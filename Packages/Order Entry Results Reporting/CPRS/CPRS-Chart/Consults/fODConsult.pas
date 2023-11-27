@@ -606,7 +606,7 @@ begin
       setServiceListWithSynonyms(SvcList, CN_SVC_LIST_ORD);           {RV}
       FastAssign(SvcList, AList);
       SortByPiece(AList, U, 2);
-      BuildServiceTree(treService, SvcList, '0', nil) ;
+      BuildServiceTree(treService, SvcList) ;
       with treService do
         begin
           for i:=0 to Items.Count-1 do
@@ -1725,6 +1725,7 @@ var
   X: string;
   HasObjects: Boolean;
 begin
+  Assert(aDest <> nil);
   Resolve := false; // override value passed in - resolve on client - PSI-05-093
   DocInfo := '';
   TmpSL := TStringList.Create;
@@ -1742,12 +1743,12 @@ begin
     Responses.OrderContainsObjects := HasObjects or TemplateBPHasObjects;
     if AbortOrder then
     begin
-      aDest.Text := '';
+      aDest.Clear;
       Close;
     end
     else
     begin
-      aDest.Text := TmpSL.Text;
+      aDest.Assign(TmpSL);
       if aDest.Count > 0 then
         SpeakTextInserted;
     end;

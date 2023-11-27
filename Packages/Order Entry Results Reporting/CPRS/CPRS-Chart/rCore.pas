@@ -9,7 +9,7 @@ unit rCore;
 
 interface
 
-uses SysUtils, Classes, Forms, ORNet, ORFn, ORClasses, system.JSON, ORCtrls;
+uses SysUtils, Classes, Forms, ORNet, ORFn, ORClasses, system.JSON, ORCtrls, UJSONParameters;
 
 { record types used to return data from the RPC's.  Generally, the delimited strings returned
   by the RPC are mapped into the records defined below. }
@@ -130,7 +130,7 @@ function setSubSetOfActiveAndInactivePersons(AORComboBox: TORComboBox;
 
 function SubsetOfPatientsWithSimilarSSNs(aDest:TStrings; aDFN: String): Integer;
 function GetDefaultPrinter(DUZ: Int64; Location: Integer): string;
-procedure getSysUserParameters(DUZ: Int64);
+function CreateSysUserParameters(DUZ: Int64): TJsonParameters;
 
 { User specific calls }
 
@@ -279,7 +279,7 @@ uses
   ShlObj,
   Windows,
   VAUtils,
-  UJSONParameters, uSimilarNames;
+  uSimilarNames;
 
 var
   uPtListDfltSort: string = '';
@@ -1584,12 +1584,12 @@ begin
   CallVistA('ORWRP GET DEFAULT PRINTER', [DUZ, Location], Result);
 end;
 
-procedure getSysUserParameters(DUZ: Int64);
+function CreateSysUserParameters(DUZ: Int64): TJsonParameters;
 var
   AReturn: string;
 begin
   CallVistA('ORWU SYSPARAM', [DUZ], AReturn);
-  SystemParameters := TJSONParameters.Create(AReturn);
+  Result := TJSONParameters.Create(AReturn);
 end;
 
 end.

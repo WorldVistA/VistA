@@ -11,35 +11,19 @@ uses
   ;
 
 type
-TShowProc = procedure(
-   RPCBrokerV: TRPCBroker;
-  InstrumentName,
-  PatientDFN,
-  OrderedBy,
-  OrderedByDUZ,
-  AdministeredBy,
-  AdministeredByDUZ,
-  Location,
-  LocationIEN: string;
-  Required: boolean;
-  var ProgressNote: string); stdcall;
+  TShowProc = procedure(RPCBrokerV: TRPCBroker;
+    InstrumentName, PatientDFN, OrderedBy, OrderedByDUZ, AdministeredBy,
+    AdministeredByDUZ, Location, LocationIEN: string; Required: Boolean;
+    var ProgressNote: string); stdcall;
 
-TSaveProc = procedure(
-   RPCBrokerV: TRPCBroker;
-  InstrumentName,
-  PatientDFN,
-  OrderedByDUZ,
-  AdministeredByDUZ,
-  AdminDate,
-  LocationIEN: string;
-  var Status: string); stdcall;
+  TSaveProc = procedure(RPCBrokerV: TRPCBroker;
+    InstrumentName, PatientDFN, OrderedByDUZ, AdministeredByDUZ, AdminDate,
+    LocationIEN: string; var Status: string); stdcall;
 
-TRemoveTempVistaFile = procedure(
-   RPCBrokerV: TRPCBroker;
-  InstrumentName,
-  PatientDFN: string); stdcall;
+  TRemoveTempVistaFile = procedure(RPCBrokerV: TRPCBroker;
+    InstrumentName, PatientDFN: string); stdcall;
 
-TCloseProc = procedure;
+  TCloseProc = procedure;
 
 TUsedMHDll = record
   Checked: boolean;
@@ -94,7 +78,7 @@ var
 
 implementation
 
-uses fFrame,rReminders, VA508AccessibilityRouter, uInit, rMisc;
+uses fFrame,rReminders, VA508AccessibilityRouter, uInit, rMisc, UResponsiveGUI;
 
 {$R *.DFM}
 
@@ -111,10 +95,15 @@ const
   QGap = 4;
   Gap = 2;
 
-  ShowProc                    : TShowProc = nil;
-  SaveProc                    : TSaveProc = nil;
-  RemoveTempVistaFile         : TRemoveTempVistaFile = nil;
-  CloseProc                   : TCloseProc = nil;
+  ShowProc: TShowProc = nil;
+  SaveProc: TSaveProc = nil;
+  RemoveTempVistaFile: TRemoveTempVistaFile = nil;
+  CloseProc: TCloseProc = nil;
+
+  DLL_ShowProc = 'ShowInstrument';
+  DLL_SaveProc = 'SaveInstrument';
+  DLL_RemoveTempProc = 'RemoveTempVistaFile';
+  DLL_CloseProc = 'CloseDLL';
 var
   frmMHTest: TfrmMHTest;
   FFirstCtrl: TList;
@@ -196,13 +185,13 @@ begin
     SaveCursor := Screen.Cursor;
     Screen.Cursor := crDefault;
     try
-      Application.ProcessMessages;
+      TResponsiveGUI.ProcessMessages;
     finally
       Screen.Cursor := SaveCursor;
     end;
   end
   else
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages;
 end;
 
 function PerformMHTest(InitialAnswers, TestName: string; QText: TStringList;
@@ -262,48 +251,48 @@ begin
   end; }
 end;
 
-function SaveMHTest(TestName, Date, Loc: string): boolean;
+function SaveMHTest(TestName, Date, Loc: string): Boolean;
 var
-  save: string;
-  tmpRtnRec: TDllRtnRec;
+  Save: string;
+  TmpRtnRec: TDllRtnRec;
 begin
-  Result := false;
+  Result := False;
   SuspendTimeout;
-  tmpRtnRec := LoadMHDLL;
+  TmpRtnRec := LoadMHDLL;
   try
-    case tmpRtnRec.Return_Type of
+    case TmpRtnRec.Return_Type of
       DLL_Success:
         begin
-          @SaveProc := GetProcAddress(MHDLLHandle, 'SaveInstrument');
-          if assigned(SaveProc) then
+          @SaveProc := GetProcAddress(MHDLLHandle, PAnsiChar(DLL_SaveProc));
+          if Assigned(SaveProc) then
           begin
             try
               SaveProc(RPCBrokerV, UpperCase(TestName), // InstrumentName
                 Patient.DFN, // PatientDFN
-                InttoStr(User.duz), // OrderedByDUZ
-                InttoStr(User.duz), // AdministeredByDUZ
+                InttoStr(User.Duz), // OrderedByDUZ
+                InttoStr(User.Duz), // AdministeredByDUZ
                 Date, Loc + 'V', // LocationIEN
-                save);
-              Result := true;
+                Save);
+              Result := True;
             finally
-              if RPCBrokerV.CurrentContext <> 'OR CPRS GUI CHART' then
+              if RPCBrokerV.CurrentContext <> TX_OPTION then
               begin
-                if RPCBrokerV.CreateContext('OR CPRS GUI CHART') = false then
-                  infoBox('Error switching broker context', 'Error', MB_OK);
+                if RPCBrokerV.CreateContext(TX_OPTION) = False then
+                  InfoBox('Error switching broker context', 'Error', MB_OK);
               end;
             end;
           end
           else
             TaskMessageDlg('Function Missing',
               'Can''t find function "SaveInstrument" within ' + MHDLLName + '.',
-              mtError, [mbok], 0);
+              MtError, [Mbok], 0);
         end;
       DLL_Missing:
-        TaskMessageDlg('File Missing or Invalid', tmpRtnRec.Return_Message,
-          mtError, [mbok], 0);
+        TaskMessageDlg('File Missing or Invalid', TmpRtnRec.Return_Message,
+          MtError, [Mbok], 0);
       DLL_VersionErr:
-        TaskMessageDlg('Incorrect Version Found', tmpRtnRec.Return_Message,
-          mtError, [mbok], 0);
+        TaskMessageDlg('Incorrect Version Found', TmpRtnRec.Return_Message,
+          MtError, [Mbok], 0);
     end;
   finally
     @SaveProc := nil;
@@ -314,37 +303,46 @@ end;
 
 procedure RemoveMHTest(TestName: string);
 var
- tmpRtnRec: TDllRtnRec;
+  TmpRtnRec: TDllRtnRec;
 begin
   SuspendTimeout;
-  tmpRtnRec := LoadMHDLL;
+  TmpRtnRec := LoadMHDLL;
   try
-    case tmpRtnRec.Return_Type of
-      DLL_Success: begin
-        @RemoveTempVistaFile := GetProcAddress(MHDLLHandle, 'RemoveTempVistaFile');
-        if assigned(RemoveTempVistaFile) then
+    case TmpRtnRec.Return_Type of
+      DLL_Success:
         begin
-          try
-            RemoveTempVistaFile(RPCBrokerV,
-            UpperCase(TestName), //InstrumentName
-            Patient.DFN);
-          finally
-            if RPCBrokerV.CurrentContext <> 'OR CPRS GUI CHART' then
-            begin
-              if RPCBrokerV.CreateContext('OR CPRS GUI CHART') = false then
-                infoBox('Error switching broker context','Error', MB_OK);
+          @RemoveTempVistaFile := GetProcAddress(MHDLLHandle,
+            PAnsiChar(DLL_RemoveTempProc));
+          if Assigned(RemoveTempVistaFile) then
+          begin
+            try
+              RemoveTempVistaFile(RPCBrokerV, UpperCase(TestName),
+                // InstrumentName
+                Patient.DFN);
+            finally
+              if RPCBrokerV.CurrentContext <> TX_OPTION then
+              begin
+                if RPCBrokerV.CreateContext(TX_OPTION) = False then
+                  InfoBox('Error switching broker context', 'Error', MB_OK);
+              end;
             end;
-          end;
-        end else
-          TaskMessageDlg('Function Missing', 'Remove Temp File function not found within ' + MHDLLName + '.', mtError, [mbok], 0);
-      end;
-      DLL_Missing: TaskMessageDlg('File Missing or Invalid', tmpRtnRec.Return_Message,mtError,[mbok],0);
-      DLL_VersionErr: TaskMessageDlg('Incorrect Version Found', tmpRtnRec.Return_Message,mtError,[mbok],0);
+          end
+          else
+            TaskMessageDlg('Function Missing',
+              'Remove Temp File function not found within ' + MHDLLName + '.',
+              MtError, [Mbok], 0);
+        end;
+      DLL_Missing:
+        TaskMessageDlg('File Missing or Invalid', TmpRtnRec.Return_Message,
+          MtError, [Mbok], 0);
+      DLL_VersionErr:
+        TaskMessageDlg('Incorrect Version Found', TmpRtnRec.Return_Message,
+          MtError, [Mbok], 0);
     end;
   finally
-   @RemoveTempVistaFile := nil;
-   UnloadMHDLL;
-   ResumeTimeout;
+    @RemoveTempVistaFile := nil;
+    UnloadMHDLL;
+    ResumeTimeout;
   end;
 end;
 
@@ -359,7 +357,7 @@ end;
 procedure CloseMHDLL(Handle: THandle);
 begin
   if Handle = 0 then Exit;
-  @CloseProc := GetProcAddress(Handle, 'CloseDLL');
+  @CloseProc := GetProcAddress(Handle, PAnsiChar(DLL_CloseProc));
   if Assigned(CloseProc) then
     CloseProc;
 end;
@@ -396,204 +394,204 @@ var
 
   procedure ParseText;
   var
-    i, tlen: integer;
+  i, tlen: integer;
 
   begin
-    Code := '';
-    i := 1;
-    tlen := length(Txt);
-    while(i <= tlen) do
-    begin
-      while(i <= tlen) and (Txt[i] = ' ') do inc(i);
-      if(i > tlen) then
-      begin
-        Txt := '';
-        exit;
-      end;
-      if(i > 1) then
-      begin
-        delete(Txt,1,i-1);
-        i := 1;
-      end;
-      if(Spec = 'I') then exit;
-      tlen := length(Txt);
-      if(tlen < 3) then exit;
-      Code := copy(Txt,i,1);
-      if(pos(Code, (UpperCaseLetters + LowerCaseLetters + Digits)) = 0) then
-      begin
-        Code := '';
-        exit;
-      end;
-      inc(i);
-      while(i <= tlen) and (Txt[i] = ' ') do inc(i);
-      if(Txt[i] in ['.','=']) then
-      begin
-        if(pos(Code, QObj.FAllowedAnswers) > 0) then
-        begin
-          inc(i);
-          while(i <= tlen) and (Txt[i] = ' ') do inc(i);
-          if(i <= tlen) then
-            delete(Txt,1,i-1)
-          else
-            Code := '';
-          exit;
-        end
-        else
-        begin
-          Code := '';
-          exit;
-        end;
-      end
-      else
-      begin
-        Code := '';
-        exit;
-      end;
-    end;
+  Code := '';
+  i := 1;
+  tlen := length(Txt);
+  while(i <= tlen) do
+  begin
+  while(i <= tlen) and (Txt[i] = ' ') do inc(i);
+  if(i > tlen) then
+  begin
+  Txt := '';
+  exit;
+  end;
+  if(i > 1) then
+  begin
+  delete(Txt,1,i-1);
+  i := 1;
+  end;
+  if(Spec = 'I') then exit;
+  tlen := length(Txt);
+  if(tlen < 3) then exit;
+  Code := copy(Txt,i,1);
+  if(pos(Code, (UpperCaseLetters + LowerCaseLetters + Digits)) = 0) then
+  begin
+  Code := '';
+  exit;
+  end;
+  inc(i);
+  while(i <= tlen) and (Txt[i] = ' ') do inc(i);
+  if(Txt[i] in ['.','=']) then
+  begin
+  if(pos(Code, QObj.FAllowedAnswers) > 0) then
+  begin
+  inc(i);
+  while(i <= tlen) and (Txt[i] = ' ') do inc(i);
+  if(i <= tlen) then
+  delete(Txt,1,i-1)
+  else
+  Code := '';
+  exit;
+  end
+  else
+  begin
+  Code := '';
+  exit;
+  end;
+  end
+  else
+  begin
+  Code := '';
+  exit;
+  end;
+  end;
   end;
 
   procedure AddTxt2Str(var X: string);
   begin
-    if(Txt <> '') then
-    begin
-      if(X <> '') then
-      begin
-        X := X + ' ';
-        if(copy(Txt, length(Txt), 1) = '.') then
-          X := X + ' ';
-      end;
-      X := X + Txt;
-    end;
+  if(Txt <> '') then
+  begin
+  if(X <> '') then
+  begin
+  X := X + ' ';
+  if(copy(Txt, length(Txt), 1) = '.') then
+  X := X + ' ';
+  end;
+  X := X + Txt;
+  end;
   end;
 
-begin
+  begin
   Result := TRUE;
   TstData := TStringList.Create;
   try
-    FastAssign(LoadMentalHealthTest(TestName), TstData);
-    if TstData.Strings[0] = '1' then MHA3 := True
-    else MHA3 := False;
-    Screen.Cursor := crHourGlass;
-    try
-      TstData.Add('99999;X;0');
-      idx := 1;
-      FMaxLines := 0;
-      FInfoText := '';
-      LastLine := U;
-      First := TRUE;
-      RSpec := FALSE;
-      TCodes := FALSE;
-      QObj := nil;
-      while (idx < TstData.Count) do
-      begin
-        Inp := TstData[idx];
-        if(pos('[ERROR]', Inp) > 0) then
-        begin
-          Result := FALSE;
-          break;
-        end;
-        p := Piece(Inp, U, 1);
-        Line := Piece(p, ';', 1);
-        Spec := Piece(p, ';', 2);
-        SpIdx := Piece(p, ';', 3);
-        if(LastLine <> Line) then
-        begin
-          LastLine := Line;
-          if(First) then
-            First := FALSE
-          else
-          begin
-            if(not RSpec) then
-            begin
-              Result := FALSE;
-              break;
-            end;
-          end;
-          if(Spec = 'X') then break;
-          lNum := StrToIntDef(Line, 0);
-          if(lNum <= 0) then
-          begin
-            Result := FALSE;
-            break;
-          end;
-          RSpec := FALSE;
-          TCodes := FALSE;
-          QObj := TMHQuestion(FObjs[FObjs.Add(TMHQuestion.Create)]);
-          QObj.FLine := lNum;
-          if(FMaxLines < lNum) then
-            FMaxLines := lNum;
-        end;
-        Txt := Piece(Inp, U, 2);
-        ParseText;
-        if(Txt <> '') then
-        begin
-          if(Spec = 'I') then
-          begin
-           if MHA3 = True then AddTxt2Str(QObj.FText)
-           else
-           AddTxt2Str(FInfoText);;
-          end
-          else
-          if(Spec = 'R') then
-          begin
-            RSpec := TRUE;
-            if(spIdx = '0') then
-              QObj.FAllowedAnswers := Txt
-            else
-            if(Code = '') then
-              QObj.FAnswerText := Txt
-            else
-            begin
-              QObj.FSeeAnswers := FALSE;
-              FAnswers.Add(Code + U + Txt);
-              inc(QObj.FAnswerCount);
-            end;
-          end
-          else
-          if(Spec = 'T') then
-          begin
-            if(Code = '') then
-            begin
-              if(TCodes) then
-              begin
-                tmp := FAnswers[FAnswers.Count-1];
-                AddTxt2Str(tmp);
-                FAnswers[FAnswers.Count-1] := tmp;
-              end
-              else
-                AddTxt2Str(QObj.FText);
-            end
-            else
-            begin
-              TCodes := TRUE;
-              FAnswers.Add(Code + U + Txt);
-              inc(QObj.FAnswerCount);
-            end;
-          end;
-        end;
-        inc(idx);
-      end;
-    finally
-      Screen.Cursor := crDefault;
-    end;
-  finally
-    TstData.Free;
+  FastAssign(LoadMentalHealthTest(TestName), TstData);
+  if TstData.Strings[0] = '1' then MHA3 := True
+  else MHA3 := False;
+  Screen.Cursor := crHourGlass;
+  try
+  TstData.Add('99999;X;0');
+  idx := 1;
+  FMaxLines := 0;
+  FInfoText := '';
+  LastLine := U;
+  First := TRUE;
+  RSpec := FALSE;
+  TCodes := FALSE;
+  QObj := nil;
+  while (idx < TstData.Count) do
+  begin
+  Inp := TstData[idx];
+  if(pos('[ERROR]', Inp) > 0) then
+  begin
+  Result := FALSE;
+  break;
   end;
-  if(not Result) then
-    InfoBox('Error encountered loading ' + TestName, 'Error', MB_OK)
+  p := Piece(Inp, U, 1);
+  Line := Piece(p, ';', 1);
+  Spec := Piece(p, ';', 2);
+  SpIdx := Piece(p, ';', 3);
+  if(LastLine <> Line) then
+  begin
+  LastLine := Line;
+  if(First) then
+  First := FALSE
   else
   begin
-    for i := 0 to FObjs.Count-1 do
-    begin
-      with TMHQuestion(FObjs[i]) do
-      begin
-        tmp := copy(InitialAnswers,i+1,1);
-        if(tmp <> '') then
-          FAnswer := tmp;
-      end;
-    end;
+  if(not RSpec) then
+  begin
+  Result := FALSE;
+  break;
   end;
-end;
+  end;
+  if(Spec = 'X') then break;
+  lNum := StrToIntDef(Line, 0);
+  if(lNum <= 0) then
+  begin
+  Result := FALSE;
+  break;
+  end;
+  RSpec := FALSE;
+  TCodes := FALSE;
+  QObj := TMHQuestion(FObjs[FObjs.Add(TMHQuestion.Create)]);
+  QObj.FLine := lNum;
+  if(FMaxLines < lNum) then
+  FMaxLines := lNum;
+  end;
+  Txt := Piece(Inp, U, 2);
+  ParseText;
+  if(Txt <> '') then
+  begin
+  if(Spec = 'I') then
+  begin
+  if MHA3 = True then AddTxt2Str(QObj.FText)
+  else
+  AddTxt2Str(FInfoText);;
+  end
+  else
+  if(Spec = 'R') then
+  begin
+  RSpec := TRUE;
+  if(spIdx = '0') then
+  QObj.FAllowedAnswers := Txt
+  else
+  if(Code = '') then
+  QObj.FAnswerText := Txt
+  else
+  begin
+  QObj.FSeeAnswers := FALSE;
+  FAnswers.Add(Code + U + Txt);
+  inc(QObj.FAnswerCount);
+  end;
+  end
+  else
+  if(Spec = 'T') then
+  begin
+  if(Code = '') then
+  begin
+  if(TCodes) then
+  begin
+  tmp := FAnswers[FAnswers.Count-1];
+  AddTxt2Str(tmp);
+  FAnswers[FAnswers.Count-1] := tmp;
+  end
+  else
+  AddTxt2Str(QObj.FText);
+  end
+  else
+  begin
+  TCodes := TRUE;
+  FAnswers.Add(Code + U + Txt);
+  inc(QObj.FAnswerCount);
+  end;
+  end;
+  end;
+  inc(idx);
+  end;
+  finally
+  Screen.Cursor := crDefault;
+  end;
+  finally
+  TstData.Free;
+  end;
+  if(not Result) then
+  InfoBox('Error encountered loading ' + TestName, 'Error', MB_OK)
+  else
+  begin
+  for i := 0 to FObjs.Count-1 do
+  begin
+  with TMHQuestion(FObjs[i]) do
+  begin
+  tmp := copy(InitialAnswers,i+1,1);
+  if(tmp <> '') then
+  FAnswer := tmp;
+  end;
+  end;
+  end;
+  end;
 }
 procedure TfrmMHTest.FormCreate(Sender: TObject);
 begin
@@ -679,53 +677,53 @@ begin
     QText.Add(copy(IntToStr(i+1) + '.      ', 1, lx) + TMHQuestion(FObjs[i]).Question);
 end;
 }
-class function TfrmMHTest.CallMHDLL(TestName: string; Required: boolean;
-  PCEData: TPCEData): String;
+class function TfrmMHTest.CallMHDLL(TestName: string; Required: Boolean;
+  PCEData: TPCEData): string;
 var
   ProgressNote: string;
-  tmpRtnRec: TDllRtnRec;
+  TmpRtnRec: TDllRtnRec;
 begin
   ProgressNote := '';
   Result := '';
   SuspendTimeout;
-  tmpRtnRec := LoadMHDLL;
+  TmpRtnRec := LoadMHDLL;
   try
-    case tmpRtnRec.Return_Type of
+    case TmpRtnRec.Return_Type of
       DLL_Success:
         begin
-          @ShowProc := GetProcAddress(MHDLLHandle, 'ShowInstrument');
-          if assigned(ShowProc) then
+          @ShowProc := GetProcAddress(MHDLLHandle, PAnsiChar(DLL_ShowProc));
+          if Assigned(ShowProc) then
           begin
             try
               ShowProc(RPCBrokerV, UpperCase(TestName), // InstrumentName
                 Patient.DFN, // PatientDFN
                 '', // OrderedByName
-                InttoStr(User.duz), // OrderedByDUZ
+                InttoStr(User.Duz), // OrderedByDUZ
                 User.Name, // AdministeredByName
-                InttoStr(User.duz), // AdministeredByDUZ
+                InttoStr(User.Duz), // AdministeredByDUZ
                 ExternalName(PCEData.Location, 44), // Location
                 InttoStr(PCEData.Location) + 'V', // LocationIEN
                 Required, ProgressNote);
               Result := ProgressNote;
             finally
-              // if RPCBrokerV.CurrentContext <> 'OR CPRS GUI CHART' then
+              // if RPCBrokerV.CurrentContext <> TX_OPTION then
               begin
-                if RPCBrokerV.CreateContext('OR CPRS GUI CHART') = false then
-                  infoBox('Error switching broker context', 'Error', MB_OK);
+                if RPCBrokerV.CreateContext(TX_OPTION) = False then
+                  InfoBox('Error switching broker context', 'Error', MB_OK);
               end;
             end;
           end
           else
             TaskMessageDlg('Function Missing',
               'Can''t find function "ShowInstrument" within ' + MHDLLName + '.',
-              mtError, [mbok], 0);
+              MtError, [Mbok], 0);
         end;
       DLL_Missing:
-        TaskMessageDlg('File Missing or Invalid', tmpRtnRec.Return_Message,
-          mtError, [mbok], 0);
+        TaskMessageDlg('File Missing or Invalid', TmpRtnRec.Return_Message,
+          MtError, [Mbok], 0);
       DLL_VersionErr:
-        TaskMessageDlg('Incorrect Version Found', tmpRtnRec.Return_Message,
-          mtError, [mbok], 0);
+        TaskMessageDlg('Incorrect Version Found', TmpRtnRec.Return_Message,
+          MtError, [Mbok], 0);
     end;
   finally
     @ShowProc := nil;

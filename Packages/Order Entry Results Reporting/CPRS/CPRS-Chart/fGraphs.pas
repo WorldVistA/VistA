@@ -7,7 +7,8 @@ uses
   ExtCtrls, StdCtrls, ORCtrls, Menus, TeeProcs, TeEngine, Series, Chart, Math,
   ComCtrls, GanttCh, ClipBrd, StrUtils, ORFn, ORDtTmRng, DateUtils, Printers,
   OleServer, Variants, ArrowCha, ORDtTm, uGraphs, fBase508Form, VCLTee.TeCanvas,
-  System.UITypes, WordXP, VA508AccessibilityManager, VCLTee.TeeGDIPlus;
+  System.UITypes, WordXP, VA508AccessibilityManager, VCLTee.TeeGDIPlus,
+  ORExtensions;
 
 type
   TfrmGraphs = class(TfrmBase508Form)
@@ -30,8 +31,8 @@ type
     lblDateRange: TLabel;
     lstViewsBottom: TORListBox;
     lstViewsTop: TORListBox;
-    lvwItemsBottom: TListView;
-    lvwItemsTop: TListView;
+    lvwItemsBottom: ORExtensions.TListView;
+    lvwItemsTop: ORExtensions.TListView;
     memBottom: TMemo;
     memTop: TMemo;
     memViewsBottom: TRichEdit;
@@ -498,7 +499,7 @@ implementation
 
 uses fGraphSettings, fGraphProfiles, fGraphData, fGraphOthers, rGraphs,
   ComObj, ActiveX, ShellAPI, fFrame, uCore, rCore, uConst, fRptBox, fReports,
-  uFormMonitor, VAUtils;
+  uFormMonitor, VAUtils, UResponsiveGUI;
 
 {$R *.DFM}
 
@@ -1023,7 +1024,7 @@ var
   aSettings, filetype, sourcetype: string;
   sl, PreSources: TStrings;
 begin
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   okbutton := false;
   conv := btnChangeSettings.Tag;
   preconv := conv;
@@ -1548,7 +1549,7 @@ var
   i: Integer;
   dfntype, listline: string;
 begin
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   FMTimestamp := floattostr(FMNow);
   // SourcesDefault;
   // FastAssign(FSourcesDefault, FSources);
@@ -1578,7 +1579,7 @@ begin
   FPrevEvent := '';
   FWarning := false;
   FFirstSwitch := true;
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   FFastData := false;
   FFastItems := false;
   FFastLabs := false;
@@ -5565,7 +5566,7 @@ var
 begin
   if FFastTrack then
     Exit;
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   TypeToCheck := UpperCase(TypeToCheck);
   if (TypeToCheck = 'SELECT') and (lvwItemsTop.SelCount = 0) and
     (lvwItemsBottom.SelCount = 0) then
@@ -5987,7 +5988,7 @@ var
   itempart, itempart1, itempart2, profile, ProfileName, profiletype,
     xprofile: string;
 begin
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   profiletype := Piece(aProfile, '^', 1);
   ProfileName := Piece(aProfile, '^', 2);
   if profiletype = VIEW_PUBLIC then
@@ -6292,7 +6293,7 @@ begin
   oldspec := Piece(GtslSpec1[0], '^', 2);
   multispec := false;
   cnt := 0;
-  for i := 0 to GtslSpec1.Count - 1 do // Oldest to newest
+  for i := 0 to GtslSpec1.Count - 1 do // Oldest to newest // Line that was reversed by Chris
   begin
     listline := GtslSpec1[i];
     if Piece(listline, '^', 2) <> oldspec then
@@ -6300,16 +6301,18 @@ begin
     newtsru := Pieces(listline, '^', 1, 4);
     if newtsru <> oldtsru then
     begin
-      cnt := cnt + 1;
-      newtest := Piece(listline, '^', 6) + '.' + inttostr(cnt);
-      SetPiece(listline, '^', 1, newtest);
-      GtslSpec2.Add(listline);
+      Inc(cnt);
+      GtslSpec2.Add('');
       oldtsru := newtsru;
     end;
+    newtest := Piece(listline, '^', 6) + '.' + inttostr(cnt);
+    SetPiece(listline, '^', 1, newtest);
+    GtslSpec2[GtslSpec2.Count-1] := listline;
     newline := Pieces(listline, '^', 5, 15);
     SetPiece(newline, '^', 2, newtest);
     GtslSpec3.Add(newline);
   end;
+
   oldline := '';
   for i := 0 to GtslItems.Count - 1 do
     if aItemType = Pieces(GtslItems[i], '^', 1, 2) then
@@ -6321,7 +6324,8 @@ begin
   specimen := '';
   specimens := '';
   range := '';
-  for i := 0 to GtslSpec2.Count - 1 do
+
+  for i := GtslSpec2.Count - 1 downto 0 do
   begin
     listline := GtslSpec2[i];
     newtest := Piece(oldline, '^', 4);
@@ -8038,20 +8042,16 @@ begin
     end;
     wrdPrintDlg := wrdApp.Dialogs.Item(wdDialogFilePrint);
     Screen.Cursor := crDefault;
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages;
     wrdPrintDlg.Show;
     wrdApp.Visible := false;
     Screen.Cursor := crHourGlass;
-    Application.ProcessMessages;
-    Sleep(5000);
+    TResponsiveGUI.Sleep(5000);
     Count := 0;
-    while (wrdApp.Application.BackgroundPrintingStatus > 0) do
+    while (wrdApp.Application.BackgroundPrintingStatus > 0) and (Count <= 3) do
     begin
-      Sleep(1000);
-      Application.ProcessMessages;
-      Count := Count + 1;
-      if Count > 3 then
-        break;
+      TResponsiveGUI.Sleep(1000);
+      Inc(Count);
     end;
   end;
   if aAction = 'COPY' then
@@ -8064,7 +8064,7 @@ begin
   wrdApp.Quit;
   wrdApp := Unassigned; // releases variant
   aHeader.Free;
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   if topflag then
     if aAction = 'PRINT' then
       mnuPopGraphStayOnTopClick(self);

@@ -252,47 +252,49 @@ begin
         if (cboService.Items.IndexOf(Trim(Piece(SvcList.Strings[i], U, 2)))
           = -1) and { RV }
           (Piece(SvcList.Strings[i], U, 5) <> '1') then
-          cboService.Items.Add(SvcList.Strings[i]);
-      if not IsProcedure then
-      begin
-        BuildServiceTree(treService, SvcList, '0', nil);
-        with treService do
-        begin
-          for i := 0 to Items.Count - 1 do
-          begin
-            if Items[i].Level > 0 then
-              Items[i].Expanded := False
-            else
-              Items[i].Expanded := True;
-          end;
-          if Items.Count > 0 then
-          begin
-            TopItem := Items[0];
-            Selected := Items[0];
-          end;
-        end;
-      end;
-      pnlForward.Visible := True;
-    end;
-    if cboService.Items.Count = 1 then
-      cboService.ItemIndex := 0;
-
-    FToService := cboService.ItemIEN;
-    // wat cq 15561
-    // cboAttentionOf.InitLongList('') ;
-    FAttentionOf := ConsultRec.attention;
-    attention := ExternalName(FAttentionOf, 200);
-    cboAttentionOf.InitLongList(attention);
-    cboAttentionOf.SelectByIEN(FAttentionOf);
-    TSimilarNames.RegORComboBox(cboAttentionOf);
-    // end cq 15561
-    with cboUrgency do
-    begin
-//      FastAssign(SubsetofUrgencies(ConsultRec.IEN), cboUrgency.Items);
-      setSubsetofUrgencies(cboUrgency.Items, ConsultRec.IEN);
-      MixedCaseList(Items);
-      SelectByIEN(ConsultRec.Urgency);
-      if ItemIndex = -1 then
+         cboService.Items.Add(SvcList.Strings[i]);
+     if not IsProcedure then
+       begin
+         BuildServiceTree(treService, SvcList) ;
+         with treService do
+         begin
+           Items.BeginUpdate;
+           try
+             for i:=0 to Items.Count-1 do
+             begin
+               if Items[i].Level > 0 then
+                 Items[i].Expanded := False
+               else
+                 Items[i].Expanded := True;
+             end;
+           finally
+             Items.EndUpdate;
+           end;
+           if Items.Count > 0 then
+           begin
+             TopItem := Items[0] ;
+             Selected := Items[0] ;
+           end;
+         end;
+       end;
+     pnlForward.Visible := True ;
+   end ;
+ if cboService.Items.Count = 1 then cboService.ItemIndex := 0;
+ FToService := cboService.ItemIEN;
+ //wat cq 15561
+ //cboAttentionOf.InitLongList('') ;
+ FAttentionOf := ConsultRec.Attention;
+ attention := ExternalName(FAttentionOf,200);
+ cboAttentionOf.InitLongList(attention);
+ cboAttentionOf.SelectByIEN(FAttentionOf);
+ TSimilarNames.RegORComboBox(cboAttentionOf);
+ //end cq 15561
+ with cboUrgency do
+  begin
+    setSubsetofUrgencies(cboUrgency.Items, ConsultRec.IEN);
+    MixedCaseList(Items) ;
+    SelectByIEN(ConsultRec.Urgency);
+    if ItemIndex = -1 then
       begin
         for i := 0 to Items.Count - 1 do
           if DisplayText[i] = 'Routine' then

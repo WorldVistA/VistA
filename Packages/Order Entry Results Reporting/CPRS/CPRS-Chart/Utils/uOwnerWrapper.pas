@@ -17,8 +17,8 @@ unit uOwnerWrapper;
   cmdAcceptClick to process the hidden dialog.
 
   4) There are places in cmdAcceptClick that ends up calling
-  Application.ProcessMessages.  This causes the parent form to process the
-  waiting WM_CLOSE message, which ends up destroying all it's owned
+  TResponsiveGUI.ProcessMessages.  This causes the parent form to process
+  the waiting WM_CLOSE message, which ends up destroying all it's owned
   components, including the order dialog
 
   5) cmdAcceptClick keeps running, expecting Self to be valid, when the order

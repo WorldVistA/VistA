@@ -58,7 +58,8 @@ procedure CheckExistingPI(AOrderId: string; var APtI: string);
 function PassDrugTest(OI: integer; OrderType: string; InptOrder: boolean; CheckForClozapineOnly: boolean = false): boolean;
 function AdminTimeHelpText(): string;
 function ValidateDrugAutoAccept(tempDrug, tempUnit, tempSch, tempDur: string;
-    OI, tempSupply, tempRefills: integer; tempQuantity: string; Titration: boolean): boolean;
+  OI, tempSupply, tempRefills: integer; tempQuantity: string;
+  Titration: boolean; OrderText: string; var EditOrder: Boolean): boolean;
 procedure UpdateSupplyQtyRefillErrorMsg(var ErrorMessage: string;
   DaySupply, Refills: integer; Quantity, Drug, Units, Schedule,
   Duration: string; Titration: boolean; OrderableItem: integer;
@@ -541,7 +542,8 @@ begin
 end;
 
 function ValidateDrugAutoAccept(tempDrug, tempUnit, tempSch, tempDur: string;
-    OI, tempSupply, tempRefills: integer; tempQuantity: string; Titration: boolean): boolean;
+  OI, tempSupply, tempRefills: integer; tempQuantity: string;
+  Titration: boolean; OrderText: string; var EditOrder: Boolean): boolean;
 var
   ErrorMessage: string;
 
@@ -552,9 +554,20 @@ begin
   Result := (ErrorMessage = '');
   if not Result then
   begin
-    infoBox(ErrorMessage, 'Cannot Save Error', MB_OK);
-    Result := false;
-    uDrugHasMaxData.CaptureMaxData := false;
+    if OrderText <> '' then
+      ErrorMessage := OrderText + CRLF + CRLF + ErrorMessage;
+    ErrorMessage := ErrorMessage + CRLF + CRLF + 'Do you want to edit this order?';
+    if infoBox(ErrorMessage, 'Cannot Save Error',
+      MB_YESNO or MB_DEFBUTTON2 or MB_ICONQUESTION) = IDYES then
+    begin
+      Result := True;
+      EditOrder := True;
+    end
+    else
+    begin
+      Result := false;
+      uDrugHasMaxData.CaptureMaxData := false;
+    end;
   end;
 end;
 
@@ -611,12 +624,12 @@ begin
       end;
     end;
     if MaxDaysSupplyError then
-      SetError(TX_SUPPLY_LIM + IntToStr(maxDS));
+      SetError(TX_SUPPLY_LIM + IntToStr(maxDS) + '.');
     if CheckClozapine then
     begin
       maxQty := DaysToQty(DaySupply, Units, Schedule, Duration, Drug);
       if (maxQty > 0) and (StrToFloatDef(Quantity, 0) > maxQty) then
-        SetError(TX_QTY_LIM + FloatToStr(maxQty));
+        SetError(TX_QTY_LIM + FloatToStr(maxQty) + '.');
     end;
   end;
 

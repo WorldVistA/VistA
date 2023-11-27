@@ -277,7 +277,6 @@ inherited frmTemplateDialog: TfrmTemplateDialog
         Height = 27
         Align = alClient
         Caption = 'OK'
-        Default = True
         ModalResult = 1
         TabOrder = 3
         OnClick = btnOKClick

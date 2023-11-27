@@ -31,15 +31,15 @@ implementation
 {$R *.DFM}
 
 uses
-  rCore, fPtSelOptns;
+  rCore, mPtSelOptns;
 
 procedure TfrmPtSelOptSave.FormCreate(Sender: TObject);
 begin
   ResizeAnchoredFormToFont(self);
   self.caption := 'Save Patient List Settings';
-  fPtSelOptns.clinDoSave := false; // Initialize.
-  fPtSelOptns.clinSaveToday := false;
-  lblClinSettings.text := 'Save ' + fPtSelOptns.clinDefaults +
+  mPtSelOptns.clinDoSave := false; // Initialize.
+  mPtSelOptns.clinSaveToday := false;
+  lblClinSettings.text := 'Save ' + mPtSelOptns.clinDefaults +
                              CRLF + ' defaults as follows?';
   rGrpClinSave.itemIndex := -1;
 //  rGrpClinSave.TabStop := True;
@@ -60,10 +60,10 @@ if ((rGrpClinSave.itemIndex < 0) or (rGrpClinSave.itemIndex >1)) then
     exit;
   end;
   if (rGrpClinSave.itemIndex = 0) then
-    fPtSelOptns.clinSaveToday := false;
+    mPtSelOptns.clinSaveToday := false;
   if (rGrpClinSave.itemIndex = 1) then
-    fPtSelOptns.clinSaveToday := true;
-  fPtSelOptns.clinDoSave := true;
+    mPtSelOptns.clinSaveToday := true;
+  mPtSelOptns.clinDoSave := true;
 close;
 
 end;

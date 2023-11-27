@@ -96,7 +96,7 @@ implementation
 {$R *.DFM}
 
 uses rODBase, ORFn, fODBase,fODGen, fODAuto, fOMVerify, uCore, rMisc, uODBase,
-  fOrders, VAUtils, System.UITypes, System.Types, fOMSet;
+  fOrders, VAUtils, System.UITypes, System.Types, fOMSet, rCore;
 
 const
   TX_NOFORM    = 'This selection does not have an associated windows form.';
@@ -489,6 +489,9 @@ end;
 
 procedure TfrmOMNavA.grdMenuKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
+var
+  ALocation: Integer;
+  AName, ASvc: string;
 begin
   //frmFrame.UpdatePtInfoOnRefresh;
   if Key in [VK_RETURN, VK_SPACE] then with grdMenu do
@@ -498,15 +501,19 @@ begin
     try
       if frmOrders <> nil then
       begin
-         if (frmOrders.TheCurrentView<>nil) and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
-           and IsCompletedPtEvt(frmOrders.TheCurrentView.EventDelay.PtEventIFN) then
-         begin
-           FDelayEvent.EventType := #0;
-           FDelayEvent.EventIFN  := 0;
-           FDelayEvent.TheParent := TParentEvent.Create(0);
-           FDelayEvent.EventName := '';
-           FDelayEvent.PtEventIFN := 0;
-         end;
+        if (frmOrders.TheCurrentView<>nil) and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
+          and IsCompletedPtEvt(frmOrders.TheCurrentView.EventDelay.PtEventIFN) then
+        begin
+          FDelayEvent.EventType := 'C';
+          FDelayEvent.EventIFN  := 0;
+          FDelayEvent.TheParent := TParentEvent.Create(0);
+          FDelayEvent.EventName := 'All Services, Active';
+          FDelayEvent.PtEventIFN := 0;
+          // set location
+          CurrentLocationForPatient(Patient.DFN, ALocation, AName, ASvc);
+          if ALocation <> 0 then
+            Encounter.Location := ALocation;
+        end;
       end;
       //frmFrame.UpdatePtInfoOnRefresh;
       FOrderMenuItem := TOrderMenuItem(Objects[Col, Row]);
@@ -523,15 +530,19 @@ begin
       end;
       if frmOrders <> nil then
       begin
-         if (frmOrders.TheCurrentView<>nil) and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
-           and IsCompletedPtEvt(frmOrders.TheCurrentView.EventDelay.PtEventIFN) then
-         begin
-           FDelayEvent.EventType := #0;
-           FDelayEvent.EventIFN  := 0;
-           FDelayEvent.TheParent := TParentEvent.Create(0);
-           FDelayEvent.EventName := '';
-           FDelayEvent.PtEventIFN := 0;
-         end;
+        if (frmOrders.TheCurrentView<>nil) and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
+          and IsCompletedPtEvt(frmOrders.TheCurrentView.EventDelay.PtEventIFN) then
+        begin
+          FDelayEvent.EventType := 'C';
+          FDelayEvent.EventIFN  := 0;
+          FDelayEvent.TheParent := TParentEvent.Create(0);
+          FDelayEvent.EventName := 'All Services, Active';
+          FDelayEvent.PtEventIFN := 0;
+          // set location
+          CurrentLocationForPatient(Patient.DFN, ALocation, AName, ASvc);
+          if ALocation <> 0 then
+            Encounter.Location := ALocation;
+        end;
       end;
     finally
       AlreadyRunning := false;
@@ -562,6 +573,8 @@ procedure TfrmOMNavA.grdMenuMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 var
   ACol, ARow: Integer;
+  ALocation: Integer;
+  AName, ASvc: string;
 begin
   //frmFrame.UpdatePtInfoOnRefresh;
   if ssDouble in Shift then
@@ -577,11 +590,15 @@ begin
       if (frmOrders.TheCurrentView<>nil) and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
         and IsCompletedPtEvt(frmOrders.TheCurrentView.EventDelay.PtEventIFN) then
       begin
-        FDelayEvent.EventType := #0;
+        FDelayEvent.EventType := 'C';
         FDelayEvent.EventIFN  := 0;
         FDelayEvent.TheParent := TParentEvent.Create(0);
-        FDelayEvent.EventName := '';
+        FDelayEvent.EventName := 'All Services, Active';
         FDelayEvent.PtEventIFN := 0;
+        // set location
+        CurrentLocationForPatient(Patient.DFN, ALocation, AName, ASvc);
+        if ALocation <> 0 then
+          Encounter.Location := ALocation;
       end;
     end;
     //frmFrame.UpdatePtInfoOnRefresh;
@@ -620,6 +637,9 @@ end;
 
 procedure TfrmOMNavA.grdMenuMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
+var
+  ALocation: Integer;
+  AName, ASvc: string;
 begin
   if ssDouble in Shift then Exit;  // ignore a double click
   if ssDouble in FTheShift then
@@ -651,11 +671,15 @@ begin
       if (frmOrders.TheCurrentView<>nil) and (frmOrders.TheCurrentView.EventDelay.PtEventIFN>0)
         and IsCompletedPtEvt(frmOrders.TheCurrentView.EventDelay.PtEventIFN) then
       begin
-        FDelayEvent.EventType := #0;
+        FDelayEvent.EventType := 'C';
         FDelayEvent.EventIFN  := 0;
         FDelayEvent.TheParent := TParentEvent.Create(0);
-        FDelayEvent.EventName := '';
+        FDelayEvent.EventName := 'All Services, Active';
         FDelayEvent.PtEventIFN := 0;
+        // set location
+        CurrentLocationForPatient(Patient.DFN, ALocation, AName, ASvc);
+        if ALocation <> 0 then
+          Encounter.Location := ALocation;
       end;
     end;
   finally

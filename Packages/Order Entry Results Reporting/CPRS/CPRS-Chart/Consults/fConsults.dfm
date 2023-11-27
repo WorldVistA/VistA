@@ -212,7 +212,7 @@ inherited frmConsults: TfrmConsults
           Left = 48
           Top = 40
           Width = 566
-          Height = 24
+          Height = 21
           Hint = 'Subject is limited to a maximum of 80 characters.'
           Anchors = [akLeft, akTop, akRight]
           MaxLength = 80
@@ -276,7 +276,6 @@ inherited frmConsults: TfrmConsults
         InfoMessage.WantReturns = False
         InfoMessage.WordWrap = False
         InfoMessage.Zoom = 100
-        InfoMessage.ExplicitHeight = 45
         InfoSelector.AlignWithMargins = True
         InfoSelector.Left = 3
         InfoSelector.Top = 3
@@ -415,7 +414,6 @@ inherited frmConsults: TfrmConsults
         InfoMessage.WantReturns = False
         InfoMessage.WordWrap = False
         InfoMessage.Zoom = 100
-        InfoMessage.ExplicitHeight = 45
         InfoSelector.AlignWithMargins = True
         InfoSelector.Left = 3
         InfoSelector.Top = 3

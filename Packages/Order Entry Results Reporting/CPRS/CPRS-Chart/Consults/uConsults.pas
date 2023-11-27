@@ -128,7 +128,7 @@ type
 function  MakeConsultListItem(InputString: string):string;
 function  MakeConsultListDisplayText(InputString: string): string;
 function  MakeConsultNoteDisplayText(RawText: string): string;
-procedure BuildServiceTree(Tree: TORTreeView; SvcList: TStrings; const Parent: string; Node: TORTreeNode);
+procedure BuildServiceTree(Tree: TORTreeView; SvcList: TStrings);
 procedure CreateListItemsForConsultTree(Dest, Source: TStrings; Context: integer; GroupBy: string;
           Ascending: Boolean);
 procedure BuildConsultsTree(Tree: TORTreeView; tmpList: TStrings; const Parent: string; Node: TORTreeNode;
@@ -272,112 +272,166 @@ begin
   Result := x;
 end;
 
-procedure BuildServiceTree(Tree: TORTreeView; SvcList: TStrings; const Parent: string; Node: TORTreeNode);
+procedure BuildServiceTree(Tree: TORTreeView; SvcList: TStrings);
+type
+  TBuildDocTree = record
+    Name: string;
+    ID: string;
+    MyNode: TORTreeNode;
+  end;
+
 var
-  MyID, MyParent, Name, item: string;
-  i, Idx: Integer;
-  ParentNode, ChildNode: TORTreeNode;
-//  tmpNode: TORTreeNode;
-  HasChildren: Boolean;
-//  AllNodes: TStringList;
-  ParentNodes: TStringList;
-//  List: TList;
-//  Lists: TObjectList;
-//  bad: boolean;
+  OurDocTree: array of TBuildDocTree;
+  ListOfParents: TStringList;
+  LastRecCnt: integer;
+  newItems: TStringList;
 
-// Former code was only filtering out half the duplicates, depending on
-// how they appeared in the tree.  Commented out code filters out all the duplicates,
-// and still keeps the fast tree build.  However, CPRS Clinical Workgroup determined
-// that no duplicates should be filtered out.  Code kept here in order to keep fast filter
-// logic, in case duplicates are ever filtered out in the future.
-
-{
-  procedure FilterOutDuplicates;
+  function getParentByID(aId: String): TORTreeNode;
   var
-    j: integer;
+    z: integer;
   begin
-    bad := false;
-    if AllNodes.Find(MyID, Idx) then
+    Result := nil;
+    for z := Low(OurDocTree) to High(OurDocTree) do
     begin
-      if AllNodes.Objects[Idx] is TORTreeNode then
+      if aId = UpperCase(OurDocTree[z].ID) then
       begin
-        tmpNode := TORTreeNode(AllNodes.Objects[Idx]);
-        bad := tmpNode.HasAsParent(ParentNode);
-        if (not bad) and assigned(tmpNode.Parent) then
-          bad := ParentNode.HasAsParent(tmpNode.Parent);
-      end
-      else
+        Result := OurDocTree[z].MyNode;
+        break;
+      end;
+    end;
+  end;
+
+  procedure RemoveUnwanted;
+  var
+    i: integer;
+  Begin
+    for i := SvcList.Count - 1 downto 0 do
+    Begin
+      if Piece(SvcList.Strings[i], U, 5) = 'S' then
+        SvcList.Delete(i);
+    End;
+  End;
+
+  procedure MapTheParent(var ItemsToAdd, ParentList: TStringList);
+  var
+    i, j: integer;
+    ParentNode: TORTreeNode;
+    NextParentList: TStringList;
+    DocInfo, DocName, CurrentParentID, DocParentID, newParent: String;
+  begin
+    NextParentList := TStringList.Create;
+    try
+      // If we have no parents (first time) then add "All Services"
+      if ListOfParents.Count < 1 then
       begin
-        bad := False;
-        List := TList(AllNodes.Objects[Idx]);
-        for j := 0 to List.Count - 1 do
+        ListOfParents.add('0');
+      end;
+
+      // Loop though the parent list and find any nodes that need to be added
+      for j := 0 to ListOfParents.Count - 1 do
+      begin
+        CurrentParentID := UpperCase(Piece(ListOfParents.Strings[j], U, 1));
+        ParentNode := getParentByID(CurrentParentID);
+
+        // Find any items from our remaining items list that is a child of this parent
+        for i := 0 to SvcList.Count - 1 do
         begin
-          tmpNode := TORTreeNode(List[j]);
-          bad := TORTreeNode(List[j]).HasAsParent(ParentNode);
-          if (not bad) and assigned(tmpNode.Parent) then
-            bad := ParentNode.HasAsParent(tmpNode.Parent);
-          if bad then break;
+          DocInfo := SvcList.Strings[i];
+          DocParentID := UpperCase(Piece(DocInfo, U, 3));
+          DocName := UpperCase(Piece(DocInfo, U, 2));
+          if DocParentID = CurrentParentID then
+          begin
+            // Add to the virtual tree.
+            // (ItemsToAdd contains documents with parents from the ParentList only.)
+            ItemsToAdd.AddObject(DocInfo, ParentNode);
+
+            // If this item is also a parent then we need to add it to our parent list for the next run through
+            newParent := Piece(DocInfo, U, 4);
+            if (newParent <> '') and (NextParentList.IndexOf(newParent) < 0)
+            then
+              NextParentList.add(DocInfo);
+          end;
         end;
       end;
+
+      ParentList.Assign(NextParentList);
+    finally
+      NextParentList.Free;
     end;
   end;
 
-  procedure AddNode;
+  procedure AddItemsToTree(ItemsToAdd: TStringList);
+  // (ListOfParents: TStringList; Orphaned: Boolean);
+  Var
+    i, j: integer;
+
   begin
-    if AllNodes.Find(MyID, Idx) then
-    begin
-      if AllNodes.Objects[Idx] is TORTreeNode then
+    try
+      // Now loop through all items that need to be added this go-around
+      for i := 0 to ItemsToAdd.Count - 1 do
       begin
-        List := TList.Create;
-        Lists.Add(List);
-        List.Add(AllNodes.Objects[Idx]);
-        AllNodes.Objects[Idx] := List;
-      end
-      else
-        List := TList(AllNodes.Objects[Idx]);
-      List.Add(ChildNode);
-    end
-    else
-      AllNodes.AddObject(MyId, ChildNode);
+        SetLength(OurDocTree, Length(OurDocTree) + 1);
+
+        // Set up the name and ID vaiable
+        OurDocTree[High(OurDocTree)].Name := Piece(ItemsToAdd.Strings[i], U, 2);
+        OurDocTree[High(OurDocTree)].ID := Piece(ItemsToAdd.Strings[i], U, 1);
+
+        // Now create this node using the ParentObject
+        OurDocTree[High(OurDocTree)].MyNode :=
+          TORTreeNode(Tree.Items.AddChild(TORTreeNode(ItemsToAdd.Objects[i]),
+          OurDocTree[High(OurDocTree)].Name));
+
+        OurDocTree[High(OurDocTree)].MyNode.StringData := ItemsToAdd.Strings[i];
+
+        // Find the node from the remaing list to remove.
+        for j := 0 to SvcList.Count - 1 do
+        begin
+          if SvcList[j] = ItemsToAdd[i] then
+          begin
+            SvcList.Delete(j);
+            break;
+          end;
+        end;
+      end;
+    finally
+    end;
   end;
-}
 
 begin
-  Tree.Items.BeginUpdate;
-  ParentNodes := TStringList.Create;
-//  AllNodes := TStringList.Create;
-//  Lists := TObjectList.Create;
+  if not(SvcList is TStringList) then
+    Exit;
+  ListOfParents := TStringList.Create();
+  newItems := TStringList.Create();
   try
-    ParentNodes.Sorted := True;
-//    AllNodes.Sorted := True;
-    for i := 0 to SvcList.Count - 1 do
+    // Clear the array
+    SetLength(OurDocTree, 0);
+    // Remove Items with 'S' in 5th Peice
+    RemoveUnwanted;
+    // Build the virtual tree array
+    LastRecCnt := -1;
+    while (SvcList.Count > 0) and (LastRecCnt <> SvcList.Count) do
     begin
-      item := SvcList[i];
-      if Piece(item, U, 5) = 'S' then Continue; 
-      MyParent := Piece(item, U, 3);
-      MyID := Piece(item, U, 1);
-      if not ParentNodes.Find(MyParent, Idx) then
-        ParentNode := nil
-      else
-      begin
-        ParentNode := TORTreeNode(ParentNodes.Objects[Idx]);
-//        FilterOutDuplicates;
-//        if bad then Continue;
-      end;
-      Name := Piece(item, U, 2);
-      HasChildren := Piece(item, U, 4) = '+';
-      ChildNode := TORTreeNode(Tree.Items.AddChild(ParentNode, Name));
-      ChildNode.StringData := item;
-//      AddNode;
-      if HasChildren then
-        ParentNodes.AddObject(MyID, ChildNode);
+      LastRecCnt := SvcList.Count;
+      // Map out the parent objects and return the future parents
+      MapTheParent(newItems, ListOfParents);
+      AddItemsToTree(newItems);
+      newItems.Clear;
     end;
+
+    // Handle any orphaned records (backup)
+    if SvcList.Count > 0 then
+    begin
+      newItems.Assign(SvcList);
+      AddItemsToTree(newItems);
+    end;
+
+    // Clear the list
+    SetLength(OurDocTree, 0);
+
   finally
-    ParentNodes.Free;
-//    AllNodes.Free;
-//    Lists.Free;
+    ListOfParents.Free;
+    newItems.Free;
   end;
-  Tree.Items.EndUpdate;
 end;
 
 procedure CreateListItemsForConsultTree(Dest, Source: TStrings; Context: integer; GroupBy: string;

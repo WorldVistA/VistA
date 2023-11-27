@@ -21,8 +21,9 @@ type
     IVFluid:   Boolean;
     SrvSeq:    Integer;
     LastFill:  TFMDateTime;
-    Location:   String;
+    Location:  String;
     Drug:      String;
+    DGroupIEN: integer;
     //Action:    Integer;
   end;
 
@@ -173,6 +174,7 @@ begin
     LastFill  := MakeFMDateTime(Piece(x, U, 11));
     Location  := Piece(Piece(x,U,1),':',2);
     //LocationID := StrToIntDef(Piece(Piece(x,U,1),':',3),0);
+    DGroupIEN := StrToIntDef(Piece(x, U, 20), 0);
   end;
 end;
 
@@ -245,7 +247,7 @@ begin
 
   aTmpList := TStringList.Create;
   try
-    CallVistA('ORWPS ACTIVE', [Patient.DFN, User.DUZ, view, '1'], aTmpList);
+    CallVistA('ORWPS ACTIVE', [Patient.DFN, User.DUZ, view, '1', 1], aTmpList);
     if aTmpList.Count > 0 then
     begin
       ASeq := 0;

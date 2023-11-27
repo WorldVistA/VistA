@@ -87,7 +87,6 @@ implementation
 uses
   Winapi.CommCtrl
   , VA508AccessibilityRouter
-  , fPtSelDemog
   , fOptionsProcessedAlerts
   , rOptions
   , fAlertRangeEdit
@@ -95,6 +94,7 @@ uses
   , VAUtils
   , uConst
   , uFormUtils
+  , UResponsiveGUI
   ;
 
 function getProcessedAlertsList:TfrmAlertsProcessed;
@@ -316,7 +316,7 @@ begin
     FpaFocusedGroup := grp.GroupID;
     msg := 'Selected Message Group is '+grp.Header+'';
     pnlRaw.Caption := msg;
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages;
     GetScreenReader.Speak(msg);
   end;
 end;
@@ -362,7 +362,7 @@ begin
     frmPtSelDemog.ClearIDInfo;
   }
 
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
 
   if Item.SubItems.Count > 0 then
     pnlRaw.Caption := Item.SubItems[Item.SubItems.Count - 1]
@@ -628,7 +628,7 @@ begin
   else
     msg := format('Found %d Notifications',[FpaAlertsFound]);
 
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   msg :=
     FormatDateTime(fmtAlertInfoDateTime, FMDateTimeToDateTime(FStrtDate)) + ' -- ' +
     FormatDateTime(fmtAlertInfoDateTime, FMDateTimeToDateTime(FEndDate))
@@ -637,7 +637,7 @@ begin
   stxtDateRange.Caption := msg;
   stxtDateRange.Width := i;
   stxtDateRange.InvalidateAll;
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
 end;
 
 procedure TfrmAlertsProcessed.paSetColumnHeaders;

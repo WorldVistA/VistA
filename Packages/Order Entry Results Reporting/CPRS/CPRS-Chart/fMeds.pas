@@ -195,7 +195,6 @@ type
     ChildODList: TStringList;
     FSortView: Integer;
     FOrderTitlecaption: string;
-
     function ListSelected(const ErrMsg: string): TListBox;
     procedure ValidateSelected(AListBox: TListBox;
       const AnAction, WarningMsg, WarningTitle: string);
@@ -279,7 +278,7 @@ uses uCore, rCore, fFrame, fRptBox, uOrders, fODBase, fOrdersDC, fOrdersHold,
   fOrdersRenew, fOMNavA, fOrdersRefill, fMedCopy, fOrders, fODChild, rODBase,
   StrUtils, fActivateDeactivate, VA2006Utils, VA508AccessibilityRouter,
   VAUtils, System.UITypes, System.Types, uPaPI, fOrdersPark, fOrdersUnPark,
-  rODMeds, rMisc;  //rMisc added for Patch Check of OR*3.0*498 // PaPI
+  rODMeds, rMisc, uWriteAccess;  //rMisc added for Patch Check of OR*3.0*498 // PaPI
 
 {$R *.DFM}
 
@@ -570,6 +569,7 @@ begin
         NewMedRec.OrderID := AnOrder.ID;
         NewMedRec.Instruct := AnOrder.Text;
         NewMedRec.Inpatient := AMedList = uMedListIn;
+        NewMedRec.DGroupIEN := AnOrder.DGroup;
         AMedList.Insert(0, NewMedRec);
         if AMedList = uMedListIn then
         begin
@@ -797,6 +797,18 @@ begin
   AddMessageHandler(lstMedsOut, lstMedsOutRightClickHandler);
   // PaPI ======================================================================
   Application.HintHidePause := 10000; // increasing the default Hide value to 10 sec.
+  if not WriteAccess(waMeds) then
+  begin
+    mnuAct.Enabled := False;
+    DocumentNonVAMeds1.Enabled := False;
+    DocumentNonVAMeds2.Enabled := False;
+  end
+  else begin
+    if not WriteAccess(waDelayedOrders) then
+      mnuActTransfer.Enabled := False;
+    DocumentNonVAMeds1.Enabled := canWriteOrder(NonVADisp);
+    DocumentNonVAMeds2.Enabled := DocumentNonVAMeds1.Enabled;
+  end;
 end;
 
 procedure TfrmMeds.FormDestroy(Sender: TObject);
@@ -1447,11 +1459,14 @@ end;
 
 { Action menu events ---------------------------------------------------------------------- }
 procedure TfrmMeds.mnuActClick(Sender: TObject);
+var
+  AllowTransfer: boolean;
+
 begin
   inherited;
+  PaPI_GUIsetup;
   if SomethingSelected then
   begin
-    PaPI_GUIsetup;
     mnuActRenew.Enabled := True;
     mnuActRefill.Enabled := True;
     if lstMedsNonVA.SelCount > 0 then
@@ -1460,17 +1475,24 @@ begin
       mnuActRefill.Enabled := False;
     end;
   end;
-  if lstMedsOut.SelCount > 0 then
+
+  AllowTransfer := WriteAccess(waDelayedOrders);
+  if AllowTransfer then
   begin
-    mnuActTransfer.Caption := 'Transfer to Inpatient...';
-    mnuActTransfer.Enabled := True;
-  end
-  else if lstMedsIn.SelCount > 0 then
-  begin
-    mnuActTransfer.Caption := 'Transfer to Outpatient...';
-    mnuActTransfer.Enabled := True;
-  end
-  else
+    if lstMedsOut.SelCount > 0 then
+    begin
+      mnuActTransfer.Caption := 'Transfer to Inpatient...';
+      mnuActTransfer.Enabled := True;
+    end
+    else if lstMedsIn.SelCount > 0 then
+    begin
+      mnuActTransfer.Caption := 'Transfer to Outpatient...';
+      mnuActTransfer.Enabled := True;
+    end
+    else
+      AllowTransfer := False;
+  end;
+  if not AllowTransfer then
   begin
     mnuActTransfer.Caption := 'Transfer to...';
     mnuActTransfer.Enabled := False;
@@ -1821,6 +1843,8 @@ begin
     end
     else
       radTxt := CP_TXT;
+    if (LimitEvent = 'A') and (not WriteAccess(waDelayedOrders, True)) then
+      exit;
     SelectedList := TList.Create;
     // temporary until able to create CopyIFNList directly
     CopyIFNList := TStringList.Create;
@@ -2112,10 +2136,27 @@ var
   ErrMsg, AParentID: string;
   CheckedList, SomePharmacyOrders: TStringList;
   ChildOrder: TChildOD;
+  AMed: TMedListRec;
 begin
   CheckedList := TStringList.Create;
   SomePharmacyOrders := GetPharmacyOrders(AListBox);
   with AListBox do
+  begin
+    WriteAccessV.BeginErrors;
+    try
+      for i := 0 to Items.Count - 1 do
+        if Selected[i] then
+        begin
+          AMed := TMedListRec(GetMedList(AListBox)[i]);
+          if not canWriteOrder(AMed.DGroupIEN, '', AnAction, True, AMed.Instruct) then
+          begin
+            Selected[i] := false;
+            continue;
+          end;
+        end;
+    finally
+      WriteAccessV.EndErrors(False);
+    end;
     for i := 0 to Items.Count - 1 do
       if Selected[i] then
       begin
@@ -2191,6 +2232,7 @@ begin
         if Selected[i] and (not OrderIsLocked(CurID, AnAction)) then
           Selected[i] := False;
       end;
+  end;
 end;
 
 procedure TfrmMeds.MakeSelectedList(AListBox: TListBox; AList: TList;
@@ -2250,6 +2292,21 @@ end;
 procedure TfrmMeds.popMedPopup(Sender: TObject);
 begin
   inherited;
+  if not WriteAccess(waMeds) then
+  begin
+    actPark.Enabled := False;
+    actUnpark.Enabled := False;
+    mnuActRenew.Enabled := False;
+    mnuActRefill.Enabled := False;
+    popMedRefill.Enabled := False;
+    popMedRenew.Enabled := False;
+    popMedDC.Enabled := False;
+    popMedChange.Enabled := False;
+    popMedNew.Enabled := False;
+    DocumentNonVAMeds2.Enabled := False;
+    exit;
+  end;
+
   if User.NoOrdering then
   begin
     actPark.Enabled := False;

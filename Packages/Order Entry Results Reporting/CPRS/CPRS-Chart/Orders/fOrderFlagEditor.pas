@@ -218,7 +218,8 @@ uses
   uSimilarNames,
   System.UITypes,
   VAUtils,
-  VA508AccessibilityRouter;
+  VA508AccessibilityRouter,
+  UResponsiveGUI;
 
 function getHint(aStrings:TStrings;aCount: Integer = 15):String;
 var
@@ -784,7 +785,7 @@ procedure TfrmOrderFlag.setActionMode(aMode: TActionMode);
   begin
     aSecond.Align := alTop;
     aSecond.Top := aFirst.Top + aFirst.Height;
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages;
   end;
 
 begin
@@ -812,7 +813,7 @@ begin
     if aMode = amRemove then
       pnlComment.Height := pnlReason.Height;
 
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages;
     splDetails.Align := alBottom;
     splDetails.Top := pnlDescription.Top + pnlDescription.Height;
   end

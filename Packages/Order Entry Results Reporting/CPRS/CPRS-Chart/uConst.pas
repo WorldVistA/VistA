@@ -106,6 +106,7 @@ const
   ORDER_CPLXRN = 12;
 
   { Order action codes }
+  // when adding new order actions, please update uWriteAccess.TActionType
   OA_COPY     = 'RW';
   OA_CHANGE   = 'XX';
   OA_RENEW    = 'RN';
@@ -130,6 +131,7 @@ const
   OA_PARK     = 'PK'; // PaPI
   OA_UNPARK   = 'UP'; // PaPI
 
+const
   { Ordering Dialog Form IDs }
   OD_ACTIVITY  = 100;
   OD_ALLERGY   = 105;

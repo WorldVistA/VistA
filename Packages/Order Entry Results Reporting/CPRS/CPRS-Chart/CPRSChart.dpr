@@ -110,8 +110,6 @@ uses
   fImmunization in 'Encounter\fImmunization.pas' {frmImmunizations},
   fEncVitals in 'Encounter\fEncVitals.pas' {frmEncVitals},
   fEffectDate in 'fEffectDate.pas' {frmEffectDate},
-  fPtSelDemog in 'fPtSelDemog.pas' {frmPtSelDemog},
-  fPtSelOptns in 'fPtSelOptns.pas' {frmPtSelOptns},
   uInit in 'uInit.pas',
   uSpell in 'uSpell.pas',
   dShared in 'dShared.pas' {dmodShared: TDataModule},
@@ -195,7 +193,6 @@ uses
   fODRad in 'Orders\fODRad.pas' {frmODRad},
   fODRadApproval in 'Orders\fODRadApproval.pas' {frmODRadApproval},
   fODRadConShRes in 'Orders\fODRadConShRes.pas' {frmODRadConShRes},
-  fODRadImType in 'Orders\fODRadImType.pas' {frmODRadImType},
   fODSaveQuick in 'Orders\fODSaveQuick.pas' {frmODQuick},
   fODText in 'Orders\fODText.pas' {frmODText},
   fODVitals in 'Orders\fODVitals.pas' {frmODVitals},
@@ -316,7 +313,6 @@ uses
   uHelpManager in 'uHelpManager.pas',
   mColumnTree in 'mColumnTree.pas' {ColumnTreeFrame: TFrame},
   mDrawers in 'mDrawers.pas' {fraDrawers: TFrame},
-  mRadioListView in 'mRadioListView.pas' {RadioLVFrame: TFrame},
   mTreeGrid in 'mTreeGrid.pas' {TreeGridFrame: TFrame},
   fDeferDialog in 'fDeferDialog.pas' {frmDeferDialog},
   fViewNotifications in 'fViewNotifications.pas' {frmViewNotifications},
@@ -447,7 +443,11 @@ uses
   u508Button in '508\u508Button.pas',
   uPrinting in 'Tools\uPrinting.pas',
   fBaseDynamicControlsForm in 'fBaseDynamicControlsForm.pas' {frmBaseDynamicControlsForm},
-  UResponsiveGUI in 'Utils\UResponsiveGUI.pas';
+  fODDietAccess in 'Orders\fODDietAccess.pas' {frmODDietAccess},
+  mPtSelDemog in 'mPtSelDemog.pas' {fraPtSelDemog: TFrame},
+  mPtSelOptns in 'mPtSelOptns.pas' {fraPtSelOptns: TFrame},
+  uComponentNexus in 'Utils\uComponentNexus.pas',
+  uWriteAccess in 'uWriteAccess.pas';
 
 {$R *.TLB}
 {$R *.RES}
@@ -475,6 +475,7 @@ begin
   end;
   Application.Title := 'CPRS - Patient Chart';
   Application.HelpFile := 'help\cprs.chm';
+  Application.MainFormOnTaskBar := true;
   Application.CreateForm(TdmodShared, dmodShared);
   Application.CreateForm(TfrmFrame, frmFrame);
   Application.CreateForm(TfrmSearchStop, frmSearchStop);

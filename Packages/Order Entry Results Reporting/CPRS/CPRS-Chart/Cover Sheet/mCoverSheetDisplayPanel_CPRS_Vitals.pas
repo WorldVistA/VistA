@@ -73,7 +73,7 @@ uses
   ORNet,
   rMisc,
   uCore,
-  uVitals;
+  uVitals, uConst, uWriteAccess;
 
 { TfraCoverSheetDisplayPanel_CPRS_Vitals }
 
@@ -91,12 +91,15 @@ end;
 procedure TfraCoverSheetDisplayPanel_CPRS_Vitals.OnPopupMenu(Sender: TObject);
 begin
   inherited;
-
+  if not WriteAccess(waVitals) then
+    exit;
   fUpdateVitals.Enabled := True;
 end;
 
 procedure TfraCoverSheetDisplayPanel_CPRS_Vitals.OnPopupMenuFree(Sender: TObject);
 begin
+  if not WriteAccess(waVitals) then
+    exit;
   FreeAndNil(fSeparator);
   FreeAndNil(fUpdateVitals);
 
@@ -106,7 +109,8 @@ end;
 procedure TfraCoverSheetDisplayPanel_CPRS_Vitals.OnPopupMenuInit(Sender: TObject);
 begin
   inherited;
-
+  if not WriteAccess(waVitals) then
+    exit;
   fSeparator := NewLine;
   fUpdateVitals := NewItem('Update Vitals ...', 0, False, True, OnUpdateVitals, 0, 'pmnVitals_UpdateVitals');
 
@@ -125,7 +129,9 @@ var
   aVitalsAbbv: string;
   aChangesMade: Boolean;
 begin
- lvData.Enabled := false;
+  if not WriteAccess(waVitals, True) then
+    exit;
+  lvData.Enabled := false;
   try
   if lvData.Selected <> nil then
     aVitalsAbbv := lvData.Selected.Caption

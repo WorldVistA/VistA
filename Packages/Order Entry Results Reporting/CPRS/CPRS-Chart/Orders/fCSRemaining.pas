@@ -5,15 +5,15 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ORCtrls, ExtCtrls, VA508AccessibilityManager, StrUtils,
-  ORFn, uCore, rOrders;
+  ORFn, uCore, rOrders, fBase508Form;
 
 type
-  TfrmCSRemaining = class(TForm)
+  TfrmCSRemaining = class(TfrmBase508Form)
     lblCSRemaining: TVA508StaticText;
     lstCSRemaining: TCaptionListBox;
     cmdOK: TButton;
-    VA508AccessibilityManager1: TVA508AccessibilityManager;
     VA508ComponentAccessibility1: TVA508ComponentAccessibility;
+    pnlBottom: TPanel;
     procedure cmdOKClick(Sender: TObject);
   private
     { Private declarations }
@@ -29,6 +29,8 @@ procedure CSRemaining(orders: TStrings; csorders: TStrings);
 
 implementation
 
+uses
+  fFrame;
 
 procedure CSRemaining(orders: TStrings; csorders: TStrings);
 var
@@ -38,13 +40,16 @@ var
   frmCSRemaining: TfrmCSRemaining;
   UnsignedOrders,HaveOrders,OthersCSOrders: TStrings;
 begin
-    ShownCurrentUserLabel := False;
-    ShownOtherUsersLabel := False;
-    OthersCSOrders  := TStringList.Create;
-    HaveOrders  := TStringList.Create;
-    UnsignedOrders := TStringList.Create;
-    frmCSRemaining := TfrmCSRemaining.Create(Application);
-    try
+  if frmFrame.TimedOut then
+    exit;
+  ShownCurrentUserLabel := False;
+  ShownOtherUsersLabel := False;
+  OthersCSOrders  := TStringList.Create;
+  HaveOrders  := TStringList.Create;
+  UnsignedOrders := TStringList.Create;
+  frmCSRemaining := TfrmCSRemaining.Create(Application);
+  try
+    ResizeFormToFont(frmCSRemaining);
     LoadUnsignedOrders(UnsignedOrders,HaveOrders);
     for i := 0 to Pred(UnsignedOrders.Count) do
     begin
@@ -85,12 +90,12 @@ begin
 
     if frmCSRemaining.lstCSRemaining.Count>0 then frmCSRemaining.ShowModal;
 
-    finally
-      FreeAndNil(OthersCSOrders);
-      FreeAndNil(HaveOrders);
-      FreeAndNil(UnsignedOrders);
-      FreeAndNil(frmCSRemaining);
-    end;
+  finally
+    FreeAndNil(OthersCSOrders);
+    FreeAndNil(HaveOrders);
+    FreeAndNil(UnsignedOrders);
+    FreeAndNil(frmCSRemaining);
+  end;
 end;
 
 {$R *.dfm}

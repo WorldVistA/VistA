@@ -6,11 +6,11 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, mVimmBase, Vcl.Grids, Vcl.StdCtrls,
   Vcl.ExtCtrls, rVimm, Vcl.ComCtrls, ORFn, Vcl.Menus, Vcl.ImgList, Vcl.Buttons,
-  System.ImageList, VA508AccessibilityManager;
+  System.ImageList, VA508AccessibilityManager, ORextensions;
 
 type
   TfraGrid = class(TfraParent)
-    lstView: TListView;
+    lstView: ORextensions.TListView;
     popMenu: TPopupMenu;
     addImm: TMenuItem;
     editImm: TMenuItem;

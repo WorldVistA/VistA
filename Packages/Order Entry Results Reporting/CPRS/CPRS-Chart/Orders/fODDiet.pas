@@ -5,10 +5,10 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fODBase, ComCtrls, ExtCtrls, StdCtrls, Grids, ORCtrls, ORDtTm, ORFn, uConst,
-  VA508AccessibilityManager, StrUtils, uInfoBoxWithBtnControls, ORExtensions;
+  VA508AccessibilityManager, StrUtils, uInfoBoxWithBtnControls, ORExtensions,
+  uOrders, rODDiet;
 
 type
-
   TlbGrid508Manager = class(TVA508ComponentManager)
    private
     HeaderStr: String;
@@ -166,7 +166,14 @@ type
     procedure grdSelectedMouseMove(Sender: TObject; Shift: TShiftState; X,
       Y: Integer);
     procedure lblTFQuantityClick(Sender: TObject);
+    procedure nbkDietDrawTab(Control: TCustomTabControl; TabIndex: Integer;
+      const Rect: TRect; Active: Boolean);
+    procedure nbkDietMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+    procedure nbkDietMouseLeave(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
+    FTabInfo: TDietTabArray;
     FNextCol: Integer;
     FNextRow: Integer;
 //    FChangeStop: Boolean;
@@ -175,6 +182,8 @@ type
     FGiveMultiTabMessage: boolean;
     lbGrid508Manager : TlbGrid508Manager;
     doNotShowMess: boolean;
+    FNextTabIdx: Integer;
+    FExcludeTabs: TDietTabs;
     procedure DietCheckForNPO;
     procedure DietCheckForTF;
 //    procedure DietCheckforTFWithNPO;
@@ -209,6 +218,10 @@ type
     procedure OPDietCheckForTF;
     function  PatientHasRecurringMeals(var MealList: TStringList; MealType: string = ''): boolean;
     //procedure CheckForAutoDCOrders(EvtID: integer; CurrentText: string; var CancelText: string; Sender: TObject);
+    procedure UMAfterDisplay(var Message: TMessage); message UM_MISC;
+    function GetDietTab(idx: integer): TDietTab;
+    function NoAccessMessage(Tab: TDietTab): string;
+    procedure SwitchToAccessibleTab(AutoAcceptIfOnlyOne: Boolean);
   protected
     procedure InitDialog; override;
     procedure Validate(var AnErrMsg: string); override;
@@ -228,8 +241,10 @@ implementation
 
 {$R *.DFM}
 
-uses uCore, rODBase, rODDiet, rCore, rOrders, fODDietLT, DateUtils,
-  fOrders, uODBase, VA508AccessibilityRouter, fODAllergyCheck, VAUtils;
+uses uCore, rODBase, rCore, rOrders, fODDietLT, DateUtils, fODDietAccess,
+  fOrders, uODBase, VA508AccessibilityRouter, fODAllergyCheck, VAUtils,
+  uWriteAccess;
+
 
 const
   TX_DIET_REG = 'A regular diet may not be combined with other diets.';
@@ -342,8 +357,48 @@ var
 procedure TfrmODDiet.FormCreate(Sender: TObject);
 var
   ALocation: string;   //ptr to #44 hospital location
+
+  procedure BuildTabInfo;
+
+    procedure Build(Tab: TDietTab; Code: string; Sheet: TTabSheet);
+    var
+      i: integer;
+      obj: TWriteAccess.TDGWriteAccess;
+
+    begin
+      FTabInfo[Tab].TabSheet := Sheet;
+      Sheet.Tag := ord(Tab);
+      with TWriteAccess.TDGWriteAccessDietetics do
+      begin
+        for i := 0 to CodeInfo.Count - 1 do
+        begin
+          if Code = CodeInfo[i].TabCode then
+          begin
+            obj := WriteAccessV.DGWriteAccess(CodeInfo[i].DisplayGroup);
+            if obj is TWriteAccess.TDGWriteAccessDietetics then
+            begin
+              FTabInfo[Tab].Access := obj as TWriteAccess.TDGWriteAccessDietetics;
+              Sheet.Enabled := FTabInfo[Tab].Access.WriteAccess;
+            end;
+            break;
+          end;
+        end;
+      end;
+    end;
+
+  begin
+    Build(dtDiet, 'D', pgeDiet);
+    Build(dtOutpatientMeals, 'M', pgeOutPt);
+    Build(dtTubeFeeding, 'T', pgeTubefeeding);
+    Build(dtEarlyLateTray, 'E', pgeEarlyLate);
+    Build(dtIsolationsPrecautions, 'P', pgeIsolations);
+    Build(dtAdditionalOrder, 'A', pgeAdditional);
+  end;
+
 begin
   inherited;
+  BuildTabInfo;
+  FNextTabIdx := -1;
   AutoSizeDisabled := false;
   FOldHintHidePause := Application.HintHidePause;
   FGiveMultiTabMessage := ScreenReaderSystemActive;
@@ -430,6 +485,12 @@ begin
     lblTFQuantity.Left := Left + ColWidths[0] + ColWidths[1] + 5;
     lblTFAmount.Left   := Left + ColWidths[0] + ColWidths[1] + ColWidths[2] + 7;
   end;
+end;
+
+procedure TfrmODDiet.FormShow(Sender: TObject);
+begin
+  inherited;
+  PostMessage(Self.Handle, UM_MISC, 0, 0);
 end;
 
 procedure TfrmODDiet.InitDialog;
@@ -677,6 +738,9 @@ end;
 { notebook tabs - general ------------------------------------------------------------------- }
 
 procedure TfrmODDiet.nbkDietChanging(Sender: TObject; var AllowChange: Boolean);
+var
+  Tab: TDietTab;
+
 begin
   inherited;
   with Responses do if (Length(CopyOrder) > 0) or (Length(EditOrder) > 0) then
@@ -684,6 +748,18 @@ begin
     AllowChange := False;
     Exit;
   end;
+  if FNextTabIdx >= 0 then
+  begin
+    Tab := GetDietTab(FNextTabIdx);
+    if (Tab <> dtNone) and (not FTabInfo[Tab].Access.WriteAccess) then
+    begin
+      ShowMessage(NoAccessMessage(Tab));
+      AllowChange := False;
+      Exit;
+    end;
+  end;
+  if not FTabInfo[TDietTab(nbkDiet.ActivePage.Tag)].Access.WriteAccess then
+    Exit;
   FTabChanging := True;
   if Length(memOrder.Text) > 0 then
     begin
@@ -714,6 +790,45 @@ begin
         end
     end;
   FTabChanging := False;
+end;
+
+procedure TfrmODDiet.nbkDietDrawTab(Control: TCustomTabControl;
+  TabIndex: Integer; const Rect: TRect; Active: Boolean);
+var
+  Text: string;
+  r: TRect;
+  Tab: TDietTab;
+
+begin
+  Tab := GetDietTab(TabIndex);
+  if Tab = dtNone then
+    Exit;
+  Text := FTabInfo[Tab].TabSheet.Caption;
+  if Active then
+    Control.Canvas.Brush.Color := clWindow
+  else
+    Control.Canvas.Brush.Color := clBtnFace;
+  Control.Canvas.FillRect(Rect);
+  if not FTabInfo[Tab].Access.WriteAccess then
+  begin
+    Control.Canvas.Font.Color := clBlue;
+    Control.Canvas.Font.Style := [fsUnderline];
+  end;
+  r := Rect;
+  Control.Canvas.TextRect(r, Text, [tfCenter, tfSingleLine, tfVerticalCenter]);
+end;
+
+procedure TfrmODDiet.nbkDietMouseLeave(Sender: TObject);
+begin
+  inherited;
+  FNextTabIdx := -1;
+end;
+
+procedure TfrmODDiet.nbkDietMouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+begin
+  inherited;
+  FNextTabIdx := nbkDiet.IndexOfTabAt(X, Y);
 end;
 
 (*procedure TfrmODDiet.CheckForAutoDCOrders(EvtID: integer; CurrentText: string; var CancelText: string; Sender: TObject);
@@ -817,6 +932,16 @@ begin
     cmdQuitClick(Self);
     exit;
   end;
+  if (csLoading in ComponentState) then
+    Exit;
+  if Assigned(nbkDiet.ActivePage) and
+    (not FTabInfo[TDietTab(nbkDiet.ActivePage.Tag)].Access.WriteAccess) then
+  begin
+    FExcludeTabs := FExcludeTabs + [TDietTab(nbkDiet.ActivePage.Tag)];
+    if Visible then
+      SwitchToAccessibleTab(True);
+    Exit;
+  end;
   StatusText('Loading Dialog Definition');
   if Sender <> Self then Responses.Clear;
   Changing := True;                                        // Changing set!
@@ -857,10 +982,11 @@ begin
       if not PatientHasRecurringMeals(uRecurringMealList) then
         begin
           Changing := False;
+          FExcludeTabs := FExcludeTabs + [TDietTab(nbkDiet.ActivePage.Tag)];
           nbkDiet.ActivePage := pgeOutPt;
           nbkDietChange(nbkDiet);
           Exit;
-          end
+        end
         else
           FastAssign(uRecurringMealList, cboOPTFRecurringMeals.Items);
     end;
@@ -893,6 +1019,7 @@ begin
         if not PatientHasRecurringMeals(uRecurringMealList) then
           begin
             Changing := False;
+            FExcludeTabs := FExcludeTabs + [TDietTab(nbkDiet.ActivePage.Tag)];
             nbkDiet.ActivePage := pgeOutPt;
             nbkDietChange(nbkDiet);
             Exit;
@@ -940,6 +1067,7 @@ begin
       if not PatientHasRecurringMeals(uRecurringMealList) then
         begin
           Changing := False;
+          FExcludeTabs := FExcludeTabs + [TDietTab(nbkDiet.ActivePage.Tag)];
           nbkDiet.ActivePage := pgeOutPt;
           nbkDietChange(nbkDiet);
           Exit;
@@ -1331,6 +1459,33 @@ begin
   TFChange(Self);
 end;
 
+procedure TfrmODDiet.SwitchToAccessibleTab(AutoAcceptIfOnlyOne: Boolean);
+var
+  CurrentTab, Tab: TDietTab;
+  DoTimer: Boolean;
+
+begin
+  CurrentTab := TDietTab(nbkDiet.ActivePage.Tag);
+  if not FTabInfo[CurrentTab].Access.WriteAccess then
+  begin
+    DoTimer := tmrBringToFront.Enabled;
+    if DoTimer then
+      tmrBringToFront.Enabled := False;
+    Tab := AskForAccessibleTab(Self, NoAccessMessage(CurrentTab), FTabInfo,
+      FExcludeTabs, AutoAcceptIfOnlyOne);
+    if Tab = dtNone then
+    begin
+      AbortOrder := True;
+      cmdQuitClick(Self);
+      Exit;
+    end;
+    nbkDiet.ActivePage := FTabInfo[Tab].TabSheet;
+    nbkDietChange(Self);
+    if DoTimer then
+      tmrBringToFront.Enabled := True;
+  end;
+end;
+
 procedure TfrmODDiet.TFClearGrid;
 var
   i: Integer;
@@ -1456,7 +1611,8 @@ end;
 
 procedure TfrmODDiet.setTabToDiet;
 begin
-  self.nbkDiet.ActivePage := self.pgeDiet;
+  if FTabInfo[dtDiet].Access.WriteAccess then
+    self.nbkDiet.ActivePage := self.pgeDiet;
   doNotShowMess := true;
 end;
 
@@ -1579,6 +1735,11 @@ begin
     Key := 0;
     if not (csDestroying in ComponentState) then grdSelected.SetFocus;
   end;
+end;
+
+procedure TfrmODDiet.UMAfterDisplay(var Message: TMessage);
+begin
+  SwitchToAccessibleTab(False);
 end;
 
 procedure TfrmODDiet.txtQuantityChange(Sender: TObject);
@@ -1739,6 +1900,28 @@ begin
   if radLT1.Checked then Result := radLT1.Caption;
   if radLT2.Checked then Result := radLT2.Caption;
   if radLT3.Checked then Result := radLT3.Caption;
+end;
+
+function TfrmODDiet.NoAccessMessage(Tab: TDietTab): string;
+var
+  tabName, DGName: string;
+
+  function CleanName(const txt: string): string;
+  begin
+    Result := LowerCase(txt);
+    Result := Strip(Result, ' ');
+    if not Result.EndsWith('s') then
+      Result := Result + 's';
+  end;
+
+begin
+  tabName := FTabInfo[Tab].TabSheet.Caption;
+  DGName := FTabInfo[Tab].Access.DisplayName;
+  if CleanName(tabName) = CleanName(DGName) then
+    Result := Format('You do not have write access to %s.', [DGName])
+  else
+    Result := Format('You can not use the %s tab because you do not have ' +
+      'write access to %s.', [tabName, DGName]);
 end;
 
 function TfrmODDiet.GetDaysOfWeek: string;
@@ -2328,6 +2511,25 @@ begin
   end;
 end;
 
+function TfrmODDiet.GetDietTab(idx: integer): TDietTab;
+var
+  i, j: integer;
+  Done: boolean;
+
+begin
+  i := -1;
+  j := -1;
+  repeat
+    inc(i);
+    Done := (i >= nbkDiet.PageCount);
+    if (not Done) and nbkDiet.Pages[i].TabVisible then
+      inc(j);
+  until (j = idx) or Done;
+  if Done or (j < 0) then
+    exit(dtNone);
+  Result := TDietTab(i);
+end;
+
 procedure TfrmODDiet.OPDietCheckForNPO;
 begin
 { TODO -oRich V. -cOutpatient Meals : Need NFS input on this section (NPO and special instructions.) }
@@ -2418,6 +2620,9 @@ begin
   with LateTrayFields do if LateMeal <> #0 then LateTrayOrder(LateTrayFields, OrderForInpatient);
 end;
 
+type
+  THackPageControl = class(TPageControl);
+
 procedure TfrmODDiet.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
@@ -2427,6 +2632,26 @@ begin
       if not (ActiveControl is TCustomMemo) or not TMemo(ActiveControl).WantTabs then begin
         nbkDiet.SelectNextPage( not (ssShift in Shift));
         Key := 0;
+      end;
+    end;
+  end;
+  if (ActiveControl = nbkDiet) then
+  begin
+    with THackPageControl(nbkDiet) do
+    begin
+      if Key = VK_RIGHT then
+      begin
+        if TabIndex < (Tabs.Count - 1) then
+          FNextTabIdx := TabIndex + 1
+        else
+          FNextTabIdx := -1;
+      end
+      else if Key = VK_LEFT then
+      begin
+        if TabIndex > 0 then
+          FNextTabIdx := TabIndex - 1
+        else
+          FNextTabIdx := -1;
       end;
     end;
   end;

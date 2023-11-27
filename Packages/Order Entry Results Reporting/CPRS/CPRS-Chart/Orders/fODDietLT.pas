@@ -42,7 +42,7 @@ implementation
 
 {$R *.DFM}
 
-uses rCore, uCore, rODDiet, uConst, rOrders;
+uses rCore, uCore, rODDiet, uConst, rOrders, uWriteAccess;
 
 const
   TX_MEAL_REQ = 'A meal time must be selected.';
@@ -242,9 +242,11 @@ begin
         begin
           CanSign := CH_SIGN_NA;
         end;
-      Changes.Add(CH_ORD, NewOrder.ID, NewOrder.Text, '', CanSign);
-      SendMessage(Application.MainForm.Handle, UM_NEWORDER, ORDER_NEW, Integer(NewOrder))
-    end
+        Changes.Add(CH_ORD, NewOrder.ID, NewOrder.Text, '', CanSign, waOrders,
+          '', 0, NewOrder.DGroup);
+        SendMessage(Application.MainForm.Handle, UM_NEWORDER, ORDER_NEW,
+          integer(NewOrder))
+      end
     else InfoBox(TX_EL_SAVE_ERR, TC_EL_SAVE_ERR, MB_OK);
   finally
     NewOrder.Free;

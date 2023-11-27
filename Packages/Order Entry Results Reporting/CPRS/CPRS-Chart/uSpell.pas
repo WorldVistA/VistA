@@ -8,8 +8,24 @@ unit uSpell;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Controls, Forms, ComObj, StdCtrls, ComCtrls,
-  rCore, ORFn, Word2000, Variants, clipbrd, ActiveX, Contnrs, PSAPI, ExtCtrls;
+  Windows,
+  Messages,
+  SysUtils,
+  Classes,
+  Controls,
+  Forms,
+  ComObj,
+  StdCtrls,
+  ComCtrls,
+  rCore,
+  ORFn,
+  Word2000,
+  Variants,
+  clipbrd,
+  ActiveX,
+  Contnrs,
+  PSAPI,
+  ExtCtrls;
 
 type
   TSpellCheckAvailable = record
@@ -33,10 +49,10 @@ const
 var
   SpellCheckerSettings: string = '';
 
-  
+
 implementation
 
-uses VAUtils, fSpellNotify, uInit;
+uses VAUtils, fSpellNotify, uInit, UResponsiveGUI;
 
 const
   TX_ERROR_TITLE        = 'Error';
@@ -167,7 +183,7 @@ var
   WordHandle: HWnd;
   ProcessID: DWORD;
   ProcessHandle: THandle;
-  
+
 begin
   if assigned(MSWordThread) then
   begin
@@ -252,11 +268,8 @@ end;
 procedure InternalSpellCheck(SpellCheck: boolean; EditControl: TCustomMemo);
 begin
   MSWordThread := TMSWordThread.CreateThread(SpellCheck, EditControl);
-  while assigned(MSWordThread) do
-  begin
-    Application.ProcessMessages;
-    sleep(50);
-  end;
+  while Assigned(MSWordThread) do
+    TResponsiveGUI.Sleep(50);
 end;
 
 procedure RefocusSpellCheckWindow;
@@ -576,7 +589,7 @@ end;
 
 procedure TMSWordThread.RefocusSpellCheckDialog;
 begin
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   if Application.Active and (not FShowingMessage) and (FDocWindowHandle <> 0) then
   begin
     SetForegroundWindow(FDocWindowHandle);

@@ -50,6 +50,7 @@ inherited frmChgEvent: TfrmChgEvent
       Anchors = [akLeft, akTop, akRight, akBottom]
       Style = orcsSimple
       AutoSelect = True
+      Caption = ''
       Color = clWindow
       DropDownCount = 8
       ItemHeight = 13
@@ -63,6 +64,7 @@ inherited frmChgEvent: TfrmChgEvent
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 0
+      Text = ''
       OnChange = cboSpecialtyChange
       OnDblClick = cboSpecialtyDblClick
       CharsNeedMatch = 1

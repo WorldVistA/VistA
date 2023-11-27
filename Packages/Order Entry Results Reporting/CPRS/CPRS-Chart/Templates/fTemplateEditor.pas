@@ -376,13 +376,6 @@ type
     procedure popGroupPlusPopup(Sender: TObject);
     procedure popTemplatesPlusPopup(Sender: TObject);
     procedure popBoilerplatePlusPopup(Sender: TObject);
-    procedure acNotesUndoExecute(Sender: TObject);
-    procedure acNotesCutExecute(Sender: TObject);
-    procedure acNotesCopyExecute(Sender: TObject);
-    procedure acNotesPasteExecute(Sender: TObject);
-    procedure acNotesSelectAllExecute(Sender: TObject);
-    procedure acNotesGrammarExecute(Sender: TObject);
-    procedure acNotesSpellingExecute(Sender: TObject);
     procedure acEditRedoExecute(Sender: TObject);
   private
     FLastRect: TRect;
@@ -500,7 +493,8 @@ implementation
 uses dShared, uCore, rTemplates, fTemplateObjects, uSpell, fTemplateView,
   fTemplateAutoGen, fDrawers, mDrawers, fTemplateFieldEditor, fTemplateFields, XMLUtils,
   fIconLegend, uReminders, uConst, rCore, rEventHooks, rConsults, VAUtils,
-  rMisc, fFindingTemplates, System.UITypes, FTemplateReport, Winapi.RichEdit;
+  rMisc, fFindingTemplates, System.UITypes, FTemplateReport, Winapi.RichEdit,
+  UResponsiveGUI;
 
 const
   PropText = ' Template Properties ';
@@ -2875,9 +2869,15 @@ begin
 end;
 
 procedure TfrmTemplateEditor.acEditSpellingExecute(Sender: TObject);
+var
+  DefaultRich: TCustomMemo;
 begin
   inherited;
-  SpellCheckForControl(reBoil);
+  DefaultRich := reBoil;
+  If Assigned(ActiveControl) and (ActiveControl is TCustomMemo) then
+    DefaultRich := (ActiveControl as TCustomMemo);
+
+  SpellCheckForControl(DefaultRich);
 end;
 
 procedure TfrmTemplateEditor.splBoilMoved(Sender: TObject);
@@ -3354,9 +3354,15 @@ begin
 end;
 
 procedure TfrmTemplateEditor.acEditGrammarExecute(Sender: TObject);
+var
+  DefaultRich: TCustomMemo;
 begin
   inherited;
-  GrammarCheckForControl(reBoil);
+  DefaultRich := reBoil;
+  If Assigned(ActiveControl) and (ActiveControl is TCustomMemo) then
+    DefaultRich := (ActiveControl as TCustomMemo);
+
+  GrammarCheckForControl(DefaultRich);
 end;
 
 procedure TfrmTemplateEditor.acActionTemplateSortExecute(Sender: TObject);
@@ -3484,49 +3490,6 @@ begin
 //      reNotes.Lines.Text := Template.Description;
   end;
 end;
-
-procedure TfrmTemplateEditor.acNotesUndoExecute(Sender: TObject);
-begin
-  inherited;
-  reNotes.Perform(EM_UNDO, 0, 0);
-end;
-
-procedure TfrmTemplateEditor.acNotesCutExecute(Sender: TObject);
-begin
-  inherited;
-  reNotes.CutToClipboard;
-end;
-
-procedure TfrmTemplateEditor.acNotesCopyExecute(Sender: TObject);
-begin
-  inherited;
-  reNotes.CopyToClipboard;
-end;
-
-procedure TfrmTemplateEditor.acNotesPasteExecute(Sender: TObject);
-begin
-  inherited;
-  reNotes.SelText := Clipboard.AsText;
-end;
-
-procedure TfrmTemplateEditor.acNotesSelectAllExecute(Sender: TObject);
-begin
-  inherited;
-  reNotes.SelectAll;
-end;
-
-procedure TfrmTemplateEditor.acNotesGrammarExecute(Sender: TObject);
-begin
-  inherited;
-  GrammarCheckForControl(reNotes);
-end;
-
-procedure TfrmTemplateEditor.acNotesSpellingExecute(Sender: TObject);
-begin
-  inherited;
-  SpellCheckForControl(reNotes);
-end;
-
 
 procedure TfrmTemplateEditor.popNotesPlusPopup(Sender: TObject);
 begin
@@ -3820,11 +3783,11 @@ begin
                     Flds.Text := FXMLFieldElement.Get_XML;
                     choice := IDOK;
                     changes := FALSE;
-                    Application.ProcessMessages;
+                    TResponsiveGUI.ProcessMessages;
                     if not BuildTemplateFields(Flds) then //Calls RPC to transfer all field XML
                       choice := IDCANCEL; //for processing
                     Flds.Text := '';
-                    Application.ProcessMessages;
+                    TResponsiveGUI.ProcessMessages;
                     if choice = IDOK then
                       CheckTemplateFields(Flds);
                     if Flds.Count > 0 then
@@ -3867,7 +3830,7 @@ begin
                       finally
                         FImportingFromXML := FALSE;
                       end; {try}
-                      Application.ProcessMessages;
+                      TResponsiveGUI.ProcessMessages;
                       if assigned(ImportedTemplate) and (Flds.Count > 0) then
                         if not ImportLoadedFields(ResultSet) then begin
                           InfoBox(iMessage2 + iMessage3, 'Error', MB_OK or MB_ICONERROR);
@@ -4201,21 +4164,17 @@ begin
     ((ActiveControl as TCustomEdit).Perform(EM_CANREDO, 0, 0) = 0));
 
   // reBoil actions
-  aBoolCheck := Assigned(ActiveControl) and (ActiveControl = reBoil) and (not reBoil.ReadOnly);
+  aBoolCheck := (not reBoil.ReadOnly);
   acEditInsertObject.Enabled := aBoolCheck;
   acEditInsertField.Enabled := aBoolCheck;
 
   // reBoil and Notes
-  aBoolCheck := Assigned(ActiveControl) and (((ActiveControl = reBoil) and (reBoil.Lines.Count > 0) and
-    (not reBoil.ReadOnly)) or ((ActiveControl = reNotes)) and
-    (reNotes.Lines.Count > 0) and (not reNotes.ReadOnly));
+  aBoolCheck := (not reBoil.ReadOnly) or (not reNotes.ReadOnly);
   acEditGrammar.Enabled := aBoolCheck and SpellCheckAvailable;
   acEditSpelling.Enabled := aBoolCheck and SpellCheckAvailable;
 
   // reBoil and Group Actions
-  aBoolCheck := Assigned(ActiveControl) and (((ActiveControl = reBoil) and (reBoil.Lines.Count > 0)) or
-    ((ActiveControl = reGroupBP) and (pnlGroupBP.Visible) and
-    (reGroupBP.Lines.Count > 0)));
+  ABoolCheck := ((ReBoil.Lines.Count > 0) or (ReGroupBP.Lines.Count > 0));
   acEditCheck.Enabled := aBoolCheck;
   acEditPreview.Enabled := aBoolCheck;
 

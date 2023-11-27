@@ -31,7 +31,7 @@ type
 implementation
 
 uses
-  ORFn, mPDMPReviewItem, uPDMP;
+  ORFn, mPDMPReviewItem, uPDMP, UResponsiveGUI;
 
 {$R *.dfm}
 
@@ -105,7 +105,7 @@ var
       ri.Parent := aParent;
       ri.Align := alTop;
 
-      Application.ProcessMessages;
+      TResponsiveGUI.ProcessMessages;
     end;
   end;
 
@@ -136,7 +136,7 @@ begin
   gbPDMP.Width := self.Width - 24; // scrollbar adjustment
   alignPDMPControls;
   gbPDMP.Left := (self.Width - gbPDMP.Width) div 2 -1;
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
 end;
 
 procedure TfrPDMPReviewOptions.activateItem(anItem: TObject);
@@ -159,7 +159,7 @@ begin
   end;
   alignPDMPControls;
   PostMessage(ReviewHandler, UM_PDMP_REFRESH, 0, 0);
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
 end;
 
 function TfrPDMPReviewOptions.getValue: String;

@@ -38,7 +38,7 @@ var
 
 implementation
 
-uses fTemplateDialog, fRptBox, rMisc;
+uses fTemplateDialog, fRptBox, rMisc, UResponsiveGUI;
 
 {$R *.DFM}
 
@@ -66,7 +66,7 @@ begin
     frmTemplateView.cbStayOnTop.Checked := LastStayOnTop;
     frmTemplateView.ActiveControl := frmTemplateView.btnClose;
     frmTemplateView.Show;
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages;
     SendMessage(frmTemplateView.reMain.Handle, EM_LINESCROLL, 0, -1 * frmTemplateView.reMain.Lines.Count);
   end;
 end;

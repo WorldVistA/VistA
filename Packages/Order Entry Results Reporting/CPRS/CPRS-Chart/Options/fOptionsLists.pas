@@ -82,7 +82,7 @@ procedure DialogOptionsLists(topvalue, leftvalue, fontsize: integer; var actiont
 
 implementation
 
-uses fOptionsNewList, rOptions, uOptions, rCore, fPtSelOptns, VAUtils, uORLists, uSimilarNames;
+uses fOptionsNewList, rOptions, uOptions, rCore, mPtSelOptns, VAUtils, uORLists, uSimilarNames;
 
 {$R *.DFM}
 
@@ -297,11 +297,11 @@ begin
 
   if radAddByType.ItemIndex = 0 {patient} then begin
     with lstAddBy do
-    if frmPtSelOptns.IsLast5(Text) then begin
+    if TfraPtSelOptns.IsLast5(Text) then begin
         ListPtByLast5(Items, Text);
         ShowMatchingPatients;
       end
-    else if frmPtSelOptns.IsFullSSN(Text) then begin
+    else if TfraPtSelOptns.IsFullSSN(Text) then begin
         ListPtByFullSSN(Items, Text);
         ShowMatchingPatients;
     end;
@@ -680,12 +680,12 @@ begin
     with lstAddBy do
     begin
       FutureText := Text + Key;
-      if frmPtSelOptns.IsLast5(FutureText) then
+      if TfraPtSelOptns.IsLast5(FutureText) then
         begin
           ListPtByLast5(Items, FutureText);
           ShowMatchingPatients;
         end
-      else if frmPtSelOptns.IsFullSSN(FutureText) then
+      else if TfraPtSelOptns.IsFullSSN(FutureText) then
         begin
           ListPtByFullSSN(Items, FutureText);
           ShowMatchingPatients;

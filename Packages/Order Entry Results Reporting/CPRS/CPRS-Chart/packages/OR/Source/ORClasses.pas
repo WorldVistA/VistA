@@ -133,6 +133,7 @@ type
   public
     property Font;
     property Text;
+    property ParentFont;
   end;
 
 { AddToNotifyWhenCreated allows you to add an event handler before the object that

@@ -91,7 +91,8 @@ uses
   ORNetIntf,
   Winsock,
   DateUtils,
-  uLockBroker, ORUnitTesting;
+  uLockBroker, ORUnitTesting,
+  UResponsiveGUI;
 
 const
   // *** these are constants from RPCBErr.pas, will broker document them????
@@ -582,7 +583,7 @@ begin
                   begin
                     Application.MessageBox('Application must shutdown due to lost VistA Connection.', 'Server Error', MB_OK);
                     Application.Terminate; // This just posts WM_QUIT
-                    Application.ProcessMessages; // This will see the WM_QUIT and set Application.Terminated to TRUE;
+                    TResponsiveGUI.ProcessMessages(True); // This will see the WM_QUIT and set Application.Terminated to TRUE;
                     Exit;
                   end
                 else
@@ -1091,7 +1092,7 @@ begin
   begin
     Application.MessageBox('Application must shutdown due to lost VistA Connection.', 'Server Error', MB_OK);
     Application.Terminate;       // This just posts WM_QUIT
-    Application.ProcessMessages; // This will see the WM_QUIT and set Application.Terminated to TRUE;
+    TResponsiveGUI.ProcessMessages(True); // This will see the WM_QUIT and set Application.Terminated to TRUE;
   end;
 end;
 

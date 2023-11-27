@@ -186,6 +186,7 @@ type
     FOnUpdateVisualsEvent: TNotifyEvent;
     fTemplateEditEvent: TTemplateEditEvent;
     FCopyMonitor: TCopyPasteDetails;
+    FTemplateAccess: boolean;
     procedure SetEncounterState(const Value: TDrawerState);
     procedure SetOrderState(const Value: TDrawerState);
     procedure SetReminderState(const Value: TDrawerState);
@@ -252,6 +253,7 @@ type
     procedure SaveDrawerConfiguration(var Configuration: TDrawerConfiguration);
     procedure LoadDrawerConfiguration(Configuration: TDrawerConfiguration);
      Property CopyMonitor: TCopyPasteDetails read fCopyMonitor write fCopyMonitor;
+    property TemplateAccess: boolean read FTemplateAccess write FTemplateAccess;
   end;
 
 var
@@ -666,7 +668,7 @@ end;
 {----------------------------------------}
 function TfraDrawers.CanEditShared: boolean;
 begin
-  Result := (UserTemplateAccessLevel = taEditor);
+  Result := FTemplateAccess and (UserTemplateAccessLevel = taEditor);
 end;
 
 {-------------------------------------------}
@@ -674,7 +676,7 @@ end;
 {-------------------------------------------}
 function TfraDrawers.CanEditTemplates: boolean;
 begin
-  Result := (UserTemplateAccessLevel in [taAll, taEditor]);
+  Result := FTemplateAccess and (UserTemplateAccessLevel in [taAll, taEditor]);
 end;
 
 {--------------------------------------------}
@@ -977,7 +979,7 @@ end;
 {-------------------------------------------}
 procedure TfraDrawers.RemindersChanged(Sender: TObject);
 begin
-  if(ActiveDrawer = odReminders) then begin
+  if FTemplateAccess and (ActiveDrawer = odReminders) then begin
     BuildReminderTree(tvReminders);
     FOldMouseUp := tvReminders.OnMouseUp;
   end else begin

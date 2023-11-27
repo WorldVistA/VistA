@@ -26,7 +26,8 @@ type
   function CompareStrSpaces(s1,s2: string): Boolean;
   function BuildReturnbyIEN(const BuildList: TObjectList<TBuildReturn>;
     sIEN: string): TBuildReturn;
-  procedure SubSetOfAPOrderItems(aDest:TStrings; QuickOrderDlgIen: Integer);
+  procedure SubSetOfAPOrderItems(aDest:TStrings; QuickOrderDlgIen: Integer;
+              AccessData: string);
 
 implementation
 
@@ -124,10 +125,11 @@ begin
     end;
 end;
 
-procedure SubSetOfAPOrderItems(aDest:TStrings; QuickOrderDlgIen: Integer);
+procedure SubSetOfAPOrderItems(aDest:TStrings; QuickOrderDlgIen: Integer;
+  AccessData: string);
 begin
   aDest.Clear;
-  CallVistA('ORWDX APORDITM', [QuickOrderDlgIen], aDest);
+  CallVistA('ORWLRAP1 APORDITM', [QuickOrderDlgIen, AccessData], aDest);
 end;
 
 

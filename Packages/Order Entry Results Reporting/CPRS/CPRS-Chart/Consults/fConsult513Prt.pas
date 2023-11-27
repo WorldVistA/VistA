@@ -190,10 +190,12 @@ begin
   begin
     ADevice := Piece(cboDevice.ItemID, ';', 2);
     PrintSF513ToDevice(FConsult, ADevice, ChartCopy, ErrMsg);
-    if FReportText.Lines.Count > 0 then
-      ErrMsg := Piece(FReportText.Lines[0], U, 2);
-    if Length(ErrMsg) > 0 then
-      InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
+    if (ErrMsg <> '') and (Piece(ErrMsg, U, 1) <> '0') then
+    begin
+      ErrMsg := Piece(ErrMsg, U, 2);
+      if Length(ErrMsg) > 0 then
+        InfoBox(ErrMsg, TX_ERR_CAP, MB_OK);
+    end;
   end;
   if chkDefault.Checked then
     SaveDefaultPrinter(Piece(cboDevice.ItemID, ';', 1));

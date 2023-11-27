@@ -6,16 +6,16 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, mVImmBase, System.ImageList,
   Vcl.ImgList, Vcl.Buttons, Vcl.StdCtrls, Vcl.ExtCtrls, rvimm, orFn,
-  Vcl.ComCtrls, Vcl.Menus, mVimmSelect;
+  Vcl.ComCtrls, Vcl.Menus, mVimmSelect, ORextensions;
 
 type
   TfraIce = class(TfraParent)
-    lstICE: TListView;
+    lstICE: ORextensions.TListView;
     mnuActions: TPopupMenu;
     Splitter1: TSplitter;
     AddImmunization1: TMenuItem;
     ViewHistory1: TMenuItem;
-    lstHistory: TListView;
+    lstHistory: ORextensions.TListView;
     procedure addImmunization(Sender: TObject);
     procedure viewHistory(Sender: TObject);
     procedure mnuActionsPopup(Sender: TObject);

@@ -145,7 +145,8 @@ uses dShared, uTemplateFields, fRptBox, uInit, rMisc, uDlgComponents,
   , ORNet
   , fOptionsTIUTemplates
   , WinAPI.RichEdit
-  , dRequiredFields;
+  , dRequiredFields
+  , UResponsiveGUI;
 
 {$R *.DFM}
 
@@ -355,7 +356,7 @@ begin
 
 // Very Important - frees up uEntries before nesting templates can create new entries.
 //                  without this call the old entries are found when nesting templates.
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages;
     for i := 0 to DlgIDCounts.Count-1 do begin
       DlgIDCounts.Objects[i].Free;
     end;
@@ -826,7 +827,7 @@ begin
     if ScreenReaderSystemActive then
     begin
       amgrMain.RefreshComponents;
-      Application.ProcessMessages;
+      TResponsiveGUI.ProcessMessages;
     end;
     CPTemp.MonitorAllAvailable;
     sbMain.VertScrollBar.Position := iPos; // RTC 1022950
@@ -1139,31 +1140,35 @@ var
   end;
 
 begin
-  ctrl := TWinControl(message.Sender);
-  if not assigned(ctrl) then
-    exit;
+  try
+    ctrl := TWinControl(message.Sender);
+    if not assigned(ctrl) then
+      exit;
 
-// to address TORComboEdit
-  ok := IsCtrlAllowed(ctrl);
-  pctrl := ctrl;
-  if ok then
-  begin
-    if ctrl is TORComboEdit then
-      pctrl := ctrl.Parent
-    else if ctrl is TORYearEdit then
-      pctrl := ctrl.Parent;
+  // to address TORComboEdit
+    ok := IsCtrlAllowed(ctrl);
+    pctrl := ctrl;
+    if ok then
+    begin
+      if ctrl is TORComboEdit then
+        pctrl := ctrl.Parent
+      else if ctrl is TORYearEdit then
+        pctrl := ctrl.Parent;
+    end;
+    if Assigned(frRequiredFields) and ok then
+      frRequiredFields.FocusedControl := pctrl;
+
+  {$IFDEF DEBUG}
+    Caption := ctrl.Name + ' ' +
+      ctrl.ClassName +
+      ' @'+IntToStr(Integer(ctrl));
+    DebugHighlight(ctrl);
+  {$ENDIF}
+    if ok then
+      dmRF.cdsControls.Locate('CTRL_OBJ', VarArrayOf([Integer(pctrl)]), []);
+  finally
+    inherited;
   end;
-  if Assigned(frRequiredFields) and ok then
-    frRequiredFields.FocusedControl := pctrl;
-
-{$IFDEF DEBUG}
-  Caption := ctrl.Name + ' ' +
-    ctrl.ClassName +
-    ' @'+IntToStr(Integer(ctrl));
-  DebugHighlight(ctrl);
-{$ENDIF}
-  if ok then
-    dmRF.cdsControls.Locate('CTRL_OBJ', VarArrayOf([Integer(pctrl)]), []);
 end;
 
 function IsTemplateControl(aCtrl, aCtrlMain: TObject): boolean;

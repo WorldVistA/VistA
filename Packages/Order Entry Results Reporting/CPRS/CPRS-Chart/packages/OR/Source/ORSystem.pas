@@ -24,7 +24,7 @@ function ClientVersion(const AFileName: string): string;
 function CompareVersion(const A, B: string): Integer;
 procedure CopyFileDate(const Source, Dest: string);
 procedure CopyLastWriteTime(const Source, Dest: string);
-procedure Delay(i: Integer);
+procedure Delay(i: Integer; AllowUserInput: Boolean = true);
 function FullToFilePart(const AFileName: string): string;
 function FullToPathPart(const AFileName: string): string;
 function IsWin95Style: Boolean;
@@ -48,7 +48,7 @@ function BorlandDLLVersionOK: boolean;
 implementation
 
 uses
-  SysUtils, Classes, Forms, Registry, ORFn;
+  SysUtils, Classes, Forms, Registry, ORFn, UResponsiveGUI;
 
 const
   CREATE_KEY = True;  // cause key to be created if it's not in the registry
@@ -89,18 +89,29 @@ begin
 end;
 
 function CompareVersion(const A, B: string): Integer;
+// Result Low Integer means A is not a valid version number
+// Result Low Integer + 1 means B is not a valid version number
+// Result <> 0 means version numbers do not match
+// Result = 0 means version numbers match
 var
-  NumA, NumB: Integer;
+  NumA, NumB: array [0..3] of Integer;
 begin
-  NumA := (StrToInt(Piece(A, '.', 1)) * 16777216) +
-          (StrToInt(Piece(A, '.', 2)) * 65536) +
-          (StrToInt(Piece(A, '.', 3)) * 256) +
-           StrToInt(Piece(A, '.', 4));
-  NumB := (StrToInt(Piece(B, '.', 1)) * 16777216) +
-          (StrToInt(Piece(B, '.', 2)) * 65536) +
-          (StrToInt(Piece(B, '.', 3)) * 256) +
-           StrToInt(Piece(B, '.', 4));
-  Result := NumA - NumB;
+  NumA[0] := StrToIntDef(Piece(A, '.', 1), -1) * 16777216;
+  NumA[1] := StrToIntDef(Piece(A, '.', 2), -1) * 65536;
+  NumA[2] := StrToIntDef(Piece(A, '.', 3), -1) * 256;
+  NumA[3] := StrToIntDef(Piece(A, '.', 4), -1);
+  if (NumA[0] < 0) or (NumA[1] < 0) or (NumA[2] < 0) or (NumA[3] < 0) then
+    Exit(Low(Integer));
+
+  NumB[0] := StrToIntDef(Piece(B, '.', 1), -1) * 16777216;
+  NumB[1] := StrToIntDef(Piece(B, '.', 2), -1) * 65536;
+  NumB[2] := StrToIntDef(Piece(B, '.', 3), -1) * 256;
+  NumB[3] := StrToIntDef(Piece(B, '.', 4), -1);
+  if (NumB[0] < 0) or (NumB[1] < 0) or (NumB[2] < 0) or (NumB[3] < 0) then
+    Exit(Low(Integer)+1);
+
+  Result := NumA[0] + NumA[1] + NumA[2] + NumA[3] -
+    NumB[0] - NumB[1] - NumB[2] - NumB[3];
 end;
 
 procedure CopyFileDate(const Source, Dest: string);
@@ -131,14 +142,20 @@ begin
   end;
 end;
 
-procedure Delay(i: Integer);
+procedure Delay(i: Integer; AllowUserInput: Boolean = true);
 const
   AMilliSecond = 0.000000011574;
 var
   Start: TDateTime;
 begin
   Start := Now;
-  while Now < (Start + (i * AMilliSecond)) do Application.ProcessMessages;
+  while Now < (Start + (i * AMilliSecond)) do
+  begin
+    If AllowUserInput then
+      Application.ProcessMessages
+    else
+      TResponsiveGUI.ProcessMessages;
+  end;
 end;
 
 procedure FileCopy(const FromFileName, ToFileName: string);

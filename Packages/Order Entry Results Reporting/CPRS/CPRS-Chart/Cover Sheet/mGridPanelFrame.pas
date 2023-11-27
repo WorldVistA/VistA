@@ -349,8 +349,8 @@ end;
 
 procedure TfraGridPanelFrame.OnSetScreenReaderStatus(Sender: TObject; aActive: boolean);
 begin
-  pnlWorkspace.TabStop := aActive; { Lets the ScreenReader stop here and read the caption }
   fScreenReaderActive := aActive;
+  // DRM NOTE: Parent form hasn't been set yet, so there's no way to find 508 manager.
 end;
 
 procedure TfraGridPanelFrame.OnShowError(Sender: TObject);

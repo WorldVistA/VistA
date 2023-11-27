@@ -8,15 +8,21 @@ uses
   fLabTests, fLabTestGroups, ORFn, TeeProcs, TeEngine, Chart, Series, Menus,
   uConst, ORDtTmRng, OleCtrls, SHDocVw, Variants, StrUtils, fBase508Form,
   VA508AccessibilityManager, ORDtTm, VA508ImageListLabeler, VclTee.TeeGDIPlus,
-  ORExtensions, uPrinting;
+  ORExtensions, uPrinting, u508Button;
 
 type
-  TGrdLab508Manager = class(TVA508ComponentManager)
+  // modified version of TCustomGrid508Manager from VA508DelphiCompatibility
+  TGridLab508Manager = class(TVA508ManagedComponentClass)
   private
-    function GetTextToSpeak(sg: TCaptionStringGrid): String;
-    function ToBlankIfEmpty(aString : String) : String;
+    FNeedFullRead: boolean;
+    FLastRow, FLastCol: integer;
+    FLastValue: string;
+    procedure ResetReadFlags;
   public
     constructor Create; override;
+    function GetCaption(Component: TWinControl): string; override;
+    function GetComponentName(Component: TWinControl): string; override;
+    function GetInstructions(Component: TWinControl): string; override;
     function GetValue(Component: TWinControl): string; override;
     function GetItem(Component: TWinControl): TObject; override;
   end;
@@ -58,10 +64,10 @@ type
     pnlButtons: TORAutoPanel;
     lblMostRecent: TLabel;
     lblDate: TVA508StaticText;
-    cmdNext: TButton;
-    cmdPrev: TButton;
-    cmdRecent: TButton;
-    cmdOld: TButton;
+    cmdNext: u508Button.TButton;
+    cmdPrev: u508Button.TButton;
+    cmdRecent: u508Button.TButton;
+    cmdOld: u508Button.TButton;
     grdLab: TCaptionStringGrid;
     pnlChart: TPanel;
     lblGraph: TLabel;
@@ -247,11 +253,12 @@ type
     procedure sptHorzRightMoved(Sender: TObject);
     procedure splLeftMoved(Sender: TObject);
     procedure splLeftLowerMoved(Sender: TObject);
+    procedure grdLabExit(Sender: TObject);
 
   private
     { Private declarations }
     SortIdx1, SortIdx2, SortIdx3: Integer;
-    grdLab508Manager : TGrdLab508Manager;
+    grdLab508Manager : TGridLab508Manager;
     procedure HGrid(griddata: TStrings);
     procedure VGrid(griddata: TStrings);
     procedure FillGrid(agrid: TStringGrid; aitems: TStrings);
@@ -488,8 +495,9 @@ begin
   lblSpecimen.Caption := '';
   SerTest.GetHorizAxis.ExactDateTime := true;
   SerTest.GetHorizAxis.Increment := DateTimeStep[dtOneMinute];
-  grdLab508Manager := TGrdLab508Manager.Create;
+  grdLab508Manager := TGridLab508Manager.Create;
   amgrMain.ComponentManager[grdLab] := grdLab508Manager;
+  amgrMain.UseDefault[grdLab] := False;
   memo1.Visible := false;
   uRDOChanging := false;
   ulstDatesChanging := false;
@@ -1980,6 +1988,12 @@ begin
     frmFrame.mnuToolsGraphing.Hint := itemid;
     frmFrame.mnuToolsGraphingClick(self);
   end;
+end;
+
+procedure TfrmLabs.grdLabExit(Sender: TObject);
+begin
+  inherited;
+  grdLab508Manager.ResetReadFlags;
 end;
 
 procedure TfrmLabs.grdLabMouseDown(Sender: TObject; Button: TMouseButton;
@@ -5936,49 +5950,111 @@ begin
   end;
 end;
 
-{ TGrdLab508Manager }
-
-constructor TGrdLab508Manager.Create;
+// TGridLab508Manager
+constructor TGridLab508Manager.Create;
 begin
-  inherited Create([mtValue, mtItemChange]);
+  inherited Create(TCaptionStringGrid, [mtCaption, mtComponentName, mtInstructions, mtValue, mtItemChange], FALSE);
+  ResetReadFlags;
 end;
 
-function TGrdLab508Manager.GetItem(Component: TWinControl): TObject;
+function TGridLab508Manager.GetCaption(Component: TWinControl):string;
 var
-  sg : TCaptionStringGrid;
+  grid: TCaptionStringGrid;
 begin
-  sg := TCaptionStringGrid(Component);
-  Result := TObject(sg.Selection.Top + sg.Selection.Left);
+  grid := TCaptionStringGrid(Component);
+  if FNeedFullRead or (grid.Col = grid.FixedCols) then
+    Result := TCaptionStringGrid(Component).Caption + ' '
+  else
+    Result := ' ';
 end;
 
-function TGrdLab508Manager.GetTextToSpeak(sg: TCaptionStringGrid): String;
+function TGridLab508Manager.GetComponentName(Component: TWinControl): string;
 var
-  textToSpeak : String;
-  CurrRowStrings,HeaderStrings : TStrings;
-  i : integer;
+  grid: TCaptionStringGrid;
 begin
-  textToSpeak := '';
-  HeaderStrings := sg.Rows[0];
-  CurrRowStrings := sg.Rows[sg.Selection.Top];
-  for i := 0 to CurrRowStrings.Count - 1 do begin
-    textToSpeak := TextToSpeak + ', ' + HeaderStrings[i] + ', ' + ToBlankIfEmpty(CurrRowStrings[i]);
+  grid := TCaptionStringGrid(Component);
+  if FNeedFullRead or (grid.Col = grid.FixedCols) then
+    Result := ' grid '
+  else
+    Result := ' ';
+end;
+
+function TGridLab508Manager.GetInstructions(Component: TWinControl): string;
+var
+  grid: TCaptionStringGrid;
+begin
+  grid := TCaptionStringGrid(Component);
+  if FNeedFullRead or (grid.Col = grid.FixedCols) then
+    Result := ' To move to items use the arrow keys '
+  else
+    Result := ' ';
+end;
+
+function TGridLab508Manager.GetItem(Component: TWinControl): TObject;
+var
+  grid: TCaptionStringGrid;
+begin
+  grid := TCaptionStringGrid(Component);
+  // Seems important that GetItem *not* return a 0 (zero).
+  Result := TObject(((grid.Row * grid.ColCount) + grid.Col) + 1);
+end;
+
+function TGridLab508Manager.GetValue(Component: TWinControl): string;
+const
+  DELIM = '^';
+var
+  grid: TCaptionStringGrid;
+
+  function GetCellValue(row, col: integer): string;
+  begin
+    Result := Piece(grid.Rows[row][col], DELIM, 1);
+    if Result = '' then
+      Result := ' blank ';
   end;
-  Result := textToSpeak;
-end;
 
-function TGrdLab508Manager.GetValue(Component: TWinControl): string;
 var
-  sg : TCaptionStringGrid;
+  row, col, cc: integer;
 begin
-  sg := TCaptionStringGrid(Component);
-  Result := GetTextToSpeak(sg);
+  Result := ' ';
+  grid := TCaptionStringGrid(Component);
+  row := grid.Row;
+  col := grid.Col;
+  If (row <> FLastRow) or (col <> FLastCol) then
+  begin
+    FNeedFullRead := FNeedFullRead or (FLastRow = -1) or (FLastCol = -1) or (col = grid.FixedCols);
+    FLastRow := row;
+    FLastCol := col;
+  end
+  else
+  begin
+    FNeedFullRead := False;
+    Result := FLastValue;
+    exit;
+  end;
+  if (row >= 0) and (col >= 0) then
+  begin
+    if FNeedFullRead then
+    begin
+      Result := ' row ' + IntToStr((row + 1) - grid.FixedRows) + ' of ' + IntToStr(grid.RowCount - grid.FixedRows) + ' ';
+      for cc := 0 to grid.ColCount - 1 do
+      begin
+        Result := Result + ', ' + Piece(grid.Rows[0][cc], DELIM, 1) + ', ';
+        Result := Result + GetCellValue(row, cc) + ' ';
+      end;
+    end
+    else
+    begin
+      Result :=  Piece(grid.Rows[0][col], DELIM, 1) + ', ' + GetCellValue(row, col) + ' ';
+    end;
+  end;
+  FLastValue := Result;
 end;
 
-function TGrdLab508Manager.ToBlankIfEmpty(aString: String): String;
+procedure TGridLab508Manager.ResetReadFlags;
 begin
-  Result := aString;
-  if aString = '' then
-  Result := 'blank';
+  FNeedFullRead := True;
+  FLastRow := -1;
+  FLastCol := -1;
 end;
 
 procedure TfrmLabs.sptHorzRightMoved(Sender: TObject);

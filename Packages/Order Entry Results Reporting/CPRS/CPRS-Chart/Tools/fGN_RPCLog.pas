@@ -624,6 +624,13 @@ begin
   sl := TStringList.Create;
   ListSymbolTable(sl);
   addLogItem('Symbol Table', 'Symbol Table', sl);
+
+  sl := TStringList.Create;
+  if GetAllEnvVars(sl) > 0 then
+    addLogItem('Environment variables', 'Environment variables', sl)
+  else
+    sl.Free;
+
 {$ENDIF}
 end;
 

@@ -24,6 +24,8 @@ type
     procedure mmChange(Sender: TObject);
     procedure aeIdle(Sender: TObject; var Done: Boolean);
     procedure FormDestroy(Sender: TObject);
+  protected
+    procedure CreateParams(var Params: TCreateParams) ; override;
   private
     { Private declarations }
     procedure UpdateMemoSize;
@@ -55,6 +57,13 @@ procedure TfrmSplash.aeIdle(Sender: TObject; var Done: Boolean);
 begin
   inherited;
   HideCaret(mm.Handle);
+end;
+
+procedure TfrmSplash.CreateParams(var Params: TCreateParams);
+begin
+  inherited;
+  Params.ExStyle := Params.ExStyle or WS_EX_APPWINDOW;
+  Params.WndParent := 0;
 end;
 
 procedure TfrmSplash.FormCreate(Sender: TObject);

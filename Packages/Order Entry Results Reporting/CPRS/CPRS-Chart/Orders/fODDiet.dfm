@@ -22,11 +22,14 @@ inherited frmODDiet: TfrmODDiet
     Margins.Bottom = 4
     ActivePage = pgeOutPt
     Align = alTop
+    OwnerDraw = True
     TabOrder = 4
     TabStop = False
     OnChange = nbkDietChange
     OnChanging = nbkDietChanging
-    ExplicitWidth = 634
+    OnDrawTab = nbkDietDrawTab
+    OnMouseLeave = nbkDietMouseLeave
+    OnMouseMove = nbkDietMouseMove
     object pgeDiet: TTabSheet
       Margins.Left = 4
       Margins.Top = 4

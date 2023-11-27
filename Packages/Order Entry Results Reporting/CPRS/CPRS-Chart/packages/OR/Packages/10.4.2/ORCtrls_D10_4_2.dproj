@@ -72,7 +72,7 @@ $(PostBuildEvent)]]></PostBuildEvent>
 $(PreBuildEvent)]]></PreBuildEvent>
         <DCC_DebugInfoInExe>true</DCC_DebugInfoInExe>
         <DCC_MapFile>3</DCC_MapFile>
-        <DCC_UsePackage>vcl;rtl;vclx;dbrtl;vcldb;VclSmp;Tee;XWB_R10_4_1;VAShared_R10_4_1;XWB_R10_4_2;VAShared_R10_4_2;$(DCC_UsePackage)</DCC_UsePackage>
+        <DCC_UsePackage>vcl;rtl;vclx;dbrtl;vcldb;VclSmp;Tee;XWB_R10_4_1;VAShared_R10_4_1;XWB_R10_4_2;VAShared_R10_4_2;ResponsiveGUI_R10_4_2;$(DCC_UsePackage)</DCC_UsePackage>
         <DCC_DcuOutput>..\..\dcu</DCC_DcuOutput>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
@@ -113,6 +113,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DCCReference Include="VA508Access_D10_4_2.dcp"/>
         <DCCReference Include="VAShared_R10_4_2.dcp"/>
         <DCCReference Include="XWB_R10_4_2.dcp"/>
+        <DCCReference Include="ResponsiveGUI_R10_4_2.dcp"/>
         <DCCReference Include="..\..\Source\ORCtrls.pas"/>
         <DCCReference Include="..\..\Source\ORCtrlsDsgn.pas"/>
         <DCCReference Include="..\..\Source\ORStaticText.pas"/>
@@ -141,6 +142,12 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DCCReference Include="..\..\Source\ORDtTmListBox.pas"/>
         <DCCReference Include="..\..\Source\ORUnitTesting.pas"/>
         <DCCReference Include="..\..\Source\ORRedirect.pas"/>
+        <DCCReference Include="..\..\Source\CPUID.pas"/>
+        <DCCReference Include="..\..\Source\DDetours.pas"/>
+        <DCCReference Include="..\..\Source\InstDecode.pas"/>
+        <DCCReference Include="..\..\Source\LegacyTypes.pas"/>
+        <DCCReference Include="..\..\Source\UIndicationsComboBox.pas"/>
+        <DCCReference Include="..\..\Source\OREventCache.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

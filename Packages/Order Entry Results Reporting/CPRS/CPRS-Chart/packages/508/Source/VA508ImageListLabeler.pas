@@ -129,7 +129,7 @@ procedure Register;
 
 implementation
 
-uses VA508Classes, VA508AccessibilityRouter;
+uses VA508Classes, VA508AccessibilityRouter, UResponsiveGUI;
 
 procedure Register;
 begin
@@ -229,7 +229,7 @@ procedure TVA508ImageListLabeler.Loaded;
 begin
   inherited;
   FStartup := FALSE;
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   SaveChanges(FALSE);
 end;
 

@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, Classes, Controls, StdCtrls, SysUtils, ComCtrls, Menus,
   Graphics, Forms, ORClasses, ORCtrls, ORDtTm, ORFn, ORNet, Dialogs, uPCE,
-  uVitals, System.Generics.Collections,
+  uVitals, System.Generics.Collections, uComponentNexus,
   ExtCtrls, fDrawers, fDeviceSelect, TypInfo, StrUtils, fRptBox, fVimm, rVimm;
 
 type
@@ -41,14 +41,15 @@ type
       Historical: boolean = FALSE): integer;
     function Visible: boolean;
     procedure findLinkItem(elementList, promptList: TStringList; startSeq: String);
+    procedure DoFocus(Ctrl: TWinControl);
   public
     constructor BaseCreate;
     constructor Create(ADlgData: string);
     destructor Destroy; override;
     procedure FinishProblems(List: TStrings;
       var MissingTemplateFields: boolean);
-    function BuildControls(ParentWidth: integer; AParent, AOwner: TWinControl)
-      : TWinControl;
+    function BuildControls(ParentWidth: integer; AParent, AOwner: TWinControl;
+      BuildAll: boolean): TWinControl;
     function Processing: boolean;
     procedure AddText(Lst: TStrings);
     procedure closeReportView;
@@ -100,6 +101,10 @@ type
     FChildren: TList; // Points to other TRemDlgElement objects
     FData: TList; // List of TRemData objects
     FPrompts: TList; // list of TRemPrompts objects
+    FNexus: TComponentNexus;
+    FPanel: TPanel;
+    FCheckBox: TORCheckBox;
+    FGroupBox: TGroupBox;
     FCodesList: TStrings;
     FText: string;
     FPNText: string;
@@ -143,9 +148,8 @@ type
     procedure FieldPanelKeyPress(Sender: TObject; var Key: Char);
     procedure FieldPanelOnClick(Sender: TObject);
     procedure FieldPanelLabelOnClick(Sender: TObject);
-
-    function BuildControls(var Y: integer; ParentWidth: integer;
-      BaseParent, AOwner: TWinControl): TWinControl;
+    function BuildControls(var Y, TabIdx: integer; ParentWidth: integer;
+      BaseParent, AOwner: TWinControl; BuildAll: boolean): TWinControl;
     function AddData(Lst: TStrings; Finishing: boolean;
       AHistorical: boolean = FALSE): integer;
     procedure FinishProblems(List: TStrings);
@@ -156,6 +160,9 @@ type
     procedure GetFieldValues(FldData: TStrings);
     procedure ParentCBEnter(Sender: TObject);
     procedure ParentCBExit(Sender: TObject);
+    procedure RemoveChildControls(All: boolean);
+    procedure ComponentAdded(AComponent: TComponent);
+    procedure NexusFreeNotification(Sender: TObject; AComponent: TComponent);
   public
     constructor Create;
     destructor Destroy; override;
@@ -238,6 +245,15 @@ type
     ptWHPapResult, ptWHNotPurp, ptDate, ptDateTime, ptView, ptPrint, ptMagnitude,
     ptUCUMCode, ptPDMP);
 
+  TControlInfo = class(TObject)
+  public
+    Prompt: TRemPrompt;
+    Name: string;
+    Control: TControl;
+    MinWidth, MaxWidth: integer;
+    destructor Destroy; override;
+  end;
+
   TRemPrompt = class(TComponent)
   private
     FFromControl: boolean;
@@ -245,6 +261,7 @@ type
     FRec4: string;
     FCaptionAssigned: boolean;
     FData: TRemData;
+    FControls: TObjectList<TControlInfo>;
     FOriginalDataRec3: string;
     FValue: string;
     FOverrideType: TRemPromptType;
@@ -273,6 +290,10 @@ type
     function getUCumData: string;
     function getDataType: string;
   protected
+    function CreateControlInfo(AName: String; cls: TControlClass;
+      AOwner: TComponent; AParent: TWinControl): TControlInfo;
+    function ControlInfo(AName: String): TControlInfo; overload;
+    function ControlInfo(AControl: TControl): TControlInfo; overload;
     function RemDataActive(RData: TRemData; encDt: TFMDateTime): boolean;
     function CompareActiveDate(ActiveDates: TStringList;
       encDt: TFMDateTime): boolean;
@@ -304,6 +325,7 @@ type
     procedure DoPDMP(Sender: TObject);
     function getSeries: string;
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+    procedure ClearControls;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -505,7 +527,7 @@ uses
   fMHTest, rPCE, rTemplates, dShared, uTemplateFields, fIconLegend,
   fReminderTree, uInit, VAUtils, VA508AccessibilityRouter,
   VA508AccessibilityManager, uDlgComponents, fBase508Form,
-  System.Types, System.UITypes, uMisc, fPDMPMgr, fFrame, uPDMP;
+  System.Types, System.UITypes, uMisc, fPDMPMgr, fFrame, uPDMP, uResponsiveGUI;
 
 type
   TRemFolder = (rfUnknown, rfDue, rfApplicable, rfNotApplicable,
@@ -635,7 +657,7 @@ const
     { ptPrint } 'GF_PRINT',
     { ptMagnitude } 'UCUM',
     { ptUCUMCode } 'UCUM_CODE',
-    {ptPDMP} 'PDMP');
+    { ptPDMP} 'PDMP');
 
   RemPromptTypes: array [TRemPromptType] of TRemDataType =
     { ptComment } (rdtAll,
@@ -714,7 +736,7 @@ const
     );
 
   PromptDescriptions: array [TRemPromptType] of string =
-  { ptComment } ('Comment',
+    { ptComment } ('Comment',
     { ptVisitLocation } 'Visit Location',
     { ptVisitDate } 'Visit Date',
     { ptQuantity } 'Quantity',
@@ -739,7 +761,7 @@ const
     { ptPDMP} 'PDMP');
 
   RemFolderCodes: array [TValidRemFolders] of Char =
-  { rfDue } ('D',
+    { rfDue } ('D',
     { rfApplicable } 'A',
     { rfNotApplicable } 'N',
     { rfEvaluated } 'E',
@@ -2751,6 +2773,12 @@ begin
   inherited;
 end;
 
+procedure TReminderDialog.DoFocus(Ctrl: TWinControl);
+begin
+  if ShouldFocus(Ctrl) then
+    Ctrl.SetFocus;
+end;
+
 function TReminderDialog.Processing: boolean;
 var
   i, j: integer;
@@ -2868,9 +2896,9 @@ begin
 end;
 
 function TReminderDialog.BuildControls(ParentWidth: integer;
-  AParent, AOwner: TWinControl): TWinControl;
+  AParent, AOwner: TWinControl; BuildAll: boolean): TWinControl;
 var
-  Y, i: integer;
+  Y, i, TabIdx: integer;
   Elem: TRemDlgElement;
   ERes: TWinControl;
 
@@ -2879,12 +2907,13 @@ begin
   if (Assigned(FElements)) then
   begin
     Y := 0;
+    TabIdx := 0;
     for i := 0 to FElements.Count - 1 do
     begin
       Elem := TRemDlgElement(FElements.Objects[i]);
       if (not Assigned(Elem.FParent)) then
       begin
-        ERes := Elem.BuildControls(Y, ParentWidth, AParent, AOwner);
+        ERes := Elem.BuildControls(Y, TabIdx, ParentWidth, AParent, AOwner, BuildAll);
         if (not Assigned(Result)) then
           Result := ERes;
       end;
@@ -3212,13 +3241,13 @@ begin
 
           if (Piece(action, U, 2) = 'CHECKED') and (not Element.isChecked) then
           begin
-            Application.ProcessMessages;
+            TResponsiveGUI.ProcessMessages;
             Element.SetChecked(TRUE);
             elementChange := TRUE;
           end
           else if Piece(action, U, 2) = 'SUPPRESS' then
           begin
-            Application.ProcessMessages;
+            TResponsiveGUI.ProcessMessages;
             if Piece(Element.FRec1, U, 4) <> 'D' then
             begin
               SetPiece(Element.FRec1, U, 4, 'D');
@@ -3228,20 +3257,20 @@ begin
           end
           else if (Piece(action, U, 2) = 'UNCHECKED') and (Element.isChecked) then
           begin
-            Application.ProcessMessages;
+            TResponsiveGUI.ProcessMessages;
             Element.SetChecked(FALSE);
             elementChange := TRUE;
           end
           else if (Piece(action, U, 2) = 'UNSUPPRESS') and (Piece(Element.FRec1, U, 4) = 'D') then
           begin
-            Application.ProcessMessages;
+            TResponsiveGUI.ProcessMessages;
             SetPiece(Element.FRec1, U, 4, 'S');
             Element.SetChecked(FALSE);
             elementChange := TRUE;
           end
           else if Piece(action, U, 2) = 'DISABLE' then
             begin
-              Application.ProcessMessages;
+              TResponsiveGUI.ProcessMessages;
               if Piece(Element.FRec1, U, 4) <> 'H' then
                 begin
   //                element.originalType := Piece(Element.FRec1, U, 4);
@@ -3255,7 +3284,7 @@ begin
             end
           else if Piece(action, U, 2) = 'UNDISABLE' then
             begin
-                Application.ProcessMessages;
+                TResponsiveGUI.ProcessMessages;
                   SetPiece(Element.FRec1, U, 4, Piece(element.originalType, U, 1));
                   if (Piece(element.originalType, U, 2)= '1') or (Piece(element.originalType, U, 1) = 'D') then element.SetChecked(true)
                   else element.SetChecked(false);
@@ -3477,6 +3506,12 @@ begin
   Result := (Piece(FRec1, U, 17) = '1');
 end;
 
+procedure TRemDlgElement.ComponentAdded(AComponent: TComponent);
+begin
+  if Assigned(AComponent) then
+    FNexus.NotifyOnFree(AComponent);
+end;
+
 function TRemDlgElement.contraindication: boolean;
 begin
   Result := (Piece(FRec1, U, 8) = '2');
@@ -3484,6 +3519,7 @@ end;
 
 destructor TRemDlgElement.Destroy;
 begin
+  FreeAndNil(FNexus);
   KillObj(@FFieldValues);
   KillObj(@FData, TRUE);
   KillObj(@FPrompts, TRUE);
@@ -4131,8 +4167,7 @@ begin
   then
     if self.FInitialChecked then
       self.FInitialChecked := false
-    else if ShouldFocus(TDlgFieldPanel(chk.Associate)) then
-      TDlgFieldPanel(chk.Associate).SetFocus;
+    else FReminder.DoFocus(TDlgFieldPanel(chk.Associate));
 end;
 
 function TRemDlgElement.EnableChildren: boolean;
@@ -4199,8 +4234,7 @@ begin
   begin
     if ScreenReaderSystemActive then
       (Sender as TCPRSDialogParentCheckBox).FocusOnBox := TRUE
-    else if ShouldFocus(TDlgFieldPanel(TORCheckBox(Sender).Associate)) then
-      TDlgFieldPanel(TORCheckBox(Sender).Associate).SetFocus;
+    else FReminder.DoFocus(TDlgFieldPanel(TORCheckBox(Sender).Associate));
   end;
 end;
 
@@ -4222,8 +4256,8 @@ end;
 type
   TORExposedWinControl = class(TWinControl);
 
-function TRemDlgElement.BuildControls(var Y: integer; ParentWidth: integer;
-  BaseParent, AOwner: TWinControl): TWinControl;
+function TRemDlgElement.BuildControls(var Y, TabIdx: integer; ParentWidth: integer;
+  BaseParent, AOwner: TWinControl; BuildAll: boolean): TWinControl;
 var
   lbl, UCUMlbl: TLabel;
   lblText: string;
@@ -4235,7 +4269,7 @@ var
   gb: TGroupBox;
   ERes, Prnt: TWinControl;
   PrntWidth: integer;
-  i, X, Y1: integer;
+  i, X, Y1, TabIdx1: integer;
   LastX, MinX, MaxX: integer;
   Prompt: TRemPrompt;
   ctrl: TMultiClassObj;
@@ -4247,9 +4281,23 @@ var
   SameLineCtrl: TList;
   Kid: TRemDlgElement;
   vt: TVitalType;
-  DefaultDate: TFMDateTime;
   Req: boolean;
   isDisable: boolean;
+  isNewList: TList;
+
+  function isNew(obj: TObject): boolean;
+  begin
+    Result := (isNewList.IndexOf(obj) >= 0);
+  end;
+
+  procedure SetTabOrder(AControl: TControl);
+  begin
+    if AControl is TWinControl then
+    begin
+      TWinControl(AControl).TabOrder := TabIdx;
+      inc(TabIdx);
+    end;
+  end;
 
   function GetPanel(const EID, AText: string; const PnlWidth: integer;
     OwningCheckBox: TCPRSDialogParentCheckBox): TDlgFieldPanel;
@@ -4291,6 +4339,7 @@ var
     // values to the values that were restored to the Entry from the Element if
     // they exist, otherwise the default values will remain.
     Result := Entry.GetPanel(PnlWidth, BaseParent, OwningCheckBox);
+    SetTabOrder(Result);
   end;
 
   procedure NextLine(var Y: integer);
@@ -4319,6 +4368,57 @@ var
     SameLineCtrl.Clear;
   end;
 
+  function GetControl(AName: String; cls: TControlClass; AOwner: TComponent;
+    AParent: TWinControl): TControl;
+  var
+    info: TControlInfo;
+
+  begin
+    info := Prompt.ControlInfo(AName);
+    if assigned(info) then
+    begin
+      if (info.MinWidth > 0) then
+        MinX := info.MinWidth;
+      if (info.MaxWidth > 0) then
+        MaxX := info.MaxWidth;
+    end
+    else
+    begin
+      info := Prompt.CreateControlInfo(AName, cls, AOwner, AParent);
+      if assigned(info) then
+        isNewList.Add(info.Control)
+      else
+      begin
+        Result := nil;
+        exit;
+      end;
+    end;
+    Result := info.Control;
+    SetTabOrder(Result);
+  end;
+
+  procedure SetMinMax(AMinX: integer; AMaxX: integer = 0);
+  var
+    info: TControlInfo;
+
+  begin
+    if (AMinX > 0) or (AMaxX > 0) then
+    begin
+      info := Prompt.ControlInfo(Ctrl.ctrl);
+      if assigned(info) then
+      begin
+        if AMinX > 0 then
+          info.MinWidth := AMinX;
+        if AMaxX > 0 then
+          info.MaxWidth := AMaxX;
+      end;
+      if AMinX > 0 then
+        MinX := AMinX;
+      if AMaxX > 0 then
+        MaxX := AMaxX;
+    end;
+  end;
+
   procedure ProcessLabel(Required, AEnabled: boolean; AParent: TWinControl;
     Control: TControl);
   begin
@@ -4326,37 +4426,51 @@ var
       lblCtrl := nil
     else
     begin
-      lbl := TLabel.Create(AOwner);
-      lbl.Parent := AParent;
       if ScreenReaderSystemActive then
       begin
-        sLbl := TCPRSDialogStaticLabel.Create(AOwner);
-        sLbl.Parent := AParent;
-        sLbl.Height := lbl.Height;
-        lbl.Free;
+        slbl := GetControl('srlbl', TCPRSDialogStaticLabel, AOwner, AParent)
+          as TCPRSDialogStaticLabel;
+        if isNew(slbl) then
+        begin
+          lbl := TLabel.Create(AOwner);
+          try
+            lbl.Parent := AParent;
+            sLbl.Height := lbl.Height;
+          finally
+            FreeAndNil(lbl);
+          end;
+        end;
         lblCtrl := sLbl;
       end
       else
-        lblCtrl := lbl;
-      lblText := Prompt.Caption;
-      if Required then
+        lblCtrl := GetControl('plbl', TLabel, AOwner, AParent) as TLabel;
+      if isNew(lblCtrl) then
       begin
-        if Assigned(Control) and Supports(Control, ICPRSDialogComponent) then
+        lblText := Prompt.Caption;
+        if Required then
         begin
-          (Control as ICPRSDialogComponent).RequiredField := TRUE;
-          if ScreenReaderSystemActive and (AOwner = frmRemDlg) then
-            frmRemDlg.amgrMain.AccessText[sLbl] := lblText;
+          if Assigned(Control) and Supports(Control, ICPRSDialogComponent) then
+          begin
+            (Control as ICPRSDialogComponent).RequiredField := TRUE;
+            if ScreenReaderSystemActive and (AOwner = frmRemDlg) then
+              frmRemDlg.amgrMain.AccessText[sLbl] := lblText;
+          end;
+          lblText := lblText + ' *';
         end;
-        lblText := lblText + ' *';
+        SetStrProp(lblCtrl, CaptionProperty, lblText);
+        if ScreenReaderSystemActive then
+        begin
+          ScreenReaderSystem_CurrentLabel(sLbl);
+          ScreenReaderSystem_AddText(lblText);
+        end;
+        UpdateColorsFor508Compliance(lblCtrl);
       end;
-      SetStrProp(lblCtrl, CaptionProperty, lblText);
-      if ScreenReaderSystemActive then
+      if (lblCtrl is TWinControl) and (Control is TWinControl) then
       begin
-        ScreenReaderSystem_CurrentLabel(sLbl);
-        ScreenReaderSystem_AddText(lblText);
+        TWinControl(lblCtrl).TabOrder := TWinControl(Control).TabOrder;
+        inc(TabIdx);
       end;
       lblCtrl.Enabled := AEnabled;
-      UpdateColorsFor508Compliance(lblCtrl);
     end;
   end;
 
@@ -4371,7 +4485,7 @@ var
     end;
   end;
 
-  procedure updatePrompt(var prompt: TRemPrompt);
+  procedure UpdatePrompt(var prompt: TRemPrompt);
   var
   action,frec4: string;
   p: integer;
@@ -4422,6 +4536,7 @@ var
     FirstX, WrapLeft, LineWidth: integer;
 
   begin
+    ActChoicesSL := nil;
     SameLineCtrl := TList.Create;
     try
       if (Assigned(cb)) then
@@ -4449,7 +4564,7 @@ var
       for i := 0 to FPrompts.Count - 1 do
       begin
         Prompt := TRemPrompt(FPrompts[i]);
-        updatePrompt(prompt);
+        UpdatePrompt(prompt);
         OK := ((Prompt.FIsShared = Shared) and Prompt.PromptOK and
           (not Prompt.Forced));
         if (OK and Shared) then
@@ -4483,210 +4598,242 @@ var
           case pt of
             ptPDMP: // PDMP Button on Dialog
               begin
-                ctrl.btn := TCPRSDialogButton.Create(AOwner);
-                ctrl.ctrl.Parent := aParent;
-                ctrl.btn.OnClick := prompt.DoPDMP;
-                ctrl.btn.Caption := prompt.ForcedCaption;
-                MinX := TextWidthByFont(ctrl.btn.Font.Handle,ctrl.btn.Caption);
+                ctrl.btn := GetControl('btn', TCPRSDialogButton,
+                  AOwner, AParent) as TCPRSDialogButton;
+                if isNew(ctrl.btn) then
+                begin
+                  ctrl.btn.Caption := prompt.ForcedCaption;
+                  ctrl.btn.OnClick := prompt.DoPDMP;
+                  MinX := TextWidthByFont(ctrl.btn.Font.Handle,ctrl.btn.Caption) + 20;
+                  if MinX < 120 then
+                    MinX := 120;
+                  SetMinMax(MinX);
+                end;
                 doLbl := False;
-                MinX := 120;
-
-//                if assigned(frmFrame.PDMPMgr) then
-//                  frmFrame.PDMPMgr.ShowNow := True;
-{
-                ctrl.pdmpBtn := TfrmPDMP.Create(AOwner);
-                ctrl.ctrl.Parent := aParent;
-                ctrl.pdmpBtn.Parent := aParent;
-                ctrl.pdmpBtn.Width := 120;
-                ctrl.pdmpBtn.Height := 22;
-                ctrl.pdmpBtn.Top := ctrl.ctrl.Top;
-                ctrl.pdmpBtn.Height := ctrl.ctrl.left + ctrl.ctrl.width + 20;
-                ctrl.pdmpBtn.Color := clMoneyGreen;
-                ctrl.pdmpBtn.Show;
-                MinX := 240;
-}
               end;
+
             ptUCUMCode:
               begin
                 doLbl := True;
-                ctrl.cbo := TCPRSDialogComboBox.Create(AOwner);
-                ctrl.cbo.Parent := AParent;
-                ctrl.cbo.OnKeyDown := Prompt.ComboBoxKeyDown;
-                ctrl.cbo.Style := orcsDropDown;
-                ctrl.cbo.LongList := True;
-                ctrl.cbo.Pieces := '2';
-                ctrl.cbo.LookupPiece := 2;
-                ctrl.cbo.OnNeedData := Prompt.UCUMNeedData;
+                ctrl.cbo := GetControl('cbo', TCPRSDialogComboBox,
+                  AOwner, AParent) as TCPRSDialogComboBox;
                 idx64 := StrToInt64Def(Prompt.Value,0);
-                ctrl.cbo.InitLongList(GetUCUMText(idx64));
-                ctrl.cbo.SelectByIEN(idx64);
-                UpdateColorsFor508Compliance(ctrl.edt);
-                MinX := TextWidthByFont(ctrl.cbo.Font.Handle,
-                  'AbCdEfGhIjKlMnOpQrStUvWxYz 1234');
+                if isNew(ctrl.cbo) then
+                begin
+                  ctrl.cbo.OnKeyDown := Prompt.ComboBoxKeyDown;
+                  ctrl.cbo.Style := orcsDropDown;
+                  ctrl.cbo.LongList := True;
+                  ctrl.cbo.Pieces := '2';
+                  ctrl.cbo.LookupPiece := 2;
+                  ctrl.cbo.OnNeedData := Prompt.UCUMNeedData;
+                  ctrl.cbo.InitLongList(GetUCUMText(idx64));
+                  SetMinMax(TextWidthByFont(ctrl.cbo.Font.Handle,
+                    'AbCdEfGhIjKlMnOpQrStUvWxYz 1234'));
+                  UpdateColorsFor508Compliance(ctrl.edt);
+                end;
                 MaxX := PWidth;
-                ctrl.cbo.OnChange := Prompt.PromptChange;
+                ctrl.cbo.OnChange := nil;
+                try
+                  ctrl.cbo.SelectByIEN(idx64);
+                finally
+                  ctrl.cbo.OnChange := Prompt.PromptChange;
+                end;
               end;
 
             ptComment, ptQuantity, ptMagnitude:
               begin
-                ctrl.edt := TCPRSDialogFieldEdit.Create(AOwner);
-                ctrl.ctrl.Parent := AParent;
-                ctrl.edt.Text := Prompt.Value;
-                UpdateColorsFor508Compliance(ctrl.edt);
-                if (pt = ptComment) then
-                begin
-                  ctrl.edt.MaxLength := 245;
-                  MinX := TextWidthByFont(ctrl.edt.Font.Handle,
-                    'AbCdEfGhIjKlMnOpQrStUvWxYz 1234');
-                  MaxX := PWidth;
-                end
-                else if (pt = ptMagnitude) then
-                begin
-                  if assigned(Prompt.FData) then
+                ctrl.edt := GetControl('edt', TCPRSDialogFieldEdit,
+                  AOwner, AParent) as TCPRSDialogFieldEdit;
+                ctrl.edt.OnChange := nil;
+                try
+                  ctrl.edt.Text := Prompt.Value;
+                  if isNew(ctrl.edt) then
                   begin
-                    ctrl.edt.UCUMCaption := Prompt.Caption;
-                    ctrl.edt.Prompt := prompt;
-                    MinX := ctrl.edt.Width - LblGap;
-                    MaxX := MinX;
-                    ctrl.edt.ShowHint := True;
-//                    if Prompt.FData.DataType = dtStandardCode then
-//                    begin
-//                      Prompt.EditEnter2(ctrl.edt); // setup hint etc.
-//                      ctrl.edt.OnEnter := Prompt.EditEnter2;
-//                    end
-//                    else
-//                    begin
-                      UCUMlbl := TLabel.Create(AOwner);
-//                      UCumlbl.Caption := Piece(prompt.FRec4, u, 34);
-                      ctrl.edt.AssociateLabel := UCUMLbl;
-                      UCUMlbl.Parent := AParent;
-                      Prompt.EditEnter(ctrl.edt); // setup hint etc.
-                      ctrl.edt.OnEnter := Prompt.EditEnter;
-//                    end;
-                    ctrl.edt.OnExit := Prompt.EditExit;
-                    UpdateColorsFor508Compliance(UCUMlbl);
+                    UpdateColorsFor508Compliance(ctrl.edt);
+                    if (pt = ptComment) then
+                    begin
+                      ctrl.edt.MaxLength := 245;
+                      SetMinMax(TextWidthByFont(ctrl.edt.Font.Handle,
+                        'AbCdEfGhIjKlMnOpQrStUvWxYz 1234'));
+                    end
+                    else if (pt = ptMagnitude) then
+                    begin
+                      if assigned(Prompt.FData) then
+                      begin
+                        ctrl.edt.UCUMCaption := Prompt.Caption;
+                        ctrl.edt.Prompt := Prompt;
+                        MinX := ctrl.edt.Width - LblGap;;
+                        SetMinMax(MinX, MinX); // MaxX := MinX
+                        ctrl.edt.ShowHint := True;
+    //                    if Prompt.FData.DataType = dtStandardCode then
+    //                    begin
+    //                      Prompt.EditEnter2(ctrl.edt); // setup hint etc.
+    //                      ctrl.edt.OnEnter := Prompt.EditEnter2;
+    //                    end;
+                      end;
+                    end;
                   end;
-                end
-                else
-                begin
-                  ud := TUpDown.Create(AOwner);
-                  ud.Parent := AParent;
-                  ud.Associate := ctrl.edt;
-                  if (pt = ptQuantity) then
+                  if (pt = ptComment) then
+                    MaxX := PWidth
+                  else if (pt = ptMagnitude) then
                   begin
-                    ud.Min := 1;
-                    ud.max := 100;
+                    if assigned(Prompt.FData) then
+                    begin
+  //                  if Prompt.FData.DataType <> dtStandardCode then
+                        UCUMlbl := GetControl('ulbl', TLabel, AOwner,
+                          AParent) as TLabel;
+                        if isNew(UCUMlbl) then
+                        begin
+                          ctrl.edt.AssociateLabel := UCUMLbl;
+                          Prompt.EditEnter(ctrl.edt); // setup hint etc.
+                          ctrl.edt.OnEnter := Prompt.EditEnter;
+                          UpdateColorsFor508Compliance(UCUMlbl);
+                        end;
+  //                  end;
+                      if isNew(ctrl.edt) then
+                        ctrl.edt.OnExit := Prompt.EditExit;
+                    end;
                   end
+                  else // ptQuantity
+                  begin
+                    ud := GetControl('ud', TUpDown, AOwner, AParent)
+                      as TUpDown;
+                    if isNew(ud) then
+                    begin
+                      ud.Associate := ctrl.edt;
+                      if (pt = ptQuantity) then
+                      begin
+                        ud.Min := 1;
+                        ud.max := 100;
+                      end
+                      else
+                      begin
+                        ud.Min := 0;
+                        ud.max := 40;
+                      end;
+                      SetMinMax(TextWidthByFont(ctrl.edt.Font.Handle,
+                        IntToStr(ud.max)) + 24);
+                      UpdateColorsFor508Compliance(ud);
+                    end;
+                    ud.Position := StrToIntDef(Prompt.Value, ud.Min);
+                  end;
+                  if isNew(ctrl.edt) then
+                    ctrl.edt.OnKeyPress := Prompt.EditKeyPress;
+                finally
+                  if pt = ptComment then
+                    begin
+                      if prompt.EventType = 'E' then
+                      begin
+                        if isNew(Ctrl.edt) then
+                          ctrl.edt.OnExit := Prompt.PromptChange;
+                      end
+                      else
+                        ctrl.edt.OnChange := Prompt.PromptChange;
+                    end
                   else
-                  begin
-                    ud.Min := 0;
-                    ud.max := 40;
-                  end;
-                  MinX := TextWidthByFont(ctrl.edt.Font.Handle,
-                    IntToStr(ud.max)) + 24;
-                  ud.Position := StrToIntDef(Prompt.Value, ud.Min);
-                  UpdateColorsFor508Compliance(ud);
+                    ctrl.edt.OnChange := Prompt.PromptChange;
                 end;
-                ctrl.edt.OnKeyPress := Prompt.EditKeyPress;
-                if pt = ptComment then
-                  begin
-                    if prompt.EventType = 'E' then ctrl.edt.OnExit := Prompt.PromptChange
-                    else ctrl.edt.OnChange := Prompt.PromptChange;
-                  end
-                else ctrl.edt.OnChange := Prompt.PromptChange;
-                UpdateColorsFor508Compliance(ctrl.edt);
                 DoLbl := TRUE;
               end;
 
             ptVisitLocation, ptLevelUnderstanding, ptSeries, ptReaction,
               ptExamResults, ptLevelSeverity, ptSkinResults, ptSkinReading:
               begin
-                ctrl.cbo := TCPRSDialogComboBox.Create(AOwner);
-                ctrl.ctrl.Parent := AParent;
-                ctrl.cbo.OnKeyDown := Prompt.ComboBoxKeyDown;
-                ctrl.cbo.Style := orcsDropDown;
-                ctrl.cbo.Pieces := '2';
-                if pt = ptSkinReading then
+                ctrl.cbo := GetControl('cbo', TCPRSDialogComboBox,
+                  AOwner, AParent) as TCPRSDialogComboBox;
+                if isNew(ctrl.cbo) then
                 begin
-                  ctrl.cbo.Pieces := '1';
-                  ctrl.cbo.Items.Add('');
-                  for j := 0 to 50 do
-                    ctrl.cbo.Items.Add(IntToStr(j));
-                  GetComboBoxMinMax(ctrl.cbo, MinX, MaxX);
-                end;
-                if pt <> ptSkinReading then
-                begin
-                  ctrl.cbo.Tag := ComboPromptTags[pt];
-                  PCELoadORCombo(ctrl.cbo, MinX, MaxX);
-                end;
-                if pt = ptVisitLocation then
-                begin
-                  DefLoc := TStringList.Create;
-                  try
-                  if GetDefLocations(DefLoc) > 0 then
+                  ctrl.cbo.OnKeyDown := Prompt.ComboBoxKeyDown;
+                  ctrl.cbo.Style := orcsDropDown;
+                  ctrl.cbo.Pieces := '2';
+                  if pt = ptSkinReading then
                   begin
-                    idx := 1;
-                    for j := 0 to DefLoc.Count - 1 do
-                    begin
-                      LocText := Piece(DefLoc[j], U, 2);
-                      if LocText <> '' then
-                      begin
-                        if (LocText <> '0') and
-                          (IntToStr(StrToIntDef(LocText, 0)) = LocText) then
-                        begin
-                          LocFound := FALSE;
-                          for k := 0 to ctrl.cbo.Items.Count - 1 do
-                          begin
-                            if (Piece(ctrl.cbo.Items[k], U, 1) = LocText) then
-                            begin
-                              LocText := ctrl.cbo.Items[k];
-                              LocFound := TRUE;
-                              break;
-                            end;
-                          end;
-                          if not LocFound then
-                            LocText := '';
-                        end
-                        else
-                          LocText := '0^' + LocText;
-                        if LocText <> '' then
-                        begin
-                          ctrl.cbo.Items.insert(idx, LocText);
-                          inc(idx);
-                        end;
-                      end;
-                    end;
-
-                    if idx > 1 then
-                    begin
-                      ctrl.cbo.Items.insert(idx, '-1' + LLS_LINE);
-                      ctrl.cbo.Items.insert(idx + 1, '-1' + LLS_SPACE);
-                    end;
-                  end;
-                  finally
-                  FreeAndNil(defLoc);
+                    ctrl.cbo.Pieces := '1';
+                    ctrl.cbo.Items.Add('');
+                    for j := 0 to 50 do
+                      ctrl.cbo.Items.Add(IntToStr(j));
+                    GetComboBoxMinMax(ctrl.cbo, MinX, MaxX);
                   end
-                end;
-
-                MinX := MaxX;
-                ctrl.cbo.SelectByID(Prompt.Value);
-                if (ctrl.cbo.ItemIndex < 0) then
-                begin
-                  ctrl.cbo.Text := Prompt.Value;
+                  else // pt <> ptSkinReading
+                  begin
+                    ctrl.cbo.Tag := ComboPromptTags[pt];
+                    PCELoadORCombo(ctrl.cbo, MinX, MaxX);
+                  end;
+                  SetMinMax(MaxX, MaxX); // MinX := MaxX;
                   if (pt = ptVisitLocation) then
                   begin
-                    if ctrl.cbo.Items.Count > 0 then
-                      ctrl.cbo.Items[0] := '0' + U + Prompt.Value
-                    else
-                      ctrl.cbo.Items.Add('0' + U + Prompt.Value);
+                    DefLoc := TStringList.Create;
+                    try
+                      if GetDefLocations(DefLoc) > 0 then
+                      begin
+                        idx := 1;
+                        for j := 0 to DefLoc.Count - 1 do
+                        begin
+                          LocText := Piece(DefLoc[j], U, 2);
+                          if LocText <> '' then
+                          begin
+                            if (LocText <> '0') and
+                              (IntToStr(StrToIntDef(LocText, 0)) = LocText) then
+                            begin
+                              LocFound := FALSE;
+                              for k := 0 to ctrl.cbo.Items.Count - 1 do
+                              begin
+                                if (Piece(ctrl.cbo.Items[k], U, 1) = LocText) then
+                                begin
+                                  LocText := ctrl.cbo.Items[k];
+                                  LocFound := TRUE;
+                                  break;
+                                end;
+                              end;
+                              if not LocFound then
+                                LocText := '';
+                            end
+                            else
+                              LocText := '0^' + LocText;
+                            if LocText <> '' then
+                            begin
+                              ctrl.cbo.Items.insert(idx, LocText);
+                              inc(idx);
+                            end;
+                          end;
+                        end;
+
+                        if idx > 1 then
+                        begin
+                          ctrl.cbo.Items.insert(idx, '-1' + LLS_LINE);
+                          ctrl.cbo.Items.insert(idx + 1, '-1' + LLS_SPACE);
+                        end;
+                      end;
+                    finally
+                      FreeAndNil(defLoc);
+                    end
                   end;
                 end;
-                if (ctrl.cbo.ItemIndex < 0) then
-                  ctrl.cbo.ItemIndex := 0;
-                ctrl.cbo.OnChange := Prompt.PromptChange;
+                ctrl.cbo.OnChange := nil;
+                try
+                  ctrl.cbo.SelectByID(Prompt.Value);
+                  if (ctrl.cbo.ItemIndex < 0) then
+                  begin
+                    ctrl.cbo.Text := Prompt.Value;
+                    if (pt = ptVisitLocation) then
+                    begin
+                      if ctrl.cbo.Items.Count > 0 then
+                        ctrl.cbo.Items[0] := '0' + U + Prompt.Value
+                      else if isNew(ctrl.cbo) then
+                        ctrl.cbo.Items.Add('0' + U + Prompt.Value);
+                    end;
+                  end;
+                  if (ctrl.cbo.ItemIndex < 0) then
+                    ctrl.cbo.ItemIndex := 0;
+                  if isNew(ctrl.cbo) then
+                  begin
+                    ctrl.cbo.ListItemsOnly := (pt <> ptVisitLocation);
+                    UpdateColorsFor508Compliance(ctrl.cbo);
+                  end;
+                finally
+                  ctrl.cbo.OnChange := Prompt.PromptChange;
+                end;
                 DoLbl := TRUE;
-                ctrl.cbo.ListItemsOnly := (pt <> ptVisitLocation);
-                UpdateColorsFor508Compliance(ctrl.cbo);
               end;
 
             ptWHPapResult:
@@ -4696,64 +4843,72 @@ var
                   if (TRemData(FData[i]).DisplayWHResults) = TRUE then
                   begin
                     NextLine(Y);
-                    ctrl.btn := TCPRSDialogButton.Create(AOwner);
-                    ctrl.ctrl.Parent := AParent;
+                    ctrl.btn := GetControl('btn', TCPRSDialogButton,
+                      AOwner, AParent) as TCPRSDialogButton;
+                    if isNew(ctrl.btn) then
+                    begin
+                      ctrl.btn.OnClick := Prompt.DoWHReport;
+                      ctrl.btn.Caption := 'Review complete report';
+                      ctrl.btn.Width := TextWidthByFont(ctrl.btn.Font.Handle,
+                        ctrl.btn.Caption) + 13;
+                      ctrl.btn.Height := TextHeightByFont(ctrl.btn.Font.Handle,
+                        ctrl.btn.Caption) + 8;
+                      ScreenReaderSupport(ctrl.btn);
+                      UpdateColorsFor508Compliance(ctrl.btn);
+                    end;
                     ctrl.btn.Left := NewLinePromptGap + 15;
                     ctrl.btn.Top := Y + 7;
-                    ctrl.btn.OnClick := Prompt.DoWHReport;
-                    ctrl.btn.Caption := 'Review complete report';
-                    ctrl.btn.Width := TextWidthByFont(ctrl.btn.Font.Handle,
-                      ctrl.btn.Caption) + 13;
-                    ctrl.btn.Height := TextHeightByFont(ctrl.btn.Font.Handle,
-                      ctrl.btn.Caption) + 13;
-                    ctrl.btn.Height := TextHeightByFont(ctrl.btn.Handle,
-                      ctrl.btn.Caption) + 8;
-                    ScreenReaderSupport(ctrl.btn);
-                    UpdateColorsFor508Compliance(ctrl.btn);
                     Y := ctrl.btn.Top + ctrl.btn.Height;
                     NextLine(Y);
-                    ctrl.WHChk := TWHCheckBox.Create(AOwner);
-                    ctrl.ctrl.Parent := AParent;
+                    ctrl.WHChk := GetControl('WHChk', TWHCheckBox,
+                      AOwner, AParent) as TWHCheckBox;
                     ProcessLabel(Prompt.Required, TRUE, ctrl.WHChk.Parent,
                       ctrl.WHChk);
-                    if lblCtrl is TWinControl then
-                      TWinControl(lblCtrl).TabOrder := ctrl.WHChk.TabOrder;
+                    if isNew(lblCtrl) then
+                      UpdateColorsFor508Compliance(lblCtrl);
                     ctrl.WHChk.Flbl := lblCtrl;
                     ctrl.WHChk.Flbl.Top := Y + 5;
                     ctrl.WHChk.Flbl.Left := NewLinePromptGap + 15;
                     WrapLeft := ctrl.WHChk.Flbl.Left;
                     Y := ctrl.WHChk.Flbl.Top + ctrl.WHChk.Flbl.Height;
                     NextLine(Y);
-                    ctrl.WHChk.RadioStyle := TRUE;
-                    ctrl.WHChk.GroupIndex := 1;
-                    ctrl.WHChk.Check2 := TWHCheckBox.Create(AOwner);
-                    ctrl.WHChk.Check2.Parent := ctrl.WHChk.Parent;
-                    ctrl.WHChk.Check2.RadioStyle := TRUE;
-                    ctrl.WHChk.Check2.GroupIndex := 1;
-                    ctrl.WHChk.Check3 := TWHCheckBox.Create(AOwner);
-                    ctrl.WHChk.Check3.Parent := ctrl.WHChk.Parent;
-                    ctrl.WHChk.Check3.RadioStyle := TRUE;
-                    ctrl.WHChk.Check3.GroupIndex := 1;
-                    ctrl.WHChk.Caption := 'NEM (No Evidence of Malignancy)';
-                    ctrl.WHChk.ShowHint := TRUE;
-                    ctrl.WHChk.Hint := 'No Evidence of Malignancy';
-                    ctrl.WHChk.Width := TextWidthByFont(ctrl.WHChk.Font.Handle,
-                      ctrl.WHChk.Caption) + 20;
-                    ctrl.WHChk.Height :=
-                      TextHeightByFont(ctrl.WHChk.Font.Handle,
-                      ctrl.WHChk.Caption) + 4;
+                    if isNew(ctrl.WHChk) then
+                    begin
+                      ctrl.WHChk.RadioStyle := TRUE;
+                      ctrl.WHChk.GroupIndex := 1;
+                      ctrl.WHChk.Caption := 'NEM (No Evidence of Malignancy)';
+                      ctrl.WHChk.ShowHint := TRUE;
+                      ctrl.WHChk.Hint := 'No Evidence of Malignancy';
+                      ctrl.WHChk.Width := TextWidthByFont(ctrl.WHChk.Font.Handle,
+                        ctrl.WHChk.Caption) + 20;
+                      ctrl.WHChk.Height :=
+                        TextHeightByFont(ctrl.WHChk.Font.Handle,
+                        ctrl.WHChk.Caption) + 4;
+                      ctrl.WHChk.OnClick := Prompt.PromptChange;
+                      UpdateColorsFor508Compliance(ctrl.WHChk);
+                      ScreenReaderSupport(ctrl.WHChk);
+                    end;
                     ctrl.WHChk.Top := Y + 5;
                     ctrl.WHChk.Left := WrapLeft;
-                    ctrl.WHChk.OnClick := Prompt.PromptChange;
                     ctrl.WHChk.Checked := (WHResultChk = 'N');
                     LineWidth := WrapLeft + ctrl.WHChk.Width + 5;
-                    ctrl.WHChk.Check2.Caption := 'Abnormal';
-                    ctrl.WHChk.Check2.Width :=
-                      TextWidthByFont(ctrl.WHChk.Check2.Font.Handle,
-                      ctrl.WHChk.Check2.Caption) + 20;
-                    ctrl.WHChk.Check2.Height :=
-                      TextHeightByFont(ctrl.WHChk.Check2.Font.Handle,
-                      ctrl.WHChk.Check2.Caption) + 4;
+                    ctrl.WHChk.Check2 := GetControl('Check2',
+                      TWHCheckBox, AOwner, ctrl.WHChk.Parent) as TWHCheckBox;
+                    if isNew(ctrl.WHChk.Check2) then
+                    begin
+                      ctrl.WHChk.Check2.RadioStyle := TRUE;
+                      ctrl.WHChk.Check2.GroupIndex := 1;
+                      ctrl.WHChk.Check2.Caption := 'Abnormal';
+                      ctrl.WHChk.Check2.Width :=
+                        TextWidthByFont(ctrl.WHChk.Check2.Font.Handle,
+                        ctrl.WHChk.Check2.Caption) + 20;
+                      ctrl.WHChk.Check2.Height :=
+                        TextHeightByFont(ctrl.WHChk.Check2.Font.Handle,
+                        ctrl.WHChk.Check2.Caption) + 4;
+                      ctrl.WHChk.Check2.OnClick := Prompt.PromptChange;
+                      UpdateColorsFor508Compliance(ctrl.WHChk.Check2);
+                      ScreenReaderSupport(ctrl.WHChk.Check2);
+                    end;
                     if (LineWidth + ctrl.WHChk.Check2.Width) > PWidth - 10 then
                     begin
                       LineWidth := WrapLeft;
@@ -4762,16 +4917,25 @@ var
                     end;
                     ctrl.WHChk.Check2.Top := Y + 5;
                     ctrl.WHChk.Check2.Left := LineWidth;
-                    ctrl.WHChk.Check2.OnClick := Prompt.PromptChange;
                     ctrl.WHChk.Check2.Checked := (WHResultChk = 'A');
                     LineWidth := LineWidth + ctrl.WHChk.Check2.Width + 5;
-                    ctrl.WHChk.Check3.Caption := 'Unsatisfactory for Diagnosis';
-                    ctrl.WHChk.Check3.Width :=
-                      TextWidthByFont(ctrl.WHChk.Check3.Font.Handle,
-                      ctrl.WHChk.Check3.Caption) + 20;
-                    ctrl.WHChk.Check3.Height :=
-                      TextHeightByFont(ctrl.WHChk.Check3.Font.Handle,
-                      ctrl.WHChk.Check3.Caption) + 4;
+                    ctrl.WHChk.Check3 := GetControl('Check3',
+                      TWHCheckBox, AOwner, ctrl.WHChk.Parent) as TWHCheckBox;
+                    if isNew(ctrl.WHChk.Check3) then
+                    begin
+                      ctrl.WHChk.Check3.RadioStyle := TRUE;
+                      ctrl.WHChk.Check3.GroupIndex := 1;
+                      ctrl.WHChk.Check3.Caption := 'Unsatisfactory for Diagnosis';
+                      ctrl.WHChk.Check3.Width :=
+                        TextWidthByFont(ctrl.WHChk.Check3.Font.Handle,
+                        ctrl.WHChk.Check3.Caption) + 20;
+                      ctrl.WHChk.Check3.Height :=
+                        TextHeightByFont(ctrl.WHChk.Check3.Font.Handle,
+                        ctrl.WHChk.Check3.Caption) + 4;
+                      ctrl.WHChk.Check3.OnClick := Prompt.PromptChange;
+                      UpdateColorsFor508Compliance(ctrl.WHChk.Check3);
+                      ScreenReaderSupport(ctrl.WHChk.Check3);
+                    end;
                     if (LineWidth + ctrl.WHChk.Check3.Width) > PWidth - 10 then
                     begin
                       LineWidth := WrapLeft;
@@ -4779,16 +4943,8 @@ var
                       NextLine(Y);
                     end;
                     ctrl.WHChk.Check3.Top := Y + 5;
-                    ctrl.WHChk.Check3.OnClick := Prompt.PromptChange;
                     ctrl.WHChk.Check3.Checked := (WHResultChk = 'U');
                     ctrl.WHChk.Check3.Left := LineWidth;
-                    UpdateColorsFor508Compliance(ctrl.WHChk);
-                    UpdateColorsFor508Compliance(ctrl.WHChk.Flbl);
-                    UpdateColorsFor508Compliance(ctrl.WHChk.Check2);
-                    UpdateColorsFor508Compliance(ctrl.WHChk.Check3);
-                    ScreenReaderSupport(ctrl.WHChk);
-                    ScreenReaderSupport(ctrl.WHChk.Check2);
-                    ScreenReaderSupport(ctrl.WHChk.Check3);
                     Y := ctrl.WHChk.Check3.Top + ctrl.WHChk.Check3.Height;
                     NextLine(Y);
                   end
@@ -4802,28 +4958,30 @@ var
             ptWHNotPurp:
               begin
                 NextLine(Y);
-                ctrl.WHChk := TWHCheckBox.Create(AOwner);
-                ctrl.ctrl.Parent := AParent;
+                ctrl.WHChk := GetControl('WHChk', TWHCheckBox,
+                  AOwner, AParent) as TWHCheckBox;
                 ProcessLabel(Prompt.Required, TRUE, ctrl.WHChk.Parent,
                   ctrl.WHChk);
+                if isNew(lblCtrl) then
+                  UpdateColorsFor508Compliance(lblCtrl);
                 ctrl.WHChk.Flbl := lblCtrl;
-                if lblCtrl is TWinControl then
-                  TWinControl(lblCtrl).TabOrder := ctrl.WHChk.TabOrder;
                 ctrl.WHChk.Flbl.Top := Y + 7;
                 ctrl.WHChk.Flbl.Left := NewLinePromptGap + 30;
                 WrapLeft := ctrl.WHChk.Flbl.Left;
                 LineWidth := WrapLeft + ctrl.WHChk.Flbl.Width + 10;
-                ctrl.WHChk.Check2 := TWHCheckBox.Create(AOwner);
-                ctrl.WHChk.Check2.Parent := ctrl.WHChk.Parent;
-                ctrl.WHChk.Check3 := TWHCheckBox.Create(AOwner);
-                ctrl.WHChk.Check3.Parent := ctrl.WHChk.Parent;
-                ctrl.WHChk.ShowHint := TRUE;
-                ctrl.WHChk.Hint := 'Letter will print with next WH batch run';
-                ctrl.WHChk.Caption := 'Letter';
-                ctrl.WHChk.Width := TextWidthByFont(ctrl.WHChk.Font.Handle,
-                  ctrl.WHChk.Caption) + 25;
-                ctrl.WHChk.Height := TextHeightByFont(ctrl.WHChk.Font.Handle,
-                  ctrl.WHChk.Caption) + 4;
+                if isNew(ctrl.WHChk) then
+                begin
+                  ctrl.WHChk.ShowHint := TRUE;
+                  ctrl.WHChk.Hint := 'Letter will print with next WH batch run';
+                  ctrl.WHChk.Caption := 'Letter';
+                  ctrl.WHChk.Width := TextWidthByFont(ctrl.WHChk.Font.Handle,
+                    ctrl.WHChk.Caption) + 25;
+                  ctrl.WHChk.Height := TextHeightByFont(ctrl.WHChk.Font.Handle,
+                    ctrl.WHChk.Caption) + 4;
+                  ctrl.WHChk.OnClick := Prompt.PromptChange;
+                  UpdateColorsFor508Compliance(ctrl.WHChk);
+                  ScreenReaderSupport(ctrl.WHChk);
+                end;
                 if (LineWidth + ctrl.WHChk.Width) > PWidth - 10 then
                 begin
                   LineWidth := WrapLeft;
@@ -4832,16 +4990,23 @@ var
                 end;
                 ctrl.WHChk.Top := Y + 7;
                 ctrl.WHChk.Left := LineWidth;
-                ctrl.WHChk.OnClick := Prompt.PromptChange;
                 ctrl.WHChk.Checked := (pos('L', WHResultNot) > 0);
                 LineWidth := LineWidth + ctrl.WHChk.Width + 10;
-                ctrl.WHChk.Check2.Caption := 'In-Person';
-                ctrl.WHChk.Check2.Width :=
-                  TextWidthByFont(ctrl.WHChk.Check2.Font.Handle,
-                  ctrl.WHChk.Check2.Caption) + 25;
-                ctrl.WHChk.Check2.Height :=
-                  TextHeightByFont(ctrl.WHChk.Check2.Font.Handle,
-                  ctrl.WHChk.Check2.Caption) + 4;
+                ctrl.WHChk.Check2 := GetControl('Check2', TWHCheckBox,
+                  AOwner, ctrl.WHChk.Parent) as TWHCheckBox;
+                if isNew(ctrl.WHChk.Check2) then
+                begin
+                  ctrl.WHChk.Check2.Caption := 'In-Person';
+                  ctrl.WHChk.Check2.Width :=
+                    TextWidthByFont(ctrl.WHChk.Check2.Font.Handle,
+                    ctrl.WHChk.Check2.Caption) + 25;
+                  ctrl.WHChk.Check2.Height :=
+                    TextHeightByFont(ctrl.WHChk.Check2.Font.Handle,
+                    ctrl.WHChk.Check2.Caption) + 4;
+                  ctrl.WHChk.Check2.OnClick := Prompt.PromptChange;
+                  UpdateColorsFor508Compliance(ctrl.WHChk.Check2);
+                  ScreenReaderSupport(ctrl.WHChk.Check2);
+                end;
                 if (LineWidth + ctrl.WHChk.Check2.Width) > PWidth - 10 then
                 begin
                   LineWidth := WrapLeft;
@@ -4850,16 +5015,23 @@ var
                 end;
                 ctrl.WHChk.Check2.Top := Y + 7;
                 ctrl.WHChk.Check2.Left := LineWidth;
-                ctrl.WHChk.Check2.OnClick := Prompt.PromptChange;
                 ctrl.WHChk.Check2.Checked := (pos('I', WHResultNot) > 0);
                 LineWidth := LineWidth + ctrl.WHChk.Check2.Width + 10;
-                ctrl.WHChk.Check3.Caption := 'Phone Call';
-                ctrl.WHChk.Check3.Width :=
-                  TextWidthByFont(ctrl.WHChk.Check3.Font.Handle,
-                  ctrl.WHChk.Check3.Caption) + 20;
-                ctrl.WHChk.Check3.Height :=
-                  TextHeightByFont(ctrl.WHChk.Check3.Font.Handle,
-                  ctrl.WHChk.Check3.Caption) + 4;
+                ctrl.WHChk.Check3 := GetControl('Check3', TWHCheckBox,
+                  AOwner, ctrl.WHChk.Parent) as TWHCheckBox;
+                if isNew(ctrl.WHChk.Check3) then
+                begin
+                  ctrl.WHChk.Check3.Caption := 'Phone Call';
+                  ctrl.WHChk.Check3.Width :=
+                    TextWidthByFont(ctrl.WHChk.Check3.Font.Handle,
+                    ctrl.WHChk.Check3.Caption) + 20;
+                  ctrl.WHChk.Check3.Height :=
+                    TextHeightByFont(ctrl.WHChk.Check3.Font.Handle,
+                    ctrl.WHChk.Check3.Caption) + 4;
+                  ctrl.WHChk.Check3.OnClick := Prompt.PromptChange;
+                  UpdateColorsFor508Compliance(ctrl.WHChk.Check3);
+                  ScreenReaderSupport(ctrl.WHChk.Check3);
+                end;
                 if (LineWidth + ctrl.WHChk.Check3.Width) > PWidth - 10 then
                 begin
                   LineWidth := WrapLeft;
@@ -4867,48 +5039,50 @@ var
                   NextLine(Y);
                 end;
                 ctrl.WHChk.Check3.Top := Y + 7;
-                ctrl.WHChk.Check3.OnClick := Prompt.PromptChange;
                 ctrl.WHChk.Check3.Checked := (pos('P', WHResultNot) > 0);
                 ctrl.WHChk.Check3.Left := LineWidth;
                 Y := ctrl.WHChk.Check3.Top + ctrl.WHChk.Check3.Height;
                 NextLine(Y);
-                ctrl.WHChk.FButton := TCPRSDialogButton.Create(AOwner);
-                ctrl.WHChk.FButton.Parent := ctrl.WHChk.Parent;
+                ctrl.WHChk.FButton := GetControl('FButton',
+                  TCPRSDialogButton, AOwner, ctrl.WHChk.Parent) as TCPRSDialogButton;
                 ctrl.WHChk.FButton.Enabled := (pos('L', WHResultNot) > 0);
                 ctrl.WHChk.FButton.Left := ctrl.WHChk.Flbl.Left;
                 ctrl.WHChk.FButton.Top := Y + 7;
-                ctrl.WHChk.FButton.OnClick := Prompt.ViewWHText;
-                ctrl.WHChk.FButton.Caption := 'View WH Notification Letter';
-                ctrl.WHChk.FButton.Width :=
-                  TextWidthByFont(ctrl.WHChk.FButton.Font.Handle,
-                  ctrl.WHChk.FButton.Caption) + 13;
-                ctrl.WHChk.FButton.Height :=
-                  TextHeightByFont(ctrl.WHChk.FButton.Font.Handle,
-                  ctrl.WHChk.FButton.Caption) + 13;
-                UpdateColorsFor508Compliance(ctrl.WHChk);
-                UpdateColorsFor508Compliance(ctrl.WHChk.Flbl);
-                UpdateColorsFor508Compliance(ctrl.WHChk.Check2);
-                UpdateColorsFor508Compliance(ctrl.WHChk.Check3);
-                UpdateColorsFor508Compliance(ctrl.WHChk.FButton);
-                ScreenReaderSupport(ctrl.WHChk);
-                ScreenReaderSupport(ctrl.WHChk.Check2);
-                ScreenReaderSupport(ctrl.WHChk.Check3);
-                ScreenReaderSupport(ctrl.WHChk.FButton);
+                if isNew(ctrl.WHChk.FButton) then
+                begin
+                  ctrl.WHChk.FButton.OnClick := Prompt.ViewWHText;
+                  ctrl.WHChk.FButton.Caption := 'View WH Notification Letter';
+                  ctrl.WHChk.FButton.Width :=
+                    TextWidthByFont(ctrl.WHChk.FButton.Font.Handle,
+                    ctrl.WHChk.FButton.Caption) + 13;
+                  ctrl.WHChk.FButton.Height :=
+                    TextHeightByFont(ctrl.WHChk.FButton.Font.Handle,
+                    ctrl.WHChk.FButton.Caption) + 13;
+                  UpdateColorsFor508Compliance(ctrl.WHChk.FButton);
+                  ScreenReaderSupport(ctrl.WHChk.FButton);
+                end;
+
                 LineWidth := ctrl.WHChk.FButton.Left + ctrl.WHChk.FButton.Width;
                 if Piece(Prompt.FRec4, U, 12) = '1' then
                 begin
-                  ctrl.WHChk.FPrintNow := TCPRSDialogCheckBox.Create(AOwner);
-                  ctrl.WHChk.FPrintNow.Parent := ctrl.WHChk.Parent;
-                  ctrl.WHChk.FPrintNow.ShowHint := TRUE;
-                  ctrl.WHChk.FPrintNow.Hint :=
-                    'Letter will print after "Finish" button is clicked';
-                  ctrl.WHChk.FPrintNow.Caption := 'Print Now';
-                  ctrl.WHChk.FPrintNow.Width :=
-                    TextWidthByFont(ctrl.WHChk.FPrintNow.Font.Handle,
-                    ctrl.WHChk.FPrintNow.Caption) + 20;
-                  ctrl.WHChk.FPrintNow.Height :=
-                    TextHeightByFont(ctrl.WHChk.FPrintNow.Font.Handle,
-                    ctrl.WHChk.FPrintNow.Caption) + 4;
+                  ctrl.WHChk.FPrintNow := GetControl('FPrintNow',
+                    TCPRSDialogCheckBox, AOwner, ctrl.WHChk.Parent) as
+                    TCPRSDialogCheckBox;
+                  if isNew(ctrl.WHChk.FPrintNow) then
+                  begin
+                    ctrl.WHChk.FPrintNow.ShowHint := TRUE;
+                    ctrl.WHChk.FPrintNow.Hint :=
+                      'Letter will print after "Finish" button is clicked';
+                    ctrl.WHChk.FPrintNow.Caption := 'Print Now';
+                    ctrl.WHChk.FPrintNow.Width :=
+                      TextWidthByFont(ctrl.WHChk.FPrintNow.Font.Handle,
+                      ctrl.WHChk.FPrintNow.Caption) + 20;
+                    ctrl.WHChk.FPrintNow.Height :=
+                      TextHeightByFont(ctrl.WHChk.FPrintNow.Font.Handle,
+                      ctrl.WHChk.FPrintNow.Caption) + 4;
+                    UpdateColorsFor508Compliance(ctrl.WHChk.FPrintNow);
+                    ScreenReaderSupport(ctrl.WHChk.FPrintNow);
+                  end;
                   if (LineWidth + ctrl.WHChk.FPrintNow.Width) > PWidth - 10 then
                   begin
                     LineWidth := WrapLeft;
@@ -4918,9 +5092,12 @@ var
                   ctrl.WHChk.FPrintNow.Left := LineWidth + 15;
                   ctrl.WHChk.FPrintNow.Top := Y + 7;
                   ctrl.WHChk.FPrintNow.Enabled := (pos('L', WHResultNot) > 0);
-                  ctrl.WHChk.FPrintNow.Checked := (WHPrintDevice <> '');
-                  ctrl.WHChk.FPrintNow.OnClick := Prompt.PromptChange;
-                  UpdateColorsFor508Compliance(ctrl.WHChk.FPrintNow);
+                  ctrl.WHChk.FPrintNow.OnClick := nil;
+                  try
+                    ctrl.WHChk.FPrintNow.Checked := (WHPrintDevice <> '');
+                  finally
+                    ctrl.WHChk.FPrintNow.OnClick := Prompt.PromptChange;
+                  end;
                   MinX := PWidth;
                   if (ctrl.WHChk.FButton.Top + ctrl.WHChk.FButton.Height) >
                     (ctrl.WHChk.FPrintNow.Top + ctrl.WHChk.FPrintNow.Height)
@@ -4929,7 +5106,6 @@ var
                   else
                     Y := ctrl.WHChk.FPrintNow.Top +
                       ctrl.WHChk.FPrintNow.Height + 7;
-                  ScreenReaderSupport(ctrl.WHChk.FPrintNow);
                 end
                 else
                   Y := ctrl.WHChk.FButton.Top + ctrl.WHChk.FButton.Height + 7;
@@ -4938,36 +5114,38 @@ var
 
             ptVisitDate:
               begin
-                ctrl.dt := TCPRSDialogDateCombo.Create(AOwner);
-                ctrl.ctrl.Parent := AParent;
-                ctrl.dt.LongMonths := TRUE;
-                try
-                  DefaultDate := ctrl.dt.FMDate;
-                  ctrl.dt.FMDate := StrToFloat(Prompt.Value);
-                except
-                  on EConvertError do
-                    ctrl.dt.FMDate := DefaultDate;
-                  else
-                    raise;
+                ctrl.dt := GetControl('dt', TCPRSDialogDateCombo,
+                  AOwner, AParent) as TCPRSDialogDateCombo;
+                if isNew(ctrl.dt) then
+                begin
+                  ctrl.dt.LongMonths := TRUE;
+                  UpdateColorsFor508Compliance(ctrl.dt);
+                  SetMinMax(ctrl.dt.Width);
                 end;
-                ctrl.dt.OnChange := Prompt.PromptChange;
-                UpdateColorsFor508Compliance(ctrl.dt);
+                ctrl.dt.OnChange := nil;
+                try
+                  ctrl.dt.FMDate := StrToFloatDef(Prompt.Value, ctrl.dt.FMDate);
+                finally
+                  ctrl.dt.OnChange := Prompt.PromptChange;
+                end;
                 DoLbl := TRUE;
-                MinX := ctrl.dt.Width;
               end;
 
             ptDate, ptDateTime:
               begin
-                ctrl.date :=  TCPRSDialogDateBox.Create(AOwner);
-                ctrl.ctrl.Parent := AParent;
-                if pt = ptDate then ctrl.date.DateOnly := true
-                else ctrl.date.DateOnly := false;
-
+                ctrl.date :=  GetControl('date', TCPRSDialogDateBox,
+                  AOwner, AParent) as TCPRSDialogDateBox;
+                if isNew(ctrl.date) then
+                begin
+                  if pt = ptDate then ctrl.date.DateOnly := true
+                  else ctrl.date.DateOnly := false;
 //                ctrl.dt.LongMonths := TRUE;
+                  UpdateColorsFor508Compliance(ctrl.date);
+                  SetMinMax(ctrl.date.Width);
+                end;
+                ctrl.date.OnChange := nil;
                 try
-                  DefaultDate := ctrl.date.FMDateTime;
                   tmp := Prompt.Value;
-//                  ctrl.date.FMDateTime := StrToFloat(Prompt.Value);
                   if tmp = 'E' then
                     begin
                       ctrl.date.FMDateTime := prompt.FParent.FReminder.PCEDataObj.DateTime;
@@ -4975,171 +5153,178 @@ var
                     end
                   else
                     ctrl.date.FMDateTime := StrToFloatDef(tmp, 0);
-//                  ctrl.date.FMDateTime :=  prompt.FParent.FReminder.FPCEDataObj.DateTime;
-                except
-                  on EConvertError do
-                    ctrl.date.FMDateTime := DefaultDate;
-                  else
-                    raise;
+                finally
+                  if Prompt.EventType = 'E' then
+                    ctrl.Date.onExit := Prompt.promptChange
+                  else ctrl.date.OnChange := Prompt.PromptChange;
                 end;
-                if Prompt.EventType = 'E' then
-                  ctrl.Date.onExit := Prompt.promptChange
-                else ctrl.date.OnChange := Prompt.PromptChange;
-                UpdateColorsFor508Compliance(ctrl.date);
                 DoLbl := TRUE;
-                MinX := ctrl.date.Width;
               end;
 
             ptView, ptPrint:
               begin
-                ctrl.btn := TCPRSDialogButton.Create(AOwner);
-                ctrl.ctrl.Parent := AParent;
-
+                ctrl.btn := GetControl('btn', TCPRSDialogButton,
+                  AOwner, AParent) as TCPRSDialogButton;
+                if isNew(ctrl.btn) then
+                begin
 //                if Piece(prompt.FRec4, U, 12) <> 'V'  then
                   ctrl.btn.OnClick := Prompt.DoView;
 //                else ctrl.btn.OnClick := prompt.PromptChange;
-                ctrl.btn.Caption := Prompt.ForcedCaption;
-                if prompt.Required then
-                begin
-                  ctrl.btn.Caption := ctrl.btn.Caption + ' *';
-                  (ctrl.btn as ICPRSDialogComponent).RequiredField := TRUE;
+                  ctrl.btn.Caption := Prompt.ForcedCaption;
+                  if prompt.Required then
+                  begin
+                    ctrl.btn.Caption := ctrl.btn.Caption + ' *';
+                    (ctrl.btn as ICPRSDialogComponent).RequiredField := TRUE;
+                  end;
+                  SetMinMax(TextWidthByFont(ctrl.btn.Font.Handle,
+                    ctrl.btn.Caption) + 13);
+                  ctrl.btn.Height := TextHeightByFont(ctrl.btn.Font.Handle,
+                    ctrl.btn.Caption) + 8;
                 end;
-                MinX := TextWidthByFont(ctrl.btn.Font.Handle,
-                  ctrl.btn.Caption) + 13;
-                ctrl.btn.Height := TextHeightByFont(ctrl.btn.Font.Handle,
-                  ctrl.btn.Caption) + 8;
                 DoLbl := FALSE;
               end;
+
             ptPrimaryDiag, ptAdd2PL, ptContraindicated:
               begin
-                ctrl.cb := TCPRSDialogCheckBox.Create(AOwner);
-                ctrl.ctrl.Parent := AParent;
-                ctrl.cb.Checked := (Prompt.Value = '1');
-                ctrl.cb.Caption := Prompt.Caption;
+                ctrl.cb := GetControl('cb', TCPRSDialogCheckBox,
+                  AOwner, AParent) as TCPRSDialogCheckBox;
+                if isNew(ctrl.cb) then
+                begin
+                  ctrl.cb.OnEnter := ParentCBEnter;
+                  ctrl.cb.OnExit := ParentCBExit;
+                  ctrl.cb.Caption := Prompt.Caption;
+                  ctrl.cb.AutoSize := FALSE;
+                  ctrl.cb.Height := TORCheckBox(ctrl.cb).Height + 5;
+                  ctrl.cb.Width := 17;
+                  UpdateColorsFor508Compliance(ctrl.cb);
+                  SetMinMax(ctrl.cb.Width);
+                end;
+                ctrl.cb.OnClick := nil;
+                try
+                  ctrl.cb.Checked := (Prompt.Value = '1');
+                finally
+                  ctrl.cb.OnClick := Prompt.PromptChange;
+                end;
                 if Prompt.Required = FALSE then
                   DoLbl := TRUE;
-                ctrl.cb.AutoSize := FALSE;
-                ctrl.cb.OnEnter := ParentCBEnter;
-                ctrl.cb.OnExit := ParentCBExit;
-                ctrl.cb.Height := TORCheckBox(ctrl.cb).Height + 5;
-                ctrl.cb.Width := 17;
-                ctrl.cb.OnClick := Prompt.PromptChange;
-                UpdateColorsFor508Compliance(ctrl.cb);
-                MinX := ctrl.cb.Width;
               end;
 
           else
             begin
               if (pt = ptSubComment) then
               begin
-                ctrl.cb := TCPRSDialogCheckBox.Create(AOwner);
-                ctrl.ctrl.Parent := AParent;
-                ctrl.cb.Checked := (Prompt.Value = '1');
-                ctrl.cb.Caption := Prompt.Caption;
-                if (ctrl.cb.Checked = false) then
-                  begin
-//                    if textArr = nil then textArr := TStringList.Create;
-                    text := prompt.FParent.FCommentPrompt.value;
-                    if pos(ctrl.cb.Caption, text)>0 then
-                      begin
-                        ctrl.cb.Checked := true;
-                        Prompt.Value := '1';
-                      end;
-                  end;
-
-//                    PiecestoList(text, ',', textArr);
-//                    for t := 0 to textArr.Count -1 do
-//                      begin
-//
-//                        if Pos(trim(textArr.Strings[t]), Prompt.Caption)>0 then ctrl.cb.Checked := true;
-//
-//                      end;
-//                  end;
-                ctrl.cb.AutoSize := TRUE;
-                ctrl.cb.OnClick := SubCommentChange;
-//                if (ctrl.cb.Checked = false) then
-//                  begin
-////                    if textArr = nil then textArr := TStringList.Create;
-//                    text := prompt.FParent.FCommentPrompt.value;
-//                    if pos(Prompt.Caption, text)>0 then ctrl.cb.Checked := true;
-//                  end;
-                ctrl.cb.Tag := integer(Prompt);
-                UpdateColorsFor508Compliance(ctrl.cb);
-                MinX := ctrl.cb.Width;
+                ctrl.cb := GetControl('cb', TCPRSDialogCheckBox,
+                  AOwner, AParent) as TCPRSDialogCheckBox;
+                if isNew(ctrl.cb) then
+                begin
+                  ctrl.cb.Caption := Prompt.Caption;
+                  ctrl.cb.AutoSize := TRUE;
+                  ctrl.cb.Tag := integer(Prompt);
+                  UpdateColorsFor508Compliance(ctrl.cb);
+                  SetMinMax(ctrl.cb.Width);
+                end;
+                ctrl.cb.OnClick := nil;
+                try
+                  ctrl.cb.Checked := (Prompt.Value = '1');
+                  if (ctrl.cb.Checked = false) then
+                    begin
+  //                    if textArr = nil then textArr := TStringList.Create;
+                      text := prompt.FParent.FCommentPrompt.value;
+                      if pos(ctrl.cb.Caption, text)>0 then
+                        begin
+                          ctrl.cb.Checked := true;
+                          Prompt.Value := '1';
+                        end;
+                    end;
+                finally
+                  ctrl.cb.OnClick := SubCommentChange;
+                end;
               end
               else if pt = ptVitalEntry then
               begin
                 vt := Prompt.VitalType;
                 if (vt = vtPain) then
                 begin
-                  ctrl.cbo := TCPRSDialogComboBox.Create(AOwner);
-                  ctrl.ctrl.Parent := AParent;
-                  ctrl.cbo.Style := orcsDropDown;
-                  ctrl.cbo.Pieces := '1,2';
-                  ctrl.cbo.OnKeyDown := Prompt.ComboBoxKeyDown;
-                  InitPainCombo(ctrl.cbo);
-                  ctrl.cbo.ListItemsOnly := TRUE;
-                  ctrl.cbo.SelectByID(Prompt.VitalValue);
-                  ctrl.cbo.OnChange := Prompt.PromptChange;
+                  ctrl.cbo := GetControl('cbo', TCPRSDialogComboBox,
+                    AOwner, AParent) as TCPRSDialogComboBox;
+                  if isNew(ctrl.cbo) then
+                  begin
+                    ctrl.cbo.Style := orcsDropDown;
+                    ctrl.cbo.Pieces := '1,2';
+                    ctrl.cbo.OnKeyDown := Prompt.ComboBoxKeyDown;
+                    InitPainCombo(ctrl.cbo);
+                    ctrl.cbo.ListItemsOnly := TRUE;
+                    SetMinMax(TextWidthByFont(ctrl.cbo.Font.Handle,
+                      ctrl.cbo.DisplayText[0]) + 24,
+                      TextWidthByFont(ctrl.cbo.Font.Handle,
+                      ctrl.cbo.DisplayText[1]) + 24);
+                    UpdateColorsFor508Compliance(ctrl.cbo);
+                  end;
+                  ctrl.cbo.OnChange := nil;
+                  try
+                    ctrl.cbo.SelectByID(Prompt.VitalValue);
+                  finally
+                    ctrl.cbo.OnChange := Prompt.PromptChange;
+                  end;
                   ctrl.cbo.SelLength := 0;
-                  MinX := TextWidthByFont(ctrl.cbo.Font.Handle,
-                    ctrl.cbo.DisplayText[0]) + 24;
-                  MaxX := TextWidthByFont(ctrl.cbo.Font.Handle,
-                    ctrl.cbo.DisplayText[1]) + 24;
                   if (ElementChecked = Self) then
                   begin
                     AutoFocusControl := ctrl.cbo;
                     ElementChecked := nil;
                   end;
-                  UpdateColorsFor508Compliance(ctrl.cbo);
                 end
                 else
                 begin
-                  ctrl.vedt := TVitalEdit.Create(AOwner);
-                  ctrl.ctrl.Parent := AParent;
-                  MinX := TextWidthByFont(ctrl.vedt.Font.Handle, '12345.67');
-                  ctrl.vedt.OnKeyPress := Prompt.EditKeyPress;
-                  ctrl.vedt.OnChange := Prompt.PromptChange;
-                  ctrl.vedt.OnExit := Prompt.VitalVerify;
-                  UpdateColorsFor508Compliance(ctrl.vedt);
+                  ctrl.vedt := GetControl('vedt', TVitalEdit, AOwner,
+                    AParent) as TVitalEdit;
+                  if isNew(ctrl.vedt) then
+                  begin
+                    SetMinMax(TextWidthByFont(ctrl.vedt.Font.Handle, '12345.67'));
+                    ctrl.vedt.OnKeyPress := Prompt.EditKeyPress;
+                    ctrl.vedt.OnChange := Prompt.PromptChange;
+                    ctrl.vedt.OnExit := Prompt.VitalVerify;
+                    UpdateColorsFor508Compliance(ctrl.vedt);
+                  end;
                   if (vt in [vtTemp, vtHeight, vtWeight]) then
                   begin
                     HasVCombo := TRUE;
-                    ctrl.vedt.LinkedCombo := TVitalComboBox.Create(AOwner);
-                    ctrl.vedt.LinkedCombo.Parent := AParent;
-                    ctrl.vedt.LinkedCombo.OnChange := Prompt.PromptChange;
-                    ctrl.vedt.LinkedCombo.Tag := VitalControlTag(vt, TRUE);
-                    ctrl.vedt.LinkedCombo.OnExit := Prompt.VitalVerify;
-                    ctrl.vedt.LinkedCombo.LinkedEdit := ctrl.vedt;
-                    case vt of
-                      vtTemp:
-                        begin
-                          ctrl.vedt.LinkedCombo.Items.Add('F');
-                          ctrl.vedt.LinkedCombo.Items.Add('C');
-                        end;
+                    ctrl.vedt.LinkedCombo := GetControl('LinkedCombo',
+                      TVitalComboBox, AOwner, AParent) as TVitalComboBox;
+                    if isNew(ctrl.vedt.LinkedCombo) then
+                    begin
+                      ctrl.vedt.LinkedCombo.OnChange := Prompt.PromptChange;
+                      ctrl.vedt.LinkedCombo.Tag := VitalControlTag(vt, TRUE);
+                      ctrl.vedt.LinkedCombo.OnExit := Prompt.VitalVerify;
+                      ctrl.vedt.LinkedCombo.LinkedEdit := ctrl.vedt;
+                      case vt of
+                        vtTemp:
+                          begin
+                            ctrl.vedt.LinkedCombo.Items.Add('F');
+                            ctrl.vedt.LinkedCombo.Items.Add('C');
+                          end;
 
-                      vtHeight:
-                        begin
-                          ctrl.vedt.LinkedCombo.Items.Add('IN');
-                          ctrl.vedt.LinkedCombo.Items.Add('CM');
-                        end;
+                        vtHeight:
+                          begin
+                            ctrl.vedt.LinkedCombo.Items.Add('IN');
+                            ctrl.vedt.LinkedCombo.Items.Add('CM');
+                          end;
 
-                      vtWeight:
-                        begin
-                          ctrl.vedt.LinkedCombo.Items.Add('LB');
-                          ctrl.vedt.LinkedCombo.Items.Add('KG');
-                        end;
-
+                        vtWeight:
+                          begin
+                            ctrl.vedt.LinkedCombo.Items.Add('LB');
+                            ctrl.vedt.LinkedCombo.Items.Add('KG');
+                          end;
+                      end;
+                      ctrl.vedt.LinkedCombo.Width :=
+                        TextWidthByFont(ctrl.vedt.Font.Handle,
+                        ctrl.vedt.LinkedCombo.Items[1]) + 30;
+                      UpdateColorsFor508Compliance(ctrl.vedt.LinkedCombo);
+                      SetMinMax(MinX + ctrl.vedt.LinkedCombo.Width);
                     end;
                     ctrl.vedt.LinkedCombo.SelectByID(Prompt.VitalUnitValue);
                     if (ctrl.vedt.LinkedCombo.ItemIndex < 0) then
                       ctrl.vedt.LinkedCombo.ItemIndex := 0;
-                    ctrl.vedt.LinkedCombo.Width :=
-                      TextWidthByFont(ctrl.vedt.Font.Handle,
-                      ctrl.vedt.LinkedCombo.Items[1]) + 30;
                     ctrl.vedt.LinkedCombo.SelLength := 0;
-                    UpdateColorsFor508Compliance(ctrl.vedt.LinkedCombo);
-                    inc(MinX, ctrl.vedt.LinkedCombo.Width);
                   end;
                   if (ElementChecked = Self) then
                   begin
@@ -5148,55 +5333,66 @@ var
                   end;
                 end;
                 ctrl.ctrl.Text := Prompt.VitalValue;
-                ctrl.ctrl.Tag := VitalControlTag(vt);
+                if isNew(ctrl.ctrl) then
+                  ctrl.ctrl.Tag := VitalControlTag(vt);
                 DoLbl := TRUE;
               end
               else if pt = ptDataList then
               begin
-                ctrl.cbo := TCPRSDialogComboBox.Create(AOwner);
-                ctrl.ctrl.Parent := AParent;
-                ctrl.cbo.Style := orcsDropDown;
-                ctrl.cbo.Pieces := '12';
-                if ActChoicesSL = nil then
-                  ActChoicesSL := TORStringList.Create;
-                if Self.Historical then
-                  encDt := DateTimeToFMDateTime(Date)
-                else
-                  encDt := RemForm.PCEObj.VisitDateTime;
-                if Assigned(Prompt.FData.FChoicesActiveDates)
-                then { csv active/inactive dates }
-                  for M := 0 to (Prompt.FData.FChoices.Count - 1) do
+                ctrl.cbo := GetControl('cbo', TCPRSDialogComboBox,
+                  AOwner, AParent) as TCPRSDialogComboBox;
+                if isNew(ctrl.cbo) then
+                begin
+                  ctrl.cbo.Style := orcsDropDown;
+                  ctrl.cbo.Pieces := '12';
+                  if ActChoicesSL = nil then
+                    ActChoicesSL := TORStringList.Create;
+                  if Assigned(Prompt.FData.FChoicesActiveDates)
+                  then { csv active/inactive dates }
                   begin
-                    for n := 0 to
-                      (TStringList(Prompt.FData.FChoicesActiveDates[M])
-                      .Count - 1) do
+                    if Self.Historical then
+                      encDt := DateTimeToFMDateTime(Date)
+                    else
+                      encDt := RemForm.PCEObj.VisitDateTime;
+                    for M := 0 to (Prompt.FData.FChoices.Count - 1) do
                     begin
-                      ActDt := StrToIntDef
-                        ((Piece(TStringList(Prompt.FData.FChoicesActiveDates[M])
-                        .Strings[n], ':', 1)), 0);
-                      InActDt :=
-                        StrToIntDef
-                        ((Piece(TStringList(Prompt.FData.FChoicesActiveDates[M])
-                        .Strings[n], ':', 2)), 9999999);
-                      // Piece12 := Piece(Piece(Prompt.FData.FChoices.Strings[m],U,12),':',1);
-                      Piece12 := Piece(Prompt.FData.FChoices.Strings[M], U, 12);
-                      Prompt.FData.FChoices.SetStrPiece(M, 12, Piece12);
-                      if (encDt >= ActDt) and (encDt <= InActDt) then
-                        ActChoicesSL.AddObject(Prompt.FData.FChoices[M],
-                          Prompt.FData.FChoices.Objects[M]);
-                    end; { loop through the TStringList object in FChoicesActiveDates[m] object property }
-                  end { loop through FChoices/FChoicesActiveDates }
-                else
-                  FastAssign(Prompt.FData.FChoices, ActChoicesSL);
-                FastAssign(ActChoicesSL, ctrl.cbo.Items);
-                ctrl.cbo.CheckBoxes := TRUE;
-                ctrl.cbo.SelectByID(Prompt.Value);
-                ctrl.cbo.OnCheckedText := FReminder.ComboBoxCheckedText;
-                ctrl.cbo.OnResize := FReminder.ComboBoxResized;
-                ctrl.cbo.CheckedString := Prompt.Value;
-                ctrl.cbo.OnChange := Prompt.PromptChange;
-                ctrl.cbo.ListItemsOnly := TRUE;
-                UpdateColorsFor508Compliance(ctrl.cbo);
+                      for n := 0 to
+                        (TStringList(Prompt.FData.FChoicesActiveDates[M])
+                        .Count - 1) do
+                      begin
+                        ActDt := StrToIntDef
+                          ((Piece(TStringList(Prompt.FData.FChoicesActiveDates[M])
+                          .Strings[n], ':', 1)), 0);
+                        InActDt :=
+                          StrToIntDef
+                          ((Piece(TStringList(Prompt.FData.FChoicesActiveDates[M])
+                          .Strings[n], ':', 2)), 9999999);
+                        // Piece12 := Piece(Piece(Prompt.FData.FChoices.Strings[m],U,12),':',1);
+                        Piece12 := Piece(Prompt.FData.FChoices.Strings[M], U, 12);
+                        Prompt.FData.FChoices.SetStrPiece(M, 12, Piece12);
+                        if (encDt >= ActDt) and (encDt <= InActDt) then
+                          ActChoicesSL.AddObject(Prompt.FData.FChoices[M],
+                            Prompt.FData.FChoices.Objects[M]);
+                      end; { loop through the TStringList object in FChoicesActiveDates[m] object property }
+                    end; { loop through FChoices/FChoicesActiveDates }
+                  end
+                  else
+                    FastAssign(Prompt.FData.FChoices, ActChoicesSL);
+                  FastAssign(ActChoicesSL, ctrl.cbo.Items);
+                  ctrl.cbo.CheckBoxes := TRUE;
+                  ctrl.cbo.OnResize := FReminder.ComboBoxResized;
+                  ctrl.cbo.ListItemsOnly := TRUE;
+                  UpdateColorsFor508Compliance(ctrl.cbo);
+                end;
+                ctrl.cbo.OnCheckedText := nil;
+                ctrl.cbo.OnChange := nil;
+                try
+                  ctrl.cbo.SelectByID(Prompt.Value);
+                finally
+                  ctrl.cbo.OnCheckedText := FReminder.ComboBoxCheckedText;
+                  ctrl.cbo.CheckedString := Prompt.Value;
+                  ctrl.cbo.OnChange := Prompt.PromptChange;
+                end;
                 if (ElementChecked = Self) then
                 begin
                   AutoFocusControl := ctrl.cbo;
@@ -5205,18 +5401,22 @@ var
                 DoLbl := TRUE;
                 if (Prompt.FData.FChoicesFont = ctrl.cbo.Font.Handle) then
                 begin
-                  MinX := Prompt.FData.FChoicesMin;
-                  MaxX := Prompt.FData.FChoicesMax;
+                  if isNew(ctrl.cbo) then
+                    SetMinMax(Prompt.FData.FChoicesMin, Prompt.FData.FChoicesMax)
                 end
                 // agp ICD-10 suppress combobox and label if no values.
                 else if (ctrl.cbo.Items.Count > 0) then
                 begin
-                  GetComboBoxMinMax(ctrl.cbo, MinX, MaxX);
-                  inc(MaxX, 18); // Adjust for checkboxes
-                  MinX := MaxX;
-                  Prompt.FData.FChoicesFont := ctrl.cbo.Font.Handle;
-                  Prompt.FData.FChoicesMin := MinX;
-                  Prompt.FData.FChoicesMax := MaxX;
+                  if isNew(ctrl.cbo) then
+                  begin
+                    GetComboBoxMinMax(ctrl.cbo, MinX, MaxX);
+                    inc(MaxX, 18); // Adjust for checkboxes
+                    MinX := MaxX;
+                    Prompt.FData.FChoicesFont := ctrl.cbo.Font.Handle;
+                    Prompt.FData.FChoicesMin := MinX;
+                    Prompt.FData.FChoicesMax := MaxX;
+                    SetMinMax(MinX, MaxX);
+                  end;
                 end
                 else
                   DoLbl := FALSE
@@ -5224,67 +5424,86 @@ var
               else if (pt = ptMHTest) or ((pt = ptGAF) and (MHDLLFound = TRUE))
               then
               begin
-                ctrl.btn := TCPRSDialogButton.Create(AOwner);
-                ctrl.ctrl.Parent := AParent;
-                ctrl.btn.OnClick := Prompt.DoMHTest;
-                ctrl.btn.Caption := 'Perform ' + Prompt.FData.Narrative;
-//                ctrl.btn.Caption := Prompt.ForcedCaption;
-                if Piece(Prompt.FData.FRec3, U, 13) = '1' then
+                ctrl.btn := GetControl('btn', TCPRSDialogButton,
+                  AOwner, AParent) as TCPRSDialogButton;
+                if isNew(ctrl.btn) then
                 begin
-                  ctrl.btn.Caption := ctrl.btn.Caption + ' *';
-                  (ctrl.btn as ICPRSDialogComponent).RequiredField := TRUE;
+                  ctrl.btn.OnClick := Prompt.DoMHTest;
+                  ctrl.btn.Caption := 'Perform ' + Prompt.FData.Narrative;
+  //                ctrl.btn.Caption := Prompt.ForcedCaption;
+                  if Piece(Prompt.FData.FRec3, U, 13) = '1' then
+                  begin
+                    ctrl.btn.Caption := ctrl.btn.Caption + ' *';
+                    (ctrl.btn as ICPRSDialogComponent).RequiredField := TRUE;
+                  end;
+                  SetMinMax(TextWidthByFont(ctrl.btn.Font.Handle,
+                    ctrl.btn.Caption) + 13);
+                  ctrl.btn.Height := TextHeightByFont(ctrl.btn.Font.Handle,
+                    ctrl.btn.Caption) + 8;
                 end;
-                MinX := TextWidthByFont(ctrl.btn.Font.Handle,
-                  ctrl.btn.Caption) + 13;
-                ctrl.btn.Height := TextHeightByFont(ctrl.btn.Font.Handle,
-                  ctrl.btn.Caption) + 8;
                 DoLbl := false;
               end
               else if ((pt = ptGAF)) and (MHDLLFound = FALSE) then
               begin
-                ctrl.edt := TCPRSDialogFieldEdit.Create(AOwner);
-                ctrl.ctrl.Parent := AParent;
-                ctrl.edt.Text := Prompt.Value;
-                ud := TUpDown.Create(AOwner);
-                ud.Parent := AParent;
-                ud.Associate := ctrl.edt;
-                ud.Min := 0;
-                ud.max := 100;
-                MinX := TextWidthByFont(ctrl.edt.Font.Handle, IntToStr(ud.max))
-                  + 24 + Gap;
-                ud.Position := StrToIntDef(Prompt.Value, ud.Min);
-                ctrl.edt.OnKeyPress := Prompt.EditKeyPress;
-                ctrl.edt.OnChange := Prompt.PromptChange;
+                ctrl.edt := GetControl('edt', TCPRSDialogFieldEdit,
+                  AOwner, AParent) as TCPRSDialogFieldEdit;
+                ctrl.edt.OnChange := nil;
+                try
+                  ctrl.edt.Text := Prompt.Value;
+                  ud := GetControl('ud', TUpDown, AOwner, AParent) as TUpDown;
+                  if isNew(ud) then
+                  begin
+                    ud.Associate := ctrl.edt;
+                    ud.Min := 0;
+                    ud.max := 100;
+                  end;
+                  if isNew(ctrl.edt) then
+                  begin
+                    SetMinMax(TextWidthByFont(ctrl.edt.Font.Handle, IntToStr(ud.max))
+                      + 24 + Gap);
+                    ctrl.edt.OnKeyPress := Prompt.EditKeyPress;
+                  end;
+                  ud.Position := StrToIntDef(Prompt.Value, ud.Min);
+                finally
+                  ctrl.edt.OnChange := Prompt.PromptChange;
+                end;
                 if (User.WebAccess and (GAFURL <> '')) then
                 begin
-                  HelpBtn := TCPRSDialogButton.Create(AOwner);
-                  HelpBtn.Parent := AParent;
-                  HelpBtn.Caption := 'Reference Info';
-                  HelpBtn.OnClick := Prompt.GAFHelp;
-                  HelpBtn.Width := TextWidthByFont(HelpBtn.Font.Handle,
-                    HelpBtn.Caption) + 13;
-                  HelpBtn.Height := ctrl.edt.Height;
-                  inc(MinX, HelpBtn.Width);
+                  HelpBtn := GetControl('HelpBtn', TCPRSDialogButton,
+                    AOwner, AParent) as TCPRSDialogButton;
+                  if isNew(HelpBtn) then
+                  begin
+                    HelpBtn.Caption := 'Reference Info';
+                    HelpBtn.OnClick := Prompt.GAFHelp;
+                    HelpBtn.Width := TextWidthByFont(HelpBtn.Font.Handle,
+                      HelpBtn.Caption) + 13;
+                    HelpBtn.Height := ctrl.edt.Height;
+                    SetMinMax(MinX + HelpBtn.Width);
+                  end;
                 end;
                 DoLbl := TRUE;
               end
               else if (pt = ptImmunization) or (pt = ptSkinTest) then
                 begin
-                  ctrl.btn := TCPRSDialogButton.Create(AOwner);
-                  ctrl.ctrl.Parent := AParent;
-                  ctrl.btn.OnClick := Prompt.DoVimm;
-                  if assigned(Prompt.FData) and (Piece(Prompt.FData.FRec3, U, 13) = '1') then isReq := '*'
-                  else isReq := '';
-                  if assigned(Prompt.FData) and (Piece(Prompt.FData.FRec3, u, 10) <> '') then ctrl.btn.Caption := Piece(Prompt.FData.FRec3, u, 10) + isReq
-                  else if pt = ptSkinTest then ctrl.btn.Caption := 'Enter Skin Test' + isReq
-                  else ctrl.btn.Caption := 'Enter Immunizations' + isReq;
-//                  if Piece(Prompt.FData.FRec3, U, 13) = '1' then
-//                    begin
-//                      ctrl.btn.Caption := ctrl.btn.Caption + ' *';
-//                      (ctrl.btn as ICPRSDialogComponent).RequiredField := TRUE;
-//                    end;
-                  MinX := TextWidthByFont(ctrl.btn.Font.Handle, ctrl.btn.Caption) + 13;
-                  ctrl.btn.Height := TextHeightByFont(ctrl.btn.Font.Handle, ctrl.btn.Caption) + 8;
+                  ctrl.btn := GetControl('btn', TCPRSDialogButton,
+                    AOwner, AParent) as TCPRSDialogButton;
+                  if isNew(ctrl.btn) then
+                  begin
+                    ctrl.btn.OnClick := Prompt.DoVimm;
+                    if assigned(Prompt.FData) and (Piece(Prompt.FData.FRec3, U, 13) = '1') then isReq := '*'
+                    else isReq := '';
+                    if assigned(Prompt.FData) and (Piece(Prompt.FData.FRec3, u, 10) <> '') then
+                      ctrl.btn.Caption := Piece(Prompt.FData.FRec3, u, 10) + isReq
+                    else if pt = ptSkinTest then ctrl.btn.Caption := 'Enter Skin Test' + isReq
+                    else ctrl.btn.Caption := 'Enter Immunizations' + isReq;
+  //                  if Piece(Prompt.FData.FRec3, U, 13) = '1' then
+  //                    begin
+  //                      ctrl.btn.Caption := ctrl.btn.Caption + ' *';
+  //                      (ctrl.btn as ICPRSDialogComponent).RequiredField := TRUE;
+  //                    end;
+                    SetMinMax(TextWidthByFont(ctrl.btn.Font.Handle, ctrl.btn.Caption) + 13);
+                    ctrl.btn.Height := TextHeightByFont(ctrl.btn.Font.Handle, ctrl.btn.Caption) + 8;
+                  end;
                   DoLbl := TRUE;
                 end
               else
@@ -5349,7 +5568,9 @@ var
               end;
               ctrl.ctrl.Enabled := Prompt.FParent.Enabled;
               if not ctrl.ctrl.Enabled then
-                ctrl.ctrl.Font.Color := DisabledFontColor;
+                ctrl.ctrl.Font.Color := DisabledFontColor
+              else
+                ctrl.ctrl.ParentFont := True;
               ctrl.ctrl.Left := X;
               ctrl.ctrl.Top := Y;
               LastX := ctrl.ctrl.Left + ctrl.ctrl.Width + Gap;
@@ -5410,6 +5631,7 @@ var
       NextLine(Y);
     finally
       SameLineCtrl.Free;
+      ActChoicesSL.Free;
     end;
 
 //    if Assigned(Application.MainForm) then
@@ -5423,6 +5645,9 @@ var
   end;
 
   procedure UpdatePrompts(EnablePanel: boolean; ClearCB: boolean);
+  var
+    i: integer;
+
   begin
     if EnablePanel then
     begin
@@ -5434,7 +5659,10 @@ var
         pnl.OnExit := FieldPanelExited;
       end;
       if ClearCB then
+      begin
         cb := nil;
+        FreeAndNil(FCheckBox);
+      end;
     end;
 
     if (FChecked and Assigned(FPrompts) and (FPrompts.Count > 0)) then
@@ -5442,7 +5670,12 @@ var
       AddPrompts(FALSE, BaseParent, ParentWidth, Y);
     end
     else
+    begin
+      if (not FChecked) and Assigned(FPrompts) then
+        for i := 0 to FPrompts.Count - 1 do
+          TRemPrompt(FPrompts[i]).ClearControls;
       inc(Y, pnl.Height);
+    end;
   end;
 
 begin
@@ -5454,150 +5687,194 @@ begin
   else isDisable := false;
   AutoFocusControl := nil;
   X := TrueIndent;
-  if (Assigned(FPrompts)) then
-  begin
-    for i := 0 to FPrompts.Count - 1 do
-      TRemPrompt(FPrompts[i]).CurrentControl := nil;
-  end;
-  if (ElemType = etDisplayOnly) or ((isDisable) and (Piece(originalType, U, 1) = 'D')) then
-  begin
-    if (FText <> '') or ((FData <> nil) and (FData.Count > 0)) then
+  isNewList := TList.Create;
+  try
+    if BuildAll then
+    begin
+      FreeAndNil(FPanel);
+      FreeAndNil(FCheckBox);
+      FreeAndNil(FGroupBox);
+      if (Assigned(FPrompts)) then
+      begin
+        for i := 0 to FPrompts.Count - 1 do
+          TRemPrompt(FPrompts[i]).ClearControls;
+      end;
+    end;
+    if (ElemType = etDisplayOnly) or ((isDisable) and (Piece(originalType, U, 1) = 'D')) then
+    begin
+      if (FText <> '') or ((FData <> nil) and (FData.Count > 0)) then
+      begin
+        inc(Y, Gap);
+        pnl := GetPanel(EntryID, CRLFText(FText),
+            ParentWidth - X - (Gap * 2), nil);
+        if assigned(FPanel) and (FPanel <> pnl) then
+          FPanel.Free;
+        FPanel := pnl;
+        ComponentAdded(FPanel);
+        pnl.Left := X;
+        pnl.Top := Y;
+        UpdatePrompts(ScreenReaderSystemActive, TRUE);
+        if isDisable then
+          pnl.Font.Color := DisabledFontColor
+        else
+          pnl.ParentFont := True;
+      end;
+    end
+    else
     begin
       inc(Y, Gap);
-      pnl := GetPanel(EntryID, CRLFText(FText),
-        ParentWidth - X - (Gap * 2), nil);
-      pnl.Left := X;
-      pnl.Top := Y;
-      UpdatePrompts(ScreenReaderSystemActive, TRUE);
-      if isDisable then
-        pnl.Font.Color := DisabledFontColor;
-    end;
-  end
-  else
-  begin
-    inc(Y, Gap);
-    cb := TCPRSDialogParentCheckBox.Create(AOwner);
-    cb.Parent := BaseParent;
-    cb.Left := X;
-    cb.Top := Y;
-    cb.Tag := integer(Self);
-    cb.WordWrap := TRUE;
-    cb.AutoSize := TRUE;
-    if isDisable then
+      if not assigned(FCheckBox) then
       begin
-        cb.checked := false;
-        cb.Enabled := false;
-      end
-    else
-      cb.Checked := FChecked;
-
-    cb.Width := ParentWidth - X - Gap;
-    if not ScreenReaderSystemActive then
-      cb.Caption := CRLFText(FText);
-    cb.AutoAdjustSize;
-    cbSingleLine := cb.SingleLine;
-    cb.WordWrap := FALSE;
-    cb.Caption := ' ';
-    if not ScreenReaderSystemActive then
-      cb.TabStop := FALSE; { take checkboxes out of the tab order }
-    pnl := GetPanel(EntryID, CRLFText(FText), ParentWidth - X - (Gap * 2) -
-      IndentGap, cb);
-    pnl.Left := X + IndentGap;
-    pnl.Top := Y;
-    if (isDisable) then pnl.Font.Color := DisabledFontColor;
-
-    cb.Associate := pnl;
-    pnl.Tag := integer(cb); { So the panel can check the checkbox }
-    cb.OnClick := cbClicked;
-    cb.OnEnter := cbEntered;
-    if ScreenReaderSystemActive then
-      cb.OnExit := ParentCBExit;
-
-    UpdateColorsFor508Compliance(cb);
-    pnl.OnKeyPress := FieldPanelKeyPress;
-    pnl.OnClick := FieldPanelOnClick;
-    for i := 0 to pnl.ControlCount - 1 do
-      if ((pnl.Controls[i] is TLabel) or (pnl.Controls[i] is TVA508StaticText))
-        and not(fsUnderline in TLabel(pnl.Controls[i]).Font.Style) then
-      // If this isn't a hyperlink change then event handler
-        TLabel(pnl.Controls[i]).OnClick := FieldPanelLabelOnClick;
-
-    if (Assigned(FParent) and (FParent.ChildrenRequired in [crOne, crNoneOrOne]))
-    then
-      cb.RadioStyle := TRUE;
-//    if (ElemType = etChecked)  then
-//      begin
-//        cb.Checked := true;
-//        self.FInitialChecked := true;
-//        UpdatePrompts(True, False);
-//      end
-//      else
-    UpdatePrompts(TRUE, FALSE);
-  end;
-
-  if (ShowChildren) then
-  begin
-    gb := nil;
-    if (Box) then
-    begin
-      gb := TGroupBox.Create(AOwner);
-      gb.Parent := BaseParent;
-      gb.Left := TrueIndent + (ChildrenIndent * IndentMult);
-      gb.Top := Y;
-      gb.Width := ParentWidth - gb.Left - Gap;
-      PrntWidth := gb.Width - (Gap * 2);
-      gb.Caption := BoxCaption;
-      gb.Enabled := EnableChildren;
-      if (not EnableChildren) then
-        gb.Font.Color := DisabledFontColor;
-      UpdateColorsFor508Compliance(gb);
-      Prnt := gb;
-      if (gb.Caption = '') then
-        Y1 := gbTopIndent
+        FCheckBox := TCPRSDialogParentCheckBox.Create(AOwner);
+        ComponentAdded(FCheckBox);
+      end;
+      cb := FCheckBox as TCPRSDialogParentCheckBox;
+      cb.Parent := BaseParent;
+      SetTabOrder(cb);
+      cb.Left := X;
+      cb.Top := Y;
+      cb.Tag := integer(Self);
+      cb.WordWrap := TRUE;
+      cb.AutoSize := TRUE;
+      if isDisable then
+        begin
+          cb.checked := false;
+          cb.Enabled := false;
+        end
       else
-        Y1 := gbTopIndent2;
-    end
-    else
-    begin
-      Prnt := BaseParent;
-      Y1 := Y;
-      PrntWidth := ParentWidth;
-//      if elemType = etDisable then Prnt.Enabled := false;
+        cb.Checked := FChecked;
+
+      cb.Width := ParentWidth - X - Gap;
+      if not ScreenReaderSystemActive then
+        cb.Caption := CRLFText(FText);
+      cb.AutoAdjustSize;
+      cbSingleLine := cb.SingleLine;
+      cb.WordWrap := FALSE;
+      cb.Caption := ' ';
+      if not ScreenReaderSystemActive then
+        cb.TabStop := FALSE; { take checkboxes out of the tab order }
+      pnl := GetPanel(EntryID, CRLFText(FText), ParentWidth - X - (Gap * 2) -
+          IndentGap, cb);
+      if assigned(FPanel) and (FPanel <> pnl) then
+        FPanel.Free;
+      FPanel := pnl;
+      ComponentAdded(FPanel);
+      pnl := FPanel as TDlgFieldPanel;
+      pnl.Left := X + IndentGap;
+      pnl.Top := Y;
+      if (isDisable) then
+        pnl.Font.Color := DisabledFontColor
+      else
+        pnl.ParentFont := True;
+      cb.Associate := pnl;
+      pnl.Tag := integer(cb); { So the panel can check the checkbox }
+      cb.OnClick := cbClicked;
+      cb.OnEnter := cbEntered;
+      if ScreenReaderSystemActive then
+        cb.OnExit := ParentCBExit;
+
+      UpdateColorsFor508Compliance(cb);
+      pnl.OnKeyPress := FieldPanelKeyPress;
+      pnl.OnClick := FieldPanelOnClick;
+      for i := 0 to pnl.ControlCount - 1 do
+        if ((pnl.Controls[i] is TLabel) or (pnl.Controls[i] is TVA508StaticText))
+          and not(fsUnderline in TLabel(pnl.Controls[i]).Font.Style) then
+        // If this isn't a hyperlink change the event handler
+          TLabel(pnl.Controls[i]).OnClick := FieldPanelLabelOnClick;
+
+      if (Assigned(FParent) and (FParent.ChildrenRequired in [crOne, crNoneOrOne]))
+      then
+        cb.RadioStyle := TRUE;
+  //    if (ElemType = etChecked)  then
+  //      begin
+  //        cb.Checked := true;
+  //        self.FInitialChecked := true;
+  //        UpdatePrompts(True, False);
+  //      end
+  //      else
+      UpdatePrompts(TRUE, FALSE);
     end;
 
-    for i := 0 to FChildren.Count - 1 do
+    if (ShowChildren) then
     begin
-      ERes := TRemDlgElement(FChildren[i]).BuildControls(Y1, PrntWidth,
-        Prnt, AOwner);
-      if (not Assigned(Result)) then
-        Result := ERes;
-    end;
+      gb := nil;
+      if (Box) then
+      begin
+        if not assigned(FGroupBox) then
+        begin
+          FGroupBox := TGroupBox.Create(AOwner);
+          ComponentAdded(FGroupBox);
+        end;
+        gb := FGroupBox;
+        gb.Parent := BaseParent;
+        SetTabOrder(gb);
+        gb.Left := TrueIndent + (ChildrenIndent * IndentMult);
+        gb.Top := Y;
+        gb.Width := ParentWidth - gb.Left - Gap;
+        PrntWidth := gb.Width - (Gap * 2);
+        gb.Caption := BoxCaption;
+        gb.Enabled := EnableChildren;
+        if (not EnableChildren) then
+          gb.Font.Color := DisabledFontColor
+        else
+          gb.ParentFont := True;
+        UpdateColorsFor508Compliance(gb);
+        Prnt := gb;
+        if (gb.Caption = '') then
+          Y1 := gbTopIndent
+        else
+          Y1 := gbTopIndent2;
+      end
+      else
+      begin
+        Prnt := BaseParent;
+        Y1 := Y;
+        PrntWidth := ParentWidth;
+  //      if elemType = etDisable then Prnt.Enabled := false;
+      end;
+      TabIdx1 := 0;
+      for i := 0 to FChildren.Count - 1 do
+      begin
+        if Box then
+          ERes := TRemDlgElement(FChildren[i]).BuildControls(Y1, TabIDx1,
+            PrntWidth, Prnt, AOwner, BuildAll)
+        else
+          ERes := TRemDlgElement(FChildren[i]).BuildControls(Y1, TabIdx,
+            PrntWidth, Prnt, AOwner, BuildAll);
+        if (not Assigned(Result)) then
+          Result := ERes;
+      end;
 
-    if (FHasSharedPrompts) then
-      AddPrompts(TRUE, Prnt, PrntWidth, Y1);
+      if (FHasSharedPrompts) then
+        AddPrompts(TRUE, Prnt, PrntWidth, Y1);
 
-    if (Box) then
-    begin
-      gb.Height := Y1 + (Gap * 3);
-      inc(Y, Y1 + (Gap * 4));
+      if (Box) then
+      begin
+        gb.Height := Y1 + (Gap * 3);
+        inc(Y, Y1 + (Gap * 4));
+      end
+      else
+        Y := Y1;
     end
-    else
-      Y := Y1;
-  end;
+    else if not BuildAll then
+      RemoveChildControls(False);
 
-  SubCommentChange(nil);
+    SubCommentChange(nil);
 
-  if (Assigned(AutoFocusControl)) then
-  begin
-    if (AutoFocusControl is TORComboBox) and
-      (TORComboBox(AutoFocusControl).CheckBoxes) and
-      (pos('1', TORComboBox(AutoFocusControl).CheckedString) = 0) then
-      Result := AutoFocusControl
-    else if (TORExposedControl(AutoFocusControl).Text = '') then
-      Result := AutoFocusControl
+    if (Assigned(AutoFocusControl)) then
+    begin
+      if (AutoFocusControl is TORComboBox) and
+        (TORComboBox(AutoFocusControl).CheckBoxes) and
+        (pos('1', TORComboBox(AutoFocusControl).CheckedString) = 0) then
+        Result := AutoFocusControl
+      else if (TORExposedControl(AutoFocusControl).Text = '') then
+        Result := AutoFocusControl
+    end;
+    if ScreenReaderSystemActive then
+      ScreenReaderSystem_Stop;
+  finally
+    isNewList.Free;
   end;
-  if ScreenReaderSystemActive then
-    ScreenReaderSystem_Stop;
 end;
 
 function TRemDlgElement.buildLinkSeq(linkIEN, dialogIEN, seq: string): boolean;
@@ -5855,7 +6132,19 @@ begin
     begin
       remData := TRemData(self.FData[i]);
       if ((Piece(remData.FRec3, U, 4) <> 'IMM') and (Piece(remData.FRec3, U, 4) <> 'SK')) then continue;
-      if (remData.vimmResult = nil) then result := false
+      if (remData.vimmResult = nil) then
+      begin
+        if Piece(remData.FRec3, U, 8) = 'IMMUNIZATION, NO DEFAULT SELECTED' then
+        begin
+          if FData.count = 1 then
+          begin
+            result := false;
+            exit;
+          end
+          else continue;
+        end;
+        result := false;
+      end
       else if not remData.vimmResult.isComplete then result := false;
     end;
 end;
@@ -6310,6 +6599,17 @@ begin
   RemindersInProcess.Notifier.Notify;
 end;
 
+procedure TRemDlgElement.NexusFreeNotification(Sender: TObject;
+  AComponent: TComponent);
+begin
+  if AComponent = FPanel then
+    FPanel := nil
+  else if AComponent = FCheckBox then
+    FCheckBox := nil
+  else if AComponent = FGroupBox then
+    FGroupBox := nil;
+end;
+
 // agp ICD-10 add this function to scan for valid codes against encounter date.
 function TRemDlgElement.oneValidCode(Choices: TORStringList;
   ChoicesActiveDates: TList; encDt: TFMDateTime): string;
@@ -6363,6 +6663,25 @@ end;
 function TRemDlgElement.IncludeMHTestInPN: boolean;
 begin
   Result := (Piece(FRec1, U, 9) = '0');
+end;
+
+procedure TRemDlgElement.RemoveChildControls(All: boolean);
+var
+  i: integer;
+
+begin
+  if All and Assigned(FPrompts) then
+    for i := 0 to FPrompts.Count - 1 do
+      TRemPrompt(FPrompts[i]).ClearControls;
+  if (Assigned(FChildren)) then
+    for i := 0 to FChildren.Count - 1 do
+      TRemDlgElement(FChildren[i]).RemoveChildControls(True);
+  FreeAndNil(FGroupBox);
+  if All then
+  begin
+    FreeAndNil(FPanel);
+    FreeAndNil(FCheckBox);
+  end;
 end;
 
 function TRemDlgElement.ResultDlgID: string;
@@ -6424,6 +6743,8 @@ constructor TRemDlgElement.Create;
 begin
   FFieldValues := TORStringList.Create;
   FCodesList := TStringList.Create;
+  FNexus := TComponentNexus.Create(nil);
+  FNexus.OnFreeNotification := NexusFreeNotification;
 end;
 
 function TRemDlgElement.EntryID: string;
@@ -7057,6 +7378,13 @@ begin
   end;
 end;
 
+procedure TRemPrompt.ClearControls;
+begin
+  if assigned(FControls) then
+    FControls.Clear;
+  CurrentControl := nil;
+end;
+
 constructor TRemPrompt.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
@@ -7064,6 +7392,30 @@ begin
   FLastUCUMDirection := -789;
   FUCUMInfo := nil;
   FLastUCUMInfoData := '';
+end;
+
+function TRemPrompt.CreateControlInfo(AName: String; cls: TControlClass;
+  AOwner: TComponent; AParent: TWinControl): TControlInfo;
+begin
+  if (cls = nil) or (AOwner = nil) or (AParent = nil) then
+  begin
+    Result := nil;
+    exit;
+  end;
+  if FControls = nil then
+    FControls := TObjectList<TControlInfo>.Create;
+  Result := TControlInfo.Create;
+  with Result do
+  begin
+    Control := cls.Create(AOwner);
+    Control.Parent := AParent;
+    Control.FreeNotification(Self);
+    Prompt := Self;
+    Name := AName;
+    MinWidth := 0;
+    MaxWidth := 0;
+  end;
+  FControls.Add(Result);
 end;
 
 function TRemPrompt.Forced: boolean;
@@ -7920,10 +8272,25 @@ end;
 
 procedure TRemPrompt.Notification(AComponent: TComponent;
   Operation: TOperation);
+var
+  i: integer;
+
 begin
   inherited;
-  if (Operation = opRemove) and (AComponent = FCurrentControl) then
-    FCurrentControl := nil;
+  if (Operation = opRemove) then
+  begin
+    if AComponent is TControl and Assigned(FControls) then
+    begin
+      for i := 0 to FControls.Count - 1 do
+        if (FControls[i].Control = AComponent) then
+        begin
+          FControls.Delete(i);
+          break;
+        end;
+    end;
+    if AComponent = FCurrentControl then
+      FCurrentControl := nil;
+  end;
 end;
 
 function TRemPrompt.CanShare(Prompt: TRemPrompt): boolean;
@@ -7951,6 +8318,7 @@ end;
 
 destructor TRemPrompt.Destroy;
 begin
+  FreeAndNil(FControls);
   KillObj(@FSharedChildren);
   if assigned(FLastUCUMData) then
     FreeAndNil(FLastUCUMData);
@@ -7999,6 +8367,38 @@ begin
       break;
     end;
   end
+end;
+
+function TRemPrompt.ControlInfo(AName: String): TControlInfo;
+var
+  i: integer;
+
+begin
+  Result := nil;
+  if (AName = '') or (FControls = nil) then
+    exit;
+  for i := 0 to FControls.Count - 1 do
+    if (FControls[i].Name = AName) then
+    begin
+      Result := FControls[i];
+      exit;
+    end;
+end;
+
+function TRemPrompt.ControlInfo(AControl: TControl): TControlInfo;
+var
+  i: integer;
+
+begin
+  Result := nil;
+  if (AControl = nil) or (FControls = nil) then
+    exit;
+  for i := 0 to FControls.Count - 1 do
+    if (FControls[i].Control = AControl) then
+    begin
+      Result := FControls[i];
+      exit;
+    end;
 end;
 
 function TRemPrompt.RemDataChoiceActive(RData: TRemData; j: integer;
@@ -8547,8 +8947,7 @@ begin
     if (vedt.Tag = TAG_VITHEIGHT) then
       vedt.Text := ConvertHeight2Inches(vedt.Text);
     if VitalInvalid(vedt, vcbo) then
-      if ShouldFocus(vedt) then
-        vedt.SetFocus;
+      FParent.FReminder.DoFocus(vedt);
   end;
 end;
 
@@ -8838,8 +9237,7 @@ begin
       if (Sender is TCPRSDialogButton) then
         begin
           (Sender as TCPRSDialogButton).Enabled := TRUE;
-          if ShouldFocus(Sender as TCPRSDialogButton) then
-            (Sender as TCPRSDialogButton).SetFocus;
+          FParent.FReminder.DoFocus(Sender as TCPRSDialogButton);
         end;
       pxrmdoneWorking;
   end;
@@ -9325,6 +9723,20 @@ begin
     if (idx >= 0) then
       FForcedPrompts.delete(idx);
   end;
+end;
+
+{ TControlInfo }
+
+destructor TControlInfo.Destroy;
+begin
+  if not (csDestroying in Control.ComponentState) then
+  begin
+    Control.RemoveFreeNotification(Prompt);
+    if Control = Prompt.FCurrentControl then
+      Prompt.FCurrentControl := nil;
+    FreeAndNil(Control);
+  end;
+  inherited;
 end;
 
 initialization

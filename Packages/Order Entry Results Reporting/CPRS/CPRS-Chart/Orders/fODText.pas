@@ -43,7 +43,7 @@ implementation
 
 {$R *.DFM}
 
-uses rCore, VAUtils, uSizing, uOwnerWrapper;
+uses rCore, VAUtils, uSizing, uOwnerWrapper, UResponsiveGUI;
 
 const
   TX_NO_TEXT = 'Some text must be entered.';
@@ -154,7 +154,7 @@ begin
     inherited;
     ReleasePending := PeekMessage(Msg, Handle, CM_RELEASE, CM_RELEASE, PM_REMOVE);
 
-    Application.ProcessMessages; //CQ 14670
+    TResponsiveGUI.ProcessMessages; //CQ 14670
     memText.Lines.Text := Trim(memText.Lines.Text); //CQ 14670
 
     if ReleasePending then

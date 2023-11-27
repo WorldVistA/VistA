@@ -74,7 +74,7 @@ $(PostBuildEvent)]]></PostBuildEvent>
 $(PreBuildEvent)]]></PreBuildEvent>
         <DCC_DebugInfoInExe>true</DCC_DebugInfoInExe>
         <DCC_MapFile>3</DCC_MapFile>
-        <DCC_UsePackage>vcl;rtl;vcldb;VclSmp;VAShared_R10_4_1;VAShared_R10_4_2;$(DCC_UsePackage)</DCC_UsePackage>
+        <DCC_UsePackage>vcl;rtl;vcldb;VclSmp;VAShared_R10_4_1;VAShared_R10_4_2;ResponsiveGUI_R10_4_2;$(DCC_UsePackage)</DCC_UsePackage>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <DCC_UsePackage>vcl;rtl;vcldb;VclSmp;$(DCC_UsePackage)</DCC_UsePackage>
@@ -110,6 +110,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DCCReference Include="VclSmp.dcp"/>
         <DCCReference Include="rtl.dcp"/>
         <DCCReference Include="VAShared_R10_4_2.dcp"/>
+        <DCCReference Include="ResponsiveGUI_R10_4_2.dcp"/>
         <DCCReference Include="..\..\Source\MSAAConstants.pas"/>
         <DCCReference Include="..\..\Source\oleacc2.pas"/>
         <DCCReference Include="..\..\Source\VA508AccessibilityCompileInfo.pas"/>

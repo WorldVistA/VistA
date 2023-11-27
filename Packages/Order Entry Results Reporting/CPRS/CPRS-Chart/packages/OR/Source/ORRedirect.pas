@@ -1,214 +1,219 @@
 unit ORRedirect;
 
+///////////////////////////////////////////////////////////////////////////////
+///  This unit intercepts
+///  - TWinControl.SetFocus
+///  - TCustomForm.SetFocus
+///  - The setter proc for property TCustomForm.ActiveControl
+///      (TCustomForm.SetActiveControl)
+///
+///  Call TORRedirect.Start to set up and start the intercepting
+///////////////////////////////////////////////////////////////////////////////
+
 interface
 
-uses Winapi.Windows, System.SysUtils, System.Classes, System.RTTI, Vcl.Controls,
-  Vcl.Forms;
-
-const
-  ASMCNT = 4;
-
 type
-  TASMData = array [0 .. ASMCNT] of byte;
-
-  TRedirectToken = record
-    Addr: ^TASMData;
-    OldData, NewData: TASMData;
-    OldMethod: TMethod;
-  end;
-
-function BeginAPIRedirect(FromAPI, ToAPI: Pointer): TRedirectToken;
-procedure EndAPIRedirect(Token: TRedirectToken);
-
-type
-  TORRedirect = class
+  TORRedirect = class(TObject)
   private
-    class var FInitialized: Boolean;
-    class var FWinControlSetFocusToken: TRedirectToken;
-    class var FFormSetFocusToken: TRedirectToken;
-    class var FFormSetActiveControlToken: TRedirectToken;
-    class var FParentRequiredText: string;
-    class function AllowException(E: Exception): boolean;
-    class procedure NewWinControlSetFocus(Self: TObject); static;
-    class procedure NewFormSetFocus(Self: TObject); static;
-    class procedure NewFormSetActiveControl(Self: TObject;
-      Control: TWinControl); static;
+    class var FIsStarted: Boolean;
   public
-    class procedure Init;
+    class procedure Start;
+    class procedure Stop;
+    class procedure Init; // for compatibility
+    class property IsStarted: Boolean read FIsStarted;
   end;
 
 implementation
 
 uses
-  Vcl.Consts;
-
-function BeginAPIRedirect(FromAPI, ToAPI: Pointer): TRedirectToken;
-type
-  TPtrRec = record
-    case integer of
-      1:
-        (lw: Pointer);
-      2:
-        (b1, b2, b3, b4: byte);
-  end;
+  System.Classes,
+  System.SysUtils,
+  System.Rtti,
+  Vcl.Consts,
+  Vcl.Forms,
+  Vcl.Controls,
+  DDetours;
 
 var
-  rec: TPtrRec;
-  dwNull: DWORD;
+  SetFocusTrampoline: procedure(Self: TWinControl) = nil;
+  FormSetFocusTrampoline: procedure(Self: TCustomForm) = nil;
+  SetActiveControlTrampoline: procedure(Self: TCustomForm;
+    Control: TWinControl) = nil;
 
+var
+  SParentRequiredMatch: string;
+
+function ShouldRaiseFocusException(E: Exception): Boolean;
+// Returns true if exception should not be swallowed
 begin
-  VirtualProtect(FromAPI, ASMCNT + 1, PAGE_EXECUTE_READWRITE, dwNull);
-  with Result do
-  begin
-    Addr := FromAPI;
-    OldMethod.Code := FromAPI;
-    OldData := Addr^;
-    rec.lw := Pointer(integer(ToAPI) - integer(FromAPI) - 5);
-    NewData[0] := $E9;
-    NewData[1] := rec.b1;
-    NewData[2] := rec.b2;
-    NewData[3] := rec.b3;
-    NewData[4] := rec.b4;
-    Addr^ := NewData;
+  // This Result := False; statement is only here for v32 of CPRS.
+  // It should be removed for v33.
+  Result := False;
+  // Uncomment these lines for v33
+  // if not(E is EInvalidOperation) then
+  //   Exit(True);
+  // Result := (Pos(SCannotFocus, E.Message) <= 0) and
+  //   (Pos(SParentRequiredMatch, E.Message) <= 0);
+end;
+
+procedure InterceptSetFocus(Self: TWinControl);
+begin
+  try
+    if Assigned(Self) and (not(csDestroying in Self.ComponentState)) then
+      SetFocusTrampoline(Self);
+  except
+    on E: Exception do
+      if ShouldRaiseFocusException(E) then
+        raise;
   end;
 end;
 
-procedure EndAPIRedirect(Token: TRedirectToken);
+procedure InterceptFormSetFocus(Self: TCustomForm);
 begin
-  Token.Addr^ := Token.OldData;
+  try
+    if Assigned(Self) and (not(csDestroying in Self.ComponentState)) then
+      FormSetFocusTrampoline(Self);
+  except
+    on E: Exception do
+      if ShouldRaiseFocusException(E) then
+        raise;
+  end;
 end;
 
-  { TORRedirect }
-
-type
-  TSetFocusMethod = procedure of object;
-  TSetActiveControlMethod = procedure(Control: TWinControl) of object;
-
-class procedure TORRedirect.NewWinControlSetFocus(Self: TObject);
+procedure InterceptSetActiveControl(Self: TCustomForm; Control: TWinControl);
 begin
-  with FWinControlSetFocusToken do
-  begin
-    Addr^ := OldData;
+  try
+    if Assigned(Self) and (not(csDestroying in Self.ComponentState)) and
+      (not Assigned(Control) or (not(csDestroying in Control.ComponentState)))
+    then
+      SetActiveControlTrampoline(Self, Control);
+  except
+    on E: Exception do
+      if ShouldRaiseFocusException(E) then
+        raise;
+  end;
+end;
+
+function FindRttiType(ARttiContext: TRttiContext; AClass: TClass): TRttiType;
+begin
+  Result := ARttiContext.GetType(AClass);
+end;
+
+function FindRttiProperty(ARttiContext: TRttiContext; AClass: TClass;
+  const APropertyName: string): TRttiProperty;
+var
+  ARttiType: TRttiType;
+begin
+  ARttiType := FindRttiType(ARttiContext, AClass);
+  if Assigned(ARttiType) then
+    Result := ARttiType.GetProperty(APropertyName)
+  else
+    Result := nil;
+end;
+
+function FindPropertySet(ARttiContext: TRttiContext; AClass: TClass;
+  APropertyName: string): Pointer;
+var
+  ARttiProperty: TRttiProperty;
+begin
+  ARttiProperty := FindRttiProperty(ARttiContext, AClass, APropertyName);
+  if Assigned(ARttiProperty) and (ARttiProperty is TRttiInstanceProperty) and
+    Assigned(TRttiInstanceProperty(ARttiProperty).PropInfo) then
+    Result := TRttiInstanceProperty(ARttiProperty).PropInfo^.SetProc
+  else
+    Result := nil;
+end;
+
+procedure StartIntercepting;
+var
+  AHandle: THandle;
+  ARttiContext: TRttiContext;
+  APropSetAddr: pointer;
+begin
+  AHandle := BeginTransaction;
+  try
+    SParentRequiredMatch := Copy(SParentRequired, Length(SParentRequired)
+      - 19, 20);
+
+    // Set up the interception of TWinControl.SetFocus
+    SetFocusTrampoline := InterceptCreate(@TWinControl.SetFocus,
+      @InterceptSetFocus);
+
+    // Set up the interception of TCustomForm.SetFocus
+    FormSetFocusTrampoline := InterceptCreate(@TCustomForm.SetFocus,
+      @InterceptFormSetFocus);
+
+    // Set up the interception of the setter proc for property
+    // TCustomForm.ActiveControl
+    ARttiContext := TRttiContext.Create;
     try
-      try
-        try
-          OldMethod.Data := Self;
-          TSetFocusMethod(OldMethod);
-        except
-          // This inner Try..Except is only here for v32 of CPRS.
-          // It should be removed for v33
-        end;
-      except
-        on E: Exception do
-          if AllowException(E) then
-            raise;
-      end;
+      APropSetAddr := FindPropertySet(ARttiContext, TCustomForm,
+        'ActiveControl');
+      if Assigned(APropSetAddr) then
+        SetActiveControlTrampoline := InterceptCreate(APropSetAddr,
+          @InterceptSetActiveControl);
     finally
-      Addr^ := NewData;
+      ARttiContext.Free;
+    end;
+
+  finally
+    EndTransaction(AHandle);
+  end;
+end;
+
+procedure StopIntercepting;
+var
+  AHandle: THandle;
+begin
+  AHandle := BeginTransaction;
+  try
+    InterceptRemove(@SetActiveControlTrampoline);
+    SetActiveControlTrampoline := nil;
+    InterceptRemove(@FormSetFocusTrampoline);
+    FormSetFocusTrampoline := nil;
+    InterceptRemove(@SetFocusTrampoline);
+    SetFocusTrampoline := nil;
+  finally
+    EndTransaction(AHandle);
+  end;
+end;
+
+// TORRedirect
+class procedure TORRedirect.Start;
+begin
+  if not FIsStarted then
+  begin
+    try
+      StartIntercepting;
+      FIsStarted := True;
+    except
+      StopIntercepting;
+      raise;
     end;
   end;
 end;
 
-class procedure TORRedirect.NewFormSetFocus(Self: TObject);
+class procedure TORRedirect.Stop;
 begin
-  with FFormSetFocusToken do
+  if FIsStarted then
   begin
-    Addr^ := OldData;
     try
-      try
-        try
-          OldMethod.Data := Self;
-          TSetFocusMethod(OldMethod);
-        except
-          // This inner Try..Except is only here for v32 of CPRS.
-          // It should be removed for v33
-        end;
-      except
-        on E: Exception do
-          if AllowException(E) then
-            raise;
-      end;
+      StopIntercepting;
     finally
-      Addr^ := NewData;
+      FIsStarted := False;
     end;
-  end;
-end;
-
-class procedure TORRedirect.NewFormSetActiveControl(Self: TObject;
-  Control: TWinControl);
-begin
-  with FFormSetActiveControlToken do
-  begin
-    Addr^ := OldData;
-    try
-      try
-        try
-          OldMethod.Data := Self;
-          TSetActiveControlMethod(OldMethod)(Control);
-        except
-          // This inner Try..Except is only here for v32 of CPRS.
-          // It should be removed for v33
-        end;
-      except
-        on E: Exception do
-          if AllowException(E) then
-            raise;
-      end;
-    finally
-      Addr^ := NewData;
-    end;
-  end;
-end;
-
-class function TORRedirect.AllowException(E: Exception): boolean;
-begin
-  Result := True;
-  if (E is EInvalidOperation) then
-  begin
-    if pos(SCannotFocus, E.Message) > 0 then
-      Result := False
-    else if pos(FParentRequiredText, E.Message) > 0 then
-      Result := False;
   end;
 end;
 
 class procedure TORRedirect.Init;
-var
-  SetActiveControlAddr: Pointer;
-
-  function FindSetActiveControlAddr: Pointer;
-  var
-    ctx: TRTTIContext;
-    typ: TRttiType;
-    prop: TRttiProperty;
-
-  begin
-    Result := nil;
-    typ := ctx.GetType(TCustomForm);
-    if assigned(typ) then
-    begin
-      prop := typ.GetProperty('ActiveControl');
-      if assigned(prop) and (prop is TRttiInstanceProperty) then
-        Result := TRttiInstanceProperty(prop).PropInfo^.SetProc;
-    end;
-  end;
-
 begin
-  if not FInitialized then
-  begin
-    SetActiveControlAddr := FindSetActiveControlAddr;
-    if SetActiveControlAddr <> nil then
-    begin
-      FParentRequiredText := copy(SParentRequired, SParentRequired.Length - 19, 20);
-      FWinControlSetFocusToken := BeginAPIRedirect(@TWinControl.SetFocus,
-        @NewWinControlSetFocus);
-      FFormSetFocusToken := BeginAPIRedirect(@TCustomForm.SetFocus,
-        @NewFormSetFocus);
-      FFormSetActiveControlToken := BeginAPIRedirect(SetActiveControlAddr,
-        @NewFormSetActiveControl);
-    end;
-    FInitialized := True;
-  end;
+  Start;
 end;
+
+initialization
+
+finalization
+
+TORRedirect.Stop;
 
 end.

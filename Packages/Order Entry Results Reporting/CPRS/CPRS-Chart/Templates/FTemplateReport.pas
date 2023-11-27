@@ -44,7 +44,8 @@ procedure RunTemplateErrorReport(RunTemplateFields: boolean = false);
 implementation
 
 {$R *.dfm}
-uses ORFn, uTemplateFields, rTemplates, Clipbrd, uTemplates, dShared;
+uses ORFn, uTemplateFields, rTemplates, Clipbrd, uTemplates, dShared,
+UResponsiveGUI;
 
 procedure RunTemplateErrorReport(RunTemplateFields: boolean = false);
 var
@@ -306,7 +307,7 @@ begin
   Count := Count + 1;
   lblCount.Caption := IntToStr(Count);
   if Count mod 5 = 0 then
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages(True);
 end;
 
 end.

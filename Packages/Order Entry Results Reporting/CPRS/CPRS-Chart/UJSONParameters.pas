@@ -311,8 +311,8 @@ begin
   begin
     if SameText(S, AValue) then Exit(False);
   end;
-  if TryStrToFloat(AValue, E) then Exit(E = 0);
-  if TryStrToInt64(AValue, I) then Exit(I = 0);
+  if TryStrToFloat(AValue, E) then Exit(E <> 0);
+  if TryStrToInt64(AValue, I) then Exit(I <> 0);
   raise EConvertError.CreateFmt(SInvalidboolean, [AValue]);
 end;
 

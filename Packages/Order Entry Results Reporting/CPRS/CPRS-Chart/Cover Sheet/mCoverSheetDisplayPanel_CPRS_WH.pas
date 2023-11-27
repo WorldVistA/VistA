@@ -81,7 +81,7 @@ uses
   uCore,
   iWVInterface,
   ORNet,
-  VAUtils;
+  VAUtils, uWriteAccess;
 
 {$R *.dfm}
 
@@ -175,7 +175,7 @@ var
   aRec: TDelimitedString;
 begin
   inherited;
-
+  if not WriteAccess(waWomenHealth) then exit;
   fUpdateData.Enabled := fValidData;
 
   fMarkAsEnteredInError.Enabled := False;
@@ -214,8 +214,11 @@ var
   aSubMenu: TMenuItem;
 begin
   FreeAndNil(fSeparator);
-  FreeAndNil(fUpdateData);
-  FreeAndNil(fMarkAsEnteredInError);
+  if WriteAccess(waWomenHealth) then
+  begin
+    FreeAndNil(fUpdateData);
+    FreeAndNil(fMarkAsEnteredInError);
+  end;
   for aSubMenu in fWebSitesRoot do
     aSubMenu.Free;
   fWebSitesRoot.Clear;
@@ -229,10 +232,12 @@ var
   i: integer;
 begin
   inherited;
-
   fSeparator := NewLine;
-  fUpdateData := NewItem('Add New Data ...', 0, False, False, OnUpdateData, 0, 'pmnWH_UpdateData');
-  fMarkAsEnteredInError := NewItem('Mark as Entered In Error ...', 0, False, False, OnEnteredInError, 0, 'pmnWH_EnteredInError');
+  if WriteAccess(waWomenHealth) then
+  begin
+    fUpdateData := NewItem('Add New Data ...', 0, False, False, OnUpdateData, 0, 'pmnWH_UpdateData');
+    fMarkAsEnteredInError := NewItem('Mark as Entered In Error ...', 0, False, False, OnEnteredInError, 0, 'pmnWH_EnteredInError');
+  end;
   fWebSitesRoot := NewSubMenu(WomensHealth.WebSiteListName, 0, 'pmnWH_WebSites', [], (WomensHealth.WebSiteCount > 0));
 
   for i := 0 to WomensHealth.WebSiteCount - 1 do
@@ -243,8 +248,11 @@ begin
     end;
 
   pmn.Items.Add(fSeparator);
-  pmn.Items.Add(fUpdateData);
-  pmn.Items.Add(fMarkAsEnteredInError);
+  if WriteAccess(waWomenHealth) then
+  begin
+    pmn.Items.Add(fUpdateData);
+    pmn.Items.Add(fMarkAsEnteredInError);
+  end;
   pmn.Items.Add(fWebSitesRoot);
 end;
 

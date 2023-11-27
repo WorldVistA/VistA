@@ -395,7 +395,7 @@ inherited frmARTAllergy: TfrmARTAllergy
             ItemTipColor = clWindow
             ItemTipEnable = True
             ListItemsOnly = True
-            LongList = True
+            LongList = False
             LookupPiece = 2
             MaxLength = 0
             ParentFont = False
@@ -408,7 +408,6 @@ inherited frmARTAllergy: TfrmARTAllergy
             TabStop = True
             Text = ''
             OnChange = ControlChange
-            OnNeedData = cboOriginatorNeedData
             CharsNeedMatch = 1
           end
           object lblAgent: TOROffsetLabel

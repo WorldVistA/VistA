@@ -322,7 +322,7 @@ procedure Register;
 implementation
 
 uses
-  U_CPTEditMonitor, U_CPTPasteDetails;
+  U_CPTEditMonitor, U_CPTPasteDetails, UResponsiveGUI;
 
 procedure Register;
 begin
@@ -1282,8 +1282,7 @@ begin
       while BufferTimer.Enabled or (I >= Wait_Timeout) do
       begin
         // check to see if the buffer has finished yet
-        Sleep(1000);
-        Application.ProcessMessages;
+        TResponsiveGUI.Sleep(100);
         Inc(I);
       end;
     end;

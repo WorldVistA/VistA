@@ -92,7 +92,7 @@ begin
         if cboService.Items.IndexOf(Trim(Piece(SvcList.Strings[i], U, 2))) = -1 then   {RV}
         //if cboService.SelectByID(Piece(SvcList.Strings[i], U, 1)) = -1 then
           cboService.Items.Add(SvcList.Strings[i]);
-      BuildServiceTree(treService, SvcList, '0', nil) ;
+      BuildServiceTree(treService, SvcList) ;
       with treService do
       begin
         for i:=0 to Items.Count-1 do

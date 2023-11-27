@@ -270,27 +270,43 @@ inherited frmOrders: TfrmOrders
     Data = (
       (
         'Component = lstSheets'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lstWrite'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = btnDelayedOrder'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = hdrOrders'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lstOrders'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlLeft'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlRight'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = frmOrders'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault'))
   end
   object mnuOrders: TMainMenu
@@ -625,7 +641,7 @@ inherited frmOrders: TfrmOrders
       Visible = False
       OnClick = mnuActRelClick
     end
-    object mnuChgEvnt: TMenuItem
+    object popChgEvnt: TMenuItem
       Tag = 1
       Caption = 'Change Release Event'
       OnClick = mnuActChgEvntClick
@@ -680,17 +696,17 @@ inherited frmOrders: TfrmOrders
     object N2: TMenuItem
       Caption = '-'
     end
-    object F1: TMenuItem
+    object popFlag: TMenuItem
       Tag = 1
       Caption = 'Flag...'
       OnClick = mnuActFlagClick
     end
-    object F2: TMenuItem
+    object popFlagComment: TMenuItem
       Tag = 1
       Caption = 'Flag Comment...'
       OnClick = mnuActFlagCommentClick
     end
-    object U1: TMenuItem
+    object popUnflag: TMenuItem
       Tag = 1
       Caption = 'Unflag...'
       OnClick = mnuActUnflagClick

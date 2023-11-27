@@ -84,8 +84,6 @@ type
     Label1: TLabel;
     procedure btnAgent1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure cboOriginatorNeedData(Sender: TObject; const StartFrom: String;
-      Direction, InsertAt: Integer);
     procedure cboSymptomsNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure lstAllergySelect(Sender: TObject);
@@ -152,11 +150,12 @@ type
     FOldHintPause: Integer;
     fOnAfterSave: TNotifyEvent;
     uDeletedSymptoms: TStringList;
+    FSendMessageUMNewOrderOnOK: boolean;
     procedure SetDate;
     procedure CheckAllergyScan;
     function SelectAllergyAgent: String;
   protected
-    constructor NewfrmARTAllergy(aNew,anError:Boolean;anOwner:TComponent);
+    constructor NewfrmARTAllergy(aNew, anError: Boolean; anOwner: TComponent);
     procedure EnableDisableControls(EnabledStatus: Boolean);
     procedure InitDialog; override;
     procedure Validate(var AnErrMsg: string);
@@ -166,11 +165,15 @@ type
     procedure SetUpEnteredInErrorFields(ARec: TAllergyRec);
   public
     property OnAfterSave: TNotifyEvent read FOnAfterSave write FOnAfterSave;
+    property SendMessageUMNewOrderOnOK: boolean read FSendMessageUMNewOrderOnOK
+      write FSendMessageUMNewOrderOnOK;
   end;
 
 function EnterEditAllergy(AllergyIEN: Integer;
   AddNew, MarkAsEnteredInError: Boolean; AnOwner: TComponent = nil;
-  ARefNum: Integer = -1; aModal: Boolean = False; aOnAfterSave: TNotifyEvent = nil): Boolean;
+  ARefNum: Integer = -1; aModal: Boolean = False;
+  aOnAfterSave: TNotifyEvent = nil;
+  ASendMessageUMNewOrderOnOK: Boolean = True): Boolean;
 function MarkEnteredInError(AllergyIEN: Integer): Boolean;
 function EnterNKAForPatient: Boolean;
 
@@ -185,7 +188,7 @@ implementation
 uses
   rODBase, uCore, rCore, rCover, iCoverSheetIntf, ORNet, fAllgyFind, fPtCWAD,
   fRptBox, VA508AccessibilityRouter, fNewAllergyCheck, uORLists,
-  VAUtils, rOrders, ORClasses;
+  VAUtils, rOrders, ORClasses, UResponsiveGUI, uWriteAccess;
 
 const
   TX_NO_ALLERGY = 'A causative agent must be specified.';
@@ -257,6 +260,9 @@ function EnterNKAForPatient: Boolean;
 var
   x: string;
 begin
+  Result := False;
+  if not WriteAccess(waAllergies, True) then
+    exit;
   uAllergiesChanged := True;
   x := RPCEnterNKAForPatient;
   if not(Piece(x, U, 1) = '0') then
@@ -307,11 +313,15 @@ end;
 
 function EnterEditAllergy(AllergyIEN: Integer;
   AddNew, MarkAsEnteredInError: Boolean; anOwner: TComponent = nil;
-  ARefNum: Integer = -1; aModal: Boolean = False; aOnAfterSave: TNotifyEvent = nil): Boolean;
+  ARefNum: Integer = -1; aModal: Boolean = False;
+  aOnAfterSave: TNotifyEvent = nil;
+  ASendMessageUMNewOrderOnOK: Boolean = True): Boolean;
 var
   Allergy: string;
 begin
   Result := False;
+  if not WriteAccess(waAllergies, True) then
+    exit;
   if anOwner = nil then
     anOwner := Application;
 
@@ -324,7 +334,9 @@ begin
     end;
 
   try
-    frmARTAllergy := TfrmARTAllergy.NewfrmARTAllergy(AddNew, MarkAsEnteredInError, anOwner);
+    frmARTAllergy := TfrmARTAllergy.NewfrmARTAllergy(AddNew,
+      MarkAsEnteredInError, anOwner);
+    frmARTAllergy.SendMessageUMNewOrderOnOK := ASendMessageUMNewOrderOnOK;
     if ARefNum <> -1 then
       frmARTAllergy.RefNum := ARefNum;
     if frmARTAllergy.AbortAction then
@@ -424,7 +436,8 @@ begin
   end;
 end;
 
-constructor TfrmARTAllergy.NewfrmARTAllergy(aNew,anError:Boolean;anOwner:TComponent);
+constructor TfrmARTAllergy.NewfrmARTAllergy(aNew, anError: Boolean;
+  anOwner: TComponent);
 begin
   uAddingNew := aNew;
   uEditing := (not aNew) and (not anError);
@@ -442,6 +455,7 @@ begin
   // what to do here?  How to set up dialog defaults without order dialog to supply prompts?
 
   Changing := True;
+  try
   (* AA: moving intialization code in InitDialog ---------------------------------
     safe as the method is protected and there are no descendants of the class
 
@@ -477,8 +491,10 @@ begin
     cboOriginator.SelectByIEN(User.DUZ);
     pgAllergy.ActivePage := tabGeneral;
     ------------------------------------------------------------------------------ *)
-  InitDialog;
-  Changing := False;
+    InitDialog;
+  finally
+    Changing := False;
+  end;
   if AbortAction then
   begin
     Close;
@@ -493,6 +509,7 @@ var
   Allergy: string;
   i: Integer;
 begin
+  FSendMessageUMNewOrderOnOK := True;
   AutoSizeDisabled := True;
   // code below was moved from FormCreate  method.
   FAbort := True;
@@ -523,7 +540,8 @@ begin
   else
     cboSymptoms.InsertSeparator;
   cboSymptoms.InitLongList('');
-  cboOriginator.InitLongList(User.Name);
+  cboOriginator.Items.Clear;
+  cboOriginator.Items.Add(IntToStr(User.DUZ) + U + MixedCase(UpperCase(User.Name)));
   cboOriginator.SelectByIEN(User.DUZ);
   pgAllergy.ActivePage := tabGeneral;
 
@@ -718,7 +736,7 @@ begin
       calOriginated.FMDateTime := Originated;
 
       cboOriginator.Items.Clear;
-      cboOriginator.Items.Add(IntToStr(Originator) + U + OriginatorName);
+      cboOriginator.Items.Add(IntToStr(Originator) + U + MixedCase(UpperCase(OriginatorName)));
       cboOriginator.SelectByIEN(Originator);
 
       { TODO -oRich V. -cART/Allergy : Change to calendar entry fields and prior entries button? }
@@ -928,14 +946,6 @@ end;
 //  calObservedDate.Validate(x);
 //  calObservedDate.FMDateTime := calObservedDate.FMDateTime;
 //end;
-
-procedure TfrmARTAllergy.cboOriginatorNeedData(Sender: TObject;
-  const StartFrom: string; Direction, InsertAt: Integer);
-begin
-  inherited;
-//  cboOriginator.ForDataUse(SubSetOfPersons(StartFrom, Direction));
-  setPersonList(cboOriginator, StartFrom, Direction);
-end;
 
 procedure TfrmARTAllergy.cboSymptomsNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
@@ -1346,8 +1356,11 @@ begin
     else
     begin
       CheckAllergyScan; // NSR#20070203   #14
-      SendMessage(Application.MainForm.Handle, UM_NEWORDER, ORDER_SIGN, 0);
-      Application.ProcessMessages;
+      if SendMessageUMNewOrderOnOK then
+      begin
+        SendMessage(Application.MainForm.Handle, UM_NEWORDER, ORDER_SIGN, 0);
+        TResponsiveGUI.ProcessMessages;
+      end;
     end;
     FAbort := False;
     Close;

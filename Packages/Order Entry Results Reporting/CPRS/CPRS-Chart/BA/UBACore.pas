@@ -992,7 +992,7 @@ begin
       else if x1 = MILITARY_SEXUAL_TRAUMA then
         setValue(UBAGlobals.BAFactorsRec.FBAFactorMST,x2,x3)
       else if x1 = COMBAT_VETERAN then
-        setValue(UBAGlobals.BAFactorsRec.FBAFactorMST,x2,x3)
+        setValue(UBAGlobals.BAFactorsRec.FBAFactorCV,x2,x3)
       else if x1 = SHIPBOARD_HAZARD_DEFENSE then
         setValue(UBAGlobals.BAFactorsRec.FBAFactorSHAD,x2,x3)
       else if x1 = CAMP_LEJEUNE then

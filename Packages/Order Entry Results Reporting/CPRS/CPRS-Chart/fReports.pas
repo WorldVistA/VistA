@@ -215,7 +215,7 @@ implementation
 
 uses ORFn, rCore, rReports, fFrame, uCore, uReports, fReportsPrint,
      fReportsAdhocComponent1, activex, mshtml, dShared, fGraphs, fGraphData, rGraphs, rLabs,
-     VA508AccessibilityRouter, VAUtils, ORExtensions, uMisc;
+     VA508AccessibilityRouter, VAUtils, ORExtensions, uMisc, UResponsiveGUI;
 
 const
   BlankWebPage = 'about:blank';
@@ -1854,7 +1854,7 @@ begin
   if tvReports.Selected <> nil then
   begin
     tvReportsClick(Self);
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages;
     //Clear the selection so we can reset
     if lvReports.Selected <> nil then lvReports.Selected := nil;
     for j := 0 to lvReports.Items.Count - 1 do

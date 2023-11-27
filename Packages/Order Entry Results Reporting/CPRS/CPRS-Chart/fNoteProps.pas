@@ -9,8 +9,8 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ORDtTm, ORCtrls, ExtCtrls, rTIU, uConst, uTIU, ORFn, ORNet,
-  ComCtrls, Buttons, fBase508Form, VA508AccessibilityManager
-  ,u508Extensions;
+  ComCtrls, Buttons, fBase508Form, VA508AccessibilityManager,
+  u508Button;
 
 type
   {This object holds a List of Actions as Returned VIA the RPCBroker}
@@ -41,8 +41,8 @@ type
     cboAuthor: TORComboBox;
     lblCosigner: TLabel;
     cboCosigner: TORComboBox;
-    cmdOK: u508Extensions.TButton;
-    cmdCancel: u508Extensions.TButton;
+    cmdOK: u508Button.TButton;
+    cmdCancel: u508Button.TButton;
     pnlConsults: TPanel;
     bvlConsult: TBevel;
     cboProcSummCode: TORComboBox;
@@ -62,8 +62,8 @@ type
     pnlCText: TPanel;
     lblConsult1: TLabel;
     lblConsult2: TLabel;
-    btnShowList: u508Extensions.TButton;
-    btnDetails: u508Extensions.TButton;
+    btnShowList: u508Button.TButton;
+    btnDetails: u508Button.TButton;
     lstRequests: TCaptionListView;
     gpMain: TGridPanel;
     procedure cboNewTitleNeedData(Sender: TObject; const StartFrom: String;
@@ -150,7 +150,8 @@ implementation
 {$R *.DFM}
 
 uses uCore, rCore, rConsults, uConsults, rSurgery, fRptBox, VA508AccessibilityRouter,
-  uORLists, uSimilarNames, VAUtils, uSizing, UCaptionListView508Manager;
+  uORLists, uSimilarNames, VAUtils, uSizing, UCaptionListView508Manager,
+  UResponsiveGUI;
 
 { Initial values in ANote
 
@@ -739,7 +740,7 @@ var
   ErrMsg, spErrMsg, WhyNot, AlertMsg: string;
 begin
   cmdOK.SetFocus;                                // make sure cbo exit events fire
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
 (*  case FCallingTab of
     CT_CONSULTS:  ;  //no action
     CT_SURGERY :  ;  //no action

@@ -53,7 +53,7 @@ procedure Update508Monitor(FileName: String; TotalLines,
 
 implementation
 
-uses VAUtils;
+uses VAUtils, UResponsiveGUI;
 
 {$R *.dfm}
 
@@ -80,7 +80,7 @@ begin
   frmProgress.lblProject.Caption := GetFileWithShortenedPath(uProjectText, frmProgress.lblProject.Width, frmProgress.Canvas);
   frmProgress.lblFile.Caption := '';
   frmProgress.Show;
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages(True);
 end;
 
 procedure StartMonitor(ProjectText: string; StopProc: TStopCompileProc);
@@ -124,7 +124,7 @@ begin
     frmProgress.lblBuilt.Caption := IntToStr(Built);
     if MilliSecondSpan(Now, uLastUpdate) > UPDATE_FREQUENCY then
     begin
-      Application.ProcessMessages;
+      TResponsiveGUI.ProcessMessages(True);
       uLastUpdate := Now; 
     end;
   end;

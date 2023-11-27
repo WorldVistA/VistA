@@ -22,6 +22,7 @@ inherited frmODLab: TfrmODLab
     Margins.Right = 4
     Margins.Bottom = 4
     Caption = 'Available Lab Tests'
+    OnClick = lblAvailTestsClick
   end
   object lblCollTime: TLabel [1]
     Left = 185

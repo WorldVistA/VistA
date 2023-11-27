@@ -395,7 +395,6 @@ type
     FEditNoteIEN: Integer;  // Note IEN for note currently being edited
 
     FUpdateUnsigned: boolean; // used when clicking Show More when editing a new note
-
     procedure DrawerButtonClicked(Sender: TObject);
     procedure ClearEditControls;
     procedure DoAutoSave(Suppress: Integer = 1);
@@ -516,7 +515,7 @@ uses
   uVA508CPRSCompatibility, VA508AccessibilityRouter, fFocusedControls,
   System.Types, rECS, TRPCB, uGlobalVar, System.UITypes, fNotificationProcessor,
   System.IniFiles, ORNetIntf, U_CPTEditMonitor, StrUtils, VAUtils,
-  System.Variants, uMisc;
+  System.Variants, uMisc, uWriteAccess;
 
 const
   FormSpace = 3;
@@ -910,8 +909,21 @@ end;
 }
 
 procedure TfrmNotes.FormCreate(Sender: TObject);
+var
+  i: Integer;
+  act: TContainedAction;
+
 begin
   inherited;
+  for i := 0 to ActionList.ActionCount - 1 do
+  begin
+    act := ActionList.Actions[i];
+    if (act.Category = 'Action') or (act = acNewNote) or (act = acChange) then
+      act.Enabled := WriteAccess(waProgressNotes)
+    else if act = acPCE then
+      act.Enabled := WriteAccess(waEncounter);
+  end;
+
   FUpdateUnsigned := False;
   acNewNote.Enabled := false;
 
@@ -925,6 +937,11 @@ begin
   FEditNote.LastCosignerName := '';
   FLastNoteID := '';
   Drawers.Init;
+  if not WriteAccess(waProgressNoteTemplates) then
+  begin
+    Drawers.TemplateState := dsDisabled;
+    Drawers.ReminderState := dsDisabled;
+  end;
   Drawers.NewNoteButton := cmdNewNote;
   Drawers.RichEditControl := memNewNote;
   FImageFlag := TBitmap.Create;
@@ -932,6 +949,7 @@ begin
   splDrawers.Enabled := False;
   Drawers.SaveDrawerConfiguration(DrawerConfiguration);
   Drawers.CopyMonitor := CPMemNewNote;
+  Drawers.TemplateAccess := WriteAccess(waProgressNoteTemplates);
 
   // Make sure the screen reader stops and reads these controls
   stTitle.TabStop := ScreenReaderActive;
@@ -994,7 +1012,7 @@ begin
       frmDrawerEdtSearchExit);
   end;
 
-  acNewNote.Enabled := True;
+  acNewNote.Enabled := WriteAccess(waProgressNotes);
 end;
 
 procedure TfrmNotes.frmDrawerEdtSearchExit(Sender: TObject);
@@ -1253,7 +1271,7 @@ begin
   // reset the display now that the note is gone
   if DeleteSts.Success then
   begin
-    DeletePCE(AVisitStr);
+    DeletePCE(AVisitStr, uPCEMaster.VisitIEN);
     // removes PCE data if this was the only note pointing to it
     ClearEditControls;
     LoadNotes;
@@ -1261,8 +1279,8 @@ begin
     ReadVisible := true;
     UpdateReminderFinish;
     ShowPCEControls(False);
-    Drawers.DisplayDrawers(true, Drawers.ActiveDrawer, [odTemplates],
-      [odTemplates]);
+    Drawers.DisplayDrawers(WriteAccess(waProgressNoteTemplates),
+      Drawers.ActiveDrawer, [odTemplates], [odTemplates]);
     ShowPCEButtons(False);
   end
   else { if DeleteSts }
@@ -1327,7 +1345,8 @@ end;
 
 procedure TfrmNotes.acEditDialogFieldsUpdate(Sender: TObject);
 begin
-  acEditDialogFields.Enabled := CanEditTemplateFields;
+  acEditDialogFields.Enabled := CanEditTemplateFields and
+    WriteAccess(waProgressNoteTemplates);
 end;
 
 procedure TfrmNotes.acEditNoteExecute(Sender: TObject);
@@ -1362,7 +1381,8 @@ end;
 
 procedure TfrmNotes.acEditSharedUpdate(Sender: TObject);
 begin
-  acEditShared.Enabled := Drawers.CanEditShared;
+  acEditShared.Enabled := Drawers.CanEditShared and
+    WriteAccess(waProgressNoteTemplates);
 end;
 
 procedure TfrmNotes.acEditTemplateExecute(Sender: TObject);
@@ -1372,7 +1392,8 @@ end;
 
 procedure TfrmNotes.acEditTemplateUpdate(Sender: TObject);
 begin
-  acEditTemplate.Enabled := Drawers.CanEditTemplates;
+  acEditTemplate.Enabled := Drawers.CanEditTemplates and
+    WriteAccess(waProgressNoteTemplates);
 end;
 
 procedure TfrmNotes.acIconLegendExecute(Sender: TObject);
@@ -1505,8 +1526,8 @@ end;
 
 procedure TfrmNotes.acNewNoteUpdate(Sender: TObject);
 begin
-  acNewNote.Enabled := (not pnlWrite.Visible) and
-    (frmConsults.EditingIndex < 0);
+  acNewNote.Enabled := WriteAccess(waProgressNotes) and
+    (not pnlWrite.Visible) and (frmConsults.EditingIndex < 0);
 end;
 
 procedure TfrmNotes.acNewSharedExecute(Sender: TObject);
@@ -1516,7 +1537,8 @@ end;
 
 procedure TfrmNotes.acNewSharedUpdate(Sender: TObject);
 begin
-  acNewShared.Enabled := Drawers.CanEditShared;
+  acNewShared.Enabled := Drawers.CanEditShared and
+    WriteAccess(waProgressNoteTemplates);
 end;
 
 procedure TfrmNotes.acNewTemplateExecute(Sender: TObject);
@@ -1526,7 +1548,8 @@ end;
 
 procedure TfrmNotes.acNewTemplateUpdate(Sender: TObject);
 begin
-  acNewTemplate.Enabled := Drawers.CanEditTemplates;
+  acNewTemplate.Enabled := Drawers.CanEditTemplates and
+    WriteAccess(waProgressNoteTemplates);
 end;
 
 procedure TfrmNotes.acPCEExecute(Sender: TObject);
@@ -1582,7 +1605,7 @@ begin
 //    end
   finally
     if cmdPCE <> nil then    // CPRS may have timed out
-      cmdPCE.Enabled := True;
+      cmdPCE.Enabled := WriteAccess(waEncounter);
   end;
 end;
 
@@ -1649,7 +1672,7 @@ var
     ExecuteTemplateOrBoilerPlate(BoilerText, FEditNote.Title, ltTitle, Self,
       'Title: ' + FEditNote.TitleName, DocInfo, CPMemNewNote);
     memNewNote.Text := BoilerText.Text;
-    memNewNote.SelStart := Length(memNewNote.Lines.Text); // CQ: 16461
+    //memNewNote.SelStart := Length(memNewNote.Lines.Text); // CQ: 16461
     SpeakStrings(BoilerText);
     UpdateNoteAuthor(DocInfo);
     FChanged := False;
@@ -2393,15 +2416,15 @@ begin
             EnableList := [odTemplates];
             ShowList := [odTemplates];
           end;
-          Drawers.DisplayDrawers(true, Drawers.ActiveDrawer, EnableList,
-            ShowList);
+          Drawers.DisplayDrawers(WriteAccess(waProgressNoteTemplates),
+            Drawers.ActiveDrawer, EnableList, ShowList);
         end;
       end
       else
       begin
         ShowPCEButtons(False);
-        Drawers.DisplayDrawers(true, Drawers.ActiveDrawer, [odTemplates],
-          [odTemplates]);
+        Drawers.DisplayDrawers(WriteAccess(waProgressNoteTemplates),
+          Drawers.ActiveDrawer, [odTemplates], [odTemplates]);
         AnIEN := lstNotes.ItemIEN;
         ActOnDocument(ActionSts, AnIEN, 'VIEW');
         if ActionSts.Success then
@@ -2435,7 +2458,7 @@ begin
         else
           ShowPCEControls(False);
       end; { if ItemIndex }
-    mnuEncounter.Enabled := cmdPCE.Visible;
+    mnuEncounter.Enabled := WriteAccess(waEncounter) and cmdPCE.Visible;
     // SetPCEParent;
   finally
     PCEList.Free;
@@ -2948,12 +2971,13 @@ procedure TfrmNotes.InsertNewNote(IsIDChild: Boolean; AnIDParent: Integer;
   aNoteIEN: Integer = -1; aNoteTitle: string = '');
 { creates the editing context for a new progress note & inserts stub into top of view list }
 var
-  EnableAutosave, HaveRequired: Boolean;
+  EnableAutosave, HaveRequired, RetryAction: Boolean;
   CreatedNote: TCreatedDoc;
   TmpBoilerPlate: TStringList;
   tmpNode: TTreeNode;
   X, WhyNot, DocInfo: string;
   aStr: string;
+  NoteErrorAction: TNoteErrorReturn;
 begin
   if frmFrame.TimedOut then
     exit;
@@ -3023,8 +3047,29 @@ begin
       uPCEMaster.NoteDateTime := FEditNote.DateTime;
       uPCEMaster.PCEForNote(USE_CURRENT_VISITSTR);
       FEditNote.NeedCPT := uPCEMaster.CPTRequired;
-      // create the note
-      PutNewNote(CreatedNote, FEditNote);
+      repeat
+        RetryAction := False;
+        // create the note
+        PutNewNote(CreatedNote, FEditNote);
+
+        if CreatedNote.IEN = 0 then
+        begin
+          NoteErrorAction := ShowNewNoteError('note', CreatedNote.ErrorText,
+            FEditNote.Lines, False, True);
+          RetryAction := NoteErrorAction = neRetry;
+
+          if NoteErrorAction = neAbort then
+          begin
+            // if note creation failed or failed to get note lock (both unlikely), unlock consult
+            with FEditNote do
+              if (PkgIEN > 0) and (PkgPtr = PKG_CONSULTS) then
+                UnlockConsultRequest(0, PkgIEN);
+            InfoBox(CreatedNote.ErrorText, TX_CREATE_ERR, MB_OK);
+            HaveRequired := False;
+          end;
+        end;
+
+      until not RetryAction;
 
       FEditNoteIEN := CreatedNote.IEN;
       uPCEMaster.NoteIEN := CreatedNote.IEN;
@@ -3085,8 +3130,7 @@ begin
           tvNotes.Items.EndUpdate;
         end;
         uChanging := False;
-        Changes.Add(CH_DOC, IntToStr(CreatedNote.IEN), GetTitleText(0), '',
-          CH_SIGN_YES);
+        Changes.Add(CH_DOC, IntToStr(CreatedNote.IEN), GetTitleText(0), '', CH_SIGN_YES);
         lstNotes.ItemIndex := 0;
         EditingIndex := 0;
         SetSubjectVisible(AskSubjectForNotes);
@@ -3102,16 +3146,7 @@ begin
           txtSubject.SetFocus
         else if memNewNote.Visible then
                memNewNote.SetFocus;
-      end
-      else
-      begin
-        // if note creation failed or failed to get note lock (both unlikely), unlock consult
-        with FEditNote do
-          if (PkgIEN > 0) and (PkgPtr = PKG_CONSULTS) then
-            UnlockConsultRequest(0, PkgIEN);
-        InfoBox(CreatedNote.ErrorText, TX_CREATE_ERR, MB_OK);
-        HaveRequired := False;
-      end; { if CreatedNote.IEN }
+      end;
     end; { if HaveRequired }
     if not HaveRequired then
     begin
@@ -3126,7 +3161,7 @@ begin
         ExecuteTemplateOrBoilerPlate(TmpBoilerPlate, FEditNote.Title, ltTitle,
           Self, 'Title: ' + FEditNote.TitleName, DocInfo, CPMemNewNote);
         memNewNote.Text := TmpBoilerPlate.Text;
-        memNewNote.SelStart := Length(memNewNote.Lines.Text); // CQ: 16461
+        //memNewNote.SelStart := Length(memNewNote.Lines.Text); // CQ: 16461
         SpeakStrings(memNewNote);
         UpdateNoteAuthor(DocInfo);
       finally
@@ -3146,11 +3181,12 @@ const
   AS_ADDENDUM = true;
   IS_ID_CHILD = False;
 var
-  HaveRequired: Boolean;
+  HaveRequired, RetryAction: Boolean;
   CreatedNote: TCreatedDoc;
   tmpNode: TTreeNode;
   X, DocInfo: string;
   TmpBoilerPlate: TStringList;
+  NoteErrorAction: TNoteErrorReturn;
 begin
   ClearEditControls;
   TmpBoilerPlate := nil;
@@ -3239,10 +3275,28 @@ begin
     FEditNote.Location := uPCEMaster.Location;
     FEditNote.LocationName := ExternalName(uPCEMaster.Location, 44);
     FEditNote.VisitDate := uPCEMaster.DateTime;
-    PutAddendum(CreatedNote, FEditNote, FEditNote.Addend);
+    repeat
+        RetryAction := False;
+        PutAddendum(CreatedNote, FEditNote, FEditNote.Addend);
+        if CreatedNote.IEN = 0 then
+        begin
+          NoteErrorAction := ShowNewNoteError('addendum', CreatedNote.ErrorText,
+            FEditNote.Lines, False, True);
+          RetryAction := NoteErrorAction = neRetry;
 
+          // Abort
+          if NoteErrorAction = neAbort then
+          begin
+            // if note creation failed or failed to get note lock (both unlikely), unlock consult
+            with FEditNote do
+              if (PkgIEN > 0) and (PkgPtr = PKG_CONSULTS) then
+                UnlockConsultRequest(0, PkgIEN);
+            HaveRequired := False;
+          end;
+        end;
+      until not RetryAction;
     // Save copied text here
-    if (memNewNote.lines.Count > 0) and (CPMemNewNote.CopyPasteEnabled) then
+    if (CreatedNote.IEN > 0) and (memNewNote.lines.Count > 0) and (CPMemNewNote.CopyPasteEnabled) then
       CPMemNewNote.SaveTheMonitor(CreatedNote.IEN);
     FEditNoteIEN := CreatedNote.IEN;
     uPCEMaster.NoteIEN := CreatedNote.IEN;
@@ -3279,8 +3333,7 @@ begin
         tvNotes.Items.EndUpdate;
       end;
       uChanging := False;
-      Changes.Add(CH_DOC, IntToStr(CreatedNote.IEN), GetTitleText(0), '',
-        CH_SIGN_YES);
+      Changes.Add(CH_DOC, IntToStr(CreatedNote.IEN), GetTitleText(0), '', CH_SIGN_YES);
       lstNotes.ItemIndex := 0;
       EditingIndex := 0;
       SetSubjectVisible(AskSubjectForNotes);
@@ -3295,16 +3348,7 @@ begin
           LoadBoilerPlate(TmpBoilerPlate, FEditNote.Title, uPCEMaster.VisitString);
         end;
       memNewNote.SetFocus;
-    end
-    else
-    begin
-      // if note creation failed or failed to get note lock (both unlikely), unlock consult
-      with FEditNote do
-        if (PkgIEN > 0) and (PkgPtr = PKG_CONSULTS) then
-          UnlockConsultRequest(0, PkgIEN);
-      InfoBox(CreatedNote.ErrorText, TX_CREATE_ERR, MB_OK);
-      HaveRequired := False;
-    end; { if CreatedNote.IEN }
+    end;
   end; { if HaveRequired }
   if not HaveRequired then
     ClearEditControls;
@@ -3315,7 +3359,7 @@ begin
         DocInfo := MakeXMLParamTIU(IntToStr(CreatedNote.IEN), FEditNote);
         ExecuteTemplateOrBoilerPlate(TmpBoilerPlate, FEditNote.Title, ltTitle, Self, 'Title: ' + FEditNote.TitleName, DocInfo, CPMemNewNote);
         memNewNote.Text := TmpBoilerPlate.Text;
-        memNewNote.SelStart := Length(memNewNote.Lines.Text); //CQ: 16461
+        //memNewNote.SelStart := Length(memNewNote.Lines.Text); //CQ: 16461
         SpeakStrings(memNewNote);
         UpdateNoteAuthor(DocInfo);
       finally
@@ -3344,8 +3388,7 @@ begin
     exit;
   EditingIndex := lstNotes.ItemIndex;
   if assigned(Changes) then
-    Changes.Add(CH_DOC, lstNotes.ItemID, GetTitleText(EditingIndex), '',
-      CH_SIGN_YES);
+    Changes.Add(CH_DOC, lstNotes.ItemID, GetTitleText(EditingIndex), '', CH_SIGN_YES);
   GetNoteForEdit(FEditNote, lstNotes.ItemIEN);
   memNewNote.Lines.Assign(FEditNote.Lines);
 
@@ -3404,80 +3447,97 @@ end;
 
 procedure TfrmNotes.SaveEditedNote(var Saved: Boolean);
 { validates fields and sends the updated note to the server }
+
+  procedure AfterSave;
+  begin
+    if LstNotes.ItemIndex = EditingIndex then
+    begin
+      EditingIndex := -1;
+      LstNotesClick(Self);
+    end;
+    EditingIndex := -1;
+    // make sure EditingIndex reset even if not viewing edited note
+    Saved := True;
+    FNewIDChild := False;
+    FChanged := False;
+  end;
+
 var
   UpdatedNote: TCreatedDoc;
   X: string;
+  RetryAction: Boolean;
+  NoteErrorAction: TNoteErrorReturn;
 begin
   Saved := False;
-  if (memNewNote.GetTextLen = 0) or (not ContainsVisibleChar(memNewNote.Text))
+  if (MemNewNote.GetTextLen = 0) or (not ContainsVisibleChar(MemNewNote.Text))
   then
   begin
-    lstNotes.ItemIndex := EditingIndex;
-    X := lstNotes.ItemID;
-    uChanging := true;
-    tvNotes.Selected := tvNotes.FindPieceNode(X, 1, U,
-      tvNotes.Items.GetFirstNode);
-    uChanging := False;
-    tvNotesChange(Self, tvNotes.Selected);
+    LstNotes.ItemIndex := EditingIndex;
+    X := LstNotes.ItemID;
+    UChanging := True;
+    TvNotes.Selected := TvNotes.FindPieceNode(X, 1, U,
+      TvNotes.Items.GetFirstNode);
+    UChanging := False;
+    TvNotesChange(Self, TvNotes.Selected);
     if FSilent or ((not FSilent) and
       (InfoBox(GetTitleText(EditingIndex) + TX_EMPTY_NOTE, TC_EMPTY_NOTE,
       MB_YESNO) = IDYES)) then
     begin
-      FConfirmed := true;
-      acDeleteNoteExecute(Self);
-      Saved := true;
-      FDeleted := true;
+      FConfirmed := True;
+      AcDeleteNoteExecute(Self);
+      Saved := True;
+      FDeleted := True;
     end
     else
       FConfirmed := False;
-    exit;
+    Exit;
   end;
   // ExpandTabsFilter(memNewNote.Lines, TAB_STOP_CHARS);
-  FEditNote.Lines := memNewNote.Lines;
+  FEditNote.Lines := MemNewNote.Lines;
   // FEditNote.Lines:= SetLinesTo74ForSave(memNewNote.Lines, Self);
-  FEditNote.Subject := txtSubject.Text;
-  FEditNote.NeedCPT := uPCEMaster.CPTRequired;
-  timAutoSave.Enabled := False;
+  FEditNote.Subject := TxtSubject.Text;
+  FEditNote.NeedCPT := UPCEMaster.CPTRequired;
+  TimAutoSave.Enabled := False;
   try
-    PutEditedNote(UpdatedNote, FEditNote, lstNotes.GetIEN(EditingIndex));
+    repeat
+      RetryAction := False;
+      PutEditedNote(UpdatedNote, FEditNote, LstNotes.GetIEN(EditingIndex));
 
-    if UpdatedNote.IEN > 0 then
-    begin
-      memNewNote.Clear;
-      // Update the richedit for the copy paste (Formatting may have changed)
-      // GetNoteForEdit(FEditNote, lstNotes.GetIEN(EditingIndex));
-      // memNewNote.Lines.Assign(FEditNote.Lines);
-      LoadDocumentText(memNewNote.Lines, lstNotes.GetIEN(EditingIndex));
+      if UpdatedNote.IEN > 0 then
+      begin
+        MemNewNote.Clear;
+        // Update the richedit for the copy paste (Formatting may have changed)
+        // GetNoteForEdit(FEditNote, lstNotes.GetIEN(EditingIndex));
+        // memNewNote.Lines.Assign(FEditNote.Lines);
+        LoadDocumentText(MemNewNote.Lines, LstNotes.GetIEN(EditingIndex));
 
-      // Save copied text here
-      // CPMemNewNote.SaveTheMonitor(lstNotes.GetIEN(EditingIndex));
-      if (memNewNote.lines.Count > 0) and (CPMemNewNote.CopyPasteEnabled) then
-        CPMemNewNote.SaveTheMonitor(UpdatedNote.IEN);
-    end;
+        // Save copied text here
+        // CPMemNewNote.SaveTheMonitor(lstNotes.GetIEN(EditingIndex));
+        if (MemNewNote.Lines.Count > 0) and (CPMemNewNote.CopyPasteEnabled) then
+          CPMemNewNote.SaveTheMonitor(UpdatedNote.IEN);
 
+        // there's no unlocking here since the note is still in Changes after a save
+        AfterSave;
+      end
+      else
+      begin
+        if not FSilent then
+        begin
+          NoteErrorAction := ShowNoteError(UpdatedNote.ErrorText,
+            FEditNote.Lines, False, True);
+
+          RetryAction := NoteErrorAction = neRetry;
+
+          if NoteErrorAction = neAbort then
+            AfterSave;
+        end;
+      end;
+    until not RetryAction;
   finally
-    timAutoSave.Enabled := true;
-  end;
-  // there's no unlocking here since the note is still in Changes after a save
-  if UpdatedNote.IEN > 0 then
-  begin
-    if lstNotes.ItemIndex = EditingIndex then
-    begin
-      EditingIndex := -1;
-      lstNotesClick(Self);
-    end;
-    EditingIndex := -1;
-    // make sure EditingIndex reset even if not viewing edited note
-    Saved := true;
-    FNewIDChild := False;
-    FChanged := False;
-  end
-  else
-  begin
-    if not FSilent then
-      ShowNoteError(UpdatedNote.ErrorText, FEditNote.Lines);
+    TimAutoSave.Enabled := True;
   end;
 end;
+
 
 procedure TfrmNotes.SaveCurrentNote(var Saved: Boolean);
 { called whenever a note should be saved - uses IEN to call appropriate save logic }
@@ -3502,9 +3562,9 @@ begin
       // pnlWrite.Visible := True;
       ReadVisible := False;
       mnuViewDetail.Enabled := False;
-      mnuActChange.Enabled := not((FEditNote.IDParent <> 0) and
-        (not FNewIDChild));
-      mnuActLoadBoiler.Enabled := true;
+      mnuActChange.Enabled := WriteAccess(waProgressNotes) and (not((FEditNote.IDParent <> 0) and
+        (not FNewIDChild)));
+      mnuActLoadBoiler.Enabled := WriteAccess(waProgressNotes);
       // stTitle.Caption := '';
       UpdateReminderFinish;
       CPMemNewNote.LoadPasteText();
@@ -3905,30 +3965,38 @@ end;
 procedure TfrmNotes.DoAutoSave(Suppress: Integer = 1);
 var
   ErrMsg: string;
+  RetryAction: Boolean;
+  NoteErrorAction: TNoteErrorReturn;
 begin
-  if fFrame.frmFrame.DLLActive then
-    exit;
+  if FFrame.FrmFrame.DLLActive then
+    Exit;
   if (EditingIndex > -1) and FChanged then
   begin
     StatusText('Autosaving note...');
     // PutTextOnly(ErrMsg, memNewNote.Lines, lstNotes.GetIEN(EditingIndex));
-    timAutoSave.Enabled := False;
+    TimAutoSave.Enabled := False;
     try
-
-      SetText(ErrMsg, memNewNote.Lines, lstNotes.GetIEN(EditingIndex), Suppress);
-
-      //Save copied text here
-      if (memNewNote.lines.Count > 0) and (CPMemNewNote.CopyPasteEnabled) then
-        CPMemNewNote.SaveTheMonitor(lstNotes.GetIEN(EditingIndex));
+      repeat
+        RetryAction := False;
+        SetText(ErrMsg, MemNewNote.Lines, LstNotes.GetIEN(EditingIndex),
+          Suppress);
+        if ErrMsg <> '' then
+        begin
+          NoteErrorAction := ShowNoteError(ErrMsg, MemNewNote.Lines,
+            True, False);
+          RetryAction := NoteErrorAction = neRetry;
+        end;
+      until not RetryAction;
+      // Save copied text here
+      if (MemNewNote.Lines.Count > 0) and (CPMemNewNote.CopyPasteEnabled) then
+        CPMemNewNote.SaveTheMonitor(LstNotes.GetIEN(EditingIndex));
 
     finally
-      timAutoSave.Enabled := True;
+      TimAutoSave.Enabled := True;
     end;
     FChanged := False;
     StatusText('');
   end;
-  if ErrMsg <> '' then
-    ShowNoteError(ErrMsg, memNewNote.Lines);
 end;
 
 procedure TfrmNotes.DrawerButtonClicked;
@@ -4253,9 +4321,11 @@ begin
     popNoteMemoGrammar.Enabled := true;
     popNoteMemoReformat.Enabled := true;
     popNoteMemoReplace.Enabled := (FEditCtrl.GetTextLen > 0);
-    popNoteMemoPreview.Enabled := (Drawers.ActiveDrawer = odTemplates) and
+    popNoteMemoPreview.Enabled := WriteAccess(waProgressNoteTemplates) and
+      (Drawers.ActiveDrawer = odTemplates) and
       assigned(Drawers.tvTemplates.Selected);
-    popNoteMemoInsTemplate.Enabled := (Drawers.ActiveDrawer = odTemplates) and
+    popNoteMemoInsTemplate.Enabled := WriteAccess(waProgressNoteTemplates) and
+      (Drawers.ActiveDrawer = odTemplates) and
       assigned(Drawers.tvTemplates.Selected);
     popNoteMemoViewCslt.Enabled := (FEditNote.PkgPtr = PKG_CONSULTS);
     // if editing consult title
@@ -4548,24 +4618,32 @@ begin
           exit;
         end;
 
-        // VISTAOR-23034
-        SetViewContext(FDefaultContext);
-
-        InsertNewNote(False, 0, StrToInt(aSmartParams.values['NOTE TITLE IEN']),
-          aSmartParams.values['NOTE TITLE']);
-        // aSmartNoteIEN, aSmartNoteTitle);
+        if WriteAccess(waProgressNotes) then
+        begin
+          // VISTAOR-23034
+          SetViewContext(FDefaultContext);
+          InsertNewNote(False, 0, StrToInt(aSmartParams.values['NOTE TITLE IEN']),
+            aSmartParams.values['NOTE TITLE']);
+          // aSmartNoteIEN, aSmartNoteTitle);
+        end
+        else
+          WriteAccessV.Error(waProgressNotes, 'Can''t create new note.');
       end
       else if (aSmartParams.values['MAKE ADDENDUM'] = '1') then
       begin
-        // VISTAOR-23034
-        SetViewContext(FDefaultContext);
+        if WriteAccess(waProgressNotes) then
+        begin
+          // VISTAOR-23034
+          SetViewContext(FDefaultContext);
 
-        InsertAddendum(StrToIntDef(aSmartParams.values['ADDEND NOTE IEN'], -1),
-          aSmartParams.values['ADDEND NOTE TITLE'], true);
+          InsertAddendum(StrToIntDef(aSmartParams.values['ADDEND NOTE IEN'], -1),
+            aSmartParams.values['ADDEND NOTE TITLE'], true);
+        end
+        else
+          WriteAccessV.Error(waProgressNotes, 'Can''t create new addendum.');
       end;
-
-        exit;
-      end
+      exit;
+    end
     else
       X := Notifications.AlertData;
   finally
@@ -5125,9 +5203,12 @@ begin
       end
 
       // frmDrawers.btnTemplate previous, an exception
-      else if (CurControl = frmDrawers.btnTemplate) and not GoForward then
+      else if (CurControl = frmDrawers.btnTemplate) and GoBack then
       begin
-        if memNewNote.CanFocus then NextControl := memNewNote;
+        if memNewNote.CanFocus then
+          NextControl := memNewNote
+        else
+          NextControl := FindNextControl(PnlWrite, False, True, False);
       end
 
       // pnlLeft next
@@ -5487,15 +5568,15 @@ begin
     acPCE.Visible := true;
     if Editing then
     begin
-      acPCE.Enabled := CanEditPCE(uPCEMaster);
+      acPCE.Enabled := WriteAccess(waEncounter) and CanEditPCE(uPCEMaster);
       acNewNote.Visible := AnytimeEncounters;
       acNewNote.Enabled := False;
     end
     else
     begin
-      acPCE.Enabled := (GetAskPCE(0) <> apDisable);
+      acPCE.Enabled := WriteAccess(waEncounter) and (GetAskPCE(0) <> apDisable);
       acNewNote.Visible := true;
-      acNewNote.Enabled := (FStarting = False); // TRUE;
+      acNewNote.Enabled := WriteAccess(waProgressNotes) and (FStarting = False); // TRUE;
     end;
   end
   else
@@ -5503,7 +5584,7 @@ begin
     acPCE.Enabled := False;
     acPCE.Visible := False;
     acNewNote.Visible := true;
-    acNewNote.Enabled := (FStarting = False); // TRUE;
+    acNewNote.Enabled := WriteAccess(waProgressNotes) and (FStarting = False); // TRUE;
   end;
   // popNoteMemoEncounter.Enabled := cmdPCE.Enabled;
   // popNoteMemoEncounter.Visible := cmdPCE.Visible;
@@ -5797,6 +5878,9 @@ Var
   DisableAll: boolean;
 
 begin
+  if not WriteAccess(waProgressNotes) then
+    exit;
+
   TResponsiveGUI.ProcessMessages;
   DisableAll := True;
   try
@@ -6036,9 +6120,9 @@ begin
                   frmSearchStop.lblSearchStatus.Repaint;
                   stNotes.Repaint;
                   // Free up some ticks so they can click the "Stop" button
-                  TResponsiveGUI.ProcessMessages;
-                  TResponsiveGUI.ProcessMessages;
-                  TResponsiveGUI.ProcessMessages;
+                  TResponsiveGUI.ProcessMessages(True);
+                  TResponsiveGUI.ProcessMessages(True);
+                  TResponsiveGUI.ProcessMessages(True);
                   if SearchTextStopFlag then
                     break
                   else
@@ -6414,8 +6498,8 @@ begin
           ReadVisible := true;
           UpdateReminderFinish;
           ShowPCEControls(False);
-          Drawers.DisplayDrawers(true, Drawers.ActiveDrawer, [odTemplates],
-            [odTemplates]); // FALSE);
+          Drawers.DisplayDrawers(WriteAccess(waProgressNoteTemplates),
+            Drawers.ActiveDrawer, [odTemplates], [odTemplates]);
           ShowPCEButtons(False);
         end
         else

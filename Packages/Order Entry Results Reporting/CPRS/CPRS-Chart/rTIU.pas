@@ -826,7 +826,6 @@ begin
     begin
       CreatedDoc.IEN := 0;
       CreatedDoc.ErrorText := '';
-      ShowNewNoteError('note', NoteRec.Lines);
     end;
   finally
     Results.Free;
@@ -871,7 +870,6 @@ begin
     begin
       CreatedDoc.IEN := 0;
       CreatedDoc.ErrorText := '';
-      ShowNewNoteError('addendum', NoteRec.Lines);
     end;
   finally
     Results.Free;

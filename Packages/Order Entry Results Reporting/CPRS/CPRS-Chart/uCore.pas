@@ -9,6 +9,7 @@ interface
 uses
   SysUtils,
   Windows,
+  WinAPI.ShellAPI,
   Classes,
   Forms,
   ORFn,
@@ -17,7 +18,7 @@ uses
   ORClasses,
   uCombatVet,
   UJSONParameters,
-  system.json;
+  uWriteAccess;
 
 type
   TUser = class(TObject)
@@ -223,10 +224,14 @@ type
     FParentID:     String;
     FUser:         Int64;
     FOrderDG:      String;
+    FOrderDGIEN:   Integer;
     FDCOrder:      Boolean;
     FDelay:        Boolean;
-    constructor Create(AnItemType: Integer; const AnID, AText, AGroupName: string;
-      ASignState: Integer; AParentID: string = ''; User: int64 = 0; OrderDG: string = '';
+    FWriteAccessType: TWriteAccessType;
+    constructor Create(AnItemType: Integer;
+      const AnID, AText, AGroupName: string; ASignState: Integer;
+      AWriteAccessType: TWriteAccessType = waNone; AParentID: string = '';
+      User: Int64 = 0; AOrderDGIEN: Integer = 0; OrderDG: string = '';
       DCOrder: Boolean = False; Delay: Boolean = False);
   public
     property ItemType:  Integer read FItemType;
@@ -236,9 +241,11 @@ type
     property SignState: Integer read FSignState write FSignState;
     property ParentID : string  read FParentID;
     property User: Int64 read FUser write FUser;
+    property OrderDGIEN: integer read FOrderDGIEN write FOrderDGIEN;
     property OrderDG: string read FOrderDG write FOrderDG;
     property DCOrder: boolean read FDCOrder write FDCOrder;
     property Delay: boolean read FDelay write FDelay;
+    property WriteAccessType: TWriteAccessType read FWriteAccessType write FWriteAccessType;
     function CSValue(): Boolean;
   end;
 
@@ -260,8 +267,11 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Add(ItemType: Integer; const AnID, ItemText, GroupName: string; SignState: Integer; AParentID: string = '';
-                  User: int64 = 0; OrderDG: String = ''; DCOrder: Boolean = False; Delay: Boolean = False; ProblemAdded: Boolean = False);
+    procedure Add(ItemType: Integer; const AnID, ItemText, GroupName: string;
+      SignState: Integer; AWriteAccessType: TWriteAccessType = waNone;
+      AParentID: string = ''; User: Int64 = 0; AOrderDGIEN: Integer = 0;
+      OrderDG: String = ''; DCOrder: Boolean = False; Delay: Boolean = False;
+      ProblemAdded: Boolean = False);
     procedure Clear;
     function CanSign: Boolean;
     function Exist(ItemType: Integer; const AnID: string): Boolean;
@@ -450,7 +460,6 @@ var
   SavedEncounterDateTime: TFMDateTime;
   SavedEncounterVisitCat: Char;
   SavedEncounterReason: string; //used to store why it will be reverted to the saved value
-  SystemParameters: TJSONParameters;
   uAllergyCacheCreated: Boolean = False;
   uAllergiesChanged: Boolean = false;
 
@@ -460,6 +469,9 @@ procedure TerminateOtherAppNotification;
 procedure GotoWebPage(const URL: WideString);
 function subtractMinutesFromDateTime(Time1 : TDateTime;Minutes : extended) : TDateTime;
 function AllowAccessToSensitivePatient(NewDFN: string; var AccessStatus: integer): boolean;
+function SystemParameters: TJSONParameters;
+procedure ClearSystemParameters;
+function EHRActive: boolean;
 
 const
   ICD_9_CM = 'ICD^ICD-9-CM';
@@ -474,8 +486,6 @@ type
 
 var
   uVistaMsg, uVistaDomMsg: UINT;
-  URLMonHandle: THandle = 0;
-  HlinkNav: HlinkNavProc;
 
 type
   TNotifyAppsThread = class(TThread)
@@ -776,10 +786,7 @@ begin
   FInitialTab    := UserInfo.InitialTab;
   FUseLastTab    := UserInfo.UseLastTab;
   FActOneStep    := UserInfo.EnableActOneStep;
-  if(URLMonHandle = 0) then
-    FWebAccess := FALSE
-  else
-    FWebAccess := UserInfo.WebAccess;
+  FWebAccess     := UserInfo.WebAccess;
   FDisableHold     := UserInfo.DisableHold;
   FIsRPL           := UserInfo.IsRPL;
   FRPLList         := UserInfo.RPLList;
@@ -1178,16 +1185,21 @@ end;
 
 { TChangeItem ------------------------------------------------------------------------------ }
 
-constructor TChangeItem.Create(AnItemType: Integer; const AnID, AText, AGroupName: string;
-  ASignState: Integer; AParentID: string; user: int64; OrderDG: string; DCOrder, Delay: Boolean);
+constructor TChangeItem.Create(AnItemType: Integer;
+  const AnID, AText, AGroupName: string; ASignState: Integer;
+  AWriteAccessType: TWriteAccessType = waNone; AParentID: string = '';
+  User: Int64 = 0; AOrderDGIEN: Integer = 0; OrderDG: string = '';
+  DCOrder: Boolean = False; Delay: Boolean = False);
 begin
   FItemType  := AnItemType;
   FID        := AnID;
   FText      := AText;
   FGroupName := AGroupName;
   FSignState := ASignState;
+  FWriteAccessType := AWriteAccessType;
   FParentID  := AParentID;
   FUser      := User;
+  FOrderDGIEN := AOrderDGIEN;
   FOrderDG   := OrderDG;
   FDCOrder   := DCOrder;
   FDelay     := Delay;
@@ -1227,61 +1239,65 @@ begin
   inherited Destroy;
 end;
 
-procedure TChanges.Add(ItemType: Integer; const AnID, ItemText, GroupName: string;
-  SignState: Integer; AParentID: string; User: int64; OrderDG: String;
-  DCOrder, Delay, ProblemAdded: Boolean);
+procedure TChanges.Add(ItemType: Integer;
+  const AnID, ItemText, GroupName: string; SignState: Integer;
+  AWriteAccessType: TWriteAccessType = waNone; AParentID: string = '';
+  User: Int64 = 0; AOrderDGIEN: Integer = 0; OrderDG: String = '';
+  DCOrder: Boolean = False; Delay: Boolean = False;
+  ProblemAdded: Boolean = False);
 var
   i: Integer;
   Found: Boolean;
   ChangeList: TList;
   NewChangeItem: TChangeItem;
+
 begin
   ChangeList := nil;
   case ItemType of
-  CH_DOC: ChangeList := FDocuments;
-  CH_SUM: ChangeList := FDocuments;  {*REV*}
-  CH_CON: ChangeList := FDocuments;
-  CH_SUR: ChangeList := FDocuments;
-  CH_ORD: ChangeList := FOrders;
-  CH_PCE: ChangeList := FPCE;
+    CH_DOC: ChangeList := FDocuments;
+    CH_SUM: ChangeList := FDocuments;  {*REV*}
+    CH_CON: ChangeList := FDocuments;
+    CH_SUR: ChangeList := FDocuments;
+    CH_ORD: ChangeList := FOrders;
+    CH_PCE: ChangeList := FPCE;
   end;
-  FRefreshCoverPL := ProblemAdded;
-  FRefreshProblemList := ProblemAdded;
-  Found := False;
-  if ChangeList <> nil then with ChangeList do for i := 0 to Count - 1 do
-    with TChangeItem(Items[i]) do if ID = AnID then
-    begin
-      Found := True;
-      // can't change ItemType, ID, or GroupName, must call Remove first
-      FText := ItemText;
-      FSignState := SignState;
-    end;
-  if not Found then
+  if ChangeList <> nil then
   begin
-    NewChangeItem := TChangeItem.Create(ItemType, AnID, ItemText, GroupName, SignState, AParentID, User, OrderDG, DCOrder, Delay);
-    case ItemType of
-    CH_DOC: begin
-              FDocuments.Add(NewChangeItem);
-            end;
-    CH_SUM: begin     {*REV*}
-              FDocuments.Add(NewChangeItem);
-            end;
-    CH_CON: begin
-              FDocuments.Add(NewChangeItem);
-            end;
-    CH_SUR: begin
-              FDocuments.Add(NewChangeItem);
-            end;
-    CH_ORD: begin
-              FOrders.Add(NewChangeItem);
-              with FOrderGrp do if IndexOf(GroupName) < 0 then Add(GroupName);
-            end;
-    CH_PCE: begin
-              FPCE.Add(NewChangeItem);
-              with FPCEGrp do if IndexOf(GroupName) < 0 then Add(GroupName);
-            end;
+    if AWriteAccessType = waNone then
+      case ItemType of
+        CH_DOC: AWriteAccessType := waProgressNotes;
+        CH_SUM: AWriteAccessType := waDCSumm;
+        CH_CON: AWriteAccessType := waConsults;
+        CH_SUR: AWriteAccessType := waSurgery;
+        CH_ORD: AWriteAccessType := waOrders;
+      end;
+    FRefreshCoverPL := ProblemAdded;
+    FRefreshProblemList := ProblemAdded;
+    Found := False;
+    with ChangeList do for i := 0 to Count - 1 do
+      with TChangeItem(Items[i]) do if ID = AnID then
+      begin
+        Found := True;
+        // can't change ItemType, ID, or GroupName, must call Remove first
+        FText := ItemText;
+        FSignState := SignState;
+      end;
+    if not Found then
+    begin
+      NewChangeItem := TChangeItem.Create(ItemType, AnID, ItemText, GroupName,
+        SignState, AWriteAccessType, AParentID, User, AOrderDGIEN, OrderDG,
+        DCOrder, Delay);
+      ChangeList.Add(NewChangeItem);
+      case ItemType of
+        CH_ORD: begin
+                  with FOrderGrp do if IndexOf(GroupName) < 0 then Add(GroupName);
+                end;
+        CH_PCE: begin
+                  with FPCEGrp do if IndexOf(GroupName) < 0 then Add(GroupName);
+                end;
+      end;
+      Inc(FCount);
     end;
-    Inc(FCount);
   end;
 end;
 
@@ -1523,7 +1539,7 @@ end;
 procedure TChanges.AddUnsignedToChanges;
 { retrieves unsigned orders outside this session based on OR UNSIGNED ORDERS ON EXIT }
 var
-  i, CanSign(*, OrderUser*): Integer;
+  i, CanSign, DisplayGroup (*, OrderUser*): Integer;
   OrderUser: int64;
   AnID, Display: string;
   HaveOrders, OtherOrders: TStringList;
@@ -1552,11 +1568,13 @@ begin
       else OrderUser := StrtoInt64(Piece(OtherOrders[i],U,2));
       //agp change the M code to pass back the value for the new order properties
       Display := Piece(OtherOrders[i],U,3);
+      DisplayGroup := StrToIntDef(Piece(OtherOrders[i], U, 8), 0);
       if Piece(OtherOrders[i],U,4) = '1' then  IsDiscontinue := True
       else IsDiscontinue := False;
       if Piece(OtherOrders[i],U,5) = '1' then  IsDelay := True
       else IsDelay := False;
-      Add(CH_ORD, AnID, TextForOrder(AnID), 'Other Unsigned', CanSign,'', OrderUser, Display, IsDiscontinue, IsDelay);
+      Add(CH_ORD, AnID, TextForOrder(AnID), 'Other Unsigned', CanSign, waOrders,
+        '', OrderUser, DisplayGroup, Display, IsDiscontinue, IsDelay);
     end;
   finally
     StatusText('');
@@ -1867,8 +1885,7 @@ end;
 
 procedure GotoWebPage(const URL: WideString);
 begin
-  if(URLMonHandle <> 0) then
-    HlinkNav(nil, PWideChar(URL));
+  ShellExecute(HInstance, 'open', PChar(url), nil, nil, SW_NORMAL);
 end;
 
 function subtractMinutesFromDateTime(Time1 : TDateTime;Minutes : extended) : TDateTime;
@@ -1879,35 +1896,6 @@ const
 begin
   TimeMinutes := Minutes / MinutesPerDay;
   result := time1 - TimeMinutes;
-end;
-
-procedure LoadURLMon;
-const
-  UrlMonLib = 'URLMON.DLL';
-  HlinkName = 'HlinkNavigateString';
-
-begin
-  URLMonHandle := LoadLibrary(PChar(UrlMonLib));
-  if URLMonHandle <= HINSTANCE_ERROR then
-    URLMonHandle := 0
-  else
-  begin
-    HlinkNav := GetProcAddress(URLMonHandle, HlinkName);
-    if(not assigned(HlinkNav)) then
-    begin
-      FreeLibrary(URLMonHandle);
-      URLMonHandle := 0;
-    end;
-  end;
-end;
-
-procedure ReleaseURLMon;
-begin
-  if(URLMonHandle <> 0) then
-  begin
-    FreeLibrary(URLMonHandle);
-    URLMonHandle := 0;
-  end;
 end;
 
 procedure TChanges.ReplaceODGrpName(const AnODID, NewGrp: string);
@@ -1932,12 +1920,46 @@ begin
   end;
 end;
 
+var
+  GlobalSystemParameters: TJSONParameters;
+
+function SystemParameters: TJSONParameters;
+// Just In Time creation of SystemParameters.
+// A small potential memory leak is solved with this fix, as well as the need
+// to check for Assigned every time you try and use it.
+begin
+  if not Assigned(GlobalSystemParameters) then
+  begin
+    if not Assigned(User) then raise Exception.Create('User not assigned.');
+    GlobalSystemParameters := CreateSysUserParameters(User.DUZ);
+  end;
+  Result := GlobalSystemParameters;
+end;
+
+procedure ClearSystemParameters;
+begin
+  FreeAndNil(GlobalSystemParameters);
+end;
+
+var
+  EHRActiveStatus: Integer = 0;
+
+function EHRActive: boolean;
+var
+  Value: integer;
+begin
+  if EHRActiveStatus = 0 then
+  begin
+    CallVista('ORACCESS EHRACTIVE', [], Value);
+    EHRActiveStatus := Value + 1;
+  end;
+  Result := (EHRActiveStatus = 2);
+end;
+
 initialization
   uVistaMsg := 0;
-  LoadURLMon;
 
 finalization
-  ReleaseURLMon;
   ReleaseAppNotification;
-
+  ClearSystemParameters;
 end.

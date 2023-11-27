@@ -64,7 +64,8 @@ implementation
 {$R *.DFM}
 
 /// /NSR20080226 Ty - added fArtAllgy to uses.
-uses rOrders, uCore, uConst, fOrders, fAllgyAR, frmDCOrdersAllrgsCrrnt, fFrame;
+uses rOrders, uCore, uConst, fOrders, fAllgyAR, frmDCOrdersAllrgsCrrnt, fFrame,
+  uWriteAccess;
 
 var // rtw
   dcordercancel: Boolean; // rtw
@@ -289,8 +290,8 @@ begin
           case DCType of
             DCT_NEWORDER:
               begin
-                Changes.Add(CH_ORD, AnOrder.ID, AnOrder.Text, '', CanSign,
-                  AnOrder.ParentID, User.DUZ, AnOrder.DGroupName, true);
+                Changes.Add(CH_ORD, AnOrder.ID, AnOrder.Text, '', CanSign, waOrders,
+                  AnOrder.ParentID, User.DUZ, AnOrder.DGroup, AnOrder.DGroupName, true);
                 AnOrder.ActionOn := OriginalID + '=DC';
               end;
             DCT_DELETION:

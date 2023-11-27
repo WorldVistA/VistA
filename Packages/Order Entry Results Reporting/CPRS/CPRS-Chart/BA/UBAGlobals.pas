@@ -202,7 +202,6 @@ var
   BAOrderList       : TStringList;
   UpdatedBAOrderList: TStringList;
   ChangeItemOrderNum: string;
-  i                 : integer;
   OrderIDList       : TStringList;
   OrderBillableList : TStrings;
   BAOrderID         : string;

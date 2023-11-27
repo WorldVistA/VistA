@@ -40,7 +40,7 @@ uses
   ClipBrd,
   DateUtils,
   System.Generics.Collections,
-  dShared;
+  dShared, mPtSelDemog, mPtSelOptns;
 
 type
   TPageControl = class(Vcl.ComCtrls.TPageControl)
@@ -88,7 +88,6 @@ type
     adtSurrogateFor);
 
   TfrmPtSel = class(TfrmBase508Form)
-    pnlPtSel: TORAutoPanel;
     cboPatient: TORComboBox;
     lblPatient: TLabel;
     pnlNotifications: TORAutoPanel;
@@ -124,6 +123,10 @@ type
     pnlPaCanvas: TPanel;
     btnCancelProcessing: TButton;
     pbarNotifications: TProgressBar;
+    gpTop: TGridPanel;
+    fraPtSelOptns: TfraPtSelOptns;
+    lblGap: TLabel;
+    fraPtSelDemog: TfraPtSelDemog;
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
     procedure cboPatientChange(Sender: TObject);
@@ -142,7 +145,6 @@ type
     procedure cmdForwardClick(Sender: TObject);
     procedure cmdRemoveClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure pnlPtSelResize(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure cboPatientKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -181,10 +183,10 @@ type
     procedure lstvAlertsAdvancedCustomDrawItem(Sender: TCustomListView;
       Item: TListItem; State: TCustomDrawState; Stage: TCustomDrawStage;
       var DefaultDraw: Boolean);
+    procedure sptVertMoved(Sender: TObject);
   private
     FsortCol: Integer;
     FsortAscending: Boolean;
-    FLastPt: string;
     FsortDirection: string;
     FUserCancelled: Boolean;
     FOKClicked: Boolean;
@@ -203,22 +205,17 @@ type
     procedure AdjustFormSize(ShowNotif: Boolean; FontSize: Integer);
     procedure ClearIDInfo;
     procedure ShowIDInfo;
-    procedure ShowFlagInfo;
     procedure SetCaptionTop;
     procedure SetPtListTop(IEN: Int64);
     procedure RPLDisplay;
     procedure AlertList;
     procedure AdjustButtonSize(pButton: TButton);
     procedure AdjustNotificationButtons;
-    procedure SetupDemographicsForm;
-    procedure SetupDemographicsLabel;
     procedure ShowDisabledButtonTexts;
     procedure SelectPtByDFN(aDFN:String);
     procedure WMSelectPatient(var Message: TMessage); message UM_SELECTPATIENT;
     function AlertData(Index: integer; DataType: TAlertDataType): string;
     function CreateSubItems(Index: integer): TStringList;
-  public
-    procedure Loaded; override;
   end;
 
 procedure SelectPatient(ShowNotif: Boolean; FontSize: Integer; var UserCancelled: Boolean);
@@ -238,8 +235,6 @@ uses
   uCore,
   fDupPts,
   fPtSens,
-  fPtSelDemog,
-  fPtSelOptns,
   fPatientFlagMulti,
   uOrPtf,
   fAlertForward,
@@ -254,7 +249,8 @@ uses
   fOptions,
   fAlertsProcessed,
   uFormUtils,
-  uSimilarNames;
+  uSimilarNames,
+  UResponsiveGUI;
 
 type
   TAlertColumnInfo = record
@@ -312,7 +308,7 @@ begin
         FDfltSrc := Piece(FDfltSrc, U, 1);
         if (IsRPL = '1') then // Deal with restricted patient list users.
           FDfltSrc := '';
-        frmPtSelOptns.SetDefaultPtList(FDfltSrc);
+        fraPtSelOptns.SetDefaultPtList(FDfltSrc);
         if RPLProblem then
           begin
             frmPtSel.Release;
@@ -340,17 +336,28 @@ end;
 procedure TfrmPtSel.AdjustFormSize(ShowNotif: Boolean; FontSize: Integer);
 { Adjusts the initial size of the form based on the font used & if notifications should show. }
 var
-  SplitterTop, t1, t2, t3: Integer;
+  SplitterTop, t1, t2, t3, btnH, btnW: Integer;
 
 begin
   SetFormPosition(self);
   ResizeAnchoredFormToFont(self);
+  btnH := TextHeightByFont(Font.Handle, cmdSaveList.Caption) + 12;
+  btnW := TextWidthByFont(Font.Handle, cmdSaveList.Caption) + 40;
+  gpTop.ColumnCollection[3].Value := btnW;
+  gpTop.RowCollection.BeginUpdate;
+  try
+    gpTop.RowCollection[0].Value := btnH;
+    gpTop.RowCollection[1].Value := btnH;
+    gpTop.RowCollection[3].Value := btnH;
+  finally
+    gpTop.RowCollection.EndUpdate;
+  end;
+
   if ShowNotif then
     begin
       pnlDivide.Visible := True;
       lstvAlerts.Visible := True;
       pnlNotifications.Visible := True;
-      pnlPtSel.BevelOuter := bvRaised;
     end
   else
     begin
@@ -365,7 +372,7 @@ begin
   else
     SetUserBounds2(Name + '.' + sptVert.Name, SplitterTop, t1, t2, t3);
   if SplitterTop > 150 then
-    pnlPtSel.Height := SplitterTop;
+    gpTop.Height := SplitterTop;
   FNotificationBtnsAdjusted := False;
   AdjustButtonSize(cmdSaveList);
   AdjustButtonSize(cmdProcessInfo);
@@ -387,7 +394,7 @@ begin
   lblPatient.Caption := 'Patients';
   if (not User.IsReportsOnly) then
     begin
-      case frmPtSelOptns.SrcType of
+      case fraPtSelOptns.SrcType of
         TAG_SRC_DFLT:
           lblPatient.Caption := 'Patients (' + FDfltSrc + ')';
         TAG_SRC_PROV:
@@ -445,33 +452,33 @@ begin
   // (Always use Piece "2" as the first in the list to assure display of patient's name.)
   cboPatient.pieces := '2,3'; // This line and next: defaults set - exceptions modifield next.
   cboPatient.tabPositions := '20,28';
-  if ((frmPtSelOptns.SrcType = TAG_SRC_DFLT) and (FDfltSrc = 'Combination')) then
+  if ((fraPtSelOptns.SrcType = TAG_SRC_DFLT) and (FDfltSrc = 'Combination')) then
     begin
       cboPatient.pieces := '2,3,4,5,9';
       cboPatient.tabPositions := '20,28,35,45';
     end;
-  if ((frmPtSelOptns.SrcType = TAG_SRC_DFLT) and
-    (FDfltSrcType = 'Ward')) or (frmPtSelOptns.SrcType = TAG_SRC_WARD) then
+  if ((fraPtSelOptns.SrcType = TAG_SRC_DFLT) and
+    (FDfltSrcType = 'Ward')) or (fraPtSelOptns.SrcType = TAG_SRC_WARD) then
     cboPatient.tabPositions := '35';
-  if ((frmPtSelOptns.SrcType = TAG_SRC_DFLT) and
-    (AnsiStrPos(pChar(FDfltSrcType), 'Clinic') <> nil)) or (frmPtSelOptns.SrcType = TAG_SRC_CLIN) then
+  if ((fraPtSelOptns.SrcType = TAG_SRC_DFLT) and
+    (AnsiStrPos(pChar(FDfltSrcType), 'Clinic') <> nil)) or (fraPtSelOptns.SrcType = TAG_SRC_CLIN) then
     begin
       cboPatient.pieces := '2,3,9';
       cboPatient.tabPositions := '24,45';
     end;
-  NewTopList := IntToStr(frmPtSelOptns.SrcType) + U + IntToStr(IEN); // Default setting.
-  if (frmPtSelOptns.SrcType = TAG_SRC_CLIN) then
-    with frmPtSelOptns.cboDateRange do
+  NewTopList := IntToStr(fraPtSelOptns.SrcType) + U + IntToStr(IEN); // Default setting.
+  if (fraPtSelOptns.SrcType = TAG_SRC_CLIN) then
+    with fraPtSelOptns.cboDateRange do
       begin
         if ItemID = '' then
           Exit; // Need both clinic & date range.
         FirstDate := Piece(ItemID, ';', 1);
         LastDate := Piece(ItemID, ';', 2);
-        NewTopList := IntToStr(frmPtSelOptns.SrcType) + U + IntToStr(IEN) + U + ItemID; // Modified for clinics.
+        NewTopList := IntToStr(fraPtSelOptns.SrcType) + U + IntToStr(IEN) + U + ItemID; // Modified for clinics.
       end;
-  if NewTopList = frmPtSelOptns.LastTopList then
+  if NewTopList = fraPtSelOptns.LastTopList then
     Exit; // Only continue if new top list.
-  frmPtSelOptns.LastTopList := NewTopList;
+  fraPtSelOptns.LastTopList := NewTopList;
   RedrawSuspend(cboPatient.Handle);
   try
     ClearIDInfo;
@@ -489,7 +496,7 @@ begin
     end
   else
     begin
-      case frmPtSelOptns.SrcType of
+      case fraPtSelOptns.SrcType of
         TAG_SRC_DFLT:
           ListPtByDflt(cboPatient.Items);
         TAG_SRC_PROV:
@@ -499,7 +506,7 @@ begin
         TAG_SRC_SPEC:
           ListPtBySpecialty(cboPatient.Items, IEN);
         TAG_SRC_CLIN:
-          ListPtByClinic(cboPatient.Items, frmPtSelOptns.cboList.ItemIEN, FirstDate, LastDate);
+          ListPtByClinic(cboPatient.Items, fraPtSelOptns.cboList.ItemIEN, FirstDate, LastDate);
         TAG_SRC_WARD:
           ListPtByWard(cboPatient.Items, IEN);
         // TDP - Added 5/27/2014 to handle PCMM team addition
@@ -509,18 +516,18 @@ begin
           ListPtTop(cboPatient.Items);
       end;
     end;
-  with frmPtSelOptns.cboList do
+  with fraPtSelOptns.cboList do
   begin
     if Visible then
     begin
       updateDate := '';
-      if (frmPtSelOptns.SrcType <> TAG_SRC_PROV) and
+      if (fraPtSelOptns.SrcType <> TAG_SRC_PROV) and
          (Piece(Items[ItemIndex], U, 3) <> '') then
         updateDate := ' last updated on ' + Piece(Items[ItemIndex], U, 3);
       lblPatient.Caption := 'Patients (' + Text + updateDate + ')';
     end;
   end;
-  if frmPtSelOptns.SrcType = TAG_SRC_ALL then
+  if fraPtSelOptns.SrcType = TAG_SRC_ALL then
     lblPatient.Caption := 'Patients (All Patients)';
   with cboPatient do
     if ShortCount > 0 then
@@ -543,7 +550,6 @@ begin
   if cboPatient.ItemIndex >= 0 then
     begin
       ShowIDInfo;
-      ShowFlagInfo;
     end;
 end;
 
@@ -568,7 +574,6 @@ var
               begin
                 ItemIndex := 0;
                 ShowIDInfo;
-                ShowFlagInfo;
               end;
             Items.Add(LLS_LINE);
             Items.Add(LLS_SPACE);
@@ -589,10 +594,10 @@ begin
         delete(sText, CharPos, 1);
     fTrimmer := True;
     cboPatient.Text := sText;
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages;
     fTrimmer := False;
 
-    if frmPtSelOptns.IsLast5(Text) then
+    if fraPtSelOptns.IsLast5(Text) then
     begin
       if (IsRPL = '1') then
         ListPtByRPLLast5(Items, Text)
@@ -600,7 +605,7 @@ begin
         ListPtByLast5(Items, Text);
       ShowMatchingPatients;
     end
-    else if frmPtSelOptns.IsFullSSN(Text) then
+    else if fraPtSelOptns.IsFullSSN(Text) then
     begin
       if (IsRPL = '1') then
         ListPtByRPLFullSSN(Items, Text)
@@ -616,7 +621,6 @@ begin
   if Length(cboPatient.ItemID) > 0 then // *DFN*
     begin
       ShowIDInfo;
-      ShowFlagInfo;
     end
   else
     begin
@@ -637,7 +641,6 @@ begin
   if Length(cboPatient.ItemID) > 0 then // *DFN*
     begin
       ShowIDInfo;
-      ShowFlagInfo;
     end
   else
     begin
@@ -696,14 +699,18 @@ end;
 
 procedure TfrmPtSel.ClearIDInfo;
 begin
-  if assigned(frmPtSelDemog) then
-    frmPtSelDemog.ClearIDInfo;
+  fraPtSelDemog.ClearIDInfo;
 end;
 
 procedure TfrmPtSel.ShowIDInfo;
 begin
-  if assigned(frmPtSelDemog) then
-    frmPtSelDemog.ShowDemog(cboPatient.ItemID);
+  fraPtSelDemog.ShowDemog(cboPatient.ItemID);
+end;
+
+procedure TfrmPtSel.sptVertMoved(Sender: TObject);
+begin
+  inherited;
+  gpTop.Realign;
 end;
 
 procedure TfrmPtSel.WMReadyAlert(var Message: TMessage);
@@ -729,11 +736,6 @@ begin
       Exit;
     end;
   NewDFN := cboPatient.ItemID; // *DFN*
-  if FLastPt <> cboPatient.ItemID then
-    begin
-      HasActiveFlg(FlagList, HasFlag, cboPatient.ItemID);
-      FLastPt := cboPatient.ItemID;
-    end;
   DFN := cboPatient.ItemID; // *DFN*
   if DupLastSSN(DFN) then // Check for, deal with duplicate patient data.
   begin
@@ -760,21 +762,21 @@ begin
   Patient.DFN := aDFN; // The patient object in uCore must have been created already!
   Encounter.Clear;
   Changes.Clear; // An earlier call to ReviewChanges should have cleared this.
-  if (frmPtSelOptns.SrcType = TAG_SRC_CLIN) and (frmPtSelOptns.cboList.ItemIEN > 0) and
+  if (fraPtSelOptns.SrcType = TAG_SRC_CLIN) and (fraPtSelOptns.cboList.ItemIEN > 0) and
     IsFMDateTime(Piece(cboPatient.Items[cboPatient.ItemIndex], U, 4)) then // Clinics, not by default.
     begin
-      Encounter.Location := frmPtSelOptns.cboList.ItemIEN;
+      Encounter.Location := fraPtSelOptns.cboList.ItemIEN;
       with cboPatient do
         Encounter.DateTime := MakeFMDateTime(Piece(Items[ItemIndex], U, 4));
     end
-  else if (frmPtSelOptns.SrcType = TAG_SRC_DFLT) and (DfltPtListSrc = 'C') and
+  else if (fraPtSelOptns.SrcType = TAG_SRC_DFLT) and (DfltPtListSrc = 'C') and
     IsFMDateTime(Piece(cboPatient.Items[cboPatient.ItemIndex], U, 4)) then
     with cboPatient do // "Default" is a clinic.
       begin
         Encounter.Location := StrToIntDef(Piece(Items[ItemIndex], U, 10), 0); // Piece 10 is ^SC( location IEN in this case.
         Encounter.DateTime := MakeFMDateTime(Piece(Items[ItemIndex], U, 4));
       end
-  else if ((frmPtSelOptns.SrcType = TAG_SRC_DFLT) and (FDfltSrc = 'Combination') and
+  else if ((fraPtSelOptns.SrcType = TAG_SRC_DFLT) and (FDfltSrc = 'Combination') and
     (Copy(Piece(cboPatient.Items[cboPatient.ItemIndex], U, 3), 1, 2) = 'Cl')) and
     (IsFMDateTime(Piece(cboPatient.Items[cboPatient.ItemIndex], U, 8))) then
     with cboPatient do // "Default" combination, clinic pt.
@@ -803,6 +805,11 @@ end;
 
 procedure TfrmPtSel.cmdCancelClick(Sender: TObject);
 begin
+  if (Patient.DFN = '') and ScreenReaderActive then
+  begin
+    if InfoBox('No patient selected. Close CPRS Yes or No?', 'Confirmation', MB_YESNO or MB_ICONQUESTION) <> IDYES then
+      Exit;
+  end;
   // Leave Patient object unchanged
   FUserCancelled := True;
   FExpectedClose := True;
@@ -929,7 +936,7 @@ var
     ctrlList := TObjectList<TControl>.Create(False);
     FProcessingAlerts := True;
     DisableControls(Self);
-    frmPtSelOptns.bvlPtList.Enabled := False;
+    fraPtSelOptns.Enabled := False;
     FDisablePageControlTabStops := True;
   end;
 
@@ -939,7 +946,7 @@ var
 
   begin
     FDisablePageControlTabStops := False;
-    frmPtSelOptns.bvlPtList.Enabled := True;
+    fraPtSelOptns.Enabled := True;
     for j := 0 to ctrlList.Count -1 do
       ctrlList[j].Enabled := True;
     ctrlList.Free;
@@ -952,7 +959,7 @@ var
   end;
 
 begin
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   if FAlertsNotReady then
     Exit;
   if lstvAlerts.SelCount <= 0 then
@@ -984,7 +991,7 @@ begin
       if ScreenReaderActive and (SelCount > 1) then
       begin
         GetScreenReader.Speak('Processing ' + SelCount.ToString + ' Notifications');
-        Application.ProcessMessages;
+        TResponsiveGUI.ProcessMessages;
       end;
 
       lastUpdate := Now;
@@ -1019,7 +1026,7 @@ begin
               pbarNotifications.Height := pnlDivide.Height - 2;
               pbarNotifications.Visible := True;
             end;
-            Application.ProcessMessages;
+            TResponsiveGUI.ProcessMessages(True);
             if not FProcessingAlerts then
             begin
               enableclose := False;
@@ -1162,7 +1169,7 @@ end;
 
 procedure TfrmPtSel.cmdSaveListClick(Sender: TObject);
 begin
-  frmPtSelOptns.cmdSaveListClick(Sender);
+  fraPtSelOptns.cmdSaveListClick(Sender);
 end;
 
 function TfrmPtSel.CreateSubItems(Index: integer): TStringList;
@@ -1332,7 +1339,7 @@ var
 
 begin
   SaveUserBounds(self);
-  frmFrame.EnduringPtSelSplitterPos := pnlPtSel.Height;
+  frmFrame.EnduringPtSelSplitterPos := gpTop.Height;
 
   aString := '';
   for col := 0 to lstvAlerts.Columns.Count - 1 do
@@ -1369,63 +1376,6 @@ begin
   AdjustNotificationButtons;
 end;
 
-procedure TfrmPtSel.pnlPtSelResize(Sender: TObject);
-var
-  ALeft, AWidth, AcmdCancelWidth: integer;
-begin
-  if Assigned(frmPtSelDemog) then
-  begin
-    if Assigned(cboPatient) then
-    begin
-      ALeft := cboPatient.Left;
-      AWidth := cboPatient.Width;
-    end else begin
-      ALeft := 208;
-      AWidth := 280;
-    end;
-    frmPtSelDemog.Left := ALeft + AWidth + 9;
-
-    if Assigned(pnlPtSel) then AWidth := pnlPtSel.Width else AWidth := ClientWidth;
-    if Assigned(cmdCancel) then AcmdCancelWidth := cmdCancel.Width else AcmdCancelWidth := 99;
-    frmPtSelDemog.Width := AWidth - frmPtSelDemog.Left - 2 - AcmdCancelWidth;
-  end;
-
-  if Assigned(frmPtSelOptns) then
-  begin
-    if Assigned(cboPatient) then ALeft := cboPatient.Left else ALeft := 208;
-    frmPtSelOptns.Width := ALeft - iGap;
-    frmPtSelOptns.orapnlMainResize(Sender);
-  end;
-  SetupDemographicsLabel;
-end;
-
-procedure TfrmPtSel.Loaded;
-begin
-  inherited;
-  SetupDemographicsForm;
-  SetupDemographicsLabel;
-
-  frmPtSelOptns := TfrmPtSelOptns.Create(self); // Was application - kcm
-  with frmPtSelOptns do
-    begin
-      parent := pnlPtSel;
-      Top := 4;
-      Left := 4;
-      Width := cboPatient.Left - 8;
-      Align := alLeft;
-      SetCaptionTopProc := SetCaptionTop;
-      SetPtListTopProc := SetPtListTop;
-      if RPLProblem then
-        Exit;
-      TabOrder := cmdSaveList.TabOrder; // Put just before save default list button
-      Show;
-    end;
-  FLastPt := '';
-  // Begin at alert list, or patient listbox if no alerts
-  if lstvAlerts.Items.Count = 0 then
-    ActiveControl := cboPatient;
-end;
-
 procedure TfrmPtSel.ShowDisabledButtonTexts;
 begin
   if ScreenReaderActive then
@@ -1441,46 +1391,11 @@ begin
       frmAlertsProcessed.stxtDateRange.TabStop := ScreenReaderActive;
 end;
 
-procedure TfrmPtSel.SetupDemographicsForm;
-begin
-  // This needs to be in Loaded rather than FormCreate or the TORAutoPanel resize logic breaks.
-  frmPtSelDemog := TfrmPtSelDemog.Create(self);
-  // Was application - kcm
-  with frmPtSelDemog do
-    begin
-      parent := pnlPtSel;
-      Top := cmdCancel.Top + cmdCancel.Height + 2;
-      Left := cboPatient.Left + cboPatient.Width + 9;
-      Width := pnlPtSel.Width - Left - 2;
-      TabOrder := cmdCancel.TabOrder + 1;
-      // Place after cancel button
-      Show;
-    end;
-  if ScreenReaderActive then
-    begin
-      frmPtSelDemog.Memo.Show;
-      frmPtSelDemog.Memo.BringToFront;
-    end;
-end;
-
-procedure TfrmPtSel.SetupDemographicsLabel;
-var
-  intAdjust: Integer;
-
-begin
-  intAdjust := Round(PixelsPerInch * MainFontSize / 96);
-  if assigned(frmPtSelDemog) then
-  begin
-    lblPtDemo.Top := frmPtSelDemog.Top - Round(lblPtDemo.Height * PixelsPerInch / 96 + intAdjust);
-    lblPtDemo.Left := frmPtSelDemog.Left
-  end;
-end;
-
 procedure TfrmPtSel.RPLDisplay;
 begin
   // Make unneeded components invisible:
   cmdSaveList.Visible := False;
-  frmPtSelOptns.Visible := False;
+  fraPtSelOptns.Visible := False;
 end;
 
 procedure TfrmPtSel.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -1514,6 +1429,13 @@ begin
   FExpectedClose := False;
   ShowDisabledButtonTexts;
   FBuildColumns := True;
+  with fraPtSelOptns do
+  begin
+    SetCaptionTopProc := SetCaptionTop;
+    SetPtListTopProc := SetPtListTop;
+  end;
+  if ScreenReaderActive then
+    fraPtSelDemog.ToggleMemo;
 
 ////////////////////////////////////////////////////////////////////////////////
   setFormParented(getProcessedAlertsList,pnlPaCanvas);
@@ -1530,8 +1452,7 @@ begin
   if (Key = Ord('D')) and (ssCtrl in Shift) then
     begin
       Key := 0;
-      if assigned(frmPtSelDemog) then
-        frmPtSelDemog.ToggleMemo;
+      fraPtSelDemog.ToggleMemo;
     end;
 end;
 
@@ -1825,27 +1746,6 @@ begin
   end;
 end;
 
-procedure TfrmPtSel.ShowFlagInfo;
-begin
-  if (not assigned(frmPtSelDemog)) or
-    (pos('*SENSITIVE*', frmPtSelDemog.lblPtSSN.Caption) > 0) then
-    begin
-      // pnlPrf.Visible := False;
-      Exit;
-    end;
-  if (FLastPt <> cboPatient.ItemID) then
-    begin
-      HasActiveFlg(FlagList, HasFlag, cboPatient.ItemID);
-      FLastPt := cboPatient.ItemID;
-    end;
-  if HasFlag then
-    begin
-      // FastAssign(FlagList, lstFlags.Items);
-      // pnlPrf.Visible := True;
-    end
-  // else pnlPrf.Visible := False;
-end;
-
 procedure TfrmPtSel.lstFlagsClick(Sender: TObject);
 begin
   { if lstFlags.ItemIndex >= 0 then
@@ -1963,6 +1863,8 @@ var
   col: integer;
 
 begin
+  if lstvAlerts.Items.Count = 0 then
+    ActiveControl := cboPatient;
   sortResult := rCore.GetSortMethod;
   sortMethod := Piece(sortResult, U, 1);
   if sortMethod = '' then

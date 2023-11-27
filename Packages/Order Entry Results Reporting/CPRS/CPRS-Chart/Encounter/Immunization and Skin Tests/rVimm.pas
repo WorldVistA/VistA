@@ -469,6 +469,11 @@ end;
 
 function placementsOnFile: boolean;
 begin
+  if uVimmInputs.selectionType = 'historical' then
+  begin
+    result := false;
+    exit;
+  end;
   if uVimmList.skinAdminList = nil then
     begin
       uVimmList.skinAdminList := TStringList.Create;
@@ -1197,7 +1202,8 @@ begin
   result := '';
   orderBy := findDefaultValue('ORDERING PROVIDER');
   if dxCode = '' then exit;
-  result := 'POV' + '+' + U + Piece(dxCode, u, 1) + U + U + Piece(dxCode, u, 2)  + U + U + Piece(orderBy, U, 1);
+//  result := 'POV' + '+' + U + Piece(dxCode, u, 1) + U + U + Piece(dxCode, u, 2)  + U + U + Piece(orderBy, U, 1);
+  result := 'POV' + '+' + U + Piece(dxCode, u, 1) + U + U + Piece(dxCode, u, 2)  + U + U;
 end;
 
 constructor TVimmResult.Create;

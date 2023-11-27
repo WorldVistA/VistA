@@ -57,7 +57,7 @@ var
 
 implementation
 
-uses ORFn;
+uses ORFn, UResponsiveGUI;
 
 var
   MockRPCs: TObjectList<TMockRPC> = nil;
@@ -591,7 +591,7 @@ begin
             begin
               PostMessage(ActiveControl.Handle, WM_KEYDOWN, PendingKeys[i], 0);
               PostMessage(ActiveControl.Handle, WM_KEYUP, PendingKeys[i], 0);
-              Application.ProcessMessages;
+              TResponsiveGUI.ProcessMessages;
             end;
           end;
           SetLength(PendingKeys, 0);

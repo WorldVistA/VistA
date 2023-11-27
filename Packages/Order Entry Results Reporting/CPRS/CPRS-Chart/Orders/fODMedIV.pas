@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fODBase, Grids, StdCtrls, ORCtrls, ComCtrls, ExtCtrls, Buttons, Menus, IdGlobal, strUtils,
-  VA508AccessibilityManager, VAUtils, fIVRoutes, uIndications;
+  VA508AccessibilityManager, VAUtils, fIVRoutes, uIndications,
+  UIndicationsComboBox; // UIndicationsComboBox should be removed when merging into v33
 
 type
   TfrmODMedIV = class(TfrmODBase)
@@ -57,7 +58,7 @@ type
     chkDoseNow: TCheckBox;
     lbl508Required: TVA508StaticText;
     Label1: TLabel;
-    cboIndication: TORComboBox;
+    cboIndication: TIndicationsComboBox; // In v33, this should revert back to a TORComboBox!
     lblIndications: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure tabFluidChange(Sender: TObject);
@@ -189,7 +190,7 @@ implementation
 {$R *.DFM}
 
 uses ORFn, uConst, rODMeds, rODBase, fFrame, uCore, fOtherSchedule, rCore,
-  uSizing;
+  uSizing, UResponsiveGUI;
 
 const
   TX_NO_DEA     = 'Provider must have a DEA# or VA# to order this medication';
@@ -225,7 +226,7 @@ const
   Tx_BAG_NO_COMMENTS ='"See Comments" entered for additive ';
   TX_BAG_NO_COMMENTS1 = ' no comments defined for this order.';
   TX_NO_INDICATION = 'Indication is required.';
-
+  TX_ALPHA_AMOUNT = 'Strength or volume must be entered as numeric only for ';
 (*
   { TIVComponent methods }
 
@@ -793,8 +794,11 @@ begin
         SetError(TX_NO_BASE);
     for i := 0 to RowCount - 1 do
     begin
-      if (Objects[0, i] <> nil) and ((Length(Cells[1, i]) = 0) or (StrToFloat(Cells[1,i])=0))
+      if (Objects[0, i] <> nil) and ((Length(Cells[1, i]) = 0) or (Trim(Cells[1,i]) = ''))
         then SetError(TX_NO_AMOUNT + Cells[0, i]);
+      //Ensure the volume is numeric
+      If (Trim(Cells[1,i]) <> '') and (StrToFloatDef(Cells[1,i], 0) = 0) then
+        SetError(TX_ALPHA_AMOUNT + Cells[0, i]);
       if (Objects[0, i] <> nil) and (Length(Cells[2, i]) = 0)
         then SetError(TX_NO_UNITS + Cells[0, i]);
       if (Objects[0,i] <> nil) and (TIVComponent(Objects[0, i]).Fluid = 'A') then
@@ -1681,7 +1685,7 @@ begin
     end;  *)
   end;
 
-  Application.ProcessMessages;         //CQ: 10157
+  TResponsiveGUI.ProcessMessages;         //CQ: 10157
   updateRoute;
   ClickOnGridCell(#0);
   //updateRoute;
@@ -1794,7 +1798,7 @@ begin
   if (Length(IndicationCombo.Text) > 0) then
     IndicationCombo.Text := TrimLeft(UpperCase(IndicationCombo.Text));
 
-  if ((Length(IndicationCombo.Text) <= 2) OR (Length(IndicationCombo.Text) >= 40)) and
+  if ((Length(IndicationCombo.Text) <= 2) OR (Length(IndicationCombo.Text) > 40)) and
      not (IndicationCombo.Text = '') then
   begin
     Application.MessageBox(TX_INDICATION_LIM, 'Incorrect Indication');
@@ -2029,7 +2033,7 @@ begin
     Row := RowCount - 1;
     Col := 1;
   end;
-  Application.ProcessMessages;         //CQ: 10157
+  TResponsiveGUI.ProcessMessages;         //CQ: 10157
   ClickOnGridCell(#0);
   updateRoute;
   ControlChange(Sender);

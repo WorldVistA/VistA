@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="generator" content="Adobe RoboHelp 2020" />
+  <title>CPRS Write Access Functionality</title>
+  <link rel="StyleSheet" href="assets/css/CPRS.css" type="text/css" />
+  <meta name="rh-index-keywords" content="Orders,Orders:verifying,Verifying,Verifying:orders,Write Access Permissions Screen" />
+</head>
+<body>
+  <h1>
+    <font color="#3366FF" size="4" style="font-size: 14pt;">CPRS Write Access Functionality</font>
+  </h1>
+  <p style="margin-bottom: 6.00pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">CPRS Write Access functionality enables an authorized VistA user to permit or restrict write access for each CPRS tab (Problems, Meds, Orders, Notes, Consults, Surgery and Discharge Summary), and for specific functionality within each tab (for example, Cover Sheet, Vitals, Encounters and specific Ordering Display Groups). The VistA user can permit or restrict write access at the System, Division or User level.</font>
+    <font color="#010100" size="2" style="font-size: 10pt;"> </font>
+  </p>
+  <p style="margin-bottom: 6.00pt;">
+    <font color="#010100" size="2" style="font-size: 10pt;">Write Access functionality eases the transition from CPRS VistA to the new Electronic Health Record (EHR) system.  It ensures continuity of patient care and optimizes validation of data displayed in the new EHR.<br />
+      <br />
+      Write Access functionality exists because sites transitioning to the new EHR must limit unauthorized write access in CPRS and VistA.   <font face="Times New Roman, serif">However, sites not moving immediately to the new EHR can still restrict Write Access to specific areas of CPRS for individual users or divisions.  There is no impact to downstream systems or other applications.</font>
+    </font>
+  </p>
+  <p style="margin-left: 54.00pt; margin-bottom: 6.00pt; text-indent: -35.50pt;">
+    <font color="#010100" size="2" style="font-size: 9pt; font-weight: bold;">Note:</font>
+    <font color="#010100">     </font>
+    <font color="#010100" size="2" style="font-size: 9pt;">If the Write Access settings have changed in VistA, the CPRS GUI must be restarted before those updates will take effect.</font>
+  </p>
+  <p style="margin-left: 54.00pt; margin-bottom: 6.00pt; text-indent: -35.50pt;">
+    <font color="#010100">
+      <font size="2">
+        <font style="font-size:9pt; font-weight:bold">Note:</font>
+      </font>
+    </font>
+    <font color="#010100">     </font>
+    <font color="#010100">
+      <font size="2">
+        <font style="font-size:9pt; font-weight:bold"> </font>
+      </font>
+    </font>
+    <font color="#010100">
+      <font size="2">
+        <font style="font-size:9pt; margin-top:-13px; margin-right:-13px; margin-bottom:-13px; margin-left:-13px">Instructions on how to change the CPRS Write Access settings are in the CPRS List Manager Technical Manual. </font>
+      </font>
+    </font><span style="font-size:11.0pt"><span style="font-family:&quot;Times New Roman&quot;,serif">.  </span></span>
+  </p>
+  <p style="margin-bottom: 6.00pt;">
+    <font color="#010100" size="2" style="font-size: 10pt; font-weight: bold;">To view the Write Access Permissions, follow these steps:</font>
+  </p>
+  <ol class="AlphaNumeric">
+    <li style="margin-bottom: 6pt;"> <font color="#010100" style="margin-top: -1px;margin-right: -1px;margin-bottom: -1px;margin-left: -1px;font-size: 16px">Click on either the <span style="font-size:1px;"><span style="font-weight: bold;font-size: 14px">Help</span></span> menu or the <span style="font-size:14px;font-weight:bold">New EHR Banner</span></font>
+      <ol>
+        <li style="margin-bottom: 6pt;">If you clicked on the Help menu, click on Write Access Permissions.  You will then see the Write Access Permissions screen.</li>
+        <li style="margin-bottom: 6pt;">If you clicked on the New EHR Banner, you will see a screen that displays information about write access permissions.  It may also include localized content about the new EHR cutover.</li>
+      </ol>
+    </li>
+  </ol>
+  <p style="margin-bottom: 6pt;">
+    <font color="#010100">
+      <font size="2">
+        <font style="font-size:10pt">
+          <font face="Times New Roman, serif">The Write Access Permissions screen lists the tabs and additional functionality where write access is allowed.  If there is a &#39;Missing write access dependencies&#39; screen, it lists write access permission that has been requested in VistA, but has not been granted because one or more dependencies are missing.  For example, setting Delayed Orders write access to Yes is only valid when the user has write access to the Orders tab.</font>
+        </font>
+      </font>
+    </font>
+  </p>
+  <figure><img src="assets/images/Write Access Permissions.GIF" />
+    <figcaption>Example of the Write Access Permissions Screen<br />
+       </figcaption>
+  </figure>
+  <figure><img src="assets/images/EHR_Write_Access_Permissions.gif" style="cursor: nwse-resize;" />
+    <figcaption>Example of the Screen Display After You Click the New EHR Banner</figcaption>
+  </figure>
+  <p style="margin-bottom: 6pt;">
+    <font color="#010100">
+      <font size="2">
+        <font style="font-size:10pt">
+          <font face="Times New Roman, serif">Listed below are examples of the differences between Write Access Allowed and Write Access Restricted for several tabs.</font>
+        </font>
+      </font>
+    </font>
+  </p>
+  <p style="margin-bottom: 6pt;">
+    <font color="#010100">
+      <font size="2">
+        <font style="font-size:10pt">
+          <font face="Times New Roman, serif">When the Problem Tab permission is set to Yes in VistA, the New Problem action is enabled and the user can edit, inactivate, remove, annotate or restore a Problem in CPRS.  When the Problem Tab permission is set to No in VistA, the New Problem action is disabled and the user cannot edit, inactivate, remove, annotate or restore a Problem in CPRS.</font>
+        </font>
+      </font>
+    </font>
+  </p>
+  <figure><img src="assets/images/Problem_tab_write_access.GIF" />
+    <figcaption>Example of the Problem Tab Permissions (On the Left screen, Problem Tab = Yes, On the Right, Problem Tab = No)</figcaption>
+  </figure>
+  <p style="margin-top:8px; margin-bottom:8px">
+    <font color="#010100">
+      <font size="2">
+        <font style="font-size:10pt">
+          <font face="Times New Roman, serif">When the Meds Tab permission is set to Yes, the user can access the functions on the Meds tab.  When the Meds Tab permission is set to No, the Action menu option is grayed out/disabled.</font>
+        </font>
+      </font>
+    </font>
+  </p>
+  <figure><img src="assets/images/Meds_tab_write_access.GIF" />
+    <figcaption>Example of the Meds Tab Permissions (On the Left screen, Meds Tab = Yes, On the Right, Meds Tab = No)</figcaption>
+  </figure>
+  <p style="margin-top:8px; margin-bottom:8px">
+    <font color="#010100">
+      <font size="2">
+        <font style="font-size:10pt">
+          <font face="Times New Roman, serif">When the Orders Tab permission is set to Yes, the user can create or modify orders.  When the Orders Tab permission is set to No, the user can&#39;t create or modify orders.</font>
+        </font>
+      </font>
+    </font>
+  </p>
+  <figure><img src="assets/images/Orders_Comparison.GIF" />
+    <figcaption>Example of the Orders Tab Permissions (On the Left screen, Orders tab = Yes, on the Right, Orders Tab = No)</figcaption>
+  </figure>
+  <p style="margin-top:8px; margin-bottom:8px">
+    <font color="#010100">
+      <font size="2">
+        <font style="font-size:10pt">
+          <font face="Times New Roman, serif">When Reminder editor permission is set to Yes, the user can perform full functions for the Reminder list.  The arrows and the OK and Apply functions are enabled. When Reminder editor permission is set to No, the user can&#39;t add available Reminders to the Reminder list panel on the right side.  The arrows and the OK and Apply functions are disabled.</font>
+        </font>
+      </font>
+    </font>
+  </p>
+  <figure><img src="assets/images/Reminder Editor Permissions.gif" />
+    <figcaption>Example of the Reminder Editor Permissions (On the Left screen, Reminders = Yes, on the Right, Reminders = No)</figcaption>
+  </figure>
+  <p style="margin-bottom: 6pt;">
+    <font color="#010100">
+      <font size="2">
+        <font style="font-size:10pt">
+          <font face="Times New Roman, serif">In the following example, write access permission for the Orders Tab was set to Yes, but the Unit Dose Medications write-access was set to No in VistA.</font>
+        </font>
+      </font>
+    </font>
+  </p>
+  <figure><img src="assets/images/Error Message.GIF" />
+    <figcaption>Example of a user who does not have write-access to a functionality within the Orders tab</figcaption>
+  </figure>
+  <figure>
+    <figcaption>
+      <figure>
+        <figcaption style="margin-top: 4px;margin-right: 4px;margin-bottom: 4px;margin-left: 4px;text-align: left"> </figcaption>
+      </figure>
+    </figcaption>
+  </figure>
+  <p> </p>
+  <figure>
+    <figcaption style="height: 0px;width: 3px"> </figcaption>
+  </figure>
+  <p style="margin-bottom: 6pt;"> </p>
+  <p style="margin-bottom: 6pt;"><img src="assets/images/Capture.GIF" style="height: 3px;" /><span style="font-size:11.0pt"><span style="font-family:&quot;Times New Roman&quot;,serif"> </span></span></p>
+  <p style="margin-top: 6.00pt; margin-bottom: 0.00pt; border-bottom: 0.75pt solid #000000;">
+    <font color="#010100" size="2" style="font-size: 10pt; font-weight: bold;">Related topics</font>
+  </p>
+  <p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"><a href="COVID-19_Identifier_New_EHR_Banner.htm">COVID-19 Identifier/New EHR Banner</a></p>
+  <p style="margin-left: 18.00pt; margin-top: 3.00pt; margin-bottom: 0.00pt;"> </p>
+</body>
+</html>

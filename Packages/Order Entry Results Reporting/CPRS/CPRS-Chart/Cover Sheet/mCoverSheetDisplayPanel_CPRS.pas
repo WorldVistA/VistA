@@ -43,12 +43,15 @@ uses
   iCoverSheetIntf,
   iGridPanelIntf,
   oDelimitedString,
-  mGridPanelFrame;
+  mGridPanelFrame,
+  VA508AccessibilityManager,
+  u508Extensions,
+  ORExtensions;
 
 type
   TfraCoverSheetDisplayPanel_CPRS = class(TfraCoverSheetDisplayPanel, ICoverSheetDisplayPanel)
     tmr: TTimer;
-    lvData: TListView;
+    lvData: ORExtensions.TListView;
     procedure lvDataEnter(Sender: TObject);
     procedure lvDataExit(Sender: TObject);
     procedure lvDataMouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: integer);
@@ -66,6 +69,8 @@ type
     fColumns: TStringList;
     fLastItemIndex: integer;
     fAllowDetailDisplay: boolean;
+    f508Manager: TVA508AccessibilityManager;
+    fLV508Manager: Tlv508Manager;
 
     { Overridden events - TfraGridPanelFrame }
     procedure OnSetFontSize(Sender: TObject; aNewSize: integer); override;
@@ -92,7 +97,7 @@ type
 
     { Introduced methods }
     function AddColumn(aIndex: integer; aCaption: string): integer; virtual; final;
-    function ClearListView(aListView: TListView): boolean; virtual;
+    procedure ClearListView(aListView: TListView); virtual;
     function CollapseColumns: integer; virtual; final;
     function ExpandColumns: integer; virtual; final;
     function ListViewItemIEN: integer; virtual;
@@ -123,7 +128,8 @@ uses
   DateUtils,
   ORFn,
   ORNet,
-  VAUtils;
+  VAUtils,
+  UResponsiveGUI;
 
 const
   UPDATING_FOREGROUND = 'Updating ...';
@@ -159,17 +165,24 @@ begin
   inherited;
 end;
 
-function TfraCoverSheetDisplayPanel_CPRS.ClearListView(aListView: TListView): boolean;
+procedure TfraCoverSheetDisplayPanel_CPRS.ClearListView(aListView: TListView);
 begin
-  try
-    aListView.Items.BeginUpdate;
-    try
-      aListView.Items.Clear;
-    finally
-      aListView.Items.EndUpdate;
+  if f508Manager = nil then
+  begin
+    f508Manager := FindControl508Manager(Self);
+    if f508Manager <> nil then
+    begin
+      fLV508Manager := Tlv508Manager.Create;
+      f508Manager.ComponentManager[lvData] := fLV508Manager;
+      // f508Manager now owns fLV508Manager, don't delete
+      f508Manager.UseDefault[lvData] := False;
     end;
+  end;
+  aListView.Items.BeginUpdate;
+  try
+    aListView.Items.Clear;
   finally
-    Result := false;
+    aListView.Items.EndUpdate;
   end;
 end;
 
@@ -260,7 +273,7 @@ begin
     else
       Caption := UPDATING_FOREGROUND;
 
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   fFinished := false;
 end;
 
@@ -487,7 +500,7 @@ begin
       fBackgroundLoading := True;
       tmr.Enabled := True;                  // Start up the timer!
       CPRSParams.LoadInBackground := false; // Only loads background when the coversheet says so.
-      Application.ProcessMessages;
+      TResponsiveGUI.ProcessMessages;
       Exit;
     end;
 
@@ -562,7 +575,7 @@ procedure TfraCoverSheetDisplayPanel_CPRS.OnStartBackgroundLoad(Sender: TObject)
 begin
   ClearListView(lvData);
   lvData.Items.Add.Caption := UPDATING_BACKGROUND;
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
 end;
 
 procedure TfraCoverSheetDisplayPanel_CPRS.tmrTimer(Sender: TObject);
@@ -584,7 +597,7 @@ begin
         ClearListView(lvData);
         lvData.Items.Add.Caption := UPDATING_BACKGROUND;
         inc(fBackgroundLoadTry);
-        Application.ProcessMessages;
+        TResponsiveGUI.ProcessMessages;
         Exit;
       end;
 
@@ -648,7 +661,7 @@ begin
         lvData.Items.Add.Caption := UPDATING_FAILURE;
       end;
 
-      Application.ProcessMessages;
+      TResponsiveGUI.ProcessMessages;
     finally
       if tmr.Enabled then tmr.OnTimer := tmr.OnTimer; // setting OnTimer calls UpdateTimer, which resets the timer to not fire again for UPDATING_WAIT_TIME
       FInTmrTimer := False;

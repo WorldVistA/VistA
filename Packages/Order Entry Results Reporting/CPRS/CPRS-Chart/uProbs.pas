@@ -308,7 +308,7 @@ function FixQuotes(Instring: string): string;
 implementation
 
 uses
-  uGlobalVar, rCore, uCore, System.Types, rMisc;
+  uGlobalVar, rCore, uCore, System.Types, rMisc, UResponsiveGUI;
 
 const
   Months: array[1..12] of string[3] = ('JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC');
@@ -1380,7 +1380,7 @@ begin
   if      s = PL_OP_VIEW then lin := 'View clinics'
   else if s = PL_IP_VIEW then lin := 'View services'
   else                        lin := 'View all problems';
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
 end;
 
 function ByProvider: string;

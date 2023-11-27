@@ -954,7 +954,7 @@ inherited frmODMeds: TfrmODMeds
             TabOrder = 2
             OnClick = chkTitrationClick
           end
-          object cboIndication: TORComboBox
+          object cboIndication: TIndicationsComboBox
             Left = 5
             Top = 20
             Width = 205

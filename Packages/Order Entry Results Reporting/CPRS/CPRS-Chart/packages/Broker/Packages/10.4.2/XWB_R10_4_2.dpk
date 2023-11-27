@@ -40,7 +40,8 @@ requires
   vclie,
   vclimg,
   dsnap,
-  soapmidas;
+  soapmidas,
+  CPRSShared;
 
 contains
   AddServer in '..\..\Source\AddServer.pas' {frmAddServer},
@@ -73,7 +74,6 @@ contains
   XWBut1 in '..\..\Source\XWBut1.pas',
   IAMConstants in '..\..\Source\IAMConstants.pas',
   XWBLoginForm in '..\..\Source\XWBLoginForm.pas' {XWBLoginForm},
-  wcrypt2 in '..\..\Source\wcrypt2.pas',
   uLockBroker in '..\..\Source\uLockBroker.pas';
 
 end.

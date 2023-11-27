@@ -932,7 +932,7 @@ begin
             end;
             dlen := length(fld) + TemplateFieldSignatureLen;
             if (not IsBad) and (not IsSplit) then
-              inc(dlen, TemplateFieldSignatureLen);
+              inc(dlen, TemplateFieldSignatureEndLen);
             delete(tmp, i, dlen);
             if IsBad then
               AddError(BadList, fld)

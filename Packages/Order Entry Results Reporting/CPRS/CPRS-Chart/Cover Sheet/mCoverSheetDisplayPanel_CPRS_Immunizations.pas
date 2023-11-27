@@ -69,7 +69,7 @@ uses
   fVimm,
   rVimm,
   fNotes,
-  uPDMP;
+  uPDMP, uConst, uWriteAccess;
 
 { TfraCoverSheetDisplayPanel_CPRS_Immunizations }
 
@@ -121,6 +121,7 @@ procedure TfraCoverSheetDisplayPanel_CPRS_Immunizations.OnPopupMenu(
   Sender: TObject);
 begin
   inherited;
+  if not WriteAccess(waImmunization) then exit;
   fEnterImmunization.enabled := true;
 end;
 
@@ -128,14 +129,17 @@ procedure TfraCoverSheetDisplayPanel_CPRS_Immunizations.OnPopupMenuFree(
   Sender: TObject);
 begin
   inherited;
-   FreeAndNil(fEnterImmunization);
+  if not WriteAccess(waImmunization) then exit;
+  FreeAndNil(fEnterImmunization);
 end;
 
 procedure TfraCoverSheetDisplayPanel_CPRS_Immunizations.OnPopupMenuInit(
   Sender: TObject);
 begin
   inherited;
-  fEnterImmunization := NewItem('Enter New Immunization ...', 0, False, False, pmnEnterNewImmunization, 0, 'pmnEnterNewImmunization');
+  if not WriteAccess(waImmunization) then exit;
+  fEnterImmunization := NewItem('Enter New Immunization ...', 0, False, False,
+    pmnEnterNewImmunization, 0, 'pmnEnterNewImmunization');
   pmn.Items.Add(NewItem('-', 0, False, False, nil, 0, 'pmnImmunization_Separator'));
   pmn.Items.Add(fEnterImmunization);
 end;
@@ -196,7 +200,7 @@ begin
   if resultList.Count = 1 then
     begin
       noteStr := resultList.Strings[0];
-      Changes.Add(10, Piece(noteStr, U, 1), Piece(noteStr, U, 2), '', 1);
+      Changes.Add(CH_DOC, Piece(noteStr, U, 1), Piece(noteStr, U, 2), '', CH_SIGN_YES);
       PostMessage(Application.MainForm.Handle, UM_PDMP_NOTE_ID, 0, 0);
     end;
   finally

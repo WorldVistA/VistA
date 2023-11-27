@@ -20,7 +20,7 @@ function CombineHeights(ctrl: array of TControl): integer;
 implementation
 
 uses
-  WinApi.CommCtrl;
+  WinApi.CommCtrl, UResponsiveGUI;
 
 procedure setFormParented(aForm: TForm; aParent: TWinControl;
   anAlign: TAlign = alClient;aVisible: Boolean = True);
@@ -131,9 +131,9 @@ begin
     if Assigned(Application.MainForm) then
     begin
       Application.MainForm.Width := Application.MainForm.Width + 1;
-      Application.ProcessMessages;
+      TResponsiveGUI.ProcessMessages;
       Application.MainForm.Width := Application.MainForm.Width - 1;
-      Application.ProcessMessages;
+      TResponsiveGUI.ProcessMessages;
     end;
 end;
 

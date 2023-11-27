@@ -14,7 +14,7 @@ uses
   OleCtrls, VERGENCECONTEXTORLib_TLB, ComObj, AppEvnts, fBase508Form, oPKIEncryption,
   VA508AccessibilityManager, RichEdit, fDebugReport, StrUtils, vcl.ActnList,
   System.SyncObjs, U_CPTAppMonitor, ORNetIntf, system.JSON, Vcl.ExtDlgs, System.Actions,
-  fPDMPMgr, uPDMP, uHelpManager;
+  fPDMPMgr, uPDMP, uHelpManager, u508Button;
 
 type
   TfrmFrame = class(TfrmBase508Form)
@@ -117,8 +117,8 @@ type
     AppEvents: TApplicationEvents;
     paVAA: TKeyClickPanel;
     mnuToolsGraphing: TMenuItem;
-    laVAA2: TButton;
-    laMHV: TButton;
+    laVAA2: u508Button.TButton;
+    laMHV: u508Button.TButton;
     mnuViewInformation: TMenuItem;
     mnuViewVisits: TMenuItem;
     mnuViewPrimaryCare: TMenuItem;
@@ -159,6 +159,8 @@ type
     acResetParams: TAction;
     ResetParams1: TMenuItem;  // rpk 11/28/2017
     pnlOtherInfo: TKeyClickPanel;
+    N2: TMenuItem;
+    mnuWAPermissions: TMenuItem;
     procedure tabPageChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -181,7 +183,6 @@ type
     procedure mnuFileOpenClick(Sender: TObject);
     procedure mnuHelpBrokerClick(Sender: TObject);
     procedure mnuFileEncounterClick(Sender: TObject);
-    procedure mnuViewPostingsClick(Sender: TObject);
     procedure mnuHelpAboutClick(Sender: TObject);
     procedure mnuFileReviewClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -296,6 +297,7 @@ type
     procedure pnlOtherInfoMouseUp(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
     procedure AppEventsIdle(Sender: TObject; var Done: Boolean);
+    procedure mnuWAPermissionsClick(Sender: TObject);
   private
     FProccessingNextClick : boolean;
     FJustEnteredApp : boolean;
@@ -485,6 +487,8 @@ var
 const
   PASSCODE = '_gghwn7pghCrOJvOV61PtPvgdeEU2u5cRsGvpkVDjKT_H7SdKE_hqFYWsUIVT1H7JwT6Yz8oCtd2u2PALqWxibNXx3Yo8GPcTYsNaxW' + 'ZFo8OgT11D5TIvpu3cDQuZd3Yh_nV9jhkvb0ZBGdO9n-uNXPPEK7xfYWCI2Wp3Dsu9YDSd_EM34nvrgy64cqu9_jFJKJnGiXY96Lf1ecLiv4LT9qtmJ-BawYt7O9JZGAswi344BmmCbNxfgvgf0gfGZea';
   EM_SETZOOM = (WM_USER + 225);
+  TX_OPTION     = 'OR CPRS GUI CHART';
+
 implementation
 
 {$R *.DFM}
@@ -498,7 +502,7 @@ uses
   fxLists, ORSystem, fRptBox, fSplash, rODAllergy, uInit, fLabTests, fLabInfo, uGlobalVar,
   uReminders, fReminderTree, ORClasses, fDeviceSelect, fDrawers, fReminderDialog, ShellAPI, rVitals,
   fOptions, fGraphs, fGraphData, rTemplates, fSurgery, rSurgery, uEventHooks, uSignItems,
-  fDefaultEvent, rECS, fIconLegend, uOrders, fPtSelOptns, DateUtils, uSpell, uOrPtf, fPatientFlagMulti,
+  fDefaultEvent, rECS, fIconLegend, uOrders, DateUtils, uSpell, uOrPtf, fPatientFlagMulti,
   fAlertForward, UBAGlobals, fBAOptionsDiagnoses, UBACore, fOrdersSign, uVitals, fOrdersRenew, fMHTest, uFormMonitor
   {$IFDEF CCOWBROKER}
   , CCOW_const
@@ -509,7 +513,7 @@ uses
   uVersionCheck, uFormUtils
   , oPDMPData, rPDMP, fPDMPView
   , uInfoBoxWithBtnControls, uSimilarNames, fODBase, UExceptHook, ORExtensions,
-  UResponsiveGUI;
+  UResponsiveGUI, uWriteAccess;
 
 //PaPI =========================================================================
 procedure SwitchToThisWindow(h1: hWnd; x: bool); stdcall;
@@ -539,7 +543,6 @@ const
   FCP_FINISH  = 99;                             // form create finished successfully
 
   TX_IN_USE     = 'VistA CPRS in use by: ';     // use same as with CPRSInstances in fTimeout
-  TX_OPTION     = 'OR CPRS GUI CHART';
   TX_ECSOPT     = 'EC GUI CONTEXT';
   TX_PTINQ      = 'Retrieving demographic information...';
   TX_NOTIF_STOP = 'Stop processing notifications?';
@@ -616,7 +619,7 @@ var
       DllWindowsFound := (WinList.Count > 0);
       if DllWindowsFound then
       begin
-        Application.ProcessMessages;
+        TResponsiveGUI.ProcessMessages(True);
         FForceCloseTimer := TTimer.Create(Self);
         with FForceCloseTimer do
         begin
@@ -1090,9 +1093,9 @@ begin
         end;
     {$ENDIF}
       User := TUser.Create;
-      getSysUserParameters(user.DUZ);
+//      getSysUserParameters(user.DUZ);
       LoadExceptionLogger;
-      TResponsiveGUI.Enabled := SystemParameters.AsTypeDef<boolean>('OverlayOn', True);
+      TResponsiveGUI.Enabled := SystemParameters.AsTypeDef<boolean>('ResponsiveGUI', True);
       CallVistA('XUS PKI GET UPN', [], SAN);
       if SAN='' then DigitalSigningSetup1.Visible := True
       else DigitalSigningSetup1.Visible := False;
@@ -1108,7 +1111,6 @@ begin
         Close;
         Exit;
       end;
-
       if not SystemParameters.AsType<Boolean>('otherInfromationPanel.turnedOn') then
         begin
           pnlOtherInfo.Enabled := false;
@@ -1153,7 +1155,7 @@ begin
 
       //Set the mix case exclusion event
       GetExcludedFromMixed;
-
+      InitialOrderVariables; // needed before tab creation
       // set up structures specific to the user
 
       Caption := TX_IN_USE + MixedCase(User.Name) + '  (' + String(RPCBrokerV.Server) + ')'
@@ -1204,7 +1206,6 @@ begin
       EnduringPtSelColumns := '';
       if User.IsReportsOnly then // Reports Only tab.
         ReportsOnlyDisplay; // Calls procedure to hide all components/menus not needed.
-      InitialOrderVariables;
 
       pdmpGetParams; //PDMP Setup
     {$IFDEF DEBUG}
@@ -1318,7 +1319,7 @@ begin
   Encounter.Free;
   Patient.Free;
   User.Free;
-  systemParameters.Free;
+  ClearSystemParameters;
   SizeHolder.Free;
   ctxContextor.Free;
   frmDebugReport.Free;
@@ -1622,7 +1623,7 @@ begin
     repeat
       Done := True;
       try
-        Application.ProcessMessages;
+        TResponsiveGUI.ProcessMessages(True);
       except
         Done := False;
       end;
@@ -1635,7 +1636,7 @@ begin
   if FCreateProgress < FCP_FINISH then
     begin
       Application.Terminate;
-      Application.ProcessMessages;
+      TResponsiveGUI.ProcessMessages(True);
     end;
 end;
 
@@ -2285,7 +2286,7 @@ begin
      begin
      UBAGlobals.tempDxList := TList.Create;
      UBAGlobals.tempDxList.Count := 0;
-     Application.ProcessMessages;
+     TResponsiveGUI.ProcessMessages;
      end
   else
      begin
@@ -2294,14 +2295,14 @@ begin
         TObject(UBAGlobals.tempDxList[i]).Free;
 
      UBAGlobals.tempDxList.Clear;
-     Application.ProcessMessages;
+     TResponsiveGUI.ProcessMessages;
 
      //Create new Dx list for newly selected patient
       if not Assigned(UBAGlobals.tempDxList) then
          begin
          UBAGlobals.tempDxList := TList.Create;
          UBAGlobals.tempDxList.Count := 0;
-         Application.ProcessMessages;
+         TResponsiveGUI.ProcessMessages;
          end;
      end;
 end;
@@ -2340,8 +2341,10 @@ begin
           TChangeItem(Changes.Documents.Items[i]).Text,
           TChangeItem(Changes.Documents.Items[i]).GroupName,
           TChangeItem(Changes.Documents.Items[i]).SignState,
+          TChangeItem(Changes.Documents.Items[i]).WriteAccessType,
           TChangeItem(Changes.Documents.Items[i]).ParentID,
           TChangeItem(Changes.Documents.Items[i]).User,
+          TChangeItem(Changes.Documents.Items[i]).OrderDGIEN,
           TChangeItem(Changes.Documents.Items[i]).OrderDG,
           TChangeItem(Changes.Documents.Items[i]).DCOrder,
           TChangeItem(Changes.Documents.Items[i]).Delay);
@@ -2354,8 +2357,10 @@ begin
           TChangeItem(Changes.Orders.Items[i]).Text,
           TChangeItem(Changes.Orders.Items[i]).GroupName,
           TChangeItem(Changes.Orders.Items[i]).SignState,
+          TChangeItem(Changes.Orders.Items[i]).WriteAccessType,
           TChangeItem(Changes.Orders.Items[i]).ParentID,
           TChangeItem(Changes.Orders.Items[i]).User,
+          TChangeItem(Changes.Orders.Items[i]).OrderDGIEN,
           TChangeItem(Changes.Orders.Items[i]).OrderDG,
           TChangeItem(Changes.Orders.Items[i]).DCOrder,
           TChangeItem(Changes.Orders.Items[i]).Delay);
@@ -2368,8 +2373,10 @@ begin
           TChangeItem(Changes.PCE.Items[i]).Text,
           TChangeItem(Changes.PCE.Items[i]).GroupName,
           TChangeItem(Changes.PCE.Items[i]).SignState,
+          TChangeItem(Changes.PCE.Items[i]).WriteAccessType,
           TChangeItem(Changes.PCE.Items[i]).ParentID,
           TChangeItem(Changes.PCE.Items[i]).User,
+          TChangeItem(Changes.PCE.Items[i]).OrderDGIEN,
           TChangeItem(Changes.PCE.Items[i]).OrderDG,
           TChangeItem(Changes.PCE.Items[i]).DCOrder,
           TChangeItem(Changes.PCE.Items[i]).Delay);
@@ -2387,8 +2394,10 @@ begin
               TChangeItem(ThisSessionChanges.Documents.Items[i]).Text,
               TChangeItem(ThisSessionChanges.Documents.Items[i]).GroupName,
               TChangeItem(ThisSessionChanges.Documents.Items[i]).SignState,
+              TChangeItem(ThisSessionChanges.Documents.Items[i]).WriteAccessType,
               TChangeItem(ThisSessionChanges.Documents.Items[i]).ParentID,
               TChangeItem(ThisSessionChanges.Documents.Items[i]).User,
+              TChangeItem(ThisSessionChanges.Documents.Items[i]).OrderDGIEN,
               TChangeItem(ThisSessionChanges.Documents.Items[i]).OrderDG,
               TChangeItem(ThisSessionChanges.Documents.Items[i]).DCOrder,
               TChangeItem(ThisSessionChanges.Documents.Items[i]).Delay);
@@ -2400,8 +2409,10 @@ begin
               TChangeItem(ThisSessionChanges.Orders.Items[i]).Text,
               TChangeItem(ThisSessionChanges.Orders.Items[i]).GroupName,
               TChangeItem(ThisSessionChanges.Orders.Items[i]).SignState,
+              TChangeItem(ThisSessionChanges.Orders.Items[i]).WriteAccessType,
               TChangeItem(ThisSessionChanges.Orders.Items[i]).ParentID,
               TChangeItem(ThisSessionChanges.Orders.Items[i]).User,
+              TChangeItem(ThisSessionChanges.Orders.Items[i]).OrderDGIEN,
               TChangeItem(ThisSessionChanges.Orders.Items[i]).OrderDG,
               TChangeItem(ThisSessionChanges.Orders.Items[i]).DCOrder,
               TChangeItem(ThisSessionChanges.Orders.Items[i]).Delay);
@@ -2413,8 +2424,10 @@ begin
               TChangeItem(ThisSessionChanges.PCE.Items[i]).Text,
               TChangeItem(ThisSessionChanges.PCE.Items[i]).GroupName,
               TChangeItem(ThisSessionChanges.PCE.Items[i]).SignState,
+              TChangeItem(ThisSessionChanges.PCE.Items[i]).WriteAccessType,
               TChangeItem(ThisSessionChanges.PCE.Items[i]).ParentID,
               TChangeItem(ThisSessionChanges.PCE.Items[i]).User,
+              TChangeItem(ThisSessionChanges.PCE.Items[i]).OrderDGIEN,
               TChangeItem(ThisSessionChanges.PCE.Items[i]).OrderDG,
               TChangeItem(ThisSessionChanges.PCE.Items[i]).DCOrder,
               TChangeItem(ThisSessionChanges.PCE.Items[i]).Delay);
@@ -2683,7 +2696,7 @@ begin
                TObject(UBAGlobals.tempDxList[i]).Free;
 
          UBAGlobals.tempDxList.Clear;
-         Application.ProcessMessages;
+         TResponsiveGUI.ProcessMessages;
          end; //end IsBillingAware
   except
      on EAccessViolation do
@@ -2703,8 +2716,10 @@ end;
 
 { View Menu Events ------------------------------------------------------------------------- }
 
-procedure TfrmFrame.mnuViewPostingsClick(Sender: TObject);
+procedure TfrmFrame.mnuWAPermissionsClick(Sender: TObject);
 begin
+  inherited;
+  WriteAccessV.ShowPermissions(Sender);
 end;
 
 { Tool Menu Events ------------------------------------------------------------------------- }
@@ -2729,6 +2744,8 @@ begin
   if Pos('%DFN',  x) > 0 then Substitute('%DFN',  Patient.DFN);  //*DFN*
   if Pos('%DUZ',  x) > 0 then Substitute('%DUZ',  IntToStr(User.DUZ));
   if Pos('%H', x) > 0  then Substitute('%H', String(RPCBrokerV.LogIn.LogInHandle));
+  if Pos('%STATION', x) > 0 then Substitute('%STATION', copy(User.StationNumber, 1, 3));
+
   Result := x;
 end;
 
@@ -4573,6 +4590,14 @@ begin
   else
     laMHV.Hint := 'No MyHealthyVet data';
 
+  if ScreenReaderActive then
+  begin
+    laVAA2.Caption := laVAA2.Hint;
+    laMHV.Caption := laMHV.Hint;
+    amgrMain.AccessText[laVAA2] := laVAA2.Hint;
+    amgrMain.AccessText[laMHV] := laMHV.Hint;
+  end;
+
   laMHV.Align := alTop;
   laMHV.Height := paVAA.ClientHeight div 2;
   laVAA2.Align := alClient;
@@ -4580,7 +4605,7 @@ begin
   laMHV.Enabled := Patient.PtIsMHV;
   laVAA2.Enabled := Patient.PtIsVAA;
 
-  paVAA.Visible := (Patient.PtIsVAA or Patient.PtIsMHV);
+  paVAA.Visible := (Patient.PtIsVAA or Patient.PtIsMHV) or ScreenReaderActive;
 end;
 
 procedure TfrmFrame.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -4638,7 +4663,7 @@ begin
   i := 0;
   repeat
     Done := True;
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages(True);
     if PeekMessage(Msg, 0, 0, 0, PM_NOREMOVE) then
     begin
       inc(i);
@@ -4751,7 +4776,7 @@ begin
 
   fPDMPMgr.Left := iLeft - fPDMPMgr.Width;
 
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
 end;
 
 procedure TfrmFrame.pdmpCloseReport;
@@ -4810,7 +4835,7 @@ begin
 
   fPDMPMgr.Visible := PDMP_ShowButton = 'ALWAYS';
 
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
 end;
 
 procedure TfrmFrame.acPDMPCancelExecute(Sender: TObject);
@@ -4898,7 +4923,7 @@ end;
 procedure TfrmFrame.acResetParamsExecute(Sender: TObject);
 begin
   inherited;
-  getSysUserParameters(user.DUZ);
+  ClearSystemParameters
 end;
 
 //=========================== CCOW main changes ========================
@@ -5991,7 +6016,8 @@ begin
   ViewInfo(mnuInsurance);
 end;
 
-
+var
+  uMHV_URL: string = '';
 
 procedure TfrmFrame.ViewInfo(Sender: TObject);
 var
@@ -6038,7 +6064,11 @@ begin
       end;
     4:begin
         if Patient.PtIsMHV then
-          ShellExecute(laMHV.Handle, 'open', PChar('http://www.myhealth.domain/'), '', '', SW_NORMAL);
+        begin
+          if uMHV_URL = '' then
+            uMHV_URL := ExpandCommand(GetUserParam('OR MHV URL'));
+          ShellExecute(laMHV.Handle, 'open', PChar(uMHV_URL), '', '', SW_NORMAL);
+        end;
       end;
     5:begin
        if Patient.PtIsVAA then

@@ -60,7 +60,7 @@ type
     function IsValid: boolean;
   end;
 
-function ExecuteRenewOutMed(AnOrder: TOrder): Boolean;
+function ExecuteRenewOutMed(AnOrder: TOrder; DestList: TList): Boolean;
 
 implementation
 
@@ -73,11 +73,10 @@ const
   TX_NO_RENEW_END = ':' + CRLF + CRLF;
   TX_NO_RENEW_CAP = 'Unable to Renew Order';
 
-function ExecuteRenewOutMed(AnOrder: TOrder): Boolean;
+function ExecuteRenewOutMed(AnOrder: TOrder; DestList: TList): Boolean;
 var
   frmRenewOutMed: TfrmRenewOutMed;
-  DestList: TList;
-  HasObject: Boolean;
+//  HasObject: Boolean;
   i, doseCount: Integer;
   EDrug, Days, Qty, QtyTxt: string;
   RenewFields: TOrderRenewFields;
@@ -86,80 +85,76 @@ begin
   RenewFields := TOrderRenewFields(AnOrder.LinkObject);
   Result := False;
   EDrug:= '';
-  DestList := TList.Create();
-  try
-    with RenewFields do
-    begin
-      Days := IntToStr(DaysSupply);
-      Qty := Quantity;
-      LoadResponses(DestList, 'X' + AnOrder.ID, HasObject, (TitrationMsg <> ''));
-      doseCount := 0;
+  with RenewFields do
+  begin
+    Days := IntToStr(DaysSupply);
+    Qty := Quantity;
+    //Moved to fOrdersRenew
+    //LoadResponses(DestList, 'X' + AnOrder.ID, HasObject, (TitrationMsg <> ''));
+    doseCount := 0;
 
-      for I := 0 to DestList.Count - 1 do
+    for I := 0 to DestList.Count - 1 do
+    begin
+      with TResponse(DestList.Items[i]) do
       begin
-        with TResponse(DestList.Items[i]) do
-        begin
-          if PromptID = 'DRUG' then
-            EDrug := EValue
-          else if PromptID = 'DOSE' then
-            inc(doseCount);
-        end;
-      end;
-      frmRenewOutMed := TfrmRenewOutMed.Create(Application);
-      try
-        with frmRenewOutMed do
-        begin
-          FActLikeQuickOrder := True;
-          FEventName := AnOrder.EventName;
-          FDrugName := EDrug;
-          FClozapine := (Pos(EDrug, 'CLOZAPINE') > 0);
-          FComplex := (doseCount > 1);
-          FResponses := DestList;
-          if papiParkingAvailable and papiOrderIsParkable(anOrder.ID) then
-            cboPickup.Items.Add('P^Park'); // PaPI.
-          ResizeFormToFont(TForm(frmRenewOutMed));
-//          memOrder.SetTextBuf(PChar(AnOrder.Text)); // may contain titration msg
-          memOrder.SetTextBuf(PChar(NewText));
-          spnRefills.Position := Refills;
-          if DispUnit = '' then
-            QtyTxt := 'Quantity'
-          else
-          begin
-            QtyTxt :='Qty (' + DispUnit + ')';
-            if Length(QtyTxt) > 10 then
-            begin
-              lblQuantity.Hint := QtyTxt;
-              QtyTxt := Copy(QtyTxt, 1, 7) + '...';
-            end;
-          end;
-          FChanging := TRUE;
-          try
-            lblQuantity.Caption := QtyTxt;
-            spnSupply.Position := StrToIntDef(Days, 0);
-            FUpdateQuantity := Qty;
-            txtQuantity.Text := Qty;
-            cboPickup.SelectByID(Pickup);
-          finally
-            FChanging := False;
-          end;
-          ShowModal;
-          if OKPressed then
-          begin
-            Result := True;
-            Refills := StrToIntDef(txtRefills.Text, Refills);
-            Pickup := cboPickup.ItemID;
-            DaysSupply := StrToIntDef(txtSupply.Text, DaysSupply);
-            Quantity := txtQuantity.Text;
-// Keep TitrationMsg or the second time around it will load the complex order
-//            TitrationMsg := '';
-          end;
-        end;
-      finally
-        frmRenewOutMed.Release;
+        if PromptID = 'DRUG' then
+          EDrug := EValue
+        else if PromptID = 'DOSE' then
+          inc(doseCount);
       end;
     end;
-  finally
-    DestList.Free;
+    frmRenewOutMed := TfrmRenewOutMed.Create(Application);
+    try
+      with frmRenewOutMed do
+      begin
+        FActLikeQuickOrder := True;
+        FEventName := AnOrder.EventName;
+        FDrugName := EDrug;
+        FClozapine := (Pos(EDrug, 'CLOZAPINE') > 0);
+        FComplex := (doseCount > 1);
+        FResponses := DestList;
+        if papiParkingAvailable and papiOrderIsParkable(anOrder.ID) then
+          cboPickup.Items.Add('P^Park'); // PaPI.
+        ResizeFormToFont(TForm(frmRenewOutMed));
+//          memOrder.SetTextBuf(PChar(AnOrder.Text)); // may contain titration msg
+        memOrder.SetTextBuf(PChar(NewText));
+        spnRefills.Position := Refills;
+        if DispUnit = '' then
+          QtyTxt := 'Quantity'
+        else
+        begin
+          QtyTxt :='Qty (' + DispUnit + ')';
+          if Length(QtyTxt) > 10 then
+          begin
+            lblQuantity.Hint := QtyTxt;
+            QtyTxt := Copy(QtyTxt, 1, 7) + '...';
+          end;
+        end;
+        FChanging := TRUE;
+        try
+          lblQuantity.Caption := QtyTxt;
+          spnSupply.Position := StrToIntDef(Days, 0);
+          FUpdateQuantity := Qty;
+          txtQuantity.Text := Qty;
+          cboPickup.SelectByID(Pickup);
+        finally
+          FChanging := False;
+        end;
+        ShowModal;
+        if OKPressed then
+        begin
+          Result := True;
+          Refills := StrToIntDef(txtRefills.Text, Refills);
+          Pickup := cboPickup.ItemID;
+          DaysSupply := StrToIntDef(txtSupply.Text, DaysSupply);
+          Quantity := txtQuantity.Text;
+// Keep TitrationMsg or the second time around it will load the complex order
+//            TitrationMsg := '';
+        end;
+      end;
+    finally
+      frmRenewOutMed.Release;
+    end;
   end;
 end;
 

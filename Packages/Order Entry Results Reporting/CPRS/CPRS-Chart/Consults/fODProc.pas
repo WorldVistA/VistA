@@ -898,6 +898,7 @@ var
   x: string;
   HasObjects: boolean;
 begin
+  Assert(aDest <> nil);
   Resolve := false; // override value passed in - resolve on client - PSI-05-093
   DocInfo := '';
   TmpSL := TStringList.Create;
@@ -916,12 +917,12 @@ begin
     Responses.OrderContainsObjects := HasObjects or TemplateBPHasObjects;
     if AbortOrder then
     begin
-      aDest.text := '';
+      aDest.Clear;
       Close;
     end
     else
     begin
-      aDest.text := TmpSL.text;
+      aDest.Assign(TmpSL);
       if aDest.Count > 0 then
         SpeakTextInserted;
     end;

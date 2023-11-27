@@ -93,7 +93,7 @@ function  IsActiveCode(ACode: string; LexApp: integer; ADate: TFMDateTime = 0): 
 function  GetICDVersion(ADate: TFMDateTime = 0): String;
 
 { Encounter Form Elements }
-procedure DeletePCE(const AVisitStr: string);
+procedure DeletePCE(const AVisitStr: string; visit: integer);
 function EligbleConditions(PCEData: TPCEData): TSCConditions;
 
 procedure ListVisitTypeSections(Dest: TStrings);
@@ -176,6 +176,8 @@ function IsNonCountClinic(ALocation: integer): boolean;
 function CheckDailyHospitalization(APCEObject: TPCEData): Boolean;
 function GetUCUMInfo(DataType: string; Code: string): TUCUMInfo;
 procedure UpdateUCUMInfo(DataType, Code, Value: string);
+function GetMagUCUMData(DataType: string; Code: string): string;
+procedure UpdateMagUCUMData(DataType, Code, Value: string);
 
 // HNC Flag
 //function HNCOK: boolean;
@@ -410,10 +412,9 @@ end;
 
 { Encounter Form Elements ------------------------------------------------------------------ }
 
-procedure DeletePCE(const AVisitStr: string);
+procedure DeletePCE(const AVisitStr: string; visit: integer);
 begin
-//  sCallV('ORWPCE DELETE', [AVisitStr, Patient.DFN]);
-  CallVistA('ORWPCE DELETE', [AVisitStr, Patient.DFN]);
+  CallVistA('ORWPCE DELETE', [AVisitStr, Patient.DFN, visit]);
 end;
 
 procedure LoadEncounterForm;

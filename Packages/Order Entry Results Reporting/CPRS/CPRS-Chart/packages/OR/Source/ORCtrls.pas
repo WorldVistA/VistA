@@ -8,7 +8,7 @@ interface // -------------------------------------------------------------------
 
 uses Windows, Messages, SysUtils, Classes, Graphics, Controls, StdCtrls, Forms,
   ComCtrls, Commctrl, Buttons, ExtCtrls, Grids, ImgList, Menus, CheckLst,
-  Variants, VAClasses, typinfo, System.Math;
+  Variants, VAClasses, typinfo, System.Math, OREventCache;
 
 const
   UM_SHOWTIP = (WM_USER + 9436); // message id to display item tip         **was 300
@@ -163,7 +163,6 @@ type
     procedure ScrollBarScroll(Sender: TObject; ScrollCode: TScrollCode; var ScrollPos: Integer);
     procedure ScrollTo(Sender: TObject; ScrollCode: TScrollCode; var ScrollPos: Integer);
     function GetStringIndex(const AString: string): Integer;
-    function SelectString(const AString: string): Integer;
     procedure SetCheckBoxes(const Value: boolean);
     procedure SetDelimiter(Value: Char);
     procedure SetFlatCheckBoxes(const Value: boolean);
@@ -266,6 +265,7 @@ type
     function SupportsDynamicProperty(PropertyID: integer): boolean;
     function GetDynamicProperty(PropertyID: integer): string;
     property HideSelection: boolean read FHideSelection write FHideSelection;
+    function SelectString(const AString: string): Integer;
   published
     property AllowGrayed: boolean read FAllowGrayed write FAllowGrayed default FALSE;
     property Caption: string read GetCaption write SetCaption;
@@ -383,8 +383,6 @@ type
       X, Y: Integer);
     procedure DropButtonUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState;
       X, Y: Integer);
-    procedure FwdChange(Sender: TObject);
-    procedure FwdChangeDelayed;
     procedure FwdClick(Sender: TObject);
     procedure FwdDblClick(Sender: TObject);
     procedure FwdKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -480,6 +478,21 @@ type
     procedure LoadComboBoxImage;
     function GetTabStop: Boolean;
     procedure SetTabStop(const Value: Boolean);
+  protected
+    // RDD: The following two procedures have been made protected and virtual
+    // so they can be overwritten in TIndicationsCombobox. These changes
+    // need to be un-done (and made permanent in this object) in v33!
+    procedure FwdChange(Sender: TObject); virtual;
+    procedure FwdChangeDelayed; virtual;
+    // These properties allow TIndicationsCombobox to access the private members
+    // it needs;
+    property FromSelf: Boolean read FFromSelf write FFromSelf;
+    property ChangePending: Boolean read FChangePending write FChangePending;
+    property ListBox: TORListBox read FListBox;
+    property KeyIsDown: Boolean read FKeyIsDown;
+    property EditBox: TORComboEdit read FEditBox;
+    property LastInput: string read FLastInput write FLastInput;
+    property LastFound: string read FLastFound write FLastFound;
   protected
     procedure DropPanelBtnPressed(OKBtn, AutoClose: boolean);
     function GetEditBoxText(Index: Integer): string;
@@ -701,13 +714,25 @@ type
 
   TCaptionTreeView = class(TTreeView, IVADynamicProperty)
   private
+    const
+      CaptionTreeViewRecreateWndEvents: array of string = ['OnAddition',
+        'OnChange', 'OnChanging', 'OnCollapsed', 'OnCollapsing', 'OnDeletion',
+        'OnExpanded', 'OnExpanding'];
+  private
+    FEventCache: TOREventCache;
     procedure SetCaption(const Value: string);
     function GetCaption: string;
     procedure TVMDeleteItem(var Message: TMessage); message TVM_DELETEITEM;
     procedure TVMSelectItem(var Message: TMessage); message TVM_SELECTITEM;
+    function GetEventCache: TOREventCache;
   protected
     FCaptionComponent: TStaticText;
+    property EventCache: TOREventCache read GetEventCache;
+    procedure CMSysColorChange(var Message: TMessage); message CM_SYSCOLORCHANGE;
+    procedure CreateWnd; override;
+    procedure DestroyWnd; override;
   public
+    destructor Destroy; Override;
     function SupportsDynamicProperty(PropertyID: integer): boolean;
     function GetDynamicProperty(PropertyID: integer): string;
   published
@@ -752,6 +777,9 @@ type
 
   TORTreeView = class(TCaptionTreeView)
   private
+    const
+      ORTreeViewRecreateWndEvents: array of string = ['OnNodeCaptioning'];
+  private
     FRecreateStream: TMemoryStream;
     FOnDragging: TORDraggingEvent;
     FDelim: Char;
@@ -773,6 +801,7 @@ type
     procedure SetNodePiece(const Value: integer);
   public
     constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
     function FindPieceNode(Value: string;
       ParentDelim: Char = #0; StartNode: TTreeNode = nil): TORTreeNode; overload;
     function FindPieceNode(Value: string; APiece: integer;
@@ -1076,9 +1105,9 @@ type
     property aObject: TObject read fObject write fObject;
   end;
 
-  TCaptionListStringList = class(classes.TStringList)
+   TCaptionListStringList = class(classes.TStringList)
    private
-    fParentCLV: TObject;
+     fParentCLV: TObject;
    public
      procedure Assign(Source: TPersistent); override;
      constructor CreateWithParent(Parent: TObject);
@@ -1088,6 +1117,7 @@ type
   private
     FPieces: array[0..MAX_TABS] of Integer;
     FItemsStrings: TCaptionListStringList;
+    FItemsStringsBackup: TStringList;
     FAutoSize: Boolean;
     FHideTinyColumns: Boolean;
     FTinyColumns: string;
@@ -1109,6 +1139,8 @@ type
     procedure SetHideTinyColumns(const Value: Boolean);
   protected
     procedure Loaded; override;
+    procedure CreateWnd; override;
+    procedure DestroyWnd; override;
   public
     property ItemIEN: Int64 read GetItemIEN;
     property ItemID: Variant read GetItemID;
@@ -3601,6 +3633,7 @@ var
 begin
   if FLongList then
   begin
+    FLastItemID := '';
     if LookUpPiece <> 0 then
     begin
       index := GetStringIndex(S);
@@ -6125,104 +6158,78 @@ begin
   FDelim := '^';
 end;
 
+destructor TORTreeView.Destroy;
+begin
+  FreeAndNil(FRecreateStream);
+  inherited;
+end;
+
 procedure TORTreeView.CreateWnd;
-
-var
-  FNodeCache: TNodeCache;
-
-  function GetNodeFromIndex(Index: Integer): TTreeNode;
-  var
-    I: Integer;
-  begin
-    if Index < 0 then
-      raise ETreeViewError.Create(sInvalidIndex);
-    if (FNodeCache.CacheNode <> nil) and (Abs(FNodeCache.CacheIndex - Index) <= 1) then
-    begin
-      with FNodeCache do
-      begin
-        if Index = CacheIndex then
-          Result := CacheNode
-        else
-          if Index < CacheIndex then
-            Result := CacheNode.GetPrev
-          else
-            Result := CacheNode.GetNext;
-      end;
-    end
-    else
-    begin
-      Result := Items.GetFirstNode;
-      I := Index;
-      while (I <> 0) and (Result <> nil) do
-      begin
-        Result := Result.GetNext;
-        Dec(I);
-      end;
-    end;
-    if Result = nil then
-      raise ETreeViewError.Create(sInvalidIndex);
-    FNodeCache.CacheNode := Result;
-    FNodeCache.CacheIndex := Index;
-  end;
-
 var
   node: TTreeNode;
-  savedCount, savedIndex: integer;
+  savedCount, nodeIndex: integer;
 begin
-  inherited;
-  if FRecreateStream <> nil then
-  begin
-    try
-      FNodeCache.CacheNode := nil;
+  EventCache.SaveAndNilEvents(ORTreeViewRecreateWndEvents);
+  try
+    inherited;
+    if FRecreateStream <> nil then
+    begin
       Items.BeginUpdate;
       try
-        FRecreateStream.ReadBuffer(savedCount, SizeOf(savedCount));
-        if (savedCount = Items.Count) then
-        begin
-          while (savedCount > 0) do
+        try
+          FRecreateStream.ReadBuffer(savedCount, SizeOf(savedCount));
+          if (savedCount = Items.Count) then
           begin
-            FRecreateStream.ReadBuffer(savedIndex, SizeOf(savedIndex));
-            node := GetNodeFromIndex(savedIndex);
-            if node <> nil then
+            nodeIndex := 0;
+            node := Items.GetFirstNode;
+            while (nodeIndex < savedCount) and (node <> nil) do
+            begin
               TORTreeNode(node).ReadORNodeData(FRecreateStream);
-            Dec(savedCount);
+              Inc(nodeIndex);
+              node := node.GetNext;
+            end;
           end;
+        finally
+          FreeAndNil(FRecreateStream);
         end;
       finally
         Items.EndUpdate;
       end;
-    finally
-      FreeAndNil(FRecreateStream);
     end;
+  finally
+    EventCache.RestoreEvents;
   end;
 end;
 
 procedure TORTreeView.DestroyWnd;
 var
   node: TTreeNode;
-  savedCount, savedIndex: integer;
+  savedCount: integer;
 begin
-  if CreateWndRestores and (Items.Count > 0) and (csRecreating in ControlState) then
-  begin
-    FRecreateStream := TMemoryStream.Create;
-    try
-      savedCount := Items.Count;
-      FRecreateStream.WriteBuffer(savedCount, SizeOf(savedCount));
-      node := Items.GetFirstNode;
-      while node <> nil do
-      begin
-        savedIndex := TORTreeNode(node).AbsoluteIndex;
-        FRecreateStream.WriteBuffer(savedIndex, SizeOf(savedIndex));
-        TORTreeNode(node).WriteORNodeData(FRecreateStream);
-        node := node.GetNext;
+  EventCache.SaveAndNilEvents(ORTreeViewRecreateWndEvents);
+  try
+    if CreateWndRestores and (Items.Count > 0) and (csRecreating in ControlState) then
+    begin
+      FRecreateStream := TMemoryStream.Create;
+      try
+        savedCount := Items.Count;
+        FRecreateStream.WriteBuffer(savedCount, SizeOf(savedCount));
+        node := Items.GetFirstNode;
+        while node <> nil do
+        begin
+          TORTreeNode(node).WriteORNodeData(FRecreateStream);
+          node := node.GetNext;
+        end;
+        FRecreateStream.Position := 0;
+      except
+        FreeAndNil(FRecreateStream);
+        raise;
       end;
-      FRecreateStream.Position := 0;
-    except
-      FreeAndNil(FRecreateStream);
-      raise;
     end;
+    inherited;
+  finally
+    EventCache.RestoreEvents;
   end;
-  inherited;
 end;
 
 function TORTreeView.CreateNode: TTreeNode;
@@ -7659,6 +7666,40 @@ end;
 
 { TCaptionTreeView}
 
+procedure TCaptionTreeView.CMSysColorChange(var Message: TMessage);
+begin
+  // Change colors here. "inherited" will cause a RecreateWnd.
+  // And we don't want that.
+  TreeView_SetBkColor(Handle, ColorToRGB(Color));
+  TreeView_SetTextColor(Handle, ColorToRGB(Font.Color));
+end;
+
+procedure TCaptionTreeView.CreateWnd;
+begin
+  EventCache.SaveAndNilEvents(CaptionTreeViewRecreateWndEvents);
+  try
+    inherited;
+  finally
+    EventCache.RestoreEvents;
+  end;
+end;
+
+destructor TCaptionTreeView.Destroy;
+begin
+  FreeAndNil(FEventCache);
+  inherited;
+end;
+
+procedure TCaptionTreeView.DestroyWnd;
+begin
+  EventCache.SaveAndNilEvents(CaptionTreeViewRecreateWndEvents);
+  try
+    inherited;
+  finally
+    EventCache.RestoreEvents;
+  end;
+end;
+
 function TCaptionTreeView.GetCaption: string;
 begin
   result := inherited Caption;
@@ -7670,6 +7711,13 @@ begin
     Result := GetCaption
   else
     Result := '';
+end;
+
+function TCaptionTreeView.GetEventCache: TOREventCache;
+begin
+  if not Assigned(FEventCache) then
+    FEventCache := TOREventCache.Create(Self);
+  Result := FEventCache;
 end;
 
 procedure TCaptionTreeView.SetCaption(const Value: string);
@@ -7881,6 +7929,7 @@ destructor TCaptionListView.Destroy;
 begin
   Inherited;
   FItemsStrings.Free;
+  FreeAndNil(FItemsStringsBackup);
 end;
 
 function TCaptionListView.AddItemToList(aStr: string; aObject: TObject): TCaptionListItem;
@@ -7948,6 +7997,46 @@ procedure TCaptionListView.Loaded;
 begin
   inherited;
   ResetTinyColumns;
+end;
+
+procedure TCaptionListView.CreateWnd;
+var
+  i, max: integer;
+begin
+  inherited;
+  if assigned(FItemsStringsBackup) then
+  begin
+    max := Items.Count;
+    if max > FItemsStringsBackup.Count then
+      max := FItemsStringsBackup.Count;
+    for i := 0 to max - 1 do
+      if Items[i] is TCaptionListItem then
+      begin
+        TCaptionListItem(Items[i]).ItemString := FItemsStringsBackup[i];
+        TCaptionListItem(Items[i]).aObject := FItemsStringsBackup.Objects[i];
+      end;
+    FreeAndNil(FItemsStringsBackup);
+  end;
+end;
+
+procedure TCaptionListView.DestroyWnd;
+var
+  i: integer;
+begin
+  if (csRecreating in ControlState) then
+  begin
+    if not assigned(FItemsStringsBackup) then
+      FItemsStringsBackup := TStringList.Create
+    else
+      FItemsStringsBackup.Clear;
+    for i := 0 to Items.Count - 1 do
+      if Items[i] is TCaptionListItem then
+        with TCaptionListItem(Items[i]) do
+          FItemsStringsBackup.AddObject(ItemString, aObject)
+      else
+        FItemsStringsBackup.AddObject('', nil);
+  end;
+  inherited;
 end;
 
 procedure TCaptionListView.SetPieces(const Value: string);
@@ -8102,7 +8191,7 @@ begin
   for i := 0 to Items.Count-1 do begin
 
    if Assigned(TCaptionListItem(Items[i]).aObject) then
-    TStringList(FItemsStrings).AddObject(TCaptionListItem(Items[i]).ItemString, TCaptionListItem(Items[i]).aObject)
+     TStringList(FItemsStrings).AddObject(TCaptionListItem(Items[i]).ItemString, TCaptionListItem(Items[i]).aObject)
    else
      TStringList(FItemsStrings).Add(TCaptionListItem(Items[i]).ItemString);
   end;
@@ -8177,8 +8266,6 @@ begin
   if fParentCLV is TCaptionListView then
    TCaptionListView(fParentCLV).SetFromStringList(TCaptionListStringList(Source));
 end;
-
-
 
 initialization
   //uItemTip := TItemTip.Create(Application);  // all listboxes share a single ItemTip window

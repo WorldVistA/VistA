@@ -44,14 +44,21 @@ type
     procedure WMPaste(var Message: TMessage); message WM_PASTE;
   end;
 
+  TListView = class(Vcl.ComCtrls.TListView)
+    private
+      procedure WMSetFocus(var Message: TMessage); message WM_SETFOCUS;
+  end;
+
 procedure ClipboardFilemanSafe;
+
+function getUserDataFolder: String;
 
 procedure SetUserDataFolder(ABrowser: TWebBrowser);
 
 implementation
 
 uses
-  orfn, VCL.Edge, System.IOUtils;
+  orfn, VCL.Edge, System.IOUtils, Winapi.CommCtrl;
 
 type
   TORBrowser = class(TWebBrowser);
@@ -419,11 +426,30 @@ begin
   inherited;
 end;
 
-procedure SetUserDataFolder(ABrowser: TWebBrowser);
+function getUserDataFolder: String;
 var
   AppData: string;
 const
   CPRSCacheDir: string = 'CPRSChart.exe\WebView2';
+begin
+  Result := '';
+  AppData := GetEnvironmentVariable('APPDATA');
+  if AppData = '' then
+    raise Exception.Create('Unable to find %APPDATA% in user account in ORExtensions.pas');
+
+  AppData := IncludeTrailingPathDelimiter(AppData) + CPRSCacheDir;
+
+  if not (DirectoryExists(AppData)) then
+    TDirectory.CreateDirectory(AppData);
+
+  Result := AppData;
+end;
+
+procedure SetUserDataFolder(ABrowser: TWebBrowser);
+//var
+//  AppData: string;
+//const
+//  CPRSCacheDir: string = 'CPRSChart.exe\WebView2';
 begin
   {
   blj 31 August 2021 - JIRA https://vajira.max.gov/browse/VISTAOR-26730
@@ -447,7 +473,7 @@ begin
   }
   if ABrowser.ActiveEngine = IE then
     exit; //We don't need to be here right now.
-
+{
   AppData := GetEnvironmentVariable('APPDATA');
   if AppData = '' then
     raise Exception.Create('Unable to find %APPDATA% in user account in ORExtensions.pas');
@@ -458,7 +484,19 @@ begin
     TDirectory.CreateDirectory(AppData);
 
   TORBrowser(ABrowser).GetEdgeInterface.UserDataFolder := AppData;
+}
+  TORBrowser(ABrowser).GetEdgeInterface.UserDataFolder := getUserDataFolder;
 end;
 
+
+{ TListView }
+
+procedure TListView.WMSetFocus(var Message: TMessage);
+begin
+ inherited;
+ if Self.ItemIndex = -1 then
+  ListView_SetItemState(Self.Handle, 0, LVIS_FOCUSED, LVIS_FOCUSED);
+ RedrawWindow(Self.Handle, nil, 0, RDW_ERASE or RDW_INVALIDATE or RDW_UPDATENOW);
+end;
 
 end.

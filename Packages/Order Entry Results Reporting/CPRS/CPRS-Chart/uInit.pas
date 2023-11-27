@@ -65,7 +65,7 @@ procedure InitTimeOut(AUserCondition: TCPRSTimeoutTimerCondition;
 begin
   if(not assigned(timTimeout)) then
   begin
-    timTimeOut := TCPRSTimeoutTimer.Create(Application);
+    timTimeOut := TCPRSTimeoutTimer.Create(nil);
     with timTimeOut do
     begin
       OnTimer := timTimeoutTimer;
@@ -113,10 +113,7 @@ begin
         FHooked := FALSE;
       end;
     end;
-    try // for some reason this can throw an invalid pointer on Application.Terminate
-      FreeAndNil(timTimeout);
-    except
-    end;
+    FreeAndNil(timTimeout);
   end;
 end;
 

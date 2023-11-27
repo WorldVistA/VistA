@@ -33,12 +33,11 @@ uses
   rODMeds,
   uConst,
   uCore,
-  VA508AccessibilityManager, u508Extensions;
+  VA508AccessibilityManager, u508Button;
 
 type
   TfrmReview = class(TfrmBase508Form)
     fraCoPay: TfraCoPayDesc;
-    laDiagnosis: TLabel;
     pnlProvInfo: TPanel;
     lblProvInfo: TLabel;
     pnlDEAText: TPanel;
@@ -56,8 +55,8 @@ type
     radPhone: TRadioButton;
     radPolicy: TRadioButton;
     radRelease: TRadioButton;
-    cmdOK: u508Extensions.TButton;
-    cmdCancel: u508Extensions.TButton;
+    cmdOK: u508Button.TButton;
+    cmdCancel: u508Button.TButton;
     pnlReview: TPanel;
     lstReview: TCaptionCheckListBox;
     lblSig: TStaticText;
@@ -67,11 +66,12 @@ type
     lblSmartCardNeeded: TStaticText;
     pnlTop: TPanel;
     pnlBottomCanvas: TPanel;
-    Panel2: TPanel;
+    pnlCSTop: TPanel;
     gpMain: TGridPanel;
     gpBottom: TGridPanel;
     gpOrderActions: TGridPanel;
     gpRelease: TGridPanel;
+    lblGap: TLabel;
 
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -101,7 +101,9 @@ type
     procedure txtESCodeChange(Sender: TObject);
     procedure fraCoPayLabel24MouseMove(Sender: TObject; Shift: TShiftState;
       X, Y: Integer);
-    procedure fraCoPayResize(Sender: TObject);
+    procedure pnlCSReviewResize(Sender: TObject);
+  private const
+    DontSign = 'Don''t Sign';
   private
     FOKPressed: Boolean;
     FShowPanel: Integer;
@@ -112,7 +114,7 @@ type
     FOldHintHidePause: Integer;
     FIsEvtChange: Boolean;
     FCurrentlySelectedItem: Integer;
-
+    FFormID: string;
     function AddItem(aCaptionCheckListBox: TCaptionCheckListBox;
       ChangeItem: TChangeItem): Integer;
     function ItemsAreChecked(aListView: TCaptionCheckListBox): Boolean;
@@ -125,10 +127,13 @@ type
     procedure BuildList(FullList: Boolean);
     procedure BuildFullList;
     procedure BuildSignList;
-    procedure PlaceComponents;
+    procedure PlaceComponents(Save: boolean = True);
     procedure CleanupChangesList(Sender: TObject; ChangeItem: TChangeItem);
     { **RV** }
     procedure FormatListForScreenReader(Sender: TObject);
+    function CheckListBox(AObject: TObject): TCaptionCheckListBox;
+  public
+    property FormID: string read FFormID write FFormID;
   end;
 
 function ReviewChanges(TimedOut: Boolean; IsEvtChange: Boolean = False)
@@ -164,7 +169,11 @@ uses
   rODLab,
   fRptBox,
   VAUtils,
-  UBAGlobals;
+  UBAGlobals,
+  UResponsiveGUI,
+  rMisc,
+  VAHelpers,
+  uWriteAccess;
 
 const
   SP_NONE = 0;
@@ -216,6 +225,7 @@ begin
 
     CallVistA('ORDEA SIGINFO', [Patient.DFN, User.DUZ], aLst);
     frmReview.lblProvInfo.Caption := aLst.Text;
+    frmReview.pnlProvInfo.Width := frmReview.lblProvInfo.Width + 8;
   finally
     FreeAndNil(aLst);
   end;
@@ -229,6 +239,7 @@ begin
     if TimedOut and (Changes.Count > 0) then
     begin
       frmReview.FSilent := True;
+      WriteAccessV.IgnoreErrors;
       frmReview.BuildFullList;
       with frmReview.lstReview do
         for i := 0 to Items.Count - 1 do
@@ -291,6 +302,11 @@ end;
 procedure TfrmReview.FormCreate(Sender: TObject);
 const
   TX_FORM_CAPTION = 'Review / Sign Changes  ';
+  RAG_GAP = 23;
+
+var
+  i, btnLen, gap, len, len2, total: integer;
+  rbtn: TRadioButton;
 
 begin
   FOKPressed := False;
@@ -303,6 +319,47 @@ begin
   FOldHintHidePause := Application.HintHidePause;
   Application.HintHidePause := 30000;
   ResizeFormToFont(Self);
+  lblSmartCardNeeded.Font.Size := MainFontSize;
+  pnlCSTop.Height := MainFontTextHeight + TSigItems.btnMargin;
+
+  gap := TSigItems.btnMargin * 8;
+  gpBottom.ColumnCollection.BeginUpdate;
+  try
+    gpBottom.ColumnCollection[0].Value := Canvas.TextWidth(lblESCode.Caption) + gap;
+    btnLen := Canvas.TextWidth(DontSign) + gap;
+    gpBottom.ColumnCollection[2].Value := btnLen;
+    gpBottom.ColumnCollection[3].Value := btnLen;
+  finally
+    gpBottom.ColumnCollection.EndUpdate;
+  end;
+  gpOrderActions.ColumnCollection.BeginUpdate;
+  try
+    gpRelease.ColumnCollection.BeginUpdate;
+    try
+      len := Canvas.TextWidth(radSignChart.Caption) + RAG_GAP;
+      len2 := Canvas.TextWidth(radHoldSign.Caption) + RAG_GAP;
+      if len < len2 then
+        len := Len2;
+      gpOrderActions.ColumnCollection[1].Value := len;
+      total := 4;
+      for i := 0 to 2 do
+      begin
+        case i of
+          0: rbtn := radVerbal;
+          1: rbtn := radPhone;
+        else rbtn := radPolicy;
+        end;
+        len := Canvas.TextWidth(rbtn.Caption) + RAG_GAP;
+        gpRelease.ColumnCollection[i].Value := len;
+        inc(total, len);
+      end;
+      gpOrderActions.ColumnCollection[2].Value := total;
+    finally
+      gpRelease.ColumnCollection.EndUpdate;
+    end;
+  finally
+    gpOrderActions.ColumnCollection.EndUpdate;
+  end;
 end;
 
 procedure TfrmReview.AddHeader(aCaptionCheckListBox: TCaptionCheckListBox;
@@ -374,183 +431,221 @@ var
   PrevGrpName, temp: string;
   displayHeader, displaySpacer, displayCSHeader, displayCSSpacer,
     otherUserOrders, otherhdradded, othercshdradded: Boolean;
-  // i, ColHeight: Integer;
-  t1, t2: Boolean;
+  t1, t2, HeaderAdded: Boolean;
+  ChangeItemErrors: TList;
+
+  function CannotSignOrder(ChangeItem: TChangeItem): Boolean;
+  begin
+    Result := False;
+    if (ChangeItemErrors.IndexOf(ChangeItem) >= 0) or
+      canWriteOrder(ChangeItem.OrderDGIEN) then
+      Exit;
+    if not canWriteOrder(ChangeItem.OrderDGIEN, '', atSign, True,
+      RetrieveOrderText(ChangeItem.ID)) then
+    begin
+      ChangeItemErrors.Add(ChangeItem);
+      Result := True;
+    end;
+  end;
+
 begin
   PrevGrpName := '';
   lstReview.Clear;
   // ok to clear without freeing objects since they're part of Changes
-  if (FullList) then
-  begin
-    SigItems.ResetOrders;
-    SigItemsCS.ResetOrders;
-    with Changes do
-      if PCE.Count > 0 then
-      begin
-        for GrpIndex := 0 to PCEGrp.Count - 1 do
-        begin
-          AddHeader(lstReview, 'Outpatient Encounter ' + PCEGrp[GrpIndex]);
-          for ChgIndex := 0 to PCE.Count - 1 do
-          begin
-            ChangeItem := PCE[ChgIndex];
-            if ChangeItem.GroupName = PCEGrp[GrpIndex] then
-              AddItem(lstReview, ChangeItem);
-          end;
-          AddHeader(lstReview, '   ');
-        end;
-      end; { if PCE }
-  end;
-  with Changes do
-    if Documents.Count > 0 then
+  ChangeItemErrors := nil;
+  WriteAccessV.BeginErrors;
+  try
+    ChangeItemErrors := TList.Create;
+    if (FullList) then
     begin
-      AddHeader(lstReview, 'Documents');
-      for ChgIndex := 0 to Documents.Count - 1 do
-      begin
-        ChangeItem := Documents[ChgIndex];
-        if (FullList or (ChangeItem.SignState <> CH_SIGN_NA)) then
-          AddItem(lstReview, ChangeItem);
-      end;
-      if (FullList) then
-        AddHeader(lstReview, '   ');
-    end; { if Documents }
-  if (FullList) then
-  begin
-    displaySpacer := False;
-    displayCSSpacer := False;
-    with Changes do
-      if Orders.Count > 0 then
-      begin
-        OrderGrp.Sorted := True;
-        otherUserOrders := False;
-        for GrpIndex := 0 to OrderGrp.Count - 1 do
+      SigItems.ResetOrders;
+      SigItemsCS.ResetOrders;
+      with Changes do
+        if PCE.Count > 0 then
         begin
-          displayHeader := True;
-          displayCSHeader := True;
-          if (GrpIndex > 0) and
-            (AnsiCompareText(PrevGrpName, OrderGrp[GrpIndex]) = 0) then
-            Continue;
-          if OrderGrp[GrpIndex] = '' then
-            temp := 'My Unsigned Orders - This Session'
-          else if OrderGrp[GrpIndex] = 'Other Unsigned' then
-            temp := 'My Unsigned Orders - Previous Sessions'
-          else
-            temp := 'Orders - ' + OrderGrp[GrpIndex];
-
-          for ChgIndex := 0 to Orders.Count - 1 do
+          for GrpIndex := 0 to PCEGrp.Count - 1 do
           begin
-            ChangeItem := Orders[ChgIndex];
-            if (ChangeItem.GroupName = OrderGrp[GrpIndex]) and
-              ((ChangeItem.User = 0) or (ChangeItem.User = User.DUZ)) then
+            AddHeader(lstReview, 'Outpatient Encounter ' + PCEGrp[GrpIndex]);
+            for ChgIndex := 0 to PCE.Count - 1 do
             begin
-              if ((ChangeItem.CSValue = False) or ChangeItem.DCOrder or
-                IsPendingHold(ChangeItem.ID)) then
-              begin
-                if displayHeader = True then
-                begin
-                  AddHeader(lstReview, temp);
-                  displayHeader := False;
-                  displaySpacer := True;
-                end;
-                lbIdx := AddItem(lstReview, ChangeItem);
-                SigItems.Add(CH_ORD, ChangeItem.ID, lbIdx);
-              end
-              else
-              begin
-                if not(GetPKISite) or not(GetPKIUse) or
-                  (DEACheckFailedAtSignature
-                  (GetOrderableIen(Piece(ChangeItem.ID, ';', 1)), False) = '1')
-                then
-                  ChangeItem.SignState := CH_SIGN_NA;
-
-                if displayCSHeader = True then
-                begin
-                  AddHeader(lstCSReview, temp);
-                  displayCSHeader := False;
-                  displayCSSpacer := True;
-                end;
-                lbIdx := AddItem(lstCSReview, ChangeItem);
-                SigItemsCS.Add(CH_ORD, ChangeItem.ID, lbIdx);
-              end;
-
-            end
-            else if ((ChangeItem.User > 0) and (ChangeItem.User <> User.DUZ))
-            then
-              otherUserOrders := True;
-          end;
-          if displayHeader = False then
+              ChangeItem := PCE[ChgIndex];
+              if ChangeItem.GroupName = PCEGrp[GrpIndex] then
+                AddItem(lstReview, ChangeItem);
+            end;
             AddHeader(lstReview, '   ');
-          if displayCSHeader = False then
-            AddHeader(lstCSReview, '   ');
-          PrevGrpName := OrderGrp[GrpIndex];
-        end;
-        // AGP fix for CQ 10073
-        if otherUserOrders = True then
+          end;
+        end; { if PCE }
+    end;
+    with Changes do
+      if (Documents.Count > 0) then
+      begin
+        HeaderAdded := False;
+        for ChgIndex := 0 to Documents.Count - 1 do
         begin
-          othercshdradded := False;
-          otherhdradded := False;
-          for ChgIndex := 0 to Orders.Count - 1 do
+          ChangeItem := Documents[ChgIndex];
+          if not WriteAccess(ChangeItem.WriteAccessType, atSign, True,
+            ChangeItem.Text) then
+            continue;
+          if (FullList or (ChangeItem.SignState <> CH_SIGN_NA)) then
           begin
-            ChangeItem := Orders[ChgIndex];
-            if (ChangeItem.GroupName = 'Other Unsigned') and
-              ((ChangeItem.User > 0) and (ChangeItem.User <> User.DUZ)) then
+            if not HeaderAdded then
             begin
+              AddHeader(lstReview, 'Documents');
+              HeaderAdded := True;
+            end;
+            AddItem(lstReview, ChangeItem);
+          end;
+        end;
+        if FullList and HeaderAdded then
+          AddHeader(lstReview, '   ');
+      end; { if Documents }
+    if (FullList) then
+    begin
+      displaySpacer := False;
+      displayCSSpacer := False;
+      with Changes do
+        if (Orders.Count > 0) then
+        begin
+          OrderGrp.Sorted := True;
+          otherUserOrders := False;
+          for GrpIndex := 0 to OrderGrp.Count - 1 do
+          begin
+            displayHeader := True;
+            displayCSHeader := True;
+            if (GrpIndex > 0) and
+              (AnsiCompareText(PrevGrpName, OrderGrp[GrpIndex]) = 0) then
+              Continue;
+            if OrderGrp[GrpIndex] = '' then
+              temp := 'My Unsigned Orders - This Session'
+            else if OrderGrp[GrpIndex] = 'Other Unsigned' then
+              temp := 'My Unsigned Orders - Previous Sessions'
+            else
+              temp := 'Orders - ' + OrderGrp[GrpIndex];
 
-              if ((ChangeItem.CSValue = False) or ChangeItem.DCOrder or
-                IsPendingHold(ChangeItem.ID)) then
+            for ChgIndex := 0 to Orders.Count - 1 do
+            begin
+              ChangeItem := Orders[ChgIndex];
+              if CannotSignOrder(ChangeItem) then
+                continue;
+              if (ChangeItem.GroupName = OrderGrp[GrpIndex]) and
+                ((ChangeItem.User = 0) or (ChangeItem.User = User.DUZ)) then
               begin
-                if not otherhdradded then
+                if ((ChangeItem.CSValue = False) or ChangeItem.DCOrder or
+                  IsPendingHold(ChangeItem.ID)) then
                 begin
-                  otherhdradded := True;
-                  if displaySpacer = True then
-                    AddHeader(lstReview, '   ');
-                  AddHeader(lstReview,
-                    'Others'' Unsigned Orders Orders - All Sessions');
+                  if displayHeader = True then
+                  begin
+                    AddHeader(lstReview, temp);
+                    displayHeader := False;
+                    displaySpacer := True;
+                  end;
+                  lbIdx := AddItem(lstReview, ChangeItem);
+                  SigItems.Add(CH_ORD, ChangeItem.ID, lbIdx);
+                end
+                else
+                begin
+                  if not(GetPKISite) or not(GetPKIUse) or
+                    (DEACheckFailedAtSignature
+                    (GetOrderableIen(Piece(ChangeItem.ID, ';', 1)), False) = '1')
+                  then
+                    ChangeItem.SignState := CH_SIGN_NA;
+
+                  if displayCSHeader = True then
+                  begin
+                    AddHeader(lstCSReview, temp);
+                    displayCSHeader := False;
+                    displayCSSpacer := True;
+                  end;
+                  lbIdx := AddItem(lstCSReview, ChangeItem);
+                  SigItemsCS.Add(CH_ORD, ChangeItem.ID, lbIdx);
                 end;
-                lbIdx := AddItem(lstReview, ChangeItem);
-                SigItems.Add(CH_ORD, ChangeItem.ID, lbIdx);
+
               end
-              else
+              else if ((ChangeItem.User > 0) and (ChangeItem.User <> User.DUZ))
+              then
+                otherUserOrders := True;
+            end;
+            if displayHeader = False then
+              AddHeader(lstReview, '   ');
+            if displayCSHeader = False then
+              AddHeader(lstCSReview, '   ');
+            PrevGrpName := OrderGrp[GrpIndex];
+          end;
+          // AGP fix for CQ 10073
+          if otherUserOrders = True then
+          begin
+            othercshdradded := False;
+            otherhdradded := False;
+            for ChgIndex := 0 to Orders.Count - 1 do
+            begin
+              ChangeItem := Orders[ChgIndex];
+              if CannotSignOrder(ChangeItem) then
+                continue;
+              if (ChangeItem.GroupName = 'Other Unsigned') and
+                ((ChangeItem.User > 0) and (ChangeItem.User <> User.DUZ)) then
               begin
-                if not(GetPKIUse) or not(GetPKISite) or
-                  (DEACheckFailedAtSignature
-                  (GetOrderableIen(Piece(ChangeItem.ID, ';', 1)), False) = '1')
-                then
-                  ChangeItem.SignState := CH_SIGN_NA;
-                if not othercshdradded then
+
+                if ((ChangeItem.CSValue = False) or ChangeItem.DCOrder or
+                  IsPendingHold(ChangeItem.ID)) then
                 begin
-                  othercshdradded := True;
-                  if displayCSSpacer = True then
-                    AddHeader(lstCSReview, '   ');
-                  AddHeader(lstCSReview,
-                    'Others'' Unsigned Orders - All Sessions');
+                  if not otherhdradded then
+                  begin
+                    otherhdradded := True;
+                    if displaySpacer = True then
+                      AddHeader(lstReview, '   ');
+                    AddHeader(lstReview,
+                      'Others'' Unsigned Orders Orders - All Sessions');
+                  end;
+                  lbIdx := AddItem(lstReview, ChangeItem);
+                  SigItems.Add(CH_ORD, ChangeItem.ID, lbIdx);
+                end
+                else
+                begin
+                  if not(GetPKIUse) or not(GetPKISite) or
+                    (DEACheckFailedAtSignature
+                    (GetOrderableIen(Piece(ChangeItem.ID, ';', 1)), False) = '1')
+                  then
+                    ChangeItem.SignState := CH_SIGN_NA;
+                  if not othercshdradded then
+                  begin
+                    othercshdradded := True;
+                    if displayCSSpacer = True then
+                      AddHeader(lstCSReview, '   ');
+                    AddHeader(lstCSReview,
+                      'Others'' Unsigned Orders - All Sessions');
+                  end;
+                  lbIdx := AddItem(lstCSReview, ChangeItem);
+                  SigItemsCS.Add(CH_ORD, ChangeItem.ID, lbIdx);
                 end;
-                lbIdx := AddItem(lstCSReview, ChangeItem);
-                SigItemsCS.Add(CH_ORD, ChangeItem.ID, lbIdx);
               end;
             end;
           end;
-        end;
-        OrderGrp.Sorted := False;
-      end; { if Orders }
+          OrderGrp.Sorted := False;
+        end; { if Orders }
 
-    case User.OrderRole of
-      OR_CLERK:
-        FShowPanel := SP_CLERK;
-      OR_NURSE:
-        FShowPanel := SP_NURSE;
-      OR_PHYSICIAN:
-        FShowPanel := SP_SIGN;
-      OR_STUDENT:
-        if Changes.CanSign then
-          FShowPanel := SP_SIGN
-        else
-          FShowPanel := SP_NONE;
+      case User.OrderRole of
+        OR_CLERK:
+          FShowPanel := SP_CLERK;
+        OR_NURSE:
+          FShowPanel := SP_NURSE;
+        OR_PHYSICIAN:
+          FShowPanel := SP_SIGN;
+        OR_STUDENT:
+          if Changes.CanSign then
+            FShowPanel := SP_SIGN
+          else
+            FShowPanel := SP_NONE;
+      else
+        FShowPanel := SP_NONE;
+      end; { case User }
+    end
     else
-      FShowPanel := SP_NONE;
-    end; { case User }
-  end
-  else
-    FShowPanel := SP_SIGN;
+      FShowPanel := SP_SIGN;
+
+  finally
+    WriteAccessV.EndErrors(True);
+    FreeAndNil(ChangeItemErrors);
+  end;
 
   case FShowPanel of
     SP_CLERK:
@@ -607,15 +702,16 @@ begin
   end;
 
   SigItems.ClearDrawItems;
-  SigItems.ClearFcb;
+  SigItems.ClearFCtrls;
   SigItemsCS.ClearDrawItems;
-  SigItemsCS.ClearFcb;
+  SigItemsCS.ClearFCtrls;
   t1 := SigItems.UpdateListBox(lstReview);
   t2 := SigItemsCS.UpdateListBox(lstCSReview);
 
   if (FullList and (t1 or t2)) then
   begin
     fraCoPay.Visible := True;
+    pnlTop.Visible := True;
   end
   else
   begin
@@ -649,9 +745,9 @@ begin
 end;
 
 // defect 355810 - form ignores Main Form font size  --------------------- begin
-procedure TfrmReview.PlaceComponents;
+procedure TfrmReview.PlaceComponents(Save: boolean = True);
 var
-  k, ii, iHeight, h2: Integer;
+  i, minWidth, temp, temp2, lstHeight, btnHeight, newHeight: integer;
 
   function getControlHeight(aControl: TControl): Integer;
   begin
@@ -669,14 +765,7 @@ begin
   if ((lstReview.Count = 0) and (lstCSReview.Count = 0)) then
     Exit;
 
-  case Application.MainForm.Font.Size of
-    12:
-      k := round(pnlBottomCanvas.Height * 2.0);
-    14, 18:
-      k := round(pnlBottomCanvas.Height * 1.5);
-  else // includes sizes of 8, 10
-    k := round(pnlBottom.Height * 2.0);
-  end;
+  lstHeight := MainFontTextHeight * 6;
 
   // keeping the component visibility logic of the original implementation //////
   if lstCSReview.Count = 0 then
@@ -701,48 +790,61 @@ begin
 
   /// /////////////////////////////////////////////////////////////////////////////
 
-  iHeight := GetSystemMetrics(SM_CYCAPTION) // window header
+  newHeight := GetSystemMetrics(SM_CYCAPTION) // window header
     + GetSystemMetrics(SM_CXBORDER); // window border
 
-  h2 := cmdOK.Height + MainFont.Size - 14;
-  //DEFECT 453886 - SDS 3/29/17 -> must account for lblHoldSign visibility
-  if pnlOrderAction.Visible and lblHoldSign.Visible then
-    pnlBottom.Height := h2 * 5
-//    pnlBottom.Height := getControlHeight(lblOrderPrompt) + getControlHeight(lblHoldSign) +
-//      grpRelease.top + GetControlHeight(grpRelease)
-  else if pnlOrderAction.Visible then
-    pnlBottom.Height := h2 * 4
-//    pnlBottom.Height := getControlHeight(lblOrderPrompt) +
-//      grpRelease.top + GetControlHeight(grpRelease)
+  btnHeight := cmdOK.Height + MainFont.Size - 14;
+  if pnlOrderAction.Visible then
+    pnlBottom.Height := btnHeight * 5
   else
     pnlBottom.Height := getControlHeight(lblESCode) + txtESCode.Height +
       txtESCode.Margins.Top + txtESCode.Margins.Bottom;
 
-  iHeight := iHeight + pnlBottom.Height;
+  newHeight := newHeight + pnlBottom.Height;
 
   if nonDCCSItemsAreChecked then
-    iHeight := iHeight + pnlDEAText.Height;
+    newHeight := newHeight + pnlDEAText.Height;
 
   if pnlTop.Visible then
-    iHeight := iHeight + pnlTop.Height;
+  begin
+    pnlTop.Height := fraCoPay.AdjustAndGetSize;
+    newHeight := newHeight + pnlTop.Height;
+  end;
 
   if pnlCSReview.Visible then
-    ii := k
-  else
-    ii := 0;
-
+    inc(newHeight, lstHeight);
   if pnlReview.Visible then
-    ii := ii + k;
+    inc(newHeight, lstHeight);
 
-  iHeight := iHeight + ii;
+  temp := SigItems.BtnWidths;
+  temp2 := SigItemsCS.BtnWidths;
+  if temp < temp2 then
+    temp := temp2;
+  if (lstCSReview.Count > 0) and (not pnlOrderAction.Visible) then
+    minWidth := Canvas.TextWidth(lblCSReview.Caption +
+      lblSmartCardNeeded.Caption) + lblSmartCardNeeded.Margins.Left
+  else
+    minWidth := Canvas.TextWidth(lblSig.Caption);
+  inc(minWidth, TSigItems.MinWidthDX + ScrollBarWidth + temp);
 
-  if iHeight < Constraints.MinHeight then // 450
-    Constraints.MinHeight := iHeight;
+  if pnlOrderAction.Visible then
+    temp := trunc(gpOrderActions.ColumnCollection[1].Value) +
+      trunc(gpOrderActions.ColumnCollection[2].Value)
+  else
+    temp := 0;
 
-  if iHeight < 350 then
-    iHeight := 350;
+  for i := 0 to 3 do
+    if i <> 1 then
+      inc(temp, trunc(gpBottom.ColumnCollection[i].Value));
+  inc(temp, TSigItems.MinWidthDX);
 
-  Height := iHeight;
+  if minWidth < temp then
+    minWidth := temp;
+
+  Constraints.MinHeight := newHeight;
+  Constraints.MinWidth := minWidth;
+
+  Height := newHeight;
 
   { Check for CS Items checked for signature }
   lblDEAText.Visible := nonDCCSItemsAreChecked;
@@ -752,7 +854,22 @@ begin
   if AnyItemsAreChecked then
     pnlSignature.Visible := IsSignatureRequired;
 
-  ResizeAnchoredFormToFont(Self);
+  FormID := '-';
+  if pnlTop.Visible then
+    FormID := FormID + 'T';
+  if pnlReview.Visible and pnlCSReview.Visible then
+    FormID := FormID + '2'
+  else if pnlReview.Visible or pnlCSReview.Visible then
+    FormID := FormID + '1';
+  if Save then
+    SetFormPosition(Self, FormID);
+end;
+
+procedure TfrmReview.pnlCSReviewResize(Sender: TObject);
+begin
+  inherited;
+  lstReview.ForceItemHeightRecalc;
+  lstCSReview.ForceItemHeightRecalc;
 end;
 
 // defect 355810 - form ignores Main Form font size  ----------------------- end
@@ -843,7 +960,7 @@ begin
     radPhone.Checked := False;
     radPolicy.Checked := False;
   end;
-  PlaceComponents; //DEFECT 453886 - SDS 3/29/17 ->  resize bottom panel after setting lblHoldSign.visible
+  PlaceComponents(False); //DEFECT 453886 - SDS 3/29/17 ->  resize bottom panel after setting lblHoldSign.visible
 end;
 
 procedure TfrmReview.txtESCodeChange(Sender: TObject);
@@ -851,7 +968,7 @@ begin
   if (not pnlSignature.Visible) then
   begin
     if (FCouldSign and not AnyItemsAreChecked) then
-      cmdOK.Caption := 'Don''t Sign'
+      cmdOK.Caption := DontSign
     else
       cmdOK.Caption := 'OK'
   end
@@ -862,7 +979,7 @@ begin
     else
     begin
       if FCouldSign then
-        cmdOK.Caption := 'Don''t Sign'
+        cmdOK.Caption := DontSign
       else
         cmdOK.Caption := 'OK';
     end;
@@ -878,7 +995,7 @@ const
   TX_SAVERR2 = ', occurred while trying to save:' + CRLF + CRLF;
   TC_SAVERR = 'Error Saving Order';
 var
-  i, k, idx, AType, PrintLoc, theSts, wardIEN, checki, checkj: Integer;
+  i, idx, AType, PrintLoc, theSts, wardIEN, checki, checkj: Integer;
   SigSts, RelSts, Nature: Char;
   ESCode, AnID, AnErrMsg: string;
   ChangeItem, TempChangeItem: TChangeItem;
@@ -1163,7 +1280,7 @@ begin
                         RelSts + U + Nature) < 0) then
                         OrderList.Add(ChangeItem.ID + U + SigSts + U + RelSts +
                           U + Nature)
-                      else if (cmdOK.Caption = 'Don''t Sign') and
+                      else if (cmdOK.Caption = DontSign) and
                         (OrderList.IndexOf(ChangeItem.ID + U + SigSts + U +
                         RelSts + U + Nature) < 0) then
                         OrderList.Add(ChangeItem.ID + U + SigSts + U + RelSts +
@@ -1224,7 +1341,7 @@ begin
                         RelSts + U + Nature) < 0) then
                         OrderList.Add(ChangeItem.ID + U + SigSts + U + RelSts +
                           U + Nature)
-                      else if (cmdOK.Caption = 'Don''t Sign') and
+                      else if (cmdOK.Caption = DontSign) and
                         (OrderList.IndexOf(ChangeItem.ID + U + SigSts + U +
                         RelSts + U + Nature) < 0) then
                         OrderList.Add(ChangeItem.ID + U + SigSts + U + RelSts +
@@ -1376,7 +1493,7 @@ begin
               if (not SigItems.OK2SaveSettings) or
                 (not SigItemsCS.OK2SaveSettings) then
               begin
-                if (cmdOK.Caption = 'Don''t Sign') then
+                if (cmdOK.Caption = DontSign) then
                   SaveCoPay := True
                 else
                 begin
@@ -1504,7 +1621,7 @@ begin
                     DoNotPrint := True;
                 end;
               end;
-              if (cmdOK.Caption = 'Don''t Sign') and (not frmFrame.TimedOut) and
+              if (cmdOK.Caption = DontSign) and (not frmFrame.TimedOut) and
                 (frmFrame.mnuFile.Tag <> 0) then
               begin
                 tempInpLoc := TfrmPrintLocation.rpcIsPatientOnWard(Patient.DFN);
@@ -1712,6 +1829,13 @@ begin
   Close;
 end;
 
+function TfrmReview.CheckListBox(AObject: TObject): TCaptionCheckListBox;
+begin
+  if AObject.ClassType <> TCaptionCheckListBox then
+    raise Exception.Create('Invalid Component');
+  Result := TCaptionCheckListBox(AObject);
+end;
+
 procedure TfrmReview.CleanupChangesList(Sender: TObject;
   ChangeItem: TChangeItem);
 { Added for v15.3 - called by Changes.Remove, but only if fReview in progress }
@@ -1770,10 +1894,7 @@ var
   end;
 
 begin
-  if not Sender.ClassNameIs('TCaptionCheckListBox') then
-    raise Exception.Create('Invalid component type')
-  else
-    aListView := TCaptionCheckListBox(Sender);
+  aListView := CheckListBox(Sender);
 
   if Sender = lstCSReview then
     with lstCSReview do
@@ -1835,10 +1956,7 @@ var
   end;
 
 begin
-  if not Control.ClassNameIs('TCaptionCheckListBox') then
-    raise Exception.Create('Invalid Component in Control')
-  else
-    aListView := TCaptionCheckListBox(Control);
+  aListView := CheckListBox(Control);
 
   dy := SIG_ITEM_VERTICAL_PAD div 2;
   X := '';
@@ -1884,16 +2002,15 @@ var
   X: string;
   ARect: TRect;
 begin
-  if not Control.ClassNameIs('TCaptionCheckListBox') then
-    raise Exception.Create('Invalid Component in Control')
-  else
-    aListView := TCaptionCheckListBox(Control);
+  aListView := CheckListBox(Control);
 
   AHeight := SigItemHeight;
   with aListView do
     if Index < Items.Count then
     begin
       ARect := ItemRect(Index);
+      if CVarExists(TSigItems.RectWidth) then
+        ARect.Right := CVar[TSigItems.RectWidth];
       ARect.Left := aListView.CheckWidth;
       Canvas.FillRect(ARect);
       X := FilteredString(Items[Index]);
@@ -1912,10 +2029,7 @@ var
   aItem: Integer;
   aListView: TCaptionCheckListBox;
 begin
-  if not Sender.ClassNameIs('TCaptionCheckListBox') then
-    raise Exception.Create('Invalid Component in Sender')
-  else
-    aListView := TCaptionCheckListBox(Sender);
+  aListView := CheckListBox(Sender);
 
   aItem := aListView.ItemAtPos(Point(X, Y), True);
   if (aItem >= 0) then
@@ -2006,7 +2120,7 @@ begin
   begin
     FRVTFHintWindow.ReleaseHandle;
     FRVTFHintWindowActive := False;
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages;
   end;
 end;
 
@@ -2016,18 +2130,9 @@ begin
   fraCoPay.LabelCaptionsOn(not FRVTFHintWindowActive);
 end;
 
-procedure TfrmReview.fraCoPayResize(Sender: TObject);
-begin
-  inherited;
-  with fraCoPay do
-  begin
-    pnlSCandRD.Width := fraCoPay.Width div 2;
-  end;
-end;
-
 procedure TfrmReview.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-
+  SaveUserBounds(Self, FormID);
   if FRVTFHintWindowActive then
   begin
     FRVTFHintWindow.ReleaseHandle;
@@ -2053,9 +2158,9 @@ var
   aListView: TCaptionCheckListBox;
   i: Integer;
 begin
-  if ScreenReaderActive and (Sender.ClassNameIs('TCaptionCheckListBox')) then
+  if ScreenReaderActive then
   begin
-    aListView := TCaptionCheckListBox(Sender);
+    aListView := CheckListBox(Sender);
 
     if aListView.Count < 1 then
       Exit;

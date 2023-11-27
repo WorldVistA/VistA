@@ -11,28 +11,27 @@ unit U508Extensions;
 
 interface
 
-uses Vcl.StdCtrls, Winapi.Messages, Vcl.Controls,
+uses Vcl.StdCtrls, Winapi.Messages, Vcl.Controls, Graphics,
   System.SysUtils, System.Classes, Vcl.Forms, vaUtils, Winapi.Windows,
   ComCtrls, VA508AccessibilityManager, ORCtrls;
 
-const
-  WM_FREE508LBL = WM_USER + 1;
-
 type
-  TButton = class(Vcl.StdCtrls.TButton)
+  TStaticTextFocusRect = class(Vcl.StdCtrls.TStaticText)
   private
-    fMgr: TVA508AccessibilityManager;
-    f508Label: TVA508StaticText;
-    fScreenReaderActive: Boolean;
-    fClicking: boolean;
-    procedure CMEnabledChanged(var Msg: TMessage); message CM_ENABLEDCHANGED;
-    procedure WMSize(var Msg: TMessage); message WM_SIZE;
-    Procedure WMFree508Lbl(var Msg: TMessage); message WM_FREE508LBL;
-    procedure RegisterWithMGR;
+    FControl: TWinControl;
+    FControlType: string;
+    F508Manager: TVA508AccessibilityManager;
+    FCaptionSet: boolean;
+    FFocused: boolean;
+    FCanvas: TCanvas;
+  protected
+    procedure WMSetFocus(var Message: TWMSetFocus); message WM_SETFOCUS;
+    procedure WMKillFocus(var Message: TWMKillFocus); message WM_KILLFOCUS;
+    procedure WMPaint(var Message: TWMPaint); message WM_PAINT;
   public
-    constructor Create(AControl: TComponent); override;
-    destructor Destroy; override;
-    procedure Click; override;
+    constructor Create(AOwner: TComponent); reintroduce;
+    procedure UpdateSize;
+    procedure UpdateCaption(const aCaption: string);
   end;
 
   tIntArray = Array of Integer;
@@ -64,107 +63,99 @@ type
     function GetItem(Component: TWinControl): TObject; override;
   end;
 
+function FindControl508Manager(aControl: TWinControl)
+  : TVA508AccessibilityManager;
+
+function CreateHiddenStaticText(aControl: TWinControl;
+  const aType, aCaption: string): TStaticTextFocusRect;
+
+var
+  ScreenReaderActiveOnStartup: boolean;
+
 implementation
 
 uses
-uMisc;
-//  uUtilities;
+  System.TypInfo, uMisc, VA508AccessibilityRouter;
 
-{$REGION '508Button'}
+const
+  StaticTextFocusOffset = 1;
 
-constructor TButton.Create(AControl: TComponent);
+constructor TStaticTextFocusRect.Create(AOwner: TComponent);
 begin
-  inherited Create(AControl);
-  fScreenReaderActive := ScreenReaderActive;
-  fMgr := nil;
+  inherited Create(AOwner);
+  AutoSize := False;
+  FCanvas := TControlCanvas.Create;
+  TControlCanvas(FCanvas).Control := Self;
 end;
 
-procedure TButton.RegisterWithMGR;
-var
-  aFrm: TCustomForm;
-  I: Integer;
+procedure TStaticTextFocusRect.UpdateSize;
 begin
-  if not assigned(fMgr) then
+  SetBounds(FControl.Left - StaticTextFocusOffset, FControl.Top - StaticTextFocusOffset,
+    FControl.Width + StaticTextFocusOffset * 2, FControl.Height + StaticTextFocusOffset * 2);
+end;
+
+procedure TStaticTextFocusRect.UpdateCaption(const aCaption: string);
+begin
+  Caption := Format('%s %s Disabled', [aCaption, FControlType]);
+end;
+
+procedure TStaticTextFocusRect.WMSetFocus(var Message: TWMSetFocus);
+var
+  PropStr: string;
+begin
+  if (F508Manager <> nil) and not FCaptionSet then
   begin
-    aFrm := GetParentForm(self);
-    for I := 0 to aFrm.ComponentCount - 1 do
+    if F508Manager.AccessData.FindItem(FControl, False) <> nil then
     begin
-      if aFrm.Components[I] is TVA508AccessibilityManager then
+      if not F508Manager.UseDefault[FControl] then
       begin
-        fMgr := TVA508AccessibilityManager(aFrm.Components[I]);
-        break;
+        if F508Manager.AccessText[FControl] <> '' then
+          Caption := Format('%s %s Disabled',
+            [F508Manager.AccessText[FControl], FControlType])
+        else if F508Manager.AccessLabel[FControl] <> nil then
+          Caption := Format('%s %s Disabled',
+            [F508Manager.AccessLabel[FControl].Caption, FControlType])
+        else if F508Manager.AccessProperty[FControl] <> '' then
+        begin
+          PropStr := GetPropValue(FControl, F508Manager.AccessProperty[FControl]);
+          Caption := Format('%s %s Disabled', [PropStr, FControlType]);
+        end;
       end;
     end;
+    FCaptionSet := True;
   end;
-
-  if assigned(fMgr) then
-    fMgr.AccessData.EnsureItemExists(f508Label);
+  FFocused := True;
+  Invalidate;
+  inherited;
 end;
 
-procedure TButton.Click;
+procedure TStaticTextFocusRect.WMKillFocus(var Message: TWMKillFocus);
 begin
-  if fClicking then
-    exit;
-  fClicking := True;
+  FFocused := False;
+  Invalidate;
+  inherited;
+end;
+
+procedure TStaticTextFocusRect.WMPaint(var Message: TWMPaint);
+begin
+  inherited;
+  FCanvas.Lock;
   try
-    inherited;
+    FCanvas.Handle := Message.DC;
+    try
+      TControlCanvas(FCanvas).UpdateTextFlags;
+      FCanvas.Brush.Color := Color;
+      FCanvas.FillRect(ClientRect);
+      if FFocused then
+        FCanvas.DrawFocusRect(ClientRect);
+    finally
+      FCanvas.Handle := 0;
+    end;
   finally
-    fClicking := False;
+    FCanvas.Unlock;
   end;
 end;
 
-procedure TButton.CMEnabledChanged(var Msg: TMessage);
-begin
-  inherited;
-  if not fScreenReaderActive then
-    exit;
-
-  if not self.Enabled then
-  begin
-    f508Label := TVA508StaticText.Create(self);
-    f508Label.Parent := self.Parent;
-    f508Label.SendToBack;
-    // self.SendToBack;
-    f508Label.TabStop := true;
-    f508Label.TabOrder := self.TabOrder;
-    f508Label.Caption := ' ' + self.Caption + ' button disabled';
-    f508Label.Top := self.Top - 2;
-    f508Label.Left := self.Left - 2;
-    f508Label.Width := self.Width + 5;
-    f508Label.Height := self.Height + 5;
-    RegisterWithMGR;
-  end
-  else
-  begin
-    PostMessage(self.Handle, WM_FREE508LBL, 0, 0);
-  end;
-end;
-
-procedure TButton.WMSize(var Msg: TMessage);
-begin
-  inherited;
-  if not fScreenReaderActive then
-    exit;
-
-  if assigned(f508Label) then
-  begin
-    f508Label.Top := self.Top - 2;
-    f508Label.Left := self.Left - 2;
-    f508Label.Width := self.Width + 5;
-    f508Label.Height := self.Height + 5;
-  end;
-end;
-
-Procedure TButton.WMFree508Lbl(var Msg: TMessage);
-begin
-  FreeAndNil(f508Label);
-end;
-
-destructor TButton.Destroy;
-begin
-  Inherited;
-end;
-{$ENDREGION}
 {$REGION 'TreeView508Manager'}
 
 constructor Ttv508Manager.Create(HeaderControl: THeaderControl;
@@ -249,6 +240,64 @@ begin
   end;
 end;
 {$ENDREGION}
+
+function GetRealParentForm(Control: TControl; TopForm: Boolean = True): TCustomForm;
+begin
+  while (TopForm or not (Control is TCustomForm)) and (Control.Parent <> nil) do
+    Control := Control.Parent;
+  if Control is TCustomForm then
+    Result := TCustomForm(Control) else
+    Result := nil;
+end;
+
+function FindControl508Manager(aControl: TWinControl)
+  : TVA508AccessibilityManager;
+var
+  aParentForm: TCustomForm;
+  ii: integer;
+begin
+{$WARN SYMBOL_PLATFORM OFF}
+  try
+    if DebugHook = 0 then
+      Result := GetComponentManager(aControl)
+    else
+      Result := nil;
+  except
+    Result := nil;
+  end;
+  if Result = nil then
+  begin
+    aParentForm := GetRealParentForm(aControl);
+    if aParentForm <> nil then
+    begin
+      for ii := 0 to aParentForm.ComponentCount - 1 do
+      begin
+        if aParentForm.Components[ii] is TVA508AccessibilityManager then
+        begin
+          Result := TVA508AccessibilityManager(aParentForm.Components[ii]);
+          break;
+        end;
+      end;
+    end;
+  end;
+{$WARN SYMBOL_PLATFORM ON}
+end;
+
+function CreateHiddenStaticText(aControl: TWinControl;
+  const aType, aCaption: string): TStaticTextFocusRect;
+begin
+  Result := TStaticTextFocusRect.Create(aControl.Owner);
+  Result.Parent := aControl.Parent;
+  Result.SendToBack;
+  Result.FControl := aControl;
+  Result.FControlType := aType;
+  Result.F508Manager := FindControl508Manager(aControl);
+  Result.TabStop := True;
+  Result.TabOrder := aControl.TabOrder;
+  Result.UpdateCaption(aCaption);
+  Result.UpdateSize;
+end;
+
 {$REGION 'ListView508Manager'}
 
 constructor Tlv508Manager.Create;
@@ -284,6 +333,15 @@ end;
 
 function Tlv508Manager.GetText(ListItem: TListItem;
   ListView: TListView): String;
+
+  function GetTextOrBlank(const aValue: string): string;
+  begin
+    if Trim(aValue) = '' then
+      Result := 'blank'
+    else
+      Result := aValue;
+  end;
+
 var
   I: Integer;
   AddTxt: String;
@@ -301,15 +359,18 @@ begin
         Result := 'Group: ' + Group.Header;
     end;
 
-    AddTxt := '';
     for I := 0 to ListView.Columns.Count - 1 do
     begin
+      AddTxt := '';
       if I = 0 then
-        AddTxt := ListView.Columns[I].Caption + ' ' + ListItem.Caption
+        AddTxt := ListView.Columns[I].Caption + ', ' + GetTextOrBlank(ListItem.Caption)
       else
-        AddTxt := ListView.Columns[I].Caption + ' ' + ListItem.SubItems[I - 1];
+      begin
+        if (I - 1) < ListItem.SubItems.Count then
+          AddTxt := ListView.Columns[I].Caption + ', ' + GetTextOrBlank(ListItem.SubItems[I - 1]);
+      end;
 
-      Result := Result + ' ' + AddTxt;
+      Result := Result + ' ' + AddTxt + ', ';
     end;
   end;
 
@@ -317,4 +378,6 @@ end;
 
 {$ENDREGION}
 
+initialization
+  ScreenReaderActiveOnStartup := ScreenReaderSystemActive;
 end.

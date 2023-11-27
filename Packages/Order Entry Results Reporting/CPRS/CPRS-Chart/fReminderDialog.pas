@@ -89,7 +89,7 @@ type
   protected
     procedure RemindersChanged(Sender: TObject);
     procedure ClearControls(All: Boolean = FALSE);
-    procedure BuildControls;
+    procedure BuildControls(BuildAll: boolean);
     function GetBox(Other: Boolean = FALSE): TScrollBox;
     function KillAll: Boolean;
     procedure ResetProcessing(Wipe: string = ''); // AGP CHANGE 24.8;
@@ -143,7 +143,8 @@ uses
   fNotes, uOrders, rOrders, uCore, rMisc, rReminders,
   fReminderTree, uVitals, rVitals, RichEdit, fConsults, fTemplateDialog,
   uTemplateFields, fRemVisitInfo, rCore, uVA508CPRSCompatibility,
-  VA508AccessibilityRouter, VAUtils, uGlobalVar, uDlgComponents, uPDMP;
+  VA508AccessibilityRouter, VAUtils, uGlobalVar, uDlgComponents, uPDMP,
+  UResponsiveGUI;
 
 {$R *.DFM}
 
@@ -408,7 +409,7 @@ begin
       ClearControls(TRUE);
       FReminder := Rem;
       Rem.PCEDataObj := RemForm.PCEObj;
-      BuildControls;
+      BuildControls(True);
       UpdateText(nil);
     end;
     PositionTrees(NodeID);
@@ -672,12 +673,12 @@ begin
     FreeandNil(MHKillArray);
 end;
 
-procedure TfrmRemDlg.BuildControls;
+procedure TfrmRemDlg.BuildControls(BuildAll: boolean);
 var
   i, CtrlIdx, Y, ParentWidth: Integer;
   AutoCtrl, Active, Ctrl: TWinControl;
   LastCB, LastObjCnt: Integer;
-  box: TScrollBox;
+  WorkBox, CurrentBox: TScrollBox;
   txt: string;
 
   function IsOnBox(Component: TComponent): Boolean;
@@ -690,7 +691,7 @@ var
       Prnt := TWinControl(Component).Parent;
       while (assigned(Prnt)) and (not Result) do
       begin
-        Result := (Prnt = box);
+        Result := (Prnt = CurrentBox);
         Prnt := Prnt.Parent;
       end;
     end;
@@ -739,32 +740,47 @@ var
   end;
 
 begin
-  Lock;
+  if BuildAll then
+    Lock;
   try
     if (assigned(FReminder)) then
     begin
-      box := GetBox(TRUE);
-      if box.ControlCount > 0 then
-        ClearControls; // AGP Change 26.1 this change should
-      // resolve the problem with Duplicate CheckBoxes
-      // appearing on some reminder dialogs CQ #2843
-      Y := box.VertScrollBar.Position;
-      GetBox.VertScrollBar.Position := 0;
-      if FProcessingTemplate then
-        txt := 'Reminder Dialog Template'
-      else
-        txt := 'Reminder Resolution';
-      Caption := txt + ': ' + FReminder.PrintName;
-      FReminder.OnNeedRedraw := nil;
-      ParentWidth := box.Width - ScrollBarWidth - 6;
-      SetActiveVars(ActiveControl);
-      AutoCtrl := FReminder.BuildControls(ParentWidth, GetBox, Self);
-      GetBox.VertScrollBar.Position := Y;
-      BoxUpdateDone;
-
-      if (LastCB <> 0) then
+      CurrentBox := GetBox(TRUE);
+      Y := CurrentBox.VertScrollBar.Position;
+      if BuildAll then
       begin
-        box := GetBox(TRUE);
+        WorkBox := GetBox;
+        ClearControls;
+      end
+      else
+      begin
+        WorkBox := CurrentBox;
+        RedrawSuspend(CurrentBox.Handle);
+        CurrentBox.Invalidate;
+      end;
+      try
+        WorkBox.HorzScrollBar.Position := 0;
+        WorkBox.VertScrollBar.Position := 0;
+        if FProcessingTemplate then
+          txt := 'Reminder Dialog Template'
+        else
+          txt := 'Reminder Resolution';
+        Caption := txt + ': ' + FReminder.PrintName;
+        FReminder.OnNeedRedraw := nil;
+        ParentWidth := CurrentBox.Width - ScrollBarWidth - 6;
+        SetActiveVars(ActiveControl);
+        AutoCtrl := FReminder.BuildControls(ParentWidth, WorkBox, Self, BuildAll);
+        WorkBox.HorzScrollBar.Position := 0;
+        WorkBox.VertScrollBar.Position := Y;
+      finally
+        if BuildAll then
+          BoxUpdateDone
+        else
+          RedrawActivate(CurrentBox.Handle);
+      end;
+      if (LastCB <> 0) and (BuildAll or (assigned(AutoCtrl) and (ActiveControl <> AutoCtrl))) then
+      begin
+        CurrentBox := GetBox(TRUE);
         if assigned(AutoCtrl) then
         begin
           if assigned(AutoCtrl.Parent) then
@@ -792,13 +808,14 @@ begin
             end;
           end;
       end;
-      ClearControls;
-  //    FReminder.ResetDefaultCheckedElements;
+      if BuildAll then
+        ClearControls;
       FReminder.OnNeedRedraw := ControlsChanged;
       FReminder.OnTextChanged := UpdateText;
     end;
   finally
-    Unlock;
+    if BuildAll then
+      Unlock;
   end;
 end;
 
@@ -837,14 +854,14 @@ begin
       if tryCount > 3 then
         raise
       else
-        Application.ProcessMessages;
+        TResponsiveGUI.ProcessMessages(True);
     end;
   until Done;
   FUseBox2 := not FUseBox2;
   ClearControls;
   if ScreenReaderSystemActive then
     amgrMain.RefreshComponents;
-  Application.ProcessMessages; // allows new ScrollBox to repaint
+  TResponsiveGUI.ProcessMessages; // allows new ScrollBox to repaint
 end;
 
 procedure TfrmRemDlg.ControlsChanged(Sender: TObject);
@@ -886,7 +903,7 @@ begin
   begin
     IgnoreReminderClicks := True;
     try
-      BuildControls;
+      BuildControls(False);
     finally
       PXRMDoneWorking;
       FAllowAutoRebuild := True;
@@ -926,7 +943,7 @@ procedure TfrmRemDlg.Unlock;
 begin
   if FLockCount > 0 then
     dec(FLockCount);
-  if FPendingAutoRebuild and (FLockCount = 0) then
+  if (not FExitOK) and FPendingAutoRebuild and (FLockCount = 0) then
     RequestRebuild;
 end;
 
@@ -1375,7 +1392,7 @@ begin
     except
       Inc(ACount);
       if ACount > 3 then raise;
-      Application.ProcessMessages;
+      TResponsiveGUI.ProcessMessages(True);
       NeedsRetry := True;
     end;
   until not NeedsRetry;
@@ -2557,7 +2574,7 @@ begin
       Template.PrintName + U + Template.ReminderWipe); // AGP CHANGE      24.8
     ClearControls(TRUE);
     FReminder.PCEDataObj := RemForm.PCEObj;
-    BuildControls;
+    BuildControls(True);
     UpdateText(nil);
     UpdateButtons;
     Show;
@@ -2580,7 +2597,7 @@ begin
     reData.Font.Size := Application.MainForm.Font.Size;
   end;
 
-  BuildControls;
+  BuildControls(False);
 end;
 
 { AGP Change 24.8 You MUST pass an address to an object variable to get KillObj to work }

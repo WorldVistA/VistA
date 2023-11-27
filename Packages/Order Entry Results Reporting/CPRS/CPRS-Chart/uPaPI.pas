@@ -23,6 +23,8 @@ function PapiParkingAvailable: Boolean;
 function PapiDrugIsParkable(ADrugID: string): Boolean;
 function PapiOrderIsParkable(AOrderID: string): Boolean;
 
+function GetOptionValue(AnOption: string): string;
+
 implementation
 
 uses

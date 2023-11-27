@@ -207,7 +207,8 @@ procedure EditCoverSheetReminderList(AsUser: boolean);
 implementation
 
 uses rCore, uCore, uPCE, rProbs, rTIU, ORFn, rReminders, uReminders,
-  fRemCoverPreview, VAUtils, VA508AccessibilityRouter, uORLists, uSimilarNames;
+  fRemCoverPreview, VAUtils, VA508AccessibilityRouter, uORLists, uSimilarNames,
+  uWriteAccess;
 
 {$R *.DFM}
 {$R sremcvr}
@@ -988,13 +989,15 @@ var
 
 begin
   lvCover.Enabled := (FEditingLevel <> dlPackage);
-  ok := assigned(tvAll.Selected) and (FEditingLevel <> dlPackage) and (FSelection);
+  ok := assigned(tvAll.Selected) and (FEditingLevel <> dlPackage) and FSelection
+    and WriteAccess(waReminderEditor);
   sbCopyRight.Enabled := ok;
 
-  ok := assigned(lvCover.Selected) and (FEditingLevel <> dlPackage) and (FSelection);
+  ok := assigned(lvCover.Selected) and (FEditingLevel <> dlPackage) and FSelection and
+    WriteAccess(waReminderEditor);
   sbCopyLeft.Enabled := ok;
 
-  ok := assigned(lvCover.Selected);
+  ok := assigned(lvCover.Selected) and WriteAccess(waReminderEditor);
   lblSeq.Enabled := ok;
   edtSeq.Enabled := ok;
 
@@ -1148,7 +1151,7 @@ var
 
 begin
   idx := FData.IndexOfPiece(String(DataCode[FEditingLevel]) + FloatToStr(FEditingIEN));
-  if idx >= 0 then
+  if (idx >= 0) and WriteAccess(waReminderEditor) then
   begin
     tmp := FData[idx];
     SetPiece(Tmp,U,2,BoolChar[TRUE]);
@@ -2098,6 +2101,11 @@ begin
           + CRLF + 'the Location, User Class, or User levels.';
   fOldFocusChanged := Screen.OnActiveControlChange;
   Screen.OnActiveControlChange := ActiveControlChanged;
+  if not WriteAccess(waReminderEditor) then
+  begin
+    btnOK.Enabled := false;
+    btnApply.Enabled := false;
+  end;
 end;
 
 procedure TfrmRemCoverSheet.ActiveControlChanged(Sender: TObject);

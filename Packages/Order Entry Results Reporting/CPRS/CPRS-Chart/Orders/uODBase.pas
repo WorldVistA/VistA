@@ -26,7 +26,7 @@ function OrderFormDlgIDOnCreate: String;
 function GetKeyVars: string;
 procedure PopKeyVars(NumLevels: Integer = 1);
 procedure PushKeyVars(const NewVals: string);
-procedure ExpandOrderObjects(var Txt: string; var ContainsObjects: boolean; msg: string = '');
+procedure ExpandOrderObjects(var Txt: string; out ContainsObjects: boolean; msg: string = '');
 procedure CheckForAutoDCDietOrders(EvtID: integer; DispGrp: integer; CurrentText: string;
             var CancelText: string; Sender: TObject; tubefeeding: boolean = false);
 
@@ -143,7 +143,7 @@ begin
   uKeyVarList.Add(x);
 end;
 
-procedure ExpandOrderObjects(var Txt: string; var ContainsObjects: boolean; msg: string = '');
+procedure ExpandOrderObjects(var Txt: string; out ContainsObjects: boolean; msg: string = '');
 var
   ObjList: TStringList;
   Err: TStringList;
@@ -156,6 +156,7 @@ const
                    'Make sure you give them the name of the quick' + CRLF +
                    'order that you are processing.' ;
 begin
+  ContainsObjects := False;
   ObjList := TStringList.Create;
   try
     Err := nil;

@@ -9,12 +9,12 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes, Vcl.Forms, Vcl.Controls, Vcl.StdCtrls, Vcl.ComCtrls,
   Vcl.ExtCtrls, Vcl.Graphics, Vcl.Menus, Vcl.CheckLst, Vcl.Buttons, ORCtrls,
-  fODBase, VA508AccessibilityManager;
+  fODBase, VA508AccessibilityManager, ORExtensions;
 
 type
   TfrmAnatPathPreview = class(TForm)
     VA508AccessibilityManager: TVA508AccessibilityManager;
-    lvwSpecimen: TListView;
+    lvwSpecimen: ORExtensions.TListView;
     memText: TCaptionMemo;
     pnlBottom: TPanel;
     btnAccept: TBitBtn;

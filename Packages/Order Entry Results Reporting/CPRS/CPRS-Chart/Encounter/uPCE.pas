@@ -387,7 +387,7 @@ type
     FStandAlone: boolean;
     FStandAloneLoaded: boolean;
     FProblemAdded: Boolean;                        // Flag set when one or more Dx are added to PL
-    encounterLock: boolean;
+    FEncounterLock: boolean;
     FVisitIEN: Integer;
     FVisitIENIsPrimary: boolean;
     function GetInpatient: boolean;
@@ -679,7 +679,7 @@ implementation
 
 uses uCore, rPCE, rCore, rTIU, fEncounterFrame, uVitals, fFrame,
      fPCEProvider, rVitals, uReminders, rMisc, uGlobalVar, uDlgComponents,
-  fReminderDialog, uMisc;
+  fReminderDialog, uMisc, uWriteAccess;
 
 const
   FN_NEW_PERSON = 200;
@@ -754,7 +754,7 @@ var
   DC: HDC;
   SaveFont: HFont;
   TextSize: TSize;
-  TLen, i: integer;
+  TLen, i, gap: integer;
   x: string;
 
 begin
@@ -781,9 +781,12 @@ begin
     ReleaseDC(0, DC);
   end;
   if(Min > Max) then Min := Max;
-
-  inc(Min, ScrollBarWidth + 8);
-  inc(Max, ScrollBarWidth + 8);
+  gap := ScrollBarWidth;
+  if (dest.Style = orcsDropDown) and (gap < dest.height) then
+    gap := dest.Height;
+  inc(gap, 16);
+  inc(Min, gap);
+  inc(Max, gap);
 end;
 
 type
@@ -913,22 +916,22 @@ begin
     dest.Clear;
     GetPCECodes(dest.Items, dest.Tag);
     dest.itemindex := 0;
-    if(GetMinMax) and (dest.Items.Count > 0) then
+  end;
+  if(GetMinMax) and (dest.Items.Count > 0) then
+  begin
+    idx := dest.Tag div 10;
+    if(idx > 0) and (idx < 8) then
     begin
-      idx := dest.Tag div 10;
-      if(idx > 0) and (idx < 8) then
+      if(ListMinMax[idx, mmFont] <> integer(dest.Font.Handle)) then
       begin
-        if(ListMinMax[idx, mmFont] <> integer(dest.Font.Handle)) then
-        begin
-          GetComboBoxMinMax(dest, Min, Max);
-          ListMinMax[idx, mmMin] := Min;
-          ListMinMax[idx, mmMax] := Max;
-        end
-        else
-        begin
-          Min := ListMinMax[idx, mmMin];
-          Max := ListMinMax[idx, mmMax];
-        end;
+        GetComboBoxMinMax(dest, Min, Max);
+        ListMinMax[idx, mmMin] := Min;
+        ListMinMax[idx, mmMax] := Max;
+      end
+      else
+      begin
+        Min := ListMinMax[idx, mmMin];
+        Max := ListMinMax[idx, mmMax];
       end;
     end;
   end;
@@ -2349,6 +2352,7 @@ begin
   FSCChanged   := False;
   FNoteIEN := 0;
   FNoteTitle := 0;
+  FEncounterLock := False;
 end;
 
 procedure TPCEData.CopyDiagnoses(Dest: TCaptionListView);
@@ -2991,10 +2995,10 @@ begin
       result := SavePCEData(PCEList, FileNoteIEN, FEncLocation, isLock);
       if not result then
         begin
-           encounterLock := isLock;
+           FEncounterLock := isLock;
            exit;
         end;
-      encounterLock := false;
+      FEncounterLock := false;
       // turn off 'Send' flags and remove items that were deleted
       CleanUp(FDiagnoses, TPCEDiag);
       CleanUp(FProcedures, TPCEProc);
@@ -3023,7 +3027,7 @@ begin
     if Length(x) > 0 then Changes.Add(CH_PCE, 'P' + AVisitStr, x, EncName, CH_SIGN_NA);
     x := StrDiagnoses;
     if Length(x) > 0 then Changes.Add(CH_PCE, 'D' + AVisitStr, x, EncName, CH_SIGN_NA,
-       Parent, User.DUZ, '', False, False, ProblemAdded);
+       waNone, Parent, User.DUZ, 0, '', False, False, ProblemAdded);
     x := StrImmunizations;
     if Length(x) > 0 then Changes.Add(CH_PCE, 'I' + AVisitStr, x, EncName, CH_SIGN_NA);
     x := StrSkinTests;
@@ -4127,7 +4131,7 @@ var
   I : Integer;
 begin
   Result := [];
-  if encounterLock then Include(result, ndLock);
+  if FEncounterLock then Include(result, ndLock);
 
   if(not FutureEncounter(Self)) then
   begin
@@ -4260,11 +4264,11 @@ begin
           else
         { apPrimaryNeeded }    DoAsk := (Primary and Needed);
         end;
-        if(DoAsk) or (EncounterLock) then
+        if(DoAsk) or (FEncounterLock) then
         begin
-          if(Asked and ((not Needed) or (not Primary)) and (not EncounterLock)) then
+          if(Asked and ((not Needed) or (not Primary)) and (not FEncounterLock)) then
             exit;
-          if(Needed) or (EncounterLock) then
+          if(Needed) or (FEncounterLock) then
           begin
             msg := TX_NEED1;
             Add(ndDiag, TX_NEED_DIAG);
@@ -5282,7 +5286,7 @@ end;
 
 function TUCUMInfo.Validate(var Value: string; OverridePrompt: string = ''): string;
 var
-  newValue, msg, TimePart: string;
+  newValue, tmpValue, msg, TimePart: string;
   vDateTime: TDateTime;
   fmDateTime: TFMDateTime;
   val: Extended;
@@ -5333,7 +5337,11 @@ begin
 
       udtTime:
         begin
-          fmDateTime := StrToFMDateTime(Value);
+          if IsDigits(Value) then
+            tmpValue := '@' + Value
+          else
+            tmpValue := Value;
+          fmDateTime := StrToFMDateTime(tmpValue);
           if fmDateTime < 0 then
             Add('is not in valid time format (' + MAG_TIME_FORMAT + ')')
           else

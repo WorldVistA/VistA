@@ -93,7 +93,7 @@ function setSubsetOfEntries(aDest:TSTrings;const StartFrom: string; Direction: I
   const XRef, GblRef, ScreenRef: string): Integer;
 
 function setSubSetOfOrderItems(aDest:TStrings;const StartFrom: string; Direction: Integer;
-  const XRef: string; QuickOrderDlgIen: Integer): Integer;
+  const XRef: string; QuickOrderDlgIen: Integer; AccessData: string = ''): Integer;
 
 function GetDefaultCopay(AnOrderID: string): String;
 procedure SetDefaultCoPayToNewOrder(AnOrderID, CoPayInfo:string);
@@ -621,12 +621,12 @@ begin
 end;
 
 function setSubSetOfOrderItems(aDest:TStrings;const StartFrom: string; Direction: Integer;
-  const XRef: string; QuickOrderDlgIen: Integer): Integer;
+  const XRef: string; QuickOrderDlgIen: Integer; AccessData: string = ''): Integer;
 { returns a pointer to a list of orderable items matching an S.xxx cross reference (for use in
   a long list box) -  The return value is  a pointer to RPCBrokerV.Results, so the data must
   be used BEFORE the next broker call! }
 begin
-  CallVistA('ORWDX ORDITM', [StartFrom, Direction, XRef, QuickOrderDlgIen],aDest);
+  CallVistA('ORWDX ORDITM', [StartFrom, Direction, XRef, QuickOrderDlgIen, AccessData], aDest);
   Result := aDest.Count;
 end;
 

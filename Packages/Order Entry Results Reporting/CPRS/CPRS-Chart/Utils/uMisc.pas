@@ -18,8 +18,7 @@ uses
    // Application units...
 //  uProg,
   orNet,
-  orFn,
-  U508Extensions;
+  orFn;
 
 type
   tSrchDictGroup = TDictionary<String, TListGroup>;
@@ -51,6 +50,8 @@ procedure NumericKeyPress(Sender: TObject; var Key: Char);
 function AssignedAndHasData(Node: TTreeNode): boolean;
 
 function StripAllExcept(Input, KeepChars: string): string;
+
+function IsDigits(str: string): boolean;
 
 implementation
 
@@ -270,6 +271,19 @@ begin
   for i := length(Result) downto 1 do
     if pos(Result[i], KeepChars) = 0 then
       delete(Result, i, 1);
+end;
+
+function IsDigits(str: string): boolean;
+var
+  i: integer;
+
+begin
+  if str = '' then
+    Exit(False);
+  for i := 1 to Length(str) do
+    if not CharInSet(str[i], ['0'..'9']) then
+      Exit(False);
+  Result := True;
 end;
 
 end.

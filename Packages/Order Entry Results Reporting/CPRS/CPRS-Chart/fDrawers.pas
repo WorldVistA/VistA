@@ -147,6 +147,7 @@ type
     FCurrentVisibleDrawers: TDrawers;
     FCurrentEnabledDrawers: TDrawers;
     FCopyMonitor: TCopyPasteDetails;
+    FTemplateAccess: boolean;
     function GetAlign: TAlign;
     procedure SetAlign(const Value: TAlign);
     function MinDrawerControlHeight: integer;
@@ -203,7 +204,8 @@ type
     property LastOpenSize: integer read FLastOpenSize write FLastOpenSize;
     property DefTempPiece: integer read FDefTempPiece write FDefTempPiece;
     property TheOpenDrawer: TDrawer read FOpenDrawer;
-     Property CopyMonitor: TCopyPasteDetails read fCopyMonitor write fCopyMonitor;
+    Property CopyMonitor: TCopyPasteDetails read fCopyMonitor write fCopyMonitor;
+    property TemplateAccess: boolean read FTemplateAccess write FTemplateAccess;
   published
     property Align: TAlign read GetAlign write SetAlign;
   end;
@@ -494,6 +496,7 @@ begin
   inc(FHoldResize);
   try
     GetDrawerControls(Drawer, Btn, Ctrl);
+    Btn.Enabled := EnableIt;
     Btn.Parent.Enabled := EnableIt;
     if(Drawer = FOpenDrawer) and (not Btn.Parent.Enabled) then
       OpenDrawer(odNone);
@@ -1194,12 +1197,12 @@ end;
 
 function TfrmDrawers.CanEditTemplates: boolean;
 begin
-  Result := (UserTemplateAccessLevel in [taAll, taEditor]);
+  Result := FTemplateAccess and (UserTemplateAccessLevel in [taAll, taEditor]);
 end;
 
 function TfrmDrawers.CanEditShared: boolean;
 begin
-  Result := (UserTemplateAccessLevel = taEditor);
+  Result := FTemplateAccess and (UserTemplateAccessLevel = taEditor);
 end;
 
 procedure TfrmDrawers.pnlTemplateSearchResize(Sender: TObject);
@@ -1308,7 +1311,7 @@ procedure TfrmDrawers.RemindersChanged(Sender: TObject);
 begin
   inc(FHoldResize);
   try
-    if(EnableDrawer(odReminders, (GetReminderStatus <> rsNone))) then
+    if FTemplateAccess and (EnableDrawer(odReminders, (GetReminderStatus <> rsNone))) then
     begin
       BuildReminderTree(tvReminders);
       FOldMouseUp := tvReminders.OnMouseUp;

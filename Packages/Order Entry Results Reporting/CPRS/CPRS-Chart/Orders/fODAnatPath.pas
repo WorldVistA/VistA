@@ -8,7 +8,8 @@ uses
   Vcl.Menus, Vcl.ComCtrls, Vcl.Controls, Vcl.StdCtrls, Vcl.ExtCtrls,
   Vcl.Samples.Spin, Vcl.Graphics, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, uConst,
   ORfn, ORNet, ORCtrls, ORDtTm, VAUtils, VA508AccessibilityManager, fODBase,
-  mODAnatPathBuilder, mODAnatPathSpecimen, oODAnatPath, u508Extensions;
+  mODAnatPathBuilder, mODAnatPathSpecimen, oODAnatPath, u508Extensions,
+  ORExtensions;
 
 type
   TOrderPrompt = (opURG,opCDT,opSSB,opCTY,opHOF,opSPH,opODC);
@@ -48,7 +49,7 @@ type
     rbtnUrineCC: TRadioButton;
     rbtnUrineOZ: TRadioButton;
     cbxSpecimenSelect: TORComboBox;
-    lvwSpecimen: TListView;
+    lvwSpecimen: ORExtensions.TListView;
     pnlAddSingleSpecimen: TKeyClickPanel;
     aPageNav: TActionList;
     aCtrlTab: TAction;
@@ -142,6 +143,7 @@ type
       var Text: string);
     procedure VA508cbxSpecimenSelectInstructionsQuery(Sender: TObject;
       var Text: string);
+    procedure lblAvailTestClick(Sender: TObject);
   private
     FlblHeight: integer;
     FReqCommentIdx: integer;
@@ -161,6 +163,8 @@ type
     FDropDownSpecs: boolean;
     FSpecSelectRedirectTabStop: boolean;
     flv508Manager: Tlv508Manager;
+    FAccessData: string;
+    FMissingGroupsMessage: string;
     procedure UMDeleteSpecimen(var Message: TMessage); message UM_OBJDESTROY;
     procedure UMMisc(var Message: TMessage); message UM_MISC;
     procedure ToggleControlEnable(cControl: TControl; bSwitch: Boolean);
@@ -368,7 +372,7 @@ implementation
 uses
   rODBase, rODLab, uCore, rCore, fODLabOthSpec, fLabCollTimes, rOrders, uODBase,
   fRptBox, fFrame, rODAnatPath, fODAnatPathPreview, VA508AccessibilityRouter,
-  uORLists, uSimilarNames, uFormMonitor;
+  uORLists, uSimilarNames, uFormMonitor, uOrders, uWriteAccess;
 
 const
   CmtType: array[0..6] of string = ('ANTICOAGULATION','DOSE/DRAW TIMES','ORDER COMMENT',
@@ -544,6 +548,8 @@ begin
 end;
 
 procedure TfrmODAnatPath.FormCreate(Sender: TObject);
+var
+  access: TWriteAccess.TDGWriteAccess;
 
   procedure Setup(Ctrl: TControl; Col, Row, ColSpan, RowSpan: integer);
   var
@@ -583,6 +589,24 @@ begin
   FReqCommentIdx := 7;
 
   inherited;
+
+  access := WriteAccessV.DGWriteAccess('AP');
+  if assigned(access) and (access is TWriteAccess.TDGWriteAccessParent) then
+    with TWriteAccess.TDGWriteAccessParent(access) do
+    begin
+      FAccessData := AccessData;
+      if MissingGroups <> '' then
+      begin
+        FMissingGroupsMessage := 'Only orders for ' + AccessGroups +
+          ' are displayed.  Additional orders would be available if you had write access to '
+          + MissingGroups;
+        gpMain.RowCollection[0].Value := gpMain.RowCollection[0].Value + 4;
+        lblAvailTest.Font.Color := clBlue;
+        lblAvailTest.Font.Style := [fsUnderline];
+        lblAvailTest.Cursor := crHandPoint;
+      end;
+    end;
+
   frmODAnatPath := Self;
 
   calCollTime.Format := 'mmm dd,yyyy@hh:nn';
@@ -619,7 +643,7 @@ begin
   CtrlInits.LoadDefaults(FAList);
   InitDialog;
 
-  SubSetOfAPOrderItems(cbxAvailTest.Items, Responses.QuickOrder);
+  SubSetOfAPOrderItems(cbxAvailTest.Items, Responses.QuickOrder, FAccessData);
 
   StatusText('');
   SetFontSize(MainFontSize);
@@ -1091,6 +1115,13 @@ begin
   ALabtest.OrderComment.Add(spnedtUrineVolume.Text + ' ' + UrineUnits);
 
   UpdateLegacyCommentResponse(True);
+end;
+
+procedure TfrmODAnatPath.lblAvailTestClick(Sender: TObject);
+begin
+  inherited;
+  if FMissingGroupsMessage <> '' then
+    ShowMessage(FMissingGroupsMessage);
 end;
 
 procedure TfrmODAnatPath.ledtCommentAntiCoagulantExit(Sender: TObject);
@@ -2845,7 +2876,10 @@ var
 begin
   gpMain.RowCollection.BeginUpdate;
   try
-    SetRow(0, FlblHeight);
+    if FMissingGroupsMessage = '' then
+      SetRow(0, FlblHeight)
+    else
+      SetRow(0, FlblHeight + 4);
     edt := FlblHeight + EDIT_BUMP;
     btn := edt + EDIT_BUMP;
     for i := 1 to 4 do

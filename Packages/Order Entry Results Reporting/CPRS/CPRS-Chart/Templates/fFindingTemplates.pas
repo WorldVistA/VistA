@@ -35,7 +35,11 @@ function FindTemplate(SearchString: string; Tree: TTreeView; OwningForm: TForm;
 
 implementation
 
-uses uTemplates, VAUtils, ORNet;
+uses
+  uTemplates,
+  VAUtils,
+  ORNet,
+  UResponsiveGUI;
 
 {$R *.dfm}
 
@@ -113,7 +117,7 @@ begin
     end;
     while (not FCanceled) and (assigned(FCurrentNode) and (not Found)) do
     begin
-      Application.ProcessMessages;
+      TResponsiveGUI.ProcessMessages(True);
       if not FCanceled then
       begin
         Text := FCurrentNode.Text;

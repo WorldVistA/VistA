@@ -73,7 +73,7 @@ uses
   ActiveX,
   Winapi.CommCtrl, ShellAPI, HTTPApp,
   uCore, rTIU, uTIU, fFrame, rCore,
-  uFormUtils, uGN_RPCLog, uSizing, fEncnt, fPDMPCosigner, ORExtensions;
+  uFormUtils, uGN_RPCLog, uSizing, fEncnt, fPDMPCosigner, ORExtensions, uConst;
 
 {$R *.dfm}
 
@@ -280,7 +280,7 @@ begin
 
       if (0 < iRC) then
       begin
-        Changes.Add(10, Piece(sError, U, 1), Piece(sError, U, 2), '', 1);
+        Changes.Add(CH_DOC, Piece(sError, U, 1), Piece(sError, U, 2), '', CH_SIGN_YES);
         aData.NoteIEN := sRC;
         Result := sError;
       end

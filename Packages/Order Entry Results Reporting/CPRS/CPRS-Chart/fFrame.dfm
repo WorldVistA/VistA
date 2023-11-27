@@ -2,7 +2,7 @@ inherited frmFrame: TfrmFrame
   Left = 219
   Top = 102
   Caption = ']='
-  ClientHeight = 828
+  ClientHeight = 825
   ClientWidth = 976
   FormStyle = fsMDIForm
   Menu = mnuFrame
@@ -11,14 +11,14 @@ inherited frmFrame: TfrmFrame
   OnCloseQuery = FormCloseQuery
   OnResize = FormResize
   ExplicitWidth = 992
-  ExplicitHeight = 887
+  ExplicitHeight = 884
   PixelsPerInch = 96
   TextHeight = 13
   object pnlNoPatientSelected: TPanel [0]
     Left = 0
     Top = 0
     Width = 976
-    Height = 828
+    Height = 825
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -38,7 +38,7 @@ inherited frmFrame: TfrmFrame
     Left = 0
     Top = 0
     Width = 976
-    Height = 828
+    Height = 825
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -884,7 +884,7 @@ inherited frmFrame: TfrmFrame
     end
     object stsArea: TStatusBar
       Left = 1
-      Top = 806
+      Top = 803
       Width = 974
       Height = 21
       Margins.Left = 5
@@ -916,7 +916,7 @@ inherited frmFrame: TfrmFrame
     end
     object tabPage: TTabControl
       Left = 1
-      Top = 779
+      Top = 776
       Width = 974
       Height = 27
       Margins.Left = 4
@@ -940,7 +940,7 @@ inherited frmFrame: TfrmFrame
       Left = 1
       Top = 105
       Width = 974
-      Height = 674
+      Height = 671
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -1015,111 +1015,183 @@ inherited frmFrame: TfrmFrame
     Data = (
       (
         'Component = pnlNoPatientSelected'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlPatientSelected'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlToolbar'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlCCOW'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlPatient'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblPtName'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblPtSSN'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblPtAge'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlVisit'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblPtLocation'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblPtProvider'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlPrimaryCare'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblPtCare'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblPtAttending'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlReminders'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = anmtRemSearch'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlPostings'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblPtPostings'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblPtCWAD'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = paVAA'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = laVAA2'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = laMHV'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = stsArea'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = tabPage'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlPage'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lstCIRNLocations'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = frmFrame'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlCVnFlag'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = btnCombatVet'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlFlag'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlRemoteData'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlVistaWeb'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlCIRN'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblPtMHTC'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = txtCmdFlags'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblOTHDDtl'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault'))
   end
   object mnuFrame: TMainMenu
@@ -1439,6 +1511,13 @@ inherited frmFrame: TfrmFrame
       object ResetParams1: TMenuItem
         Action = acResetParams
         Visible = False
+      end
+      object N2: TMenuItem
+        Caption = '-'
+      end
+      object mnuWAPermissions: TMenuItem
+        Caption = 'Write Access Permissions'
+        OnClick = mnuWAPermissionsClick
       end
       object Z5: TMenuItem
         Caption = '-'

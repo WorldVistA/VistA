@@ -212,7 +212,8 @@ type
     procedure SetFontSize(FontSize: integer); virtual;
     procedure SetKeyVariables(const VarStr: string);
     procedure TabClose(var CanClose: Boolean);
-    property AllowQuickOrder: Boolean   read FAllowQO      write FAllowQO;
+    function IsManualEvent: Boolean;
+    property AllowQuickOrder: Boolean   read FAllowQO    write FAllowQO;
     property AutoAccept: Boolean        read FAutoAccept   write FAutoAccept;
     property CallOnExit: TCallOnExit    read FCallOnExit   write FCallOnExit;
     property Changing:  Boolean         read FChanging     write FChanging;
@@ -269,7 +270,7 @@ implementation
 uses fOCAccept, uODBase, rCore, rMisc, fODMessage,
   fTemplateDialog, uEventHooks, uTemplates, rConsults,fOrders,uOrders,
   fFrame, uTemplateFields, fClinicWardMeds, fODDietLT, rODDiet, VAUtils, fODDiet,
-  System.Types, uOwnerWrapper, fODAuto;
+  System.Types, uOwnerWrapper, fODAuto, uWriteAccess;
 
 var //rtw
  UAPCanceled: boolean; //rtw
@@ -1334,9 +1335,9 @@ begin
     try
       StatusText('Order Checking...');
       Responses.BuildOCItems(OIList, StartDtTm, FillerID);
-      x := Responses.IValueFor('REFILLS', i) + U + Responses.IValueFor('PICKUP',
-        i) + U + Responses.IValueFor('SUPPLY', i) + U +
-        Responses.IValueFor('QTY', i);
+      x := Responses.IValueFor('REFILLS', 1) + U + Responses.IValueFor('PICKUP',
+        1) + U + Responses.IValueFor('SUPPLY', 1) + U +
+        Responses.IValueFor('QTY', 1);
       OrderChecksOnAccept(Responses.OrderChecks, FillerID, StartDtTm, OIList,
         DupORIFN, '0', x, Self is TfrmODAuto);
       if FMergeOrderChecks and assigned(OCTemp) then
@@ -1443,6 +1444,16 @@ begin
   end
   else Result := Patient.Inpatient;
   end;
+end;
+
+function TfrmODBase.IsManualEvent: Boolean;
+var
+  AnEventType: Char;
+begin
+  AnEventType := OrderEventTypeOnCreate;
+  // if event type = #0, then it wasn't passed or we're not in create
+  if AnEventType = #0 then AnEventType := Responses.FEventType;
+  Result := AnEventType = 'M'
 end;
 
 procedure TfrmODBase.ShowOrderMessage(Show: boolean);
@@ -1667,6 +1678,7 @@ begin
     result := AcceptOrderWithChecks(OIList, BuildOrderChecks, OverrideFunction);
   finally
     FreeAndNil(OIList);
+    StatusText('');
   end;
 end;
 
@@ -1743,7 +1755,8 @@ begin
       if NewOrder.Signature = OSS_NOT_REQUIRE then CanSign := CH_SIGN_NA;
       if (NewOrder.EventPtr <> '') and (GetEventDefaultDlg(responses.FEventIFN) <> InttoStr(Responses.QuickOrder)) then
           IsDelayOrder := True;
-      Changes.Add(CH_ORD, NewOrder.ID, NewOrder.Text, Responses.FViewName, CanSign,'',0, NewOrder.DGroupName, False, IsDelayOrder);
+      Changes.Add(CH_ORD, NewOrder.ID, NewOrder.Text, Responses.FViewName, CanSign,
+        waOrders,'',0, NewOrder.DGroup, NewOrder.DGroupName, False, IsDelayOrder);
 
     UBAGlobals.TargetOrderID := NewOrder.ID;
 

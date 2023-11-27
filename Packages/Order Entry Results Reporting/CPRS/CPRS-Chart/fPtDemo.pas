@@ -42,7 +42,7 @@ procedure PatientInquiry(var NewPt: Boolean);
 var
   frmPtDemo: TfrmPtDemo;
 begin
-  if StrToInt64Def(Patient.DFN, 0) <= 0 then
+  if StrToFloatDef(Patient.DFN, 0) <= 0 then
     exit;
   frmPtDemo := TfrmPtDemo.Create(Application);
   try

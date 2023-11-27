@@ -417,7 +417,8 @@ uses fVisit, rCore, uCore, rConsults, fConsultBS, fConsultBD, fSignItem,
      fReminderDialog, uReminders, fConsMedRslt, fTemplateFieldEditor, System.Types,
      dShared, rTemplates, fIconLegend, fNoteIDParents, fNoteCPFields, rECS, ORNet, trpcb,
      uTemplates, fTemplateDialog, DateUtils, uVA508CPRSCompatibility, VA508AccessibilityRouter,
-     System.UITypes, System.IniFiles, ORNetIntf, U_CPTEditMonitor, VAUtils, oDst, uORLists, uMisc;
+     System.UITypes, System.IniFiles, ORNetIntf, U_CPTEditMonitor, VAUtils, oDst, uORLists, uMisc,
+     UResponsiveGUI, uWriteAccess;
 
 const
   CT_ORDERS =   4;                               // ID for orders tab used by frmFrame
@@ -1213,11 +1214,12 @@ const
   AS_ADDENDUM = True;
   IS_ID_CHILD = False;
 var
-  HaveRequired: Boolean;
+  HaveRequired, RetryAction: Boolean;
   CreatedNote: TCreatedDoc;
   x: string;
   tmpNode: TTreeNode;
   AClassName: string;
+  NoteErrorAction: TNoteErrorReturn;
 begin
   AClassName := DCL_CONSULTS;
   ClearEditControls;
@@ -1258,8 +1260,27 @@ begin
     FEditNote.Location     := uPCEMaster.Location;
     FEditNote.LocationName := ExternalName(uPCEMaster.Location, 44);
     FEditNote.VisitDate    := uPCEMaster.DateTime;
-    PutAddendum(CreatedNote, FEditNote, FEditNote.Addend);
+    repeat
+      RetryAction := False;
+      PutAddendum(CreatedNote, FEditNote, FEditNote.Addend);
+      if CreatedNote.IEN = 0 then
+      begin
+        NoteErrorAction := ShowNewNoteError('addendum', CreatedNote.ErrorText,
+          FEditNote.Lines, False, True);
+        RetryAction := NoteErrorAction = neRetry;
 
+        // Abort
+        if NoteErrorAction = neAbort then
+        begin
+          // if note creation failed or failed to get note lock (both unlikely), unlock consult
+          if FEditNote.PkgIEN > 0 then UnlockConsultRequest(0, FEditNote.PkgIEN);
+          //if FEditNote.Consult > 0 then UnlockConsultRequest(0, FEditNote.Consult);
+          InfoBox(CreatedNote.ErrorText, TX_CREATE_ERR, MB_OK);
+          HaveRequired := False;
+          pnlConsultList.Enabled := True; //CQ#15785
+        end;
+      end;
+    until not RetryAction;
     FEditNoteIEN := CreatedNote.IEN;
     uPCEMaster.NoteIEN := CreatedNote.IEN;
     if CreatedNote.IEN > 0 then LockDocument(CreatedNote.IEN, CreatedNote.ErrorText);
@@ -1298,16 +1319,6 @@ begin
       lstNotesClick(Self);  // will make pnlWrite visible
       if timAutoSave.Interval <> 0 then timAutoSave.Enabled := True;
       memResults.SetFocus;
-    end else
-    begin
-      // if note creation failed or failed to get note lock (both unlikely), unlock consult
-      if FEditNote.PkgIEN > 0 then UnlockConsultRequest(0, FEditNote.PkgIEN);
-      //if FEditNote.Consult > 0 then UnlockConsultRequest(0, FEditNote.Consult);
-      InfoBox(CreatedNote.ErrorText, TX_CREATE_ERR, MB_OK);
-      HaveRequired := False;
-      pnlConsultList.Enabled := True; //CQ#15785
-//      lstConsults.Enabled := True;
-//      tvConsults.Enabled := True;
     end; {if CreatedNote.IEN}
   end; {if HaveRequired}
   if not HaveRequired then ClearEditControls;
@@ -1425,65 +1436,89 @@ procedure TfrmConsults.SaveEditedConsult(var Saved: Boolean);
 { validates fields and sends the updated consult result to the server }
 var
   UpdatedNote: TCreatedDoc;
-  x, ErrMsg: string;
-  ContinueSave: boolean;
+  X, ErrMsg: string;
+  ContinueSave, RetryAction: Boolean;
+  NoteErrorAction: TNoteErrorReturn;
 
   // this block executes for Clinical Procedures documents ONLY!!
-  procedure SaveOrAbort(var AllowSave: boolean);
+  procedure SaveOrAbort(var AllowSave: Boolean);
   begin
     // if no text, leave as undictated, saving nothing
-    if (memResults.GetTextLen = 0) or (not ContainsVisibleChar(memResults.Text)) then
+    if (MemResults.GetTextLen = 0) or (not ContainsVisibleChar(MemResults.Text))
+    then
+    begin
+      if LstNotes.ItemIndex = EditingIndex then
       begin
-        if lstNotes.ItemIndex = EditingIndex then
-          begin
-            EditingIndex := -1;
-            lstNotesClick(Self);
-          end;
         EditingIndex := -1;
-        Saved := True;    // (yes, though not actually saving, this is correct and necessary (RV))
-        AllowSave := False;
-      end
+        LstNotesClick(Self);
+      end;
+      EditingIndex := -1;
+      Saved := True;
+      // (yes, though not actually saving, this is correct and necessary (RV))
+      AllowSave := False;
+    end
     // if text, stuff user as author, and allow save as unsigned
     else
-      begin
-        if FEditNote.Author <= 0 then FEditNote.Author := User.DUZ;
-        AllowSave := True;
-      end;
+    begin
+      if FEditNote.Author <= 0 then
+        FEditNote.Author := User.DUZ;
+      AllowSave := True;
+    end;
+  end;
+
+  procedure AfterSave;
+  begin
+    if LstNotes.ItemIndex = EditingIndex then
+    begin
+      EditingIndex := -1;
+      LstNotesClick(Self);
+    end;
+    EditingIndex := -1;
+    Saved := True;
+    FChanged := False;
   end;
 
 begin
   Saved := False;
   ContinueSave := True;
-  if MenuAccessRec.IsClinicalProcedure and LacksClinProcFields(FEditNote, MenuAccessRec, ErrMsg) then
-    // this block will execute for Clinical Procedures documents ONLY!!
+  if MenuAccessRec.IsClinicalProcedure and LacksClinProcFields(FEditNote,
+    MenuAccessRec, ErrMsg) then
+  // this block will execute for Clinical Procedures documents ONLY!!
+  begin
+    if not FSilent then // if not timing out, then prompt for required fields
     begin
-      if not FSilent then                       //  if not timing out, then prompt for required fields
-        begin
-          InfoBox(ErrMsg, TC_CLIN_PROC, MB_OK);
-          cmdChangeClick(mnuActConsultResults);
-          if frmFrame.TimedOut then exit;
-          if MenuAccessRec.IsClinicalProcedure and LacksClinProcFields(FEditNote, MenuAccessRec, ErrMsg) then   //  if still not entered, action depends on presence of text
-            SaveOrAbort(ContinueSave);
-        end
-      else SaveOrAbort(ContinueSave);           //  if timing out, action depends on presence of text
-      if not ContinueSave then exit;
+      InfoBox(ErrMsg, TC_CLIN_PROC, MB_OK);
+      CmdChangeClick(MnuActConsultResults);
+      if FrmFrame.TimedOut then
+        Exit;
+      if MenuAccessRec.IsClinicalProcedure and LacksClinProcFields(FEditNote,
+        MenuAccessRec, ErrMsg) then
+      // if still not entered, action depends on presence of text
+        SaveOrAbort(ContinueSave);
     end
-  else if (memResults.GetTextLen = 0) or (not ContainsVisibleChar(memResults.Text)) then
+    else
+      SaveOrAbort(ContinueSave);
+    // if timing out, action depends on presence of text
+    if not ContinueSave then
+      Exit;
+  end
+  else if (MemResults.GetTextLen = 0) or
+    (not ContainsVisibleChar(MemResults.Text)) then
   // this block will NOT execute for Clinical Procedures documents!!
   begin
-    lstNotes.ItemIndex := EditingIndex;
-    x := lstNotes.ItemID;
-    uChanging := True;
-    tvCsltNotes.Selected := tvCsltNotes.FindPieceNode(x, 1, U, tvCsltNotes.Items.GetFirstNode);
-    uChanging := False;
-    tvCsltNotesChange(Self, tvCsltNotes.Selected);
-    if FSilent or
-       ((not FSilent) and
-      (InfoBox(GetTitleText(EditingIndex) + TX_EMPTY_NOTE, TC_EMPTY_NOTE, MB_YESNO) = IDYES))
-    then
+    LstNotes.ItemIndex := EditingIndex;
+    X := LstNotes.ItemID;
+    UChanging := True;
+    TvCsltNotes.Selected := TvCsltNotes.FindPieceNode(X, 1, U,
+      TvCsltNotes.Items.GetFirstNode);
+    UChanging := False;
+    TvCsltNotesChange(Self, TvCsltNotes.Selected);
+    if FSilent or ((not FSilent) and
+      (InfoBox(GetTitleText(EditingIndex) + TX_EMPTY_NOTE, TC_EMPTY_NOTE,
+      MB_YESNO) = IDYES)) then
     begin
       FConfirmed := True;
-      mnuActNoteDeleteClick(Self);
+      MnuActNoteDeleteClick(Self);
       Saved := True;
       FDeleted := True;
     end
@@ -1491,36 +1526,41 @@ begin
       FConfirmed := False;
     Exit;
   end;
-  //ExpandTabsFilter(memResults.Lines, TAB_STOP_CHARS);
-  FEditNote.Lines    := memResults.Lines;
-  FEditNote.Subject  := txtSubject.Text;
-  FEditNote.NeedCPT  := uPCEMaster.CPTRequired;
-  timAutoSave.Enabled := False;
+  // ExpandTabsFilter(memResults.Lines, TAB_STOP_CHARS);
+  FEditNote.Lines := MemResults.Lines;
+  FEditNote.Subject := TxtSubject.Text;
+  FEditNote.NeedCPT := UPCEMaster.CPTRequired;
+  TimAutoSave.Enabled := False;
   try
-    PutEditedNote(UpdatedNote, FEditNote, lstNotes.GetIEN(EditingIndex));
+    repeat
+      RetryAction := False;
+      PutEditedNote(UpdatedNote, FEditNote, LstNotes.GetIEN(EditingIndex));
 
-    //Save copied text here
-    if (memResults.lines.Count > 0) and (CPMemResults.CopyPasteEnabled) then
-      CPMemResults.SaveTheMonitor(UpdatedNote.IEN);
+      // there's no unlocking here since the note is still in Changes after a save
+      if UpdatedNote.IEN > 0 then
+      begin
+        // Save copied text here
+        if (MemResults.Lines.Count > 0) and (CPMemResults.CopyPasteEnabled) then
+          CPMemResults.SaveTheMonitor(UpdatedNote.IEN);
 
+        AfterSave;
+      end
+      else
+      begin
+        if not FSilent then
+        begin
+          NoteErrorAction := ShowNoteError(UpdatedNote.ErrorText,
+            FEditNote.Lines, False, True);
+
+          RetryAction := NoteErrorAction = neRetry;
+
+          if NoteErrorAction = neAbort then
+            AfterSave;
+        end;
+      end;
+    until not RetryAction;
   finally
-    timAutoSave.Enabled := True;
-  end;
-  // there's no unlocking here since the note is still in Changes after a save
-  if UpdatedNote.IEN > 0 then
-  begin
-    if lstNotes.ItemIndex = EditingIndex then
-    begin
-      EditingIndex := -1;
-      lstNotesClick(Self);
-    end;
-    EditingIndex := -1;
-    Saved := True;
-    FChanged := False;
-  end else
-  begin
-    if not FSilent then
-      ShowNoteError(UpdatedNote.ErrorText, FEditNote.Lines);
+    TimAutoSave.Enabled := True;
   end;
 end;
 
@@ -2080,7 +2120,8 @@ begin
     Exit;
   end;
   LockConsultRequestAndNote(lstNotes.ItemIEN);
-  with lstNotes do Changes.Add(CH_CON, ItemID, GetTitleText(ItemIndex), '', CH_SIGN_YES);
+  with lstNotes do
+    Changes.Add(CH_CON, ItemID, GetTitleText(ItemIndex), '', CH_SIGN_YES);
 end;
 
 
@@ -2136,7 +2177,7 @@ begin
   // reset the display now that the note is gone
   if DeleteSts.Success then
   begin
-    DeletePCE(AVisitStr);  // removes PCE data if this was the only note pointing to it
+    DeletePCE(AVisitStr, uPCEMaster.VisitIEN);  // removes PCE data if this was the only note pointing to it
     ClearEditControls;
     //ClearPtData;   WRONG - fixed in v15.10 - RV
     cmdNewConsult.Visible := True;
@@ -2527,7 +2568,7 @@ begin
   inherited;
   cmdPCE.Enabled := False;
   UpdatePCE(uPCEMaster);
-  cmdPCE.Enabled := True;
+  cmdPCE.Enabled := WriteAccess(waEncounter);
   if frmFrame.Closing then exit;
   DisplayPCE;
 end;
@@ -2689,10 +2730,14 @@ begin
       end
      else
       begin
-       MenuAccessRec  := GetActionMenuLevel(ConsultRec.IEN) ;
-       status  := ConsultRec.ORStatus ;
+        if WriteAccess(waConsults) then
+        begin
+          MenuAccessRec  := GetActionMenuLevel(ConsultRec.IEN) ;
+          status  := ConsultRec.ORStatus;
+        end
+        else
+          status  := ST_NO_STATUS;
       end ;
-
 
      with MenuAccessRec do
        begin
@@ -2741,7 +2786,7 @@ begin
                                                        and (status<>ST_COMPLETE)
                                                        and (status<>ST_CANCELLED));
 
-         mnuActAddComment.Enabled     :=  True;
+         mnuActAddComment.Enabled     :=  WriteAccess(waConsults);
          mnuActDisplayDetails.Enabled :=  True;
          mnuActDisplayResults.Enabled :=  True;
          mnuActDisplaySF513.Enabled   :=  True;
@@ -2863,9 +2908,9 @@ begin
 
   if ((lstNotes.ItemIndex > -1) and UserIsSigner(lstNotes.ItemIEN)) then
   begin
-    mnuActSignatureList.Enabled := True;
-    mnuActSignatureSign.Enabled := True;
-    mnuActConsultResults.Enabled := True;
+    mnuActSignatureList.Enabled := WriteAccess(waConsults);
+    mnuActSignatureSign.Enabled := WriteAccess(waConsults);
+    mnuActConsultResults.Enabled := WriteAccess(waConsults);
   end;
 
   popNoteMemoSignList.Enabled       :=  //(mnuActConsultResults.Enabled) and
@@ -2911,7 +2956,7 @@ begin
       finally
         VitalStr.free;
       end;
-      cmdPCE.Enabled := CanEditPCE(uPCEMaster);
+      cmdPCE.Enabled := WriteAccess(waEncounter) and CanEditPCE(uPCEMaster);
       ShowPCEControls(cmdPCE.Enabled or (memPCEShow.Lines.Count > 0));
       if(NoPCE and memPCEShow.Visible) then
         memPCEShow.Lines.Insert(0, TX_NOPCE);
@@ -2930,7 +2975,7 @@ begin
         ShowList := [odTemplates];
       end;
       frmDrawers.Visible := True;
-      frmDrawers.DisplayDrawers(TRUE, EnableList, ShowList);
+      frmDrawers.DisplayDrawers(WriteAccess(waConsultTemplates), EnableList, ShowList);
       cmdNewConsult.Visible := False;
       cmdNewProc.Visible := False;
       pnlConsultList.Height := (pnlLeft.Height div 5);
@@ -3106,8 +3151,10 @@ begin
     popNoteMemoGrammar.Enabled  := True;
     popNoteMemoReformat.Enabled := True;
     popNoteMemoReplace.Enabled  := (FEditCtrl.GetTextLen > 0);
-    popNoteMemoPreview.Enabled  := (frmDrawers.TheOpenDrawer = odTemplates) and Assigned(frmDrawers.tvTemplates.Selected);
-    popNoteMemoInsTemplate.Enabled  := (frmDrawers.TheOpenDrawer = odTemplates) and Assigned(frmDrawers.tvTemplates.Selected);
+    popNoteMemoPreview.Enabled  := WriteAccess(waConsultTemplates) and
+      (frmDrawers.TheOpenDrawer = odTemplates) and Assigned(frmDrawers.tvTemplates.Selected);
+    popNoteMemoInsTemplate.Enabled  := WriteAccess(waConsultTemplates) and
+      (frmDrawers.TheOpenDrawer = odTemplates) and Assigned(frmDrawers.tvTemplates.Selected);
     popNoteMemoViewCslt.Enabled := (FEditNote.PkgPtr = PKG_CONSULTS);  //wat cq 17586
   end else
   begin
@@ -3390,6 +3437,10 @@ end;
 procedure TfrmConsults.FormCreate(Sender: TObject);
 begin
   inherited;
+  cmdNewConsult.Enabled := canWriteOrder(CsltDisp);
+  cmdNewProc.Enabled := canWriteOrder(ProcDisp);
+  mnuActNewConsultRequest.Enabled := canWriteOrder(CsltDisp);
+  mnuActNewProcedure.Enabled := canWriteOrder(ProcDisp);
   FocusToRightPanel := False;
   PageID := CT_CONSULTS;
   EditingIndex := -1;
@@ -3404,6 +3455,7 @@ begin
   frmDrawers.Splitter := splDrawers;
   frmDrawers.DefTempPiece := 2;
   frmDrawers.CopyMonitor := CPMemResults;
+  frmDrawers.TemplateAccess := WriteAccess(waConsultTemplates);
   FImageFlag := TBitmap.Create;
   FDocList := TStringList.Create;
   with FCurrentNoteContext do
@@ -3414,6 +3466,8 @@ begin
     end;
   FCsltList := TStringList.Create;
 
+  SetActionMenus ;
+  SetResultMenus ;
   //safteynet
   CPMemConsult.CopyMonitor := frmFrame.CPAppMon;
   CPMemResults.CopyMonitor := frmFrame.CPAppMon;
@@ -3733,7 +3787,7 @@ begin
     if Copy(Piece(Notifications.RecordID, U, 2), 1, 6) = 'TIUADD' then Notifications.Delete;
     if Copy(Piece(Notifications.RecordID, U, 2), 1, 5) = 'TIUID' then Notifications.Delete;
   end;
-  
+
   FNotifPending := False;
 end;
 
@@ -3917,7 +3971,8 @@ begin
   mnuNewTemplate.Enabled := frmDrawers.CanEditTemplates;
   mnuEditSharedTemplates.Enabled := frmDrawers.CanEditShared;
   mnuNewSharedTemplate.Enabled := frmDrawers.CanEditShared;
-  mnuEditDialgFields.Enabled := CanEditTemplateFields;
+  mnuEditDialgFields.Enabled := WriteAccess(waConsultTemplates) and
+    CanEditTemplateFields;
 end;
 
 procedure TfrmConsults.mnuEditSharedTemplatesClick(Sender: TObject);
@@ -4327,31 +4382,44 @@ begin
   DoAutoSave;
 end;
 
-procedure TfrmConsults.DoAutoSave(Suppress: integer = 1);
+procedure TfrmConsults.DoAutoSave(Suppress: Integer = 1);
 var
   ErrMsg: string;
+  RetryAction: Boolean;
+  NoteErrorAction: TNoteErrorReturn;
 begin
-  if fFrame.frmFrame.DLLActive = True then Exit;
+  if FFrame.FrmFrame.DLLActive = True then
+    Exit;
   if (EditingIndex > -1) and FChanged then
   begin
     StatusText('Autosaving note...');
-    //PutTextOnly(ErrMsg, memResults.Lines, lstNotes.GetIEN(EditingIndex));
-    timAutoSave.Enabled := False;
+    // PutTextOnly(ErrMsg, memResults.Lines, lstNotes.GetIEN(EditingIndex));
+    TimAutoSave.Enabled := False;
     try
-      SetText(ErrMsg, memResults.Lines, lstNotes.GetIEN(EditingIndex), Suppress);
+      repeat
+        RetryAction := False;
+        SetText(ErrMsg, MemResults.Lines, LstNotes.GetIEN(EditingIndex),
+          Suppress);
+        if ErrMsg <> '' then
+        begin
+          NoteErrorAction := ShowNoteError(ErrMsg, MemResults.Lines,
+            True, False);
+          RetryAction := NoteErrorAction = neRetry;
+        end;
+      until not RetryAction;
 
-      if (memResults.lines.Count > 0) and (CPMemResults.CopyPasteEnabled) then
-        //Save copied text here
-        CPMemResults.SaveTheMonitor(lstNotes.GetIEN(EditingIndex));
+      if (MemResults.Lines.Count > 0) and (CPMemResults.CopyPasteEnabled) then
+        // Save copied text here
+        CPMemResults.SaveTheMonitor(LstNotes.GetIEN(EditingIndex));
 
     finally
-      timAutoSave.Enabled := True;
+      TimAutoSave.Enabled := True;
     end;
     FChanged := False;
     StatusText('');
   end;
   if ErrMsg <> '' then
-    ShowNoteError(ErrMsg, memResults.Lines);
+    ShowNoteError(ErrMsg, MemResults.Lines);
 end;
 
 procedure TfrmConsults.DoLeftPanelCustomShiftTab;
@@ -4650,7 +4718,7 @@ begin
   if uChanging then Exit;
   //This gives the change a chance to occur when keyboarding, so that WindowEyes
   //doesn't use the old value.
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   with tvCsltNotes do
     begin
       if not AssignedAndHasData(Selected) then Exit;

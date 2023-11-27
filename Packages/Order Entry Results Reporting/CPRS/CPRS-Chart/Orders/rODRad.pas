@@ -15,14 +15,14 @@ function ImagingMessage(AnIEN: integer): string;
 function PatientOnIsolationProcedures(const PatientDFN: string): boolean;
 // *DFN*
 procedure SubsetOfRadiologists(Dest: TStrings);
-procedure SubsetOfImagingTypes(Dest: TStrings);
+procedure SubsetOfImagingTypes(Dest: TStrings; CheckWriteAccess: boolean = True);
 procedure SubsetOfRadSources(Dest: TStrings; SrcType: string);
 function LocationType(Location: integer): string;
 function ReasonForStudyCarryOn: boolean;
 
 implementation
 
-uses rODBase;
+uses rODBase, uOrders;
 (* fODBase, rODBase, fODRad; *)
 
 //function ODForRad(const PatientDFN, AnEventDiv: string; ImagingType: integer)
@@ -112,13 +112,19 @@ begin
   CallVistA('ORWDRA32 APPROVAL', [''], Dest);
 end;
 
-procedure SubsetOfImagingTypes(Dest: TStrings);
+procedure SubsetOfImagingTypes(Dest: TStrings; CheckWriteAccess: boolean = True);
+var
+  i, DGroup: Integer;
+
 begin
-  { 272867
-    Callv('ORWDRA32 IMTYPSEL',['']);
-    Result := RPCBrokerV.Results ;
-  }
   CallVistA('ORWDRA32 IMTYPSEL', [''], Dest);
+  if CheckWriteAccess then
+    for i := Dest.Count - 1 downto 0 do
+    begin
+      DGroup := StrToIntDef(Piece(Dest[i], u, 4), 0);
+      if not canWriteOrder(DGroup) then
+        Dest.Delete(i);
+    end;
 end;
 
 procedure SubsetOfRadSources(Dest: TStrings; SrcType: string);

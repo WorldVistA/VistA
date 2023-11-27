@@ -295,7 +295,7 @@ uses fVisit, fEncnt, rCore, uCore, fNoteBA, fNoteBD, fSignItem,
   FIconLegend, fPCEEdit, rTIU, fRptBox, fTemplateDialog,
   VA508AccessibilityRouter,
   System.Types, rECS, ORNet, trpcb, System.IniFiles, ORNetIntf,
-  U_CPTEditMonitor, VAUtils, uMisc;
+  U_CPTEditMonitor, VAUtils, uMisc, UResponsiveGUI, uWriteAccess;
 
 const
   CT_SURGERY = 11; // chart tab - surgery
@@ -516,8 +516,11 @@ begin
   frmDrawers.Splitter := splDrawers;
   frmDrawers.DefTempPiece := 1;
   frmDrawers.CopyMonitor := CPMemNewNote;
+  frmDrawers.TemplateAccess := WriteAccess(waSurgeryTemplates);
   FImageFlag := TBitmap.Create;
   FCaseList := TStringList.Create;
+
+  EnableDisableMenus(False);
 
   // safteynet
   CPMemSurgery.CopyMonitor := frmFrame.CPAppMon;
@@ -900,13 +903,13 @@ begin
           EnableList := [odTemplates];
           ShowList := [odTemplates];
         end;
-        frmDrawers.DisplayDrawers(True, EnableList, ShowList);
+        frmDrawers.DisplayDrawers(WriteAccess(waSurgeryTemplates), EnableList, ShowList);
       end;
     end
     else
     begin
       ShowPCEButtons(False);
-      frmDrawers.DisplayDrawers(True, [odTemplates], [odTemplates]);
+      frmDrawers.DisplayDrawers(WriteAccess(waSurgeryTemplates), [odTemplates], [odTemplates]);
       AnIEN := lstNotes.ItemIEN;
       ActOnDocument(ActionSts, AnIEN, 'VIEW');
       if ActionSts.Success then
@@ -1132,8 +1135,7 @@ begin
           tvSurgery.Items.EndUpdate;
         end;
         uChanging := False;
-        Changes.Add(CH_SUR, IntToStr(CreatedNote.IEN), GetTitleText(0), '',
-          CH_SIGN_YES);
+        Changes.Add(CH_SUR, IntToStr(CreatedNote.IEN), GetTitleText(0), '', CH_SIGN_YES);
         lstNotes.ItemIndex := 0;
         EditingIndex := 0;
         SetSubjectVisible(AskSubjectForNotes);
@@ -1260,8 +1262,7 @@ begin
         tvSurgery.Items.EndUpdate;
       end;
       uChanging := False;
-      Changes.Add(CH_SUR, IntToStr(CreatedNote.IEN), GetTitleText(0), '',
-        CH_SIGN_YES);
+      Changes.Add(CH_SUR, IntToStr(CreatedNote.IEN), GetTitleText(0), '', CH_SIGN_YES);
       lstNotes.ItemIndex := 0;
       EditingIndex := 0;
       SetSubjectVisible(AskSubjectForNotes);
@@ -1290,8 +1291,7 @@ var
 begin
   ClearEditControls;
   EditingIndex := lstNotes.ItemIndex;
-  Changes.Add(CH_SUR, lstNotes.ItemID, GetTitleText(EditingIndex), '',
-    CH_SIGN_YES);
+  Changes.Add(CH_SUR, lstNotes.ItemID, GetTitleText(EditingIndex), '', CH_SIGN_YES);
   GetNoteForEdit(FEditNote, lstNotes.ItemIEN);
   memNewNote.Lines.Assign(FEditNote.Lines);
   FChanged := False;
@@ -1349,9 +1349,25 @@ end;
 
 procedure TfrmSurgery.SaveEditedNote(var Saved: Boolean);
 { validates fields and sends the updated note to the server }
+
+  procedure AfterSave;
+  begin
+    if LstNotes.ItemIndex = EditingIndex then
+    begin
+      EditingIndex := -1;
+      LstNotesClick(Self);
+    end;
+    EditingIndex := -1;
+    // make sure EditingIndex reset even if not viewing edited note
+    Saved := True;
+    FChanged := False;
+  end;
+
 var
   UpdatedNote: TCreatedDoc;
   x: string;
+  RetryAction: Boolean;
+  NoteErrorAction: TNoteErrorReturn;
 begin
   Saved := False;
   if (memNewNote.GetTextLen = 0) or (not ContainsVisibleChar(memNewNote.Text))
@@ -1383,32 +1399,36 @@ begin
   FEditNote.NeedCPT := uPCEMaster.CPTRequired;
   timAutoSave.Enabled := False;
   try
-    PutEditedNote(UpdatedNote, FEditNote, lstNotes.GetIEN(EditingIndex));
+    repeat
+      RetryAction := False;
+      PutEditedNote(UpdatedNote, FEditNote, LstNotes.GetIEN(EditingIndex));
 
-    // Save copied text here
-    if (memNewNote.lines.Count > 0) and (CPMemNewNote.CopyPasteEnabled) then
-      CPMemNewNote.SaveTheMonitor(UpdatedNote.IEN);
+      // there's no unlocking here since the note is still in Changes after a save
+      if UpdatedNote.IEN > 0 then
+      begin
+        // Save copied text here
+        if (MemNewNote.Lines.Count > 0) and (CPMemNewNote.CopyPasteEnabled) then
+          CPMemNewNote.SaveTheMonitor(UpdatedNote.IEN);
 
+        AfterSave;
+      end
+      else
+      begin
+        if not FSilent then
+        begin
+          NoteErrorAction := ShowNoteError(UpdatedNote.ErrorText,
+            FEditNote.Lines, False, True);
+
+          RetryAction := NoteErrorAction = neRetry;
+
+          if NoteErrorAction = neAbort then
+            AfterSave;
+        end;
+
+      end;
+    until not RetryAction;
   finally
-    timAutoSave.Enabled := True;
-  end;
-  // there's no unlocking here since the note is still in Changes after a save
-  if UpdatedNote.IEN > 0 then
-  begin
-    if lstNotes.ItemIndex = EditingIndex then
-    begin
-      EditingIndex := -1;
-      lstNotesClick(Self);
-    end;
-    EditingIndex := -1;
-    // make sure EditingIndex reset even if not viewing edited note
-    Saved := True;
-    FChanged := False;
-  end
-  else
-  begin
-    if not FSilent then
-      ShowNoteError(UpdatedNote.ErrorText, FEditNote.Lines);
+    TimAutoSave.Enabled := True;
   end;
 end;
 
@@ -1459,7 +1479,7 @@ begin
     UpdatePCE(uPCEMaster);
     Refresh := True;
   end;
-  cmdPCE.Enabled := True;
+  cmdPCE.Enabled := WriteAccess(waEncounter);
   if Refresh and (not frmFrame.Closing) then
     DisplayPCE;
 end;
@@ -1693,28 +1713,36 @@ end;
 procedure TfrmSurgery.DoAutoSave(Suppress: Integer = 1);
 var
   ErrMsg: string;
+  RetryAction: Boolean;
+  NoteErrorAction: TNoteErrorReturn;
 begin
-  if fFrame.frmFrame.DLLActive = True then
+  if FFrame.FrmFrame.DLLActive = True then
     Exit;
   if (EditingIndex > -1) and FChanged then
   begin
     StatusText('Autosaving note...');
     // PutTextOnly(ErrMsg, memNewNote.Lines, lstNotes.GetIEN(EditingIndex));
-    timAutoSave.Enabled := False;
+    TimAutoSave.Enabled := False;
     try
-      SetText(ErrMsg, memNewNote.Lines, lstNotes.GetIEN(EditingIndex),
-        Suppress);
-
-      if (memNewNote.lines.Count > 0) and (CPMemNewNote.CopyPasteEnabled) then
-        CPMemNewNote.SaveTheMonitor(lstNotes.GetIEN(EditingIndex));
+      repeat
+        RetryAction := false;
+        SetText(ErrMsg, MemNewNote.Lines, LstNotes.GetIEN(EditingIndex),
+          Suppress);
+        if ErrMsg <> '' then
+        begin
+          NoteErrorAction := ShowNoteError(ErrMsg, MemNewNote.Lines,
+            True, False);
+          RetryAction := NoteErrorAction = neRetry;
+        end;
+      until not RetryAction;
+      if (MemNewNote.Lines.Count > 0) and (CPMemNewNote.CopyPasteEnabled) then
+        CPMemNewNote.SaveTheMonitor(LstNotes.GetIEN(EditingIndex));
     finally
-      timAutoSave.Enabled := True;
+      TimAutoSave.Enabled := True;
     end;
     FChanged := False;
     StatusText('');
   end;
-  if ErrMsg <> '' then
-    ShowNoteError(ErrMsg, memNewNote.Lines);
 end;
 
 procedure TfrmSurgery.timAutoSaveTimer(Sender: TObject);
@@ -1945,7 +1973,7 @@ begin
   // reset the display now that the note is gone
   if DeleteSts.Success then
   begin
-    DeletePCE(AVisitStr);
+    DeletePCE(AVisitStr, uPCEMaster.VisitIEN);
     // removes PCE data if this was the only note pointing to it
     ClearEditControls;
     LoadSurgeryCases;
@@ -1953,7 +1981,7 @@ begin
     pnlRead.Visible := True;
     UpdateReminderFinish;
     ShowPCEControls(False);
-    frmDrawers.DisplayDrawers(True, [odTemplates], [odTemplates]); // FALSE);
+    frmDrawers.DisplayDrawers(WriteAccess(waSurgeryTemplates), [odTemplates], [odTemplates]); // FALSE);
     ShowPCEButtons(False);
     // end; {if ItemIndex}
   end { if DeleteSts }
@@ -2248,7 +2276,7 @@ begin
     popNoteMemoCopy.Enabled := FEditCtrl.SelLength > 0;
     popNoteMemoPaste.Enabled := (not TORExposedCustomEdit(FEditCtrl).ReadOnly)
       and Clipboard.HasFormat(CF_TEXT);
-    popNoteMemoTemplate.Enabled := frmDrawers.CanEditTemplates and
+    popNoteMemoTemplate.Enabled := WriteAccess(waSurgeryTemplates) and frmDrawers.CanEditTemplates and
       popNoteMemoCut.Enabled;
     popNoteMemoFind.Enabled := FEditCtrl.GetTextLen > 0;
   end
@@ -2265,9 +2293,9 @@ begin
     popNoteMemoGrammar.Enabled := True;
     popNoteMemoReformat.Enabled := True;
     popNoteMemoReplace.Enabled := (FEditCtrl.GetTextLen > 0);
-    popNoteMemoPreview.Enabled := (frmDrawers.TheOpenDrawer = odTemplates) and
+    popNoteMemoPreview.Enabled := WriteAccess(waSurgeryTemplates) and (frmDrawers.TheOpenDrawer = odTemplates) and
       Assigned(frmDrawers.tvTemplates.Selected);
-    popNoteMemoInsTemplate.Enabled := (frmDrawers.TheOpenDrawer = odTemplates)
+    popNoteMemoInsTemplate.Enabled := WriteAccess(waSurgeryTemplates) and (frmDrawers.TheOpenDrawer = odTemplates)
       and Assigned(frmDrawers.tvTemplates.Selected);
   end
   else
@@ -2715,7 +2743,7 @@ begin
   mnuNewTemplate.Enabled := frmDrawers.CanEditTemplates;
   mnuEditSharedTemplates.Enabled := frmDrawers.CanEditShared;
   mnuNewSharedTemplate.Enabled := frmDrawers.CanEditShared;
-  mnuEditDialgFields.Enabled := CanEditTemplateFields;
+  mnuEditDialgFields.Enabled := WriteAccess(waSurgeryTemplates) and CanEditTemplateFields;
 end;
 
 procedure TfrmSurgery.SetEditingIndex(const Value: Integer);
@@ -2774,14 +2802,14 @@ begin
     cmdPCE.Visible := True;
     if Editing then
     begin
-      cmdPCE.Enabled := CanEditPCE(uPCEMaster);
+      cmdPCE.Enabled := WriteAccess(waEncounter) and CanEditPCE(uPCEMaster);
       { TODO -oRich V. -cSurgery/TIU : Uncomment if allow new notes from Surgery tab }
       // cmdNewNote.Visible := AnytimeEncounters;
       // cmdNewNote.Enabled := FALSE;
     end
     else
     begin
-      cmdPCE.Enabled := (GetAskPCE(0) <> apDisable);
+      cmdPCE.Enabled := WriteAccess(waEncounter) and (GetAskPCE(0) <> apDisable);
       { TODO -oRich V. -cSurgery/TIU : Uncomment if allow new notes from Surgery tab }
       // cmdNewNote.Visible := TRUE;
       // cmdNewNote.Enabled := TRUE;
@@ -2801,7 +2829,7 @@ begin
     lblSpace1.Top := cmdPCE.Top - lblSpace1.Height
   else
     lblSpace1.Top := cmdNewNote.Top - lblSpace1.Height;
-  popNoteMemoEncounter.Enabled := cmdPCE.Enabled;
+  popNoteMemoEncounter.Enabled := WriteAccess(waEncounter) and cmdPCE.Enabled;
   popNoteMemoEncounter.Visible := cmdPCE.Visible;
 end;
 
@@ -2822,7 +2850,7 @@ begin
     Exit;
   // This gives the change a chance to occur when keyboarding, so that WindowEyes
   // doesn't use the old value.
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   // ShowReport := True;
   with tvSurgery do
   begin
@@ -2876,7 +2904,8 @@ begin
       pnlRead.Visible := True;
       // UpdateReminderFinish;
       ShowPCEControls(False);
-      frmDrawers.DisplayDrawers(True, [odTemplates], [odTemplates]); // FALSE);
+      frmDrawers.DisplayDrawers(WriteAccess(waSurgeryTemplates),
+        [odTemplates], [odTemplates]); // FALSE);
       ShowPCEButtons(False);
       memSurgery.Clear;
     end;
@@ -3088,35 +3117,42 @@ begin
 end;
 
 procedure TfrmSurgery.EnableDisableMenus(IsTIUDocument: Boolean);
+var
+  IsTIUDocumentA: boolean;
 begin
+  IsTIUDocumentA := IsTIUDocument and WriteAccess(waSurgery);
   { TODO -oRich V. -cSurgery/TIU : Reset NewNoteMenu enabled if allow new notes from Surgery tab }
   mnuActNew.Enabled := False;
-  mnuActAddend.Enabled := IsTIUDocument;
+  mnuActAddend.Enabled := IsTIUDocumentA;
   mnuActAddIDEntry.Enabled := False;
   mnuActDetachFromIDParent.Enabled := False;
-  mnuActEdit.Enabled := IsTIUDocument;
-  mnuActDelete.Enabled := IsTIUDocument;
-  mnuActSign.Enabled := IsTIUDocument;
-  mnuActSignList.Enabled := IsTIUDocument;
-  mnuActSave.Enabled := IsTIUDocument;
-  mnuActIdentifyAddlSigners.Enabled := IsTIUDocument;
-  mnuActChange.Enabled := IsTIUDocument;
-  mnuActLoadBoiler.Enabled := IsTIUDocument;
-  popNoteMemoSignList.Enabled := IsTIUDocument;
-  popNoteMemoSign.Enabled := IsTIUDocument;
-  popNoteMemoSave.Enabled := IsTIUDocument;
-  popNoteMemoEdit.Enabled := IsTIUDocument;
-  popNoteMemoDelete.Enabled := IsTIUDocument;
-  popNoteMemoAddlSign.Enabled := IsTIUDocument;
-  popNoteMemoAddend.Enabled := IsTIUDocument;
-  mnuViewDetail.Enabled := IsTIUDocument;
-  popNoteMemoPreview.Enabled := IsTIUDocument and
+  mnuActEdit.Enabled := IsTIUDocumentA;
+  mnuActDelete.Enabled := IsTIUDocumentA;
+  mnuActSign.Enabled := IsTIUDocumentA;
+  mnuActSignList.Enabled := IsTIUDocumentA;
+  mnuActSave.Enabled := IsTIUDocumentA;
+  mnuActIdentifyAddlSigners.Enabled := IsTIUDocumentA;
+  mnuActChange.Enabled := IsTIUDocumentA;
+  mnuActLoadBoiler.Enabled := IsTIUDocumentA;
+  popNoteMemoSignList.Enabled := IsTIUDocumentA;
+  popNoteMemoSign.Enabled := IsTIUDocumentA;
+  popNoteMemoSave.Enabled := IsTIUDocumentA;
+  popNoteMemoEdit.Enabled := IsTIUDocumentA;
+  popNoteMemoDelete.Enabled := IsTIUDocumentA;
+  popNoteMemoAddlSign.Enabled := IsTIUDocumentA;
+  popNoteMemoAddend.Enabled := IsTIUDocumentA;
+  mnuViewDetail.Enabled := IsTIUDocument; // NOT IsTIUDocumentA
+  popNoteMemoPreview.Enabled := IsTIUDocumentA and
+    WriteAccess(waSurgeryTemplates) and
     Assigned(frmDrawers.tvTemplates.Selected);
-  popNoteMemoInsTemplate.Enabled := IsTIUDocument and
+  popNoteMemoInsTemplate.Enabled := IsTIUDocumentA and
+    WriteAccess(waSurgeryTemplates) and
     Assigned(frmDrawers.tvTemplates.Selected);
   if not IsTIUDocument then
     mnuViewDetail.Checked := False;
   frmFrame.mnuFilePrint.Enabled := IsTIUDocument;
+  popNoteMemoEncounter.Enabled := cmdPCE.Enabled;
+  popNoteMemoEncounter.Visible := cmdPCE.Visible;
 end;
 
 procedure TfrmSurgery.memNewNoteKeyDown(Sender: TObject; var Key: Word;

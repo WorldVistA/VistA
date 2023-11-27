@@ -2,7 +2,8 @@ unit rODDiet;
 
 interface
 
-uses SysUtils, Windows, Classes, ORNet, ORFn, uCore, uConst, rOrders;
+uses SysUtils, Windows, Classes, ORNet, ORFn, uCore, uConst, rOrders, ComCtrls,
+  uOrders, uWriteAccess;
 
 type
   TOutpatientPatchInstalled = record
@@ -32,6 +33,20 @@ type
     OPMaxDays: integer;
     OPDefaultDiet: integer;
   end;
+
+  TDietTabInfo = record
+    TabSheet: TTabSheet;
+    Access: TWriteAccess.TDGWriteAccessDietetics;
+  end;
+
+  TDietTab = (dtDiet, dtOutpatientMeals, dtTubeFeeding, dtEarlyLateTray,
+    dtIsolationsPrecautions, dtAdditionalOrder);
+
+  TDietTabs = set of TDietTab;
+  TDietTabArray = array [TDietTab] of TDietTabInfo;
+
+const
+  dtNone = TDietTab(-1);
 
 function CurrentDietText: string;
 function DietAttributes(OI: Integer): string;

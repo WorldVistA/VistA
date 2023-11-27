@@ -78,7 +78,8 @@ function GetMOBDLLName(): string;
 
 procedure SaveUserBounds(AControl: TControl; ID: string = '');
 procedure SaveUserSizes(SizingList: TStringList);
-procedure SetFormPosition(AForm: TForm; FormID: string = '');
+procedure SetFormPosition(AForm: TForm; FormID: string = '';
+  NoShrinkAllowed: Boolean = False);
 procedure SetUserBounds(var AControl: TControl);
 procedure SetUserBounds2(AName: string; var v1, v2, v3, v4: integer);
 //procedure SetUserBoundsArray(AName: string; var SettingArray: SettingSizeArray);
@@ -108,6 +109,7 @@ function FindInt(aSource: TStrings; const FieldID: string;
 function FindInt64(aSource: TStrings; const FieldID: string;
   aPiece: Integer): Int64;
 function FindVal(aSource:TStrings;const FieldID: string;aPiece:Integer): string;
+procedure GetDDAttributes(Dest: TStrings; FileNum, FieldNum: Extended; Flags, Attributes: string);
 
 var
   SizeHolder : TSizeHolder;
@@ -590,7 +592,8 @@ begin
   CallVistA('ORWCH SAVFONT', [IntToStr(FontSize)]);
 end;
 
-procedure SetFormPosition(AForm: TForm; FormID: string = '');
+procedure SetFormPosition(AForm: TForm; FormID: string = '';
+  NoShrinkAllowed: Boolean = False);
 var
   x: string;
   kb: IORKeepBounds;
@@ -602,6 +605,13 @@ begin
     AForm.WindowState := wsMaximized
   else
   begin
+    if NoShrinkAllowed then
+    begin
+      if StrToIntDef(Piece(x, ',', 3), 0) < AForm.Width then
+        SetPiece(x, ',', 3, AForm.Width.ToString);
+      if StrToIntDef(Piece(x, ',', 4), 0) < AForm.Height then
+        SetPiece(x, ',', 4, AForm.Height.ToString);
+    end;
     AForm.SetBounds(StrToIntDef(Piece(x, ',', 1), AForm.Left),
                     StrToIntDef(Piece(x, ',', 2), AForm.Top),
                     StrToIntDef(Piece(x, ',', 3), AForm.Width),
@@ -1013,6 +1023,11 @@ end;
 function FindVal(aSource:TStrings;const FieldID: string;aPiece:Integer): string;
 begin
   Result := getPieceByFieldID(aSource,FieldID,aPiece);
+end;
+
+procedure GetDDAttributes(Dest: TStrings; FileNum, FieldNum: Extended; Flags, Attributes: string);
+begin
+  CallVistA('ORWU FLDINFO', [FileNum, FieldNum, Flags, Attributes], Dest);
 end;
 
 initialization

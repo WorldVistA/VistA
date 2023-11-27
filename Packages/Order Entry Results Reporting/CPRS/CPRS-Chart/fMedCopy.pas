@@ -51,7 +51,7 @@ var
 implementation
 {$R *.DFM}
 
-uses  fODBase, fOrdersTS, fOrders, VAUtils;
+uses  fODBase, fOrdersTS, fOrders, VAUtils, uWriteAccess;
 
 const
   TX_SEL_DATE = 'An effective date (approximate) must be selected for discharge orders.';
@@ -291,6 +291,11 @@ const
     ' readied in advance by Pharmacy for the patient''s expected discharge date.';
 begin
   inherited;
+    if not WriteAccess(waDelayedOrders, True) then
+    begin
+      radReleaseClick(radRelease);
+      exit;
+    end;
   frmMedCopy.fraEvntDelayList.UserDefaultEvent := StrToIntDef(GetDefaultEvt(IntToStr(User.DUZ)),0);
   fraEvntDelayList.DisplayEvntDelayList;
   if fraEvntDelayList.mlstEvents.Items.Count < 1 then

@@ -51,7 +51,7 @@ implementation
 
 {$R *.DFM}
 
-uses uCore, uConst, forders, fODChangeEvtDisp, rMisc;
+uses uCore, uConst, forders, fODChangeEvtDisp, rMisc, uWriteAccess;
 
 function ExecuteChangeEvt(SelectedList: TList; var DoesDestEvtOccur: boolean;
   var DestPtEvtID: integer; var DestPtEvtName: string): boolean;
@@ -144,7 +144,7 @@ begin
       for i := 0 to selectedList.Count - 1 do
       begin
         AnOrder := TOrder(selectedList[i]);
-        AnOrderIDList.Add(AnOrder.ID);
+        AnOrderIDList.Add(AnOrder.ID + U + IntToStr(AnOrder.DGroup));
       end;
       EvtInfo := frmChgEvent.cboSpecialty.Items[frmChgEvent.cboSpecialty.ItemIndex];
       AnEvent.EventType := CharAt(Piece(EvtInfo,'^',3),1);
@@ -211,7 +211,7 @@ begin
       for i := 0 to selectedList.Count - 1 do
       begin
         AnOrder := TOrder(selectedList[i]);
-        AnOrderIDList.Add(AnOrder.ID);
+        AnOrderIDList.Add(AnOrder.ID + U + IntToStr(AnOrder.DGroup));
       end;
       ChangeEvent(AnOrderIDList,'');
       frmChgEvent.updateChanges(AnOrderIDList,'');
@@ -377,24 +377,28 @@ end;
 
 procedure TfrmChgEvent.updateChanges(const AnOrderIDList: TStringList; const AnEventName: String);
 var
-  jx,TempSigSts: integer;
+  jx, TempSigSts, DG: integer;
   theChangeItem: TChangeItem;
   TempText: string;
+  id: string;
+
 begin
   for jx := 0 to AnOrderIDList.Count - 1 do
   begin
-    theChangeItem := Changes.Locate(CH_ORD,AnOrderIDList[jx]);
+    id := Piece(AnOrderIDList[jx], U, 1);
+    DG := StrToIntDef(Piece(AnOrderIDList[jx], U, 2), 0);
+    theChangeItem := Changes.Locate(CH_ORD, id);
     if theChangeItem = nil then
     begin
-      TempText := RetrieveOrderText(AnOrderIDList[jx]);
-      Changes.Add(CH_ORD,AnOrderIDList[jx],TempText,AnEventName,1);
+      TempText := RetrieveOrderText(id);
+      Changes.Add(CH_ORD, id, TempText, AnEventName, CH_SIGN_YES, waOrders, '', 0, DG)
     end
     else
     begin
       TempText := theChangeItem.Text;
       TempSigSts := theChangeItem.SignState;
-      Changes.Remove(CH_ORD,AnOrderIDList[jx]);
-      Changes.Add(CH_ORD,AnOrderIDList[jx],TempText, AnEventName, TempSigSts);
+      Changes.Remove(CH_ORD, id);
+      Changes.Add(CH_ORD, id, TempText, AnEventName, TempSigSts, waOrders, '', 0, DG);
     end;
   end;
   if FDefaultPtEvntIFN>0 then

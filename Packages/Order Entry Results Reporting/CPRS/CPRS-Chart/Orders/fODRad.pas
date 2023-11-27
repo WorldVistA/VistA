@@ -80,6 +80,7 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure txtReasonKeyPress(Sender: TObject; var Key: Char);
     procedure tmrBringToFrontTimer(Sender: TObject);
+    procedure lblImTypeClick(Sender: TObject);
   private
     FLastRadID: string;
     FEditCopy: boolean;
@@ -88,6 +89,7 @@ type
     FPredefineOrder: boolean;
     ImageTypeChanged : boolean;
     FFormFirstOpened: boolean;
+    FMissingGroupsMessage: string;
     function NoPregnantSelection : Boolean;
     procedure ImageTypeChange;
     procedure FormFirstOpened(Sender: TObject);
@@ -107,7 +109,7 @@ implementation
 {$R *.DFM}
 
 uses rODBase, rODRad, rOrders, uCore, rCore, fODRadApproval, fODRadConShRes, fLkUpLocation, fFrame,
-  uFormMonitor, System.UITypes, VAUtils;
+  uFormMonitor, System.UITypes, VAUtils, uOrders, uWriteAccess;
 
 const
   TX_NO_PROC          = 'An Imaging Procedure must be specified.'    ;
@@ -404,6 +406,13 @@ begin
   end;
 
   StatusText('');
+end;
+
+procedure TfrmODRad.lblImTypeClick(Sender: TObject);
+begin
+  inherited;
+  if FMissingGroupsMessage <> '' then
+    ShowMessage(FMissingGroupsMessage);
 end;
 
 procedure TfrmODRad.ControlChange(Sender: TObject);
@@ -731,6 +740,9 @@ begin
 end;
 
 procedure TfrmODRad.FormCreate(Sender: TObject);
+var
+  DGAccess: TWriteAccess.TDGWriteAccess;
+
 begin
   FFormFirstOpened := TRUE;
   ImageTypeChanged := false;
@@ -767,6 +779,21 @@ begin
     radPregnantUnknown.Enabled := False;
   end else SetDefaultPregant;
   FormMonitorBringToFrontEvent(Self, FormFirstOpened);
+
+  DGAccess := WriteAccessV.DGWriteAccess(ImgDisp);
+ if assigned(DGAccess) and (DGAccess is TWriteAccess.TDGWriteAccessParent) then
+    with DGAccess as TWriteAccess.TDGWriteAccessParent do
+    begin
+      if MissingGroups <> '' then
+      begin
+        FMissingGroupsMessage := 'Only imaging types for ' + AccessGroups +
+          ' are displayed.  Additional imaging types would be available if you had write access to '
+          + MissingGroups;
+        lblImType.Font.Color := clBlue;
+        lblImType.Font.Style := [fsUnderline];
+        lblImType.Cursor := crHandPoint;
+      end;
+    end;
 end;
 
 {Assigned to cbolmType.OnDropDownClose and cbolmType.OnExit, instead of

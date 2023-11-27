@@ -21,6 +21,9 @@ procedure DebugShowServer;
 function RPCLogDefaultFileName:TFileName;
 procedure RPCLogSetFontSize(aSize:Integer);
 
+function GetAllEnvVars(const Vars: TStrings): Integer;
+
+
 var
   RPCLog_SaveAvailable: Boolean; // If TRUE saving of the Log is available
   RPCLog_TrackForms: Boolean; // If TRUE Forms events are tracked
@@ -239,6 +242,40 @@ procedure RPCLogSetFontSize(aSize:Integer);
 begin
   if assigned(frmRPCLog) then
     frmRPCLog.setFontSize(aSize);
+end;
+
+function GetAllEnvVars(const Vars: TStrings): Integer;
+var
+  PEnvVars: PChar;    // pointer to start of environment block
+  PEnvEntry: PChar;   // pointer to an env string in block
+begin
+  // Clear the list
+  if Assigned(Vars) then
+    Vars.Clear;
+  // Get reference to environment block for this process
+ PEnvVars := GetEnvironmentStrings;
+ if PEnvVars <> nil then
+ begin
+   // We have a block: extract strings from it
+   // Env strings are #0 separated and list ends with #0#0
+   PEnvEntry := PEnvVars;
+   try
+     while PEnvEntry^ <> #0 do
+     begin
+       if Assigned(Vars) then
+         Vars.Add(PEnvEntry);
+       Inc(PEnvEntry, StrLen(PEnvEntry) + 1);
+     end;
+     // Calculate length of block
+     Result := (PEnvEntry - PEnvVars) + 1;
+   finally
+     // Dispose of the memory block
+     Windows.FreeEnvironmentStrings(PEnvVars);
+   end;
+ end
+ else
+   // No block => zero length
+   Result := 0;
 end;
 
 initialization

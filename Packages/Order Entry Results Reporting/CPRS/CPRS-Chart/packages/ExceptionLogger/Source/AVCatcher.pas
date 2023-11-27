@@ -67,6 +67,7 @@ type
     FAVLogFile: string; // Log file for the AV info
     fEmailTo: TStringList;
     fEnabled: Boolean;
+    FMaxStackDepth: Integer;
     fDaysToPurge: Integer;
     fVisible: Boolean;
     fTerminateApp: Boolean;
@@ -95,6 +96,7 @@ type
     property TerminateApp: Boolean read fTerminateApp write fTerminateApp;
     property DaysToPurge: Integer read fDaysToPurge write fDaysToPurge;
     property Enabled: Boolean read fEnabled write fEnabled;
+    property MaxStackDepth: Integer read FMaxStackDepth write FMaxStackDepth;
     property Visible: Boolean read FVisible write FVisible;
     property EmailTo: TStringList read fEmailTo;
     property OnBtnCustomClick: TNotifyEvent read FOnBtnCustomClick
@@ -119,7 +121,8 @@ uses
   Vcl.Graphics,
   IdURI,
   UExceptHook,
-  uMapParser;
+  uMapParser,
+  UResponsiveGUI;
 
 
 {$R *.dfm}
@@ -258,7 +261,6 @@ procedure TAppExceptThread.Execute;
 
   procedure GatherStackInfo(var OutList: TStringList);
   const
-    MAX_STACK_LENGTH = 50; // How many stack addresses do we map
     NoMapFormat = '[%p]';
     StackFormat = '[%p] %s (Line %s, "%s")';
   var
@@ -297,7 +299,7 @@ procedure TAppExceptThread.Execute;
         try
           for P in AStack do
           begin
-            if CurrentLevel >= MAX_STACK_LENGTH then Break;
+            if CurrentLevel >= MaxStackDepth then Break;
             if not Parser.MapLoaded then
             begin
               OutList.Add(Format(NoMapFormat, [P]));
@@ -306,8 +308,10 @@ procedure TAppExceptThread.Execute;
               Parser.LookupInMap(LongWord(P), aUnit, aMethod, aLine);
               if (aUnit <> 'NA') then begin
                 OutList.Add(Format(StackFormat, [P, aMethod, aLine, aUnit]));
-                Inc(CurrentLevel);
+              end else begin
+                OutList.Add(Format(NoMapFormat, [P]));
               end;
+              Inc(CurrentLevel);
             end;
           end;
         finally
@@ -351,6 +355,7 @@ end;
 constructor TExceptionLogger.Create;
 begin
   inherited;
+  FMaxStackDepth := 100;
   fDaysToPurge := 60;
   fEnabled := True;
   fEmailTo := TStringList.Create;
@@ -539,8 +544,7 @@ begin
     try
       while fParsing do
       begin
-        Sleep(100);
-        Application.ProcessMessages;
+        TResponsiveGUI.Sleep(100);
       end;
     finally
       Screen.Cursor := cr;
@@ -664,8 +668,9 @@ var
             StringReplace(AttachmentStr.Text, cCRLF, '', [rfReplaceAll])) <> 0
           then
           begin
-            S := cCRLF + RightPad('', 'X', 50) + cCRLF + StringOfChar(' ', 15) +
-              'Session Errors' + cCRLF + RightPad('', 'X', 50) + cCRLF + cCRLF;
+            S := cCRLF + cCRLF + RightPad('', 'X', 50) + cCRLF +
+              StringOfChar(' ', 15) + 'Session Errors' + cCRLF +
+              RightPad('', 'X', 50) + cCRLF + cCRLF;
             AttachmentStr.Insert(0, S);
             stringlist.Add(TIdURI.ParamsEncode(AttachmentStr.Text));
           end;
@@ -699,7 +704,7 @@ var
     AStack: TStack;
   begin
     if not Assigned(fExceptObj) then
-      Exit;
+      Exit('[fExceptObj not assigned]');
 
     Result := fExceptObj.UnitName + '.' + fExceptObj.ClassName;
     ErrStr := '';
@@ -733,7 +738,6 @@ var
   end;
 
 begin
-
   // Need to figure out the ole object method
   // fEmailTo.Delimiter := ';';
   EmailUsrs := '';
@@ -743,9 +747,8 @@ begin
       EmailUsrs := EmailUsrs + '; ';
     EmailUsrs := EmailUsrs + TmpStr;
   end;
-  SendMail(ExtractFileName(Application.ExeName) +' Error logged - ' + SetEmailSubject,
-    LogMessage, EmailUsrs, AVLogFile);
-
+  SendMail(ExtractFileName(Application.ExeName) + ' Error logged - ' +
+    SetEmailSubject, LogMessage, EmailUsrs, AVLogFile);
 end;
 
 function TExceptionLogger.RightPad(S: string; ch: char; Len: Integer): string;

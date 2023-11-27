@@ -78,7 +78,7 @@ inherited frmODRad: TfrmODRad
       Caption = 'Available Modifiers'
     end
     object lblImType: TLabel
-      Left = 0
+      Left = 2
       Top = 0
       Width = 83
       Height = 16
@@ -87,6 +87,7 @@ inherited frmODRad: TfrmODRad
       Margins.Right = 4
       Margins.Bottom = 4
       Caption = 'Imaging Type'
+      OnClick = lblImTypeClick
     end
     object lblSelectMod: TLabel
       Left = 134

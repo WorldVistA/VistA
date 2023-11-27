@@ -313,6 +313,7 @@ inherited frmODAnatPath: TfrmODAnatPath
       Height = 13
       Align = alClient
       Caption = '*Available Orders'
+      OnClick = lblAvailTestClick
       ExplicitWidth = 81
     end
     object cbxAvailTest: TORComboBox

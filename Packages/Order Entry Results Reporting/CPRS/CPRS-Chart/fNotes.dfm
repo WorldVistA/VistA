@@ -175,7 +175,6 @@ inherited frmNotes: TfrmNotes
           ParentBackground = False
           ParentColor = False
           TabOrder = 0
-          TabStop = True
           OnExit = frmDrawersExit
           OnResize = frmDrawersResize
           ExplicitWidth = 201
@@ -853,7 +852,7 @@ inherited frmNotes: TfrmNotes
         PlainText = True
         PopupMenu = popNoteMemo
         ScrollBars = ssVertical
-        TabOrder = 0
+        TabOrder = 1
         WantTabs = True
         Zoom = 100
         OnChange = memNewNoteChange
@@ -877,7 +876,7 @@ inherited frmNotes: TfrmNotes
         ParentShowHint = False
         ShowCaption = False
         ShowHint = True
-        TabOrder = 1
+        TabOrder = 2
         Visible = False
         CopyMonitor = frmFrame.CPAppMon
         CollapseBtn.Left = 878
@@ -970,7 +969,7 @@ inherited frmNotes: TfrmNotes
         PlainText = True
         ReadOnly = True
         ScrollBars = ssVertical
-        TabOrder = 2
+        TabOrder = 3
         Zoom = 100
         OnExit = memPCEWriteExit
       end
@@ -1055,7 +1054,7 @@ inherited frmNotes: TfrmNotes
           item
             Value = 33.165469163886410000
           end>
-        TabOrder = 3
+        TabOrder = 0
         OnResize = grdPnlResize
         object lblNewTitle: TStaticText
           AlignWithMargins = True
@@ -1200,7 +1199,8 @@ inherited frmNotes: TfrmNotes
         'Status = stsDefault')
       (
         'Component = memNewNote'
-        'Status = stsDefault')
+        'Text = Note Editor'
+        'Status = stsOK')
       (
         'Component = stTitle'
         'Status = stsDefault')
@@ -1335,13 +1335,15 @@ inherited frmNotes: TfrmNotes
         'Status = stsDefault')
       (
         'Component = cmdChange'
-        'Status = stsDefault')
+        'Text = Change Note Properties'
+        'Status = stsOK')
       (
         'Component = lblSubject'
         'Status = stsDefault')
       (
         'Component = txtSubject'
-        'Status = stsDefault'))
+        'Text = Note Subject'
+        'Status = stsOK'))
   end
   object fldAccessReminders: TVA508ComponentAccessibility
     Component = frmDrawers.btnReminder

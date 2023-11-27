@@ -325,7 +325,7 @@ implementation
 uses rCore, uCore, rODMeds, rODBase, rOrders, fRptBox, fODMedOIFA,
   fOtherSchedule, VA508AccessibilityRouter, System.Types,
   System.UITypes,
-  fFrame, ORNet, VAUtils, fODAllergyCheck;
+  fFrame, ORNet, VAUtils, fODAllergyCheck, uResponsiveGUI;
 
 const
   {grid columns for complex dosing }
@@ -852,9 +852,9 @@ begin
   SelRect := AListView.Selected.DisplayRect(drBounds);   //  CQ: 6636
   FRowHeight := SelRect.Bottom - SelRect.Top;
   Offset := AListView.Selected.Index - AListView.TopItem.Index;
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   if Offset > 0 then AListView.Scroll(0, (Offset * FRowHeight));
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
 end;
 
 procedure TfrmODMedNVA.ChangeDelayed;
@@ -2427,7 +2427,7 @@ begin
     if Found > -1 then
     begin
       ItemIndex := Found;
-      Application.ProcessMessages;
+      TResponsiveGUI.ProcessMessages;
       SelStart  := 1;
       SelLength := Length(Items[Found]);
     end else

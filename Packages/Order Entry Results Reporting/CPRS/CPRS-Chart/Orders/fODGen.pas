@@ -83,7 +83,7 @@ implementation
 
 {$R *.DFM}
 
-uses rCore, rOrders, uConst, VAUtils, uSizing, uOwnerWrapper;
+uses rCore, rOrders, uConst, VAUtils, uSizing, uOwnerWrapper, UResponsiveGUI;
 
 const
   HT_FRAME  = 8;
@@ -691,7 +691,7 @@ begin
     ReleasePending := PeekMessage(Msg, Handle, CM_RELEASE, CM_RELEASE, PM_REMOVE);
 
     TrimAllMemos;
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages;
 
     if ReleasePending then
       Release;

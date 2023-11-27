@@ -13,6 +13,8 @@ uses SysUtils, Classes, ORFn, ORNet, uCore, Dialogs, Controls;
 
 type
   TOrder = class
+  // WARNING: When adding or removing fields on TOrder, make sure to update the
+  // Assign and Clear methods too!
   private
     FPackage: string;
   public
@@ -425,6 +427,12 @@ function SetOrderRevwCol(AnOrder: TOrder):String;
 
 function SafeEventType(CurrentEventType: Char): Char;
 
+type TOrderableItemInfoType = (oitNone, oitLabService);
+
+procedure GetOrderableItemInfo(Dest: TStrings; InfoNeeded: TOrderableItemInfoType);
+function GetGroupsUsedByXRef(XREF: string): string;
+procedure GetDieteticsGroupInfo(Dest: TStrings);
+
 var
   UAPViewCalling: Boolean;
 
@@ -489,7 +497,11 @@ end;
 { TOrder methods }
 
 procedure TOrder.Assign(Source: TOrder);
+// When updating the Assign method, please keep fields in order as they are
+// defined on the TOrder object!!!
 begin
+  FPackage := Source.FPackage;
+  ICD9Code := Source.ICD9Code;
   ID := Source.ID;
   DGroup := Source.DGroup;
   OrderTime := Source.OrderTime;
@@ -518,16 +530,25 @@ begin
   OrderLocIEN := Source.OrderLocIEN;
   OrderLocName := Source.OrderLocName;
   ParentID := Source.ParentID;
-  LinkObject := Source.LinkObject;
   ParkedStatus := Source.ParkedStatus; // PaPI NSR#20090509 AA 2015/09/29
+  LinkObject := Source.LinkObject;
+  EnteredInError := Source.EnteredInError;
+  ORUAPreviewresult := Source.ORUAPreviewresult;
+  DCOriginalOrder := Source.DCOriginalOrder;
+  IsOrderPendDC:= Source.IsOrderPendDC;
+  IsDelayOrder := Source.IsDelayOrder;
   IsControlledSubstance := Source.IsControlledSubstance;
   IsDetox := Source.IsDetox;
-  FPackage := Source.FPackage;
-  ORUAPreviewresult   := Source.ORUAPreviewresult;
+  FlagText := Source.FlagText;
+  IsFlagTextLoaded := Source.IsFlagTextLoaded;
 end;
 
 procedure TOrder.Clear;
+// When updating the Clear method, please keep fields in order as they are
+// defined on the TOrder object!!!
 begin
+  FPackage := '';
+  ICD9Code := '';
   ID := '';
   DGroup := 0;
   OrderTime := 0;
@@ -554,11 +575,15 @@ begin
   OrderLocIEN := ''; // imo
   OrderLocName := ''; // imo
   ParentID := '';
+  ParkedStatus := '';
   LinkObject := nil;
+  EnteredInError := 0;
+  ORUAPreviewresult := '';
+  DCOriginalOrder := False;
+  IsOrderPendDC := False;
+  IsDelayOrder := False;
   IsControlledSubstance := False;
   IsDetox := False;
-  ORUAPreviewresult      := '';
-  FPackage := '';
   FlagText := '';
   IsFlagTextLoaded := False;
 end;
@@ -891,6 +916,91 @@ begin
     end;
 end;
 
+procedure RefreshOrders(AOrigList, ADestList: TList);
+// Refreshes all order in ADestList, adds any orders from AOrigList that are
+// not in ADestList, and removes orders in ADestList that are not in
+// AOrigList. In the end, the ADestList contain the data to from
+// AOrigList, in the order from AOrigList, but the objects in ADestList were
+// refreshed, and NOT destroyed, where possible!
+// All objects in AOrigLists will be either freed or transfered!
+var
+  AFreeList: TObjectList<TObject>;
+
+  procedure MarkFree(AObject: TObject);
+  begin
+    try
+      AFreeList.Add(AObject);
+    except
+      AObject.Free;
+      raise;
+    end;
+  end;
+
+var
+  I: Integer;
+  AOrig: TObject;
+  AOrder: TOrder;
+  AOrderList: TObjectList<TOrder>;
+  Found: Boolean;
+begin
+  AOrderList := TObjectList<TOrder>.Create(False);
+  try
+    AFreeList := TObjectList<TObject>.Create(True);
+    try
+      for I := 0 to ADestList.Count - 1 do
+        if TObject(ADestList[I]) is TOrder then
+          AOrderList.Add(TOrder(ADestList[I]))
+        else
+          AFreeList.Add(TObject(ADestList[I]));
+
+      try
+        ADestList.Clear;
+        for I := 0 to AOrigList.Count - 1 do
+        begin
+          AOrig := TObject(AOrigList[I]);
+          Found := False;
+          if not(AOrig is TOrder) then
+          begin
+            MarkFree(AOrig);
+          end else begin
+            for AOrder in AOrderList do
+            begin
+              if AOrder.ID = TOrder(AOrig).ID then
+              begin
+                // Update an order found in AOrderList
+                Found := True;
+                AOrder.Assign(TOrder(AOrig)); // RDD: Need to check Assign!!!!
+                ADestList.Add(AOrder);
+                try
+                  AOrderList.Remove(AOrder);
+                except
+                  ADestList.Delete(ADestList.Count - 1);
+                  raise;
+                end;
+                MarkFree(AOrig);
+                Break;
+              end;
+            end;
+            if not Found then
+            begin
+              // Add an order not found in AOrderList
+              ADestList.Add(AOrig);
+            end;
+          end
+        end;
+      except
+        for AOrder in AOrderList do
+          ADestList.Add(AOrder); // add unprocessed orders back to ADestList
+        raise;
+      end;
+      AOrderList.OwnsObjects := True; // Won't get called if error is raised
+    finally
+      FreeAndNil(AFreeList); // This frees all the items in it
+    end;
+  finally
+    FreeAndNil(AOrderList);
+  end;
+end;
 
 procedure LoadOrdersAbbr(Dest: TList; AView: TOrderView; APtEvtID: string);
 // Filter, Specialty, Groups: Integer; var TextView: Integer;
@@ -900,8 +1010,8 @@ var
   sl: TStrings;
   FilterTS: string;
   AlertedUserOnly: Boolean;
+  AOrderList: TList;
 begin
-  ClearOrders(Dest);
   if uDGroupMap = nil then
     LoadDGroupMap; // to make sure broker not called while looping thru Results
   FilterTS := IntToStr(AView.Filter) + U + IntToStr(AView.EventDelay.Specialty);
@@ -912,11 +1022,12 @@ begin
     if not CallVistA('ORWORR AGET', [Patient.DFN, FilterTS, AView.DGroup,
       AView.TimeFrom, AView.TimeThru, APtEvtID, AlertedUserOnly], sl) then
       ; // add error processing here // sl.Clear;
-    if (sl.Count > 0) then
+    if (sl.Count <= 0) then
     begin
+      ClearOrders(Dest);
+    end else begin
       if ((Piece(sl[0], U, 1) = '0') or (Piece(sl[0], U, 1) = '')) and
         (AView.Filter = 5) then
-
       begin // if no expiring orders found display expired orders)
         sl.Clear;
         FMD := ExpiredOrdersStartDT;
@@ -929,7 +1040,14 @@ begin
         AView.ViewName := 'Recently Expired Orders (No Expiring Orders Found) -'
           + Piece(AView.ViewName, '-', 2);
       end;
-      ConvertOrders(Dest, AView, sl);
+
+      AOrderList := TList.Create;
+      try
+        ConvertOrders(AOrderList, AView, sl);
+        RefreshOrders(AOrderList, Dest);
+      finally
+        FreeAndNil(AOrderList);
+      end;
     end;
   finally
     sl.Free;
@@ -940,15 +1058,21 @@ procedure LoadOrdersAbbr(Dest: TList; AView: TOrderView; APtEvtID: string;
   AlertID: string);
 var
   sl: TStrings;
+  AOrderList: TList;
 begin
-  ClearOrders(Dest);
   if uDGroupMap = nil then
     LoadDGroupMap; // to make sure broker not called while looping thru Results
   sl := TStringList.Create;
   try
     if not CallVistA('ORB FOLLOW-UP ARRAY', [AlertID], sl) then;
     // add error processing here // sl.Clear;
-    ConvertOrders(Dest, AView, sl);
+    AOrderList := TList.Create;
+    try
+      ConvertOrders(AOrderList, AView, sl);
+      RefreshOrders(AOrderList, Dest);
+    finally
+      FreeAndNil(AOrderList);
+    end;
   finally
     sl.Free;
   end;
@@ -962,6 +1086,7 @@ var
   FilterTS: string;
   DCStart: Boolean;
   sl: TStringList;
+  AOrderListDC, AOrderListRL: TList;
 begin
   DCStart := False;
   if uDGroupMap = nil then
@@ -973,47 +1098,59 @@ begin
     if not CallVistA('ORWORR RGET', [Patient.DFN, FilterTS, AView.DGroup,
       AView.TimeFrom, AView.TimeThru, APtEvtID], sl) then;
     // add error processing here //sl.Clear;
-    if (sl.Count < 1) or (sl[0] = '0') then // if no orders found (0 element is count)
-    begin
-      AnOrder := TOrder.Create;
-      with AnOrder do
+
+    AOrderListDC := nil;
+    AOrderListRL := nil;
+    try
+      AOrderListDC := TList.Create;
+      AOrderListRL := TList.Create;
+
+      if (sl.Count < 1) or (sl[0] = '0') then // if no orders found (0 element is count)
       begin
-        ID := '0';
-        DGroup := 0;
-        OrderTime := FMNow;
-        Status := 97;
-        Text := 'No orders found.';
-        Retrieved := True;
-      end;
-      DestDC.Add(AnOrder);
-      // Exit; -- replaced with "else" block
-    end
-    else
-    begin
-      AView.TextView := StrToIntDef(Piece(sl[0], U, 2), 0);
-      AView.CtxtTime := MakeFMDateTime(Piece(sl[0], U, 3));
-      for i := 1 to sl.Count - 1 do // if orders found (skip 0 element)
-      begin
-        if AnsiCompareText('DC START', sl[i]) = 0 then
-        begin
-          DCStart := True;
-          Continue;
-        end;
         AnOrder := TOrder.Create;
         with AnOrder do
         begin
-          ID := Piece(sl[i], U, 1);
-          DGroup := StrToIntDef(Piece(sl[i], U, 2), 0);
-          OrderTime := MakeFMDateTime(Piece(sl[i], U, 3));
-          EventPtr := Piece(sl[i], U, 4);
-          EventName := Piece(sl[i], U, 5);
-          DGroupSeq := SeqOfDGroup(DGroup);
+          ID := '0';
+          DGroup := 0;
+          OrderTime := FMNow;
+          Status := 97;
+          Text := 'No orders found.';
+          Retrieved := True;
         end;
-        if DCStart then
-          DestDC.Add(AnOrder)
-        else
-          DestRL.Add(AnOrder);
+        AOrderListDC.Add(AnOrder);
+      end
+      else
+      begin
+        AView.TextView := StrToIntDef(Piece(sl[0], U, 2), 0);
+        AView.CtxtTime := MakeFMDateTime(Piece(sl[0], U, 3));
+        for i := 1 to sl.Count - 1 do // if orders found (skip 0 element)
+        begin
+          if AnsiCompareText('DC START', sl[i]) = 0 then
+          begin
+            DCStart := True;
+            Continue;
+          end;
+          AnOrder := TOrder.Create;
+          with AnOrder do
+          begin
+            ID := Piece(sl[i], U, 1);
+            DGroup := StrToIntDef(Piece(sl[i], U, 2), 0);
+            OrderTime := MakeFMDateTime(Piece(sl[i], U, 3));
+            EventPtr := Piece(sl[i], U, 4);
+            EventName := Piece(sl[i], U, 5);
+            DGroupSeq := SeqOfDGroup(DGroup);
+          end;
+          if DCStart then
+            AOrderListDC.Add(AnOrder)
+          else
+            AOrderListRL.Add(AnOrder);
+        end;
       end;
+      RefreshOrders(AOrderListDC, DestDC);
+      RefreshOrders(AOrderListRL, DestRL);
+    finally
+      FreeAndNil(AOrderListRL);
+      FreeAndNil(AOrderListDC);
     end;
   finally
     sl.Free;
@@ -1418,7 +1555,6 @@ procedure ListDGroupAll(Dest: TStrings);
 begin
   CallVistA('ORWORDG ALLTREE', [nil],Dest);
 end;
-
 
 procedure ListSpecialties(Dest: TStrings);
 var
@@ -2484,8 +2620,19 @@ begin
 end;
 
 procedure ChangeEvent(AnOrderList: TStringList; APtEvtID: string);
+var
+  sl: TStringList;
+  i: integer;
+
 begin
-  CallVistA('OREVNTX1 CHGEVT', [APtEvtID, AnOrderList]);
+  sl := TStringList.Create;
+  try
+    for i := 0 to AnOrderList.Count - 1 do
+      sl.Add(Piece(AnOrderList[i], U, 1));
+    CallVistA('OREVNTX1 CHGEVT', [APtEvtID, sl]);
+  finally
+    sl.Free;
+  end;
 end;
 
 procedure DeletePtEvent(APtEvtID: string);
@@ -3134,7 +3281,8 @@ procedure OrderChecksOnMedicationSelect(ListOfChecks: TStringList;
 begin
   uAllergyCacheCreated := True;
   uAllergiesChanged := False;
-  CallVistA('ORWDXC ALLERGY', [Patient.DFN, FillerID, Item1, OrderNum], ListOfChecks);
+  CallVistA('ORWDXC ALLERGY', [Patient.DFN, FillerID, Item1, OrderNum,
+    Encounter.Location], ListOfChecks);
 end;
 
 procedure ClearAllergyOrderCheckCache;
@@ -3641,6 +3789,21 @@ begin
     Result := 'C'
   else
     Result := CurrentEventType;
+end;
+
+procedure GetOrderableItemInfo(Dest: TStrings; InfoNeeded: TOrderableItemInfoType);
+begin
+  CallVistA('ORACCES2 DLGOIINFO', [Dest, ord(InfoNeeded)], Dest);
+end;
+
+function GetGroupsUsedByXRef(XREF: string): string;
+begin
+  CallVistA('ORACCES2 LABSBYXREF', [XREF], Result);
+end;
+
+procedure GetDieteticsGroupInfo(Dest: TStrings);
+begin
+  CallVistA('ORACCES2 DIETINFO', [], Dest);
 end;
 
 { TLockedList }

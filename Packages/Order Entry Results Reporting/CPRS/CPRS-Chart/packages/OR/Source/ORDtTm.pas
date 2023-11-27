@@ -777,7 +777,7 @@ end;
 var
   AnHour, AMinute: Integer;
   ATime: TDateTime;
-  
+
 begin
   setRangeTimeBoundaries;
 
@@ -1504,7 +1504,7 @@ end;
 { TORDateCombo ------------------------------------------------------------------------- }
 
 const
-  ComboBoxAdjSize = 24;
+  ComboBoxAdjSize = 10;
   EditAdjHorzSize = 8;
   DateComboCtrlGap = 2;
   FirstYear = 1800;
@@ -1576,7 +1576,7 @@ begin
     while (FDayCombo.Items.Count > dy) do
       FDayCombo.Items.Delete(FDayCombo.Items.Count - 1);
     if (GetSize) then
-      Result := TextWidthByFont(Font.Handle, '88') + ComboBoxAdjSize;
+      Result := TextWidthByFont(Font.Handle, '88') + ComboBoxAdjSize + Height;
     if (FDay > (dy - 1)) then
       SetDay(dy - 1);
   end;
@@ -1605,7 +1605,7 @@ begin
       end;
     end;
     if GetSize then
-      Inc(Result, ComboBoxAdjSize);
+      Inc(Result, ComboBoxAdjSize + Height);
   end;
 end;
 

@@ -28,6 +28,7 @@ inherited frmMedCopy: TfrmMedCopy
       Height = 40
       Alignment = taLeftJustify
       AutoSize = True
+      Caption = ''
       Constraints.MinHeight = 40
       TabOrder = 1
       ShowAccelChar = True

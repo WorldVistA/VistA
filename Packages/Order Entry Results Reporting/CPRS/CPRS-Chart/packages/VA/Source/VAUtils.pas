@@ -13,13 +13,86 @@ interface
 uses
   SysUtils, Windows, Messages, Classes, Graphics, StrUtils, Controls, VAClasses, Forms,
   SHFolder, ShlObj, PSAPI, ShellAPI, ComObj, vcl.Dialogs, vcl.StdCtrls, vcl.ExtCtrls;
+type
+  /// <summary>array of string</summary>
+  TStringarray = array of string;
 
 procedure ShowMessage(const Text: string);
 
+/// <summary>Dialog with no default button and possible with button captions</summary>
+/// <param name="Text">[<see cref="system|String"/>] - Message dialog main text</param>
+/// <param name="Caption">[<see cref="system|String"/>] - Message dialog caption text</param>
+/// <param name="DlgType">[<see cref="Vcl.Dialogs|TMsgDlgType"/>] - Type of message dialog</param>
+/// <param name="Buttons">[<see cref="Vcl.Dialogs|TMsgDlgBtn"/>] - Buttons display on the message dialog</param>
+/// <param name="ButtonCaptions">[<see cref="VAUtils|TStringarray"/>] - Overwrite captions of the buttons</param>
+/// <returns>[<see cref="system|Integer"/>] - Integer value for <see cref="vcl.controls|TModalResult"/></returns>
 function InfoDlg(const Text, Caption: string; DlgType: TMsgDlgType;
-  Buttons: TMsgDlgButtons): integer; overload;
+  Buttons: TMsgDlgButtons; ButtonCaptions: TStringarray = nil)
+  : Integer; overload;
+
+/// <summary>Dialog with a default button and possible with button captions</summary>
+/// <param name="Text">[<see cref="system|String"/>] - Message dialog main text</param>
+/// <param name="Caption">[<see cref="system|String"/>] - Message dialog caption text</param>
+/// <param name="DlgType">[<see cref="Vcl.Dialogs|TMsgDlgType"/>] - Type of message dialog</param>
+/// <param name="Buttons">[<see cref="Vcl.Dialogs|TMsgDlgBtn"/>] - Buttons display on the message dialog</param>
+/// <param name="DefaultButton">[<see cref="Vcl.Dialogs|TMsgDlgBtn"/>] - Default button</param>
+/// <param name="ButtonCaptions">[<see cref="VAUtils|TStringarray"/>] - Overwrite captions of the buttons</param>
+/// <returns>[<see cref="system|Integer"/>] - Integer value for <see cref="vcl.controls|TModalResult"/></returns>
 function InfoDlg(const Text, Caption: string; DlgType: TMsgDlgType;
-  Buttons: TMsgDlgButtons; DefaultButton: TMsgDlgBtn): integer; overload;
+  Buttons: TMsgDlgButtons; DefaultButton: TMsgDlgBtn;
+  ButtonCaptions: TStringarray = nil): Integer; overload;
+
+/// <summary>Dialog with a check box and no default button</summary>
+/// <param name="Text">[<see cref="system|String"/>] - Message dialog main text</param>
+/// <param name="Caption">[<see cref="system|String"/>] - Message dialog caption text</param>
+/// <param name="DlgType">[<see cref="Vcl.Dialogs|TMsgDlgType"/>] - Type of message dialog</param>
+/// <param name="Buttons">[<see cref="Vcl.Dialogs|TMsgDlgBtn"/>] - Buttons display on the message dialog</param>
+/// <param name="CheckBoxVisible">[<see cref="system|Boolean"/>] - Display the checkbox</param>
+/// <param name="CheckBoxCaption">[<see cref="system|String"/>] - Caption for the checkbox</param>
+/// <param name="CheckboxOnClick">[<see cref="system.classes|TNotifyEvent"/>] - OnClick event for the checkbox</param>
+/// <param name="CheckboxChecked">[<see cref="system|Boolean"/>] - <b>OUT PARMATER</b> Checkbox checked state</param>
+/// <returns>[<see cref="system|Integer"/>] - Integer value for <see cref="vcl.controls|TModalResult"/></returns>
+function InfoDlgWithCheckbox(const Text, Caption: string; DlgType: TMsgDlgType;
+  Buttons: TMsgDlgButtons;
+  CheckBoxVisible: Boolean; CheckBoxCaption: string;
+  CheckboxOnClick: TNotifyEvent; out CheckboxChecked: Boolean): Integer;
+  overload;
+
+/// <summary>Dialog with a check box and no default button and possible with button captions</summary>
+/// <param name="Text">[<see cref="system|String"/>] - Message dialog main text</param>
+/// <param name="Caption">[<see cref="system|String"/>] - Message dialog caption text</param>
+/// <param name="DlgType">[<see cref="Vcl.Dialogs|TMsgDlgType"/>] - Type of message dialog</param>
+/// <param name="Buttons">[<see cref="Vcl.Dialogs|TMsgDlgBtn"/>] - Buttons display on the message dialog</param>
+/// <param name="ButtonCaptions">[<see cref="VAUtils|TStringarray"/>] - Overwrite captions of the buttons</param>
+/// <param name="CheckBoxVisible">[<see cref="system|Boolean"/>] - Display the checkbox</param>
+/// <param name="CheckBoxCaption">[<see cref="system|String"/>] - Caption for the checkbox</param>
+/// <param name="CheckboxOnClick">[<see cref="system.classes|TNotifyEvent"/>] - OnClick event for the checkbox</param>
+/// <param name="CheckboxChecked">[<see cref="system|Boolean"/>] - <b>OUT PARMATER</b> Checkbox checked state</param>
+/// <returns>[<see cref="system|Integer"/>] - Integer value for <see cref="vcl.controls|TModalResult"/></returns>
+function InfoDlgWithCheckbox(const Text, Caption: string; DlgType: TMsgDlgType;
+  Buttons: TMsgDlgButtons; ButtonCaptions: TStringarray;
+  CheckBoxVisible: Boolean; CheckBoxCaption: string;
+  CheckboxOnClick: TNotifyEvent; out CheckboxChecked: Boolean): Integer;
+  overload;
+
+/// <summary>Dialog with a check box and with a default button and possible with button captions</summary>
+/// <param name="Text">[<see cref="system|String"/>] - Message dialog main text</param>
+/// <param name="Caption">[<see cref="system|String"/>] - Message dialog caption text</param>
+/// <param name="DlgType">[<see cref="Vcl.Dialogs|TMsgDlgType"/>] - Type of message dialog</param>
+/// <param name="Buttons">[<see cref="Vcl.Dialogs|TMsgDlgBtn"/>] - Buttons display on the message dialog</param>
+/// <param name="DefaultButton">[<see cref="Vcl.Dialogs|TMsgDlgBtn"/>] - Default button</param>
+/// <param name="ButtonCaptions">[<see cref="VAUtils|TStringarray"/>] - Overwrite captions of the buttons</param>
+/// <param name="CheckBoxVisible">[<see cref="system|Boolean"/>] - Display the checkbox</param>
+/// <param name="CheckBoxCaption">[<see cref="system|String"/>] - Caption for the checkbox</param>
+/// <param name="CheckboxOnClick">[<see cref="system.classes|TNotifyEvent"/>] - OnClick event for the checkbox</param>
+/// <param name="CheckboxChecked">[<see cref="system|Boolean"/>] - <b>OUT PARMATER</b> Checkbox checked state</param>
+/// <returns>[<see cref="system|Integer"/>] - Integer value for <see cref="vcl.controls|TModalResult"/></returns>
+function InfoDlgWithCheckbox(const Text, Caption: string; DlgType: TMsgDlgType;
+  Buttons: TMsgDlgButtons; DefaultButton: TMsgDlgBtn;
+  ButtonCaptions: TStringarray; CheckBoxVisible: Boolean;
+  CheckBoxCaption: string; CheckboxOnClick: TNotifyEvent;
+  out CheckboxChecked: Boolean): Integer; overload;
+
 
 type
   TShow508MessageIcon = (smiNone, smiInfo, smiWarning, smiError, smiQuestion);
@@ -373,32 +446,79 @@ begin
 end;
 
 function InfoDlgInternal(const Text, Caption: string; DlgType: TMsgDlgType;
-  Buttons: TMsgDlgButtons; DefaultButton: integer): integer; forward;
+  Buttons: TMsgDlgButtons; DefaultButton: Integer;
+  ButtonCaptions: TStringarray; CheckBoxVisible: Boolean;
+  CheckBoxCaption: string; CheckboxOnClick: TNotifyEvent; out CheckBoxChecked: Boolean): Integer; forward;
 
+// no default with button captions
 function InfoDlg(const Text, Caption: string; DlgType: TMsgDlgType;
-  Buttons: TMsgDlgButtons): integer;
+  Buttons: TMsgDlgButtons; ButtonCaptions: TStringarray = nil): Integer;
+var
+  ADummy: Boolean;
 begin
-  Result := InfoDlgInternal(Text, Caption, DlgType, Buttons, -1);
+  Result := InfoDlgInternal(Text, Caption, DlgType, Buttons, -1, ButtonCaptions,
+    False, '', nil, ADummy);
 end;
 
+// Deafult with button captions
 function InfoDlg(const Text, Caption: string; DlgType: TMsgDlgType;
-  Buttons: TMsgDlgButtons; DefaultButton: TMsgDlgBtn): integer;
+  Buttons: TMsgDlgButtons; DefaultButton: TMsgDlgBtn;
+  ButtonCaptions: TStringarray = nil): Integer;
+var
+  ADummy: Boolean;
 begin
-  Result := InfoDlgInternal(Text, Caption, DlgType, Buttons, Integer(DefaultButton));
+  Result := InfoDlgInternal(Text, Caption, DlgType, Buttons,
+    Integer(DefaultButton), ButtonCaptions, False, '', nil, ADummy);
+end;
+
+function InfoDlgWithCheckbox(const Text, Caption: string; DlgType: TMsgDlgType;
+  Buttons: TMsgDlgButtons;
+  CheckBoxVisible: Boolean; CheckBoxCaption: string;
+  CheckboxOnClick: TNotifyEvent; out CheckboxChecked: Boolean): Integer;
+  overload;
+begin
+  Result := InfoDlgInternal(Text, Caption, DlgType, Buttons, -1, [],
+    CheckBoxVisible, CheckBoxCaption, CheckboxOnClick, CheckboxChecked);
+end;
+
+// no default with button captions and checkbox
+function InfoDlgWithCheckbox(const Text, Caption: string; DlgType: TMsgDlgType;
+  Buttons: TMsgDlgButtons; ButtonCaptions: TStringarray;
+  CheckBoxVisible: Boolean; CheckBoxCaption: string; CheckboxOnClick: TNotifyEvent;
+  out CheckboxChecked: Boolean): Integer; overload;
+begin
+  Result := InfoDlgInternal(Text, Caption, DlgType, Buttons, -1, ButtonCaptions,
+    CheckBoxVisible, CheckBoxCaption, CheckboxOnClick, CheckboxChecked);
+end;
+
+// Deafult with button captions and checkbox
+function InfoDlgWithCheckbox(const Text, Caption: string; DlgType: TMsgDlgType;
+  Buttons: TMsgDlgButtons; DefaultButton: TMsgDlgBtn;
+  ButtonCaptions: TStringarray; CheckBoxVisible: Boolean;
+  CheckBoxCaption: string; CheckboxOnClick: TNotifyEvent;
+  out CheckboxChecked: Boolean): Integer; overload;
+begin
+  Result := InfoDlgInternal(Text, Caption, DlgType, Buttons,
+    Integer(DefaultButton), ButtonCaptions, CheckBoxVisible, CheckBoxCaption,
+    CheckboxOnClick, CheckboxChecked);
 end;
 
 function InfoDlgInternal(const Text, Caption: string; DlgType: TMsgDlgType;
-  Buttons: TMsgDlgButtons; DefaultButton: integer): integer;
+  Buttons: TMsgDlgButtons; DefaultButton: Integer;
+  ButtonCaptions: TStringarray; CheckBoxVisible: Boolean;
+  CheckBoxCaption: string; CheckboxOnClick: TNotifyEvent; out CheckBoxChecked: Boolean): Integer;
 var
-  OldSize: integer;
-  dlg: TForm;
-  dx, idx, x1, x2: integer;
-  ctrl: TControl;
-  lbl: TStaticText4ScreenReader;
-  workArea: TRect;
+  OldSize: Integer;
+  Dlg: TForm;
+  Dx, Idx, X1, X2, I, ButtonIdx, checkTop: Integer;
+  Ctrl: TControl;
+  Lbl: TStaticText4ScreenReader;
+  WorkArea: TRect;
+  Dlgbutton: Tbutton;
+  DlgCheckBox: TCheckBox;
 
   procedure InfoDlgMouseWheel(Self, Sender: TObject; Shift: TShiftState;
-    WheelDelta: integer; MousePos: TPoint; var Handled: boolean);
+    WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
   begin
     with TScrollBox(Sender).VertScrollBar do
       Position := Position - WheelDelta;
@@ -407,142 +527,188 @@ var
 
   procedure AddScrollBoxIfNeeded;
   var
-    idx, btnTop, btnBottom, Gap: integer;
-    boxWidth, neededWidth: integer;
-    messageLabel: TLabel;
-    box: TScrollBox;
-    evnt: TMouseWheelEvent;
+    Idx, BtnTop, BtnBottom, Gap: Integer;
+    BoxWidth, NeededWidth: Integer;
+    MessageLabel: TLabel;
+    Box: TScrollBox;
+    Evnt: TMouseWheelEvent;
 
   begin
-    if dlg.Height > workArea.Height then
+    if Dlg.Height > WorkArea.Height then
     begin
-      btnBottom := 0;
-      messageLabel := nil;
-      for idx := 0 to dlg.ControlCount - 1 do
+      BtnBottom := 0;
+      MessageLabel := nil;
+      for Idx := 0 to Dlg.ControlCount - 1 do
       begin
-        ctrl := dlg.Controls[idx];
-        if (ctrl is TButton) and ((ctrl.Top + ctrl.Height) > btnBottom) then
-          btnBottom := ctrl.Top + ctrl.Height
-        else if (not assigned(messageLabel)) and (ctrl is TLabel) then
-          messageLabel := TLabel(ctrl);
+        Ctrl := Dlg.Controls[Idx];
+        if (Ctrl is TButton) and ((Ctrl.Top + Ctrl.Height) > BtnBottom) then
+          BtnBottom := Ctrl.Top + Ctrl.Height
+        else if (not Assigned(MessageLabel)) and (Ctrl is TLabel) then
+          MessageLabel := TLabel(Ctrl);
       end;
-      if assigned(messageLabel) and (btnBottom > 0) then
+      if Assigned(MessageLabel) and (BtnBottom > 0) then
       begin
-        for idx := 0 to dlg.ControlCount - 1 do
-          if (dlg.Controls[idx] is TButton) then
-            dlg.Controls[idx].Anchors := [akLeft, akBottom];
-        Gap := dlg.ClientHeight - btnBottom;
-        dlg.Height := workarea.Height - (Gap * 2);
-        dlg.Top := workarea.Top + Gap;
-        boxWidth := dlg.ClientWidth - Gap - messageLabel.Left;
-        neededWidth := messageLabel.Width + GetSystemMetrics(SM_CXVSCROLL) +
-          dlg.Font.Size;
-        dx := 0;
-        if neededWidth > boxWidth then
+        for Idx := 0 to Dlg.ControlCount - 1 do
+          if (Dlg.Controls[Idx] is TButton) then
+            Dlg.Controls[Idx].Anchors := [AkLeft, AkBottom];
+        Gap := Dlg.ClientHeight - BtnBottom;
+        Dlg.Height := Workarea.Height - (Gap * 2);
+        Dlg.Top := Workarea.Top + Gap;
+        BoxWidth := Dlg.ClientWidth - Gap - MessageLabel.Left;
+        NeededWidth := MessageLabel.Width + GetSystemMetrics(SM_CXVSCROLL) +
+          Dlg.Font.Size;
+        Dx := 0;
+        if NeededWidth > BoxWidth then
         begin
-          dx := neededWidth - boxWidth;
-          dlg.Width := dlg.Width + dx;
-          Inc(boxWidth, dx);
-          dx := dx div 2;
-          dlg.Left := dlg.Left - dx;
+          Dx := NeededWidth - BoxWidth;
+          Dlg.Width := Dlg.Width + Dx;
+          Inc(BoxWidth, Dx);
+          Dx := Dx div 2;
+          Dlg.Left := Dlg.Left - Dx;
         end;
-        btnTop := dlg.Height;
-        for idx := 0 to dlg.ControlCount - 1 do
+        BtnTop := Dlg.Height;
+        for Idx := 0 to Dlg.ControlCount - 1 do
         begin
-          ctrl := dlg.Controls[idx];
-          if (ctrl is TButton) then
+          Ctrl := Dlg.Controls[Idx];
+          if (Ctrl is TButton) then
           begin
-            ctrl.Left := ctrl.Left + dx;
-            if ctrl.Top < btnTop then
-              btnTop := ctrl.Top;
+            Ctrl.Left := Ctrl.Left + Dx;
+            if Ctrl.Top < BtnTop then
+              BtnTop := Ctrl.Top;
           end;
         end;
-        box := TScrollBox.Create(dlg);
-        box.Parent := dlg;
-        box.Left := messageLabel.Left;
-        box.Width := boxWidth;
-        box.Top := Gap;
-        box.Height := btnTop - (Gap * 2);
-        box.VertScrollBar.Tracking := True;
-        box.VertScrollBar.Style := ssHotTrack;
-        box.BorderStyle := bsNone;
-        TMethod(evnt).Code := @InfoDlgMouseWheel;;
-        TMethod(evnt).Data := box;
-        box.OnMouseWheel := evnt;
-        messageLabel.Parent := box;
-        messageLabel.Top := 0;
-        messageLabel.Left := 0;
+        Box := TScrollBox.Create(Dlg);
+        Box.Parent := Dlg;
+        Box.Left := MessageLabel.Left;
+        Box.Width := BoxWidth;
+        Box.Top := Gap;
+        Box.Height := BtnTop - (Gap * 2);
+        Box.VertScrollBar.Tracking := True;
+        Box.VertScrollBar.Style := SsHotTrack;
+        Box.BorderStyle := BsNone;
+        TMethod(Evnt).Code := @InfoDlgMouseWheel;;
+        TMethod(Evnt).Data := Box;
+        Box.OnMouseWheel := Evnt;
+        MessageLabel.Parent := Box;
+        MessageLabel.Top := 0;
+        MessageLabel.Left := 0;
       end;
     end;
   end;
 
 begin
-  if assigned(Screen.ActiveCustomForm) then
-    workArea := Screen.ActiveCustomForm.Monitor.WorkareaRect
+  if Assigned(Screen.ActiveCustomForm) then
+    WorkArea := Screen.ActiveCustomForm.Monitor.WorkareaRect
   else
-    workArea := Screen.WorkAreaRect;
+    WorkArea := Screen.WorkAreaRect;
   OldSize := Screen.MessageFont.Size;
   try
     if Assigned(Application.MainForm) then
       Screen.MessageFont.Size := Application.MainForm.Font.Size;
     if DefaultButton = -1 then
-      dlg := CreateMessageDialog(Text, DlgType, Buttons)
+      Dlg := CreateMessageDialog(Text, DlgType, Buttons)
     else
-      dlg := CreateMessageDialog(Text, DlgType, Buttons, TMsgDlgBtn(DefaultButton));
+      Dlg := CreateMessageDialog(Text, DlgType, Buttons,
+        TMsgDlgBtn(DefaultButton));
     try
       dlg.DefaultMonitor := dmDesktop;
       Dlg.Caption := Caption;
       Dx := Workarea.Width div 4;
       if Dlg.Width < Dx then
       begin
-        dlg.Width := dx;
-        x1 := dlg.ClientWidth;
-        x2 := 0;
-        for idx := 0 to dlg.ControlCount - 1 do
+        Dlg.Width := Dx;
+        X1 := Dlg.ClientWidth;
+        X2 := 0;
+        checkTop := 0;
+
+        for Idx := 0 to Dlg.ControlCount - 1 do
         begin
-          ctrl := dlg.Controls[idx];
-          if ctrl is TButton then
+          Ctrl := Dlg.Controls[Idx];
+          if Ctrl is TButton then
           begin
-            if ctrl.Left < x1 then
-              x1 := ctrl.Left;
-            if (ctrl.Left + ctrl.Width) > x2 then
-              x2 := ctrl.Left + ctrl.Width;
+            if Ctrl.Left < X1 then
+              X1 := Ctrl.Left;
+            if (Ctrl.Left + Ctrl.Width) > X2 then
+              X2 := Ctrl.Left + Ctrl.Width;
+          If (Ctrl.Top + Ctrl.Height) > checkTop then
+            checkTop := Ctrl.Top + Ctrl.Height;
           end;
         end;
-        dx := dlg.ClientWidth - x2 + x1;
-        dx := (dx div 2) - x1;
-        if dx > 0 then
+        Dx := Dlg.ClientWidth - X2 + X1;
+        Dx := (Dx div 2) - X1;
+        if Dx > 0 then
         begin
-          for idx := 0 to dlg.ControlCount - 1 do
+          for Idx := 0 to Dlg.ControlCount - 1 do
           begin
-            ctrl := dlg.Controls[idx];
-            if ctrl is TButton then
-              ctrl.Left := ctrl.Left + dx;
+            Ctrl := Dlg.Controls[Idx];
+            if Ctrl is TButton then
+              Ctrl.Left := Ctrl.Left + Dx;
           end;
         end;
       end;
 
-      dx := (workarea.Width - dlg.Width) div 2;
-      dlg.Left := workarea.Left + dx;
+      Dx := (Workarea.Width - Dlg.Width) div 2;
+      Dlg.Left := Workarea.Left + Dx;
+      If CheckBoxVisible then
+      begin
+        checkTop := 0;
+        for Idx := 0 to Dlg.ControlCount - 1 do
+        begin
+          Ctrl := Dlg.Controls[Idx];
+          if Ctrl is TButton then
+          begin
+            If (Ctrl.Top + Ctrl.Height) > checkTop then
+              checkTop := Ctrl.Top + Ctrl.Height;
+          end;
+        end;
+        DlgCheckBox := TCheckBox.Create(Dlg);
+        DlgCheckBox.Parent := Dlg;
+        DlgCheckBox.Caption := CheckBoxCaption;
+        DlgCheckBox.Width := dlg.Canvas.TextWidth(CheckBoxCaption) + 20;
+        Dlg.Height := Dlg.Height + dlg.Canvas.TextHeight(CheckBoxCaption) + 10;
+        DlgCheckBox.top := checkTop + 5;
+        DlgCheckBox.Left := 50;
+        DlgCheckBox.OnClick := CheckboxOnClick;
+      end else
+        DlgCheckBox := nil;
+
       AddScrollBoxIfNeeded;
       dx := (workarea.Height - dlg.Height) div 2;
       dlg.Top := workArea.Top + dx;
-      if ScreenReaderActive then
+
+      // Update button Captions
+      if Length(ButtonCaptions) > 0 then
       begin
-        dlg.Caption := dlg.Caption + ' Dialog';
-        lbl := TStaticText4ScreenReader.Create(dlg);
-        lbl.Parent := dlg;
-        lbl.Top := -1000;
-        lbl.Left := 0;
-        lbl.Caption := Text;
-        lbl.TabStop := True;
-        lbl.TabOrder := 99;  // tab order *after* any buttons
-        dlg.SetFocusedControl(lbl);
+        ButtonIdx := 0;
+        for I := 0 to Dlg.ComponentCount - 1 do
+        begin
+          if (Dlg.Components[I] is TButton) then
+          begin
+            Dlgbutton := TButton(Dlg.Components[I]);
+            if ButtonIdx <= high(ButtonCaptions) then
+              Dlgbutton.Caption := ButtonCaptions[ButtonIdx];
+            Inc(ButtonIdx);
+          end;
+        end;
       end;
 
-      Result := dlg.ShowModal;
+      if ScreenReaderActive then
+      begin
+        Dlg.Caption := Dlg.Caption + ' Dialog';
+        Lbl := TStaticText4ScreenReader.Create(Dlg);
+        Lbl.Parent := Dlg;
+        Lbl.Top := -1000;
+        Lbl.Left := 0;
+        Lbl.Caption := Text;
+        Lbl.TabStop := True;
+        Lbl.TabOrder := 99; // tab order *after* any buttons
+        Dlg.SetFocusedControl(Lbl);
+      end;
+
+      Result := Dlg.ShowModal;
+      CheckBoxChecked := assigned(DlgCheckBox) and DlgCheckBox.Checked;
     finally
-      dlg.Free;
+      Dlg.Free;
     end;
   finally
     Screen.MessageFont.Size := OldSize;

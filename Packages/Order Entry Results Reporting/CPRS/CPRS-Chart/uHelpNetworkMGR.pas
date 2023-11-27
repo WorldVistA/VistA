@@ -29,9 +29,27 @@ unit uHelpNetworkMGR;
 
 interface
 {$WARN UNIT_PLATFORM OFF}
+
 uses
-  Classes, Messages, windows, sysutils, ShlObj, Forms, SHFolder, ComCtrls, StdCtrls, Dialogs, mmsystem,
-  controls, ComObj, Variants, ShellAPI, Registry, ActiveX, Math;
+  Classes,
+  Messages,
+  windows,
+  sysutils,
+  ShlObj,
+  Forms,
+  SHFolder,
+  ComCtrls,
+  StdCtrls,
+  Dialogs,
+  mmsystem,
+  controls,
+  ComObj,
+  Variants,
+  ShellAPI,
+  Registry,
+  ActiveX,
+  Math,
+  UResponsiveGUI;
 
 type
 
@@ -426,7 +444,7 @@ begin
   Result := RetrivalThread.fSuccess;
 
   while not RetrivalThread.fDone do
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages(True);
   AMsgDialog.Free;
 end;
 
@@ -659,4 +677,3 @@ begin
 end;
 
 end.
-

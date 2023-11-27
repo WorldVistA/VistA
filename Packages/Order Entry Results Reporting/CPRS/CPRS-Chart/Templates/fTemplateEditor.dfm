@@ -204,17 +204,19 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           Align = alBottom
           BevelOuter = bvNone
           TabOrder = 4
-          DesignSize = (
-            310
-            24)
           object sbPerUp: TBitBtn
             Tag = 1
-            Left = 197
+            AlignWithMargins = True
+            Left = 218
             Top = 2
             Width = 21
-            Height = 21
+            Height = 20
             Hint = 'Move Personal Template Up'
-            Anchors = [akTop, akRight]
+            Margins.Left = 0
+            Margins.Top = 2
+            Margins.Right = 0
+            Margins.Bottom = 2
+            Align = alRight
             Enabled = False
             Glyph.Data = {
               76010000424D7601000000000000760000002800000020000000100000000100
@@ -234,15 +236,21 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             ShowHint = True
             TabOrder = 0
             OnClick = sbMoveUpClick
+            ExplicitLeft = 216
           end
           object sbPerDown: TBitBtn
             Tag = 1
-            Left = 220
+            AlignWithMargins = True
+            Left = 195
             Top = 2
             Width = 21
-            Height = 21
+            Height = 20
             Hint = 'Move Personal Template Down'
-            Anchors = [akTop, akRight]
+            Margins.Left = 2
+            Margins.Top = 2
+            Margins.Right = 2
+            Margins.Bottom = 2
+            Align = alRight
             Enabled = False
             Glyph.Data = {
               76010000424D7601000000000000760000002800000020000000100000000100
@@ -262,15 +270,21 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             ShowHint = True
             TabOrder = 1
             OnClick = sbMoveDownClick
+            ExplicitLeft = 191
           end
           object sbPerDelete: TBitBtn
             Tag = 1
-            Left = 243
+            AlignWithMargins = True
+            Left = 241
             Top = 2
             Width = 67
-            Height = 21
+            Height = 20
             Hint = 'Delete Personal Template'
-            Anchors = [akTop, akRight]
+            Margins.Left = 2
+            Margins.Top = 2
+            Margins.Right = 2
+            Margins.Bottom = 2
+            Align = alRight
             Caption = 'Delete'
             Enabled = False
             Glyph.Data = {
@@ -294,17 +308,19 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             OnClick = sbDeleteClick
           end
           object cbPerHide: TCheckBox
-            Left = 0
-            Top = 4
-            Width = 191
-            Height = 17
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 187
+            Height = 18
             Hint = 'Hide Inactive Personal Templates'
-            Anchors = [akLeft, akTop, akRight]
+            Align = alClient
             Caption = 'Hide &Inactive'
             ParentShowHint = False
             ShowHint = True
             TabOrder = 3
             OnClick = cbPerHideClick
+            ExplicitWidth = 183
           end
         end
         object pnlPersonalGap: TPanel
@@ -726,16 +742,18 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         Align = alBottom
         BevelOuter = bvNone
         TabOrder = 4
-        DesignSize = (
-          260
-          24)
         object sbShUp: TBitBtn
-          Left = 137
+          AlignWithMargins = True
+          Left = 143
           Top = 2
           Width = 22
-          Height = 21
+          Height = 20
           Hint = 'Move Shared Template Up'
-          Anchors = [akTop, akRight]
+          Margins.Left = 2
+          Margins.Top = 2
+          Margins.Right = 2
+          Margins.Bottom = 2
+          Align = alRight
           Enabled = False
           Glyph.Data = {
             76010000424D7601000000000000760000002800000020000000100000000100
@@ -755,14 +773,20 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           ShowHint = True
           TabOrder = 0
           OnClick = sbMoveUpClick
+          ExplicitLeft = 139
         end
         object sbShDown: TBitBtn
-          Left = 160
+          AlignWithMargins = True
+          Left = 167
           Top = 2
           Width = 22
-          Height = 21
+          Height = 20
           Hint = 'Move Shared Template Down'
-          Anchors = [akTop, akRight]
+          Margins.Left = 0
+          Margins.Top = 2
+          Margins.Right = 0
+          Margins.Bottom = 2
+          Align = alRight
           Enabled = False
           Glyph.Data = {
             76010000424D7601000000000000760000002800000020000000100000000100
@@ -782,14 +806,20 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           ShowHint = True
           TabOrder = 1
           OnClick = sbMoveDownClick
+          ExplicitLeft = 165
         end
         object sbShDelete: TBitBtn
-          Left = 188
+          AlignWithMargins = True
+          Left = 191
           Top = 2
           Width = 67
-          Height = 21
+          Height = 20
           Hint = 'Delete Shared Template'
-          Anchors = [akTop, akRight]
+          Margins.Left = 2
+          Margins.Top = 2
+          Margins.Right = 2
+          Margins.Bottom = 2
+          Align = alRight
           Caption = 'Delete'
           Enabled = False
           Glyph.Data = {
@@ -813,17 +843,19 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           OnClick = sbDeleteClick
         end
         object cbShHide: TCheckBox
-          Left = 0
-          Top = 4
-          Width = 124
-          Height = 17
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 135
+          Height = 18
           Hint = 'Hide Inactive Shared Templates'
-          Anchors = [akLeft, akTop, akRight]
+          Align = alClient
           Caption = '&Hide Inactive'
           ParentShowHint = False
           ShowHint = True
           TabOrder = 3
           OnClick = cbShHideClick
+          ExplicitWidth = 131
         end
       end
       object pnlSharedGap: TPanel

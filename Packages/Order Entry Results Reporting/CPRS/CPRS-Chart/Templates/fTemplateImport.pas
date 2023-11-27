@@ -28,7 +28,7 @@ implementation
 {$R *.DFM}
 
 uses
-  ORFn;
+  ORFn, UResponsiveGUI;
 
 var
   frmTemplateImport: TfrmTemplateImport = nil;
@@ -45,7 +45,7 @@ begin
       lblImporting.Hint := lblImporting.Caption;
       gaugeImport.MaxValue := MaxCount;
       Show;
-      Application.ProcessMessages;
+      TResponsiveGUI.ProcessMessages(True);
     end;
   end;
 end;
@@ -58,7 +58,7 @@ begin
     if not Result then
     begin
       frmTemplateImport.gaugeImport.Progress := CurrentCount;
-      Application.ProcessMessages;
+      TResponsiveGUI.ProcessMessages(True);
     end;  
   end
   else
@@ -76,7 +76,7 @@ procedure TfrmTemplateImport.btnCancelClick(Sender: TObject);
 begin
   lblImporting.Caption := 'Canceling...';
   btnCancel.Enabled := FALSE;
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages(True);
 end;
 
 end.

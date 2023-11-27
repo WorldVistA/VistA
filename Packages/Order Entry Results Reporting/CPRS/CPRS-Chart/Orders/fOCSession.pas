@@ -14,7 +14,7 @@ uses
   Grids, strUtils, uDlgComponents, VAUtils, VA508AccessibilityRouter,
   Vcl.ComCtrls, Winapi.RichEdit, ShellAPI, ORNet, rOCSession, Data.Bind.EngExt,
   Vcl.Bind.DBEngExt, Vcl.ImgList, fOMAction, VA508ImageListLabeler, Vcl.Menus,
-  System.Actions, Vcl.ActnList, System.ImageList, u508Button;
+  System.Actions, Vcl.ActnList, System.ImageList, u508Button, ORExtensions;
 
 type
   tStringListArray = array of TStringList;
@@ -26,7 +26,7 @@ type
     lblOverrideChecks: TVA508StaticText;
     PnlCtrLft: TPanel;
     pnlCtrRght: TPanel;
-    lvOrders: TListView;
+    lvOrders: ORExtensions.TListView;
     Splitter: TSplitter;
     rchOrdChk: rOCSession.TRichEdit;
     pnlReason: TPanel;
@@ -40,7 +40,7 @@ type
     lblNote: tLabel;
     pnlInstr: TPanel;
     pnlLegend: TPanel;
-    lvLegend: TListView;
+    lvLegend: ORExtensions.TListView;
     VA508StatusImgLst: TVA508ImageListLabeler;
     VA508CheckBoxImgLst: TVA508ImageListLabeler;
     pnlList: TPanel;
@@ -387,12 +387,12 @@ end;
 ////////////////////////////////////////////////////////////////////////////////
 
 procedure TfrmOCSession.EnableAllgyBtn;
-//var
-//  s: string;
+var
+  S: string;
 begin
   acAllergyAssessment.Enabled :=
-//  CallVistA('ORQQAL LIST', [Patient.DFN],s) and (s = '^No Allergy Assessment'); // Todo: This code needs to go back into 32c!
-    False;
+    CallVistA('ORQQAL LIST', [Patient.DFN], S) and
+      (S = '^No Allergy Assessment');
 end;
 
 procedure TfrmOCSession.cmdAcceptOrdersClick(Sender: TObject);
@@ -992,7 +992,8 @@ end;
 procedure TfrmOCSession.acAllergyAssessmentExecute(Sender: TObject);
 begin
   inherited;
-  fAllgyAR.EnterEditAllergy(0, true, false, nil, -1, True, ExecuteOrderCheckCallBack);
+  fAllgyAR.EnterEditAllergy(0, true, false, nil, -1, True,
+    ExecuteOrderCheckCallBack, False);
 end;
 
 procedure TfrmOCSession.acViewMonographExecute(Sender: TObject);

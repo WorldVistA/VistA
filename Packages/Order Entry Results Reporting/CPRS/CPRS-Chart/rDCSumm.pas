@@ -458,7 +458,6 @@ begin
     begin
       CreatedDoc.IEN := 0;
       CreatedDoc.ErrorText := '';
-      ShowNewNoteError('discharge summary', DCSummRec.Lines);
     end;
   finally
     sl.Free;
@@ -513,7 +512,6 @@ begin
     begin
       CreatedDoc.IEN := 0;
       CreatedDoc.ErrorText := '';
-      ShowNewNoteError('addendum', DCSummRec.Lines);
     end;
   finally
     sl.Free;

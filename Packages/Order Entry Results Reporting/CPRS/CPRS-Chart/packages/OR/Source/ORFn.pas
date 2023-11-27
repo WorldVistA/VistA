@@ -25,6 +25,7 @@ type
 
 var
   ScrollBarHeight: integer = 0;
+  ScrollBarWidth: integer = 0;
   //Used for the sort by peice
   SortADelim: Char;
   SortPieceNum: Integer;
@@ -97,7 +98,8 @@ procedure SetPieces(var x: string; Delim: Char; Pieces: Array of Integer;
                                                 FromString: string);
 procedure SortByPiece(AList: TStringList; ADelim: Char; PieceNum: Integer; aSortDir:
   tSortDir = DIR_FRWRD); overload;
-procedure SortByPiece(AList: TStrings; ADelim: Char; PieceNum: Integer); overload;
+procedure SortByPiece(AList: TStrings; ADelim: Char; PieceNum: Integer; aSortDir:
+  tSortDir = DIR_FRWRD); overload;
 function  SortByPiece2(List: TStringList; Index1, Index2: Integer): Integer;
 
 procedure SortByPieces(AList: TStringList; ADelim: Char; PieceNums: tSortArray;
@@ -126,6 +128,7 @@ function MainFont: TFont;
 function MainFontSize: Integer;
 function MainFontWidth: Integer;
 function MainFontHeight: Integer;
+function MainFontTextHeight: Integer;
 function BaseFont: TFont;
 procedure RedrawSuspend(AHandle: HWnd);
 procedure RedrawActivate(AHandle: HWnd);
@@ -805,7 +808,7 @@ begin
       begin
         Result[i] := x[i].ToUpper;
       end
-    else if (x[i] = 'S') and (x[i - 1] = '''') and x[i - 2].IsLetter then
+    else if (i > 2) and (x[i] = 'S') and (x[i - 1] = '''') and x[i - 2].IsLetter then
       begin
         if (i < Length(x)) and (CharInSet(x[i + 1], [' ', ',', '-', '.', '/', '^', '[', ''''])) then
           begin
@@ -988,10 +991,12 @@ begin
   AList.CustomSort(SortByPiece2);
 end;
 
-procedure SortByPiece(AList: TStrings; ADelim: Char; PieceNum: Integer);
+procedure SortByPiece(AList: TStrings; ADelim: Char; PieceNum: Integer; aSortDir:
+  tSortDir = DIR_FRWRD);
 var
   sl: TStringList;
 begin
+  SortDir := aSortDir;
   SortADelim := ADelim;
   SortPieceNum := PieceNum;
   if aList is TSTringList then
@@ -1605,6 +1610,20 @@ begin
   Result := Abs(MainFont.Height);
 end;
 
+var
+  uLastMainFontSize: Integer = 0;
+  uMainFontTextHeight: Integer = 0;
+
+function MainFontTextHeight: Integer;
+begin
+  if uLastMainFontSize <> MainFontSize then
+  begin
+    uLastMainFontSize := MainFontSize;
+    uMainFontTextHeight := TextHeightByFont(MainFont.Handle, 'XyZ')
+  end;
+  Result := uMainFontTextHeight;
+end;
+
 procedure RedrawSuspend(AHandle: HWnd);
 begin
   SendMessage(AHandle, WM_SETREDRAW, 0, 0);
@@ -1717,7 +1736,7 @@ begin
 // DRM - I18906933FY18/687893 - This ProcessMessages can cause re-entrance issues
 // in some cases (e.g., CPRS, File menu, Select New Patient... on slow servers).
 //  if AControl.Align <> alNone then
-//    Application.ProcessMessages;
+//    TResponsiveGUI.ProcessMessages;
 // DRM ---
   AControl.DisableAlign;
   try
@@ -3056,6 +3075,7 @@ initialization
   fExcludeFromMixed := TStringList.Create;
   SetExcludedDefault;
   ScrollBarHeight := GetSystemMetrics(SM_CYHSCROLL);
+  ScrollBarWidth := GetSystemMetrics(SM_CYVSCROLL);
   AlignList := TStringList.Create;
   AnchorList := TStringList.Create;
   PURE_BLACK := ColorToRGB(clBlack);

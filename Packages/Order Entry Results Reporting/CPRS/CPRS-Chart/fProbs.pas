@@ -222,7 +222,7 @@ implementation
 
 uses fFrame, fProbFlt, fProbLex, rProbs, rCover, fRptBox, rCore,
      fProbCmt, fEncnt, fReportsPrint, fReports, rPCE, DateUtils, VA2006Utils,
-     VA508AccessibilityRouter;
+     VA508AccessibilityRouter, uWriteAccess;
 
 {$R *.DFM}
 
@@ -767,8 +767,8 @@ procedure TfrmProblems.UMCloseProblem(var Message:TMessage);
 begin
   pnlView.BringToFront ;
   ShowPnlView;
-  bbCancel.Enabled := True ;
-  bbOtherProb.enabled := true; {restore lexicon access}
+  bbCancel.Enabled := WriteAccess(waProblems);
+  bbOtherProb.enabled := WriteAccess(waProblems); {restore lexicon access}
   pnlButtons.Visible := False;
   pnlButtons.SendToBack;
   pnlProbEnt.Visible :=  (not PLUser.usUseLexicon) ;
@@ -863,7 +863,7 @@ begin
     TotalProbs := FAllProblems.Count
   else
     TotalProbs := 0;
-    
+
   case PLUser.usViewAct[1] of
     'A': lblProbList.Caption := ACTIVE_LIST_CAP ;
     'I': lblProbList.Caption := INACTIVE_LIST_CAP ;
@@ -944,7 +944,6 @@ end;
 procedure TfrmProblems.FormCreate(Sender: TObject);
 begin
   inherited;
-//  FixHeaderControlDelphi2006Bug(HeaderControl);
   FAllProblems := TStringList.Create;
   FProblemsVisible := TStringList.Create;
   FItemData := TStringList.Create;
@@ -1373,8 +1372,8 @@ begin
   if HighlightDuplicate(NewProb, 'This problem looks similar to the highlighted problem'
                  + #13#10 + '        Proceed?', mtConfirmation, 'ADD') then
   begin
-    bbCancel.Enabled := True ;
-    bbOtherProb.enabled:=true; {don't let them invoke lexicon till add completed}
+    bbCancel.Enabled := WriteAccess(waProblems) ;
+    bbOtherProb.enabled:= WriteAccess(waProblems); {don't let them invoke lexicon till add completed}
     exit; {bail out - if don't want dups}
   end ;
 //============================== End new code =========================
@@ -1617,42 +1616,52 @@ begin
       popRemove.enabled        := false;
       popAnnotate.enabled      := false;
       popViewDetails.enabled   := false;
-      AnyUnver := 0;
-      AnyAct := 0;
-      for i := 0 to wgProbData.Count - 1 do
-       begin
-        if wgProbData.Selected[i] and (Copy(Piece(MString(i), U, 2),5,3)='(u)') then
-          AnyUnver := AnyUnVer + 1;
-        if wgProbData.Selected[i] and (Copy(Piece(MString(i), U, 2),1,1) = 'A') then
-          AnyAct := AnyAct + 1;
-       end;
-      mnuActVerify.enabled     := PLUser.usVerifyTranscribed and
-                                  PLUser.usPrimeUser and (AnyUnver > 0);
-      popVerify.enabled        := PLUser.usVerifyTranscribed and
-                                  PLUser.usPrimeUser and (AnyUnver > 0);
-      mnuActInactivate.enabled := (AnyAct > 0);
-      popInactivate.enabled    := (AnyAct > 0);
+      if WriteAccess(waProblems) then
+      begin
+        AnyUnver := 0;
+        AnyAct := 0;
+        for i := 0 to wgProbData.Count - 1 do
+        begin
+          if wgProbData.Selected[i] and (Copy(Piece(MString(i), U, 2),5,3)='(u)') then
+            AnyUnver := AnyUnVer + 1;
+          if wgProbData.Selected[i] and (Copy(Piece(MString(i), U, 2),1,1) = 'A') then
+            AnyAct := AnyAct + 1;
+        end;
+        mnuActVerify.enabled     := PLUser.usVerifyTranscribed and
+                                    PLUser.usPrimeUser and (AnyUnver > 0);
+        popVerify.enabled        := PLUser.usVerifyTranscribed and
+                                    PLUser.usPrimeUser and (AnyUnver > 0);
+        mnuActInactivate.enabled := (AnyAct > 0);
+        popInactivate.enabled    := (AnyAct > 0);
+      end
+      else
+      begin
+        mnuActVerify.enabled     := False;
+        popVerify.enabled        := False;
+        mnuActInactivate.enabled := False;
+        popInactivate.enabled    := False;
+      end;
     end
   else
     begin
       mnuActDetails.enabled    := true;
-      mnuActChange.enabled     := true;
-      mnuActRestore.enabled    := PLUser.usPrimeUser;
-      mnuActRemove.enabled     := PLUser.usPrimeUser;
-      mnuActAnnotate.enabled   := true;
-      popChange.enabled        := true;
-      popRestore.enabled       := PLUser.usPrimeUser;
-      popRemove.enabled        := PLUser.usPrimeUser;
-      popAnnotate.enabled      := true;
+      mnuActChange.enabled     := WriteAccess(waProblems);
+      mnuActRestore.enabled    := WriteAccess(waProblems) and PLUser.usPrimeUser;
+      mnuActRemove.enabled     := WriteAccess(waProblems) and PLUser.usPrimeUser;
+      mnuActAnnotate.enabled   := WriteAccess(waProblems);
+      popChange.enabled        := WriteAccess(waProblems);
+      popRestore.enabled       := WriteAccess(waProblems) and PLUser.usPrimeUser;
+      popRemove.enabled        := WriteAccess(waProblems) and PLUser.usPrimeUser;
+      popAnnotate.enabled      := WriteAccess(waProblems);
       popViewDetails.enabled   := true ;
-      mnuActVerify.enabled     := PLUser.usVerifyTranscribed and
+      mnuActVerify.enabled     := WriteAccess(waProblems) and PLUser.usVerifyTranscribed and
                                   PLUser.usPrimeUser and
                                   (Copy(Piece(MString(wgProbData.ItemIndex), U, 2),5,3)='(u)') ;
-      popVerify.enabled        := PLUser.usVerifyTranscribed and
+      popVerify.enabled        := WriteAccess(waProblems) and PLUser.usVerifyTranscribed and
                                   PLUser.usPrimeUser and
                                   (Copy(Piece(MString(wgProbData.ItemIndex), U, 2),5,3)='(u)') ;
-      mnuActInactivate.enabled := Copy(Piece(MString(wgProbData.ItemIndex), U, 2),1,1) = 'A' ;
-      popInactivate.enabled    := Copy(Piece(MString(wgProbData.ItemIndex), U, 2),1,1) = 'A' ;
+      mnuActInactivate.enabled := WriteAccess(waProblems) and (Copy(Piece(MString(wgProbData.ItemIndex), U, 2),1,1) = 'A') ;
+      popInactivate.enabled    := WriteAccess(waProblems) and (Copy(Piece(MString(wgProbData.ItemIndex), U, 2),1,1) = 'A') ;
     end;
 
   //Disable menu actions for REMOVED problems list display
@@ -1669,7 +1678,7 @@ begin
       popRemove.Enabled        := False;
       popVerify.Enabled        := False;
     end;
-end ;
+end;
 
 procedure TfrmProblems.bbCancelClick(Sender: TObject);
 begin
@@ -2055,6 +2064,8 @@ procedure TfrmProblems.ShowPnlView;
 begin
   pnlView.BringToFront;
   pnlView.Show;
+  bbNewProb.Enabled := WriteAccess(waProblems);
+  mnuActNew.Enabled := WriteAccess(waProblems);
   lstView.TabStop := true;
   bbNewProb.TabStop := true;
 end;
@@ -2165,5 +2176,3 @@ initialization
   SpecifyFormIsNotADialog(TfrmProblems);
 
 end.
-
-

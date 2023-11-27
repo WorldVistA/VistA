@@ -242,6 +242,9 @@ begin
             end;
         end;
       if i > -1 then cbo.itemindex := i;
+//      if cbo.ItemIndex = -1 then exit;
+//      if editIntVal = '1' then cbo.Enabled := false
+//      else cbo.Enabled := true;
     end;
   inherited;
 
@@ -536,6 +539,16 @@ begin
     editObject := vEditObject(layoutControl.uiControl);
     editObject.setComboBoxDefault(id, '');
     (editObject.editComponent as TORComboBox).OnChange((editObject.editComponent as TORComboBox));
+    if id = '1' then
+    begin
+      (editObject.editComponent as TORComboBox).Enabled := true;
+      (editObject.editComponent as TORComboBox).Color := clWindow;
+    end
+    else
+    begin
+      (editObject.editComponent as TORComboBox).Enabled := false;
+      (editObject.editComponent as TORComboBox).Color := cl3DLight;
+    end;
   end;
 end;
 

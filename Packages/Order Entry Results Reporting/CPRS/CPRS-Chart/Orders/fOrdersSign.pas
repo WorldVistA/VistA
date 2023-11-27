@@ -36,7 +36,6 @@ uses
 
 type
   TfrmSignOrders = class(TfrmBase508Form)
-    laDiagnosis: TLabel;
     fraCoPay: TfraCoPayDesc;
     pnlDEAText: TPanel;
     lblDEAText: TStaticText;
@@ -56,6 +55,8 @@ type
     cmdCancel: TButton;
     pnlCombined: TORAutoPanel;
     pnlTop: TPanel;
+    gpMain: TGridPanel;
+    pnlCSTop: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
@@ -68,10 +69,8 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure clstOrdersKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure FormResize(Sender: TObject);
-    procedure FormPaint(Sender: TObject);
+    procedure gpMainResize(Sender: TObject);
   private
-    PaintCallCount: integer;
     OKPressed: boolean;
     ESCode: string;
     FLastHintItem: Integer;
@@ -111,7 +110,10 @@ uses
   fFrame,
   rODLab,
   fRptBox,
-  VAUtils;
+  VAUtils,
+  UResponsiveGUI,
+  rMisc,
+  VAHelpers;
 
 const
   TX_SAVERR1 = 'The error, ';
@@ -123,12 +125,12 @@ const
   VERT_SPACING = 6;
 var
   i, {k,} cidx, cnt, theSts, WardIEN: Integer;
-  ShrinkHeight, oheight, newheight {TotalSH, temph1, temph2, oltemptop, csoltemptop, deatemptop, esigtemptop, oltemph, csoltemph, deatemph, esigtemph}: Integer;
+  minWidth, sigWidth, topHeight, lstHeight, deaHeight, newHeight: integer;
   SignList: TStringList;
   CSSignList: TStringList;
   Obj: TOrder;
   ContainsIMOOrders, DoNotPrint, t1, t2 {, t3}: boolean;
-  X {SigData, SigUser, SigDrugSch, SigDEA}: string;
+  X, FormID {SigData, SigUser, SigDrugSch, SigDEA}: string;
   cSignature, cHashData, cCrlUrl, cErr, WardName: string;
   //UsrAltName, IssuanceDate, PatientName, PatientAddress, DetoxNumber, ProviderName, ProviderAddress: string;
   //DrugName, Quantity, Directions: string;
@@ -210,6 +212,7 @@ begin
 
     CallVistA('ORDEA SIGINFO', [Patient.DFN, User.DUZ], aLst);
     frmSignOrders.lblProvInfo.Caption := aLst.Text;
+    frmSignOrders.pnlProvInfo.Width := frmSignOrders.lblProvInfo.Width + 8;
   finally
     FreeAndNil(aLst);
   end;
@@ -292,31 +295,50 @@ begin
       end;
 
     SigItems.ClearDrawItems;
-    SigItems.ClearFcb;
+    SigItems.ClearFCtrls;
     SigItemsCS.ClearDrawItems;
-    SigItemsCS.ClearFcb;
-    t1 := SigItems.UpdateListBox(frmSignOrders.clstOrders);
-    t2 := SigItemsCS.UpdateListBox(frmSignOrders.clstCSOrders);
-    if t1 or t2 then
-      frmSignOrders.fraCoPay.Visible := True;
-
-    if SignNotRequired then
-      begin
-        frmSignOrders.lblESCode.Visible := False;
-        frmSignOrders.txtESCode.Visible := False;
-      end;
+    SigItemsCS.ClearFCtrls;
 
     with frmSignOrders do
       begin
+        topHeight := pnlTop.Height;
+        lstHeight := MainFontTextHeight * 5;
+        deaHeight := pnlDEAText.Height;
+        if clstCSOrders.Count > 0 then
+          minWidth := Canvas.TextWidth(lblCSOrderList.Caption +
+            lblSmartCardNeeded.Caption) + lblSmartCardNeeded.Margins.Left
+        else
+          minWidth := Canvas.TextWidth(lblOrderList.Caption);
+        inc(minWidth, TSigItems.MinWidthDX + ScrollBarWidth);
+        t1 := SigItems.UpdateListBox(clstOrders);
+        t2 := SigItemsCS.UpdateListBox(clstCSOrders);
+        if t1 or t2 then
+        begin
+          fraCoPay.Visible := True;
+          pnlTop.Visible := True;
+          pnlTop.Height := fraCoPay.AdjustAndGetSize;
+          if t1 then
+            inc(minWidth, SigItems.BtnWidths)
+          else
+            inc(minWidth, SigItemsCS.BtnWidths);
+        end;
+
+        sigWidth := (cmdOK.Width * 4) + txtESCode.Left + txtESCode.Width;
+        if minWidth < sigWidth then
+          minWidth := SigWidth;
+
+        if SignNotRequired then
+          begin
+            lblESCode.Visible := False;
+            txtESCode.Visible := False;
+          end;
         pnlDEAText.Visible := True;
         txtESCode.Text := '';
         if ((clstOrders.Count = 0) and (clstCSOrders.Count = 0)) then
           Exit;
-        pnlProvInfo.Height := lblProvInfo.Height + 5 + lblProvInfo.Top;
 
         if clstCSOrders.Count = 0 then
           begin
-            oheight := pnlOrderList.Height;
             pnlProvInfo.Visible := False;
             if fraCoPay.Visible = False then
               begin
@@ -324,49 +346,56 @@ begin
               end;
             pnlDEAText.Visible := False;
             pnlCSOrderList.Visible := False;
-            pnlOrderList.Align := alClient;
-            newheight := Height - pnlOrderList.Height + oheight;
-            if newheight < Constraints.MinHeight then
-              Constraints.MinHeight := newheight;
-            Height := newheight;
           end
         else if clstOrders.Count = 0 then
           begin
-            oheight := pnlCSOrderList.Height;
             pnlOrderList.Visible := False;
-            pnlCSOrderList.Align := alClient;
-            newheight := Height - pnlCSOrderList.Height + oheight;
-            if newheight < Constraints.MinHeight then
-              Constraints.MinHeight := newheight;
-            Height := newheight;
             txtESCode.Visible := False;
             lblESCode.Visible := False;
-
-          end
-        else if fraCoPay.Visible = False then
-          begin
-            fraCoPay.Visible := True;
-            ShrinkHeight := fraCoPay.Height - pnlProvInfo.Height;
-            fraCoPay.Visible := False;
-
-            pnlTop.Height := pnlTop.Height - ShrinkHeight;
-            pnlCombined.Top := pnlCombined.Top - ShrinkHeight;
-            pnlCombined.Height := pnlCombined.Height + ShrinkHeight;
-
           end;
-
         lblDEAText.Visible := False;
         lblSmartCardNeeded.Visible := False;
-      end;
-    if frmSignOrders.AnyItemsAreChecked then
-      begin
-        frmSignOrders.lblESCode.Visible := frmSignOrders.IsSignatureRequired;
-        frmSignOrders.txtESCode.Visible := frmSignOrders.IsSignatureRequired;
-      end;
-    if frmSignOrders.txtESCode.Visible then
-      frmSignOrders.ActiveControl := frmSignOrders.txtESCode;
 
+        if AnyItemsAreChecked then
+        begin
+          lblESCode.Visible := IsSignatureRequired;
+          txtESCode.Visible := IsSignatureRequired;
+        end;
+        if txtESCode.Visible then
+          ActiveControl := txtESCode;
+
+        newHeight := Height - ClientHeight + pnlEsig.Height;
+        if pnlTop.Visible then
+          inc(newHeight, topHeight);
+        if pnlDEAText.Visible then
+          inc(newHeight, deaHeight);
+        if pnlOrderList.Visible then
+          inc(newHeight, lstHeight)
+        else
+          gpMain.RowCollection[0].Value := 0;
+        if pnlCSOrderList.Visible then
+          inc(newHeight, lstHeight)
+        else
+          gpMain.RowCollection[1].Value := 0;
+        Constraints.MinHeight := newHeight;
+        Constraints.MinWidth := minWidth;
+        Height := newHeight;
+
+        FormID := '-';
+        if pnlTop.Visible then
+          FormID := FormID + 'T';
+        if pnlDEAText.Visible then
+          FormID := FormID + 'D';
+        if pnlOrderList.Visible and pnlCSOrderList.Visible then
+          FormID := FormID + '2'
+        else if pnlOrderList.Visible or pnlCSOrderList.Visible then
+          FormID := FormID + '1';
+      end;
+
+    SetFormPosition(frmSignOrders, FormID);
     frmSignOrders.ShowModal;
+    SaveUserBounds(frmSignOrders, FormID);
+
     if frmSignOrders.OKPressed then
       begin
         Result := True;
@@ -630,6 +659,8 @@ begin
   FOldHintHidePause := Application.HintHidePause;
   Application.HintHidePause := 30000;
   ResizeFormToFont(Self);
+  lblSmartCardNeeded.Font.Size := MainFontSize;
+  pnlCSTop.Height := MainFontTextHeight + TSigItems.btnMargin;
 end;
 
 procedure TfrmSignOrders.FormShow(Sender: TObject);
@@ -647,6 +678,13 @@ begin
   // end CQ5172
 end;
 
+procedure TfrmSignOrders.gpMainResize(Sender: TObject);
+begin
+  inherited;
+  clstOrders.ForceItemHeightRecalc;
+  clstCSOrders.ForceItemHeightRecalc;
+end;
+
 procedure TfrmSignOrders.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 var
   j: Integer; // CQ5054
@@ -660,7 +698,8 @@ begin
 
   case Key of
     // CQ5054
-    83, 115:
+    // 83, 115:
+    vkS, vkF4:
       if (ssAlt in Shift) then
         begin
           for j := 0 to clstOrders.Items.Count - 1 do
@@ -680,7 +719,7 @@ begin
       begin
         FOSTFhintWindow.ReleaseHandle;
         FOSTFHintWndActive := False;
-        Application.ProcessMessages;
+        TResponsiveGUI.ProcessMessages;
       end;
   except
     on E: Exception do
@@ -689,40 +728,6 @@ begin
         raise;
       end;
   end;
-end;
-
-
-procedure TfrmSignOrders.FormPaint(Sender: TObject);
-begin
-  inherited;
-  if PaintCallCount > 100 then exit;
-  inc(PaintCallCount);
-
-  if clstCSOrders.Count = 0 then
-    begin
-      clstOrders.Height := pnlOrderList.Height - clstOrders.Top - 4;
-      clstOrders.Width := pnlOrderList.Width - clstOrders.Left - 4;
-    end;
-  if clstOrders.Count = 0 then
-    begin
-      clstCSOrders.Height := pnlCSOrderList.Height - clstCSOrders.Top - 4;
-      clstCSOrders.Width := pnlCSOrderList.Width - clstCSOrders.Left - 4;
-    end;
-end;
-
-procedure TfrmSignOrders.FormResize(Sender: TObject);
-begin
-  inherited;
-  if clstCSOrders.Count = 0 then
-    begin
-      clstOrders.Height := pnlOrderList.Height - clstOrders.Top - 4;
-      clstOrders.Width := pnlOrderList.Width - clstOrders.Left - 4;
-    end;
-  if clstOrders.Count = 0 then
-    begin
-      clstCSOrders.Height := pnlCSOrderList.Height - clstCSOrders.Top - 4;
-      clstCSOrders.Width := pnlCSOrderList.Width - clstCSOrders.Left - 4;
-    end;
 end;
 
 procedure TfrmSignOrders.FormDestroy(Sender: TObject);
@@ -818,7 +823,7 @@ var
   ARect: TRect;
   aListView: TCaptionCheckListBox;
 begin
-  if Control.ClassNameIs('TCaptionCheckListBox') then
+  if Control is TCaptionCheckListBox then
     aListView := TCaptionCheckListBox(Control)
   else
     raise Exception.Create('Invalid control passed to MeasureItem');
@@ -828,6 +833,8 @@ begin
     if Index < Items.Count then
       begin
         ARect := ItemRect(Index);
+        if CVarExists(TSigItems.RectWidth) then
+          ARect.Right := CVar[TSigItems.RectWidth];
         Canvas.FillRect(ARect);
         X := FilteredString(Items[Index]);
         AHeight := WrappedTextHeightByFont(Canvas, Font, X, ARect);

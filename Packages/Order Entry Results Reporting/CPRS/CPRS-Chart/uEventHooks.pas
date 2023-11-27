@@ -29,7 +29,7 @@ type
     procedure Initialize;
   end;
 
-  TCPRSBroker = class(TAutoIntfObject, ICPRSBrokerInitializer)
+  TCPRSBroker = class(TAutoIntfObject, ICPRSBrokerInitializer, ICPRSBroker)
   private
     FContext: string;
     FRPCVersion: string;

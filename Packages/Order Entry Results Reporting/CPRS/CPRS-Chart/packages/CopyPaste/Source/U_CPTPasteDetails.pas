@@ -157,7 +157,7 @@ procedure Register;
 implementation
 
 uses
-  System.SyncObjs, VAUtils;
+  System.SyncObjs, VAUtils, UResponsiveGUI;
 
 procedure Register;
 begin
@@ -962,7 +962,7 @@ begin
     InvalidateRect(TRichEdit(FMonitorObject).Handle, NIL, true);
     TRichEdit(FMonitorObject).Perform(EM_SETEVENTMASK, 0, ResetMask);
     Screen.Cursor := RtnCursor;
-    Application.ProcessMessages; // moved from HighLightInfoPanel
+    TResponsiveGUI.ProcessMessages; // moved from HighLightInfoPanel
   end;
 end;
 
@@ -1193,11 +1193,11 @@ begin
         Format.crBackColor := ColorToRGB(Color);
         TRichEdit(FMonitorObject).Perform(EM_SETCHARFORMAT, SCF_SELECTION,
           Longint(@Format));
-// This Application.ProcessMessages was allowing a note change in the middle of
+// This TResponsiveGUI.ProcessMessages was allowing a note change in the middle of
 // lbSelectorClick, which clears out the PasteText, causing access violations
 // because lbSelectorClick was still processing PasteText data.  Fix was to
-// move Application.ProcessMessages to the bottom of lbSelectorClick
-//        Application.ProcessMessages;
+// move TResponsiveGUI.ProcessMessages to the bottom of lbSelectorClick
+//        TResponsiveGUI.ProcessMessages;
       end;
 
     until CharPos = 0;

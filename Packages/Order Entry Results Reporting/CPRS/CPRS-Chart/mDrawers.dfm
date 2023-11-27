@@ -5,7 +5,6 @@ object fraDrawers: TfraDrawers
   Height = 362
   Constraints.MinWidth = 161
   TabOrder = 0
-  TabStop = True
   object pnlTemplate: TPanel
     Left = 0
     Top = 0

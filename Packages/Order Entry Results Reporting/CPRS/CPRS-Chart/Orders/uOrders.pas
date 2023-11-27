@@ -1,4 +1,4 @@
-unit uOrders;
+ï»¿unit uOrders;
 
 interface
 
@@ -6,16 +6,13 @@ uses
   Windows, Messages, SysUtils, Classes, Controls, Forms, uConst, rConsults,
   rOrders, ORFn, Dialogs, ORCtrls, stdCtrls, strUtils, fODBase, fODMedOIFA,
   VA508AccessibilityRouter, VA508AccessibilityManager, ORNet, DateUtils, TRPCb,
-  rMisc, Vcl.ComCtrls, rODBase;
+  rMisc, Vcl.ComCtrls, rODBase, system.JSON, System.Character,
+  uWriteAccess;
 
 type
   EOrderDlgFail = class(Exception);
   TLoadMOBProc = procedure(aConnectParams: WideString; aRunParams: WideString;
     var aResult: longBool);
-
-  // FQOAltOI = record
-  // OI: integer;
-  // end;
 
   { Ordering Environment }
 function AuthorizedUser: Boolean;
@@ -35,13 +32,14 @@ procedure ResetDialogProperties(const AnID: string; AnEvent: TOrderDelayEvent;
 function IsInvalidActionWarning(const AnOrderText, AnOrderID: String): Boolean;
 procedure InitialOrderVariables;
 procedure BuildResponseVarsForOutpatient(AResponses: TObject; var AUnits,
-  ASchedule, ADuration, ADrug: String);
+  ASchedule, ADuration, ADrug: String; NoPRN: boolean);
 
 { Write Orders }
 function ActivateAction(const AnID: string; AnOwner: TComponent;
   ARefNum: Integer): Boolean;
 function ActivateOrderDialog(const AnID: string; AnEvent: TOrderDelayEvent;
-  AnOwner: TComponent; ARefNum: Integer; ANeedVerify: Boolean = True): Boolean;
+  const AnOwner: TComponent; const ARefNum: Integer;
+  const ANeedVerify: Boolean = True; const ForceEdit: Boolean = False): Boolean;
 function RetrieveOrderText(AnOrderID: string): string;
 function ActivateOrderHTML(const AnID: string; AnEvent: TOrderDelayEvent;
   AnOwner: TComponent; ARefNum: Integer): Boolean;
@@ -93,8 +91,20 @@ procedure ShowOneStepAdmin;
 function LoadMOBDLL: TDllRtnRec;
 procedure UnloadMOBDLL;
 function TitrationSafeText(Text1, Text2: string): string;
+
+function canWriteOrder(DGIEN: Integer): Boolean; overload;
+function canWriteOrder(DGIEN: Integer; DGName: String;
+  Action: String; ShowError: Boolean = False; ErrorText: String = '';
+  RequireChildAccess: Boolean = False): Boolean; overload;
+function canWriteOrder(DGIEN: Integer; DGName: String;
+  Action: TActionType; ShowError: Boolean = False; ErrorText: String = '';
+  RequireChildAccess: Boolean = False): Boolean; overload;
+function canWriteOrder(ResolvedDialog: TOrderDialogResolved): boolean; overload;
+function canWriteOrder(AnOrder: TOrder; Action: TActionType): boolean; overload;
+function canWriteOrder(AnOrder: TOrder; Action: string): boolean; overload;
+
 function HasDaysSupplyComplexDoseConflict(AResponses: TObject;
-  CurSupply: integer): Boolean;
+  CurSupply: integer; OrderText: string; var EditOrder: Boolean): Boolean;
 
 type
   TResponsesAdapter = class
@@ -139,6 +149,7 @@ var
   uAutoAc: Boolean;
   InptDisp: Integer;
   OutptDisp: Integer;
+  SupplyDisp: Integer;
   MedsDisp: Integer;
   ClinDisp: Integer; // IMO
   ClinOrdDisp: Integer;
@@ -151,6 +162,7 @@ var
   ImgDisp: Integer;
   DietDisp: Integer;
   NonVADisp: Integer;
+  LabDisp: Integer;
   MedsInDlgIen: Integer;
   ClinMedsDlgIen: Integer;
   ClinIVDlgIen: Integer;
@@ -177,6 +189,8 @@ const
   TX_ERR_REFILL = 'The number of refills must be in the range of 0 through ';
   TX_NO_RENEW_END = ':' + CRLF + CRLF;
   TX_INVALID_NO_MESSAGE = '^TX_INVALID_NO_MESSAGE^';
+  TX_NO_WRITE_ACCESS = 'you do not have write-access to %s.';
+  TX_NO_VALID_GROUPS = 'there are no active orderable items for this order dialog.';
 
 implementation
 
@@ -190,7 +204,8 @@ uses fODDiet, fODMisc, fODGen, fODMedIn, fODMedOut, fODText, fODConsult,
   rODAllergy,
   UBAGlobals, fClinicWardMeds, uTemplateFields, VAUtils, System.UITypes, rTIU,
   ORSystem, RpcConf1, uInit,
-  fODRTC, fODAllergyCheck, uOwnerWrapper;
+  fODRTC, fODAllergyCheck, uOwnerWrapper, uInfoBoxWithBtnControls,
+  ORClasses, rODRad, UResponsiveGUI;
 
 var
   uPatientLocked: Boolean;
@@ -206,7 +221,6 @@ var
   uNewMedDialog: Integer;
   MOBDLLHandle : THandle = 0;
   MOBDLLName : string = 'OrderCom.dll';
-  //QOALTOI: FQOAltOI;
 
 const
   TX_PROV_LOC =
@@ -269,8 +283,7 @@ const
     + CRLF + CRLF + 'OR' + CRLF + CRLF +
     'If you are a nurse and need to document a clinic medication that has been previously administered greater than 23 hours in the past you need to go to BCMA.';
   TX_DAYS_CONFLICT = 'WARNING - Days supply (%d) does not match duration ' +
-    'specified in complex dose (%d).' + CRLF + CRLF +
-    'Are you sure you want to accept this order?';
+    'specified in complex dose (%d).' + CRLF + CRLF;
 
   LoadMOBProc: TLoadMOBProc = nil;
 
@@ -530,7 +543,7 @@ begin
     begin
       AnOrder := TOrder(Items[i]);
       with AnOrder do
-        Changes.Add(CH_ORD, ID, Text, '', CanSign);
+        Changes.Add(CH_ORD, ID, Text, '', CanSign, waOrders, '', 0, DGroup);
       if (Length(AnOrder.ActionOn) > 0) and not Changes.ExistForOrder
         (Piece(AnOrder.ActionOn, ';', 1)) then
         UnlockOrder(AnOrder.ActionOn);
@@ -650,6 +663,7 @@ procedure InitialOrderVariables;
 begin
   InptDisp := DisplayGroupByName('UD RX');
   OutptDisp := DisplayGroupByName('O RX');
+  SupplyDisp := DisplayGroupByName('SPLY');
   MedsDisp := DisplayGroupByName('RX');
   IVDisp := DisplayGroupByName('IV RX');
   ClinDisp := DisplayGroupByName('C RX');
@@ -662,6 +676,7 @@ begin
   ImgDisp := DisplayGroupByName('XRAY');
   DietDisp := DisplayGroupByName('DO');
   NonVADisp := DisplayGroupByName('NV RX');
+  LabDisp := DisplayGroupByName('LAB');
   ClinMedsDlgIen := DlgIENForName('PSJ OR CLINIC OE');
   ClinIVDlgIen := DlgIENForName('CLINIC OR PAT FLUID OE');
   MedsInDlgIen := DlgIENForName('PSJ OR PAT OE');
@@ -673,6 +688,85 @@ begin
   MedsNVADlgFormID := FormIDForDialog(MedsNVADlgIen);
   MedsIVDlgFormID := FormIDForDialog(MedsIVDlgIen);
   ClinIVDlgFormID := FormIDForDialog(ClinIVDlgIen);
+  If WriteAccess(waOrders) then
+    WriteAccessV.InitCPRSDisplayGroups;
+end;
+
+function canWriteOrder(obj: TWriteAccess.TDGWriteAccess; Action: TActionType;
+  ShowError: Boolean = False; ErrorText: String = '';
+  RequireChildAccess: Boolean = False): Boolean; overload;
+begin
+  Result := WriteAccessV.OrderAccess(obj, Action, ShowError, ErrorText, RequireChildAccess);
+end;
+
+function canWriteOrder(DGIEN: Integer): Boolean; overload;
+begin
+  Result := canWriteOrder(WriteAccessV.DGWriteAccess(DGIEN), atNone);
+end;
+
+function canWriteOrder(DGIEN: Integer; DGName: String;
+  Action: String; ShowError: Boolean = False; ErrorText: String = '';
+  RequireChildAccess: Boolean = False): Boolean; overload;
+var
+  obj: TWriteAccess.TDGWriteAccess;
+
+begin
+  if DGIEN > 0 then
+    obj := WriteAccessV.DGWriteAccess(DGIEN)
+  else
+    obj := WriteAccessV.DGWriteAccess(DGName);
+  Result := canWriteOrder(obj, WriteAccessV.ActionType(Action), ShowError, ErrorText,
+    RequireChildAccess);
+end;
+
+function canWriteOrder(DGIEN: Integer; DGName: String;
+  Action: TActionType; ShowError: Boolean = False; ErrorText: String = '';
+  RequireChildAccess: Boolean = False): Boolean; overload;
+var
+  obj: TWriteAccess.TDGWriteAccess;
+
+begin
+  if DGIEN > 0 then
+    obj := WriteAccessV.DGWriteAccess(DGIEN)
+  else
+    obj := WriteAccessV.DGWriteAccess(DGName);
+  Result := canWriteOrder(obj, Action, ShowError, ErrorText,
+    RequireChildAccess);
+end;
+
+function canWriteOrder(ResolvedDialog: TOrderDialogResolved): Boolean; overload;
+const
+  ChildDialogs: array of Integer = [OD_IMAGING, OD_DIET, OD_LAB, OD_AP];
+var
+  i: integer;
+  NeedChildren: Boolean;
+begin
+  NeedChildren := False;
+  for i := low(ChildDialogs) to high(ChildDialogs) do
+    if ResolvedDialog.FormID = ChildDialogs[i] then
+    begin
+      NeedChildren := True;
+      break;
+    end;
+  Result := canWriteOrder(WriteAccessV.DGWriteAccess(ResolvedDialog.DisplayGroup),
+    atWrite, True, '', NeedChildren);
+end;
+
+function canWriteOrder(AnOrder: TOrder; Action: TActionType): boolean; overload;
+begin
+  Result := canWriteOrder(WriteAccessV.DGWriteAccess(AnOrder.DGroup), Action,
+    True, AnOrder.Text);
+end;
+
+function canWriteOrder(AnOrder: TOrder; Action: string): Boolean; overload;
+begin
+  Result := canWriteOrder(AnOrder.DGroup, '', Action, True, AnOrder.Text);
+end;
+
+function canWriteOrder(id, DisplayGroupName: string; Action: TActionType): Boolean; overload;
+begin
+  Result := canWriteOrder(WriteAccessV.DGWriteAccess(DisplayGroupName), Action,
+   True, RetrieveOrderText(id));
 end;
 
 function GMRCCanCloseDialog(dialog: TfrmODBase): Boolean;
@@ -1013,9 +1107,9 @@ begin
 end;
 
 procedure BuildResponseVarsForOutpatient(AResponses: TObject; var AUnits,
-  ASchedule, ADuration, ADrug: String);
+  ASchedule, ADuration, ADrug: String; NoPRN: boolean);
 var
-  i: integer;
+  i, p: integer;
   Responses: TResponsesAdapter;
   NewAdapter, InsideAnd: Boolean;
   X, DayText, LastDayText: string;
@@ -1043,6 +1137,17 @@ begin
       X := Piece(X, '&', 3);
       AUnits := AUnits + X + U;
       X := Responses.IValueFor('SCHEDULE', i);
+      if NoPRN then
+      begin
+        repeat
+          p := pos('PRN',X);
+          if p > 0 then
+          begin
+            delete(X, p, 3);
+            x := Trim(x);
+          end;
+        until (p = 0);
+      end;
       ASchedule := ASchedule + X + U;
       X := Responses.IValueFor('DAYS', i);
       if (X = '') and InsideAnd then
@@ -1070,7 +1175,8 @@ var
   Activating: boolean = false;
 
 function ActivateOrderDialog(const AnID: string; AnEvent: TOrderDelayEvent;
-  AnOwner: TComponent; ARefNum: Integer; ANeedVerify: Boolean = True): Boolean;
+  const AnOwner: TComponent; const ARefNum: Integer;
+  const ANeedVerify: Boolean = True; const ForceEdit: Boolean = False): Boolean;
 const
   TX_DEAFAIL1 = 'Order for controlled substance,' + CRLF;
   TX_DEAFAIL2 = CRLF + 'could not be completed. Provider does not have a' + CRLF
@@ -1120,12 +1226,12 @@ var
   x, EditedOrder, chkCopay, OrderID, PkgInfo, OrderPtEvtID, OrderEvtID, NssErr,
     tempUnit, tempSupply, tempDrug, tempSch: string;
   temp, tempDur, tempQuantity, tempRefills: string;
-  i, ODItem, tempOI, ALTOI, rLevel, tmpDialogIEN, tmpDisplayGroup: Integer;
+  i, p, ODItem, tempOI, ALTOI, rLevel, tmpDialogIEN, tmpDisplayGroup: Integer;
   DrugCheck, InptDlg, IsAnIMOOrder, DrugTestDlgType, ShowClinOrdMsg: Boolean;
   IsRadiology, // VISTAOR-23041
   IsPsoSupply, IsDischargeOrPass, IsPharmacyOrder, IsConsultOrder, ForIMO,
     IsNewOrder, Titration: Boolean;
-  isRTCOrder: Boolean;
+  isRTCOrder, EditAutoAcceptOrder: Boolean;
   tmpResp: TResponse;
   CxMsg: string;
   AButton: TButton;
@@ -1133,7 +1239,9 @@ var
   // CsltFrmID: integer;
   FirstNumericPos: Integer;
   DEAFailStr, TX_INFO: string;
-  ClinicLocationMsg: string;
+  ClinicLocationMsg, toDisplayGroup: string;
+  tmpOrder: TOrder;
+  OriginalEvent: TOrderDelayEvent;
 
   function GetClinicLocation(): Boolean;
   // returning true means clinic location not selected or it was cancelled
@@ -1199,7 +1307,7 @@ var
         InfoBox(TX_PAST_DATE, 'Clinic Order', MB_OK or MB_ICONWARNING);
         // If past date selected, ask If this medication has been already administered by the clinician, then go to the One Step Clinic Med Admin option.
         // OR If you are a nurse and need to document a clinic medication that has been previously administered greater than 23 hours in the past,
-        // you need to go to BCMA.”
+        // you need to go to BCMA.ï¿½
       end;
 
     end;
@@ -1220,6 +1328,7 @@ begin
     Exit;
   Activating := True;
   try
+  OriginalEvent := AnEvent;
   rLevel := 0;
   IsPsoSupply := False;
   IsDischargeOrPass := False;
@@ -1240,8 +1349,8 @@ begin
   if uOrderDialog <> nil then
     uOrderDialog.Close;
 
-  Application.ProcessMessages; // Important - call should be after Close statement above
-                               // or can cause duplicate order dialogs at the same time
+  TResponsiveGUI.ProcessMessages; // Important - call should be after Close statement above
+                                  // or can cause duplicate order dialogs at the same time
   if (uOrderDialog <> nil) then
   begin
     uOrderDialog.BringToFront;
@@ -1265,6 +1374,13 @@ begin
   end;
   if CharAt(AnID, 1) = 'C' then
   begin
+    tmpOrder := getOrderByIFN(copy(AnId, 2, MaxInt));
+    try
+    if not canWriteOrder(tmpOrder, atCopy) then
+      exit;
+    finally
+      tmpOrder.Free;
+    end;
     IsNewOrder := False;
     // if PassDrugTest(StrtoINT(Copy(AnID, FirstNumericPos, (Pos(';', AnID) - FirstNumericPos))), 'E')=false then Exit;
     ValidateOrderAction(Copy(AnID, 2, Length(AnID)), OA_COPY, x);
@@ -1292,6 +1408,18 @@ begin
         (PassDrugTest(StrToInt(Copy(AnID, FirstNumericPos,
         (Pos(';', AnID) - FirstNumericPos))), 'E', False) = False) then
         Exit;
+      if XferOutToInOnMeds then
+            toDisplayGroup := 'UNIT DOSE MEDICATIONS'
+        else if XfInToOutNow then
+          toDisplayGroup := 'OUTPATIENT MEDICATIONS'
+        else if (AnEvent.EventType = 'D') then
+          toDisplayGroup := 'OUTPATIENT MEDICATIONS'
+        else if (AnEvent.EventType <> 'D') then
+            toDisplayGroup := 'UNIT DOSE MEDICATIONS'
+        else toDisplayGroup := '';
+        if (toDisplayGroup <> '') and
+          (not canWriteOrder(Copy(AnID, 2, Length(AnID)), toDisplayGroup, atTransfer)) then
+          Exit;
     end;
     ValidateOrderAction(Copy(AnID, 2, Length(AnID)), OA_TRANSFER, x);
     if Length(x) > 0 then
@@ -1319,6 +1447,8 @@ begin
   FillChar(ResolvedDialog, SizeOf(ResolvedDialog), #0);
   ResolvedDialog.InputID := AnID;
   BuildResponses(ResolvedDialog, GetKeyVars, AnEvent, ForIMO);
+  if ForceEdit then
+    ResolvedDialog.QuickLevel := QL_DIALOG;
   if (ResolvedDialog.DisplayGroup = InptDisp) or
     (ResolvedDialog.DisplayGroup = ClinDisp) then
     DrugTestDlgType := True;
@@ -1407,7 +1537,6 @@ begin
     end
     else
   end;
-
   ClinicLocationMsg := 'You are about to enter a Clinic ';
   if (ResolvedDialog.DialogIEN = ClinMedsDlgIen) or
     (ResolvedDialog.DialogIEN = MedsInDlgIen) or
@@ -1425,6 +1554,7 @@ begin
     ' order.  Are you sure this is what you want to do?';
 
   ResetDialogProperties(AnID, AnEvent, ResolvedDialog);
+  if not canWriteOrder(ResolvedDialog) then exit;
 
   if ((ResolvedDialog.DisplayGroup = ClinDisp) or
     (ResolvedDialog.DisplayGroup = ClinIVDisp)) then
@@ -1833,15 +1963,33 @@ begin
             tmpResp := uOrderDialog.Responses.FindResponseByName('ORDERABLE', 1);
             tempOI := StrToIntDef(tmpResp.IValue, 0);
 
+            temp := uOrderDialog.Responses.OrderText;
+            if StrToIntDef(tempSupply, 0) > 0 then
+            begin
+              p := pos('Quantity:', temp);
+              if p = 0 then
+                temp := temp + CRLF + 'Days Supply: ' + tempSupply
+              else
+                insert('Days Supply: ' + tempSupply + CRLF, temp, p);
+            end;
+            EditAutoAcceptOrder := False;
             BuildResponseVarsForOutpatient(uOrderDialog.Responses, tempUnit,
-              tempSch, tempDur, tempDrug);
+              tempSch, tempDur, tempDrug, True);
             if ValidateDrugAutoAccept(tempDrug, tempUnit, tempSch, tempDur,
               tempOI, StrToIntDef(tempSupply, 0), StrToIntDef(tempRefills, 0),
-              tempQuantity, Titration) = False then
+              tempQuantity, Titration, temp, EditAutoAcceptOrder) = False then
+              Exit
+            else if (not EditAutoAcceptOrder) and
+              HasDaysSupplyComplexDoseConflict(uOrderDialog.Responses,
+              StrToIntDef(tempSupply, 0), temp, EditAutoAcceptOrder) then
               Exit;
-            if HasDaysSupplyComplexDoseConflict(uOrderDialog.Responses,
-              StrToIntDef(tempSupply, 0)) then
+            if EditAutoAcceptOrder then
+            begin
+              Activating := False;
+              Result := ActivateOrderDialog(AnID, OriginalEvent, AnOwner,
+                ARefNum, ANeedVerify, True);
               Exit;
+            end;
           end;
           if ((ResolvedDialog.DisplayGroup = CsltDisp) and
             (ResolvedDialog.QuickLevel = QL_AUTO)) then
@@ -1893,7 +2041,7 @@ begin
     if assigned(uOrderDialog) then
       uOrderDialog.Release;
     Result := False;
-    // Application.ProcessMessages;       // to allow dialog to finish closing
+    // TResponsiveGUI.ProcessMessages;       // to allow dialog to finish closing
     // Exit;                              // so result is not returned true
   end;
 
@@ -1923,12 +2071,15 @@ begin
   // end;
   OrdList := TList.Create;
   theOrder := TOrder.Create;
-  theOrder.ID := AnOrderID;
-  OrdList.Add(theOrder);
-  RetrieveOrderFields(OrdList, 0, 0);
-  Result := TOrder(OrdList.Items[0]).Text;
-  if Assigned(OrdList) then
-    OrdList.Free; // CQ:7554
+  try
+    theOrder.ID := AnOrderID;
+    OrdList.Add(theOrder);
+    RetrieveOrderFields(OrdList, 0, 0);
+    Result := TOrder(OrdList.Items[0]).Text;
+  finally
+    theOrder.Free;
+    OrdList.Free;
+  end;
 end;
 
 function ActivateOrderHTML(const AnID: string; AnEvent: TOrderDelayEvent;
@@ -2081,7 +2232,7 @@ begin
     end;
     if InfoBox('This order set contains the following items:' + CRLF + str +
       CRLF + CRLF + 'Select the OK button to start this order set.' +
-      'To stop the order set while it is in process, press “Alt +F6” to navigate to the order set dialog, and select the Stop Order Set Button.',
+      'To stop the order set while it is in process, press ï¿½Alt +F6ï¿½ to navigate to the order set dialog, and select the Stop Order Set Button.',
       'Starting Order Set', MB_OKCANCEL) = IDCANCEL then
     begin
       Result := False;
@@ -2106,7 +2257,7 @@ begin
       Show;
     end;
   uOrderSet.InsertList(AList, AnOwner, ARefNum, KeyVarStr, AnEvent.EventType);
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   Result := uOrderSet <> nil;
 end;
 
@@ -2126,7 +2277,7 @@ begin
   if uOrderSet <> nil then
   begin
     uOrderSet.Close;
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages;
     if (uOrderSet <> nil) and not(fsModal in uOrderSet.FormState) then
       Exit;
   end;
@@ -2134,34 +2285,34 @@ begin
   if uOrderDialog <> nil then
   begin
     uOrderDialog.Close;
-    Application.ProcessMessages; // allow close to finish
+    TResponsiveGUI.ProcessMessages; // allow close to finish
     if (uOrderDialog <> nil) and not(fsModal in uOrderDialog.FormState) then
       Exit;
   end;
   if uOrderHTML <> nil then
   begin
     uOrderHTML.Close;
-    Application.ProcessMessages; // allow browser to close
+    TResponsiveGUI.ProcessMessages; // allow browser to close
     Assert(uOrderHTML = nil);
   end;
   { close any open ordering menu }
   if uOrderMenu <> nil then
   begin
     uOrderMenu.Close;
-    Application.ProcessMessages; // allow menu to close
+    TResponsiveGUI.ProcessMessages; // allow menu to close
     Assert(uOrderMenu = nil);
   end;
   if uOrderAction <> nil then
   begin
     uOrderAction.Close;
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages;
     if (uOrderAction <> nil) and not(fsModal in uOrderAction.FormState) then
       Exit;
   end;
   if frmARTAllergy <> nil then // SMT Add to account for allergies.
   begin
     frmARTAllergy.Close;
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages;
     if frmARTAllergy <> nil then
       Exit;
   end;
@@ -2294,7 +2445,7 @@ begin
   if uOrderDialog <> nil then
   begin
     uOrderDialog.Close;
-    Application.ProcessMessages; // allow close to finish
+    TResponsiveGUI.ProcessMessages; // allow close to finish
   end;
 
   if not ActiveOrdering then // allow change while entering new
@@ -2334,7 +2485,7 @@ begin
         AnOrder.ActionOn := AnOrder.ID + '=RN';
         SendMessage(Application.MainForm.Handle, UM_NEWORDER, ORDER_ACT,
           Integer(AnOrder));
-        Application.ProcessMessages;
+        TResponsiveGUI.ProcessMessages;
         continue;
       end;
     finally
@@ -2349,7 +2500,7 @@ begin
     // X + ORIFN for change
     if EventDefaultOD = 1 then
       EventDefaultOD := 0;
-    Application.ProcessMessages; // give uOrderDialog a chance to go back to nil
+    TResponsiveGUI.ProcessMessages; // give uOrderDialog a chance to go back to nil
     if BILLING_AWARE then // hds6265
     begin // hds6265
       UBAGlobals.SourceOrderID := AList[i]; // hds6265
@@ -2366,13 +2517,13 @@ begin
   if uOrderDialog <> nil then
   begin
     uOrderDialog.Close;
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages;
   end;
   if not ActiveOrdering then
     if not ReadyForNewOrder(AnEvent) then
       Exit;
   Result := ActivateOrderDialog('X' + AnOrderID, AnEvent, Application, -1);
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   UnlockIfAble;
 end;
 
@@ -2425,7 +2576,7 @@ begin
     then
       Result := True;
 
-    Application.ProcessMessages; // give uOrderDialog a chance to go back to nil
+    TResponsiveGUI.ProcessMessages; // give uOrderDialog a chance to go back to nil
     OrderSource := '';
 
     if (not DoesEventOccur) and (AnEvent.PtEventIFN > 0) and
@@ -2505,7 +2656,7 @@ begin
         ANeedVerify) then
         Result := True;
     end;
-    Application.ProcessMessages; // give uOrderDialog a chance to go back to nil
+    TResponsiveGUI.ProcessMessages; // give uOrderDialog a chance to go back to nil
     OrderSource := '';
     if (not DoesEventOccur) and (AnEvent.PtEventIFN > 0) and
       IsCompletedPtEvt(AnEvent.PtEventIFN) then
@@ -3222,6 +3373,7 @@ var
       begin
         spnSupply.Position := CurSupply;
         txtSupply.Text := IntToStr(CurSupply);
+        spnSupply.Position := CurSupply;
         txtSupply.Tag := 0;
         if (AIsQuickOrder) and (AQOInitial) and (AIsClozapineOrder = false) then
         begin
@@ -3241,6 +3393,7 @@ var
       begin
         CurSupply := tmpSupply;
         txtSupply.Text := IntToStr(CurSupply);
+        spnSupply.Position := CurSupply;
         CalculateQuantity := True;
       end;
     end;
@@ -3265,6 +3418,8 @@ var
       if CurQuantity >= 0 then
       begin
         txtQuantity.Text := FloatToStr(CurQuantity);
+        if CurQuantity = trunc(CurQuantity) then
+          spnQuantity.Position := trunc(CurQuantity);
         txtQuantity.Tag := 0;
       end;
       LackQtyInfo := True;
@@ -3324,7 +3479,8 @@ var
           if AIsQuickOrder and (CurQuantity > 0) and AQOInitial then
           begin
             txtQuantity.Text := FloatToStr(CurQuantity);
-//            spnQuantity.Position := StrToIntDef(txtQuantity.Text, 0);
+            if CurQuantity = trunc(CurQuantity) then
+              spnQuantity.Position := trunc(CurQuantity);
             Exit;
           end;
           CurQuantity := DaysToQty(CurSupply, CurUnits, CurSchedule,
@@ -3332,7 +3488,8 @@ var
           if (CurQuantity >= 0) then
           begin
             txtQuantity.Text := FloatToStr(CurQuantity);
-//            spnQuantity.Position := StrToIntDef(txtQuantity.Text, 0);
+            if CurQuantity = trunc(CurQuantity) then
+              spnQuantity.Position := trunc(CurQuantity);
           end;
         end;
       UPD_SUPPLY:
@@ -3351,7 +3508,8 @@ var
           if AIsQuickOrder and (CurQuantity > 0) and AQOInitial then
           begin
             txtQuantity.Text := FloatToStr(CurQuantity);
-//            spnQuantity.Position := StrToIntDef(txtQuantity.Text, 0);
+            if CurQuantity = trunc(CurQuantity) then
+              spnQuantity.Position := trunc(CurQuantity);
             Exit;
           end;
           (* if FIsQuickOrder and (CurQuantity > 0) and (tmpQuantity = 0) and FQOInitial then
@@ -3364,7 +3522,8 @@ var
           if CurQuantity >= 0 then
           begin
             txtQuantity.Text := FloatToStr(CurQuantity);
-//            spnQuantity.Position := StrToIntDef(txtQuantity.Text, 0);
+            if CurQuantity = trunc(CurQuantity) then
+              spnQuantity.Position := trunc(CurQuantity);
           end;
         end;
     end;
@@ -3378,7 +3537,7 @@ begin
   HasFreeTextDose := False;
   OrderableItem := StrToIntDef(ResponsesAdapter.IValueFor('ORDERABLE', 1), 0);
   BuildResponseVarsForOutpatient(ResponsesAdapter, CurUnits, CurScheduleOut,
-    CurDuration, CurDispDrug);
+    CurDuration, CurDispDrug, False);
 
   i := ResponsesAdapter.NextInstance('DOSE', 0);
   while i > 0 do
@@ -3483,7 +3642,8 @@ begin
   if (not ANoZERO) and (txtQuantity.Text = '') and (ALastQuantity = 0) then
   begin
     txtQuantity.Text := FloatToStr(ALastQuantity);
-//    spnQuantity.Position := StrToIntDef(txtQuantity.Text, 0);
+    if ALastQuantity = trunc(ALastQuantity) then
+      spnQuantity.Position := trunc(ALastQuantity);
   end;
   if (not ANoZERO) and (txtSupply.Text = '') and (ALastSupply = 0) then
   begin
@@ -3641,12 +3801,13 @@ begin
 end;
 
 function HasDaysSupplyComplexDoseConflict(AResponses: TObject;
-  CurSupply: integer): Boolean;
+  CurSupply: integer; OrderText: string; var EditOrder: Boolean): Boolean;
 var
   Responses: TResponsesAdapter;
-  CalcDays: Integer;
+  CalcDays, BtnResult: Integer;
   NewAdapter, AllRowsHaveDuration: Boolean;
-  tmpDur: string;
+  tmpDur, MessageText: string;
+  list: TStringList;
 
 begin
   NewAdapter := not (AResponses is TResponsesAdapter);
@@ -3662,9 +3823,38 @@ begin
       AllRowsHaveDuration, tmpDur);
     if AllRowsHaveDuration and (CalcDays > 0) and (CurSupply <> CalcDays) then
     begin
-      if InfoBox(Format(TX_DAYS_CONFLICT, [CurSupply, CalcDays]), TC_PROV_LOC,
-        MB_YESNO or MB_DEFBUTTON2 or MB_ICONWARNING) = IDNO then
-        Result := True;
+      if OrderText = '' then
+        MessageText := ''
+      else
+        MessageText := OrderText + CRLF + CRLF;
+      MessageText := MessageText + Format(TX_DAYS_CONFLICT, [CurSupply, CalcDays]);
+      if OrderText = '' then
+      begin
+        MessageText := MessageText + 'Are you sure you want to accept this order?';
+        if InfoBox(MessageText, TC_PROV_LOC,
+          MB_YESNO or MB_DEFBUTTON2 or MB_ICONWARNING) = IDNO then
+          Result := True;
+      end
+      else
+      begin
+        list := TStringList.Create;
+        try
+          MessageText := MessageText + 'Do you want to Accept this order, ' +
+            'Edit this order, or Cancel?';
+          list.Add('Accept Order');
+          list.Add(' Edit Order ');
+          list.Add('Cancel Order');
+          BtnResult := uInfoBoxWithBtnControls.DefMessageDlG(MessageText,
+            mtWarning, list, TC_PROV_LOC, True);
+          case BtnResult of
+            0: ;
+            1: EditOrder := True;
+            else Result := True;
+          end;
+        finally
+          list.Free;
+        end;
+      end;
     end;
   finally
     if NewAdapter then
@@ -3690,7 +3880,7 @@ OriginalMedsInHeight := 0;
 OriginalNonVAMedsHeight := 0;
 
 finalization
-if assigned(uRespAdapterSingleton) then
-  uRespAdapterSingleton.free;
+  if assigned(uRespAdapterSingleton) then
+    uRespAdapterSingleton.free;
 
 end.

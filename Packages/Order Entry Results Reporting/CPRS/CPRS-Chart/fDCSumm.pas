@@ -314,7 +314,8 @@ uses fVisit, fEncnt, rCore, uCore, fNoteBA, fNoteBD, fSignItem, fEncounterFrame,
   ORNet, trpcb,
   fTemplateDialog, uVA508CPRSCompatibility, VA508AccessibilityRouter,
   System.Types,
-  System.UITypes, System.IniFiles, U_CPTEditMonitor, VAUtils, uMisc;
+  System.UITypes, System.IniFiles, U_CPTEditMonitor, VAUtils, uMisc,
+  UResponsiveGUI, uWriteAccess;
 
 const
   NA_CREATE = 0; // New Summ action - create new Summ
@@ -755,12 +756,13 @@ begin
         finally
           VitalStr.free;
         end;
-        cmdPCE.Enabled := CanEditPCE(uPCEMaster);
+        cmdPCE.Enabled := WriteAccess(waEncounter) and CanEditPCE(uPCEMaster);
         ShowPCEControls(cmdPCE.Enabled or (memPCEShow.Lines.Count > 0));
         if (NoPCE and memPCEShow.Visible) then
           memPCEShow.Lines.Insert(0, TX_NOPCE);
 
-        frmDrawers.DisplayDrawers(True, [odTemplates], [odTemplates]);
+        frmDrawers.DisplayDrawers(WriteAccess(waDCSummTemplates),
+          [odTemplates], [odTemplates]);
         cmdNewSumm.Visible := False;
         lblSpace1.Top := cmdPCE.Top - lblSpace1.Height;
       end;
@@ -809,13 +811,14 @@ procedure TfrmDCSumm.InsertNewSumm(IsIDChild: Boolean; AnIDParent: Integer);
 const
   USE_CURRENT_VISITSTR = -2;
 var
-  EnableAutosave, HaveRequired, Saved: Boolean;
+  EnableAutosave, HaveRequired, Saved, RetryAction: Boolean;
   CreatedSumm: TCreatedDoc;
   ListItemForEdit: string;
   TmpBoilerPlate: TStringList;
   tmpNode: TTreeNode;
   X, WhyNot: string;
   DocInfo: string;
+  NoteErrorAction: TNoteErrorReturn;
 begin
   EnableAutosave := False;
   TmpBoilerPlate := nil;
@@ -885,8 +888,23 @@ begin
         uPCEMaster.NoteDateTime := FEditDCSumm.DischargeDateTime;
         uPCEMaster.PCEForNote(USE_CURRENT_VISITSTR);
         FEditDCSumm.NeedCPT := uPCEMaster.CPTRequired;
-        // create the note
-        PutNewDCSumm(CreatedSumm, FEditDCSumm);
+
+        repeat
+          RetryAction := False;
+          // create the note
+          PutNewDCSumm(CreatedSumm, FEditDCSumm);
+
+          if CreatedSumm.IEN = 0 then
+          begin
+            NoteErrorAction := ShowNewNoteError('discharge summary',
+              CreatedSumm.ErrorText, FEditDCSumm.Lines, False, True);
+            RetryAction := NoteErrorAction = neRetry;
+
+            // Abort
+            if NoteErrorAction = neAbort then
+              HaveRequired := False;
+          end;
+        until not RetryAction;
 
         FEditNoteIEN := CreatedSumm.IEN;
         uPCEMaster.NoteIEN := CreatedSumm.IEN;
@@ -941,8 +959,7 @@ begin
             tvSumms.Items.EndUpdate;
           end;
           uChanging := False;
-          Changes.Add(CH_SUM, IntToStr(CreatedSumm.IEN), GetTitleText(0), '',
-            CH_SIGN_YES);
+          Changes.Add(CH_SUM, IntToStr(CreatedSumm.IEN), GetTitleText(0), '', CH_SIGN_YES);
           lstSumms.ItemIndex := 0;
           EditingIndex := 0;
           if not Assigned(TmpBoilerPlate) then
@@ -954,11 +971,6 @@ begin
           if timAutoSave.Interval <> 0 then
             EnableAutosave := True;
           memNewSumm.SetFocus;
-        end
-        else
-        begin
-          InfoBox(CreatedSumm.ErrorText, TX_CREATE_ERR, MB_OK);
-          HaveRequired := False;
         end; { if CreatedSumm.IEN }
       end; { loaded for edit }
     end; { if HaveRequired }
@@ -987,11 +999,12 @@ const
   AS_ADDENDUM = True;
   IS_ID_CHILD = False;
 var
-  HaveRequired: Boolean;
+  HaveRequired, RetryAction: Boolean;
   CreatedSumm: TCreatedDoc;
   ListItemForEdit: string;
   tmpNode: TTreeNode;
   X: string;
+  NoteErrorAction: TNoteErrorReturn;
 begin
   ClearEditControls;
   FShowAdmissions := False;
@@ -1027,7 +1040,23 @@ begin
       if DischargeDateTime <= 0 then
         DischargeDateTime := FMNow;
     end;
-    PutDCAddendum(CreatedSumm, FEditDCSumm, FEditDCSumm.Addend);
+
+    repeat
+      RetryAction := False;
+      PutDCAddendum(CreatedSumm, FEditDCSumm, FEditDCSumm.Addend);
+
+      if CreatedSumm.IEN = 0 then
+      begin
+        NoteErrorAction := ShowNewNoteError('addendum', CreatedSumm.ErrorText,
+          FEditDCSumm.Lines, False, True);
+        RetryAction := NoteErrorAction = neRetry;
+
+        // Abort
+        if NoteErrorAction = neAbort then
+          HaveRequired := False;
+      end;
+    until not RetryAction;
+
 
     FEditNoteIEN := CreatedSumm.IEN;
     uPCEMaster.NoteIEN := CreatedSumm.IEN;
@@ -1066,8 +1095,7 @@ begin
         tvSumms.Items.EndUpdate;
       end;
       uChanging := False;
-      Changes.Add(CH_SUM, IntToStr(CreatedSumm.IEN), GetTitleText(0), '',
-        CH_SIGN_YES);
+      Changes.Add(CH_SUM, IntToStr(CreatedSumm.IEN), GetTitleText(0), '', CH_SIGN_YES);
       lstSumms.ItemIndex := 0;
       EditingIndex := 0;
       cmdChangeClick(Self); // will set captions, sign state for Changes
@@ -1075,12 +1103,7 @@ begin
       if timAutoSave.Interval <> 0 then
         timAutoSave.Enabled := True;
       memNewSumm.SetFocus;
-    end
-    else
-    begin
-      InfoBox(CreatedSumm.ErrorText, TX_CREATE_ERR, MB_OK);
-      HaveRequired := False;
-    end; { if CreatedNote.IEN }
+    end;
   end; { if HaveRequired }
   if not HaveRequired then
     ClearEditControls;
@@ -1098,8 +1121,7 @@ begin
     exit;
   CPMemNewSumm.EditMonitor.ClearTheMonitor;
   EditingIndex := lstSumms.ItemIndex;
-  Changes.Add(CH_SUM, lstSumms.ItemID, GetTitleText(EditingIndex), '',
-    CH_SIGN_YES);
+  Changes.Add(CH_SUM, lstSumms.ItemID, GetTitleText(EditingIndex), '', CH_SIGN_YES);
   if not PreserveValues then
     GetDCSummForEdit(FEditDCSumm, lstSumms.ItemIEN);
   if FEditDCSumm.Lines <> nil then
@@ -1167,33 +1189,58 @@ end;
 
 procedure TfrmDCSumm.SaveEditedSumm(var Saved: Boolean);
 { validates fields and sends the updated Summ to the server }
+
+  procedure AfterSave(AUpdatedSumm: TCreatedDoc);
+  begin
+    if (FEditDCSumm.Status in [TIU_ST_UNREL, TIU_ST_UNVER]) then
+    begin
+      Changes.Remove(CH_SUM, IntToStr(AUpdatedSumm.IEN));
+      // DON'T REPROMPT ON PATIENT CHANGE
+      UnlockDocument(AUpdatedSumm.IEN);
+      // Unlock only if UNRELEASED or UNVERIFIED
+    end;
+    // otherwise, there's no unlocking here since the note is still in Changes after a save
+    if LstSumms.ItemIndex = EditingIndex then
+    begin
+      EditingIndex := -1;
+      LstSummsClick(Self);
+    end;
+    EditingIndex := -1;
+    // make sure EditingIndex reset even if not viewing edited note
+    Saved := True;
+    FChanged := False;
+  end;
+
 var
   UpdatedSumm: TCreatedDoc;
   X: string;
+  RetryAction: Boolean;
+  NoteErrorAction: TNoteErrorReturn;
 begin
+
   Saved := False;
-  if (memNewSumm.GetTextLen = 0) or (not ContainsVisibleChar(memNewSumm.Text))
+  if (MemNewSumm.GetTextLen = 0) or (not ContainsVisibleChar(MemNewSumm.Text))
   then
   begin
-    lstSumms.ItemIndex := EditingIndex;
-    X := lstSumms.ItemID;
-    uChanging := True;
-    tvSumms.Selected := tvSumms.FindPieceNode(X, 1, U,
-      tvSumms.Items.GetFirstNode);
-    uChanging := False;
-    tvSummsChange(Self, tvSumms.Selected);
+    LstSumms.ItemIndex := EditingIndex;
+    X := LstSumms.ItemID;
+    UChanging := True;
+    TvSumms.Selected := TvSumms.FindPieceNode(X, 1, U,
+      TvSumms.Items.GetFirstNode);
+    UChanging := False;
+    TvSummsChange(Self, TvSumms.Selected);
     if FSilent or ((not FSilent) and
       (InfoBox(GetTitleText(EditingIndex) + TX_EMPTY_SUMM, TC_EMPTY_SUMM,
       MB_YESNO) = IDYES)) then
     begin
       FConfirmed := True;
-      mnuActDeleteClick(Self);
+      MnuActDeleteClick(Self);
       Saved := True;
       FDeleted := True;
     end
     else
       FConfirmed := False;
-    exit;
+    Exit;
   end;
   // ExpandTabsFilter(memNewSumm.Lines, TAB_STOP_CHARS);
   with FEditDCSumm do
@@ -1201,16 +1248,16 @@ begin
     if (Attending = 0) and (not FSilent) then
     begin
       InfoBox(TX_MISSING_FIELDS, TC_MISSING_FIELDS, MB_OK);
-      cmdChangeClick(mnuActSave);
-      exit;
+      CmdChangeClick(MnuActSave);
+      Exit;
     end;
-    NeedCPT := uPCEMaster.CPTRequired; { *RAB* }
-    Lines := memNewSumm.Lines;
-    if RequireMASVerification(lstSumms.GetIEN(EditingIndex), TYP_DC_SUMM) then
+    NeedCPT := UPCEMaster.CPTRequired; { *RAB* }
+    Lines := MemNewSumm.Lines;
+    if RequireMASVerification(LstSumms.GetIEN(EditingIndex), TYP_DC_SUMM) then
       Status := TIU_ST_UNVER;
     (* if (User.DUZ <> Dictator) and (User.DUZ <> Attending) and *)
     // ALL USERS??
-    if RequireRelease(lstSumms.GetIEN(EditingIndex), TYP_DC_SUMM) then
+    if RequireRelease(LstSumms.GetIEN(EditingIndex), TYP_DC_SUMM) then
     begin
       if not FSilent then
       begin
@@ -1221,41 +1268,36 @@ begin
         Status := TIU_ST_UNREL;
     end;
   end;
-  timAutoSave.Enabled := False;
+  TimAutoSave.Enabled := False;
   try
-    PutEditedDCSumm(UpdatedSumm, FEditDCSumm, lstSumms.GetIEN(EditingIndex));
+    repeat
+      RetryAction := False;
+      PutEditedDCSumm(UpdatedSumm, FEditDCSumm, LstSumms.GetIEN(EditingIndex));
 
-    //Save copied text here
-    if (memNewSumm.lines.Count > 0) and (CPMemNewSumm.CopyPasteEnabled) then
-      CPMemNewSumm.SaveTheMonitor(UpdatedSumm.IEN);
+      if UpdatedSumm.IEN > 0 then
+      begin
+        // Save copied text here
+        if (MemNewSumm.Lines.Count > 0) and (CPMemNewSumm.CopyPasteEnabled) then
+          CPMemNewSumm.SaveTheMonitor(UpdatedSumm.IEN);
 
+        AfterSave(UpdatedSumm);
+      end
+      else
+      begin
+        if not FSilent then
+        begin
+          NoteErrorAction := ShowNoteError(UpdatedSumm.ErrorText,
+            FEditDCSumm.Lines, False, True);
+
+          RetryAction := NoteErrorAction = neRetry;
+
+          if NoteErrorAction = neAbort then
+            AfterSave(UpdatedSumm);
+        end;
+      end;
+    until not RetryAction;
   finally
-    timAutoSave.Enabled := True;
-  end;
-  if UpdatedSumm.IEN > 0 then
-  begin
-    if (FEditDCSumm.Status in [TIU_ST_UNREL, TIU_ST_UNVER]) then
-    begin
-      Changes.Remove(CH_SUM, IntToStr(UpdatedSumm.IEN));
-      // DON'T REPROMPT ON PATIENT CHANGE
-      UnlockDocument(UpdatedSumm.IEN);
-      // Unlock only if UNRELEASED or UNVERIFIED
-    end;
-    // otherwise, there's no unlocking here since the note is still in Changes after a save
-    if lstSumms.ItemIndex = EditingIndex then
-    begin
-      EditingIndex := -1;
-      lstSummsClick(Self);
-    end;
-    EditingIndex := -1;
-    // make sure EditingIndex reset even if not viewing edited note
-    Saved := True;
-    FChanged := False;
-  end
-  else
-  begin
-    if not FSilent then
-      ShowNoteError(UpdatedSumm.ErrorText, FEditDCSumm.Lines);
+    TimAutoSave.Enabled := True;
   end;
 end;
 
@@ -1328,8 +1370,8 @@ begin
       pnlWrite.Visible := True;
       pnlRead.Visible := False;
       mnuViewDetail.Enabled := False;
-      mnuActChange.Enabled := True;
-      mnuActLoadBoiler.Enabled := True;
+      mnuActChange.Enabled := WriteAccess(waDCSumm);
+      mnuActLoadBoiler.Enabled := WriteAccess(waDCSumm);
       CPMemNewSumm.LoadPasteText;
     end
     else
@@ -1373,7 +1415,7 @@ begin
   inherited;
   cmdPCE.Enabled := False;
   UpdatePCE(uPCEMaster);
-  cmdPCE.Enabled := True;
+  cmdPCE.Enabled := WriteAccess(waEncounter);
   if frmFrame.Closing then
     exit;
   DisplayPCE;
@@ -2026,7 +2068,7 @@ begin
   // reset the display now that the note is gone
   if DeleteSts.Success then
   begin
-    DeletePCE(AVisitStr);
+    DeletePCE(AVisitStr, uPCEMaster.VisitIEN);
     // removes PCE data if this was the only note pointing to it
     ClearEditControls;
     // ClearPtData;   WRONG - fixed in v15.10 - RV
@@ -2113,6 +2155,7 @@ var
   SavedDocID, tmpItem: string;
   EditingID: string; // v22.12 - RV
   tmpNode: TTreeNode;
+  Dictator: Int64;
 begin
   inherited;
   if NoSummSelected() then
@@ -2172,13 +2215,20 @@ begin
       uPCEMaster.Updated := False;
       lstSummsClick(Self);
     end;
-    if not AuthorSignedDocument(lstSumms.ItemIEN) then
+    if lstSumms.ItemIndex >= 0 then
+      Dictator := StrToInt64Def(Piece(Piece(lstSumms.Items[lstSumms.ItemIndex],
+        U, 5), ';', 1), -1)
+    else
+      Dictator := -1;
+    if Dictator <> User.DUZ then
     begin
-      if (InfoBox(TX_AUTH_SIGNED + GetTitleText(lstSumms.ItemIndex), TX_SIGN,
-        MB_YESNO) = ID_NO) then
-        exit;
+      if not AuthorSignedDocument(lstSumms.ItemIEN) then
+      begin
+        if (InfoBox(TX_AUTH_SIGNED +
+            GetTitleText(lstSumms.ItemIndex),TX_SIGN ,MB_YESNO)= ID_NO) then exit;
+      end;
     end;
-    if (OK) then
+    if(OK) then
     begin
       with lstSumms do
         SignatureForItem(Font.Size, MakeDCSummDisplayText(Items[ItemIndex]),
@@ -2362,10 +2412,12 @@ begin
     popSummMemoGrammar.Enabled := True;
     popSummMemoReformat.Enabled := True;
     popSummMemoReplace.Enabled := (FEditCtrl.GetTextLen > 0);
-    popSummMemoPreview.Enabled := (frmDrawers.TheOpenDrawer = odTemplates) and
+    popSummMemoPreview.Enabled := WriteAccess(waDCSummTemplates) and
+      (frmDrawers.TheOpenDrawer = odTemplates) and
       Assigned(frmDrawers.tvTemplates.Selected);
-    popSummMemoInsTemplate.Enabled := (frmDrawers.TheOpenDrawer = odTemplates)
-      and Assigned(frmDrawers.tvTemplates.Selected);
+    popSummMemoInsTemplate.Enabled := WriteAccess(waDCSummTemplates) and
+      (frmDrawers.TheOpenDrawer = odTemplates) and
+      Assigned(frmDrawers.tvTemplates.Selected);
   end
   else
   begin
@@ -2518,8 +2570,28 @@ begin
   frmDrawers.Splitter := splDrawers;
   frmDrawers.DefTempPiece := 3;
   frmDrawers.CopyMonitor := CPMemNewSumm;
+  frmDrawers.TemplateAccess := WriteAccess(waDCSummTemplates);
   FImageFlag := TBitmap.create;
   FDocList := TStringList.create;
+
+  cmdNewSumm.Enabled := WriteAccess(waDCSumm);
+  mnuActNew.Enabled := WriteAccess(waDCSumm);
+  mnuActAddend.Enabled := WriteAccess(waDCSumm);
+  mnuActChange.Enabled := WriteAccess(waDCSumm);
+  mnuActLoadBoiler.Enabled := WriteAccess(waDCSumm);
+  mnuActSignList.Enabled := WriteAccess(waDCSumm);
+  mnuActDelete.Enabled := WriteAccess(waDCSumm);
+  mnuActEdit.Enabled := WriteAccess(waDCSumm);
+  mnuActSave.Enabled := WriteAccess(waDCSumm);
+  mnuActSign.Enabled := WriteAccess(waDCSumm);
+  mnuActIdentifyAddlSigners.Enabled := WriteAccess(waDCSumm);
+  popSummMemoSignList.Enabled := WriteAccess(waDCSumm);
+  popSummMemoDelete.Enabled := WriteAccess(waDCSumm);
+  popSummMemoEdit.Enabled := WriteAccess(waDCSumm);
+  popSummMemoAddend.Enabled := WriteAccess(waDCSumm);
+  popSummMemoSave.Enabled := WriteAccess(waDCSumm);
+  popSummMemoSign.Enabled := WriteAccess(waDCSumm);
+  popSummMemoAddlSign.Enabled := WriteAccess(waDCSumm);
 
   // safteynet
   CPMemSumm.CopyMonitor := frmFrame.CPAppMon;
@@ -2744,7 +2816,7 @@ begin
       Notifications.Delete;
     if Copy(Piece(Notifications.RecordID, U, 2), 1, 5) = 'TIUID' then
       Notifications.Delete;
-  end;  
+  end;
 end;
 
 procedure TfrmDCSumm.SetViewContext(AContext: TTIUContext);
@@ -2892,7 +2964,8 @@ begin
   mnuNewTemplate.Enabled := frmDrawers.CanEditTemplates;
   mnuEditSharedTemplates.Enabled := frmDrawers.CanEditShared;
   mnuNewSharedTemplate.Enabled := frmDrawers.CanEditShared;
-  mnuEditDialgFields.Enabled := CanEditTemplateFields;
+  mnuEditDialgFields.Enabled := WriteAccess(waDCSummTemplates) and
+    CanEditTemplateFields;
 end;
 
 procedure TfrmDCSumm.mnuEditSharedTemplatesClick(Sender: TObject);
@@ -3011,30 +3084,39 @@ end;
 procedure TfrmDCSumm.DoAutoSave(Suppress: Integer = 1);
 var
   ErrMsg: string;
+  RetryAction: Boolean;
+  NoteErrorAction: TNoteErrorReturn;
 begin
-  if fFrame.frmFrame.DLLActive = True then
-    exit;
+  if FFrame.FrmFrame.DLLActive = True then
+    Exit;
   if (EditingIndex > -1) and FChanged then
   begin
     StatusText('Autosaving note...');
     // PutTextOnly(ErrMsg, memNewNote.Lines, lstNotes.GetIEN(EditingIndex));
-    timAutoSave.Enabled := False;
+    TimAutoSave.Enabled := False;
     try
-      SetText(ErrMsg, memNewSumm.Lines, lstSumms.GetIEN(EditingIndex),
-        Suppress);
+      repeat
+        RetryAction := False;
+        SetText(ErrMsg, MemNewSumm.Lines, LstSumms.GetIEN(EditingIndex),
+          Suppress);
+        if ErrMsg <> '' then
+        begin
+          NoteErrorAction := ShowNoteError(ErrMsg, MemNewSumm.Lines,
+            True, False);
+          RetryAction := NoteErrorAction = neRetry;
+        end;
+      until not RetryAction;
 
-      if (memNewSumm.lines.Count > 0) and (CPMemNewSumm.CopyPasteEnabled) then
+      if (MemNewSumm.Lines.Count > 0) and (CPMemNewSumm.CopyPasteEnabled) then
         // Save copied text here
-        CPMemNewSumm.SaveTheMonitor(lstSumms.GetIEN(EditingIndex));
+        CPMemNewSumm.SaveTheMonitor(LstSumms.GetIEN(EditingIndex));
 
     finally
-      timAutoSave.Enabled := True;
+      TimAutoSave.Enabled := True;
     end;
     FChanged := False;
     StatusText('');
   end;
-  if ErrMsg <> '' then
-    ShowNoteError(ErrMsg, memNewSumm.Lines);
 end;
 
 procedure TfrmDCSumm.timAutoSaveTimer(Sender: TObject);
@@ -3378,13 +3460,13 @@ begin
     exit;
   // This gives the change a chance to occur when keyboarding, so that WindowEyes
   // doesn't use the old value.
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   with tvSumms do
   begin
     memSumm.Clear;
     if not AssignedAndHasData(Selected) then
       exit;
-    if uIDNotesActive then
+    if uIDNotesActive and WriteAccess(waDCSumm) then
     begin
       mnuActDetachFromIDParent.Enabled :=
         (Selected.ImageIndex in [IMG_ID_CHILD, IMG_ID_CHILD_ADD]);

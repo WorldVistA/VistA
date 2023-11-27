@@ -402,8 +402,6 @@ inherited frmLabs: TfrmLabs
       Margins.Bottom = 4
       Align = alClient
       TabOrder = 2
-      ExplicitTop = 323
-      ExplicitHeight = 365
       object Memo1: TMemo
         Left = 1
         Top = 1
@@ -489,7 +487,6 @@ inherited frmLabs: TfrmLabs
       Margins.Bottom = 4
       Align = alTop
       TabOrder = 1
-      ExplicitHeight = 238
       object bvlHeader: TBevel
         Left = 1
         Top = 61
@@ -777,7 +774,7 @@ inherited frmLabs: TfrmLabs
             Margins.Top = 4
             Margins.Right = 4
             Margins.Bottom = 4
-            Caption = 'Next >'
+            Caption = '&Next >'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBtnText
             Font.Height = -12
@@ -797,7 +794,7 @@ inherited frmLabs: TfrmLabs
             Margins.Top = 4
             Margins.Right = 4
             Margins.Bottom = 4
-            Caption = '< Previous'
+            Caption = '< &Previous'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBtnText
             Font.Height = -12
@@ -817,7 +814,7 @@ inherited frmLabs: TfrmLabs
             Margins.Top = 4
             Margins.Right = 4
             Margins.Bottom = 4
-            Caption = 'Newest >>'
+            Caption = 'Ne&west >>'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBtnText
             Font.Height = -12
@@ -837,7 +834,7 @@ inherited frmLabs: TfrmLabs
             Margins.Top = 4
             Margins.Right = 4
             Margins.Bottom = 4
-            Caption = '<< Oldest'
+            Caption = '<< &Oldest'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBtnText
             Font.Height = -12
@@ -874,6 +871,7 @@ inherited frmLabs: TfrmLabs
         TabOrder = 1
         Visible = False
         OnClick = grdLabClick
+        OnExit = grdLabExit
         OnMouseDown = grdLabMouseDown
         OnMouseUp = grdLabMouseUp
         OnMouseWheelDown = grdLabMouseWheelDown
@@ -1035,7 +1033,6 @@ inherited frmLabs: TfrmLabs
         OnSelectItem = lvReportsSelectItem
         AutoSize = False
         HideTinyColumns = True
-        ExplicitHeight = 57
       end
     end
     object pnlRightTopHeader: TPanel
@@ -1454,7 +1451,6 @@ inherited frmLabs: TfrmLabs
         TabStop = True
         Visible = False
         ShowAccelChar = True
-        ExplicitWidth = 328
       end
     end
   end
@@ -1530,18 +1526,22 @@ inherited frmLabs: TfrmLabs
       (
         'Component = cmdNext'
         'Text = Next'
+        'WatchEnable = True'
         'Status = stsOK')
       (
         'Component = cmdPrev'
         'Text = Previous'
+        'WatchEnable = True'
         'Status = stsOK')
       (
         'Component = cmdRecent'
         'Text = Newest'
+        'WatchEnable = True'
         'Status = stsOK')
       (
         'Component = cmdOld'
         'Text = Oldest'
+        'WatchEnable = True'
         'Status = stsOK')
       (
         'Component = grdLab'

@@ -31,17 +31,25 @@ type
     lblCL: TVA508StaticText;
     lblCL2: TVA508StaticText;
     pnlRight: TPanel;
-    ScrollBox2: TScrollBox;
-    GridPanel1: TGridPanel;
+    gpRight: TGridPanel;
+    gpMain: TGridPanel;
+    pnlBorderLeft: TPanel;
+    pnlBorderRight: TPanel;
     procedure lblEnter(Sender: TObject);
     procedure lblExit(Sender: TObject);
+    procedure gpRightResize(Sender: TObject);
   private
-    { Private declarations }
+    FlblWidth: array[0..1] of integer;
     procedure ConvertShortLabelsToLong;
+    procedure AdjustLblGrid;
+    procedure CMFontChanged(var Message: TMessage); message CM_FONTCHANGED;
+  protected
+    procedure Loaded; override;
   public
     procedure ShowTreatmentFactorHints(var pHintText: string; var pCompName: TVA508StaticText);
     procedure LabelCaptionsOn(CaptionsOn : Boolean = true);
     constructor Create(AOwner: TComponent); override;
+    function AdjustAndGetSize: integer;
   end;
 
 implementation
@@ -83,9 +91,21 @@ begin
   begin
    lblCL.Hint          := BAFactorsRec.FBAFactorCL;
    lblCL2.Hint         := BAFactorsRec.FBAFactorCL;
-  end;
+  end
+  else
+    gpRight.RowCollection[8].Value := 0;
+
   if ScreenReaderActive then
     ConvertShortLabelsToLong;
+end;
+
+procedure TfraCoPayDesc.gpRightResize(Sender: TObject);
+var
+  adj: integer;
+
+begin
+  adj :=  (gpRight.Width - FlblWidth[0] - FlblWidth[1]) div 2;
+  gpRight.ColumnCollection[0].Value := FlblWidth[0] + adj;
 end;
 
 procedure TfraCoPayDesc.LabelCaptionsOn(CaptionsOn: Boolean);
@@ -121,7 +141,65 @@ end;
 
 procedure TfraCoPayDesc.lblExit(Sender: TObject);
 begin
-    (Sender as TVA508StaticText).Font.Style := [];
+  (Sender as TVA508StaticText).Font.Style := [];
+end;
+
+procedure TfraCoPayDesc.Loaded;
+begin
+  inherited;
+  AdjustLblGrid;
+  gpRightResize(nil);
+end;
+
+function TfraCoPayDesc.AdjustAndGetSize: integer;
+var
+  ht, i: integer;
+
+begin
+  ht := TextHeightByFont(MainFont.Handle, 'Tg') + 2;
+  lblCaption.Height := ht;
+  lblSCDisplay.Height := ht;
+  Result := 4;
+  gpRight.RowCollection.BeginUpdate;
+  try
+    for i := 0 to gpRight.RowCollection.Count - 1 do
+      if gpRight.RowCollection[i].Value > 0 then
+      begin
+        gpRight.RowCollection[i].Value := ht;
+        inc(Result, ht);
+      end;
+  finally
+    gpRight.RowCollection.EndUpdate;
+  end;
+  inc(Result, ht + 10);
+end;
+
+procedure TfraCoPayDesc.AdjustLblGrid;
+var
+  i: integer;
+  item: TControlItem;
+  lbl: TVA508StaticText;
+
+begin
+  FlblWidth[0] := 0;
+  FlblWidth[1] := 0;
+  for i := 0 to gpRight.ControlCollection.Count - 1 do
+  begin
+    Item := gpRight.ControlCollection[i];
+    lbl := Item.Control as TVA508StaticText;
+    if FlblWidth[Item.Column] < lbl.Width then
+      FlblWidth[Item.Column] := lbl.Width;
+  end;
+  inc(FlblWidth[0], 10);
+  inc(FlblWidth[1], 10);
+  Constraints.MinWidth := ((FlblWidth[0] + FlblWidth[1]) * 2) + 12;
+end;
+
+procedure TfraCoPayDesc.CMFontChanged(var Message: TMessage);
+begin
+  inherited;
+  if not (csLoading in ComponentState) then
+    AdjustLblGrid;
 end;
 
 procedure TfraCoPayDesc.ConvertShortLabelsToLong;

@@ -41,7 +41,8 @@ requires
   vcldb,
   VA508Access_D10_4_2,
   VAShared_R10_4_2,
-  XWB_R10_4_2;
+  XWB_R10_4_2,
+  ResponsiveGUI_R10_4_2;
 
 contains
   ORCtrls in '..\..\Source\ORCtrls.pas',
@@ -65,7 +66,13 @@ contains
   MSXML_TLB in '..\..\Source\MSXML_TLB.pas',
   ORDtTmListBox in '..\..\Source\ORDtTmListBox.pas',
   ORUnitTesting in '..\..\Source\ORUnitTesting.pas',
-  ORRedirect in '..\..\Source\ORRedirect.pas';
+  ORRedirect in '..\..\Source\ORRedirect.pas',
+  CPUID in '..\..\Source\CPUID.pas',
+  DDetours in '..\..\Source\DDetours.pas',
+  InstDecode in '..\..\Source\InstDecode.pas',
+  LegacyTypes in '..\..\Source\LegacyTypes.pas',
+  UIndicationsComboBox in '..\..\Source\UIndicationsComboBox.pas',
+  OREventCache in '..\..\Source\OREventCache.pas';
 
 end.
 

@@ -74,7 +74,8 @@ uses
   rReminders,
   fIconLegend,
   ORFn,
-  ORNet;
+  ORNet,
+  UResponsiveGUI;
 
 const
   CUSTOM_TITLE = 'Clinical Reminders'; // The original title has column headers in it.
@@ -176,7 +177,7 @@ begin
   inherited;
   CoverSheetRemindersInBackground := TRUE;
   CoverSheet.OnRefreshReminders(Sender);
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
 end;
 
 procedure TfraCoverSheetDisplayPanel_CPRS_Reminders.OnCompleteBackgroundLoad(Sender: TObject);
@@ -184,7 +185,7 @@ begin
   inherited;
   CoverSheetRemindersInBackground := False;
   CoverSheet.OnRefreshReminders(Sender);
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
 end;
 
 function TfraCoverSheetDisplayPanel_CPRS_Reminders.getTitle: string;

@@ -4,13 +4,14 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  ComCtrls, StdCtrls, ExtCtrls, fBase508Form, VA508AccessibilityManager;
+  ComCtrls, StdCtrls, ExtCtrls, fBase508Form, VA508AccessibilityManager,
+  ORExtensions;
 
 type
   TfrmRemCoverPreview = class(TfrmBase508Form)
     pnlBtns: TPanel;
     btnOK: TButton;
-    lvMain: TListView;
+    lvMain: ORExtensions.TListView;
     procedure FormCreate(Sender: TObject);
     procedure lvMainColumnClick(Sender: TObject; Column: TListColumn);
     procedure lvMainCompare(Sender: TObject; Item1, Item2: TListItem;

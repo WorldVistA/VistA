@@ -77,7 +77,7 @@ function GetAllergyTitleText: string;
 implementation
 
 uses
-  ORNetIntf;
+  ORNetIntf, uConst;
 
 const
   NO_YES: array[Boolean] of string = ('NO', 'YES');
@@ -283,7 +283,7 @@ begin
     // code added allowing v27 GUI changes to continue if M change is not released prior.
     // cq-14842 -  add observed/drug allergies to the fReview/fSignOrders forms for signature.
     if Length(Piece(result, '^', 2)) > 0 then
-      Changes.Add(10, Piece(result, '^', 2), GetAllergyTitleText, '', 1)
+      Changes.Add(CH_DOC, Piece(result, '^', 2), GetAllergyTitleText, '', CH_SIGN_YES)
   end;
 end;
 

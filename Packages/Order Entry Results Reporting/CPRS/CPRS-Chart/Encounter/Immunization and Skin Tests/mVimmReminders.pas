@@ -3,15 +3,18 @@ unit mVimmReminders;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, mVimmBase, Vcl.StdCtrls, Vcl.ExtCtrls,
-  Vcl.ImgList, Vcl.Buttons, System.ImageList, rVimm, Vcl.Grids, OrFn,
-  Vcl.ComCtrls, Vcl.Menus, mVimmSelect, fRptBox, VAUtils, fBase508Form, VA508AccessibilityManager;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, MVimmBase, Vcl.StdCtrls, Vcl.ExtCtrls,
+  Vcl.ImgList, Vcl.Buttons, System.ImageList, RVimm, Vcl.Grids, OrFn,
+  Vcl.ComCtrls, Vcl.Menus, MVimmSelect, FRptBox, VAUtils, FBase508Form,
+  VA508AccessibilityManager, ORextensions;
 
 type
+
   TfraReminders = class(TfraParent)
     pnlItems: TPanel;
-    remList: TListView;
+    remList: ORextensions.TListView;
     Splitter1: TSplitter;
     pnlDetails: TPanel;
     Splitter2: TSplitter;
@@ -19,7 +22,7 @@ type
     AddImmunization1: TMenuItem;
     ViewInformation1: TMenuItem;
     acClinMaint: TMenuItem;
-    lstHistory: TListView;
+    lstHistory: ORextensions.TListView;
     remDetails: TRichEdit;
     procedure AddImmunization1Click(Sender: TObject);
     procedure ViewInformation1Click(Sender: TObject);

@@ -132,7 +132,8 @@ implementation
 uses
   uCore,
   fGAF, uConst,
-  rCore, fPCEProvider, rMisc, VA508AccessibilityRouter, VAUtils;
+  rCore, fPCEProvider, rMisc, VA508AccessibilityRouter, VAUtils,
+  UResponsiveGUI, uWriteAccess, uInit;
 
 {$R *.DFM}
 
@@ -401,6 +402,11 @@ var
   AUser, PrimaryProvider: string;
 
 begin
+ if not WriteAccess(waEncounter, True) then
+  begin
+    Result := False;
+    exit;
+  end;
   if KeepPrimaryProvider and (PCEData.Providers.PrimaryIdx >= 0) then
     PrimaryProvider := PCEData.Providers.Strings[PCEData.Providers.PrimaryIdx]
   else
@@ -630,7 +636,8 @@ begin
   KillObj(@uProviders);
   uVisitType.Free;
   Formlist.free;
-  Application.ProcessMessages;
+  if (not uInit.TimedOut) and (not Application.Terminated) then
+    TResponsiveGUI.ProcessMessages;
 end;
 
 

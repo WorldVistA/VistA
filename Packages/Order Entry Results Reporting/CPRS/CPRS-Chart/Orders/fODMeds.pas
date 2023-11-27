@@ -11,7 +11,7 @@ uses
   Menus,
   uIndications,
   // XUDIGSIGSC_TLB,
-  VA508AccessibilityManager, VAUtils, Contnrs;
+  VA508AccessibilityManager, VAUtils, Contnrs, UIndicationsComboBox;
 
 const
   UM_DELAYCLICK = 11037; // temporary for listview click event
@@ -99,7 +99,7 @@ type
     sptSelect: TSplitter;
     lstQuick: TCaptionListView;
     lstAll: TCaptionListView;
-    cboIndication: TORComboBox;
+    cboIndication: TIndicationsComboBox;
     lblIndications: TLabel;
     // ckbPickPark: TCheckBox;
     // spbTest: TSpeedButton;
@@ -383,7 +383,7 @@ uses rCore, uCore, ORFn, rODMeds, rODBase, rOrders, fRptBox, fODMedOIFA,
   uOrders, fOtherSchedule, StrUtils, fFrame, VA508AccessibilityRouter,
   System.Types,
   System.UITypes, uPaPI, fODAllergyCheck, ORNet,
-  System.Math;
+  System.Math, UResponsiveGUI;
 
 const
   { grid columns for complex dosing }
@@ -598,7 +598,7 @@ begin
     X := 'NV RX'
   else
     X := 'O RX';
-  if FInptDlg and (not OrderForInpatient) and (not isIMO) then // IMO
+  if FInptDlg and (not OrderForInpatient) and (not isIMO) and (not IsManualEvent) then // IMO
   begin
     FOutptIV := TRUE;
     X := 'IVM RX';
@@ -647,7 +647,6 @@ begin
   FResizedAlready := FALSE;
   FShowPnlXScheduleOk := TRUE;
   FRemoveText := TRUE;
-  ShowMedSelect;
   lblAdminTime.TabStop := ScreenReaderActive;
   lblAdminSch.TabStop := ScreenReaderActive;
   memOrder.TabStop := ScreenReaderActive;
@@ -735,8 +734,10 @@ begin
       SetVisibleCommentRows(4);
     if OrderAction in [ORDER_COPY, ORDER_EDIT] then
       Responses.Remove('START', 1);
-    if OrderAction in [ORDER_COPY, ORDER_EDIT, ORDER_QUICK] then
+    if not(OrderAction in [ORDER_COPY, ORDER_EDIT, ORDER_QUICK]) then
     begin
+      ShowMedSelect;
+    end else begin
       Changing := TRUE;
       try
         txtMed.Tag := StrToIntDef(Responses.IValueFor('ORDERABLE', 1), 0);
@@ -972,6 +973,7 @@ var
   i, ie, code, CurSupply, tempRefills: Integer;
   CurDispDrug, temp, X: string;
   AUnits, ASchedule, ADuration, ADrug: string;
+  TempBool: Boolean;
 
   procedure SetError(const X: string);
   begin
@@ -1243,7 +1245,7 @@ begin
         Exit;
       end;
     end;
-    BuildResponseVarsForOutpatient(Responses, AUnits, ASchedule, ADuration, ADrug);
+    BuildResponseVarsForOutpatient(Responses, AUnits, ASchedule, ADuration, ADrug, True);
     UpdateSupplyQtyRefillErrorMsg(AnErrMsg,
       StrToIntDef(Responses.IValueFor('SUPPLY', 1), 0), tempRefills,
       Responses.IValueFor('QTY', 1), ADrug, AUnits, ASchedule, ADuration,
@@ -1251,7 +1253,7 @@ begin
       StrToIntDef(ResponsesAdapter.IValueFor('ORDERABLE', 1), 0), True);
 
     if (AnErrMsg = '') and HasDaysSupplyComplexDoseConflict(Responses,
-      StrToIntDef(txtSupply.Text, 0)) then
+      StrToIntDef(txtSupply.Text, 0), '', TempBool) then
       AnErrMsg := TX_INVALID_NO_MESSAGE;
 
     if AnErrMsg = '' then
@@ -1458,10 +1460,10 @@ begin
   SelRect := AListView.Selected.DisplayRect(drBounds);
   FRowHeight := SelRect.Bottom - SelRect.Top;
   Offset := AListView.Selected.Index - AListView.TopItem.Index;
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   if Offset > 0 then
     AListView.Scroll(0, (Offset * FRowHeight));
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
 end;
 
 procedure TfrmODMeds.ChangeDelayed;
@@ -2568,8 +2570,6 @@ procedure TfrmODMeds.ShowMedFields;
 var
   NumRows: Integer;
 begin
-  txtMed.SelStart := Length(txtMed.Text);
-  ChangeDelayed; // synch the listboxes with display
   PageControl.ActivePage := PageFields;
   InitGUI;
   NumRows := Responses.TotalRows;

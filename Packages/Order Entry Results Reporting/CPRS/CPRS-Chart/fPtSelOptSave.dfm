@@ -5,7 +5,8 @@ inherited frmPtSelOptSave: TfrmPtSelOptSave
   ClientHeight = 204
   ClientWidth = 272
   Position = poScreenCenter
-  OnCreate = FormCreate
+  ExplicitWidth = 278
+  ExplicitHeight = 233
   PixelsPerInch = 96
   TextHeight = 13
   object pnlClinSave: TPanel [0]

@@ -5,7 +5,8 @@ interface
 uses
   SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
   Forms, Dialogs, StdCtrls, ORCtrls, ORfn, fODBase, ExtCtrls, ComCtrls, uConst,
-  ORDtTm, Buttons, Menus, VA508AccessibilityManager, VA508AccessibilityRouter;
+  ORDtTm, Buttons, Menus, VA508AccessibilityManager, VA508AccessibilityRouter,
+  uOrders, ORStaticText;
 
 type
   TfrmODLab = class(TfrmODBase)
@@ -90,6 +91,7 @@ type
     procedure pnlCollTimeButtonExit(Sender: TObject);
     procedure ViewinReportWindow1Click(Sender: TObject);
     procedure FormResize(Sender: TObject);
+    procedure lblAvailTestsClick(Sender: TObject);
   protected
     FCmtTypes: TStringList ;
     procedure InitDialog; override;
@@ -109,6 +111,8 @@ type
     FLastItemID: string;
     FEvtDelayLoc: integer;
     FEvtDivision: integer;
+    FAccessData: string;
+    FMissingGroupsMessage: string;
     procedure ReadServerVariables;
     procedure DisplayChangedOrders(ACollType: string);
     procedure setup508Label(text: string; lbl: TVA508StaticText; ctrl: TControl; lbl2: string);
@@ -192,7 +196,7 @@ implementation
 {$R *.DFM}
 
 uses rODBase, rODLab, uCore, rCore, fODLabOthCollSamp, fODLabOthSpec, fODLabImmedColl, fLabCollTimes,
- rOrders, uODBase, fRptBox, fFrame, VAUtils;
+ rOrders, uODBase, fRptBox, fFrame, VAUtils, ORClasses, uWriteAccess;
 
 
 var
@@ -212,12 +216,96 @@ const
   TX_NO_IMMED = 'Immediate collect is not available for this test/sample';
   TX_NO_IMMED_CAP = 'Invalid Collection Type';
 
+// DRM - I7509280FY16/528262 - 2017/8/8 - make sure entered time is before pickup cutoff
+const
+  TX_AFTER_CUTOFF     = 'The cutoff time has passed for the selected lab collection time. Choose another collection time.';
+
+function IsBeforeCollectionTimeCutoff(enteredDate: TFMDateTime; aLocation: integer): boolean;
+var
+  dates: TStrings;
+  enteredTime, chkTime: string;
+  dd: integer;
+begin
+  // Assumes:
+  // 1. IsLabCollectTime has already been called to confirm enteredTime is a valid lab
+  //    collection time.
+  Result := Int(enteredDate) > FMToday;
+  if not Result then
+  begin
+    enteredTime := FormatFMDateTime('hhnn', enteredDate);
+    dates := TStringList.Create;
+    try
+      GetLabTimesForDate(dates, enteredDate, aLocation);
+      for dd := 0 to dates.Count - 1 do
+      begin
+        chkTime := Piece(dates[dd], U, 1);
+        if chkTime = enteredTime then
+        begin
+          Result := True;
+          Break;
+        end;
+      end;
+    finally
+      dates.Free;
+    end;
+  end;
+end;
+// DRM - I7509280FY16/528262 ---
+
 { base form procedures shared by all dialogs ------------------------------------------------ }
 
 procedure TfrmODLab.FormCreate(Sender: TObject);
 var
   i, n, HMD508: integer;
   AList: TStringList;
+  DGAccess: TWriteAccess.TDGWriteAccess;
+
+  procedure RemoveQuickOrdersWithoutWriteAccess;
+  var
+    i, idx, last: integer;
+    str: string;
+    sl: TORStringList;
+
+  begin
+    sl := TORStringList.Create;
+    try
+      last := cboAvailTest.Items.Count - 1;
+      for i := 0 to cboAvailTest.Items.Count - 1 do
+      begin
+        str := Piece(cboAvailTest.Items[i], U, 1);
+        if not str.StartsWith('Q') then
+        begin
+          last := i - 1;
+          break;
+        end;
+        delete(str, 1, 1);
+        if str <> '' then
+          sl.Add(str);
+      end;
+      if sl.Count > 0 then
+      begin
+        GetOrderableItemInfo(sl, oitLabService);
+        for i := last downto 0 do
+        begin
+          str := Piece(cboAvailTest.Items[i], U, 1);
+          if str.StartsWith('Q') then
+          begin
+            delete(str, 1, 1);
+            idx := sl.IndexOfPiece(str, U);
+            if (idx >=0) then
+            begin
+              str := U + piece(sl[idx], U, 2) + U;
+              if pos(str, FAccessData) = 0 then
+                cboAvailTest.Items.Delete(i);
+            end;
+          end;
+        end;
+      end;
+    finally
+      sl.Free;
+    end;
+  end;
+
 begin
   frmFrame.pnlVisit.Enabled := false;
   AutoSizeDisabled := True;
@@ -234,6 +322,21 @@ begin
     FLastColltime := '';
     FLastLabCollTime := '';
     FLastItemID := '';
+    DGAccess := WriteAccessV.DGWriteAccess(LabDisp);
+    if assigned(DGAccess) and (DGAccess is TWriteAccess.TDGWriteAccessParent) then
+      with DGAccess as TWriteAccess.TDGWriteAccessParent do
+      begin
+        FAccessData := AccessData;
+        if MissingGroups <> '' then
+        begin
+          FMissingGroupsMessage := 'Only lab tests for ' + AccessGroups +
+            ' are displayed.  Additional lab tests would be available if you had write access to '
+            + MissingGroups;
+          lblAvailTests.Font.Color := clBlue;
+          lblAvailTests.Font.Style := [fsUnderline];
+          lblAvailTests.Cursor := crHandPoint;
+        end;
+      end;
     uDfltCollType := '';
     FillerID := 'LR';
     FEvtDelayLoc := 0;
@@ -272,6 +375,7 @@ begin
       SetupCollTimes(cboCollType.ItemID);
       StatusText('Initializing List of Tests');
       SetControl(cboAvailTest, 'ShortList');
+      RemoveQuickOrdersWithoutWriteAccess;
       if cboAvailTest.Items.Count > 0 then cboAvailTest.InsertSeparator;
       cboAvailTest.InitLongList('');
       //TDP - CQ#19396 HMD508 added to guarantee 508 label did not change width
@@ -359,6 +463,13 @@ begin
   cboAvailTest.ItemIndex := -1;
   StatusText('');
   Changing := False ;
+end;
+
+procedure TfrmODLab.lblAvailTestsClick(Sender: TObject);
+begin
+  inherited;
+  if FMissingGroupsMessage <> '' then
+    ShowMessage(FMissingGroupsMessage);
 end;
 
 procedure TfrmODLab.SetupDialog(OrderAction: Integer; const ID: string);
@@ -1026,12 +1137,22 @@ begin
          else if EvtDelayLoc > 0 then
            begin
              if (not IsLabCollectTime(StrToFMDateTime(cboCollTime.Text), EvtDelayLoc)) then
-               SetError(cboCollTime.Text + TX_NOT_LAB_COLL_TIME);
+             // DRM - I7509280FY16/528262 - 2017/8/8 - make sure entered time is before pickup cutoff
+//               SetError(cboCollTime.Text + TX_NOT_LAB_COLL_TIME);
+               SetError(cboCollTime.Text + TX_NOT_LAB_COLL_TIME)
+             else if not IsBeforeCollectionTimeCutoff(StrToFMDateTime(cboCollTime.Text), EvtDelayLoc) then
+               SetError(TX_AFTER_CUTOFF);
+             // DRM - I7509280FY16/528262 ---
            end
          else if EvtDelayLoc <= 0 then
            begin
              if (not IsLabCollectTime(StrToFMDateTime(cboCollTime.Text), Encounter.Location)) then
-               SetError(cboCollTime.Text + TX_NOT_LAB_COLL_TIME);
+             // DRM - I7509280FY16/528262 - 2017/8/8 - make sure entered time is before pickup cutoff
+//               SetError(cboCollTime.Text + TX_NOT_LAB_COLL_TIME);
+               SetError(cboCollTime.Text + TX_NOT_LAB_COLL_TIME)
+             else if not IsBeforeCollectionTimeCutoff(StrToFMDateTime(cboCollTime.Text), Encounter.Location) then
+               SetError(TX_AFTER_CUTOFF);
+             // DRM - I7509280FY16/528262 ---
            end;
        end;
    end
@@ -1259,7 +1380,7 @@ begin
   sl := TStringList.Create;
   try
     setSubsetOfOrderItems(sl, StartFrom, Direction, 'S.LAB',
-      Responses.QuickOrder);
+      Responses.QuickOrder, FAccessData);
     cboAvailTest.ForDataUse(sl);
   finally
     sl.Free;
@@ -1513,19 +1634,12 @@ begin
 end;
 
 procedure TfrmODLab.cboCollTimeChange(Sender: TObject);
-var
-  CollType: string;
-const
-  TX_BAD_TIME         = ' is not a routine lab collection time.' ;
-  TX_BAD_TIME_CAP     = 'Invalid Time';
 begin
-  CollType := 'LC';
   with cboCollTime do if ItemID = 'LO' then
     begin
       ItemIndex := -1;
       Text := GetFutureLabTime(FMToday);
     end;
-  //cboCollType.SelectByID(CollType);
   ControlChange(Self);
 end;
 
@@ -1930,10 +2044,27 @@ begin
           isTrue := IsLabCollectTime(ADateTime, Encounter.Location);
         if isTrue then
           begin
+            // DRM - I7509280FY16/528262 - 2017/8/8 - make sure entered time is before pickup cutoff
+            if EvtDelayLoc > 0 then
+              isTrue := IsBeforeCollectionTimeCutoff(ADateTime, EvtDelayLoc)
+            else
+              isTrue := IsBeforeCollectionTimeCutoff(ADateTime, Encounter.Location);
+            if isTrue then
+              begin
+            // DRM - I7509280FY16/528262 ---
             calCollTime.Clear;
             cboCollTime.Visible := True;
             calCollTime.Visible := False;
             calCollTime.Enabled := False;
+            // DRM - I7509280FY16/528262 - 2017/8/8 - make sure entered time is before pickup cutoff
+              end
+            else
+              begin
+              InfoBox(TX_AFTER_CUTOFF, TX_BAD_TIME_CAP, MB_OK or MB_ICONWARNING) ;
+              ItemIndex := -1;
+              Text := GetFutureLabTime(ADateTime);
+              end;
+            // DRM - I7509280FY16/528262 ---
           end {if IsLabCollectTime}
         else
           begin

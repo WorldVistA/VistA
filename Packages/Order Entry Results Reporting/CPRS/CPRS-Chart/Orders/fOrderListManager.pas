@@ -152,7 +152,8 @@ implementation
 
 {$R *.dfm}
 
-uses fOptions, uFormUtils, Math, fOrders, System.UITypes, VAUtils;
+uses fOptions, uFormUtils, Math, fOrders, System.UITypes, VAUtils,
+UResponsiveGUI;
 
 var
   frmListManager: TfrmListManager;
@@ -564,7 +565,7 @@ begin
     mmListStatus.Hint := ItemObject.OFStatusInfo;
     pnlListStatus.Hint := ItemObject.OFStatusInfo;
     lvItems.Invalidate;
-    Application.ProcessMessages;
+    TResponsiveGUI.ProcessMessages;
   end;
 //  if assigned(ItemEditor) then
 //    SendMessage(ItemEditor.Handle,UM_ORDINIT,0,0);
@@ -771,7 +772,7 @@ begin
   Self.Font.Size := aSize;
   setMenu(aSize);
 
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   adjustActionPanelHeight(pnlBottom);
   adjustPanelWidth(pnlCancel, 'Cancel');
 

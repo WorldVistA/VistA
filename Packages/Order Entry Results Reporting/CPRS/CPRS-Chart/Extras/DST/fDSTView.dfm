@@ -15,7 +15,7 @@ inherited frmDSTView: TfrmDSTView
     Height = 33
     Align = alBottom
     BevelOuter = bvNone
-    TabOrder = 0
+    TabOrder = 2
     object btnOK: TButton
       AlignWithMargins = True
       Left = 790
@@ -52,19 +52,35 @@ inherited frmDSTView: TfrmDSTView
       OnClick = btnCloseCTBClick
     end
   end
-  object wbInternetExplorer: TWebBrowser [1]
-    Left = 0
-    Top = 0
-    Width = 868
-    Height = 464
+  object wbEdgeBrowser: TEdgeBrowser [1]
+    AlignWithMargins = True
+    Left = 3
+    Top = 3
+    Width = 862
+    Height = 193
+    Align = alTop
+    TabOrder = 0
+    TabStop = True
+    OnNavigationCompleted = wbEdgeBrowserNavigationCompleted
+    ExplicitLeft = -2
+  end
+  object webBrowser: TWebBrowser [2]
+    AlignWithMargins = True
+    Left = 3
+    Top = 202
+    Width = 862
+    Height = 259
     Align = alClient
     TabOrder = 1
+    OnEnter = webBrowserEnter
     SelectedEngine = EdgeIfAvailable
+    OnNavigateComplete2 = webBrowserNavigateComplete2
+    OnDocumentComplete = webBrowserDocumentComplete
     OnNavigateError = wbInternetExplorerNavigateError
-    ExplicitWidth = 694
-    ExplicitHeight = 477
+    OnShowScriptError = webBrowserShowScriptError
+    ExplicitLeft = 8
     ControlData = {
-      4C000000B6590000F52F00000000000000000000000000000000000000000000
+      4C00000017590000C51A00000000000000000000000000000000000000000000
       000000004C000000000000000000000001000000E0D057007335CF11AE690800
       2B2E126208000000000000004C0000000114020000000000C000000000000046
       8000000000000000000000000000000000000000000000000000000000000000
@@ -82,13 +98,16 @@ inherited frmDSTView: TfrmDSTView
         'Component = btnOK'
         'Status = stsDefault')
       (
-        'Component = wbInternetExplorer'
-        'Status = stsDefault')
-      (
         'Component = btnCancel'
         'Status = stsDefault')
       (
         'Component = btnCloseCTB'
+        'Status = stsDefault')
+      (
+        'Component = wbEdgeBrowser'
+        'Status = stsDefault')
+      (
+        'Component = webBrowser'
         'Status = stsDefault'))
   end
 end

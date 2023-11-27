@@ -100,7 +100,7 @@ type
 implementation
 
 uses VA508DelphiCompatibility, ORCtrls, ORDtTm, VA508AccessibilityRouter,
-  VA508AccessibilityConst, ORDtTmRng;
+  VA508AccessibilityConst, ORDtTmRng, UResponsiveGUI;
 
 function GetEditBox(ComboBox: TORComboBox): TORComboEdit;
 var
@@ -223,7 +223,7 @@ function TORCheckBox508Manager.GetState(Component: TWinControl): string;
 var
   cb: TORCheckBox;
 begin
-  Application.ProcessMessages; // <<<  needed to allow messages that set state to process
+  TResponsiveGUI.ProcessMessages; // <<<  needed to allow messages that set state to process
   Result := '';
   cb := TORCheckBox(Component);
   if (cb.State = cbGrayed) and (cb.GrayedStyle in [gsQuestionMark, gsBlueQuestionMark]) then

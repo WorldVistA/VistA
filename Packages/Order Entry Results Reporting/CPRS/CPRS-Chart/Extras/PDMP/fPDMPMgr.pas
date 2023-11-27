@@ -81,7 +81,7 @@ implementation
 uses
   fEncnt, ORFn, fPDMPView,    fReminderDialog,
   uCore, fFrame, rCore, uSizing,
-  rPDMP, fPDMPUser, fPDMPCosigner;
+  rPDMP, fPDMPUser, fPDMPCosigner, UResponsiveGUI;
 
 const
   CAPTION_GAP = 8;
@@ -444,7 +444,7 @@ procedure TfrmPDMP.updateFont;
 begin
   if assigned(Application.MainForm) then
     self.font.Size := Application.MainForm.font.Size;
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   updateBtnWidth(bbStart, 'Query');
   updateBtnWidth(bbCancel, 'Cancel');
   updateBtnWidth(bbResults, 'Results');
@@ -489,7 +489,7 @@ begin
   updateBtnWidth(bbStart, 'Query');
   updateBtnWidth(bbCancel, 'Cancel');
   updateBtnWidth(bbResults, 'Results');
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
 
   if (Status = UM_PDMP_Ready) then
     begin

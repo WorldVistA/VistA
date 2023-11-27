@@ -63,7 +63,7 @@ implementation
 
 {$R *.DFM}
 
-uses rODBase, System.Types, VAUtils;
+uses rODBase, System.Types, VAUtils, UResponsiveGUI;
 
 const
   COL_SELECT   =  0;
@@ -192,7 +192,7 @@ begin
     if Found > -1 then
     begin
       ItemIndex := Found;
-      Application.ProcessMessages;
+      TResponsiveGUI.ProcessMessages;
       SelStart  := 1;
       SelLength := Length(Items[Found]);
     end else

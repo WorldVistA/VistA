@@ -28,11 +28,13 @@ type
     procedure hdrOrdersSectionResize(HeaderControl: THeaderControl;
       Section: THeaderSection);
     procedure FormResize(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     OKPressed: Boolean;
     OrderList: TList;
     fCallBackOrder: TOrder;
     fCallBackList: tStringList;
+    fResponses: TList;
     procedure RedrawList;
     procedure GetGridText(RenewFields: TOrderRenewFields; var col1, col2: string);
     function MeasureColumnHeight(TheOrderText: string; Index: Integer; Column: integer):integer;
@@ -40,6 +42,7 @@ type
     procedure BuildOrderChecks(var aReturnList: TStringList);
     function OverrideFunction(aReturnList: tStringList; aOverrideType: String;
       aOverrideReason: String = ''; aOverrideComment: String = ''): Boolean;
+    function GetMedResponseList(Index: Integer): TList;
   end;
 
 function ExecuteRenewOrders(var SelectedList: TList): Boolean;
@@ -49,7 +52,8 @@ implementation
 
 {$R *.DFM}
 
-uses fDateRange, fRenewOutMed, uCore, rCore, rMisc, UBAGlobals, VA2006Utils, fFrame;
+uses fDateRange, fRenewOutMed, uCore, rCore, rMisc, UBAGlobals, VA2006Utils, fFrame,
+  rODBase, uInfoBoxWithBtnControls;
 var //rtw
   RenewOrderCancel : boolean; //rtw
 
@@ -336,6 +340,22 @@ begin
   ResizeFormToFont(Self);
   SetFormPosition(Self);
   uAllergiesChanged := False;
+  fResponses := TList.Create;
+end;
+
+procedure TfrmRenewOrders.FormDestroy(Sender: TObject);
+var
+  i: integer;
+  list: TList;
+
+begin
+  inherited;
+  for i := 0 to fResponses.Count - 1 do
+  begin
+    list := TList(fResponses[i]);
+    KillObj(@list, True);
+  end;
+  fResponses.Free;
 end;
 
 procedure TfrmRenewOrders.FormResize(Sender: TObject);
@@ -356,6 +376,27 @@ begin
     col1 := NewText;
     if length(TitrationMsg)>0 then
       col1 := col1 + CRLF + TitrationMsg;
+  end;
+end;
+
+function TfrmRenewOrders.GetMedResponseList(Index: Integer): TList;
+var
+  AnOrder: TOrder;
+  HasObjects: Boolean;
+  RenewFields: TOrderRenewFields;
+
+begin
+  while fResponses.Count <= Index do
+    fResponses.Add(nil);
+  Result := TList(fResponses[Index]);
+  if Result = nil then
+  begin
+    AnOrder := TOrder(lstOrders.Items.Objects[Index]);
+    RenewFields := TOrderRenewFields(AnOrder.LinkObject);
+    Result := TList.Create;
+    LoadResponses(Result, 'X' + AnOrder.ID, HasObjects,
+      (RenewFields.TitrationMsg <> ''));
+    fResponses[Index] := Result;
   end;
 end;
 
@@ -445,8 +486,8 @@ begin
                    OldComment := UpperCase(ReverseStr(Comments));
                    OldPickup  := PickupText(Pickup);
                    OldQty := 'Quantity: ' + Quantity;
-                   if ExecuteRenewOutMed(AnOrder) then
-                      RedrawList;
+                   if ExecuteRenewOutMed(AnOrder, GetMedResponseList(ItemIndex)) then
+                     RedrawList;
                    NewComment := UpperCase(ReverseStr(Comments));
                    x := ReverseStr(NewText);
                    StartPos := Pos(OldComment, UpperCase(x));
@@ -482,44 +523,86 @@ end;
 
 procedure TfrmRenewOrders.cmdOKClick(Sender: TObject);
 var
-  i: integer;
+  DestList, SkippedList: TList;
+  i, idx, BtnResults: integer;
   AnOrder: TOrder;
   RenewFields: TOrderRenewFields;
-  badQtyCount, badidx: integer;
-  s: string;
+  Done, Cancel: Boolean;
+  Buttons: TStringList;
+  ErrorMessage, tempUnit, tempSch, tempDur, tempDrug: string;
+  Adapter: TResponsesAdapter;
 
 begin
   inherited;
-  badQtyCount := 0;
-  badidx := -1;
-  for i := 0 to lstOrders.Count-1 do
-  begin
-    AnOrder := TOrder(lstOrders.Items.Objects[i]);
-    if AnOrder.DGroup = OutptDisp then
+  Adapter := TResponsesAdapter.Create;
+  Buttons := TStringList.Create;
+  SkippedList := TList.Create;
+  try
+    Buttons.Add('Edit Order');
+    Buttons.Add('Don''t Renew this order');
+    Buttons.Add('Cancel');
+    Cancel := False;
+    for i := 0 to lstOrders.Count-1 do
     begin
-      RenewFields := TOrderRenewFields(AnOrder.LinkObject);
-      if (StrToFloatDef(RenewFields.Quantity, 0.0) < 0.000000001) then
+      AnOrder := TOrder(lstOrders.Items.Objects[i]);
+      if AnOrder.DGroup = OutptDisp then
       begin
-        inc(badQtyCount);
-        if badQtyCount = 1 then
-          badidx := i;
+        repeat
+          Done := True;
+          RenewFields := TOrderRenewFields(AnOrder.LinkObject);
+          with RenewFields do
+          begin
+            DestList := GetMedResponseList(i);
+            Adapter.Assign(DestList);
+            BuildResponseVarsForOutpatient(Adapter, tempUnit, tempSch, tempDur, tempDrug, True);
+            ErrorMessage := '';
+            UpdateSupplyQtyRefillErrorMsg(ErrorMessage, DaysSupply, Refills,
+              Quantity, tempDrug, tempUnit, tempSch, tempDur, (TitrationMsg <> ''),
+              StrToIntDef(Adapter.IValueFor('ORDERABLE', 1), 0), True);
+            if ErrorMessage <> '' then
+            begin
+              ErrorMessage := AnOrder.Text + CRLF + CRLF + ErrorMessage;
+              BtnResults := uInfoBoxWithBtnControls.DefMessageDlg(ErrorMessage,
+                mtConfirmation, Buttons, 'Error Renewing Order', false);
+              case BtnResults of
+                0:
+                begin
+                  lstOrders.ItemIndex := i;
+                  cmdChangeClick(cmdChange);
+                  Done := False; // Recheck order
+                end;
+                1: SkippedList.Add(AnOrder);
+                2: Cancel := True;
+              end;
+            end;
+          end;
+        until Done or Cancel;
+        if Cancel then
+          break;
       end;
     end;
+    if (not Cancel) and (SkippedList.Count > 0) then
+    begin
+      for i := OrderList.Count-1 downto 0 do
+      begin
+        AnOrder := TOrder(OrderList[i]);
+        if SkippedList.IndexOf(AnOrder) >= 0 then
+        begin
+          OrderList.Delete(i);
+          FreeAndNil(AnOrder.LinkObject);
+          idx := lstOrders.Items.IndexOfObject(AnOrder);
+          if idx >= 0 then
+            lstOrders.Items.Delete(idx);
+        end;
+      end;
+    end;
+  finally
+    SkippedList.Free;
+    Buttons.Free;
+    Adapter.Free;
   end;
 
-  if BadQtyCount > 0 then
-  begin
-    if BadQtyCount > 1 then
-      s := TX_QTY_NV_2
-    else
-    begin
-      s := TX_QTY_NV_1;
-      lstOrders.Selected[badIdx] := True;
-    end;
-    InfoBox(TX_QTY_NV + s, TX_NO_SAVE_CAP, MB_OK);
-
-  end
-  else
+  if not Cancel then
   begin
     OKPressed := True;
     Close;

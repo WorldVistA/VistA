@@ -997,7 +997,7 @@ inherited frmODMedIV: TfrmODMedIV
       ExplicitTop = 542
       ExplicitWidth = 86
     end
-    object cboIndication: TORComboBox
+    object cboIndication: TIndicationsComboBox
       AlignWithMargins = True
       Left = 434
       Top = 397

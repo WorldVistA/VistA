@@ -50,7 +50,7 @@ var
 implementation
 {$R *.DFM}
 
-uses fOrders, fOrdersTS, ORFn, rOrders;
+uses fOrders, fOrdersTS, ORFn, rOrders, uWriteAccess;
 var //rtw
  copyordercancel: boolean;  //rtw
 
@@ -306,6 +306,12 @@ procedure TfrmCopyOrders.radEvtDelayClick(Sender: TObject);
 var i: integer;
 begin
   inherited;
+  if not WriteAccess(waDelayedOrders, True) then
+  begin
+    radReleaseClick(radRelease);
+    exit;
+  end;
+
   if radRelease.Checked then
     radRelease.Checked  := False;
   radEvtDelay.Checked := True;

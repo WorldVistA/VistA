@@ -71,7 +71,7 @@ $(PostBuildEvent)]]></PostBuildEvent>
 $(PreBuildEvent)]]></PreBuildEvent>
         <DCC_DcuOutput>..\..\dcu</DCC_DcuOutput>
         <DCC_DebugInfoInExe>true</DCC_DebugInfoInExe>
-        <DCC_UsePackage>vcl;rtl;vclx;dbrtl;IndySystem;IndyProtocols;IndyCore;vcldb;VclSmp;VAShared_R10_4_1;VAShared_R10_4_2;$(DCC_UsePackage)</DCC_UsePackage>
+        <DCC_UsePackage>vcl;rtl;vclx;dbrtl;IndySystem;IndyProtocols;IndyCore;vcldb;VclSmp;VAShared_R10_4_1;VAShared_R10_4_2;ResponsiveGUI_R10_4_2;$(DCC_UsePackage)</DCC_UsePackage>
         <DCC_MapFile>3</DCC_MapFile>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
@@ -113,6 +113,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DCCReference Include="IndySystem.dcp"/>
         <DCCReference Include="IndyProtocols.dcp"/>
         <DCCReference Include="IndyCore.dcp"/>
+        <DCCReference Include="ResponsiveGUI_R10_4_2.dcp"/>
         <DCCReference Include="..\..\Source\U_CPTPasteDetails.pas"/>
         <DCCReference Include="..\..\Source\U_CPTCommon.pas"/>
         <DCCReference Include="..\..\Source\U_CPTUtils.pas"/>

@@ -46,7 +46,6 @@ type
     fEnterNewAllergy: TMenuItem;
     fMarkSelectedAsEnteredInError: TMenuItem;
     fMarkPtAsNKA: TMenuItem;
-
     procedure pmnEnterNewAllergy(Sender: TObject);
     procedure pmnMarkSelectedAsEnteredInError(Sender: TObject);
     procedure pmnMarkPtAsNKA(Sender: TObject);
@@ -76,7 +75,7 @@ uses
   rODAllergy,
   fAllgyAR,
   ORFn,
-  ORNet;
+  ORNet, uWriteAccess;
 
 const
   NO_ASSESSMENT = 'No Allergy Assessment';
@@ -174,7 +173,7 @@ var
   aMsg: string;
 begin
   inherited;
-
+  if not WriteAccess(waAllergies) then exit;
   fEnterNewAllergy.Enabled := True;
   fMarkSelectedAsEnteredInError.Enabled := False;
   fMarkPtAsNKA.Enabled := False;
@@ -202,6 +201,7 @@ end;
 
 procedure TfraCoverSheetDisplayPanel_CPRS_Allergies.OnPopupMenuFree(Sender: TObject);
 begin
+  if not WriteAccess(waAllergies) then exit;
   FreeAndNil(fSeparator);
   FreeAndNil(fEnterNewAllergy);
   FreeAndNil(fMarkSelectedAsEnteredInError);
@@ -213,7 +213,7 @@ end;
 procedure TfraCoverSheetDisplayPanel_CPRS_Allergies.OnPopupMenuInit(Sender: TObject);
 begin
   inherited;
-
+  if not WriteAccess(waAllergies) then exit;
   fSeparator := NewLine;
   fEnterNewAllergy := NewItem('Enter New Allergy ...', 0, False, False, pmnEnterNewAllergy, 0, 'pmnEnterNewAllergy');
   fMarkSelectedAsEnteredInError := NewItem('Mark Selected Allergy as Entered in Error ...', 0, False, False, pmnMarkSelectedAsEnteredInError, 0, 'pmnMarkSelectedAllergyAsEnteredInError');

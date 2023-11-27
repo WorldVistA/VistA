@@ -170,7 +170,7 @@ type
     popResultsHistory: TMenuItem;
     btnDelayedOrder: TORAlignButton;
     mnuActChgEvnt: TMenuItem;
-    mnuChgEvnt: TMenuItem;
+    popChgEvnt: TMenuItem;
     mnuActRel: TMenuItem;
     popOrderRel: TMenuItem;
     EventRealeasedOrder1: TMenuItem;
@@ -203,9 +203,9 @@ type
     MnuDash2UAP: TMenuItem;
     MnuSignUAP: TMenuItem;
     N2: TMenuItem;
-    F1: TMenuItem;
-    F2: TMenuItem;
-    U1: TMenuItem;
+    popFlag: TMenuItem;
+    popFlagComment: TMenuItem;
+    popUnflag: TMenuItem;
     mnuAllowMultipleAssignment: TMenuItem;
     ActionList: TActionList;
     actPark: TAction;
@@ -322,6 +322,8 @@ type
     UAPContinue: Boolean; // rtw
     FRenewcancel2: Boolean; // rtw
     FOrderTitlecaption: string;
+    FNoOrderingOrWriteAccess: boolean;
+    FAllowAlertAction: boolean;
     function CanChangeOrderView: Boolean;
     function GetEvtIFN(AnIndex: Integer): string;
     function DisplayDefaultDlgList(ADest: TORListBox;
@@ -436,8 +438,7 @@ uses fFrame, fEncnt, fOrderVw, fRptBox, fLkUpLocation, fOrdersDC, fOrdersCV,
   fMeds, uInit, fBALocalDiagnoses,
   fODConsult, fClinicWardMeds, fActivateDeactivate, VA2006Utils, rodMeds,
   VA508AccessibilityRouter, VAUtils, System.Types, System.UITypes, uPaPI,
-  ORNet
-  ;
+  ORNet, UResponsiveGUI, uWriteAccess;
 
 {$R *.DFM}
 
@@ -642,17 +643,18 @@ begin
     // popup items that apply to ordering have tag>0
     with mnuAct do
       for i := 0 to Pred(Count) do
-        Items[i].Enabled := not User.NoOrdering;
+        Items[i].Enabled := not FNoOrderingOrWriteAccess;
+    mnuActAlert.Enabled := FAllowAlertAction;
     with popOrder.Items do
       for i := 0 to Pred(Count) do
         if Items[i].Tag > 0 then
-          Items[i].Enabled := not User.NoOrdering;
+          Items[i].Enabled := not FNoOrderingOrWriteAccess;
     // set nurse verification actions (may be enabled when ordering disabled)
     mnuActVerify.Enabled := User.EnableVerify;
     mnuActChartRev.Enabled := User.EnableVerify;
     popOrderVerify.Enabled := User.EnableVerify;
     popOrderChartRev.Enabled := User.EnableVerify;
-    mnuActOneStep.Enabled := User.EnableActOneStep and not User.NoOrdering;
+    mnuActOneStep.Enabled := User.EnableActOneStep and (not FNoOrderingOrWriteAccess);
     if User.DisableHold then
     begin
       mnuActHold.Visible := False;
@@ -681,10 +683,10 @@ begin
   end;
   {
     Force this page to re-assess column widths and text wrapping *AFTER* we
-    call Application.ProcessMessages so all the windows messages and other
+    call TResponsiveGUI.ProcessMessages so all the windows messages and other
     'things' we fired off will complete first.
   }
-  Application.ProcessMessages;
+  TResponsiveGUI.ProcessMessages;
   RedrawOrderList(KeepSelections);
 end;
 
@@ -770,7 +772,8 @@ begin
           end;
         end;
         DCOrder(OrderForList, GetReqReason, DCNewOrder, ReturnedType);
-        Changes.Add(CH_ORD, OrderForList.ID, OrderForList.Text, '', CanSign);
+        Changes.Add(CH_ORD, OrderForList.ID, OrderForList.Text, '', CanSign,
+          waOrders, '', 0, OrderForList.DGroup);
         FCompress := True;
         SynchListToOrders;
       end;
@@ -889,6 +892,25 @@ begin
     mnuViewUAP.Visible := True;
   if ORUAPOFF = 1 then
     mnuViewDM.Visible := True; // rtw
+  if User.NoOrdering then
+  begin
+    FNoOrderingOrWriteAccess := True;
+    FAllowAlertAction := False;
+  end
+  else if WriteAccess(waOrders) then
+  begin
+    FNoOrderingOrWriteAccess := False;
+    FAllowAlertAction := True;
+  end
+  else
+  begin
+    FNoOrderingOrWriteAccess := True;
+    FAllowAlertAction := not EHRActive;
+  end;
+  lstWrite.Enabled := WriteAccess(waOrders);
+  mnuActAlert.Enabled := FAllowAlertAction;
+  mnuAct.Enabled := FAllowAlertAction;
+  btnDelayedOrder.Enabled := WriteAccess(waDelayedOrders);
 end;
 
 procedure TfrmOrders.FormDestroy(Sender: TObject);
@@ -922,7 +944,7 @@ end;
 procedure TfrmOrders.PopUAPOrderPopup(Sender: TObject);  //modified for portland rtwstart
  begin
   inherited;
-  if User.NoOrdering then
+  if FNoOrderingOrWriteAccess then
   begin
     MnuContinueUAP.Enabled := False;
     MnuChangeUAP.Enabled := False;
@@ -1257,7 +1279,7 @@ begin
     begin
       lstOrders.PopupMenu := popOrder;
       lstOrders.MultiSelect := True;
-      frmOrders.mnuAct.Enabled := True;
+      frmOrders.mnuAct.Enabled := FAllowAlertAction;
       Callvista('ORTO SET UAP FLAG', ['0']);
       UAPViewCalling := False;
     end;
@@ -1404,7 +1426,7 @@ begin
   end;
   lstOrders.PopupMenu := popOrder;
   lstOrders.MultiSelect := True;
-  frmOrders.mnuAct.Enabled := True;
+  frmOrders.mnuAct.Enabled := FAllowAlertAction;
   Callvista('ORTO SET UAP FLAG', ['0']);
   UAPViewCalling := False;
   if lstSheets.ItemIndex > 0 then
@@ -2101,7 +2123,7 @@ begin
   end
   else
 
-  // Application.ProcessMessages;
+  // TResponsiveGUI.ProcessMessages;
 
   idx := lstOrders.ItemAtPos(Point(aPoint.X, aPoint.Y), True);
   if (idx < 0) or (idx >= lstOrders.Items.Count) then
@@ -2110,7 +2132,7 @@ begin
  { if (idx < 0) or (idx = oldidx) then
     Exit;
   oldidx := idx;  }
- // Application.ProcessMessages;
+ // TResponsiveGUI.ProcessMessages;
  // Application.CancelHint;
 
   HintText := getHintString(idx);
@@ -2283,21 +2305,40 @@ procedure TfrmOrders.ValidateSelected(const AnAction, WarningMsg,
   WarningTitle: string);
 { loop to validate action on each selected order, deselect if not valid }
 var
-  i: Integer;
+  i, ix, jx: Integer;
   AnOrder: TOrder;
-  ErrMsg, AParentID: string;
-  GoodList, BadList, CheckedList: TStringlist;
+  ErrMsg, AParentID, CplxOrderMsg, ParentOrderID, CurrentActID: string;
+  GoodList,BadList, CheckedList, ChildList: TStringList;
+  complexorder: Boolean;
+
 begin
-  GoodList := TStringlist.Create;
-  BadList := TStringlist.Create;
-  CheckedList := TStringlist.Create;
+  GoodList := nil;
+  BadList  := nil;
+  CheckedList := nil;
+  ChildList := nil;
   try
+    GoodList := TStringList.Create;
+    BadList  := TStringList.Create;
+    CheckedList := TStringList.Create;
+    ChildList := TStringList.Create;
     with lstOrders do
+    begin
+      WriteAccessV.BeginErrors;
+      try
+        for i := 0 to Items.Count - 1 do
+          if Selected[i] then
+          begin
+            AnOrder := TOrder(Items.Objects[i]);
+            if (not canWriteOrder(AnOrder, AnAction)) then
+              Selected[i] := False;
+          end;
+      finally
+        WriteAccessV.EndErrors(False);
+      end;
       for i := 0 to Items.Count - 1 do
         if Selected[i] then
         begin
           AnOrder := TOrder(Items.Objects[i]);
-
           if (AnAction = 'RN') and
             (AnOrder.DGroupName = 'Non-VA Meds (Documentation)') then
           begin
@@ -2351,90 +2392,109 @@ begin
             Selected[i] := False;
             Continue;
           end;
-          if ((AnAction <> OA_RELEASE) and (AnOrder.EnteredInError = 0)) or
-            (((AnOrder.EnteredInError = 1) and ((AnOrder.Status = 1) or
-            (AnOrder.Status = 13))) and (AnAction = 'ES')) then
-            ValidateOrderAction(AnOrder.ID, AnAction, ErrMsg)
-            // AGP END Changes
-          else
-            ErrMsg := '';
-          case StrToIntDef(Piece(ErrMsg, U, 1), 0) of
-            1: ErrMsg := TX_DEAFAIL; // prescriber has an invalid or no DEA#
-            2:
-              ErrMsg := TX_SCHFAIL + Piece(ErrMsg, U, 2) + '.';
-              // prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
-            3:
-              ErrMsg := TX_NO_DETOX; // prescriber has an invalid or no Detox#
-            4:
-              ErrMsg := TX_EXP_DEA1 + Piece(ErrMsg, U, 2) + TX_EXP_DEA2;
-              // prescriber's DEA# expired and no VA# is assigned
-            5:
-              ErrMsg := TX_EXP_DETOX + Piece(ErrMsg, U, 2) + '.';
-              // valid detox#, but expired DEA#
+          if ((AnAction <> OA_RELEASE) and (AnOrder.EnteredInError = 0)) or (((AnOrder.EnteredInError = 1) and ((AnOrder.Status = 1) or (AnOrder.Status = 13))) and
+                (AnAction = 'ES')) then
+             ValidateOrderAction(AnOrder.ID, AnAction, ErrMsg)
+          //AGP END Changes
+            else ErrMsg := '';
+          case StrToIntDef(Piece(ErrMsg,U,1),0) of
+              1:  ErrMsg := TX_DEAFAIL;  //prescriber has an invalid or no DEA#
+              2:  ErrMsg := TX_SCHFAIL + Piece(ErrMsg,U,2) + '.';  //prescriber has no schedule privileges in 2,2N,3,3N,4, or 5
+              3:  ErrMsg := TX_NO_DETOX;  //prescriber has an invalid or no Detox#
+              4:  ErrMsg := TX_EXP_DEA1 + Piece(ErrMsg,U,2) + TX_EXP_DEA2;  //prescriber's DEA# expired and no VA# is assigned
+              5:  ErrMsg := TX_EXP_DETOX + Piece(ErrMsg,U,2) + '.';  //valid detox#, but expired DEA#
           end;
-          if (Length(ErrMsg) > 0) and (Pos('COMPLEX-PSI', ErrMsg) < 1) then
+          if (Length(ErrMsg)>0) and (Pos('COMPLEX-PSI',ErrMsg)<1) then
           begin
             InfoBox(AnOrder.Text + WarningMsg + ErrMsg, WarningTitle, MB_OK);
             Selected[i] := False;
             Continue;
           end;
-          if (Length(ErrMsg) > 0) and IsFirstDoseNowOrder(AnOrder.ID) and
-            (AnAction <> 'RL') then
+          if (Length(ErrMsg)>0) and IsFirstDoseNowOrder(AnOrder.ID) and (AnAction <> 'RL') then
           begin
             InfoBox(AnOrder.Text + WarningMsg + ErrMsg, WarningTitle, MB_OK);
             Selected[i] := False;
             Continue;
           end;
-          if (Length(ErrMsg) > 0) and
-            ((AnAction = OA_CHGEVT) or (AnAction = OA_EDREL)) then
+          if (Length(ErrMsg)>0) and ( (AnAction = OA_CHGEVT) or (AnAction = OA_EDREL) ) then
           begin
             InfoBox(AnOrder.Text + WarningMsg + ErrMsg, WarningTitle, MB_OK);
             Selected[i] := False;
             Continue;
           end;
           AParentID := '';
-          IsValidActionOnComplexOrder(AnOrder.ID, AnAction, TListBox(lstOrders),
-            CheckedList, ErrMsg, AParentID);
+          complexOrder := IsValidActionOnComplexOrder(AnOrder.ID, AnAction,TListBox(lstOrders),CheckedList,ErrMsg, AParentID);
           TOrder(Items.Objects[i]).ParentID := AParentID;
-          if (Length(ErrMsg) = 0) and (AnAction = OA_EDREL) then
+          if (Length(ErrMsg)=0) and (AnAction=OA_EDREL) then
+             begin
+               if (AnOrder.Signature = 2) and (not VerbTelPolicyOrder(AnOrder.ID)) then
+                  begin
+                    ErrMsg := 'Need to be signed first.';
+                    Selected[i] := False;
+                  end;
+             end;
+
+              if (AnAction = OA_CHGEVT) or (AnAction = OA_EDREL) then
+              begin
+                if Length(ErrMsg) > 0 then
+                begin
+                  Selected[i] := False;
+                  BadList.Add(AnOrder.Text + '^' + ErrMsg);
+                end
+                else
+                  GoodList.Add(AnOrder.Text);
+              end;
+
+              if (Length(ErrMsg) > 0) and (AnAction <> OA_CHGEVT) and
+                (AnAction <> OA_EDREL) then
+              begin
+                if Pos('COMPLEX-PSI', ErrMsg) > 0 then
+                  ErrMsg := TX_COMPLEX;
+                InfoBox(AnOrder.Text + WarningMsg + ErrMsg, WarningTitle, MB_OK);
+                Selected[i] := False;
+              end;
+
+          if Selected[i] then
           begin
-            if (AnOrder.Signature = 2) and (not VerbTelPolicyOrder(AnOrder.ID))
-            then
-            begin
-              ErrMsg := 'Need to be signed first.';
+            WarningOrderAction(AnOrder.ID, AnAction, ErrMsg);
+            if (Piece(ErrMsg,U,1) = '1') and (InfoBox(AnOrder.Text +
+                TitrationSafeText(WarningMsg, CRLF + Piece(ErrMsg,U,2)),
+                'Warning', MB_YESNO or MB_ICONWARNING) = IDNO) then
               Selected[i] := False;
+          end;
+          //cvw 529181 the following block prevents discontinuation of complex orders if any
+          //of the orders (parent or child) are locked.
+          if Selected[i] and (not OrderIsLocked(AnOrder.ID, AnAction)) then
+          begin
+            Selected[i] := False;
+
+            if (ComplexOrder) and (AnAction = OA_DC ) then
+            begin
+              CplxOrderMsg := '';
+              ParentOrderID := '';
+              CurrentActID := '';
+              ValidateComplexOrderAct(AnOrder.ID, CplxOrderMsg);
+              ParentOrderID := Piece(CplxOrderMsg, '^', 2);
+              CurrentActID := Piece(AnOrder.ID, ';', 2);
+
+              GetChildrenOfComplexOrder(ParentOrderID, CurrentActID, ChildList);
+
+              for ix := 0 to ChildList.Count - 1 do
+              begin
+                for jx := 0 to lstOrders.Items.Count - 1 do
+                begin
+                  if TOrder(lstOrders.Items.Objects[jx]).ID = ChildList[ix] then
+                  begin
+                    TOrder(lstOrders.Items.Objects[jx]).ParentID := ParentOrderID;
+                    lstOrders.Selected[jx] := False;
+                  end;
+                end;
+              end;
             end;
           end;
-
-          if (AnAction = OA_CHGEVT) or (AnAction = OA_EDREL) then
-          begin
-            if Length(ErrMsg) > 0 then
-            begin
-              Selected[i] := False;
-              BadList.Add(AnOrder.Text + '^' + ErrMsg);
-            end
-            else
-              GoodList.Add(AnOrder.Text);
-          end;
-
-          if (Length(ErrMsg) > 0) and (AnAction <> OA_CHGEVT) and
-            (AnAction <> OA_EDREL) then
-          begin
-            if Pos('COMPLEX-PSI', ErrMsg) > 0 then
-              ErrMsg := TX_COMPLEX;
-            InfoBox(AnOrder.Text + WarningMsg + ErrMsg, WarningTitle, MB_OK);
-            Selected[i] := False;
-          end;
-
-          if Selected[i] and (not OrderIsLocked(AnOrder.ID, AnAction)) then
-            Selected[i] := False;
-
-          WarningOrderAction(AnOrder.ID, AnAction, ErrMsg);
-          if (Piece(ErrMsg,U,1) = '1') and (InfoBox(AnOrder.Text +
-              TitrationSafeText(WarningMsg, CRLF + Piece(ErrMsg,U,2)),
-              'Warning', MB_YESNO or MB_ICONWARNING) = IDNO) then
-            Selected[i] := False;
-        end; // with
+          //end of 529181 block
+        end;
+    end;
 
     if ((AnAction = OA_CHGEVT) or (AnAction = OA_EDREL)) then
     begin
@@ -2446,9 +2506,10 @@ begin
         DisplayOrdersForAction(BadList, GoodList, AnAction);
     end;
   finally
-    GoodList.Free;
-    BadList.Free;
-    CheckedList.Free;
+    FreeAndNil(ChildList);
+    FreeAndNil(GoodList);
+    FreeAndNil(BadList);
+    FreeAndNil(CheckedList);
   end;
 end;
 
@@ -2894,6 +2955,18 @@ begin
       ErrMsgLog := '';
       Items.BeginUpdate;
       try
+        WriteAccessV.BeginErrors;
+        try
+          for i := 0 to Items.Count - 1 do
+            if Selected[i] then
+            begin
+              AnOrder := TOrder(Items.Objects[i]);
+              if (not canWriteOrder(AnOrder, ValidationAction)) then
+                Selected[i] := False;
+            end;
+        finally
+          WriteAccessV.EndErrors(False);
+        end;
         for i := 0 to Items.Count - 1 do
           if Selected[i] then
           begin
@@ -3173,8 +3246,7 @@ begin
     IsNewEvent := False;
     // if not ShowMsgOn(CopyIFNList.Count = 0, TX_NOSEL, TC_NOSEL) then
     if CopyIFNList.Count > 0 then
-      if SetViewForCopy(IsNewEvent, DoesDestEvtOccur, DestPtEvtID, DestPtEvtName)
-      then
+      if SetViewForCopy(IsNewEvent, DoesDestEvtOccur, DestPtEvtID, DestPtEvtName) then
       begin
         if DoesDestEvtOccur then
         begin
@@ -3840,7 +3912,7 @@ var
   IsRealeaseNow: Boolean;
 begin
   inherited;
-  if User.NoOrdering then
+  if FNoOrderingOrWriteAccess then
     exit;
   mnuViewUAP.Enabled := True;
   if not EncounterPresentEDO then
@@ -4436,8 +4508,9 @@ end;
 procedure TfrmOrders.PaPI_GUIsetup;
 
   function IsParked(const AOrderListRec: TObject): Boolean;
-  begin       // Outpatient Only
-    Result := (TOrder(AOrderListRec).DGroup = 4) and
+  begin       // Out patient or supply Only
+    Result := ((TOrder(AOrderListRec).DGroup = OutptDisp) or
+               (TOrder(AOrderListRec).DGroup = SupplyDisp)) and
               // Check that is active
               (TOrder(AOrderListRec).Status = 6) and
               // Cehck that is Parked
@@ -4445,8 +4518,9 @@ procedure TfrmOrders.PaPI_GUIsetup;
   end;
 
   function CanBeParked(const AOrderListRec: TObject): Boolean;
-  begin       // Out patient Only
-    Result := (TOrder(AOrderListRec).DGroup = 4) and
+  begin       // Out patient or supply Only
+    Result := ((TOrder(AOrderListRec).DGroup = OutptDisp) or
+               (TOrder(AOrderListRec).DGroup = SupplyDisp)) and
              // Check that is active
              (TOrder(AOrderListRec).Status = 6) and // Active
              // Check that is not active/parked
@@ -4457,8 +4531,14 @@ var
   I: Integer;
   HaveOnlyParked, HaveOnlyCanBeParked: Boolean;
 begin
-  HaveOnlyParked := PapiParkingAvailable and not User.NoOrdering and (SelCount > 0);
-  HaveOnlyCanBeParked := PapiParkingAvailable and not User.NoOrdering and (SelCount > 0);
+  if not WriteAccess(waOrders) then
+  begin
+    ActPark.Enabled := False;
+    ActUnpark.Enabled := False;
+    exit;
+  end;
+  HaveOnlyParked := PapiParkingAvailable and (not FNoOrderingOrWriteAccess) and (SelCount > 0);
+  HaveOnlyCanBeParked := PapiParkingAvailable and (not FNoOrderingOrWriteAccess) and (SelCount > 0);
   if HaveOnlyParked or HaveOnlyCanBeParked then
   begin
     for I := 0 to lstOrders.Count - 1 do
@@ -4489,10 +4569,25 @@ begin
   end
   else
   begin
-    PopOrderDC.Enabled := not User.NoOrdering;
+    PopOrderDC.Enabled := not FNoOrderingOrWriteAccess;
     PopOrderDC.Caption := GetMenuString;
   end;
   PaPI_GUIsetup;
+  if not WriteAccess(waOrders) then
+  begin
+    popOrderChange.Enabled := false;
+    popOrderDC.Enabled := false;
+    popOrderRenew.Enabled := false;
+    popOrderVerify.Enabled := false;
+    popOrderSign.Enabled := false;
+    popOrderCopy.Enabled := false;
+    popOrderChartRev.Enabled := false;
+    popFlag.Enabled := false;
+    popFlagComment.Enabled := false;
+    popUnflag.Enabled := false;
+  end;
+  popOrderRel.Enabled := WriteAccess(waDelayedOrders);
+  popChgEvnt.Enabled := WriteAccess(waDelayedOrders);
 end;
 
 procedure TfrmOrders.mnuActClick(Sender: TObject);
@@ -4505,7 +4600,7 @@ begin
   end
   else
   begin
-    mnuActDC.Enabled := not User.NoOrdering;
+    mnuActDC.Enabled := not FNoOrderingOrWriteAccess;
     mnuActDC.Caption := GetMenuString;
   end;
   PaPI_GUIsetup;
