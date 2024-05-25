@@ -4,6 +4,7 @@
 #
 #---------------------------------------------------------------------------
 # Copyright 2011-2019 The Open Source Electronic Health Record Alliance
+# Copyright 2024 Sam Habiel
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -435,6 +436,7 @@ class KIDSBuildParser(ISectionParser):
   PGL_SECTION = 24
   FRV1_SECTION = 25
   FRV1K_SECTION = 26
+  REST_SECTION = 27
 
   """
     regular expression to determine the start of the section
@@ -471,6 +473,7 @@ class KIDSBuildParser(ISectionParser):
   PGL_LINE = re.compile("^\"PGL\"")
   FRV1_LINE = re.compile("^\"FRV1\"")
   FRV1K_LINE = re.compile("^\"FRV1K\"")
+  REST_LINE = re.compile("^\"REST\"")
 
   def __init__(self, outDir):
     self._outDir = outDir
@@ -642,7 +645,8 @@ class KIDSBuildParser(ISectionParser):
       self.PGL_LINE: (self.PGL_SECTION, None),
       self.FRV1_LINE: (self.FRV1_SECTION, None),
       self.FRV1K_LINE: (self.FRV1K_SECTION, None),
-      self.VERSION_LINE : (self.VERSION_SECTION, self)
+      self.VERSION_LINE : (self.VERSION_SECTION, self),
+      self.REST_LINE : (self.REST_SECTION, None)
     }
   """
     Method to check if current line is a valid section line
