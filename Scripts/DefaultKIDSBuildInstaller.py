@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2012-2019 The Open Source Electronic Health Record Alliance
+# Copyright 2024 Sam Habiel
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -171,6 +172,45 @@ class DefaultKIDSBuildInstaller(object):
     connection.expect("Enter a Host File:")
     connection.send(self._kidsFile+"\r")
 
+  """ Backup KIDS build to Mailman
+  """
+  def __backupKIDSBuild__(self, connection):
+    logger.info("Backing up %s" % self._kidsInstallName)
+    # Backup a Transport Global
+    connection.send("Backup\r")
+    # Select INSTALL NAME:
+    connection.expect("Select INSTALL NAME:")
+    connection.send(self._kidsInstallName+"\r")
+    # Subject: Backup of EC*2.0*166 on Jul 09, 2024  Replace
+    connection.expect("Subject:")
+    connection.send("\r")
+    # Backup Type: B//
+    connection.expect("Backup Type:")
+    connection.send("\r")
+    index = connection.expect(["Do you wish to secure this message?", "Enter a Host File:"])
+    if index == 0:
+        # Do you wish to secure this message? NO//
+        connection.send("\r")
+        # Send mail to: PROGRAMMER,ONE//
+        connection.expect("Send mail to:")
+        connection.send("\r")
+        # Select basket to send to: IN//
+        connection.expect("Select basket to send to:")
+        connection.send("BACK UP\r")
+        # And Send to:
+        connection.expect("And Send to:")
+        connection.send("\r")
+        # Message sent
+        connection.expect("Message sent")
+    else:
+        # Enter a Host File:
+        connection.send("/tmp/" + self._kidsInstallName + " BACKUP.KID")
+        # Header Comment:
+        connection.expect("Header Comment:")
+        connection.send("\r")
+        # Package Transported Successfully
+        connection.expect("Package Transported Successfully")
+
   """ Answer all the KIDS install questions
   """
   def __handleKIDSInstallQuestions__(self, connection, connection2=None):
@@ -270,6 +310,7 @@ class DefaultKIDSBuildInstaller(object):
         self.__printTransportGlobal__(vistATestClient,[self._kidsInstallName],self._tgOutputDir)
       else:
         self.__printTransportGlobal__(vistATestClient,self._multiBuildList,self._tgOutputDir)
+    self.__backupKIDSBuild__(connection)
     if vistATestClient2:
       result = self.__handleKIDSInstallQuestions__(connection, connection2)
     else:
