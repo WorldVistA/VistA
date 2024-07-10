@@ -342,7 +342,10 @@ class PatchSequenceApply(object):
                             multiBuildsList,
                             files=associateFiles,
                             globals=associatedGlobals,
-                            duz = self._duz)
+                            duz = self._duz,
+                            backupPath = self._backupPath,
+                            backupBasket = self._backupBasket
+                            )
     logger.info("Applying Patch %s" % patchInfo)
     assert kidsInstaller
     return kidsInstaller.runInstallation(self._testClient, self._testClient2)
@@ -415,6 +418,10 @@ def main():
                           ', this option will ignore the CSV dependencies')
   parser.add_argument('-d', '--duz', default=17, type=int,
                 help='installer\'s VistA instance\'s DUZ')
+  parser.add_argument('-bup', '--backupPath', default='/tmp/',
+                help='Path for KIDS backup files')
+  parser.add_argument('-bub', '--backupBasket', default='BACK UP',
+                help='Mail basket for KIDS backup files')
 
   result = parser.parse_args();
   print (result)
@@ -430,6 +437,8 @@ def main():
   with testClient as vistAClient:
     patchSeqApply = PatchSequenceApply(vistAClient, outputDir)
     patchSeqApply._duz = result.duz
+    patchSeqApply._backupPath = result.backupPath
+    patchSeqApply._backupBasket = result.backupBasket
     assert testClient2
     with testClient2 as vistAClient2:
       patchSeqApply._testClient2 = vistAClient2

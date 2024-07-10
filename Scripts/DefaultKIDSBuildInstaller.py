@@ -145,6 +145,10 @@ class DefaultKIDSBuildInstaller(object):
     self._tgOutputDir = None
     if "printTG" in kargs:
       self._tgOutputDir = kargs['printTG']
+    if "backupPath" in kargs:
+      self._backupPath = kargs['backupPath']
+    if "backupBasket" in kargs:
+      self._backupBasket = kargs['backupBasket']
 
   """ set up the log for VistA connection
     @connection: a connection from a VistATestClient
@@ -196,7 +200,7 @@ class DefaultKIDSBuildInstaller(object):
         connection.send("\r")
         # Select basket to send to: IN//
         connection.expect("Select basket to send to:")
-        connection.send("BACK UP\r")
+        connection.send(self._backupBasket + "\r")
         # And Send to:
         connection.expect("And Send to:")
         connection.send("\r")
@@ -204,7 +208,7 @@ class DefaultKIDSBuildInstaller(object):
         connection.expect("Message sent")
     else:
         # Enter a Host File:
-        connection.send("/tmp/" + self._kidsInstallName + " BACKUP.KID")
+        connection.send(self._backupPath + os.sep + self._kidsInstallName + " BACKUP.KID")
         # Header Comment:
         connection.expect("Header Comment:")
         connection.send("\r")
@@ -757,6 +761,10 @@ def main():
                 help='list of global files that need to import')
   parser.add_argument('-d', '--duz', default=DEFAULT_INSTALL_DUZ, type=int,
                 help='installer\'s VistA instance\'s DUZ')
+  parser.add_argument('-bup', '--backupPath', default='/tmp/',
+                help='Path for KIDS backup files')
+  parser.add_argument('-bub', '--backupBasket', default='BACK UP',
+                help='Mail basket for KIDS backup files')
 
   result = parser.parse_args();
   print (result)
@@ -780,7 +788,9 @@ def main():
                                            multiBuildList=multiBuildList,
                                            duz = result.duz,
                                            globals=result.globalFiles,
-                                           printTG=result.tglobalprint)
+                                           printTG=result.tglobalprint,
+                                           backupPath=result.backupPath,
+                                           backupBasket=result.backupBasket)
     defaultKidsInstall.runInstallation(testClient, result.reinstall)
 
 if __name__ == "__main__":
