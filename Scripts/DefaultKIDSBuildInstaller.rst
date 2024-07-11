@@ -37,3 +37,9 @@ To re-install a KIDS build, just append ``-r`` to the above command.
 To import a global before installing the KIDS build, append ``-g <patch_to_global_file>`` to the above command.
 
 To print the transport globals of the KIDS build, append ``-t <path_to_output_dir>`` to the above command
+
+Optional parameters: 
+
+* ``-d`` Installer DUZ (default 17)
+* ``-bup`` Backup-Path for backing up current state of system prior to installing KIDS build (default ``/tmp``). Only used for multibuilds.
+* ``-bub`` Backup Mail Basket for backing up current state of system prior to installing KIDS build (default ``BACK UP``). Used for the rest of the builds.

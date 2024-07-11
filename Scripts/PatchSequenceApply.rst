@@ -104,7 +104,7 @@ From PatchSequenceApply output:
 Resolution:
 +++++++++++
 
-Download the patch, if available, from foia-vista.osehra.org or another source
+Download the patch, if available, from foia-vista.worldvista.org or another source
 and place it in the directory with the target patch.
 
 
