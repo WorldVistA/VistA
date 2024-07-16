@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2013-2019 The Open Source Electronic Health Record Alliance
+# Copyright 2024 Sam Habiel: Python 3.12 support
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -120,19 +121,19 @@ def addChangeSet(gitRepoDir=None, patternList=[]):
                   diffStack.append(s[2:])
                 if s[0] == "+":
                   if len(diffStack):
-                    if re.search("DIC\(9.8,",s[2:]):
+                    if re.search(r"DIC\(9.8,",s[2:]):
                       break
-                    if re.search("[0-9]{7}(\.[0-9]{4,6})*",s[2:]) or re.search("[0-9]{7}(\.[0-9]{4,6})*",diffStack[0]):
+                    if re.search(r"[0-9]{7}(\.[0-9]{4,6})*",s[2:]) or re.search(r"[0-9]{7}(\.[0-9]{4,6})*",diffStack[0]):
                       results.append("DATE")
                       break
-                    if re.search("[0-9]{2}\-[A-Z]{3}\-[0-9]{4}",s[2:]) or re.search("[0-9]{2}\:[0-9]{2}\:[0-9]{2}",diffStack[0]) :
+                    if re.search(r"[0-9]{2}\-[A-Z]{3}\-[0-9]{4}",s[2:]) or re.search(r"[0-9]{2}\:[0-9]{2}\:[0-9]{2}",diffStack[0]) :
                       results.append("DATE")
                       break
-                    if re.search("[0-9]{2}:[0-9]{2}:[0-9]{2}",s[2:]) or re.search("[0-9]{2}\:[0-9]{2}\:[0-9]{2}",diffStack[0]) :
+                    if re.search(r"[0-9]{2}:[0-9]{2}:[0-9]{2}",s[2:]) or re.search(r"[0-9]{2}\:[0-9]{2}\:[0-9]{2}",diffStack[0]) :
                       results.append("DATE")
                       break
                     # Removes a specific global entry in DEVICE file which maintains a count of the times the device was opened
-                    if re.search("%ZIS\([0-9]+,[0-9]+,5",s[2:]):
+                    if re.search(r"%ZIS\([0-9]+,[0-9]+,5",s[2:]):
                       break
                     diffStack.pop(0)
             outLineStack.pop(0)

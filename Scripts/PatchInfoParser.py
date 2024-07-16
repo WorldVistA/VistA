@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2012-2019 The Open Source Electronic Health Record Alliance
+# Copyright 2024 Sam Habiel: Python 3.12 support
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -155,7 +156,7 @@ class PatchInfoParser(object):
   SUBJECT_PART_START_REGEX = re.compile("^Subject:(?P<subj>.*)")
   ASSOCIATED_PATCH_START_REGEX = re.compile("^Associated patches: ")
   ASSOCIATED_PATCH_START_INDEX = 20
-  ASSOCIATED_PATCH_SECTION_REGEX = re.compile("^ {%d,%d}\(v\)" %
+  ASSOCIATED_PATCH_SECTION_REGEX = re.compile(r"^ {%d,%d}\(v\)" %
                                               (ASSOCIATED_PATCH_START_INDEX,
                                                ASSOCIATED_PATCH_START_INDEX))
   DESCRIPTION_REGEX = re.compile("^ *Description:")

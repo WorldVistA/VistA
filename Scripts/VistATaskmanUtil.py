@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2013 The Open Source Electronic Health Record Agent
+# Copyright 2024 Sam Habiel. Python3.12 changes.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -147,7 +148,7 @@ class VistATaskmanUtil(object):
     menuUtil = VistAMenuUtil(duz=1)
     menuUtil.gotoTaskmanMgrUtilMenu(vistAClient)
     connection.send("Place Taskman in a WAIT State\r")
-    connection.expect("Should active submanagers shut down after finishing their current tasks\? ")
+    connection.expect(r"Should active submanagers shut down after finishing their current tasks\? ")
     if shutdownSubMgrs:
       connection.send("YES\r")
     else:
@@ -173,7 +174,7 @@ class VistATaskmanUtil(object):
   def stopMailManBackgroundFiler(self, vistAClient):
     connection = vistAClient.getConnection()
     connection.send("D STOP^XMKPL\n")
-    connection.expect("Are you sure you want the Background Filers to stop delivering mail\? ")
+    connection.expect(r"Are you sure you want the Background Filers to stop delivering mail\? ")
     connection.send("YES\r")
     vistAClient.waitForPrompt()
     logger.info("Wait 30 seconds for Mailman background filer to stop")
@@ -224,7 +225,7 @@ class VistATaskmanUtil(object):
     connection.expect("Checking the Status List:")
     statusString = connection.lastconnection.strip(' \r\n').split('\r\n')[0]
     logger.debug("Status String is %s" % statusString)
-    connection.expect("Node        weight  status      time       \$J")
+    connection.expect(r"Node        weight  status      time       \$J")
     connection.expect("Checking the Schedule List:")
     detailedStatus = connection.lastconnection.strip(' \r\n')
     logger.debug("Detailed Status String is %s" % detailedStatus)

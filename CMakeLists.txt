@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2012-2013 The Open Source Electronic Health Record Agent
+# Copyright 2024 Sam Habiel
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-cmake_minimum_required(VERSION 2.8.0)
+cmake_minimum_required(VERSION 3.14)
 set(CMAKE_LEGACY_CYGWIN_WIN32 0)
 project(VISTA NONE)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake ${CMAKE_MODULE_PATH})

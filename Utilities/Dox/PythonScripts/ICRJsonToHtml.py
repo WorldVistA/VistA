@@ -1,6 +1,7 @@
 # This module is parses ICR in JSON format and convert to html web page
 #---------------------------------------------------------------------------
 # Copyright 2011 The Open Source Electronic Health Record Agent
+# Copyright 2024 Sam Habiel. Python 3.12 changes.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +22,7 @@ from future.utils import iteritems
 from past.utils import old_div
 import json
 import os.path
-import cgi
+import html
 import io
 import re
 
@@ -120,7 +121,7 @@ def convertJson(inputJsonFile, date, MRepositDir, patchRepositDir,
             for pkgName, outJson in iteritems(pkgJson):
                 _generateICRSummaryPageImpl(outJson, 'ICR List', pkgName, date,
                                             outDir, crossRef)
-            logger.warn('Total # entry in pkgJson is [%s]', len(pkgJson))
+            logger.warning('Total # entry in pkgJson is [%s]', len(pkgJson))
             _generatePkgDepSummaryPage(inputJson, date, outDir, crossRef)
 
         # TODO: Log failures
@@ -145,7 +146,7 @@ def _getICRIndividualHtmlFileLinkByIen(value, icrEntry, **kargs):
         if not line:  # Empty string
           ienDescription += '\n'
         else:
-          ienDescription += ' ' + cgi.escape(line).replace('"', r"&quot;").replace("'", r"&quot;")
+          ienDescription += ' ' + html.escape(line).replace('"', r"&quot;").replace("'", r"&quot;")
     return '<a title=\"%s\" href=\"%s\">%s</a>' % (ienDescription, '%s/ICR/ICR-%s.html' % 	 (FILES_URL, ien), value)
 
 
@@ -156,7 +157,7 @@ def _getGeneralDescription(value, icrEntry, **kargs):
         if not line:  # Empty string
           description += '\n'
         else:
-          description += '<br>' + cgi.escape(line).replace('"', r"&quot;").replace("'", r"&quot;")
+          description += '<br>' + html.escape(line).replace('"', r"&quot;").replace("'", r"&quot;")
     return description
 
 
@@ -455,7 +456,7 @@ def _generateICRIndividualPagePDF(icrJson, date, pdfOutDir):
     else:
         # TODO: PDF will not be included in a package bundle and will not be
         #       accessible from the Dox pages
-        logger.warn("Could not find package for: ICR %s" % ien)
+        logger.warning("Could not find package for: ICR %s" % ien)
     pdfFile = os.path.join(pdfOutDir, 'ICR-' + ien + '.pdf')
 
     # Setup the pdf document
@@ -536,9 +537,9 @@ def _icrDataEntryToPDF(pdf, icrJson, doc):
                 description.append(Paragraph('GENERAL DESCRIPTION', STYLES['Heading3']))
                 if isinstance(value, list):
                     for line in value:
-                        description.append(Paragraph(cgi.escape(line), STYLES['Normal']))
+                        description.append(Paragraph(html.escape(line), STYLES['Normal']))
                 else:
-                    description.append(Paragraph(cgi.escape(value), STYLES['Normal']))
+                    description.append(Paragraph(html.escape(value), STYLES['Normal']))
                 if description:
                     pdf.append(KeepTogether(description))
                 continue
@@ -703,7 +704,7 @@ def _writeTableOfValue(output, field, value, crossRef):
             # ICR-5317
             if "Type:" in variables:
                 # <variableName> Type: <variable type> <description>
-                ICR_5317_REGEX = re.compile("^(?P<varName>[A-Z]+)\s+Type:\s+(?P<varType>[A-Za-z]+)\s*(?P<description>.*)")
+                ICR_5317_REGEX = re.compile(r"^(?P<varName>[A-Z]+)\s+Type:\s+(?P<varType>[A-Za-z]+)\s*(?P<description>.*)")
                 ret = ICR_5317_REGEX.search(variables)
                 entry[val][0]['VARIABLES'] = ret.group('varName')
                 entry[val][0]['TYPE'] = ret.group('varType')
@@ -764,7 +765,7 @@ def _convertIndividualFieldValue(field, icrEntry, value, crossRef):
     if isWordProcessingField(field):
         if isinstance(value, list):
             value = "\n".join(value)
-        value = '<pre>\n' + cgi.escape(value) + '\n</pre>\n'
+        value = '<pre>\n' + html.escape(value) + '\n</pre>\n'
         return value
     if field in FIELD_CONVERT_MAP:
         if isinstance(value, list):
@@ -780,7 +781,7 @@ def _convertIndividualFieldValuePDF(field, value, writeField=False,
         if isinstance(value, list):
             cell = []
             for item in value:
-                text = cgi.escape(item)
+                text = html.escape(item)
                 if writeField:
                   text = "%s : %s" % (field, text)
                 # TODO: "Field:" should not be styled as 'Code'
@@ -790,7 +791,7 @@ def _convertIndividualFieldValuePDF(field, value, writeField=False,
             else:
                 return cell
         else:
-            text = cgi.escape(value)
+            text = html.escape(value)
             if writeField:
               text = "%s : %s" % (field, text)
             # TODO: "Field:" should not be styled as 'Code'

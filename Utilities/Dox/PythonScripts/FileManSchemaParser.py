@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2014 The Open Source Electronic Health Record Agent
+# Copyright 2024 Sam Habiel. Python 3.12 changes.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -215,11 +216,11 @@ class FileManSchemaParser(object):
 
   def _parseSchemaField(self, fieldNo, rootNode, fileSchema):
     if '0' not in rootNode:
-      logger.warn('%s does not have a 0 subscript' % rootNode)
+      logger.warning('%s does not have a 0 subscript' % rootNode)
       return None
     zeroFields = rootNode["0"].value
     if not zeroFields:
-      logger.warn("No value: %s for %s" % (zeroFields, rootNode['0']))
+      logger.warning("No value: %s for %s" % (zeroFields, rootNode['0']))
       return None
     zeroFields = zeroFields.split('^')
     if len(zeroFields) < 2:
@@ -295,7 +296,7 @@ class FileManSchemaParser(object):
         self._noPointedToFiles[fileGlobalRoot] = Global(fileGlobalRoot)
         logger.info("@TODO, set the file number for %s" % fileGlobalRoot)
       else:
-        logger.warn("No pointed to file set for file:%s: field:%r 0-index:%s" %
+        logger.warning("No pointed to file set for file:%s: field:%r 0-index:%s" %
                      (fileSchema.getFileNo(), fileField, zeroFields))
     elif fileField.getType() == FileManField.FIELD_TYPE_SUBFILE_POINTER:
       if subFile:
@@ -306,7 +307,7 @@ class FileManSchemaParser(object):
         fileSchema.addFileManSubFile(subFileSchema)
         fileField.setPointedToSubFile(subFileSchema)
       else:
-        logger.warn("No subfile is set for file:%s, field:%r 0-index:%s" %
+        logger.warning("No subfile is set for file:%s, field:%r 0-index:%s" %
                      (fileSchema.getFileNo(), fileField, zeroFields))
     elif fileField.getType() == FileManField.FIELD_TYPE_SET and not subFile and zeroFields[2]:
       setDict = dict([x.split(':') for x in zeroFields[2].rstrip(';').split(';')])

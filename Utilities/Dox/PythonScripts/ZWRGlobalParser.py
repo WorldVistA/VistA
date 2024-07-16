@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2012 The Open Source Electronic Health Record Agent
+# Copyright 2024 Sam Habiel. Python 3.12 changes.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -194,7 +195,7 @@ class DefaultZWRRootGenerator(object):
     if rootSub != self.rootSub: # not under the same root, ignore
       retNode = self.curRoot
       if self.glbLoc:
-        logger.warn("Different root, expected: %s, real: %s, ignore for now" %
+        logger.warning("Different root, expected: %s, real: %s, ignore for now" %
                       (self.rootSub, rootSub))
         self.curRoot = None
         return True
@@ -210,7 +211,7 @@ class DefaultZWRRootGenerator(object):
         else:
           return True
     if self.commonSubscript and subscripts[0:self.index] != self.commonSubscript:
-      logger.warn("Different subsript, expected: %s, real: %s, ignore for now" %
+      logger.warning("Different subsript, expected: %s, real: %s, ignore for now" %
                       (self.commonSubscript, subscripts[0:self.index]))
       retNode = self.curRoot
       self.curRoot = None

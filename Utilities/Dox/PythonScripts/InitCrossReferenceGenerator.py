@@ -1,5 +1,6 @@
 # ---------------------------------------------------------------------------
 # Copyright 2018 The Open Source Electronic Health Record Alliance
+# Copyright 2024 Sam Habiel. Python 3.12 changes.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -32,9 +33,9 @@ from ArgParserHelper import createArgParser as createInitialCrossRefGenArgParser
 from CrossReference import CrossReference, Routine, Package, Global, PlatformDependentGenericRoutine
 from LogManager import logger
 
-A_ROUTINE_EX = re.compile("^A[0-9][^ ]+$")
-ZWR_FILENO_REGEX = re.compile("(?P<fileNo>^[0-9.]+)(-1)?\+(?P<des>.*)\.zwr$")
-ZWR_NAMESPACE_REGEX = re.compile("(?P<namespace>^[^.]+)\.zwr$")
+A_ROUTINE_EX = re.compile(r"^A[0-9][^ ]+$")
+ZWR_FILENO_REGEX = re.compile(r"(?P<fileNo>^[0-9.]+)(-1)?\+(?P<des>.*)\.zwr$")
+ZWR_NAMESPACE_REGEX = re.compile(r"(?P<namespace>^[^.]+)\.zwr$")
 
 fileNoPackageMappingDict = {"18.02":"Web Services Client",
                    "18.12":"Web Services Client",
@@ -82,7 +83,7 @@ class InitCrossReferenceGenerator(object):
           currentPackage.setDocLink(getVDLHttpLinkByID(vdlId))
       else:
         if not currentPackage:
-          logger.warn("row is not under any package: %s" % row)
+          logger.warning("row is not under any package: %s" % row)
           continue
       if len(row['Prefixes']):
         currentPackage.addNamespace(row['Prefixes'])
@@ -181,7 +182,7 @@ class InitCrossReferenceGenerator(object):
         lineNo = lineNo + 1
       if not fileNo:
         if file not in skipFile:
-          logger.warn("Warning: No FileNo found for file %s" % file)
+          logger.warning("Warning: No FileNo found for file %s" % file)
         continue
       globalVar = Global(globalName, fileNo, globalDes,
                          allPackages.get(packageName))

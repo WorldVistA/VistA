@@ -4,6 +4,7 @@
 # Visual Cross Reference Documentation (DOX) pages.
 #---------------------------------------------------------------------------
 # Copyright 2011-2019 The Open Source Electronic Health Record Alliance
+# Copyright 2014 Sam Habiel
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -255,13 +256,13 @@ PC_LEGEND += """
   </div>
 """
 
-INDEX_HTML_PAGE_OSEHRA_IMAGE_PART = """
+INDEX_HTML_PAGE_WV_IMAGE_PART = """
 <br/>
 <left>
 <div class="content">
-<a href="https://www.osehra.org">
-<img src="https://www.osehra.org/profiles/drupal_commons/themes/commons_osehra_earth/logo.png"
-style="border-width:0" alt="OSEHRA" /></a>
+<a href="https://www.worldvista.org">
+<img src="https://opensourcevista.net/NancysVistAServer/WorldVistALogoSmall.jpg"
+style="border-width:0" alt="WorldVistA" /></a>
 </div>
 </left>
 <br/>
@@ -273,8 +274,8 @@ INDEX_HTML_PAGE_INTRODUCTION_PART = """
 Welcome to VistA Cross Reference Documentation Page.
 This documentation is generated with the results of XINDEX and
  FileMan Data Dictionary utility running against the VistA code base pulled
- from the <a href="https://code.osehra.org/gitweb?p=VistA-M.git;a=summary"/>
-repository</a>.
+ from the <a href="https://foia-vista.worldvista.org/DBA_VistA_FOIA_System_Files/">
+FOIA site</a>.
 This documentation provides direct dependency information among packages,
  among FileMan files,  between globals and routines,
  as well as direct call/caller graphs and source code for individual routine.
@@ -764,11 +765,11 @@ class WebPageGenerator(object):
     def generateIndexHtmlPage(self):
         outputFile = open(os.path.join(self._outDir, "index.html"), 'w')
         outputFile.write(COMMON_HEADER_PART)
-        outputFile.write("<title>OSEHRA VistA Code Documentation</title>")
+        outputFile.write("<title>Vivian VistA Code Documentation</title>")
         outputFile.write(GOOGLE_ANALYTICS_JS_CODE)
         outputFile.write(HEADER_END)
         outputFile.write(DEFAULT_BODY_PART)
-        outputFile.write(INDEX_HTML_PAGE_OSEHRA_IMAGE_PART)
+        outputFile.write(INDEX_HTML_PAGE_WV_IMAGE_PART)
         outputFile.write(INDEX_HTML_PAGE_HEADER)
         outputFile.write(TOP_INDEX_BAR_PART)
         outputFile.write(INDEX_HTML_PAGE_INTRODUCTION_PART)
@@ -2873,7 +2874,7 @@ class WebPageGenerator(object):
         if len(package.getDocLink()) > 0:
             outputFile.write("<div><p><h4 id=\"packageDocs\">VA documentation in the <a target='blank' href=\"%s\">VistA Documentation Library</a></p></div>" % package.getDocLink())
             if len(package.getDocMirrorLink()) > 0:
-                outputFile.write("&nbsp;or&nbsp;<a href=\"%s\">OSEHRA Mirror site</a></h4></div>\n" % package.getDocMirrorLink())
+                outputFile.write("&nbsp;or&nbsp;<a href=\"%s\">WorldVistA Mirror site</a></h4></div>\n" % package.getDocMirrorLink())
         else:
             outputFile.write("<div><p><h4><a href=\"https://www.va.gov/vdl/\">VA documentation in the VistA Documentation Library</a></h4></p></div>\n")
         writeSectionEnd(outputFile)

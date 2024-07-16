@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2018 The Open Source Electronic Health Record Agent
+# Copyright 2024 Sam Habiel
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,11 +20,10 @@ set(vendor_args "")
 SetVendorArgsConfig(vendor_args "@VENDOR_NAME@" "@VISTA_CACHE_NAMESPACE@"
                      "@VISTA_CACHE_INSTANCE@" "@VISTA_CACHE_USERNAME@"
                      "@VISTA_CACHE_PASSWORD@")
-set(XINDEX_PATCH_DIR "@CMAKE_CURRENT_SOURCE_DIR@/Patches")
-set(PATCH_INSTALL_SCRIPT "@VISTA_SOURCE_DIR@/Scripts/PatchSequenceApply.py")
-set(LOG_DIR "@DOCUMENT_VISTA_FILES_OUTPUT_DIR@")
-list(APPEND vendor_args -p "${XINDEX_PATCH_DIR}" -l "${LOG_DIR}" -i -n "all")
-execute_process(COMMAND "@PYTHON_EXECUTABLE@" "@VISTA_SOURCE_DIR@/Scripts/PatchSequenceApply.py" ${vendor_args}
+set(XINDEX_PATCH "@CMAKE_CURRENT_SOURCE_DIR@/Patches/XT-7p3-10001T4.KID")
+set(LOG_FILE "@DOCUMENT_VISTA_FILES_OUTPUT_DIR@/xindex_install.log")
+list(APPEND vendor_args -d 1 -bub IN -l "${LOG_FILE}" "${XINDEX_PATCH}")
+execute_process(COMMAND "@PYTHON_EXECUTABLE@" "@VISTA_SOURCE_DIR@/Scripts/DefaultKIDSBuildInstaller.py" ${vendor_args}
                 RESULT_VARIABLE retCode
                 OUTPUT_VARIABLE output)
 if(retCode)

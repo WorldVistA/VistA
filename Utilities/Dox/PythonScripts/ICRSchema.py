@@ -1,6 +1,7 @@
 # This file defined the reverse engineered ICR fileman schema
 #---------------------------------------------------------------------------
 # Copyright 2018 The Open Source Electronic Health Record Alliance
+# Copyright 2024 Sam Habiel. Python 3.12 changes.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -152,7 +153,7 @@ DATE_TIME_FIELD = set([
 ])
 
 # regular  expression for fields
-INTEGRATION_REFERENCES_LIST = re.compile('^\s*INTEGRATION REFERENCES (LIST|List) *(.*)(([01]\d|2[0-3]):([0-5]\d)|24:00) *PAGE')
+INTEGRATION_REFERENCES_LIST = re.compile(r'^\s*INTEGRATION REFERENCES (LIST|List) *(.*)(([01]\d|2[0-3]):([0-5]\d)|24:00) *PAGE')
 
 
 """ SOME UTILITY FUNCTIONS  """
@@ -168,7 +169,7 @@ def isWordProcessingField(field):
 def getDate(icrFilename):
     with open(icrFilename, 'r') as ICRFile:
         for line in ICRFile:
-            line = line.rstrip("\r\n")
+            line = line.rstrip(r"\r\n")
             match = INTEGRATION_REFERENCES_LIST.match(line)
             if match:
                 return match.group(2).strip()

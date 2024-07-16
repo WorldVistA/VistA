@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2013 The Open Source Electronic Health Record Agent
+# Copyright 2024 Sam Habiel. Python3.12 changes.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -55,7 +56,7 @@ class VistAMenuUtil(object):
     connection = vistAClient.getConnection()
     connection.expect("Select Systems Manager Menu ")
     connection.send("\r")
-    connection.expect("Do you really want to halt\?")
+    connection.expect(r"Do you really want to halt\?")
     connection.send("\r")
     vistAClient.waitForPrompt()
     connection.send("\r")
@@ -78,11 +79,11 @@ class VistAMenuUtil(object):
     connection = vistAClient.getConnection()
     self.gotoProgrammerMenu(vistAClient)
     connection.send("KIDS\r")
-    connection.expect("Select Kernel Installation \& Distribution System ")
+    connection.expect(r"Select Kernel Installation \& Distribution System ")
 
   def exitKidsMainMenu(self, vistAClient):
     connection = vistAClient.getConnection()
-    connection.expect("Select Kernel Installation \& Distribution System")
+    connection.expect(r"Select Kernel Installation \& Distribution System")
     connection.send("\r")
     self.exitProgrammerMenu(vistAClient)
 

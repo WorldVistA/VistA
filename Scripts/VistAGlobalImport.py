@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2012-2019 The Open Source Electronic Health Record Alliance
+# Copyright 2024 Sam Habiel. Python3.12 changes.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -35,7 +36,7 @@ class VistAGlobalImport(object):
   def __setupDeviceCache__(self, connection, nativeFile):
     connection.expect("Device:")
     connection.send("%s\r" % nativeFile)
-    connection.expect("Parameters\?")
+    connection.expect(r"Parameters\?")
     connection.send("\r")
     connection.expect("Input option: ")
     connection.send("A\r")

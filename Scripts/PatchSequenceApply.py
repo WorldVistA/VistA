@@ -8,6 +8,7 @@
 #
 #---------------------------------------------------------------------------
 # Copyright 2011-2019 The Open Source Electronic Health Record Alliance
+# Copyright 2024 Sam Habiel. Python3.12 changes.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -372,7 +373,7 @@ class PatchSequenceApply(object):
         itemIndex = self.indexInPatchList(item, patchList)
         patchIndex = self.indexInPatchList(patchInfo.installName, patchList)
         if itemIndex >= patchIndex:
-          logger.warn("%s is out of order with %s" % (item, patchInfo))
+          logger.warning("%s is out of order with %s" % (item, patchInfo))
           return False
         else:
           continue
@@ -384,7 +385,7 @@ class PatchSequenceApply(object):
       if self._vistaPatchInfo.isInstallCompleted(installStatus):
         continue
       elif item in patchInfo.optionalDepSet:
-        logger.warn("Patch specified in KIDS info file %s is not installed for %s" %
+        logger.warning("Patch specified in KIDS info file %s is not installed for %s" %
                     (item, patchInfo.installName))
         continue
       else:

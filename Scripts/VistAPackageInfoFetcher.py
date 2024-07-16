@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2012-2019 The Open Source Electronic Health Record Alliance
+# Copyright 2024 Sam Habiel. Python3.12 changes.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -95,7 +96,7 @@ class VistAPackageInfoFetcher(object):
     connection.expect("Select PACKAGE NAME:")
     connection.send("%s\r" % packageName)
     while True:
-      index  = connection.expect(["Select VERSION: [0-9.VvTtPp]+\/\/",
+      index  = connection.expect([r"Select VERSION: [0-9.VvTtPp]+\/\/",
                                   "Select VERSION: ",
                                   "Select Utilities ",
                                   "CHOOSE [0-9]+-[0-9]+"])
@@ -119,7 +120,7 @@ class VistAPackageInfoFetcher(object):
             have a version information (old system)
         """
         while True:
-          idx = connection.expect(["Do you want to see the Descriptions\?",
+          idx = connection.expect([r"Do you want to see the Descriptions\?",
                                     "CHOOSE [0-9]+-[0-9]+",
                                     "Select VERSION: ",
                                     "DEVICE:"])
@@ -215,11 +216,11 @@ class VistAPackageInfoFetcher(object):
     connection.send("17\r")
     connection.expect("THEN PRINT FIELD: ")
     connection.send("\r")
-    connection.expect("Heading \(S/C\): INSTALL SEARCH// ")
+    connection.expect(r"Heading \(S/C\): INSTALL SEARCH// ")
     connection.send("\r") # use default heading
     connection.expect("DEVICE:")
     connection.send(";132;99999\r")
-    connection.expect("[0-9]+ MATCH(ES)? FOUND\.")
+    connection.expect(r"[0-9]+ MATCH(ES)? FOUND\.")
     result = connection.lastconnection.split("\r\n")
     output = []
     resultStart = False

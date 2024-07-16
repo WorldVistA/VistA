@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2011 The Open Source Electronic Health Record Agent
+# Copyright 2024 Sam Habiel
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,7 +23,7 @@ message(STATUS "Filema database information...")
 set(ENV{VistA-FOIA} @DOCUMENT_VISTA_M_DIR@)
 
 # Download the 'fileman_json' branch of the 'rgivistatools' repo
-set(git_repository https://github.com/jasonli2000/rgivistatools)
+set(git_repository https://github.com/WorldVistA/rgivistatools)
 set(git_tag "fileman_json")
 set(src_name "@CMAKE_BINARY_DIR@/rgivistatools")
 
@@ -45,15 +46,6 @@ execute_process(
   )
 if(error_code)
   message(FATAL_ERROR "Failed to checkout tag: '${git_tag}' (${error_code})")
-endif()
-
-execute_process(
-  COMMAND "@GIT_EXECUTABLE@" pull
-  WORKING_DIRECTORY ${src_name}
-  RESULT_VARIABLE error_code
-  )
-if(error_code)
-  message(FATAL_ERROR "Failed to update repository: '${git_tag}' (${error_code})")
 endif()
 
 set(src_dir "${src_name}/MParseAnalyze/src")

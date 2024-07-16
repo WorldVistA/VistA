@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2014 The Open Source Electronic Health Record Agent
+# Copyright 2024 Sam Habiel. Python 3.12 changes.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +17,7 @@
 from future import standard_library
 standard_library.install_aliases()
 
-import cgi
+import html
 import json
 import os
 import re
@@ -55,7 +56,7 @@ SCRIPTS_DIR = os.path.normpath(os.path.join(FILE_DIR, "../../../Scripts"))
 if SCRIPTS_DIR not in sys.path:
   sys.path.append(SCRIPTS_DIR)
 
-ZZSERVER_SUBMENU_REGEX = re.compile("19\^[9]+")
+ZZSERVER_SUBMENU_REGEX = re.compile(r"19\^[9]+")
 
 
 class OSEHRAEncoder(JSONEncoder):
@@ -616,7 +617,7 @@ class FileManDataToHtml(object):
       outputDataListTableHeader(output, tName, columnNames, searchColumnNames)
       output.write("<body id=\"dt_example\">")
       output.write("<a class=\"brand\" href=\"%s\" style=\"height:50px; padding: 0px;\"> \
-                  <img src=\"https://osehra.org/sites/default/files/vivian.png\" width=\"137\" height=\"50\"/></a>" % VIV_URL)
+                  <img src=\"/vivian/vivian.png\" width=\"137\" height=\"50\"/></a>" % VIV_URL)
       output.write("""<div id="container" style="width:80%">""")
       if pkgName == "All":
         pkgLinkName = pkgName
@@ -690,7 +691,7 @@ class FileManDataToHtml(object):
                                      hideColumnNames=[""] )
       output.write("<body id=\"dt_example\">")
       output.write("<a class=\"brand\" href=\"%s\" style=\"height:50px; padding: 0px;\"> \
-                  <img src=\"https://osehra.org/sites/default/files/vivian.png\" width=\"137\" height=\"50\"/></a>" % VIV_URL)
+                  <img src=\"/vivian/vivian.png\" width=\"137\" height=\"50\"/></a>" % VIV_URL)
       output.write("""<div id="container" style="width:80%">""")
       output.write("<h1>File %s(%s) Data List</h1>" % (tName, fileNo))
       outputDataTableHeader(output, fieldNamesList, tName)
@@ -754,7 +755,7 @@ class FileManDataToHtml(object):
         outputDataRecordTableHeader(output, tName)
         output.write("<body id=\"dt_example\">")
         output.write("<a class=\"brand\" href=\"%s\" style=\"height:50px; padding: 0px;\"> \
-                    <img src=\"https://osehra.org/sites/default/files/vivian.png\" width=\"137\" height=\"50\"/></a>" % VIV_URL)
+                    <img src=\"/vivian/vivian.png\" width=\"137\" height=\"50\"/></a>" % VIV_URL)
         output.write("""<div id="container" style="width:80%">""")
         output.write ("<h1>%s (%s) &nbsp;&nbsp;  %s (%s)</h1>\n" % (name, ien,
                                                                     fileManData.name,
@@ -829,7 +830,7 @@ class FileManDataToHtml(object):
           fieldType == FileManField.FIELD_TYPE_FREE_TEXT and "FILE COMMENT" == name):
       if isinstance(value, list):
         value = "\n".join(value)
-      value = "<pre>\n" + cgi.escape(value) + "\n</pre>\n"
+      value = "<pre>\n" + html.escape(value) + "\n</pre>\n"
 
     if isRoot:
       retval += "<tr>\n"

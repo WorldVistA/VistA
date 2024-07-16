@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2013-2019 The Open Source Electronic Health Record Alliance
+# Copyright 2024 Sam Habiel. Python3.12 changes.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -65,10 +66,10 @@ class MCompReposReadMeGenerator(object):
       outputDir = os.path.join(self._outputDir, "Packages",
                                 packageName)
       if not os.path.exists(inputReadMePath):
-        logger.warn("No README.rst for Package %s" % packageName)
+        logger.warning("No README.rst for Package %s" % packageName)
         continue
       if not os.path.exists(outputDir):
-        logger.warn("Package %s does not exist in M Repository" % packageName)
+        logger.warning("Package %s does not exist in M Repository" % packageName)
         continue
       goldSection = self.__parseGoldSectionFromReadMe__(inputReadMePath)
       if goldSection:
@@ -123,7 +124,7 @@ class MCompReposReadMeGenerator(object):
     goldSection = None
     curModule = None
     while len(curLine) > 0:
-      if re.search('^\^+$', curLine):
+      if re.search(r'^\^+$', curLine):
         curModule = prevLine.strip(' \r\n')
         logger.debug("current module is %s" % curModule)
       elif curLine.startswith('.. table::'):

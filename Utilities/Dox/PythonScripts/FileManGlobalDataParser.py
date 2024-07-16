@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2014 The Open Source Electronic Health Record Agent
+# Copyright 2024 Sam Habiel. Python 3.12 changes.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -83,11 +84,11 @@ INSTALL_RENAME_DICT = {"Kernel Public Domain" : "Kernel",
                           }
 
 
-REGEX_RTN_CODE = re.compile("( ?[DQI] |[:',])(\$\$)?(?P<tag>"
-                         "([A-Z0-9][A-Z0-9]*)?)\^(?P<rtn>[A-Z%][A-Z0-9]+)")
-ZWR_FILE_REGEX = re.compile("(?P<fileNo>^[0-9.]+)(-[1-9])?\+(?P<des>.*)\.zwr$")
-PACKAGE_CHANGE_REGEX = re.compile("\*+")
-PACKAGE_NAME_VAL_REGEX = re.compile("(?P<packageName>[A-Z./ \&\-\']+) (?P<packageVal>[.0-9]+)")
+REGEX_RTN_CODE = re.compile(r"( ?[DQI] |[:',])(\$\$)?(?P<tag>"
+                         r"([A-Z0-9][A-Z0-9]*)?)\^(?P<rtn>[A-Z%][A-Z0-9]+)")
+ZWR_FILE_REGEX = re.compile(r"(?P<fileNo>^[0-9.]+)(-[1-9])?\+(?P<des>.*)\.zwr$")
+PACKAGE_CHANGE_REGEX = re.compile(r"\*+")
+PACKAGE_NAME_VAL_REGEX = re.compile(r"(?P<packageName>[A-Z./ \&\-\']+) (?P<packageVal>[.0-9]+)")
 
 def getMumpsRoutine(mumpsCode):
   """
@@ -453,7 +454,7 @@ class FileManGlobalDataParser(object):
           elif '12' in protocolEntry.fields: # check the packge it belongs
             pass
           else:
-            logger.warn("Cannot find a package for HL7: %s" % entryName)
+            logger.warning("Cannot find a package for HL7: %s" % entryName)
           for field in ('771', '772'):
             if field not in protocolEntry.fields:
               continue
@@ -512,7 +513,7 @@ class FileManGlobalDataParser(object):
       package = INSTALL_PACKAGE_FIX[installEntryName]
     # If it cannot match a package by namespace, capture the name via Regular Expression
     if package is None:
-      pkgMatch = re.match("[A-Z./ \&\-\']+", installEntryName)
+      pkgMatch = re.match(r"[A-Z./ \&\-\']+", installEntryName)
       if pkgMatch:
         # if a match is found, switch to title case and remove extra spaces
         targetName = pkgMatch.group(0).title().strip()
@@ -715,7 +716,7 @@ class FileManGlobalDataParser(object):
           fileNo = self.getFileNoByGlobalLocation(vpInfo[1])
           ien = vpInfo[0]
           if not fileNo:
-            logger.warn("Could not find File for %s" % value)
+            logger.warning("Could not find File for %s" % value)
             fieldDetail = 'Global Root: %s, IEN: %s' % (vpInfo[1], ien)
       if fileNo and ien:
         fieldDetail = '^'.join((fileNo, ien))
@@ -736,7 +737,7 @@ class FileManGlobalDataParser(object):
         if outDt:
           fieldDetail = outDt
         else:
-          logger.warn("Could not parse Date/Time: %s" % value)
+          logger.warning("Could not parse Date/Time: %s" % value)
     elif fieldAttr.getName().upper().startswith("TIMESTAMP"): # timestamp field
       if value.find(',') >=0:
         fieldDetail = horologToDateTime(value)
