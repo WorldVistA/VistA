@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #---------------------------------------------------------------------------
 # Copyright 2012-2019 The Open Source Electronic Health Record Alliance
+# Copyright 2024 Sam Habiel: Python 3.12 support
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -27,7 +28,7 @@ from LoggerManager import getTempLogFile
 
 class VistARoutineExport(object):
   """ regular expression constants """
-  REGEX_ROUTINES = "Routine(\(s\))?: "
+  REGEX_ROUTINES = r"Routine(\(s\))?: "
   def __init__(self):
     pass
   def __setupOutputInfoCache__(self, connection, outputFileName):
@@ -37,9 +38,9 @@ class VistARoutineExport(object):
     nativeName = os.path.normpath(outputFileName)
     connection.send("%s\r" % nativeName)
     """ this could be system dependent format """
-    selectionList = ["Parameters\? \"WNS\" =>",
+    selectionList = [r"Parameters\? \"WNS\" =>",
                      "Yes =>", # for prompt "file exists, do you want to overwrite it"
-                     "Printer Format\? No =>"]
+                     r"Printer Format\? No =>"]
     while True:
       index = connection.expect(selectionList)
       connection.send("\r")

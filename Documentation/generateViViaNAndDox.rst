@@ -25,7 +25,7 @@ Automated Generation
 ********************
 
 
-**Cache Systems Only**
+**IRIS Systems Only**
 
 OSEHRA has generated a  set of scripts to be run by Docker to automatically
 generate the ViViaN and DOX pages.  To see the documentation and setup required
@@ -39,9 +39,9 @@ Install and Setup Required Components
 Machine requirements
 ********************
 
-* OS: Windows with Cache or Linux with GT.M or Cache
+* OS: Windows with IRIS or Linux with GT.M or IRIS
 * CPU: At least Pentium 1.5GHZ
-* Hard drive: at least 35GB free disk space
+* Hard drive: at least 100GB free disk space
   (Note: The VistA-M repository is ~20GB and the generated files are ~8GB)
 * Memory: at least 2GB
 
@@ -52,9 +52,9 @@ Required Tools
 +-----------------------------+---------------------------------------------------------------+
 |    Tools                    |                        Web Link                               |
 +-----------------------------+---------------------------------------------------------------+
-|   CMake (2.8+)              | www.cmake.org                                                 |
+|   CMake (3.14)              | www.cmake.org                                                 |
 +-----------------------------+---------------------------------------------------------------+
-| Python 2.7 or 3 (preferred) | www.python.org                                                |
+| Python 3.12                 | www.python.org                                                |
 +-----------------------------+---------------------------------------------------------------+
 |       Git                   | www.git-scm.com                                               |
 +-----------------------------+---------------------------------------------------------------+
@@ -83,18 +83,16 @@ Download the latest FOIA released ICR_.
 ViViAN Repository
 *****************
 
-Use Git to clone the Product-Management or ViViAN repository.
+Use Git to clone the ViViAN repository.
 
 .. parsed-literal::
 
-  $ git clone https://github.com/OSEHRA-Sandbox/Product-Management
-  Cloning into 'Product-Management'...
+  $ git clone https://github.com/WorldVistA/ViViaN.git vivian
+  Cloning into 'vivian'...
   .
   .
   .
 
-Create a symbolic link from ``Product-Management/Visual`` to the ``vivian``
-directory, e.g. ``C:\wamp64\www\vivian``.
 
 VistA Repository
 ****************
@@ -103,7 +101,7 @@ Clone of the OSEHRA VistA repository.
 
 .. parsed-literal::
 
-  $ git clone https://github.com/OSEHRA/VistA
+  $ git clone https://github.com/WorldVistA/VistA
   Cloning into 'VistA'...
   .
   .
@@ -120,15 +118,15 @@ ObtainingVistAMCode_ to obtain the source code. Next, follow the instructions
 below based upon which type of MUMPS database will be utilized for the VistA
 installation:
 
-Caché
+IRIS
 ~~~~~
 If necessary, OSEHRA has compiled a set of instructions on how to install the
-Caché instance: InstallCache_.
+IRIS instance: InstallCache_.
 
-To import the MUMPS code from the OSEHRA VistA-M Repository into a Caché
+To import the MUMPS code from the OSEHRA VistA-M Repository into a IRIS
 instance, see `Automated VistA Configuration`_.
 
-Instructions for additional configuration of the Caché environment can be
+Instructions for additional configuration of the IRIS environment can be
 found here: ConfigureCache_.
 
 GT.M
@@ -164,7 +162,7 @@ at the top of the window so that the source code points to the VistA
 repository. The binaries path can be set to any directory, preferably one
 outside of the VistA repository tree.
 
-.. figure:: http://code.osehra.org/content/named/SHA1/f4a9de-launchCmakeGUI.png
+.. figure:: http://code.worldvista.org/content/named/SHA1/f4a9de-launchCmakeGUI.png
    :align: center
    :alt:  Initial CMake-GUI page
 
@@ -174,21 +172,21 @@ default option (Borland Makefile on a Windows environment and Unix Makefiles on
 a Linux system) is suffcient. Click \"Finish\" after the selection is made to
 continue the configuration process.
 
-.. figure:: http://code.osehra.org/content/named/SHA1/D76CF0-selectGenerator.png
+.. figure:: http://code.worldvista.org/content/named/SHA1/D76CF0-selectGenerator.png
    :align: center
    :alt:  Generator selection
 
 Following generator selection, the interface will produce a highlighted display
 with three options:
 
-.. figure:: http://code.osehra.org/content/named/SHA1/1086c5-initialCMakeGUI.png
+.. figure:: http://code.worldvista.org/content/named/SHA1/1086c5-initialCMakeGUI.png
    :align: center
    :alt:  Result of first CMake configuration
 
 Select `DOCUMENT_VISTA` and click the \"Configure\" button again. The CMake-GUI
 will be updated new entries and an error message:
 
-.. figure:: http://code.osehra.org/content/named/SHA1/835c6c-configureCMakeGUI.png
+.. figure:: http://code.worldvista.org/content/named/SHA1/835c6c-configureCMakeGUI.png
    :align: center
    :alt:  Result of CMake configuration after DOCUMENT_VISTA is selected
 
@@ -204,7 +202,7 @@ package and are available to download from a link on the DOX Package pages.
 This option increases the generation time significantly, and, therefore is not
 selected by default.
 
-The following variables are required for both Cache and GT.M environments.
+The following variables are required for both IRIS and GT.M environments.
 
 +---------------------------+---------------------------------------------------------------+
 | Variable Name             |       Description                                             |
@@ -226,13 +224,13 @@ The following variables are required for both Cache and GT.M environments.
 PYTHON_EXECUTABLE during configuration, to see or update the default values,
 click on the \"Advanced\" toggle in the CMake-GUI.
 
-These variables are Cache- or GT.M- specific and will pre-populated with
+These variables are IRIS- or GT.M- specific and will pre-populated with
 default values.
 
 +------------------------+------------------------------------+------------------------------------+
-|   Variable Name        |     Value for Testing in Caché     |     Value for Testing in GT.M      |
+|   Variable Name        |     Value for Testing in IRIS     |     Value for Testing in GT.M      |
 +------------------------+------------------------------------+------------------------------------+
-| CCONTROL_EXECUTABLE    |      Path to CControl Executable   |                    N/A             |
+| CCONTROL_EXECUTABLE    |      Path to ``iris`` Executable   |                    N/A             |
 | (Advanced)             |                                    |                                    |
 +------------------------+------------------------------------+------------------------------------+
 | CTERM_EXECUTABLE       |      Path to CTerm Executable      |                    N/A             |
@@ -240,12 +238,12 @@ default values.
 +------------------------+------------------------------------+------------------------------------+
 | VISTA_CACHE_NAMESPACE  |      Namespace of VistA routines   |                    N/A             |
 +------------------------+------------------------------------+------------------------------------+
-| VISTA_CACHE_INSTANCE   |      Caché Instance Name           |                    N/A             |
+| VISTA_CACHE_INSTANCE   |      IRIS Instance Name            |                    N/A             |
 +------------------------+------------------------------------+------------------------------------+
-| VISTA_CACHE_USERNAME   |      Login Username for Caché      |                    N/A             |
+| VISTA_CACHE_USERNAME   |      Login Username for IRIS       |                    N/A             |
 |                        |      (if necessary)                |                                    |
 +------------------------+------------------------------------+------------------------------------+
-| VISTA_CACHE_PASSWORD   | Login Password for Caché           |                    N/A             |
+| VISTA_CACHE_PASSWORD   | Login Password for IRIS            |                    N/A             |
 |                        | (if necessary)                     |                                    |
 +------------------------+------------------------------------+------------------------------------+
 | GTM_DIST               |               N/A                  |     Path to GTM distribution Dir   |
@@ -256,7 +254,7 @@ default values.
 
 Once the options are set, press \"Configure\" again and then \"Generate\".
 
-.. figure:: http://code.osehra.org/content/named/SHA1/6ce087-generateCMakeGUI.png
+.. figure:: http://code.worldvista.org/content/named/SHA1/6ce087-generateCMakeGUI.png
    :align: center
    :alt:  Result of CMake generate
 
@@ -443,7 +441,7 @@ ViViaN Setup Script
 *******************
 
 Finally, execute the setup script from the ViViaN scripts
-(``Product-Management/Visual/scripts``) directory: ``python setup.py`` to
+(``vivian/scripts``) directory: ``python setup.py`` to
 generate other JSON and csv files.
 
 The setup script has two optional arguments, ``files_dir`` and ``dox_dir``.
@@ -482,6 +480,6 @@ file from your favorite web browser.
 .. _InstallCache: InstallCache.rst
 .. _ConfigureCache: ConfigureCache.rst
 .. _`Automated VistA Configuration`: AutomatedVistAConfiguration.rst
-.. _`M Routine Analyzer`: https://github.com/jasonli2000/rgivistatools/tree/fileman_json
+.. _`M Routine Analyzer`: https://github.com/WorldVistA/rgivistatools/tree/fileman_json
 .. _`google_code_prettify`: https://github.com/google/code-prettify
 .. _xlrd: https://pypi.python.org/pypi/xlrd

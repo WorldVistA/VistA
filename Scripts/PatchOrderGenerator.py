@@ -9,6 +9,7 @@
 #
 #---------------------------------------------------------------------------
 # Copyright 2012-2019 The Open Source Electronic Health Record Alliance
+# Copyright 2024 Sam Habiel. Python3.12 changes.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -254,17 +255,17 @@ class PatchOrderGenerator(object):
           logger.error("Duplicated KIDS build file %s" % kidsFile)
       for installName in installNameList:
         if installName in self._kidsInstallNameDict:
-          logger.warn("%s is already in the dict %s" % (installName, kidsFile))
+          logger.warning("%s is already in the dict %s" % (installName, kidsFile))
         logger.debug("Added installName %s, file %s" % (installName, kidsFile))
         self._kidsInstallNameDict[installName] = os.path.normpath(kidsFile)
         """ handle KIDS sha1 file Path """
         if sha1Path:
           if installName in self._kidsInstallNameSha1Dict:
-            logger.warn("%s is already in the dict %s" % (installName, sha1Path))
+            logger.warning("%s is already in the dict %s" % (installName, sha1Path))
           self._kidsInstallNameSha1Dict[installName] = sha1Path
         """ update kids dependency """
         if installName in self._kidsDepBuildDict:
-          logger.warn("%s already has the dep map %s" %
+          logger.warning("%s already has the dep map %s" %
                       (installName, self._kidsDepBuildDict[installName]))
         if kidsBuilds:
           for kidsBuild in kidsBuilds:
@@ -291,11 +292,11 @@ class PatchOrderGenerator(object):
       """ only add to list for info that is related to a Patch"""
       installName = patchInfo.installName
       if installName not in self._kidsInstallNameDict:
-        logger.warn("no KIDS file related to %s (%s)" % (installName, kidsInfoFile))
+        logger.warning("no KIDS file related to %s (%s)" % (installName, kidsInfoFile))
         if installName in self._missKidsBuildDict:
-          logger.warn("duplicated kids install name")
+          logger.warning("duplicated kids install name")
           if kidsInfoFile != self._missKidsBuildDict[installName].kidsInfoPath:
-            logger.warn("duplicated kids info file name %s" % kidsInfoFile)
+            logger.warning("duplicated kids info file name %s" % kidsInfoFile)
           continue
         self._missKidsBuildDict[installName] = patchInfo
         continue
@@ -307,7 +308,7 @@ class PatchOrderGenerator(object):
         patchInfo.kidsSha1Path = sha1Path
         patchInfo.kidsSha1 = readSha1SumFromSha1File(sha1Path)
       if installName in self._patchInfoDict:
-        logger.warn("duplicated installName %s, %s, %s" %
+        logger.warning("duplicated installName %s, %s, %s" %
                      (installName, self._patchInfoDict[installName],
                      kidsInfoFile))
       """ merge the dependency if needed, also
@@ -548,7 +549,7 @@ class PatchOrderGenerator(object):
       if installName not in self._patchInfoDict:
         if (installName not in self._informationalKidsSet and
             installName not in self._kidsInstallNameDict):
-          logger.warn("No KIDS file found for %s" % str(patchOrder))
+          logger.warning("No KIDS file found for %s" % str(patchOrder))
         continue
       patchInfo = self._patchInfoDict[installName]
       patchInfo.verifiedDate = patchOrder[2]

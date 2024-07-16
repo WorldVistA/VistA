@@ -4,7 +4,7 @@
 #
 #---------------------------------------------------------------------------
 # Copyright 2011-2019 The Open Source Electronic Health Record Alliance
-# Copyright 2024 Sam Habiel
+# Copyright 2024 Sam Habiel: Backup, Python3.12 changes
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -84,8 +84,8 @@ class DebugSectionParser(ISectionParser):
   @inherits ISectionParser
 """
 class RoutineSectionParser(ISectionParser):
-  ROUTINE_START = re.compile("^\"RTN\"\)")
-  NEW_ROUTINE_START = re.compile("^\"RTN\",\"(?P<Name>[^,\"]+)\"\)$")
+  ROUTINE_START = re.compile(r"^\"RTN\"\)")
+  NEW_ROUTINE_START = re.compile(r"^\"RTN\",\"(?P<Name>[^,\"]+)\"\)$")
   """
   """
   def __init__(self, outputDir, **kargs):
@@ -251,12 +251,12 @@ class BuildSectionParser(ISectionParser):
   def __initHandler__(self):
     """ based on BUILD file schema """
     self._handlers = (
-      (re.compile(',"INI"\)$'), self.__handlePreInstallRoutine__),
-      (re.compile(',"INIT"\)$'), self.__handlePostInstallRoutine__),
-      (re.compile(',"PRE"\)$'), self.__handleEnvCheckRoutine__),
-      (re.compile(',6\)$'), self.__handleSeqNo__),
-      (re.compile(',"INID"\)$'), self.__handleRoutineCleanup__),
-      (re.compile(',"REQB",[0-9]+,0\)$'), self.__handleReqiredBuild__),
+      (re.compile(r',"INI"\)$'), self.__handlePreInstallRoutine__),
+      (re.compile(r',"INIT"\)$'), self.__handlePostInstallRoutine__),
+      (re.compile(r',"PRE"\)$'), self.__handleEnvCheckRoutine__),
+      (re.compile(r',6\)$'), self.__handleSeqNo__),
+      (re.compile(r',"INID"\)$'), self.__handleRoutineCleanup__),
+      (re.compile(r',"REQB",[0-9]+,0\)$'), self.__handleReqiredBuild__),
     )
   def __handlePreInstallRoutine__(self, lines, kidsBuild):
     line2 = lines[1]
@@ -301,7 +301,7 @@ class BuildSectionParser(ISectionParser):
     if len(fields) > 0:
       kidsBuild.addDependencyBuild(fields)
     else:
-      logger.warn("no require build information for [%s]" % lines)
+      logger.warning("no require build information for [%s]" % lines)
 
 """
   object to store information related to a KIDS build
@@ -441,39 +441,39 @@ class KIDSBuildParser(ISectionParser):
   """
     regular expression to determine the start of the section
   """
-  BUILD_START = re.compile("^\"BLD\",[0-9]+,0\)$")
-  VER_START = re.compile("^\"VER\"\)")
+  BUILD_START = re.compile(r"^\"BLD\",[0-9]+,0\)$")
+  VER_START = re.compile(r"^\"VER\"\)")
   """
     regular expression to determine which section that current line belongs to
   """
-  KIDS_LINE = re.compile("^\*\*KIDS\*\*")
-  INSTALL_NAME_LINE = re.compile("^\*\*INSTALL NAME\*\*$")
-  DATA_LINE = re.compile("^\"DATA\"")
-  DATA_DICTIONARY_LINE = re.compile("^\"\^DD\",")
-  SEC_LINE = re.compile("^\"SEC\",")
-  UP_LINE = re.compile("^\"UP\",")
-  QUES_LINE = re.compile("^\"QUES\",\".*\",.*\)$")
-  TEMP_LINE = re.compile("^\"TEMP\",")
-  MBREQ_LINE = re.compile("\"MBREQ\"")
-  ORD_LINE = re.compile("^\"ORD\",") # option, RPC, templates etc
-  ROUTINE_LINE = re.compile("^\"RTN\"")
-  BUILD_LINE = re.compile("^\"BLD\",[0-9]+")
-  VERSION_LINE = re.compile("^\"VER\"\)$")
-  PRE_INSTALL_ROUTINE_LINE = re.compile("^\"INI\"\)$")
-  POST_INSTALL_ROUTINE_LINE = re.compile("^\"INIT\"\)$")
-  KRN_LINE = re.compile("^\"KRN\",")
-  PKG_LINE = re.compile("^\"PKG\",")
-  END_LINE = re.compile("^\*\*END\*\*$")
-  DIC_LINE = re.compile("^\"\^DIC\"")
-  PRE_LINE = re.compile("^\"PRE\"\)$")
-  FIA_LINE = re.compile("^\"FIA\"")
-  IX_LINE = re.compile("^\"IX\"")
-  KEY_LINE = re.compile("^\"KEY\"")
-  KEYPTR_LINE = re.compile("^\"KEYPTR\"")
-  PGL_LINE = re.compile("^\"PGL\"")
-  FRV1_LINE = re.compile("^\"FRV1\"")
-  FRV1K_LINE = re.compile("^\"FRV1K\"")
-  REST_LINE = re.compile("^\"REST\"")
+  KIDS_LINE = re.compile(r"^\*\*KIDS\*\*")
+  INSTALL_NAME_LINE = re.compile(r"^\*\*INSTALL NAME\*\*$")
+  DATA_LINE = re.compile(r"^\"DATA\"")
+  DATA_DICTIONARY_LINE = re.compile(r"^\"\^DD\",")
+  SEC_LINE = re.compile(r"^\"SEC\",")
+  UP_LINE = re.compile(r"^\"UP\",")
+  QUES_LINE = re.compile(r"^\"QUES\",\".*\",.*\)$")
+  TEMP_LINE = re.compile(r"^\"TEMP\",")
+  MBREQ_LINE = re.compile(r"\"MBREQ\"")
+  ORD_LINE = re.compile(r"^\"ORD\",") # option, RPC, templates etc
+  ROUTINE_LINE = re.compile(r"^\"RTN\"")
+  BUILD_LINE = re.compile(r"^\"BLD\",[0-9]+")
+  VERSION_LINE = re.compile(r"^\"VER\"\)$")
+  PRE_INSTALL_ROUTINE_LINE = re.compile(r"^\"INI\"\)$")
+  POST_INSTALL_ROUTINE_LINE = re.compile(r"^\"INIT\"\)$")
+  KRN_LINE = re.compile(r"^\"KRN\",")
+  PKG_LINE = re.compile(r"^\"PKG\",")
+  END_LINE = re.compile(r"^\*\*END\*\*$")
+  DIC_LINE = re.compile(r"^\"\^DIC\"")
+  PRE_LINE = re.compile(r"^\"PRE\"\)$")
+  FIA_LINE = re.compile(r"^\"FIA\"")
+  IX_LINE = re.compile("r^\"IX\"")
+  KEY_LINE = re.compile(r"^\"KEY\"")
+  KEYPTR_LINE = re.compile(r"^\"KEYPTR\"")
+  PGL_LINE = re.compile(r"^\"PGL\"")
+  FRV1_LINE = re.compile(r"^\"FRV1\"")
+  FRV1K_LINE = re.compile(r"^\"FRV1K\"")
+  REST_LINE = re.compile(r"^\"REST\"")
 
   def __init__(self, outDir):
     self._outDir = outDir
@@ -535,7 +535,7 @@ class KIDSBuildParser(ISectionParser):
         else:
           section, parser = self.__isSectionLine__(curLine)
           if section == None: # could not find a valid section
-            logger.warn("Cannot parse %s" % lines[0])
+            logger.warning("Cannot parse %s" % lines[0])
             self.__resetCurrentSection__(section, parser, lines)
           else: # find a section
             if section != self._curSection:
@@ -705,7 +705,7 @@ class KIDSBuildParser(ISectionParser):
     self._kidsBuilds.append(self._curKidsBuild)
   def __onKIDSSectionStart__(self, section, lines, **kargs):
     line = lines[0].rstrip(" \r\n")
-    ret = re.search('^\*\*KIDS\*\*:(?P<name>.*)\^$', line)
+    ret = re.search(r'^\*\*KIDS\*\*:(?P<name>.*)\^$', line)
     if ret:
       self._installNameList = ret.group('name').rstrip(' ').split('^')
     else:

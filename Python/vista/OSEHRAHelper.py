@@ -1,6 +1,7 @@
 #---------------------------------------------------------------------------
 # Copyright 2012 The Open Source Electronic Health Record Agent
 # Copyright 2017 Sam Habiel. writectrl methods.
+# Copyright 2024 Sam Habiel. Python3.12 changes.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -130,14 +131,14 @@ class ConnectMUMPS(object):
   def getenv(self, volume):
     self.write('D GETENV^%ZOSV W Y')
     if sys.platform == 'win32':
-      match = self.wait_re(volume + ':.+\s', None)
+      match = self.wait_re(volume + r':.+\s', None)
       test = match[1].span()
       VistAboxvol = ''
       for i in range(test[0], test[1]):
         VistAboxvol = VistAboxvol + decode(match[2])[i]
       self.boxvol = VistAboxvol.strip()
     else:
-      self.wait_re(volume + ':.+\s', None)
+      self.wait_re(volume + r':.+\s', None)
       self.boxvol = self.connection.after.strip()
 
   def IEN(self, file, objectname):
@@ -305,7 +306,7 @@ class ConnectWinCache(ConnectMUMPS):
 class ConnectLinuxCache(ConnectMUMPS):
   def __init__(self, logfile, instance, namespace, location='127.0.0.1'):
     super(ConnectMUMPS, self).__init__()
-    self.connection = pexpect.spawn('ccontrol session ' + instance + ' -U ' + namespace, timeout=None, encoding='utf-8', codec_errors='ignore')
+    self.connection = pexpect.spawn('irissession ' + instance + ' -U ' + namespace, timeout=None, encoding='utf-8', codec_errors='ignore')
     if len(namespace) == 0:
       namespace = 'VISTA'
     self.namespace = namespace
@@ -686,10 +687,10 @@ class ConnectRemoteSSH(ConnectMUMPS):
 
   """
   Added to convert regex's into regular string matching. It replaces special
-  characters such as '?' into '\?'
+  characters such as '?' into '\\?'
   """
   def escapeSpecialChars(self, string):
-    re_chars = '?*.+-|^$\()[]{}'
+    re_chars = r'?*.+-|^$\()[]{}'
     escaped_str = ''
     for c in string:
         if c in re_chars:
@@ -697,7 +698,7 @@ class ConnectRemoteSSH(ConnectMUMPS):
         escaped_str += c
     return escaped_str
 
-def ConnectToMUMPS(logfile, instance='CACHE', namespace='VISTA',
+def ConnectToMUMPS(logfile, instance='IRIS', namespace='VISTA',
                    location='127.0.0.1', remote_conn_details=None):
     # self.namespace = namespace
     # self.location = location

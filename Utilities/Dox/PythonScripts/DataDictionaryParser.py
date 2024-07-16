@@ -5,6 +5,7 @@
 #---------------------------------------------------------------------------
 # Copyright 2012 The Open Source Electronic Health Record Agent
 # Copyright 2021 Sam Habiel
+# Copyright 2024 Sam Habiel
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -197,7 +198,7 @@ class FileManFieldSectionParser(IDDSectionParser):
         else:
             # handle three cases, 1. no location info 2. no type info 3. Both
             if restOfLine.find(";") != -1: # missing type info
-                logger.warn("Missing Type information [%s]" % line)
+                logger.warning("Missing Type information [%s]" % line)
                 result = NAME_LOC_REGEX.search(restOfLine)
                 if result:
                     fName = result.group('Name').strip()
@@ -211,7 +212,7 @@ class FileManFieldSectionParser(IDDSectionParser):
                     fName = result.group('Name').strip()
                     fType = result.group('Type').strip()
                 else:
-                    logger.warn("Guessing Name: %s at line [%s]" % (restOfLine.strip(), line))
+                    logger.warning("Guessing Name: %s at line [%s]" % (restOfLine.strip(), line))
         stripedType = ""
         if fType:
             stripedType = self.__stripFieldAttributes__(fType)

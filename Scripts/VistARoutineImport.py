@@ -1,6 +1,6 @@
-
 #---------------------------------------------------------------------------
 # Copyright 2012-2019 The Open Source Electronic Health Record Alliance
+# Copyright 2024 Sam Habiel: Python 3.12 support
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,10 +29,10 @@ class VistARoutineImport(object):
   def __importRoutineCache__(self, connection, routineImportFile):
     connection.expect("Device: ")
     connection.send("%s\r" % routineImportFile)
-    connection.expect("Parameters\? ")
+    connection.expect(r"Parameters\? ")
     connection.send("\r")
     while True:
-      index = connection.expect(["Override and use this File with %RI\? No =>",
+      index = connection.expect([r"Override and use this File with %RI\? No =>",
                                  "Please enter a number from the above list:",
                                  "Routine Input Option:",
                                 ])
@@ -43,16 +43,16 @@ class VistARoutineImport(object):
       else:
         connection.send("All\r")
         break
-    connection.expect("shall it replace the one on file\? No =>")
+    connection.expect(r"shall it replace the one on file\? No =>")
     connection.send("YES\r")
-    connection.expect("Recompile\? Yes =>")
+    connection.expect(r"Recompile\? Yes =>")
     connection.send("\r")
-    connection.expect("Display Syntax Errors\? Yes =>")
+    connection.expect(r"Display Syntax Errors\? Yes =>")
     connection.send("\r")
 
   def __importRoutineGTM__(self, connection, routineImportFile,
                            routineOutputDir):
-    connection.expect("Formfeed delimited <No>\? ")
+    connection.expect(r"Formfeed delimited <No>\? ")
     connection.send("No\r")
     connection.expect("Input device: <terminal>: ")
     connection.send("%s\r" % routineImportFile)

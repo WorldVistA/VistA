@@ -2,6 +2,7 @@ ZGO ; [Public] Save globals to ZWR files organized by FileMan ; 12/3/18 9:21pm
  ;---------------------------------------------------------------------------
  ; Copyright 2018 The Open Source Electronic Health Record Agent
  ; Copyright 2020 Sam Habiel
+ ; Copyright 2024 Sam Habiel. IRIS support + rewrite $SY checks for GT.M/YDB
  ;
  ; Licensed under the Apache License, Version 2.0 (the "License");
  ; you may not use this file except in compliance with the License.
@@ -73,11 +74,11 @@ CONFIG ; Obtain configuration for Open and obtaining globals
  ZK ^%ZIS,^%ZISL,^%ZTER,^%ZTSCH,^%ZUA,^%ZUT
  ZK ^DIC,^ECC,^ECT,^DIC,^LAC,^LEX,^LEXC,^PRPF,^PRPFT,^PSNDF,^PSNDF(0),^USC,^XIP
  ;
- I $ZV["Cache" D  Q
+ I $ZV["Cache"!($ZV["IRIS") D  Q
  . N % S %=$System.Process.ScientificNotation(0) ; Disable lower e as scientific notation.
  . S CONFIG("OPENIORW")="O IO:(""WNS""):1"
  . S CONFIG("OPENIOR")="O IO:(""RS""):0"
- . S CONFIG("GLOBALS")="D Fetch^%SYS.GD(""*"",1,0) S G="""" F  S G=$O(^CacheTempJ($J,G)) Q:G=""""  I G'?.E1L.E S GLOBALS(G)="""""
+ . S CONFIG("GLOBALS")="D Fetch^%SYS.GD(""*"",1,0) S G="""" F  S G=$O(^IRIS.TempJ($J,G)) Q:G=""""  I G'?.E1L.E S GLOBALS(G)="""""
  . S CONFIG("LISTF")="S Y=$ZSEARCH(X)"
  I $ZV["GT.M" D  Q
  . S CONFIG("OPENIORW")="D GTMIOW(IO)"
@@ -159,8 +160,17 @@ GLOBALS ; [Private] Collect all Globals except the temp ones
  Q
 STARTJOBS  ; [Private] Start child workers
  N CORES
- I $L($SY,":")=2 X "S CORES=$SYSTEM.Util.NumberOfCPUs()"
- I +$SY=47 D
+ I $L($SY,":")=2 D
+ . W "On IRIS",!
+ . N LIC
+ . S CORES=$system.Util.NumberOfCPUs()
+ . W "CPU Cores: ",CORES,!
+ . S LIC=$system.License.LUAvailable()
+ . W "Available licenses: ",LIC,!
+ . I LIC<CORES S CORES=LIC
+ . I LIC=0 S CORES=1
+ . W "Using Cores: ",CORES,!
+ I $P($SY,",")=47 D
  . I $ZV["Linux" o "p":(shell="/bin/sh":comm="nproc")::"pipe" u "p" r CORES c "p"
  . I $ZV["Darwin" o "p":(shell="/bin/sh":comm="sysctl -n hw.ncpu")::"pipe" u "p" r CORES c "p"
  I 'CORES S CORES=8
@@ -168,7 +178,7 @@ STARTJOBS  ; [Private] Start child workers
  N CACHENULL S CACHENULL="/dev/null"
  I $L($SY,":")=2,$ZV["Windows" S CACHENULL="//./nul"
  N OUTCACHE S OUTCACHE=$$DEFDIR^%ZISH_"worklist.log"
- I +$SY=47 S JOBPAR="RUNJOBS:(IN=""/dev/null"":OUT="""_$P_""":ERR="""_$P_""")"
+ I $P($SY,",")=47 S JOBPAR="RUNJOBS:(IN=""/dev/null"":OUT="""_$P_""":ERR="""_$P_""")"
  I $L($SY,":")=2 S JOBPAR="RUNJOBS:(::CACHENULL:OUTCACHE)"
  N I F I=1:1:CORES J @JOBPAR W !,"Started Job PID "_$S($L($SY,":")=2:$ZCHILD,1:$ZJOB)
  I $L($SY,":")=2 W !,"Tail "_OUTCACHE_" to see the status of a Cache Export"
@@ -219,7 +229,7 @@ VISIT(G) ; [Private] Visit export Files; and if there is a non-Fileman node, exp
  .. ;
  .. E  D
  ... n fDev s fDev=$$OPENFILE(fileRef)
- ... I +$SY=47 U fDev ZWRITE @fileGlobal@(*) ; GT.M speed up!
+ ... I $P($SY,",")=47 U fDev ZWRITE @fileGlobal@(*) ; GT.M speed up!
  ... I $L($SY,":")=2 d  ; On Cache, ZWRITE is really slow
  .... d:$d(@fileGlobal)#2 WRITE(fDev,fileGlobal) ; head node
  .... d DUMP(fDev,fileGlobal)
@@ -280,7 +290,7 @@ VISIT(G) ; [Private] Visit export Files; and if there is a non-Fileman node, exp
  ... s fullSubs=fullSubs_sub_","
  .. s $e(fullSubs,$l(fullSubs))=""
  .. n gNode s gNode=G_"("_fullSubs_")"
- .. I +$SY=47 U gDev ZWRITE @gNode@(*) ; GT.M speed up!
+ .. I $P($SY,",")=47 U gDev ZWRITE @gNode@(*) ; GT.M speed up!
  .. I $L($SY,":")=2 D WRITE(gDev,gNode)
  . D CLOSE(gDev)
  quit

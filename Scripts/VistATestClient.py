@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2012-2019 The Open Source Electronic Health Record Alliance
+# Copyright 2024 Sam Habiel. Python3.12 changes.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -175,7 +176,7 @@ class VistATestClientCacheWindows(VistATestClientCache, ConnectWinCache):
 
 """ Implementation of Cache on Linux system """
 class VistATestClientCacheLinux(VistATestClientCache, ConnectLinuxCache):
-  DEFAULT_CACHE_CMD = "ccontrol session"
+  DEFAULT_CACHE_CMD = "irissession"
   def __init__(self, namespace):
     assert namespace, "Must provide a namespace"
     prompt = namespace + CACHE_PROMPT_END
@@ -196,7 +197,7 @@ class VistATestClientCacheLinux(VistATestClientCache, ConnectLinuxCache):
 
 """ constants for default value """
 DEFAULT_NAMESPACE = "VISTA"
-DEFAULT_INSTANCE = "CACHE"
+DEFAULT_INSTANCE = "IRIS"
 
 """ generate argument parse for VistATestClientFactory """
 def createTestClientArgParser():

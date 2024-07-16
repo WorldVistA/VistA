@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2011 The Open Source Electronic Health Record Agent
+# Copyright 2024 Sam Habiel. Increase timeout for CALLGRAPH job.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -115,7 +116,7 @@ if (GENERATE_DOX OR GENERATE_VIVIAN)
 
       # Creates the command that will be called for the Test
       add_test(CALLERGRAPH_${package_file_name} ${CMAKE_COMMAND} -P ${SCRIPT_OUTPUT_DIR}/${package_file_name}.cmake)
-      set_tests_properties(CALLERGRAPH_${package_file_name} PROPERTIES TIMEOUT 5000)
+      set_tests_properties(CALLERGRAPH_${package_file_name} PROPERTIES TIMEOUT 7200)
     endif()
   endforeach()
 endif()

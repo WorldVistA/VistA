@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2013-2019 The Open Source Electronic Health Record Alliance
+# Copyright 2024 Sam Habiel. Python3.12 changes.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -213,7 +214,7 @@ def backupCacheDataByGitHash(instanceName, origDataPath, backupDir,
     logger.info("Creating tar file for %s" % origDataPath)
     createBZIP2Tarball(origDataPath, destFile)
   else:
-    logger.warn("%s already exists" % destFile)
+    logger.warning("%s already exists" % destFile)
   return True
 
 """

@@ -1,6 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2012-2019 The Open Source Electronic Health Record Alliance
-# Copyright 2024 Sam Habiel
+# Copyright 2024 Sam Habiel: Backup, Python3.12 changes
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -60,16 +60,16 @@ class DefaultKIDSBuildInstaller(object):
     it is a general question
   """
   KIDS_MENU_OPTION_ACTION_LIST = [
-      ("Want to continue installing this build\?","YES", False),
+      (r"Want to continue installing this build\?","YES", False),
       ("Enter the Coordinator for Mail Group", "POSTMASTER", False),
-      ("Want KIDS to Rebuild Menu Trees Upon Completion of Install\?",
+      (r"Want KIDS to Rebuild Menu Trees Upon Completion of Install\?",
        "", False),
       ("Want KIDS to INHIBIT LOGONs during the install?",
        "NO", False),
-      ("Want to DISABLE Scheduled Options, Menu Options, and Protocols\?",
+      (r"Want to DISABLE Scheduled Options, Menu Options, and Protocols\?",
        "NO", False),
-      ("Delay Install \(Minutes\):  \(0\-60\):", "0", False),
-      ("do you want to include disabled components\?", "NO", False),
+      (r"Delay Install \(Minutes\):  \(0\-60\):", "0", False),
+      (r"do you want to include disabled components\?", "NO", False),
       ("DEVICE:", '0;P-OTHER;80;999999999', True)
   ]
 
@@ -85,10 +85,10 @@ class DefaultKIDSBuildInstaller(object):
   """
   KIDS_LOAD_QUESTION_ACTION_LIST = [
       ("OK to continue with Load","YES", False),
-      ("Want to Continue with Load\?","YES", False),
+      (r"Want to Continue with Load\?","YES", False),
       ("Select Installation ","?", True),
-      ("Want to continue installing this build\?","YES", False),
-      ("Want to RUN the Environment Check Routine\? YES//","YES",False)
+      (r"Want to continue installing this build\?","YES", False),
+      (r"Want to RUN the Environment Check Routine\? YES//","YES",False)
   ]
 
   """ option action list for Exit KIDS menu, similar struct as above """
@@ -97,7 +97,7 @@ class DefaultKIDSBuildInstaller(object):
       ("Select Kernel Installation & Distribution System ", "", False),
       ("Select Programmer Options ", "", False),
       ("Select Systems Manager Menu ", "", False),
-      ("Do you really want to halt\?", "YES", True)
+      (r"Do you really want to halt\?", "YES", True)
   ]
 
   KIDS_FILE_PATH_MAX_LEN = 75 # this might need to be fixed in VistA XPD
@@ -240,7 +240,7 @@ class DefaultKIDSBuildInstaller(object):
   """ restart the previous installation
   """
   def restartInstallation(self, vistATestClient):
-    logger.warn("restart the previous installation for %s" %
+    logger.warning("restart the previous installation for %s" %
                 self._kidsInstallName)
     connection = vistATestClient.getConnection()
     self.__gotoKIDSMainMenu__(vistATestClient)
@@ -286,7 +286,7 @@ class DefaultKIDSBuildInstaller(object):
       self.__gotoKIDSMainMenu__(vistATestClient)
     self.__selectUnloadDistributionOption__(connection)
     index = connection.expect([
-      "Want to continue with the Unload of this Distribution\? NO// ",
+      r"Want to continue with the Unload of this Distribution\? NO// ",
       "Select INSTALL NAME: "])
     if index == 1:
       connection.send('\r')
@@ -425,7 +425,7 @@ class DefaultKIDSBuildInstaller(object):
     installStatus = infoFetcher.getInstallationStatus(self._kidsInstallName)
     """ select KIDS installation workflow based on install status """
     if infoFetcher.isInstallCompleted(installStatus):
-      logger.warn("install %s is already completed!" %
+      logger.warning("install %s is already completed!" %
                    self._kidsInstallName)
       if not reinst:
         return True
@@ -537,7 +537,7 @@ class DefaultKIDSBuildInstaller(object):
   def handleKIDSInstallQuestions(self, connection, **kargs):
     errorCheckTimeout = 5 # 5 seconds
     try:
-      connection.expect("\*\*INSTALL FILE IS CORRUPTED\*\*",errorCheckTimeout)
+      connection.expect(r"\*\*INSTALL FILE IS CORRUPTED\*\*",errorCheckTimeout)
       logger.error("%s:INSTALL FILE IS CORRUPTED" % self._kidsInstallName)
       connection.expect("Select Installation ", errorCheckTimeout)
       connection.send('\r')
@@ -559,7 +559,7 @@ class DefaultKIDSBuildInstaller(object):
   def extraFixWork(self, vistATestClient):
     # use KIDS entry point to manually create package link for install
     if self._updatePackageLink:
-      logger.warn("Attempting to manually creating the package link for: %s" %
+      logger.warning("Attempting to manually creating the package link for: %s" %
             (self._kidsInstallName))
       connection = vistATestClient.getConnection()
       # Luckily, the command just takes the patch information in order, ie "SD", "5.3", "701"
@@ -655,7 +655,7 @@ def getPersonNameByDuz(inputDuz, vistAClient):
   menuUtil.exitSystemMenu(vistAClient)
   vistAClient.waitForPrompt()
   connection.send('W $$NAME^XUSER(%s)\r' % inputDuz)
-  connection.expect('\)') # get rid of the echo
+  connection.expect(r'\)') # get rid of the echo
   vistAClient.waitForPrompt()
   result = connection.lastconnection.strip(' \r\n')
   connection.send('\r')
@@ -686,7 +686,7 @@ def addPackagePatchHistory(packageName, version, seqNo,
   connection.send("\r")
   connection.expect("Select PATCH APPLICATION HISTORY: ")
   connection.send("%s SEQ #%s\r" % (patchNo, seqNo))
-  connection.expect("Are you adding .*\? No//")
+  connection.expect(r"Are you adding .*\? No//")
   connection.send("YES\r")
   connection.expect("DATE APPLIED: ")
   connection.send("T\r")

@@ -4,6 +4,7 @@
 # the FileMan db call dependencies among packages.
 #---------------------------------------------------------------------------
 # Copyright 2013 The Open Source Electronic Health Record Agent
+# Copyright 2024 Sam Habiel. Python 3.12 changes.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -57,7 +58,7 @@ class FileManDbCallParser(object):
                     rtnName = rtn['name']
                     routine = self._crossRef.getRoutineByName(rtnName)
                     if not routine:
-                        logger.warn("Cannot find routine [%s]" % rtnName)
+                        logger.warning("Cannot find routine [%s]" % rtnName)
                         continue
                     fileManGlobals = rtn['Globals']
                     self._addFileManGlobals(routine, fileManGlobals)
