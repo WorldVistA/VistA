@@ -73,11 +73,11 @@ CONFIG ; Obtain configuration for Open and obtaining globals
  ZK ^%ZIS,^%ZISL,^%ZTER,^%ZTSCH,^%ZUA,^%ZUT
  ZK ^DIC,^ECC,^ECT,^DIC,^LAC,^LEX,^LEXC,^PRPF,^PRPFT,^PSNDF,^PSNDF(0),^USC,^XIP
  ;
- I $ZV["Cache" D  Q
+ I $ZV["Cache"!($ZV["IRIS") D  Q
  . N % S %=$System.Process.ScientificNotation(0) ; Disable lower e as scientific notation.
  . S CONFIG("OPENIORW")="O IO:(""WNS""):1"
  . S CONFIG("OPENIOR")="O IO:(""RS""):0"
- . S CONFIG("GLOBALS")="D Fetch^%SYS.GD(""*"",1,0) S G="""" F  S G=$O(^CacheTempJ($J,G)) Q:G=""""  I G'?.E1L.E S GLOBALS(G)="""""
+ . S CONFIG("GLOBALS")="D Fetch^%SYS.GD(""*"",1,0) S G="""" F  S G=$O(^IRIS.TempJ($J,G)) Q:G=""""  I G'?.E1L.E S GLOBALS(G)="""""
  . S CONFIG("LISTF")="S Y=$ZSEARCH(X)"
  I $ZV["GT.M" D  Q
  . S CONFIG("OPENIORW")="D GTMIOW(IO)"

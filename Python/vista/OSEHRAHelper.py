@@ -305,7 +305,7 @@ class ConnectWinCache(ConnectMUMPS):
 class ConnectLinuxCache(ConnectMUMPS):
   def __init__(self, logfile, instance, namespace, location='127.0.0.1'):
     super(ConnectMUMPS, self).__init__()
-    self.connection = pexpect.spawn('ccontrol session ' + instance + ' -U ' + namespace, timeout=None, encoding='utf-8', codec_errors='ignore')
+    self.connection = pexpect.spawn('irissession ' + instance + ' -U ' + namespace, timeout=None, encoding='utf-8', codec_errors='ignore')
     if len(namespace) == 0:
       namespace = 'VISTA'
     self.namespace = namespace
@@ -697,7 +697,7 @@ class ConnectRemoteSSH(ConnectMUMPS):
         escaped_str += c
     return escaped_str
 
-def ConnectToMUMPS(logfile, instance='CACHE', namespace='VISTA',
+def ConnectToMUMPS(logfile, instance='IRIS', namespace='VISTA',
                    location='127.0.0.1', remote_conn_details=None):
     # self.namespace = namespace
     # self.location = location
