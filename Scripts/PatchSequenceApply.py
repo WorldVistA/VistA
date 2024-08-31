@@ -420,7 +420,7 @@ def main():
                 help='installer\'s VistA instance\'s DUZ')
   parser.add_argument('-bup', '--backupPath', default='/tmp/',
                 help='Path for KIDS backup files')
-  parser.add_argument('-bub', '--backupBasket', default='BACK UP',
+  parser.add_argument('-bub', '--backupBasket', default='IN',
                 help='Mail basket for KIDS backup files')
 
   result = parser.parse_args();

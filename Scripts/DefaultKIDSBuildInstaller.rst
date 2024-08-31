@@ -42,4 +42,4 @@ Optional parameters:
 
 * ``-d`` Installer DUZ (default 17)
 * ``-bup`` Backup-Path for backing up current state of system prior to installing KIDS build (default ``/tmp``). Only used for multibuilds.
-* ``-bub`` Backup Mail Basket for backing up current state of system prior to installing KIDS build (default ``BACK UP``). Used for the rest of the builds.
+* ``-bub`` Backup Mail Basket for backing up current state of system prior to installing KIDS build (default ``IN``). Used for the rest of the builds.
