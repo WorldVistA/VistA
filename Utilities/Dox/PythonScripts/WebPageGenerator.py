@@ -124,18 +124,8 @@ CONDITIONAL = re.compile("^W(?!\w)($|(?P<conditional>\:.+)?)")
 SPLIT_LINE = re.compile(''' (?=(?:[^'"]|'[^']*'|"[^"]*")*$)''')
 
 # constants for html page
-GOOGLE_ANALYTICS_JS_CODE = """
-<script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-26757196-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'https://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-</script>
+SCARF_ANALYTICS_CODE = """
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=ce911fa0-dff5-4687-a120-f23e4c0b5a03" />
 """
 
 TOP_INDEX_BAR_PART = """
@@ -766,7 +756,7 @@ class WebPageGenerator(object):
         outputFile = open(os.path.join(self._outDir, "index.html"), 'w')
         outputFile.write(COMMON_HEADER_PART)
         outputFile.write("<title>Vivian VistA Code Documentation</title>")
-        outputFile.write(GOOGLE_ANALYTICS_JS_CODE)
+        outputFile.write(SCARF_ANALYTICS_CODE)
         outputFile.write(HEADER_END)
         outputFile.write(DEFAULT_BODY_PART)
         outputFile.write(INDEX_HTML_PAGE_WV_IMAGE_PART)
@@ -784,7 +774,7 @@ class WebPageGenerator(object):
         header.append(COMMON_HEADER_PART)
         if isSource:
             header.append(CODE_PRETTY_JS_CODE)
-        header.append(GOOGLE_ANALYTICS_JS_CODE)
+        header.append(SCARF_ANALYTICS_CODE)
         header.append(HEADER_END)
         if isSource:
             header.append(SOURCE_CODE_BODY_PART)
