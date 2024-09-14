@@ -1,5 +1,6 @@
 #---------------------------------------------------------------------------
 # Copyright 2014 The Open Source Electronic Health Record Agent
+# Copyright 2024 Sam Habiel. Fix DOX link.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -59,7 +60,7 @@ def generateListingPage(outDir, pageData, dataType):
             for nmsp in allnmsp:
               result = crossRef.__categorizeVariableNameByNamespace__(nmsp.strip())
               if result[0] != None:
-                pageObject += """<a href='../dox/%s'>%s</a></br> """ % (getPackageHtmlFileName(result[1].getName()), nmsp)
+                pageObject += """<a href='../../dox/%s'>%s</a></br> """ % (getPackageHtmlFileName(result[1].getName()), nmsp)
               else:
                 pageObject += nmsp + "</br>"
             output.write("<td>%s</td>\n" % pageObject)
