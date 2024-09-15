@@ -66,21 +66,27 @@ procedure TfrmLabTest.FormCreate(Sender: TObject);
 var
   blood, urine, serum, plasma: string;
 begin
-  RedrawSuspend(cboList.Handle);
-  cboList.InitLongList('');
-  RedrawActivate(cboList.Handle);
-  RedrawSuspend(cboSpecimen.Handle);
-  cboSpecimen.InitLongList('');
-  SpecimenDefaults(blood, urine, serum, plasma);
-  cboSpecimen.Items.Add('0^Any');
-  cboSpecimen.Items.Add(serum + '^Serum');
-  cboSpecimen.Items.Add(blood + '^Blood');
-  cboSpecimen.Items.Add(plasma + '^Plasma');
-  cboSpecimen.Items.Add(urine + '^Urine');
-  cboSpecimen.Items.Add(LLS_LINE);
-  cboSpecimen.Items.Add(LLS_SPACE);
-  cboSpecimen.ItemIndex := 0;
-  RedrawActivate(cboSpecimen.Handle);
+  cboList.LockDrawing;
+  try
+    cboList.InitLongList('');
+  finally
+    cboList.UnlockDrawing;
+  end;
+  cboSpecimen.LockDrawing;
+  try
+    cboSpecimen.InitLongList('');
+    SpecimenDefaults(blood, urine, serum, plasma);
+    cboSpecimen.Items.Add('0^Any');
+    cboSpecimen.Items.Add(serum + '^Serum');
+    cboSpecimen.Items.Add(blood + '^Blood');
+    cboSpecimen.Items.Add(plasma + '^Plasma');
+    cboSpecimen.Items.Add(urine + '^Urine');
+    cboSpecimen.Items.Add(LLS_LINE);
+    cboSpecimen.Items.Add(LLS_SPACE);
+    cboSpecimen.ItemIndex := 0;
+  finally
+    cboSpecimen.UnlockDrawing;
+  end;
 end;
 
 procedure TfrmLabTest.cboListNeedData(Sender: TObject;

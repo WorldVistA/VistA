@@ -8,7 +8,6 @@ inherited frmLabs: TfrmLabs
   HelpFile = 'qnoback'
   ExplicitWidth = 729
   ExplicitHeight = 752
-  PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
     Top = 708
@@ -1159,7 +1158,7 @@ inherited frmLabs: TfrmLabs
           Align = alRight
           Caption = '      '
           Enabled = False
-          TabOrder = 0
+          TabOrder = 3
           OnClick = btnAppearRtClick
           OnEnter = btnAppearRtEnter
         end
@@ -1175,7 +1174,7 @@ inherited frmLabs: TfrmLabs
           Align = alLeft
           Caption = '      '
           Enabled = False
-          TabOrder = 3
+          TabOrder = 0
           OnClick = btnAppearRtClick
         end
       end
@@ -1526,22 +1525,18 @@ inherited frmLabs: TfrmLabs
       (
         'Component = cmdNext'
         'Text = Next'
-        'WatchEnable = True'
         'Status = stsOK')
       (
         'Component = cmdPrev'
         'Text = Previous'
-        'WatchEnable = True'
         'Status = stsOK')
       (
         'Component = cmdRecent'
         'Text = Newest'
-        'WatchEnable = True'
         'Status = stsOK')
       (
         'Component = cmdOld'
         'Text = Oldest'
-        'WatchEnable = True'
         'Status = stsOK')
       (
         'Component = grdLab'
@@ -1581,7 +1576,8 @@ inherited frmLabs: TfrmLabs
         'Status = stsDefault')
       (
         'Component = chkMaxFreq'
-        'Status = stsDefault')
+        'Text = Developer option - Max occurrence'
+        'Status = stsOK')
       (
         'Component = TabControl1'
         'Status = stsDefault')
@@ -1623,14 +1619,16 @@ inherited frmLabs: TfrmLabs
         'Status = stsDefault')
       (
         'Component = btnClear'
-        'Status = stsDefault')
+        'Text = Developer button - Reload reports'
+        'Status = stsOK')
       (
         'Component = btnAppearRt'
-        'Text =  '
+        'Text = Developer Options'
         'Status = stsOK')
       (
         'Component = btnAppearLt'
-        'Status = stsDefault')
+        'Text = Developer Options'
+        'Status = stsOK')
       (
         'Component = lbl508Footer'
         'Status = stsDefault')

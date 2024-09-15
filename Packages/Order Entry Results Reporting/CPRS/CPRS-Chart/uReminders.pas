@@ -3,6 +3,7 @@
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, Classes, Controls, StdCtrls, SysUtils, ComCtrls, Menus,
   Graphics, Forms, ORClasses, ORCtrls, ORDtTm, ORFn, ORNet, Dialogs, uPCE,
   uVitals, System.Generics.Collections, uComponentNexus,
@@ -383,7 +384,7 @@ type
     DrawerReminderTV: TORTreeView;
     DrawerReminderTreeChange: TTreeChangeNotifyEvent;
     DrawerRemoveReminderTreeChange: TTreeChangeNotifyEvent;
-    NewNoteRE: TRichEdit;
+    NewNoteRE: ORExtensions.TRichEdit;
     NoteList: TORListBox;
   end;
 
@@ -1517,7 +1518,7 @@ begin
   if (IEN > 0) then
     aList := TStringList.Create;
     try
-      if ReminderInquiry(IEN, aList) > 0 then
+      if EducationTopicDetail(IEN, aList) > 0 then
             ReportBox(Alist, 'Reminder Inquiry: ' + 'Education Topic: ' + (Sender as TMenuItem).Caption, TRUE)
       else infoBox('Error loading Education Topic Inquiry.', 'Error', MB_OK);
     finally

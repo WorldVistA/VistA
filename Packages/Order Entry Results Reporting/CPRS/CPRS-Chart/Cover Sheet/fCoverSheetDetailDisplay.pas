@@ -27,10 +27,12 @@ uses
   Vcl.Forms,
   Vcl.Dialogs,
   Vcl.StdCtrls,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls,
+  fBase508Form,
+  VA508AccessibilityManager;
 
 type
-  TfrmCoverSheetDetailDisplay = class(TForm)
+  TfrmCoverSheetDetailDisplay = class(TfrmBase508Form)
     pnlOptions: TPanel;
     btnClose: TButton;
     memDetails: TMemo;

@@ -3,6 +3,7 @@ unit fTemplateDialog;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ExtCtrls, ORCtrls, ORFn, AppEvnts, uTemplates, fBase508Form, uConst,
   VA508AccessibilityManager, ORDtTm
@@ -22,7 +23,7 @@ type
     btnOKGrid: TButton;
     btnCancelGrid: TButton;
     pnlDebug: TPanel;
-    reText: TRichEdit;
+    reText: ORExtensions.TRichEdit;
     PopupMenu1: TPopupMenu;
     S1: TMenuItem;
     T1: TMenuItem;
@@ -89,7 +90,7 @@ type
     FTabPos: integer;
     FCheck4Required: boolean;
     FSilent: boolean;
-    procedure ChkAll(Chk: boolean);
+    procedure ChkAll(Chk: Boolean);
     procedure BuildCB(CBidx: integer; var Y: integer; FirstTime: boolean);
     procedure ItemChecked(Sender: TObject);
     procedure BuildAllControls;
@@ -351,8 +352,7 @@ begin
     //frmTemplateDialog.Free;    v22.11e RV
     if (Sl.Count > 0) and Assigned(ExtCPMon) then
       frmTemplateDialog.CPTemp.TransferData(ExtCPMon.EditMonitor);
-    frmTemplateDialog.Release;
-    frmTemplateDialog := nil;  // cleaning pointer after Release
+    FreeAndNil(frmTemplateDialog);
 
 // Very Important - frees up uEntries before nesting templates can create new entries.
 //                  without this call the old entries are found when nesting templates.
@@ -389,7 +389,9 @@ var
 begin
   for i := 0 to SL.Count - 1 do
   begin
-    line := TrimRight(SL[i]);
+    line := SL[i];
+    if Length(line) >= 70 then
+      line := TrimRight(line);
     if line = '' then
       line := ' ';
     if line <> SL[i] then
@@ -404,6 +406,13 @@ begin
     end
     else
       SL.Clear;
+  end;
+  for i := 0 to SL.Count - 1 do
+  begin
+    line := SL[i];
+    if Trim(line) = '' then
+      line := '';
+    SL[i] := line;
   end;
   StripScreenReaderCodes(SL);
 end;
@@ -430,24 +439,19 @@ begin
   end;
 end;
 
-
-
-procedure TfrmTemplateDialog.ChkAll(Chk: boolean);
-var
-  i: integer;
-
+procedure TfrmTemplateDialog.ChkAll(Chk: Boolean);
 begin
-  for i := 0 to sbMain.ControlCount-1 do
+  for var I := 0 to sbMain.ControlCount - 1 do
   begin
-    if(sbMain.Controls[i] is TORCheckBox) then
-      TORCheckBox(sbMain.Controls[i]).Checked := Chk;
-
+    if sbMain.Controls[I] is TORCheckBox then
+      TORCheckBox(sbMain.Controls[I]).Checked := Chk;
   end;
-  if assigned(frRequiredFields) then
-    begin
-      if assigned(frRequiredFields.FocusedControl) then
-        frRequiredFields.FocusedControl.SetFocus;
-    end;
+
+  if Assigned(frRequiredFields) and Assigned(frRequiredFields.FocusedControl)
+    and (frRequiredFields.FocusedControl.CanFocus) then
+  begin
+    frRequiredFields.FocusedControl.SetFocus;
+  end;
 end;
 
 procedure TfrmTemplateDialog.btnAllClick(Sender: TObject);
@@ -619,6 +623,7 @@ begin
       idx := BuildIdx.IndexOfObject(TObject(ctrl.Tag)); // remove ctrl from BuildIdx
       if idx >= 0 then
         BuildIdx.delete(idx);
+      dmRF.RemoveChildFieldControls(TWinControl(ctrl));
       ctrl.Free;                                        // free ctrl
     end;
     exit;                       // EXIT if ctrl is killed
@@ -1305,7 +1310,7 @@ procedure TfrmTemplateDialog.edTargetKeyDown(Sender: TObject; var Key: Word;
 var
   CharPos, CharPos2: Integer;
 
-  procedure HighlightRichEdit(re: TRichEdit; StartChar, EndChar: Integer;
+  procedure HighlightRichEdit(re: ORExtensions.TRichEdit; StartChar, EndChar: Integer;
     HighLightColor: TColor; Flag: Integer = SCF_SELECTION);
   var
     Format: CHARFORMAT2;

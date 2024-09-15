@@ -19,7 +19,6 @@ inherited frmBAOptionsDiagnoses: TfrmBAOptionsDiagnoses
     Width = 739
     Height = 530
     Align = alClient
-    Caption = 'Panel1'
     Constraints.MinHeight = 344
     Constraints.MinWidth = 576
     TabOrder = 0

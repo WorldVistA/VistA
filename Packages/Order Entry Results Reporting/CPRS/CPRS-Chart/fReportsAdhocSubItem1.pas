@@ -56,10 +56,7 @@ type
     { Public declarations }
   end;
 
-var
-  frmReportsAdhocSubItem1: TfrmReportsAdhocSubItem1;
-
-function ExecuteForm2: Boolean;
+function ExecuteForm2(aCaption: string): Boolean;
 
 implementation
 
@@ -67,12 +64,15 @@ uses fReportsAdhocComponent1, rReports, VAUtils, System.Types;
 
 {$R *.DFM}
 
-function ExecuteForm2: Boolean;
+function ExecuteForm2(aCaption: string): Boolean;
+var
+  frmReportsAdhocSubItem1: TfrmReportsAdhocSubItem1;
 begin
   Result := False;
   frmReportsAdhocSubItem1 := TfrmReportsAdhocSubItem1.Create(Application);
   try
     ResizeFormToFont(TForm(frmReportsAdhocSubItem1));
+    frmReportsAdhocSubItem1.Caption := aCaption;
     frmReportsAdhocSubItem1.ShowModal;
     if frmReportsAdhocSubItem1.OKPressed then
       Result := True;
@@ -98,17 +98,18 @@ begin
   Panel8.Align := Splitter3.Align;
   ORListBox1.Left := Panel8.Left + Panel8.Width;
   ORListBox1.Align := Panel8.Align;
-  RedrawSuspend(ORComboBox2.Handle);
-  ORComboBox2.InitLongList('');
-  RedrawActivate(ORComboBox2.Handle);
+  ORComboBox2.LockDrawing;
+  try
+    ORComboBox2.InitLongList('');
+  finally
+    ORComboBox2.UnlockDrawing;
+  end;
   If uLimit>0 then
         lblLimit.Caption := IntToStr(uLimit)
       else
         lblLimit.Caption := 'No Limit';
   ORListBox1.Caption := 'File Entries Selected ( Selections Allowed: ' +
     lblLimit.Caption + ')';
-  Caption := Piece(frmReportsAdhocComponent1.ORComboBox1.Items
-    [frmReportsAdhocComponent1.ORComboBox1.ItemIndex],'^',2);
   for i := 0 to uComponents.Count-1 do
     if piece(uComponents[i],'^',1) = IntToStr(uCurrentComponent) then
       ORListBox1.Items.Add(Pieces(uComponents[i],'^',3,10));

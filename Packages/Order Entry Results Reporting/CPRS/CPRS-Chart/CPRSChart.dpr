@@ -274,7 +274,6 @@ uses
   fBALocalDiagnoses in 'BA\fBALocalDiagnoses.pas' {frmBALocalDiagnoses},
   fReview in 'fReview.pas' {frmReview},
   fARTFreeTextMsg in 'fARTFreeTextMsg.pas' {frmARTFreeTextMsg},
-  fAllgyBox in 'fAllgyBox.pas' {frmAllgyBox},
   UBACore in 'BA\UBACore.pas',
   fBAOptionsDiagnoses in 'BA\fBAOptionsDiagnoses.pas' {frmBAOptionsDiagnoses},
   fOtherSchedule in 'Orders\fOtherSchedule.pas' {frmOtherSchedule},
@@ -435,8 +434,6 @@ uses
   uVersionCheck in 'Utils\uVersionCheck.pas',
   uIndications in 'uIndications.pas',
   uOwnerWrapper in 'Utils\uOwnerWrapper.pas',
-  ORExtensions in 'ORExtensions.pas',
-  UJSONParameters in 'UJSONParameters.pas',
   UCaptionListView508Manager in 'Tools\UCaptionListView508Manager.pas',
   uHelpNetworkMGR in 'uHelpNetworkMGR.pas',
   u508Extensions in 'Tools\u508Extensions.pas',
@@ -447,7 +444,9 @@ uses
   mPtSelDemog in 'mPtSelDemog.pas' {fraPtSelDemog: TFrame},
   mPtSelOptns in 'mPtSelOptns.pas' {fraPtSelOptns: TFrame},
   uComponentNexus in 'Utils\uComponentNexus.pas',
-  uWriteAccess in 'uWriteAccess.pas';
+  uWriteAccess in 'uWriteAccess.pas',
+  UMemoTools in 'Tools\UMemoTools.pas',
+  UMHDll in 'UMHDll.pas';
 
 {$R *.TLB}
 {$R *.RES}
@@ -462,7 +461,7 @@ begin
   RegisterCPRSTypeLibrary;                // will halt program if /regserver or /unregserver param
 {$ENDIF}
 
-  TORRedirect.Init;
+  TORRedirect.Start;
 
   Application.Initialize;
 

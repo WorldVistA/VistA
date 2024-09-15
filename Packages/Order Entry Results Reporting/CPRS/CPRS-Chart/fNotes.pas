@@ -200,9 +200,9 @@ type
     spDetails: TSplitter;
     CPMemNewNote: TCopyPasteDetails;
     spEditDetails: TSplitter;
-    memPCERead: TRichEdit;
+    memPCERead: ORExtensions.TRichEdit;
     splmemPCRead: TSplitter;
-    memPCEWrite: TRichEdit;
+    memPCEWrite: ORExtensions.TRichEdit;
     splmemPCEWrite: TSplitter;
     grdPnl: TGridPanel;
     lblNewTitle: TStaticText;
@@ -456,6 +456,7 @@ type
     procedure RestoreExpandStatus; // (fix 336188)
     function getNodeLocation(aNode: TTreeNode): String; // NSR 20070817
     Procedure UpdateConstraints;
+    procedure ClearTVNotes;
   protected
     property WriteShowing: Boolean read GetWriteShowing write SetWriteShowing;
     procedure ExitToNextControl(Sender: TObject);
@@ -1527,7 +1528,8 @@ end;
 procedure TfrmNotes.acNewNoteUpdate(Sender: TObject);
 begin
   acNewNote.Enabled := WriteAccess(waProgressNotes) and
-    (not pnlWrite.Visible) and (frmConsults.EditingIndex < 0);
+    (not pnlWrite.Visible) and Assigned(frmConsults) and
+    (frmConsults.EditingIndex < 0);
 end;
 
 procedure TfrmNotes.acNewSharedExecute(Sender: TObject);
@@ -1765,6 +1767,7 @@ var
   SavedDocID, tmpItem: string;
   EditingID: string; // v22.12 - RV
   tmpNode: TTreeNode;
+  needReload: boolean;
 begin
   inherited;
   SavedDocID := lstNotes.ItemID; // v22.12 - RV
@@ -1804,6 +1807,7 @@ begin
     exit;
   // no exits after things are locked
   NoteUnlocked := False;
+  needReload := True;
   ActOnDocument(ActionSts, lstNotes.ItemIEN, ActionType);
   if ActionSts.Success then
   begin
@@ -1849,34 +1853,40 @@ begin
     end;
   end
   else
+  begin
+    needReload := False;
     InfoBox(ActionSts.Reason, TX_IN_AUTH, MB_OK);
+  end;
   if not NoteUnlocked then
     UnlockDocument(lstNotes.ItemIEN);
   UnlockConsultRequest(lstNotes.ItemIEN);
-  LoadNotes; // v22.12 - RV
-  if (EditingID <> '') then
+  if needReload then
   begin
-    lstNotes.Items.Insert(0, tmpItem);
-    tmpNode := tvNotes.Items.AddObjectFirst(tvNotes.Items.GetFirstNode,
-      'Note being edited',
-      MakeNoteTreeObject('EDIT^Note being edited^^^^^^^^^^^%^0'));
-    TORTreeNode(tmpNode).StringData := 'EDIT^Note being edited^^^^^^^^^^^%^0';
-    tmpNode.ImageIndex := IMG_TOP_LEVEL;
-    tmpNode := tvNotes.Items.AddChildObjectFirst(tmpNode,
-      MakeNoteDisplayText(tmpItem), MakeNoteTreeObject(tmpItem));
-    TORTreeNode(tmpNode).StringData := tmpItem;
-    SetTreeNodeImagesAndFormatting(TORTreeNode(tmpNode), FCurrentContext,
-      CT_NOTES);
-    EditingIndex := lstNotes.SelectByID(EditingID); // v22.12 - RV
+    LoadNotes; // v22.12 - RV
+    if (EditingID <> '') then
+    begin
+      lstNotes.Items.Insert(0, tmpItem);
+      tmpNode := tvNotes.Items.AddObjectFirst(tvNotes.Items.GetFirstNode,
+        'Note being edited',
+        MakeNoteTreeObject('EDIT^Note being edited^^^^^^^^^^^%^0'));
+      TORTreeNode(tmpNode).StringData := 'EDIT^Note being edited^^^^^^^^^^^%^0';
+      tmpNode.ImageIndex := IMG_TOP_LEVEL;
+      tmpNode := tvNotes.Items.AddChildObjectFirst(tmpNode,
+        MakeNoteDisplayText(tmpItem), MakeNoteTreeObject(tmpItem));
+      TORTreeNode(tmpNode).StringData := tmpItem;
+      SetTreeNodeImagesAndFormatting(TORTreeNode(tmpNode), FCurrentContext,
+        CT_NOTES);
+      EditingIndex := lstNotes.SelectByID(EditingID); // v22.12 - RV
+    end;
+    tvNotes.Selected := tvNotes.FindPieceNode(FLastNoteID, U,
+      tvNotes.Items.GetFirstNode);
+    if tvNotes.Selected <> nil then
+      tvNotesChange(Self, tvNotes.Selected)
+    else
+      If tvNotes.Items.Count > 0 then
+        tvNotes.Selected := tvNotes.Items[0]; // first Node in treeview
+    updateNotesCaption(True);
   end;
-  tvNotes.Selected := tvNotes.FindPieceNode(FLastNoteID, U,
-    tvNotes.Items.GetFirstNode);
-  if tvNotes.Selected <> nil then
-    tvNotesChange(Self, tvNotes.Selected)
-  else
-    If tvNotes.Items.Count > 0 then
-      tvNotes.Selected := tvNotes.Items[0]; // first Node in treeview
-  updateNotesCaption(True);
 end;
 
 procedure TfrmNotes.AddTemplateNode(const tmpl: TTemplate;
@@ -2023,8 +2033,7 @@ begin
   uChanging := true;
   tvNotes.Items.BeginUpdate;
   try
-    KillDocTreeObjects(tvNotes);
-    tvNotes.Items.Clear;
+    ClearTVNotes;
   finally
     tvNotes.Items.EndUpdate;
   end;
@@ -2049,7 +2058,7 @@ end;
 procedure TfrmNotes.DisplayPage;
 { causes page to be visible and conditionally executes initialization code }
 begin
-  SendMessage(frmNotes.Handle, WM_SETREDRAW, 0, 0);
+  LockDrawing;
   try
     inherited DisplayPage;
     CurrentTabPCEObject := uPCEMaster;
@@ -2085,9 +2094,7 @@ begin
         ProcessNotifications;
     end;
   finally
-    SendMessage(frmNotes.Handle, WM_SETREDRAW, 1, 0);
-    RedrawWindow(frmNotes.Handle, nil, 0, RDW_ERASE or RDW_FRAME or
-      RDW_INVALIDATE or RDW_ALLCHILDREN);
+    UnlockDrawing;
   end;
 end;
 
@@ -2186,6 +2193,18 @@ begin
 
   //Set the edit width based on the update
   LimitEditableNote;
+end;
+
+procedure TfrmNotes.ClearTVNotes;
+begin
+  // prevent calling OnChange while clearing the tree
+  tvNotes.OnChange := nil;
+  try
+    KillDocTreeObjects(tvNotes);
+    tvNotes.Items.Clear;
+  finally
+    tvNotes.OnChange := tvNotesChange;
+  end;
 end;
 
 procedure TfrmNotes.LimitEditableNote;
@@ -2369,95 +2388,95 @@ begin
   ClearPCE;
   PCEList := TStringList.Create;
   try
-//    PCEList.Clear;
-    with lstNotes do
-      if ItemIndex = EditingIndex then
+    if lstNotes.ItemIndex = EditingIndex then
+    begin
+      uPCEMaster.NoteDateTime := FEditNote.DateTime;
+      uPCEMaster.PCEForNote(FEditNoteIEN);
+      uPCEMaster.AddStrData(PCEList);
+      NoPCE := (PCEList.Count = 0);
+      VitalStr := TStringList.Create;
+      try
+        GetVitalsFromDate(VitalStr, uPCEMaster);
+        uPCEMaster.AddVitalData(VitalStr, PCEList);
+      finally
+        VitalStr.Free;
+      end;
+      ShowPCEButtons(true);
+      PCE2Use := ShowPCEControls(cmdPCE.Enabled or (PCEList.Count > 0));
+
+      if PCEList.Count > 0 then
+        PCE2Use.Lines.AddStrings(PCEList);
+
+      if (NoPCE and PCE2Use.Visible) then
+        PCE2Use.Lines.Insert(0, TX_NOPCE);
+      PCE2Use.SelStart := 0;
+      PCE2Use.Perform(EM_LineScroll, 0, Low(Integer));
+      if (InteractiveRemindersActive) then
       begin
-        with uPCEMaster do
+        if (GetReminderStatus = rsNone) then
+          EnableList := [odTemplates]
+        else if FutureEncounter(uPCEMaster) and (not SpansIntlDateLine) then
         begin
-          NoteDateTime := FEditNote.DateTime;
-          PCEForNote(FEditNoteIEN);
-          AddStrData(PCEList);
-          NoPCE := (PCEList.Count = 0);
-          VitalStr := TStringList.Create;
-          try
-            GetVitalsFromDate(VitalStr, uPCEMaster);
-            AddVitalData(VitalStr, PCEList);
-          finally
-            VitalStr.Free;
-          end;
-          ShowPCEButtons(true);
-          PCE2Use := ShowPCEControls(cmdPCE.Enabled or (PCEList.Count > 0));
-
-          if PCEList.Count > 0 then
-            PCE2Use.Lines.AddStrings(PCEList);
-
-          if (NoPCE and PCE2Use.Visible) then
-            PCE2Use.Lines.Insert(0, TX_NOPCE);
-          PCE2Use.SelStart := 0;
-
-          if (InteractiveRemindersActive) then
-          begin
-            if (GetReminderStatus = rsNone) then
-              EnableList := [odTemplates]
-            else if FutureEncounter(uPCEMaster) and (not SpansIntlDateLine) then
-            begin
-              EnableList := [odTemplates];
-              ShowList := [odTemplates];
-            end
-            else
-            begin
-              EnableList := [odTemplates, odReminders];
-              ShowList := [odTemplates, odReminders];
-            end;
-          end
-          else
-          begin
-            EnableList := [odTemplates];
-            ShowList := [odTemplates];
-          end;
-          Drawers.DisplayDrawers(WriteAccess(waProgressNoteTemplates),
-            Drawers.ActiveDrawer, EnableList, ShowList);
+          EnableList := [odTemplates];
+          ShowList := [odTemplates];
+        end
+        else
+        begin
+          EnableList := [odTemplates, odReminders];
+          ShowList := [odTemplates, odReminders];
         end;
       end
       else
       begin
-        ShowPCEButtons(False);
-        Drawers.DisplayDrawers(WriteAccess(waProgressNoteTemplates),
-          Drawers.ActiveDrawer, [odTemplates], [odTemplates]);
-        AnIEN := lstNotes.ItemIEN;
-        ActOnDocument(ActionSts, AnIEN, 'VIEW');
-        if ActionSts.Success then
+        EnableList := [odTemplates];
+        ShowList := [odTemplates];
+      end;
+      Drawers.DisplayDrawers(WriteAccess(waProgressNoteTemplates),
+        Drawers.ActiveDrawer, EnableList, ShowList);
+    end
+    else
+    begin
+      ShowPCEButtons(False);
+      Drawers.DisplayDrawers(WriteAccess(waProgressNoteTemplates),
+        Drawers.ActiveDrawer, [odTemplates], [odTemplates]);
+      AnIEN := lstNotes.ItemIEN;
+      ActOnDocument(ActionSts, AnIEN, 'VIEW');
+      if ActionSts.Success then
+      begin
+        StatusText('Retrieving encounter information...');
+
+        if lstNotes.ItemIndex > -1 then
         begin
-          StatusText('Retrieving encounter information...');
-          with uPCEMaster do
-          begin
-            NoteDateTime :=
-              MakeFMDateTime(Piece(lstNotes.Items[lstNotes.ItemIndex], U, 3));
-            PCEForNote(AnIEN);
-            AddStrData(PCEList);
-            NoPCE := (PCEList.Count = 0);
-            VitalStr := TStringList.Create;
-            try
-              GetVitalsFromNote(VitalStr, uPCEMaster, AnIEN);
-              AddVitalData(VitalStr, PCEList);
-            finally
-              VitalStr.Free;
-            end;
-            PCE2Use := ShowPCEControls(PCEList.Count > 0);
+          uPCEMaster.NoteDateTime :=
+            MakeFMDateTime(Piece(lstNotes.Items[lstNotes.ItemIndex], U, 3));
+        end else begin
+          uPCEMaster.NoteDateTime := 0;
+        end;
 
-            if PCEList.Count > 0 then
-              PCE2Use.Lines.AddStrings(PCEList);
+        uPCEMaster.PCEForNote(AnIEN);
+        uPCEMaster.AddStrData(PCEList);
+        NoPCE := (PCEList.Count = 0);
+        VitalStr := TStringList.Create;
+        try
+          GetVitalsFromNote(VitalStr, uPCEMaster, AnIEN);
+          uPCEMaster.AddVitalData(VitalStr, PCEList);
+        finally
+          VitalStr.Free;
+        end;
+        PCE2Use := ShowPCEControls(PCEList.Count > 0);
 
-            if (NoPCE and PCE2Use.Visible) then
-              PCE2Use.Lines.Insert(0, TX_NOPCE);
-            PCE2Use.SelStart := 0;
-          end;
-          StatusText('');
-        end
-        else
-          ShowPCEControls(False);
-      end; { if ItemIndex }
+        if PCEList.Count > 0 then
+          PCE2Use.Lines.AddStrings(PCEList);
+
+        if (NoPCE and PCE2Use.Visible) then
+          PCE2Use.Lines.Insert(0, TX_NOPCE);
+        PCE2Use.SelStart := 0;
+        PCE2Use.Perform(EM_LineScroll, 0, Low(Integer));
+        StatusText('');
+      end
+      else
+        ShowPCEControls(False);
+    end;
     mnuEncounter.Enabled := WriteAccess(waEncounter) and cmdPCE.Visible;
     // SetPCEParent;
   finally
@@ -4001,7 +4020,7 @@ end;
 
 procedure TfrmNotes.DrawerButtonClicked;
 begin
-  SendMessage(pnlLeft.Handle, WM_SETREDRAW, 0, 0);
+  pnlLeft.LockDrawing;
   try
     if Drawers.DrawerButtonsVisible then
     begin
@@ -4031,9 +4050,7 @@ begin
       splDrawers.Enabled := False;
     end;
   finally
-    SendMessage(pnlLeft.Handle, WM_SETREDRAW, 1, 0);
-    RedrawWindow(pnlLeft.Handle, nil, 0, RDW_ERASE or RDW_FRAME or
-      RDW_INVALIDATE or RDW_ALLCHILDREN);
+    pnlLeft.UnlockDrawing;
   end;
 end;
 
@@ -4659,8 +4676,7 @@ begin
   tvNotes.Items.BeginUpdate;
   try
     lstNotes.Clear;
-    KillDocTreeObjects(tvNotes);
-    tvNotes.Items.Clear;
+    ClearTVNotes;
     lstNotes.Items.Add(X);
     AnObject := MakeNoteTreeObject('ALERT^Alerted Note^^^^^^^^^^^%^0');
     tmpNode := tvNotes.Items.AddObjectFirst(tvNotes.Items.GetFirstNode,
@@ -4977,12 +4993,12 @@ var
   txt: string;
 
 begin
-  UpdateActMenu('', nil);
   if (Self = nil) then
     exit;
+
+  UpdateActMenu('', nil);
   if assigned(Node) and (not ShowMoreNode(Node.Text)) then
     SaveTreePosition; // saving position only if it is the TX_MORE node
-
   if (tvNotes.Selected <> nil) and (not ShowMoreNode(tvNotes.Selected.Text)) then
   begin
     DoSelect;
@@ -5513,10 +5529,10 @@ procedure TfrmNotes.lvNotesSelectItem(Sender: TObject; Item: TListItem;
 begin
   if uChanging then
     exit;
-  UpdateActMenu('', nil);
   if (not Selected) then
     exit;
 
+  UpdateActMenu('', nil);
   uChanging := true;
   with lvNotes do
     // Ensure that we still have the item and it has the required sub nodes
@@ -6013,16 +6029,15 @@ begin
       try
         FDocList.Clear;
 
-        RedrawSuspend(memNote.Handle);
-        RedrawSuspend(lvNotes.Handle);
+        memNote.LockDrawing;
+        lvNotes.LockDrawing;
         try
           HasUpdateBegun := not SignedOnly;
           if HasUpdateBegun then
             tvNotes.Items.BeginUpdate;
           try
             lstNotes.Items.Clear;
-            KillDocTreeObjects(tvNotes);
-            tvNotes.Items.Clear;
+            ClearTVNotes;
             // tvNotes.Items.EndUpdate;
             lvNotes.Items.Clear;
             memNote.Clear;
@@ -6294,8 +6309,8 @@ begin
             tvNotesChange(Self, tvNotes.Selected);
 
         finally
-          RedrawActivate(memNote.Handle);
-          RedrawActivate(lvNotes.Handle);
+          lvNotes.UnlockDrawing;
+          memNote.UnlockDrawing;
         end;
       finally
         FreeAndNil(tmpList);
@@ -6442,9 +6457,9 @@ var
   MyNodeID: string;
   ReturnCursor: Integer;
 begin
-  UpdateActMenu('', nil);
   if (Self = nil) or (not HandleAllocated) or (tvNotes.Selected = nil) then
     exit;
+  UpdateActMenu('', nil);
 
   ReturnCursor := Screen.Cursor;
   Screen.Cursor := crHourGlass;
@@ -6457,9 +6472,9 @@ begin
         exit;
       if assigned(Selected.Data) then
         UpdateActMenu(PDocTreeObject(Selected.Data)^.DocID, tvNotes);
-      RedrawSuspend(tvNotes.Handle);
-      RedrawSuspend(lvNotes.Handle);
-      RedrawSuspend(memNote.Handle);
+      tvNotes.LockDrawing;
+      lvNotes.LockDrawing;
+      memNote.LockDrawing;
       try
         popNoteListExpandSelected.Enabled := Selected.HasChildren;
         popNoteListCollapseSelected.Enabled := Selected.HasChildren;
@@ -6520,12 +6535,10 @@ begin
         if assigned(Selected) and assigned(Selected.Data) and
           PDocTreeObject(Selected.Data)^.Orphaned then
           MessageDlg(ORPHANED_NOTE_TEXT, mtInformation, [mbOK], -1);
-
-
       finally
-        RedrawActivate(tvNotes.Handle);
-        RedrawActivate(lvNotes.Handle);
-        RedrawActivate(memNote.Handle);
+        memNote.UnlockDrawing;
+        lvNotes.UnlockDrawing;
+        tvNotes.UnlockDrawing;
       end;
     end;
   finally
@@ -6611,25 +6624,28 @@ begin
   begin
     // savePosition;
     SaveExpandStatus;
-    RedrawSuspend(lvNotes.Handle);
-    LoadNotes(true); // load only signed notes
-    RestoreExpandStatus;
-    updateNotesCaption;
-    tn := getNodeByName(targetAllSignedNotes, 0, tvNotes);
-    tvNotes.Selected := tn;
+    lvNotes.LockDrawing;
+    try
+      LoadNotes(true); // load only signed notes
+      RestoreExpandStatus;
+      updateNotesCaption;
+      tn := getNodeByName(targetAllSignedNotes, 0, tvNotes);
+      tvNotes.Selected := tn;
 
-    if lvNotes.Items.Count > 0 then
-    begin
-      // i := lvNotes.Items.Count - FCurrentContext.MaxDocs;
-      i := lvNotes.Items.Count - 2;
-      // 2016-07-15 always one line prior to "SHOW MORE"
-      if i < 0 then
-        i := 0;
-      lvNotes.ItemIndex := i;
-      lvNotes.Items[i].MakeVisible(False);
-      // RestorePosition;
+      if lvNotes.Items.Count > 0 then
+      begin
+        // i := lvNotes.Items.Count - FCurrentContext.MaxDocs;
+        i := lvNotes.Items.Count - 2;
+        // 2016-07-15 always one line prior to "SHOW MORE"
+        if i < 0 then
+          i := 0;
+        lvNotes.ItemIndex := i;
+        lvNotes.Items[i].MakeVisible(False);
+        // RestorePosition;
+      end;
+    finally
+      lvNotes.UnlockDrawing;
     end;
-    RedrawActivate(lvNotes.Handle);
   end;
 end;
 

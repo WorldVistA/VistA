@@ -40,7 +40,9 @@ uses
   ClipBrd,
   DateUtils,
   System.Generics.Collections,
-  dShared, mPtSelDemog, mPtSelOptns;
+  dShared,
+  mPtSelDemog,
+  mPtSelOptns;
 
 type
   TPageControl = class(Vcl.ComCtrls.TPageControl)
@@ -184,7 +186,10 @@ type
       Item: TListItem; State: TCustomDrawState; Stage: TCustomDrawStage;
       var DefaultDraw: Boolean);
     procedure sptVertMoved(Sender: TObject);
+    procedure sptVertCanResize(Sender: TObject; var NewSize: Integer;
+      var Accept: Boolean);
   private
+    FGridRowHeight: integer;
     FsortCol: Integer;
     FsortAscending: Boolean;
     FsortDirection: string;
@@ -216,12 +221,12 @@ type
     procedure WMSelectPatient(var Message: TMessage); message UM_SELECTPATIENT;
     function AlertData(Index: integer; DataType: TAlertDataType): string;
     function CreateSubItems(Index: integer): TStringList;
+    procedure EnsureDemographicsVisible;
   end;
 
 procedure SelectPatient(ShowNotif: Boolean; FontSize: Integer; var UserCancelled: Boolean);
 
 var
-  frmPtSel: TfrmPtSel;
   FDfltSrc, FDfltSrcType: string;
   IsRPL, RPLJob: string; // RPLJob stores server $J job number of RPL pt. list.
   RPLProblem: Boolean; // Allows close of form if there's an RPL problem.
@@ -250,7 +255,9 @@ uses
   fAlertsProcessed,
   uFormUtils,
   uSimilarNames,
-  UResponsiveGUI;
+  uSizing,
+  UResponsiveGUI,
+  uMisc;
 
 type
   TAlertColumnInfo = record
@@ -300,55 +307,53 @@ begin
   frmPtSel := TfrmPtSel.Create(Application);
   RPLProblem := False;
   try
-    with frmPtSel do
-      begin
-        AdjustFormSize(ShowNotif, FontSize); // Set initial form size
-        FDfltSrc := DfltPtList;
-        FDfltSrcType := Piece(FDfltSrc, U, 2);
-        FDfltSrc := Piece(FDfltSrc, U, 1);
-        if (IsRPL = '1') then // Deal with restricted patient list users.
-          FDfltSrc := '';
-        fraPtSelOptns.SetDefaultPtList(FDfltSrc);
-        if RPLProblem then
-          begin
-            frmPtSel.Release;
-            Exit;
-          end;
-        Notifications.Clear;
-        FsortCol := -1;
-        AlertList;
-        ClearIDInfo;
-        if (IsRPL = '1') then // Deal with restricted patient list users.
-          RPLDisplay; // Removes unnecessary components from view.
-        FUserCancelled := False;
+    frmPtSel.AdjustFormSize(ShowNotif, FontSize); // Set initial form size
+    FDfltSrc := DfltPtList;
+    FDfltSrcType := Piece(FDfltSrc, U, 2);
+    FDfltSrc := Piece(FDfltSrc, U, 1);
+    if (IsRPL = '1') then // Deal with restricted patient list users.
+      FDfltSrc := '';
+    frmPtSel.fraPtSelOptns.SetDefaultPtList(FDfltSrc);
+    if RPLProblem then
+    begin
+      frmPtSel.Release;
+      frmPtSel := nil;
+      Exit;
+    end;
+    Notifications.Clear;
+    frmPtSel.FsortCol := -1;
+    frmPtSel.AlertList;
+    frmPtSel.ClearIDInfo;
+    if (IsRPL = '1') then // Deal with restricted patient list users.
+      frmPtSel.RPLDisplay; // Removes unnecessary components from view.
+    frmPtSel.FUserCancelled := False;
 
-        pcProcNoti.TabIndex := 0; // always start with pending notifications
+    frmPtSel.pcProcNoti.TabIndex := 0; // always start with pending notifications
 
-        KeepBounds := False;
-        ShowModal;
-        UserCancelled := FUserCancelled;
-      end;
+    frmPtSel.KeepBounds := False;
+    frmPtSel.ShowModal;
+    UserCancelled := frmPtSel.FUserCancelled;
   finally
-    frmPtSel.Release;
+    if Assigned(frmPtSel) then frmPtSel.Release;
   end;
 end;
 
 procedure TfrmPtSel.AdjustFormSize(ShowNotif: Boolean; FontSize: Integer);
 { Adjusts the initial size of the form based on the font used & if notifications should show. }
 var
-  SplitterTop, t1, t2, t3, btnH, btnW: Integer;
+  SplitterTop, t1, t2, t3, btnW: Integer;
 
 begin
   SetFormPosition(self);
   ResizeAnchoredFormToFont(self);
-  btnH := TextHeightByFont(Font.Handle, cmdSaveList.Caption) + 12;
+  FGridRowHeight := TextHeightByFont(Font.Handle, cmdSaveList.Caption) + 12;
   btnW := TextWidthByFont(Font.Handle, cmdSaveList.Caption) + 40;
   gpTop.ColumnCollection[3].Value := btnW;
   gpTop.RowCollection.BeginUpdate;
   try
-    gpTop.RowCollection[0].Value := btnH;
-    gpTop.RowCollection[1].Value := btnH;
-    gpTop.RowCollection[3].Value := btnH;
+    gpTop.RowCollection[0].Value := FGridRowHeight;
+    gpTop.RowCollection[1].Value := FGridRowHeight;
+    gpTop.RowCollection[3].Value := FGridRowHeight - 2; // Fixes cut-off of Save Settings button
   finally
     gpTop.RowCollection.EndUpdate;
   end;
@@ -416,7 +421,7 @@ begin
   if Length(X) > 0 then
     with cboPatient do
       begin
-        RedrawSuspend(cboPatient.Handle);
+        cboPatient.LockDrawing;
         try
           ClearIDInfo;
           ClearTop;
@@ -426,7 +431,7 @@ begin
           Items.Add(LLS_SPACE);
           cboPatient.InitLongList('');
         finally
-          RedrawActivate(cboPatient.Handle);
+          cboPatient.UnlockDrawing;
         end;
       end;
 end;
@@ -479,22 +484,22 @@ begin
   if NewTopList = fraPtSelOptns.LastTopList then
     Exit; // Only continue if new top list.
   fraPtSelOptns.LastTopList := NewTopList;
-  RedrawSuspend(cboPatient.Handle);
+  cboPatient.LockDrawing;
   try
     ClearIDInfo;
     cboPatient.ClearTop;
     cboPatient.Text := '';
     if (IsRPL = '1') then // Deal with restricted patient list users.
+    begin
+      RPLJob := MakeRPLPtList(User.RPLList); // MakeRPLPtList is in rCore, writes global "B" x-ref list.
+      if (RPLJob = '') then
       begin
-        RPLJob := MakeRPLPtList(User.RPLList); // MakeRPLPtList is in rCore, writes global "B" x-ref list.
-        if (RPLJob = '') then
-          begin
-            InfoBox('Assignment of valid OE/RR Team List Needed.', 'Unable to build Patient List', MB_OK);
-          RPLProblem := True;
-          Exit;
-        end;
+        InfoBox('Assignment of valid OE/RR Team List Needed.', 'Unable to build Patient List', MB_OK);
+        RPLProblem := True;
+        Exit;
+      end;
     end
-  else
+    else
     begin
       case fraPtSelOptns.SrcType of
         TAG_SRC_DFLT:
@@ -516,29 +521,29 @@ begin
           ListPtTop(cboPatient.Items);
       end;
     end;
-  with fraPtSelOptns.cboList do
-  begin
-    if Visible then
+    with fraPtSelOptns.cboList do
     begin
-      updateDate := '';
-      if (fraPtSelOptns.SrcType <> TAG_SRC_PROV) and
-         (Piece(Items[ItemIndex], U, 3) <> '') then
-        updateDate := ' last updated on ' + Piece(Items[ItemIndex], U, 3);
-      lblPatient.Caption := 'Patients (' + Text + updateDate + ')';
-    end;
-  end;
-  if fraPtSelOptns.SrcType = TAG_SRC_ALL then
-    lblPatient.Caption := 'Patients (All Patients)';
-  with cboPatient do
-    if ShortCount > 0 then
+      if Visible then
       begin
-          Items.Add(LLS_LINE);
-          Items.Add(LLS_SPACE);
-        end;
+        updateDate := '';
+        if (fraPtSelOptns.SrcType <> TAG_SRC_PROV) and
+          (Piece(Items[ItemIndex], U, 3) <> '') then
+          updateDate := ' last updated on ' + Piece(Items[ItemIndex], U, 3);
+        lblPatient.Caption := 'Patients (' + Text + updateDate + ')';
+      end;
+    end;
+    if fraPtSelOptns.SrcType = TAG_SRC_ALL then
+      lblPatient.Caption := 'Patients (All Patients)';
+    with cboPatient do
+      if ShortCount > 0 then
+      begin
+        Items.Add(LLS_LINE);
+        Items.Add(LLS_SPACE);
+      end;
     cboPatient.Caption := lblPatient.Caption;
     cboPatient.InitLongList('');
   finally
-    RedrawActivate(cboPatient.Handle);
+    cboPatient.UnlockDrawing;
   end;
 end;
 
@@ -705,6 +710,15 @@ end;
 procedure TfrmPtSel.ShowIDInfo;
 begin
   fraPtSelDemog.ShowDemog(cboPatient.ItemID);
+  EnsureDemographicsVisible;
+end;
+
+procedure TfrmPtSel.sptVertCanResize(Sender: TObject; var NewSize: Integer;
+  var Accept: Boolean);
+begin
+  inherited;
+  Accept := (ClientHeight - NewSize > pnlNotifications.Height * 5) and
+    (NewSize > (fraPtSelDemog.GetMinHeight + (FGridRowHeight * 3)));
 end;
 
 procedure TfrmPtSel.sptVertMoved(Sender: TObject);
@@ -805,10 +819,11 @@ end;
 
 procedure TfrmPtSel.cmdCancelClick(Sender: TObject);
 begin
-  if (Patient.DFN = '') and ScreenReaderActive then
+  if ((not Assigned(Patient)) or (Patient.DFN = '')) and ScreenReaderActive then
   begin
-    if InfoBox('No patient selected. Close CPRS Yes or No?', 'Confirmation', MB_YESNO or MB_ICONQUESTION) <> IDYES then
-      Exit;
+    if InfoBox('No patient selected. Close CPRS Yes or No?', 'Confirmation',
+      MB_YESNO or MB_ICONQUESTION) <> IDYES then
+        Exit;
   end;
   // Leave Patient object unchanged
   FUserCancelled := True;
@@ -1374,6 +1389,7 @@ begin
   AdjustButtonSize(cmdRemove);
   AdjustButtonSize(cmdDefer);
   AdjustNotificationButtons;
+  EnsureDemographicsVisible;
 end;
 
 procedure TfrmPtSel.ShowDisabledButtonTexts;
@@ -1435,7 +1451,10 @@ begin
     SetPtListTopProc := SetPtListTop;
   end;
   if ScreenReaderActive then
+  begin
     fraPtSelDemog.ToggleMemo;
+    EnsureDemographicsVisible;
+  end;
 
 ////////////////////////////////////////////////////////////////////////////////
   setFormParented(getProcessedAlertsList,pnlPaCanvas);
@@ -1453,6 +1472,7 @@ begin
     begin
       Key := 0;
       fraPtSelDemog.ToggleMemo;
+      EnsureDemographicsVisible;
     end;
 end;
 
@@ -1700,49 +1720,94 @@ end;
 
 //function TfrmPtSel.DupLastSSN(const DFN: string): Boolean;
 function TfrmPtSel.DupLastSSN(var DFN: string): Boolean;
+
+  function IsInpatient(ALocation: string): boolean;
+  begin
+    Result := Length(ALocation) > 0;
+  end;
+
+  function NeedToShowLocation: boolean;
+  begin
+    Result := fraPtSelOptns.radAll.Visible and fraPtSelOptns.radAll.Checked;;
+  end;
+
 var
-  i: Integer;
-  SL: TStrings;
+  I: Integer;
+  AStringList: TStringList;
+  AIsInPatient: Boolean;
+  ADFN, ALocation, AAttending, APrimaryCareProvider, ALastVisitLocation: string;
+  ALastVisitDate: string;
 const
   fmtResultError = 'SubsetOfPatientsWithSimilarSSNs returns incorrect data.' +
     CRLF + CRLF + 'Search for DFN %d returns' + CRLF + ' %s';
 begin
   Result := False;
-  SL := TStringList.Create;
+  AStringList := TStringList.Create;
   try
-    SubsetOfPatientsWithSimilarSSNs(SL, DFN);
-    if SL.Count > 0 then
+    if SubsetOfPatientsWithSimilarSSNs(AStringList, DFN) > 0 then
     begin
-      if SL[0] = '1' then
+      Result := True;
+      AStringList.Delete(0);
+      for I := AStringList.Count - 1 downto 0 do
       begin
-        Result := True;
-        SL.Delete(0);
-        i := 0;
-        while i < SL.Count do
-          if Piece(SL[i], U, 1) = '1' then
+        if Piece(AStringList[i], U, 1) <> '1' then
+        begin
+          AStringList.Delete(I);
+        end else begin
+          ADFN := Piece(AStringList[I], U, 2);
+          ALastVisitLocation := Piece(AStringList[I], U, 8);
+          ALastVisitDate := Piece(AStringList[I], U, 9);
+          ALocation := Piece(AStringList[I], U, 6);
+          AIsInpatient := IsInpatient(ALocation);
+          if AIsInPatient then
           begin
-            SL[i] := (Piece(SL[i], U, 2) + U + Piece(SL[i], U, 3) + U +
-              FormatFMDateTimeStr('mmm dd,yyyy', Piece(SL[i], U, 4)) + U +
-              Piece(SL[i], U, 5));
-            Inc(i)
-          end
-          else
-            SL.Delete(i);
+            AAttending := Piece(AStringList[I], U, 10);
+            APrimaryCareProvider := '';
+          end else begin
+            AAttending := '';
+            APrimaryCareProvider := Piece(AStringList[I], U, 7);
+          end;
+          if NeedToShowLocation then
+          begin
+            if ALocation = '' then
+              ALocation := ' ';
+          end else begin
+            ALocation := '';
+          end;
 
-        case SL.Count of
-          0:
-            ;
-          1:
-            if Piece(SL[0], U, 1) <> DFN then
-              MessageDlg(Format(fmtResultError, [DFN, SL[0]]), mtError,
-                [mbOk], 0);
-        else // Call form to get user's selection from expanded duplicate pt. list
-          DFN := getItemIDFromList(SL);
+          AStringList[I] := (Piece(AStringList[I], U, 2) + U +
+            Piece(AStringList[I], U, 3) + U + FormatFMDateTimeStr('mmm dd,yyyy',
+            Piece(AStringList[I], U, 4)) + U + Piece(AStringList[I], U, 5)) + U
+            + ALocation + U + Trim(AAttending + APrimaryCareProvider) + U +
+            ALastVisitDate + U + ALastVisitLocation;
         end;
       end;
+
+      case AStringList.Count of
+        0: ;
+        1: if Piece(AStringList[0], U, 1) <> DFN then
+            MessageDlg(Format(fmtResultError, [DFN, AStringList[0]]), mtError,
+              [mbOk], 0);
+      else
+        // Call form to get user's selection from expanded duplicate pt. list
+        DFN := uSimilarNames.getItemIDFromList(AStringList);
+      end;
     end;
+
   finally
-    SL.Free;
+    FreeAndNil(AStringList);
+  end;
+end;
+
+procedure TfrmPtSel.EnsureDemographicsVisible;
+var
+  ht: integer;
+begin
+  ht := fraPtSelDemog.GetMinHeight + (FGridRowHeight * 3);
+  if gpTop.Height < ht then
+  begin
+    gpTop.Height := ht;
+    gpTop.Realign;
   end;
 end;
 

@@ -101,7 +101,7 @@ begin
         if not assigned(NodeCat) then
           exit;
 
-        RedrawSuspend(tvSearch.Handle);
+        tvSearch.LockDrawing;
         try
           if (CurCat <> NodeCat) then
           begin
@@ -118,7 +118,7 @@ begin
           tvSearch.Selected := Node;
           Node.EnsureVisible;
         finally
-          RedrawActivate(tvSearch.Handle);
+          tvSearch.UnlockDrawing;
         end;
 
       end;

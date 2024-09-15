@@ -1,4 +1,4 @@
-object frmAnatPathPreview: TfrmAnatPathPreview
+inherited frmAnatPathPreview: TfrmAnatPathPreview
   Left = 0
   Top = 0
   Caption = 'Preview'
@@ -106,7 +106,7 @@ object frmAnatPathPreview: TfrmAnatPathPreview
     TabOrder = 4
     TabStop = True
   end
-  object VA508AccessibilityManager: TVA508AccessibilityManager
+  inherited amgrMain: TVA508AccessibilityManager
     Left = 64
     Top = 96
     Data = (

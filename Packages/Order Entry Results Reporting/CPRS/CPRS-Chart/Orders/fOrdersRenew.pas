@@ -345,17 +345,23 @@ end;
 
 procedure TfrmRenewOrders.FormDestroy(Sender: TObject);
 var
-  i: integer;
-  list: TList;
-
+  AList, BList: TList;
 begin
-  inherited;
-  for i := 0 to fResponses.Count - 1 do
+  AList := fResponses;
+  fResponses := nil;
+
+  if Assigned(AList) then
   begin
-    list := TList(fResponses[i]);
-    KillObj(@list, True);
+    for var I := AList.Count - 1 downto 0 do
+    begin
+      BList := TList(AList[I]);
+      KillObj(@BList, True);
+    end;
+
+    FreeAndNil(AList);
   end;
-  fResponses.Free;
+
+  inherited;
 end;
 
 procedure TfrmRenewOrders.FormResize(Sender: TObject);
@@ -384,19 +390,18 @@ var
   AnOrder: TOrder;
   HasObjects: Boolean;
   RenewFields: TOrderRenewFields;
-
 begin
   while fResponses.Count <= Index do
     fResponses.Add(nil);
   Result := TList(fResponses[Index]);
   if Result = nil then
   begin
-    AnOrder := TOrder(lstOrders.Items.Objects[Index]);
-    RenewFields := TOrderRenewFields(AnOrder.LinkObject);
+    AnOrder := lstOrders.Items.Objects[Index] as TOrder;
+    RenewFields := AnOrder.LinkObject as TOrderRenewFields;
     Result := TList.Create;
+    fResponses[Index] := Result;
     LoadResponses(Result, 'X' + AnOrder.ID, HasObjects,
       (RenewFields.TitrationMsg <> ''));
-    fResponses[Index] := Result;
   end;
 end;
 

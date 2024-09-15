@@ -2,7 +2,10 @@ unit uConst;
 
 interface
 
-uses Messages, ORFn;
+uses
+  WinApi.Messages,
+  VAShared.UJSONParameters,
+  ORFn;
 
 const
 
@@ -18,6 +21,7 @@ const
 //  UM_DESTROY      = (WM_USER + 109);  // used to notify owner when order dialog closes
 //  UM_DELAYEVENT   = (WM_USER + 110);  // used with PostMessage to slightly delay an event
 
+// PLEASE update AddCustomWindowMessages at the bottom when adding new messages
   UM_SHOWPAGE     = (WM_USER + 9236);  // originally in fFrame
   UM_NEWORDER     = (WM_USER + 9237);  // originally in fODBase
   UM_TAKEFOCUS    = (WM_USER + 9238);  // in fProbEdt
@@ -484,15 +488,111 @@ const
   CampLejeunePatch = 'OR*3.0*407';
 
   ORPHANED_NOTE_TEXT = 'This note was linked to another note that is no longer available. There is no action required, this message is for informational purposes, only.';
+
+  SIGI_HINT_TRIGGERS: TArray<string> = ['Birth Sex', 'SIGI',
+    'Self-Identified Gender Identity'];
+  SIGI_HINTS: TArray<string> = ['Birth Sex: Sex assigned at birth',
+    'SIGI: Self-Identified Gender Identity', 'SIGI: Self-Identified Gender Identity'];
+
+  function SigiHintLong(ASystemParameters: TJSONParameters): string;
+
 var
   ScrollBarWidth: integer = 0;
 
 implementation
 
 uses
-  Windows;
+  System.SysUtils,
+  WinApi.Windows,
+  UWinMsgNames,
+  ORCtrls,
+  uPCE,
+  uPDMP,
+  mODAnatPathSpecimen,
+  uReminders;
+
+function SigiHintLong(ASystemParameters: TJSONParameters): string;
+begin
+  Result := SIGI_HINTS[2];
+  if not Assigned(ASystemParameters) then Exit;
+  for var I := 0 to ASystemParameters.CountItems('SelfIdentifiedGender') - 1 do
+  begin
+    Result := Result + #13#10'  ' + ASystemParameters.AsTypeDef<string>
+      (Format('SelfIdentifiedGender[%0:d].Gender', [I]), '');
+  end;
+end;
+
+procedure AddCustomWindowsMessages;
+begin
+  TWinMsgNames.Name[UM_SHOWPAGE] := 'UM_SHOWPAGE';
+  TWinMsgNames.Name[UM_NEWORDER] := 'UM_NEWORDER';
+  TWinMsgNames.Name[UM_TAKEFOCUS] := 'UM_TAKEFOCUS';
+  TWinMsgNames.Name[UM_CLOSEPROBLEM] := 'UM_CLOSEPROBLEM';
+  TWinMsgNames.Name[UM_PLFILTER] := 'UM_PLFILTER';
+  TWinMsgNames.Name[UM_PLLEX] := 'UM_PLLEX';
+  TWinMsgNames.Name[UM_RESIZEPAGE] := 'UM_RESIZEPAGE';
+  TWinMsgNames.Name[UM_DROPLIST] := 'UM_DROPLIST';
+  TWinMsgNames.Name[UM_DESTROY] := 'UM_DESTROY';
+  TWinMsgNames.Name[UM_DELAYEVENT] := 'UM_DELAYEVENT';
+  TWinMsgNames.Name[UM_INITIATE] := 'UM_INITIATE';
+  TWinMsgNames.Name[UM_RESYNCREM] := 'UM_RESYNCREM';
+  TWinMsgNames.Name[UM_STILLDELAY] := 'UM_STILLDELAY';
+  TWinMsgNames.Name[UM_EVENTOCCUR] := 'UM_EVENTOCCUR';
+  TWinMsgNames.Name[UM_NSSOTHER] := 'UM_NSSOTHER';
+  TWinMsgNames.Name[UM_MISC] := 'UM_MISC';
+  TWinMsgNames.Name[UM_REMINDERS] := 'UM_REMINDERS';
+  TWinMsgNames.Name[UM_508] := 'UM_508';
+  TWinMsgNames.Name[UM_ENCUPD] := 'UM_ENCUPD';
+  TWinMsgNames.Name[UM_PaPI] := 'UM_PaPI';
+  TWinMsgNames.Name[UM_SELECTPATIENT] := 'UM_SELECTPATIENT';
+  TWinMsgNames.Name[UM_ORDFLAGSTATUS] := 'UM_ORDFLAGSTATUS';
+  TWinMsgNames.Name[UM_ORDFLAGACTION] := 'UM_ORDFLAGACTION';
+  TWinMsgNames.Name[UM_ORDDESELECT] := 'UM_ORDDESELECT';
+  TWinMsgNames.Name[UM_TIMEOUT] := 'UM_TIMEOUT';
+  TWinMsgNames.Name[UM_ENABLENEXT] := 'UM_ENABLENEXT';
+  TWinMsgNames.Name[UM_SELECT] := 'UM_SELECT';
+  TWinMsgNames.Name[UM_UpdateRFN] := 'UM_UpdateRFN';
+  TWinMsgNames.Name[UM_OBJDESTROY] := 'UM_OBJDESTROY';
+  TWinMsgNames.Name[UM_NOTELIMIT] := 'UM_NOTELIMIT';
+
+  // Defined in uPCE
+  TWinMsgNames.Name[UM_VALIDATE_MAG] := 'UM_VALIDATE_MAG';
+
+  // Defined in uReminders
+  TWinMsgNames.Name[UM_MESSAGEBOX] := 'UM_MESSAGEBOX';
+
+  // Defined in mODAnatPathSpecimen
+  TWinMsgNames.Name[WM_TRACK_DESC] := 'WM_TRACK_DESC';
+
+  // Defined in uPDMP
+  TWinMsgNames.Name[UM_PDMP] := 'UM_PDMP';
+  TWinMsgNames.Name[UM_PDMP_Done] := 'UM_PDMP_Done';
+  TWinMsgNames.Name[UM_PDMP_Reviewed] := 'UM_PDMP_Reviewed';
+  TWinMsgNames.Name[UM_PDMP_Start] := 'UM_PDMP_Start';
+  TWinMsgNames.Name[UM_PDMP_Loading] := 'UM_PDMP_Loading';
+  TWinMsgNames.Name[UM_PDMP_Show] := 'UM_PDMP_Show';
+  TWinMsgNames.Name[UM_PDMP_Ready] := 'UM_PDMP_Ready';
+  TWinMsgNames.Name[UM_PDMP_Init] := 'UM_PDMP_Init';
+  TWinMsgNames.Name[UM_PDMP_NOTE_ID] := 'UM_PDMP_NOTE_ID';
+  TWinMsgNames.Name[UM_PDMP_ABORT] := 'UM_PDMP_ABORT';
+  TWinMsgNames.Name[UM_PDMP_CANCEL] := 'UM_PDMP_CANCEL';
+  TWinMsgNames.Name[UM_PDMP_Error] := 'UM_PDMP_Error';
+  TWinMsgNames.Name[UM_PDMP_Options] := 'UM_PDMP_Options';
+  TWinMsgNames.Name[UM_PDMP_WebError] := 'UM_PDMP_WebError';
+  TWinMsgNames.Name[UM_PDMP_Refresh] := 'UM_PDMP_Refresh';
+  TWinMsgNames.Name[UM_PDMP_Closed] := 'UM_PDMP_Closed';
+  TWinMsgNames.Name[UM_PDMP_Disable] := 'UM_PDMP_Disable';
+  TWinMsgNames.Name[UM_PDMP_Enable] := 'UM_PDMP_Enable';
+
+  // Defined in ORFn and U_CPTCommon
+  TWinMsgNames.Name[UM_STATUSTEXT] := 'UM_STATUSTEXT';
+  // Defined in ORCtrls
+  TWinMsgNames.Name[UM_SHOWTIP] := 'UM_SHOWTIP';
+  TWinMsgNames.Name[UM_GOTFOCUS] := 'UM_GOTFOCUS';
+end;
 
 initialization
   ScrollBarWidth := GetSystemMetrics(SM_CXVSCROLL);
+  AddCustomWindowsMessages;
 
 end.

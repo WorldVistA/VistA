@@ -8,11 +8,8 @@ inherited frmTimeout: TfrmTimeout
   ClientWidth = 270
   FormStyle = fsStayOnTop
   Position = poScreenCenter
-  OnCreate = FormCreate
-  OnShow = FormShow
-  ExplicitWidth = 276
-  ExplicitHeight = 224
-  PixelsPerInch = 96
+  ExplicitWidth = 282
+  ExplicitHeight = 230
   TextHeight = 13
   object pnlTop: TPanel [0]
     Left = 0
@@ -69,8 +66,8 @@ inherited frmTimeout: TfrmTimeout
       Height = 25
       Anchors = [akLeft, akTop, akBottom]
       Caption = 'Close CPRS'
+      ModalResult = 1
       TabOrder = 1
-      OnClick = btnCloseClick
     end
     object cmdContinue: TButton
       Left = 71
@@ -81,8 +78,8 @@ inherited frmTimeout: TfrmTimeout
       Cancel = True
       Caption = 'Don'#39't Close CPRS'
       Default = True
+      ModalResult = 2
       TabOrder = 0
-      OnClick = cmdContinueClick
     end
     object lblCount: TStaticText
       Left = 8

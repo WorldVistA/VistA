@@ -3,6 +3,7 @@ unit fBase508Form;
 interface
 
 uses
+  UORForm,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, ORFn,
   Dialogs, StdCtrls, ExtCtrls, VA508AccessibilityManager, OR2006Compatibility, uConst;
 
@@ -12,7 +13,7 @@ type
   TAccessibilityActions = set of TAccessibilityAction;
 
 type
-  TfrmBase508Form = class(TForm, IORKeepBounds)
+  TfrmBase508Form = class(TORForm, IORKeepBounds)
     amgrMain: TVA508AccessibilityManager;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     function FormHelp(Command: Word; Data: NativeInt;

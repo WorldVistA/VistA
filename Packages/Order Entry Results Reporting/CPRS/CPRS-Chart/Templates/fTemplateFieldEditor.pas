@@ -3,6 +3,7 @@ unit fTemplateFieldEditor;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ORCtrls, StdCtrls, ExtCtrls, Menus, ComCtrls, uTemplateFields, ORFn,
   ToolWin, ORClasses, ORDtTm, fBase508Form, VA508AccessibilityManager,
@@ -30,7 +31,7 @@ type
     edtLMText: TCaptionEdit;
     cbxType: TORComboBox;
     lblType: TLabel;
-    reNotes: TRichEdit;
+    reNotes: ORExtensions.TRichEdit;
     btnApply: TButton;
     btnPreview: TButton;
     cbHide: TCheckBox;
@@ -66,7 +67,7 @@ type
     lblMaxVal: TLabel;
     edtMaxVal: TCaptionEdit;
     udMaxVal: TUpDown;
-    reItems: TRichEdit;
+    reItems: ORExtensions.TRichEdit;
     lblLength: TLabel;
     edtLen: TCaptionEdit;
     udLen: TUpDown;

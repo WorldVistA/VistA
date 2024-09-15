@@ -47,6 +47,7 @@ type
     function getNumberOfMissingFields(aParent: TWinControl): Integer;
     procedure AddFieldControl(aFld: TTemplateField; aControl: TWinControl;
       anID: string);
+    procedure RemoveChildFieldControls(aControl: TWinControl);
     function RequiredFields2Str: string;
     procedure FindFocusedControl(aCtrl:TWinControl);
   end;
@@ -141,6 +142,25 @@ begin
     ss := ss + U + ' ' + _not_Required_;
 
   fRequiredFields.AddObject(ss, aFld);
+end;
+
+procedure TdmRF.RemoveChildFieldControls(aControl: TWinControl);
+var
+  ctrlID: string;
+  cc: integer;
+begin
+  ctrlID := 'CTRL:' + IntToStr(Integer(aControl));
+  for cc := 0 to fRequiredFields.Count - 1 do
+  begin
+    if Piece(fRequiredFields[cc], U, 1) = ctrlID then
+    begin
+      fRequiredFields.Delete(cc);
+      break;
+    end;
+  end;
+  for cc := 0 to aControl.ControlCount - 1 do
+    if aControl.Controls[cc] is TWinControl then
+      RemoveChildFieldControls(TWinControl(aControl.Controls[cc]));
 end;
 
 /// ///////////////////////////////////////////////////////////////////////////

@@ -30,10 +30,12 @@ uses
   Vcl.StdCtrls,
   Vcl.ExtCtrls,
   System.Actions,
-  Vcl.ActnList;
+  Vcl.ActnList,
+  fBase508Form,
+  VA508AccessibilityManager;
 
 type
-  TfrmWVEIEReasonsDlg = class(TForm)
+  TfrmWVEIEReasonsDlg = class(TfrmBase508Form)
     btnCancel: TButton;
     btnOK: TButton;
     chkbxOther: TCheckBox;

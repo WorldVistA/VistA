@@ -3,6 +3,7 @@ unit fOrderComment;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fAutoSz, StdCtrls, ComCtrls, ORFn, rOrders, VA508AccessibilityManager;
 
@@ -12,7 +13,7 @@ type
     cmdOK: TButton;
     cmdCancel: TButton;
     memOrder: TMemo;
-    memComments: TRichEdit;
+    memComments: ORExtensions.TRichEdit;
     procedure FormCreate(Sender: TObject);
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);

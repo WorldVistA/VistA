@@ -7,22 +7,22 @@ unit fODAllergyCheck;
 interface
 
 uses
+  ORExtensions,
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, ORFn, ORNet, rOrders, fODBase,
   Winapi.RichEdit, ShellAPI, Vcl.ExtCtrls, fBase508Form, VA508AccessibilityManager, Vcl.ComCtrls;
 
 type
-  TfrmAllergyCheck = class(TForm)
+  TfrmAllergyCheck = class(TfrmBase508Form)
     btnContinue: TButton;
     btnCancel: TButton;
-    amgrMain : TVA508AccessibilityManager;
     pnlBUttons: TPanel;
     Panel1: TPanel;
     lblOverride: TLabel;
     lblComment: TLabel;
     cbAllergyReason: TComboBox;
     cbComment: TComboBox;
-    reInfo: TRichEdit;
+    reInfo: ORExtensions.TRichEdit;
     procedure cbAllergyReasonChange(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure AdjustButtonSize(pButton: TButton);

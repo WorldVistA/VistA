@@ -127,7 +127,6 @@ inherited frmAbout: TfrmAbout
     Height = 199
     Align = alClient
     BevelOuter = bvNone
-    Caption = 'pnlTop'
     ShowCaption = False
     TabOrder = 0
     object pnlLogo: TPanel

@@ -288,9 +288,12 @@ procedure TfrmODActive.hdControlSectionResize(
   HeaderControl: THeaderControl; Section: THeaderSection);
 begin
   inherited;
-  RedrawSuspend(Self.Handle);
-  RedrawActiveList;
-  RedrawActivate(Self.Handle);
+  LockDrawing;
+  try
+    RedrawActiveList;
+  finally
+    UnlockDrawing;
+  end;
   lstActiveOrders.Invalidate;
 end;
 
@@ -301,18 +304,22 @@ var
 begin
   with lstActiveOrders do
   begin
-    RedrawSuspend(Handle);
-    SaveTop := TopIndex;
-    Clear;
-    for i := 0 to ActiveOrderList.Count - 1 do
-    begin
-      AnOrder := TOrder(ActiveOrderList.Items[i]);
-      if (AnOrder.ID = FDefaultEventOrder) or (IsDCedOrder(AnOrder.ID)) then
-        Continue;
-      Items.AddObject(AnOrder.ID, AnOrder);
+    LockDrawing;
+    try
+      SaveTop := TopIndex;
+      Clear;
+      for i := 0 to ActiveOrderList.Count - 1 do
+      begin
+        AnOrder := TOrder(ActiveOrderList.Items[i]);
+        if (AnOrder.ID = FDefaultEventOrder) or (IsDCedOrder(AnOrder.ID)) then
+          Continue;
+        Items.AddObject(AnOrder.ID, AnOrder);
+      end;
+      TopIndex := SaveTop;
+    finally
+      UnlockDrawing;
     end;
-    TopIndex := SaveTop;
-    RedrawActivate(Handle);
+
   end;
 end;
 

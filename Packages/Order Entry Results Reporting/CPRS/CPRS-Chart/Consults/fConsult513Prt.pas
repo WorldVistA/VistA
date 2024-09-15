@@ -3,6 +3,7 @@ unit fConsult513Prt;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fAutoSz, ORCtrls, StdCtrls, Mask, ORNet, ORFn, ComCtrls,
   VA508AccessibilityManager, uReports, Vcl.ExtCtrls, uPrinting;
@@ -39,7 +40,7 @@ type
   private
     { Private declarations }
     FConsult: Integer;
-    FReportText: TRichEdit;
+    FReportText: ORExtensions.TRichEdit;
     procedure DisplaySelectDevice;
   public
     { Public declarations }

@@ -1,4 +1,4 @@
-object frmNoteCPFields: TfrmNoteCPFields
+inherited frmNoteCPFields: TfrmNoteCPFields
   Left = 508
   Top = 307
   Caption = 'Enter Required Fields'
@@ -21,7 +21,6 @@ object frmNoteCPFields: TfrmNoteCPFields
     Width = 275
     Height = 179
     Align = alClient
-    Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 1
     object lblAuthor: TLabel
@@ -143,7 +142,6 @@ object frmNoteCPFields: TfrmNoteCPFields
     Height = 31
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'Panel2'
     ShowCaption = False
     TabOrder = 0
     object cmdCancel: TButton

@@ -9,7 +9,16 @@ unit rCore;
 
 interface
 
-uses SysUtils, Classes, Forms, ORNet, ORFn, ORClasses, system.JSON, ORCtrls, UJSONParameters;
+uses
+  SysUtils,
+  Classes,
+  Forms,
+  ORNet,
+  ORFn,
+  ORClasses,
+  system.JSON,
+  ORCtrls,
+  UORJSONParameters;
 
 { record types used to return data from the RPC's.  Generally, the delimited strings returned
   by the RPC are mapped into the records defined below. }
@@ -65,6 +74,12 @@ type
     Vet: string;
     Location: string;
     RoomBed: string;
+    SIGI: string; // NSR#20130305
+    Attending: string;
+    PrimaryCareProvider: string;      // NSR 20131005 SDS July 2017
+    PrimaryInpatientProvider: string; // NSR 20131005 SDS July 2017
+    LastVisitLocation: string;        // NSR 20131005 SDS July 2017
+    LastVisitDate: string;            // NSR 20131005 SDS July 2017
   end;
 
   TPtSelect = record // record for ORWPT SELECT
@@ -92,6 +107,8 @@ type
     Attending: string;
     Associate: string;
     InProvider: string;
+    SIGI: String; // NSR#20130305
+    Pronoun: string;
   end;
 
   TEncounterText = record // record for ORWPT ENCTITL
@@ -130,7 +147,7 @@ function setSubSetOfActiveAndInactivePersons(AORComboBox: TORComboBox;
 
 function SubsetOfPatientsWithSimilarSSNs(aDest:TStrings; aDFN: String): Integer;
 function GetDefaultPrinter(DUZ: Int64; Location: Integer): string;
-function CreateSysUserParameters(DUZ: Int64): TJsonParameters;
+function CreateSysUserParameters(DUZ: Int64): TORJSONParameters;
 
 { User specific calls }
 
@@ -577,17 +594,10 @@ end;
 
 procedure LoadProcessedNotifications(var Dest: TStrings;
   DateFrom, DateTo, MaxNumber, ProcessedOnly: String);
-var
-  tmplst: TStringList;
 begin
-  tmplst := TStringList.Create;
-  try
-    // UpdateUnsignedOrderAlerts(Patient.DFN);      //moved to AFTER signature and DC actions
-    CallVistA('ORWORB PROUSER', [DateFrom, DateTo, MaxNumber,
-      ProcessedOnly], Dest);
-  finally
-    tmplst.Free;
-  end;
+  // UpdateUnsignedOrderAlerts(Patient.DFN);      //moved to AFTER signature and DC actions
+  CallVistA('ORWORB PROUSER', [DateFrom, DateTo, MaxNumber,
+    ProcessedOnly], Dest);
 end;
 
 function IsSmartAlert(notIEN: Integer): Boolean;
@@ -800,7 +810,7 @@ end;
 function SubsetOfPatientsWithSimilarSSNs(aDest: TStrings;aDFN: String): Integer;
 { returns a pointer to a list of patients that has similar SSNs }
 begin
-  CallVistA('DG CHK BS5 XREF ARRAY', [aDFN], aDest);
+  CallVistA('ORWPT2 LOOKUP', [aDFN], aDest);
   Result := aDest.Count;
 end;
 
@@ -1236,43 +1246,48 @@ function GetPtIDInfo(const DFN: string): TPtIDInfo; // *DFN*
 { returns the identifiers displayed upon patient selection
   Pieces: SSN[1]^DOB[2]^SEX[3]^VET[4]^SC%[5]^WARD[6]^RM-BED[7]^NAME[8] }
 var
-  x: string;
+  S: string;
 begin
-  CallVistA('ORWPT ID INFO', [DFN], x);
-  with Result do // map string into TPtIDInfo record
-  begin
-    Name := MixedCase(Piece(x, U, 8)); // Name
-    SSN := Piece(x, U, 1);
-    DOB := Piece(x, U, 2);
-    Age := '';
-    if IsSSN(SSN) then
-      SSN := FormatSSN(Piece(x, U, 1)); // SSN (PID)
-    if IsFMDate(DOB) then
-      DOB := FormatFMDateTimeStr('mmm dd,yyyy', DOB); // Date of Birth
-    // Age := IntToStr(CalcAge(MakeFMDateTime(Piece(x, U, 2))));            // Age
-    Sex := Piece(x, U, 3); // Sex
-    if Length(Sex) = 0 then
-      Sex := 'U';
-    case Sex[1] of
-      'F', 'f':
-        Sex := 'Female';
-      'M', 'm':
-        Sex := 'Male';
-    else
-      Sex := 'Unknown';
-    end;
-    if Piece(x, U, 4) = 'Y' then
-      Vet := 'Veteran'
-    else
-      Vet := ''; // Veteran?
-    if Length(Piece(x, U, 5)) > 0 // % Service Connected
-    then
-      SCSts := Piece(x, U, 5) + '% Service Connected'
-    else
-      SCSts := '';
-    Location := Piece(x, U, 6); // Inpatient Location
-    RoomBed := Piece(x, U, 7); // Inpatient Room-Bed
+  // First, do the legacy RPC
+  CallVistA('ORWPT ID INFO', [DFN], S);
+  // map string into TPtIDInfo record
+  Result.Name := MixedCase(Piece(S, U, 8)); // Name
+  Result.SSN := Piece(S, U, 1);
+  Result.DOB := Piece(S, U, 2);
+  Result.Age := '';
+  if IsSSN(Result.SSN) then
+    Result.SSN := FormatSSN(Result.SSN); // SSN (PID)
+  if IsFMDate(Result.DOB) then
+    Result.DOB := FormatFMDateTimeStr('mmm dd,yyyy', Result.DOB); // Date of Birth
+  Result.Sex := Piece(S, U, 3); // Sex
+  if Length(Result.Sex) = 0 then
+    Result.Sex := 'U';
+  case Result.Sex[1] of
+    'F', 'f': Result.Sex := 'Female';
+    'M', 'm': Result.Sex := 'Male';
+  else Result.Sex := 'Unknown';
   end;
+  if Piece(S, U, 4) = 'Y' then
+    Result.Vet := 'Veteran'
+  else
+    Result.Vet := ''; // Veteran?
+  if Length(Piece(S, U, 5)) > 0 // % Service Connected
+  then
+    Result.SCSts := Piece(S, U, 5) + '% Service Connected'
+  else
+    Result.SCSts := '';
+  Result.Location := Piece(S, U, 6); // Inpatient Location
+  Result.RoomBed := Piece(S, U, 7); // Inpatient Room-Bed
+  Result.SIGI := Piece(S, U, 9); // NSR#20130305
+  Result.Attending := Piece(S, U, 10); // Attending Physician
+  // NSR 20131005 SDS July 2017
+  // Second, run a new RPC that returns additional info requested by Patient Safety
+  // M developer explained a second call was the cleanest way to safely obtain data
+  CallVistA('ORWPT2 ID INFO', [DFN], S);            // NSR 20131005 SDS July 2017
+  Result.PrimaryInpatientProvider:= Piece(S, U, 1); // NSR 20131005 SDS July 2017
+  Result.PrimaryCareProvider:= Piece(S, U, 2);      // NSR 20131005 SDS July 2017
+  Result.LastVisitLocation:= Piece(S, U, 3);        // NSR 20131005 SDS July 2017
+  Result.LastVisitDate:= Piece(S, U, 4);            // NSR 20131005 SDS July 2017
 end;
 
 function HasLegacyData(const DFN: string; var AMsg: string): Boolean;
@@ -1339,7 +1354,8 @@ end;
 procedure SelectPatient(const DFN: string; var PtSelect: TPtSelect); // *DFN*
 { selects the patient (updates DISV, calls Pt Select actions) & returns key fields
   Pieces: NAME[1]^SEX[2]^DOB[3]^SSN[4]^LOCIEN[5]^LOCNAME[6]^ROOMBED[7]^CWAD[8]^SENSITIVE[9]^
-  ADMITTIME[10]^CONVERTED[11]^SVCONN[12]^SC%[13]^ICN[14]^Age[15]^TreatSpec[16] }
+  ADMITTIME[10]^CONVERTED[11]^SVCONN[12]^SC%[13]^ICN[14]^Age[15]^TreatSpec[16]^
+  SpecialtySvc[17]^SIGI[18]^ProNoun[19] }
 var
   x: string;
 begin
@@ -1353,6 +1369,8 @@ begin
     DOB := MakeFMDateTime(Piece(x, U, 3));
     Age := StrToIntDef(Piece(x, U, 15), 0);
     // Age := CalcAge(DOB, DateOfDeath(DFN));
+    SIGI := Piece(x, U, 18); // NSR#20130305
+    Pronoun := Piece(x, U, 19);
     if Length(Piece(x, U, 2)) > 0 then
       Sex := Piece(x, U, 2)[1]
     else
@@ -1584,12 +1602,12 @@ begin
   CallVistA('ORWRP GET DEFAULT PRINTER', [DUZ, Location], Result);
 end;
 
-function CreateSysUserParameters(DUZ: Int64): TJsonParameters;
+function CreateSysUserParameters(DUZ: Int64): TORJSONParameters;
 var
   AReturn: string;
 begin
   CallVistA('ORWU SYSPARAM', [DUZ], AReturn);
-  Result := TJSONParameters.Create(AReturn);
+  Result := TORJSONParameters.Create(AReturn);
 end;
 
 end.

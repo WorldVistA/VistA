@@ -3,6 +3,7 @@ unit fEditProc;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ORCtrls, ExtCtrls, ComCtrls, ORfn, uConst, uConsults, Buttons,
   Menus, fAutoSz, ORDtTm, VA508AccessibilityManager, fBase508Form;
@@ -13,7 +14,7 @@ type
     cmdQuit: TButton;
     pnlMessage: TPanel;
     imgMessage: TImage;
-    memMessage: TRichEdit;
+    memMessage: ORExtensions.TRichEdit;
     pnlMain: TPanel;
     lblProc: TLabel;
     lblReason: TLabel;
@@ -25,7 +26,7 @@ type
     lblAttn: TStaticText;
     lblProvDiag: TStaticText;
     lblInpOutp: TStaticText;
-    memReason: TRichEdit;
+    memReason: ORExtensions.TRichEdit;
     cboUrgency: TORComboBox;
     radInpatient: TRadioButton;
     radOutpatient: TRadioButton;
@@ -35,7 +36,7 @@ type
     cboProc: TORComboBox;
     cboCategory: TORComboBox;
     cboService: TORComboBox;
-    memComment: TRichEdit;
+    memComment: ORExtensions.TRichEdit;
     btnCmtCancel: TButton;
     btnCmtOther: TButton;
     cmdLexSearch: TButton;
@@ -184,6 +185,7 @@ begin
     NewRec.Clear;
     Defaults.Free;
     frmEditProc.Release;
+    frmEditProc := nil;
   end;
 end;
 

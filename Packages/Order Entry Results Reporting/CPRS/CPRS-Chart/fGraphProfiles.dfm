@@ -94,7 +94,6 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Height = 32
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 2
     object lblUser: TLabel

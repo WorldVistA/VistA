@@ -3,6 +3,7 @@ unit fPatientFlagMulti;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, fAutoSz, ORCtrls, ExtCtrls, ComCtrls, rMisc, fBase508Form,
   VA508AccessibilityManager;
@@ -28,7 +29,7 @@ type
     Splitter1: TSplitter;
     lblFlags: TLabel;
     lstFlagsCat2: TORListBox;
-    memFlags: TRichEdit;
+    memFlags: ORExtensions.TRichEdit;
     pnlNotes: TPanel;
     lvPRF: TCaptionListView;
     lblNoteTitle: TLabel;
@@ -79,7 +80,7 @@ procedure ShowFlags(FlagId: integer = 0);
 
 implementation
 
-uses uCore,uOrPtf,ORFn, ORNet, uConst, fRptBox, rCover;
+uses uCore,uOrPtf,ORFn, ORNet, uConst, fRptBox, rCover, VAUtils;
 {$R *.dfm}
 
 procedure ShowFlags(FlagId: integer);
@@ -309,7 +310,10 @@ begin
     idx := SelectedList.SelectByIEN(FFlagId);
   SelectedList.ItemIndex := idx;
   SelectedList.OnClick(Self);
-  ActiveControl := memFlags;
+  if ScreenReaderActive then
+    ActiveControl := SelectedList
+  else
+    ActiveControl := memFlags;
   GetNotes(SelectedList);
 end;
 

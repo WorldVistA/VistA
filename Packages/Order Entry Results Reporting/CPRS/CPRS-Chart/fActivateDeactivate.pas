@@ -60,6 +60,7 @@ begin
     ResizeAnchoredFormToFont(frmActivateDeactive);
     frmActivateDeactive.ShowModal;
     frmActivateDeactive.Release;
+    frmActivateDeactive := nil;
 end;
 
 procedure TfrmActivateDeactive.fActivateDeactive(OrderID: TStringList);

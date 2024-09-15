@@ -94,7 +94,6 @@ object pdmpView: TpdmpView
     Width = 1024
     Height = 374
     Align = alClient
-    Caption = 'pnlCanvas'
     ShowCaption = False
     TabOrder = 0
     object splBrowser: TSplitter

@@ -54,6 +54,7 @@ type
     procedure DstMgrbtnLaunchToolboxClick(Sender: TObject); { **REV** }
     procedure ControlChange(Sender: TObject);
     procedure btnLaunchToolboxClick(Sender: TObject);
+    procedure ORFormResize(Sender: TObject);
   private
     FActionType: Integer;
     FChanged: boolean;
@@ -91,6 +92,7 @@ type
     procedure setForward(bVisible: boolean);
     procedure setSigFindings(bVisible: boolean);
     procedure SetDstButton(action: integer);
+    function ResizeLabels(aLabelObject: TObject) : TRect;
   end;
 
 function SetActionContext(FontSize: Integer; ActionCode: Integer;
@@ -129,7 +131,6 @@ uses
 
 var
   uChanging: boolean;
-  frmConsultAction: TfrmConsultAction;
   RecipientList: TRecipientList;
 
 const
@@ -139,6 +140,8 @@ function SetActionContext(FontSize: Integer; ActionCode: Integer;
   IsProcedure: boolean; ProcID: string; UserLevel: Integer;
   ConsService: string; ConsultUrgency: string): boolean;
 { displays action input form for consults and sets up broker calls }
+var
+  frmConsultAction: TfrmConsultAction;
 begin
   Result := False;
   frmConsultAction := TfrmConsultAction.Create(Application);
@@ -422,6 +425,18 @@ begin
   finally
     sl.Free;
   end;
+end;
+
+procedure TfrmConsultAction.ORFormResize(Sender: TObject);
+var
+  ARect: TRect;
+begin
+  if FActionType = CN_ACT_ADD_CMT then
+  begin
+    aRect := ResizeLabels(lblAutoAlerts);
+    lblAutoAlerts.Height := aRect.Height;
+  end;
+  inherited;
 end;
 
 procedure TfrmConsultAction.ProviderNeedData(Sender: TObject;
@@ -765,6 +780,9 @@ const
   TX_ALERT_SVC_USERS = 'notification recipients for this service.';
   TX_ALERT_NOBODY = 'No automatic alerts will be sent.';
   // this should be rare to never
+  TX_ALERT_ADD_CMT ='Only alert Providers when their action is required.'
+      + CRLF + '++ NOTE: To alert Provider use "Send additional alerts" ' +
+      'option below, or use Significant Findings. ++';
 var
   b: boolean;
   x: string;
@@ -797,6 +815,17 @@ begin
           x := TX_ALERT1 + TX_ALERT_PROVIDER + ' and to ' + TX_ALERT_SVC_USERS;
       end;
   end;
+  (*Alter caption text when adding a comment to a consult. Addresses a patient
+    safety issue when comments are added to a consult and the caption
+    implies that the ordering provider will automatically receive the alert.
+    HITPS-2453*)
+  if (FActionType = CN_ACT_ADD_CMT) then
+    begin
+      if ScreenReaderActive then
+        x := StringReplace(TX_ALERT_ADD_CMT,'++','',[rfReplaceAll])
+      else
+        x := TX_ALERT_ADD_CMT;
+    end;
   Result := x;
 end;
 
@@ -816,8 +845,41 @@ begin
   if bVisible then
   begin
     lblAutoAlerts.Caption := getAutoAlertText;
+    //Two lines of alert text for add comment; see getAutoAlertText
     pnlAlert.Height := ckAlert.Height + lblAutoAlerts.Height + 6;
   end;
+end;
+
+function TfrmConsultAction.ResizeLabels(aLabelObject: TObject) : TRect;
+var
+  aDummyLbl: TLabel;
+  lText: String;
+begin
+  aDummyLbl := TLabel.Create(self);
+  try
+    if aLabelObject is TStaticText then
+    begin
+      aDummyLbl.Parent := TStaticText(aLabelObject).Parent;
+      aDummyLbl.Align := alClient;
+      aDummyLbl.Caption := TStaticText(aLabelObject).Caption;
+      aDummyLbl.WordWrap := True;
+    end else if aLabelObject is TLabel then
+    begin
+      aDummyLbl.Parent := TLabel(aLabelObject).Parent;
+      aDummyLbl.Align := alClient;
+      aDummyLbl.Caption := TLabel(aLabelObject).Caption;
+      aDummyLbl.WordWrap := True;
+    end else raise Exception.Create('aLabelObject is not TStaticText or Tlabel');
+
+    lText := aDummyLbl.Caption;
+    Result.Left := 0;
+    Result.Right := aDummyLbl.Width;
+    Result.Top := 0;
+    Result.Bottom := 0;
+    aDummyLbl.Canvas.TextRect(Result, lText, [tfCalcRect, tfWordBreak]);
+  Finally
+    aDummyLbl.Free;
+  End;
 end;
 
 procedure TfrmConsultAction.setActions(bVisible: boolean; aTitle: String = '');

@@ -3,6 +3,7 @@ unit fReminderDialog;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ExtCtrls, ORFn, StdCtrls, ComCtrls, Buttons, ORCtrls, uReminders, uConst,
   ORClasses, fRptBox, Menus, rPCE, uTemplates, fBase508Form, System.Generics.Collections,
@@ -17,8 +18,8 @@ type
     pnlFrmBottom: TPanel;
     pnlBottom: TPanel;
     splText: TSplitter;
-    reData: TRichEdit;
-    reText: TRichEdit;
+    reData: ORExtensions.TRichEdit;
+    reText: ORExtensions.TRichEdit;
     lblFootnotes: TLabel;
     gpButtons: TGridPanel;
     btnClear: TButton;
@@ -739,83 +740,96 @@ var
     end;
   end;
 
+var
+  LockedDrawingSetOnCurrentBox: Boolean;
 begin
-  if BuildAll then
-    Lock;
+  LockedDrawingSetOnCurrentBox := False;
   try
-    if (assigned(FReminder)) then
-    begin
-      CurrentBox := GetBox(TRUE);
-      Y := CurrentBox.VertScrollBar.Position;
-      if BuildAll then
-      begin
-        WorkBox := GetBox;
-        ClearControls;
-      end
-      else
-      begin
-        WorkBox := CurrentBox;
-        RedrawSuspend(CurrentBox.Handle);
-        CurrentBox.Invalidate;
-      end;
-      try
-        WorkBox.HorzScrollBar.Position := 0;
-        WorkBox.VertScrollBar.Position := 0;
-        if FProcessingTemplate then
-          txt := 'Reminder Dialog Template'
-        else
-          txt := 'Reminder Resolution';
-        Caption := txt + ': ' + FReminder.PrintName;
-        FReminder.OnNeedRedraw := nil;
-        ParentWidth := CurrentBox.Width - ScrollBarWidth - 6;
-        SetActiveVars(ActiveControl);
-        AutoCtrl := FReminder.BuildControls(ParentWidth, WorkBox, Self, BuildAll);
-        WorkBox.HorzScrollBar.Position := 0;
-        WorkBox.VertScrollBar.Position := Y;
-      finally
-        if BuildAll then
-          BoxUpdateDone
-        else
-          RedrawActivate(CurrentBox.Handle);
-      end;
-      if (LastCB <> 0) and (BuildAll or (assigned(AutoCtrl) and (ActiveControl <> AutoCtrl))) then
+    if BuildAll then
+      Lock;
+    try
+      if (assigned(FReminder)) then
       begin
         CurrentBox := GetBox(TRUE);
-        if assigned(AutoCtrl) then
+        Y := CurrentBox.VertScrollBar.Position;
+        if BuildAll then
         begin
-          if assigned(AutoCtrl.Parent) then
-          begin
-            AutoCtrl.SetFocus;
-            if (AutoCtrl is TORComboBox) then
-              TORComboBox(AutoCtrl).DroppedDown := TRUE;
-          end
-          else
-            ShowMessage('No Parent Control assigned');
+          WorkBox := GetBox;
+          ClearControls;
         end
         else
-          for i := 0 to ComponentCount - 1 do
-          begin
-            if (IsOnBox(Components[i])) then
+        begin
+          WorkBox := CurrentBox;
+          CurrentBox.LockDrawing;
+          LockedDrawingSetOnCurrentBox := True;
+          CurrentBox.Invalidate;
+        end;
+        try
+          WorkBox.HorzScrollBar.Position := 0;
+          WorkBox.VertScrollBar.Position := 0;
+          if FProcessingTemplate then
+            txt := 'Reminder Dialog Template'
+          else
+            txt := 'Reminder Resolution';
+          Caption := txt + ': ' + FReminder.PrintName;
+          FReminder.OnNeedRedraw := nil;
+          ParentWidth := CurrentBox.Width - ScrollBarWidth - 6;
+          SetActiveVars(ActiveControl);
+          AutoCtrl := FReminder.BuildControls(ParentWidth, WorkBox, Self, BuildAll);
+          WorkBox.HorzScrollBar.Position := 0;
+          WorkBox.VertScrollBar.Position := Y;
+        finally
+          if BuildAll then
+            BoxUpdateDone
+          else
+            if LockedDrawingSetOnCurrentBox then
             begin
-              Ctrl := TWinControl(Components[i]);
-              if (Ctrl is TORCheckBox) and (Ctrl.Tag = LastCB) then
+              CurrentBox.UnlockDrawing;
+              LockedDrawingSetOnCurrentBox := False;
+            end;
+        end;
+        if (LastCB <> 0) and (BuildAll or (assigned(AutoCtrl) and (ActiveControl <> AutoCtrl))) then
+        begin
+          CurrentBox := GetBox(TRUE);
+          if assigned(AutoCtrl) then
+          begin
+            if assigned(AutoCtrl.Parent) then
+            begin
+              AutoCtrl.SetFocus;
+              if (AutoCtrl is TORComboBox) then
+                TORComboBox(AutoCtrl).DroppedDown := TRUE;
+            end
+            else
+              ShowMessage('No Parent Control assigned');
+          end
+          else
+            for i := 0 to ComponentCount - 1 do
+            begin
+              if (IsOnBox(Components[i])) then
               begin
-                if ((i + LastObjCnt) < ComponentCount) and
-                  (Components[i + LastObjCnt] is TWinControl) then
-                  TWinControl(Components[i + LastObjCnt]).SetFocus;
-                break;
+                Ctrl := TWinControl(Components[i]);
+                if (Ctrl is TORCheckBox) and (Ctrl.Tag = LastCB) then
+                begin
+                  if ((i + LastObjCnt) < ComponentCount) and
+                    (Components[i + LastObjCnt] is TWinControl) then
+                    TWinControl(Components[i + LastObjCnt]).SetFocus;
+                  break;
+                end;
               end;
             end;
-          end;
+        end;
+        if BuildAll then
+          ClearControls;
+        FReminder.OnNeedRedraw := ControlsChanged;
+        FReminder.OnTextChanged := UpdateText;
       end;
+    finally
       if BuildAll then
-        ClearControls;
-      FReminder.OnNeedRedraw := ControlsChanged;
-      FReminder.OnTextChanged := UpdateText;
+        Unlock;
     end;
   finally
-    if BuildAll then
-      Unlock;
+    if LockedDrawingSetOnCurrentBox then
+      CurrentBox.UnlockDrawing;
   end;
 end;
 
@@ -854,7 +868,7 @@ begin
       if tryCount > 3 then
         raise
       else
-        TResponsiveGUI.ProcessMessages(True);
+        TResponsiveGUI.ProcessMessages;
     end;
   until Done;
   FUseBox2 := not FUseBox2;
@@ -957,7 +971,6 @@ end;
 procedure TfrmRemDlg.UpdateText(Sender: TObject);
 const
   BadType = TPCEDataCat(-1);
-
 var
   TopIdx, i, LastPos, CurPos, TxtStart: Integer;
   Cat, LastCat: TPCEDataCat;
@@ -965,9 +978,9 @@ var
   TmpData: TORStringList;
   Bold: Boolean;
   tmp: string;
-
+  AStringList: TStringList;
 begin
-  RedrawSuspend(reText.Handle);
+  reText.LockDrawing;
   try
     TopIdx := SendMessage(reText.Handle, EM_GETFIRSTVISIBLELINE, 0, 0);
     reText.Clear;
@@ -979,9 +992,15 @@ begin
         Rem := FReminder
       else
         Rem := TReminder(RemindersInProcess.Objects[i]);
-      if assigned(Rem) then
+      if Assigned(Rem) then
       begin
-        Rem.AddText(reText.Lines);
+        AStringList := TStringList.Create;
+        try
+          Rem.AddText(AStringList);
+          reText.AddString(AStringList.Text);
+        finally
+          FreeAndNil(AStringList);
+        end;
         reText.SelStart := MaxInt;
         CurPos := reText.SelStart;
         if (Rem = FReminder) then
@@ -999,7 +1018,7 @@ begin
     until (FProcessingTemplate or (i >= RemindersInProcess.Count));
     if ((not FProcessingTemplate) and (reText.Lines.Count > 0)) then
     begin
-      reText.Lines.Insert(0, ClinRemText(RemForm.PCEObj.Location));
+      reText.InsertStringBefore(ClinRemText(RemForm.PCEObj.Location) + #13#10);
       reText.SelStart := 0;
       reText.SelLength := length(ClinRemText(RemForm.PCEObj.Location));
       reText.SelAttributes.Style := reText.SelAttributes.Style - [fsBold];
@@ -1008,7 +1027,7 @@ begin
     end;
     SendMessage(reText.Handle, EM_LINESCROLL, 0, TopIdx);
   finally
-    RedrawActivate(reText.Handle);
+    reText.UnlockDrawing;
   end;
 
   TmpData := TORStringList.Create;
@@ -1030,7 +1049,7 @@ begin
     if (tmp = '') and (i = 0) then
       reData.Lines.Insert(0, TX_NOPCE);
     TmpData.Sort;
-    RedrawSuspend(reData.Handle);
+    reData.LockDrawing;
     try
       TopIdx := SendMessage(reData.Handle, EM_GETFIRSTVISIBLELINE, 0, 0);
       reData.SelAttributes.Style := reData.SelAttributes.Style - [fsBold];
@@ -1075,7 +1094,7 @@ begin
       end;
       SendMessage(reData.Handle, EM_LINESCROLL, 0, TopIdx);
     finally
-      RedrawActivate(reData.Handle);
+      reData.UnlockDrawing;
     end;
   finally
     TmpData.Free;
@@ -1392,15 +1411,15 @@ begin
     except
       Inc(ACount);
       if ACount > 3 then raise;
-      TResponsiveGUI.ProcessMessages(True);
+      TResponsiveGUI.ProcessMessages;
       NeedsRetry := True;
     end;
   until not NeedsRetry;
 
   try
     FLastWidth := GetBox(TRUE).ClientWidth;
-  finally
-
+  except
+    // do nothing
   end;
   PostMessage(Handle, UM_RESYNCREM, 0, 0);
   FAllowAutoRebuild := False;

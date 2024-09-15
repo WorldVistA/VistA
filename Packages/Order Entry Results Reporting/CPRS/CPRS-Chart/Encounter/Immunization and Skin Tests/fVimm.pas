@@ -256,7 +256,7 @@ begin
     end;
   if uVimmInputs.canSaveData then
     clearResults;
-  self.Release;
+  Release;
 end;
 
 
@@ -386,7 +386,7 @@ begin
     end;
   if uVimmInputs.canSaveData then
     clearResults;
-  self.Release;
+  Release;
 end;
 
 procedure TvimmMainForm.FormCreate(Sender: TObject);

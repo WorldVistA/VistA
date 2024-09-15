@@ -8,12 +8,11 @@ inherited frmOptionsReportsDefault: TfrmOptionsReportsDefault
   ClientWidth = 314
   OnCreate = FormCreate
   ExplicitHeight = 206
-  PixelsPerInch = 96
   TextHeight = 16
   object Bevel2: TBevel [0]
     Left = 0
-    Top = 144
-    Width = 314
+    Top = 135
+    Width = 308
     Height = 2
     Align = alBottom
     ExplicitTop = 173
@@ -21,12 +20,12 @@ inherited frmOptionsReportsDefault: TfrmOptionsReportsDefault
   end
   object Panel1: TPanel [1]
     Left = 0
-    Top = 146
-    Width = 314
+    Top = 137
+    Width = 308
     Height = 32
     Align = alBottom
     BevelOuter = bvNone
-    TabOrder = 1
+    TabOrder = 4
     object btnOK: TButton
       AlignWithMargins = True
       Left = 198
@@ -71,43 +70,40 @@ inherited frmOptionsReportsDefault: TfrmOptionsReportsDefault
   object Panel2: TPanel [2]
     Left = 0
     Top = 107
-    Width = 314
+    Width = 308
     Height = 30
     Align = alTop
     BevelOuter = bvNone
-    Caption = 'Panel2'
     ShowCaption = False
     TabOrder = 3
     object Label2: TLabel
       AlignWithMargins = True
       Left = 3
       Top = 3
-      Width = 63
-      Height = 24
+      Width = 107
+      Height = 16
       Align = alLeft
-      Caption = 'Max:'
+      Caption = 'Max Occurrences:'
     end
     object edtDefaultMax: TCaptionEdit
       AlignWithMargins = True
-      Left = 72
+      Left = 116
       Top = 3
-      Width = 239
+      Width = 195
       Height = 24
       Align = alClient
       TabOrder = 0
-      OnClick = edtDefaultMaxClick
       OnExit = edtDefaultMaxExit
-      OnKeyPress = edtDefaultMaxKeyPress
-      Caption = 'Max'
+      OnKeyPress = odcDfStartKeyPress
+      Caption = 'Max Occurrences'
       ExplicitLeft = 37
-      ExplicitWidth = 274
     end
   end
   object lblDefaultText: TMemo [3]
     AlignWithMargins = True
     Left = 3
     Top = 3
-    Width = 308
+    Width = 302
     Height = 41
     TabStop = False
     Align = alTop
@@ -118,27 +114,25 @@ inherited frmOptionsReportsDefault: TfrmOptionsReportsDefault
       'Click dots in boxes to set start and end dates. '
       'You can also input values directly.')
     ReadOnly = True
-    TabOrder = 0
+    TabOrder = 2
   end
   object Panel3: TPanel [4]
     Left = 0
     Top = 77
-    Width = 314
+    Width = 308
     Height = 30
     Align = alTop
     BevelOuter = bvNone
-    Caption = 'Panel3'
     ShowCaption = False
-    TabOrder = 2
+    TabOrder = 1
     object Label4: TLabel
       AlignWithMargins = True
       Left = 3
       Top = 3
       Width = 63
-      Height = 24
+      Height = 16
       Align = alLeft
       Caption = 'Stop Date:'
-      ExplicitHeight = 16
     end
     object odcDfStop: TORDateBox
       AlignWithMargins = True
@@ -148,9 +142,9 @@ inherited frmOptionsReportsDefault: TfrmOptionsReportsDefault
       Height = 24
       Align = alClient
       TabOrder = 0
-      OnClick = odcDfStopClick
+      OnEnter = odcDfStartEnter
       OnExit = odcDfStopExit
-      OnKeyPress = odcDfStopKeyPress
+      OnKeyPress = odcDfStartKeyPress
       DateOnly = True
       RequireTime = False
       Caption = ''
@@ -159,22 +153,20 @@ inherited frmOptionsReportsDefault: TfrmOptionsReportsDefault
   object Panel4: TPanel [5]
     Left = 0
     Top = 47
-    Width = 314
+    Width = 308
     Height = 30
     Align = alTop
     BevelOuter = bvNone
-    Caption = 'Panel4'
     ShowCaption = False
-    TabOrder = 4
+    TabOrder = 0
     object Label3: TLabel
       AlignWithMargins = True
       Left = 3
       Top = 3
       Width = 62
-      Height = 24
+      Height = 16
       Align = alLeft
       Caption = 'Start Date:'
-      ExplicitHeight = 16
     end
     object odcDfStart: TORDateBox
       AlignWithMargins = True
@@ -184,7 +176,7 @@ inherited frmOptionsReportsDefault: TfrmOptionsReportsDefault
       Height = 24
       Align = alClient
       TabOrder = 0
-      OnClick = odcDfStartClick
+      OnEnter = odcDfStartEnter
       OnExit = odcDfStartExit
       OnKeyPress = odcDfStartKeyPress
       DateOnly = True

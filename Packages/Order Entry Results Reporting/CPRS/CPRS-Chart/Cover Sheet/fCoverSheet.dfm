@@ -29,7 +29,6 @@ object frmCoverSheet: TfrmCoverSheet
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelOuter = bvNone
     BevelWidth = 5
-    Caption = 'gpMain'
     ColumnCollection = <
       item
         Value = 50.000000000000000000

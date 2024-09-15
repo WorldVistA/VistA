@@ -1,14 +1,13 @@
 inherited frmODRTC: TfrmODRTC
   Left = 203
   Top = 183
-  Width = 673
-  Height = 468
+  Width = 660
+  Height = 465
   Caption = 'Return To Clinic'
-  Constraints.MinHeight = 365
-  Constraints.MinWidth = 300
-  ExplicitWidth = 673
-  ExplicitHeight = 468
-  PixelsPerInch = 96
+  Constraints.MinHeight = 465
+  Constraints.MinWidth = 660
+  ExplicitWidth = 660
+  ExplicitHeight = 465
   TextHeight = 13
   object lblOrderSig: TLabel [0]
     Left = 8
@@ -22,10 +21,6 @@ inherited frmODRTC: TfrmODRTC
     Top = 350
     Width = 555
     Height = 69
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     Constraints.MinWidth = 25
     TabOrder = 2
     Caption = 'Order Sig'
@@ -164,7 +159,7 @@ inherited frmODRTC: TfrmODRTC
       Caption = 'Nums of Appointments*'
     end
     object SpinNumAppt: TUpDown
-      Left = 10
+      Left = 70
       Top = 168
       Width = 16
       Height = 19
@@ -279,21 +274,17 @@ inherited frmODRTC: TfrmODRTC
       Top = 120
       Width = 261
       Height = 74
-      OnClickCheck = lstPreReqClickCheck
-      ItemHeight = 13
+      ItemHeight = 17
       ParentShowHint = False
       ShowHint = True
       TabOrder = 11
+      OnClickCheck = lstPreReqClickCheck
     end
   end
   inherited cmdAccept: TButton
     Left = 572
     Top = 350
     Width = 69
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     TabOrder = 3
     ExplicitLeft = 572
     ExplicitTop = 350
@@ -303,10 +294,6 @@ inherited frmODRTC: TfrmODRTC
     Left = 572
     Top = 389
     Width = 67
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     TabOrder = 5
     ExplicitLeft = 572
     ExplicitTop = 389
@@ -315,10 +302,6 @@ inherited frmODRTC: TfrmODRTC
   inherited pnlMessage: TPanel
     Left = 152
     Top = 366
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
     Enabled = False
     TabOrder = 0
     ExplicitLeft = 152
@@ -326,20 +309,12 @@ inherited frmODRTC: TfrmODRTC
     inherited imgMessage: TImage
       Left = 7
       Top = 7
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       ExplicitLeft = 7
       ExplicitTop = 7
     end
     inherited memMessage: TRichEdit
       Left = 47
       Top = 7
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
       ExplicitLeft = 47
       ExplicitTop = 7
     end

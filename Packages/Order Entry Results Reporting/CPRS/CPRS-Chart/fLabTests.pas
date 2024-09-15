@@ -72,9 +72,12 @@ end;
 
 procedure TfrmLabTests.FormCreate(Sender: TObject);
 begin
-  RedrawSuspend(cboTests.Handle);
-  cboTests.InitLongList('');
-  RedrawActivate(cboTests.Handle);
+  cboTests.LockDrawing;
+  try
+    cboTests.InitLongList('');
+  finally
+    cboTests.UnlockDrawing;
+  end;
 end;
 
 procedure TfrmLabTests.cboTestsNeedData(Sender: TObject;

@@ -7,6 +7,7 @@ Update History
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fOCMonograph,
   fAutoSz, StdCtrls, ORFn, uConst, ORCtrls, ExtCtrls, VA508AccessibilityManager,
@@ -38,7 +39,7 @@ type
   end;
 
   // Add URL support to the TRichedit
-  TRichEdit = class(Vcl.ComCtrls.TRichEdit)
+  TRichEdit = class(ORExtensions.TRichEdit)
   private
     FAutoDetect: Boolean; // URL Auto Detection
     FClickRange: TCharRange; // Range when left mouse button clicked

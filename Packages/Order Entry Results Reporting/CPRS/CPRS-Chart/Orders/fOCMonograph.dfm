@@ -1,4 +1,4 @@
-object frmOCMonograph: TfrmOCMonograph
+inherited frmOCMonograph: TfrmOCMonograph
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
@@ -106,7 +106,7 @@ object frmOCMonograph: TfrmOCMonograph
       Caption = ''
     end
   end
-  object VA508AccessibilityManager1: TVA508AccessibilityManager
+  inherited amgrMain: TVA508AccessibilityManager
     Left = 408
     Top = 96
     Data = (

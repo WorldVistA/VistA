@@ -7,7 +7,10 @@ uses
   StdCtrls, ORCtrls, ExtCtrls, ComCtrls, ImgList, ORFn, Menus, fBase508Form,
   VA508AccessibilityManager, VA508ImageListLabeler;
 
-type
+const
+  WM_FORCERESYNC = WM_APP + 101;
+
+ type
   TtvRem508Manager = class(TVA508ComponentManager)
   private
     function getDueDate(sData : String): String;
@@ -65,6 +68,8 @@ type
     procedure tvRemNodeCaptioning(Sender: TObject; var Caption: String);
     procedure mnuExitClick(Sender: TObject);
     procedure tvRemKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormMouseWheel(Sender: TObject; Shift: TShiftState;
+      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
   private
     tvRem508Manager : TtvRem508Manager;
     FLinking: boolean;
@@ -88,6 +93,7 @@ type
 //    procedure PositionToReminder(Sender: TObject);
     procedure ProcessedRemindersChanged(Sender: TObject);
     procedure WMMenuSelect(var Msg: TWMMenuSelect) ; message WM_MENUSELECT;
+    procedure WMForceResync(var Msg: TMessage) ; message WM_FORCERESYNC;
   public
     procedure EnableActions;
     procedure SetFontSize( NewFontSize: integer);
@@ -183,7 +189,8 @@ begin
         else
           begin
             tvRem.Selected := TTreeNode(lbRem.Items.Objects[lbRem.ItemIndex]);
-            tvRem.SetFocus;
+            if not tvRem.Focused then
+              tvRem.SetFocus;
           end;
       end;
     finally
@@ -666,6 +673,19 @@ begin
   RemTreeDlgHeight := Self.Height;
 end;
 
+procedure TfrmReminderTree.FormMouseWheel(Sender: TObject; Shift: TShiftState;
+  WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
+var
+  control: TWinControl;
+begin
+  control := FindVCLWindow(MousePos);
+  inherited;
+  if (control = tvRem) then
+  begin
+    PostMessage(Handle, WM_FORCERESYNC, 1, 0);
+  end;
+end;
+
 procedure TfrmReminderTree.memRefreshClick(Sender: TObject);
 begin
   KillObj(@ReminderDialogInfo, TRUE);
@@ -699,6 +719,11 @@ begin
   end;
  end;
 
+end;
+
+procedure TfrmReminderTree.WMForceResync(var Msg: TMessage);
+begin
+  Resync((Msg.WParam <> 0));
 end;
 
 procedure TfrmReminderTree.memActionClick(Sender: TObject);

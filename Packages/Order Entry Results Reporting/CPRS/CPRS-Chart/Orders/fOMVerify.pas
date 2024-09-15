@@ -3,6 +3,7 @@ unit fOMVerify;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fAutoSz, StdCtrls, ComCtrls, VA508AccessibilityManager, VA508AccessibilityRouter,
   Vcl.ExtCtrls;
@@ -12,7 +13,7 @@ type
     cmdAccept: TButton;
     cmdEdit: TButton;
     cmdCancel: TButton;
-    memText: TRichEdit;
+    memText: ORExtensions.TRichEdit;
     VA508ComponentAccessibility1: TVA508ComponentAccessibility;
     pnlButtons: TPanel;
     Panel1: TPanel;

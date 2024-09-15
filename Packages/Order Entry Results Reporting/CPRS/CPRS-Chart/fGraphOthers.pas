@@ -3,6 +3,7 @@ unit fGraphOthers;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ComCtrls, ORCtrls, ExtCtrls, ORFn, uGraphs, rCore, uCore,
   fBase508Form, VA508AccessibilityManager;
@@ -13,7 +14,7 @@ type
     lblOthers: TLabel;
     cboOthers: TORComboBox;
     lstViews: TORListBox;
-    memReport: TRichEdit;
+    memReport: ORExtensions.TRichEdit;
     pnlBottom: TPanel;
     lblViews: TLabel;
     lblInfo: TLabel;

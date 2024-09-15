@@ -693,7 +693,6 @@ inherited frmEditCslt: TfrmEditCslt
     Height = 33
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'pnlButtons'
     ShowCaption = False
     TabOrder = 2
     object stLaunchToolbox: TStaticText

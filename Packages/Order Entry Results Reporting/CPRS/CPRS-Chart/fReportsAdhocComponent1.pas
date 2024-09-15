@@ -91,7 +91,6 @@ type
   end;
 
 var
-  frmReportsAdhocComponent1: TfrmReportsAdhocComponent1;
   uComponents: TStringList;    {This is what is built as SubItems are
                                 selected.  It is identified by segment
                                 and is ordered in the order that the items
@@ -126,6 +125,8 @@ THSCompRec = object
   end;
 
 function ExecuteAdhoc1: Boolean;
+var
+  frmReportsAdhocComponent1: TfrmReportsAdhocComponent1;
 begin
   Result := False;
   frmReportsAdhocComponent1 := TfrmReportsAdhocComponent1.Create(Application);
@@ -486,22 +487,21 @@ begin
                 uComponents.Add(IntToStr(uCurrentComponent) + '^' + uFile +
                   '^' + uCompSubs[i]);
             end
-          Else
-            If ExecuteForm2 = True then
-              begin
-                ORListBox1.Clear;
-                for i := 0 to uComponents.Count-1 do
-                  if piece(uComponents[i],'^',1) = IntToStr(uCurrentComponent) then
-                    ORListBox1.Items.Add(Pieces(uComponents[i],'^',3,10));
-                if ORListBox1.Items.Count < 1 then
-                  begin
+          else
+            begin
+              var aCaption := Piece(ORComboBox1.Items[ORComboBox1.ItemIndex],'^',2);
+              If ExecuteForm2(aCaption) then
+                begin
+                  ORListBox1.Clear;
+                  for i := 0 to uComponents.Count-1 do
+                    if piece(uComponents[i],'^',1) = IntToStr(uCurrentComponent) then
+                      ORListBox1.Items.Add(Pieces(uComponents[i],'^',3,10));
+                  if ORListBox1.Items.Count < 1 then
                     InfoBox('No sub-items were selected', 'Information', MB_OK or MB_ICONINFORMATION);
-                  end;
-              end
-            else
-              begin
+                end
+              else
                 InfoBox('No sub-items were selected', 'Information', MB_OK or MB_ICONINFORMATION);
-              end;
+            end;
         end;
     end;
   with ORComboBox1 do
@@ -644,7 +644,8 @@ procedure TfrmReportsAdhocComponent1.btnEditSubitemsClick(Sender: TObject);
 var
   i: integer;
 begin
-  If ExecuteForm2 = True then
+  var aCaption := Piece(ORComboBox1.Items[ORComboBox1.ItemIndex],'^',2);
+  If ExecuteForm2(aCaption) then
       begin
         lblItems.Enabled := False;
         ORListBox1.Enabled := False;

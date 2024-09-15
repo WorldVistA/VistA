@@ -179,9 +179,12 @@ procedure TfrmInvalidActionList.hdrActionSectionResize(
   HeaderControl: THeaderControl; Section: THeaderSection);
 begin
   inherited;
-  RedrawSuspend(Self.Handle);
-  RedrawActiveList;
-  RedrawActivate(Self.Handle);
+  LockDrawing;
+  try
+    RedrawActiveList;
+  finally
+    UnlockDrawing;
+  end;
   lstActDeniedOrders.Invalidate;
 end;
 
@@ -191,13 +194,16 @@ var
 begin
   with lstActDeniedOrders do
   begin
-    RedrawSuspend(Handle);
-    SaveTop := TopIndex;
-    Clear;
-    for i := 0 to TheInvaList.Count - 1 do
-      Items.Add(Piece(TheInvaList[i], U, 1) + ' ' + Piece(TheInvaList[i], U, 2));
-    TopIndex := SaveTop;
-    RedrawActivate(Handle);
+    LockDrawing;
+    try
+      SaveTop := TopIndex;
+      Clear;
+      for i := 0 to TheInvaList.Count - 1 do
+        Items.Add(Piece(TheInvaList[i], U, 1) + ' ' + Piece(TheInvaList[i], U, 2));
+      TopIndex := SaveTop;
+    finally
+      UnlockDrawing;
+    end;
   end;
 end;
 

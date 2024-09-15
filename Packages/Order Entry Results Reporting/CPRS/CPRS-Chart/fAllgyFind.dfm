@@ -288,6 +288,7 @@ inherited frmAllgyFind: TfrmAllgyFind
       TabStop = False
       OnChange = tvAgentChange
       OnDblClick = tvAgentDblClick
+      OnKeyDown = tvAgentKeyDown
       Caption = 'Select from one of the following items'
       NodePiece = 0
     end

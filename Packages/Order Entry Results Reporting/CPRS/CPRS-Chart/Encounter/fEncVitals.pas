@@ -9,424 +9,49 @@ uses
 
 type
   TfrmEncVitals = class(TfrmPCEBase)
-    pnlmain: TPanel;
-    lblDate: TStaticText;
-    lblDateBP: TStaticText;
-    lblDateTemp: TStaticText;
-    lblDateResp: TStaticText;
-    lblDatePulse: TStaticText;
-    lblDateHeight: TStaticText;
-    lblDateWeight: TStaticText;
-    lblLstMeas: TStaticText;
-    lbllastBP: TStaticText;
-    lblLastTemp: TStaticText;
-    lblLastResp: TStaticText;
-    lblLastPulse: TStaticText;
-    lblLastHeight: TStaticText;
-    lblLastWeight: TStaticText;
-    lblVitPointer: TOROffsetLabel;
-    lblVital: TStaticText;
-    lblVitBP: TStaticText;
-    lnlVitTemp: TStaticText;
-    lblVitResp: TStaticText;
-    lblVitPulse: TStaticText;
-    lblVitHeight: TStaticText;
-    lblVitWeight: TStaticText;
-    txtMeasBP: TCaptionEdit;
-    cboTemp: TCaptionComboBox;
-    txtMeasTemp: TCaptionEdit;
-    txtMeasResp: TCaptionEdit;
-    cboHeight: TCaptionComboBox;
-    txtMeasWt: TCaptionEdit;
-    cboWeight: TCaptionComboBox;
-    txtMeasDate: TORDateBox;
-    lblVitPain: TStaticText;
-    lblLastPain: TStaticText;
-    lblDatePain: TStaticText;
-    cboPain: TORComboBox;
-    txtMeasPulse: TCaptionEdit;
-    txtMeasHt: TCaptionEdit;
     pnlBottom: TPanel;
     lvVitals: TCaptionListView;
     btnEnterVitals: TButton;
     btnOKkludge: TButton;
     btnCancelkludge: TButton;
-    procedure SetVitPointer(Sender: TObject);
-    procedure txtMeasBPExit(Sender: TObject);
-    procedure cboTempChange(Sender: TObject);
-    procedure cboTempExit(Sender: TObject);
-    procedure txtMeasRespExit(Sender: TObject);
-    procedure txtMeasPulseExit(Sender: TObject);
-    procedure cboHeightChange(Sender: TObject);
-    procedure cboHeightExit(Sender: TObject);
-    procedure cboWeightChange(Sender: TObject);
-    procedure cboWeightExit(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
-    procedure lbllastClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure FormActivate(Sender: TObject);
-    function HasData: Boolean;
-    function AssignVitals: boolean;
-    procedure cboPainChange(Sender: TObject);
-    procedure FormResize(Sender: TObject);
-    procedure txtMeasTempExit(Sender: TObject);
-    procedure txtMeasHtExit(Sender: TObject);
-    procedure txtMeasWtExit(Sender: TObject);
     procedure btnEnterVitalsClick(Sender: TObject); //vitals lite
   private
-    FDataLoaded: boolean;
-    FChangingFocus: boolean;
-    UvitalNew: TStringList;
-    uVitalOld: TSTringList;
-    procedure InitVitalPanel;
-    procedure PopulateLastVital;
-    function GetVitHTRate: String;
-    procedure CheckVitalUnit;
-    procedure ChangeFocus(Control: TWinControl);
-    procedure ClearData;
     procedure LoadVitalView(VitalsList : TStringList); //Vitals Lite
     procedure LoadVitalsList;
   public
-    function OK2SaveVitals: boolean;
-    property VitalNew: TStringList read uVitalNew;
-    property VitalOld: TStringList read uVitalOld;
   end;
 
 var
   frmEncVitals: TfrmEncVitals;
-//  uVitalLocation: Real;
 
 implementation
 
 {$R *.DFM}
 
 uses UCore, rCore, rPCE, fPCELex, fPCEOther, fVitals,fVisit, fFrame, fEncnt,
-     fEncounterFrame, uInit, VA508AccessibilityRouter, System.UITypes, rMisc;
-
-const
-  TX_VDATE_REQ1 = 'Entered vitals information can not be saved without a Date.' + CRLF +
-                  'Do you wish to use the encounter date of ';
-  TX_VDATE_REQ2 = '?';
-  TC_VDATE_REQ = 'Missing Vitals Entry Date';
-
-  TX_KILLDATA = 'Discard entered vitals information?';
-
-var
-  UcboVitChanging:      Boolean = False;
-
-function TfrmEncVitals.HasData: Boolean;
-begin
-  result := False;
-  if ((txtMeasBP.text <> '') or (txtMeasTemp.text <> '') or (txtMeasResp.text <> '') or
-    (txtMeasPulse.text <> '') or (txtMeasHt.text <> '') or (txtMeasWt.text <> '')) or
-    (cboPain.text <>'') then
-    result := True;
-end;
-
-procedure TfrmEncVitals.InitVitalPanel;
-begin
-  lblDate.font.Style := [fsBold];
-  lblDateBP.font.Style := [fsBold];
-  lblDateTemp.font.Style := [fsBold];
-  lblDateResp.font.Style := [fsBold];
-  lblDatePulse.font.Style := [fsBold];
-  lblDateHeight.font.Style := [fsBold];
-  lblDateWeight.font.Style := [fsBold];
-  lblDatePain.font.style := [fsBold];
-  lblLstMeas.font.Style := [fsBold];
-  lblLastBP.font.Style := [fsBold];
-  lblLastTemp.font.Style := [fsBold];
-  lblLastResp.font.Style := [fsBold];
-  lblLastPulse.font.Style := [fsBold];
-  lblLastHeight.font.Style := [fsBold];
-  lblLastWeight.font.Style := [fsBold];
-  lblLastPain.font.style := [fsBold];
-  lblVital.font.Style := [fsbold];
-
-  {Use this area to read parameter for units and set apropriately
-   after parameter is defined. in next version
-  }
-  UcboVitchanging := true; //prevents entering code in CheckVitalUnit
-
-  try
-    InitPainCombo(cboPain);
-    cboTemp.Text := cboTemp.Items[0];
-    cboHeight.Text := cboHeight.Items[0];
-    cboWeight.Text := cboWeight.Items[0];
-  finally
-    UcboVitchanging := False; //prevents entering code in CheckVitalUnit
-  end;
-
-  if txtMeasDate.Text = '' then
-    txtMeasDate.Text := FormatFMDateTime('mmm dd,yy@hh:nn', uEncPCEData.VisitDateTime);
-  if (UvitalOld.text = '') then
-    PopulateLastVital;
-end;
-
-
-procedure TfrmEncVitals.PopulateLastVital;
-var
- i: integer;
-begin
-  GetLastVital(uVitalOld,Patient.DFN);
-  //populate labels from UVitalOld;
-  with UVitalOld do
-  for i := 0 to count-1 do
-  begin
-    if piece(strings[i],U,2) = 'T' then
-    begin
-      lblLastTemp.Caption := ConvertVitalData(piece(strings[i],U,3), vtTemp);
-      lblDateTemp.Caption := FormatFMDateTime('mmm dd,yy',
-        StrToFloat(piece(strings[i],U,4)));
-    end;
-    if piece(strings[i],U,2) = 'P' then
-    begin
-      lblLastPulse.Caption := piece(strings[i],U,3);
-      lblDatePulse.Caption := FormatFMDateTime('mmm dd,yy',
-        StrToFloat(piece(strings[i],U,4)));
-    end;
-    if piece(strings[i],U,2) = 'R' then
-    begin
-      lblLastResp.Caption := piece(strings[i],U,3);
-      lblDateResp.Caption := FormatFMDateTime('mmm dd,yy',
-        StrToFloat(piece(strings[i],U,4)));
-    end;
-    if piece(strings[i],U,2) = 'BP' then
-    begin
-      lblLastBP.Caption := piece(strings[i],U,3);
-      lblDateBP.Caption := FormatFMDateTime('mmm dd,yy',
-        StrToFloat(piece(strings[i],U,4)));
-    end;
-    if piece(strings[i],U,2) = 'HT' then
-    begin
-      lblLastHeight.Caption := ConvertVitalData(piece(strings[i],U,3), vtHeight);
-      lblDateHeight.Caption := FormatFMDateTime('mmm dd,yy',
-        StrToFloat(piece(strings[i],U,4)));
-    end;
-    if piece(strings[i],U,2) = 'WT' then
-    begin
-      lblLastWeight.Caption := ConvertVitalData(piece(strings[i],U,3), vtWeight);
-      lblDateWeight.Caption := FormatFMDateTime('mmm dd,yy',
-        StrToFloat(piece(strings[i],U,4)));
-
-    end;
-   if piece(strings[i],U,2) = 'PN' then
-    begin
-      lblLastPain.Caption := piece(strings[i],U,3);
-      lblDatePain.Caption := FormatFMDateTime('mmm dd,yy',
-        StrToFloat(piece(strings[i],U,4)));
-    end;
-  end;
-end;
-
-
-procedure TfrmEncVitals.SetVitPointer(Sender: TObject);
-begin
-  if ActiveCtrl.tag in VitalTagSet then
-  begin
-    // move pointer to some height and five pixels to right of edit box.
-    lblVitPointer.Top := ActiveCtrl.Top+((ActiveCtrl.height ) div
-    (lblVitPointer.height ));
-
-    if ActiveCtrl = txtMeasTemp then
-      lblVitPointer.left := (cboTemp.left + cboTemp.Width)
-    else if ActiveCtrl = txtMeasHT then
-      lblVitPointer.left := (cboHeight.left + cboHeight.Width)
-    else if ActiveCtrl = txtMeasWT then
-      lblVitPointer.left := (cboWeight.left + cboWeight.Width)
-    else
-      lblVitPointer.left := (ActiveCtrl.left + ActiveCtrl.Width);
-
-  end;
-end;
-
-
-function TfrmEncVitals.GetVitHTRate: String;
-begin
-  Result := ConvertHeight2Inches(txtMeasHT.Text);
-  txtMeasHT.text := result;
-end;
-
-function TfrmEncVitals.AssignVitals: boolean;
-var
-  TmpDate: TFMDateTime;
-
-begin
-  TmpDate := txtMeasDate.FMDateTime;
-  Result := ValidVitalsDate(TmpDate);
-  if Result then
-    AssignVitals2List(uVitalNew, TmpDate, FloatToStr(PCERPCEncLocation),
-                       txtMeasBP.text, txtMeasTemp.text, cboTemp.text,
-                       txtMeasResp.text, txtMeasPulse.text, GetVitHTRate, cboHeight.text,
-                       txtMeasWT.text, cboWeight.text, cboPain.ItemID);
-end;
-
-procedure TfrmEncVitals.cboTempChange(Sender: TObject);
-begin
-  inherited;
-  if not (cbotemp.droppeddown) then
-    CheckVitalUnit;
-end;
-
-
-procedure TfrmEncVitals.CheckVitalUnit;
-var
-  len,i: integer;
-  found: boolean;
-  comp: string; //substring for comparing
-  temp: string;
-begin
-  if (UcboVitchanging = true) then exit;
-
-  UcboVitChanging := true;
-  try
-    with ActiveCtrl as TComboBox do
-    begin
-       found := False;
-       temp := text;
-       while (found = false) and (Length(temp) > 0) do
-       begin
-          i := 0;
-          while (found = false) and (length(items[i]) > 0) do
-          begin
-          len := length(temp);
-          //match text to string
-          comp := copy(items[i],0,len);
-          if (CompareText(comp,temp) = 0) then
-          begin
-             found := true;
-             Text := '';
-             text := items[i];
-
-          end;
-          inc(i);
-          end;
-          if (found = false) then Delete(temp,1,1);
-       end;
-       if (found = False) then
-       begin
-          Text := '';
-       end;
-    end;
-  finally
-    UcboVitChanging := false;
-  end;
-end;
-
-
-procedure TfrmEncVitals.cboHeightChange(Sender: TObject);
-begin
-  inherited;
-  CheckVitalUnit;
-end;
-
-procedure TfrmEncVitals.cboWeightChange(Sender: TObject);
-begin
-  inherited;
-  CheckVitalUnit;
-end;
-
-procedure TfrmEncVitals.txtMeasBPExit(Sender: TObject);
-begin
-  inherited;
-  if VitalInvalid(txtMeasBP) then
-    ChangeFocus(txtMeasBP);
-end;
-
-procedure TfrmEncVitals.cboTempExit(Sender: TObject);
-begin
-  inherited;
-  if(ActiveCtrl <> txtMeasTemp) then
-  begin
-    if VitalInvalid(txtMeasTemp, cboTemp) then
-      ChangeFocus(txtMeasTemp);
-  end;
-end;
-
-procedure TfrmEncVitals.txtMeasRespExit(Sender: TObject);
-begin
-  inherited;
-  if VitalInvalid(txtMeasResp) then
-    ChangeFocus(txtMeasResp);
-end;
-
-procedure TfrmEncVitals.txtMeasPulseExit(Sender: TObject);
-begin
-  inherited;
-  if VitalInvalid(txtMeasPulse) then
-    ChangeFocus(txtMeasPulse);
-end;
-
-procedure TfrmEncVitals.cboHeightExit(Sender: TObject);
-begin
-  inherited;
-  if(ActiveCtrl <> txtMeasHt) then
-  begin
-    if VitalInvalid(txtMeasHt, cboHeight, GetVitHTRate) then
-      ChangeFocus(txtMeasHt);
-  end;
-end;
-
-procedure TfrmEncVitals.cboWeightExit(Sender: TObject);
-begin
-  inherited;
-  if(ActiveCtrl <> txtMeasWt) then
-  begin
-    if VitalInvalid(txtMeasWt, cboWeight) then
-      ChangeFocus(txtMeasWt);
-  end;
-end;
-
+     fEncounterFrame, uInit, VA508AccessibilityRouter, System.UITypes, rMisc,
+     VAPieceHelper;
 
 procedure TfrmEncVitals.FormCreate(Sender: TObject);
 begin
-
   inherited;
   FTabName := CT_VitNm;
-  //uVisitType := TPCEProc.create;
-  uVitalOld  := TStringList.create;
-  uVitalNew  := TStringList.create;
-
 end;
-
-
 
 procedure TfrmEncVitals.FormDestroy(Sender: TObject);
-
 begin
-  //uVisitType.Free;
-  uVitalOld.Free;
-  uVitalNew.free;
-
-{== Vitals Lite 2004-05-21 ===================================================}
   UnloadVitalsDLL;
-{== Vitals Lite 2004-05-21 ===================================================}
   inherited;
 end;
-
-
-
-
-procedure TfrmEncVitals.lbllastClick(Sender: TObject);
-begin
-  inherited;
-  //
-  try
-    frmEncVitals.Show;
-  except
-    with sender as TStaticText do
-      SelectVital(self.Font.Size, tag);
-  end; //end of try
-end;
-
 
 procedure TfrmEncVitals.FormShow(Sender: TObject);
 var
  tmpRtnRec: TDllRtnRec;
 begin
   inherited;
-  //Begin Vitals Lite
   {Visit is Assumed to Be selected when Opening Encounter Dialog}
   tmpRtnRec := LoadVitalsDLL;
   case tmpRtnRec.Return_Type of
@@ -434,112 +59,59 @@ begin
     DLL_Missing: TaskMessageDlg('File Missing or Invalid', tmpRtnRec.Return_Message,mtError,[mbok],0);
     DLL_VersionErr: TaskMessageDlg('Incorrect Version Found', tmpRtnRec.Return_Message,mtError,[mbok],0);
   end;
-  //End Vitals Lite
-//  frmEncVitals.caption := 'Vital entry for - '+ patient.name; {RAB 6/15/98}
   FormActivate(Sender);
 end;
 
-procedure TfrmEncVitals.FormActivate(Sender: TObject);
-begin
-  inherited;
-  if(not FChangingFocus) and (not FDataLoaded) then
+procedure TfrmEncVitals.LoadVitalView(VitalsList: TStringList);
+
+  procedure CombineMetricandImperial(aVitalsList: TStringList);
+  const
+    MetricColHeader = 'Metric Value';
+    ImperialColHeader = 'USS Value';
+    NewColName = 'Value';
+  var
+    ImperialIdx, MetricIdx: Integer;
+    aCprsStr: TPiece;
+    aStr, MetricStr, ImperialStr: string;
+    I: Integer;
+    MetricFirst: Boolean;
   begin
-    FDataLoaded := TRUE;
-    InitVitalPanel;
-//    txtMeasTemp.setfocus;  //added 3/30/99 after changing tab order.
-                         //The date is now first in tab order, but it shouldn't default there.
-  end;
-end;
-
-
-
-procedure TfrmEncVitals.cboPainChange(Sender: TObject);
-begin
-  inherited;
-  CheckVitalUnit;
-end;
-
-procedure TfrmEncVitals.FormResize(Sender: TObject);
-begin
-  inherited;
-  //added to make things austo size that do not heave the property.
-  cboTemp.height := txtmeastemp.height;
-  cboPain.height := txtmeastemp.height;
-  cboheight.height := txtmeastemp.height;
-  cboweight.height := txtmeastemp.height;
-end;
-
-procedure TfrmEncVitals.txtMeasTempExit(Sender: TObject);
-begin
-  inherited;
-  if(ActiveCtrl <> cboTemp) then
-  begin
-    if VitalInvalid(txtMeasTemp, cboTemp) then
-      ChangeFocus(txtMeasTemp);
-  end;
-end;
-
-procedure TfrmEncVitals.txtMeasHtExit(Sender: TObject);
-begin
-  inherited;
-  if(ActiveCtrl <> cboHeight) then
-  begin
-    if VitalInvalid(txtMeasHt, cboHeight, GetVitHTRate) then
-      ChangeFocus(txtMeasHt);
-  end;
-end;
-
-procedure TfrmEncVitals.txtMeasWtExit(Sender: TObject);
-begin
-  inherited;
-  if(ActiveCtrl <> cboWeight) then
-  begin
-    if VitalInvalid(txtMeasWt, cboWeight) then
-      ChangeFocus(txtMeasWt);
-  end;
-end;
-
-procedure TfrmEncVitals.ChangeFocus(Control: TWinControl);
-begin
-  FChangingFocus := TRUE;
-  try
-    Control.SetFocus;
-  finally
-    FChangingFocus := FALSE;
-  end;
-end;
-
-function TfrmEncVitals.OK2SaveVitals: boolean;
-begin
-  Result := TRUE;
-  if(HasData and (abs(txtMeasDate.FMDateTime) <= 0.0000000000001)) then
-  begin
-    Result := (InfoBox(TX_VDATE_REQ1 + FormatFMDateTime('mmm dd,yy@hh:nn', uEncPCEData.DateTime) +
-                       TX_VDATE_REQ2, TC_VDATE_REQ, MB_YESNO or MB_ICONWARNING) = IDYES);
-    if Result then
-      txtMeasDate.FMDateTime := uEncPCEData.DateTime
-    else
+    if aVitalsList.Count = 0 then
+      exit;
+    //Find the piece that contains the metric header and value
+    aCprsStr := TPiece(aVitalsList.Strings[0]);
+    MetricIdx := TPiece(aVitalsList.Strings[0]).IndexOfPiece(U, MetricColHeader);
+    ImperialIdx := TPiece(aVitalsList.Strings[0]).IndexOfPiece(U, ImperialColHeader);
+    MetricFirst := SystemParameters.AsTypeDef<string>('vitals.gmvMetricFirst', '0') = '1';
+    for I := 0 to aVitalsList.Count - 1 do
     begin
-      Result := (InfoBox(TX_KILLDATA, TC_VDATE_REQ, MB_YESNO or MB_ICONWARNING) = IDYES);
-      if(Result) then
-        ClearData;
+      aStr := aVitalsList[i];
+      if I > 0 then
+      begin
+        // merge and remove the values
+        MetricStr := Piece(aStr, U, MetricIdx);
+        if Trim(MetricStr) > '' then
+        begin
+          if MetricFirst then
+          begin
+            ImperialStr := Piece(aStr, U, ImperialIdx);
+            SetPiece(aStr, U, ImperialIdx, '(' + ImperialStr + ')');
+            SetPiece(aStr, U, ImperialIdx, TPiece(aStr).Pieces([MetricIdx, ImperialIdx], U, ' '));
+          end else begin
+            SetPiece(aStr, U, MetricIdx, '(' + MetricStr + ')');
+            SetPiece(aStr, U, ImperialIdx, TPiece(aStr).Pieces([ImperialIdx, MetricIdx], U, ' '));
+          end;
+        end;
+      end else
+        SetPiece(aStr, U, ImperialIdx, NewColName);
+
+      aCprsStr := TPiece(aStr);
+      aCprsStr.DeletePiece(U, MetricIdx);
+      aVitalsList[i] := string(aCprsStr);
+
     end;
   end;
-end;
 
-procedure TfrmEncVitals.ClearData;
-begin
-  txtMeasBP.text    := '';
-  txtMeasTemp.text  := '';
-  txtMeasResp.text  := '';
-  txtMeasPulse.text := '';
-  txtMeasHt.text    := '';
-  txtMeasWt.text    := '';
-  cboPain.text      := '';
-end;
-
-//Begin Vitals Lite
-procedure TfrmEncVitals.LoadVitalView(VitalsList: TStringList);
 var
   i : integer;
   curCol : TListColumn;
@@ -552,6 +124,7 @@ begin
     lvVitals.ShowColumnHeaders := false;                //CQ: 10069 - the column display becomes squished.
     lvVitals.Items.Clear;
     lvVitals.Columns.Clear;
+    CombineMetricandImperial(VitalsList);
     if VitalsList.Count > 0 then
       PiecesToList(VitalsList[0],U,HeadingList);
     for i := 0 to HeadingList.Count-1 do
@@ -584,7 +157,7 @@ var
 begin
   inherited;
 
-  Info := frmFrame.lblPtSSN.Caption + '    ' + frmFrame.lblPtAge.Caption;
+  Info := frmFrame.PatientInfoLabelCaption;
 
   if EnterPatientVitals(RPCBrokerV, Patient, uEncPCEData, Info) then
     LoadVitalsList;
@@ -604,11 +177,8 @@ begin
   finally
     VitalsList.Free;
   end;
-
 end;
-//End Vitals Lite
 
 initialization
   SpecifyFormIsNotADialog(TfrmEncVitals);
-
 end.

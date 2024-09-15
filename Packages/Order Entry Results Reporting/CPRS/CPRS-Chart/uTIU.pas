@@ -126,6 +126,7 @@ function ShowNewNoteError(DocType, ErrMsg: String; Lines: TStrings; AllowIgnore:
 implementation
 
 uses
+  ORExtensions,
   rTIU, uDocTree, VAUtils, vcl.Dialogs, vcl.Themes, Vcl.StdCtrls, system.UITypes, VA508AccessibilityRouter;
 
 function MakeConsultDisplayText(RawText: string): string;
@@ -182,10 +183,10 @@ end;
 function SetLinesTo74ForSave(AStrings: TStrings; AParent: TWinControl)
   : TStrings;
 var
-  ARichEdit74: TRichEdit;
+  ARichEdit74: ORExtensions.TRichEdit;
 begin
   Result := AStrings;
-  ARichEdit74 := TRichEdit.Create(AParent);
+  ARichEdit74 := ORExtensions.TRichEdit.Create(AParent);
   try
     ARichEdit74.Parent := AParent;
     ARichEdit74.Lines.Text := AStrings.Text;
@@ -419,7 +420,7 @@ begin
         end;
       end;
     finally
-      Free;
+      FreeAndNil(TskDlg);
     end;
   end
   else

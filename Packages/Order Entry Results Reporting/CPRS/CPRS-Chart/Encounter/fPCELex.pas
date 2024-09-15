@@ -33,7 +33,6 @@ type
     procedure cmdExtendedSearchClick(Sender: TObject);
     function isNumeric(inStr: String): Boolean;
     procedure FormShow(Sender: TObject);
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure tgfLextvChange(Sender: TObject; Node: TTreeNode);
     procedure tgfLextvClick(Sender: TObject);
     procedure tgfLextvDblClick(Sender: TObject);
@@ -130,12 +129,6 @@ begin
   finally
     frmPCELex.Free;
   end;
-end;
-
-procedure TfrmPCELex.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  inherited;
-  Release;
 end;
 
 procedure TfrmPCELex.FormCreate(Sender: TObject);
@@ -609,6 +602,8 @@ begin
   if(tgfLex.SelectedNode = nil) then
     Exit;
   Node := tgfLex.SelectedNode;
+  if (Node.VUID = '') or (Node.VUID = '+') then
+    Exit;
   if ((FLexApp IN [LX_ICD, LX_SCT, LX_SC]) and (Node.Code <> '')) then
   begin
     if (Copy(Node.CodeSys, 0, 3) = 'ICD') then
@@ -728,7 +723,8 @@ procedure TfrmPCELex.tgfLextvChange(Sender: TObject; Node: TTreeNode);
 begin
   inherited;
   tgfLex.tvChange(Sender, Node);
-  if (tgfLex.SelectedNode = nil) or (tgfLex.SelectedNode.VUID = '+')  then
+  var selectedNode := tgfLex.SelectedNode;
+  if (selectedNode = nil) or (selectedNode.VUID = '') or (selectedNode.VUID = '+') then
   begin
     cmdOK.Enabled := false;
     cmdOk.Default := false;
@@ -744,7 +740,8 @@ end;
 procedure TfrmPCELex.tgfLextvClick(Sender: TObject);
 begin
   inherited;
-  if(tgfLex.SelectedNode <> nil) and (tgfLex.SelectedNode.VUID <> '+') then
+  var selectedNode := tgfLex.SelectedNode;
+  if (selectedNode <> nil) and (selectedNode.VUID <> '') and (selectedNode.VUID <> '+') then
   begin
     cmdOK.Enabled := true;
     cmdSearch.Default := False;
@@ -756,7 +753,8 @@ procedure TfrmPCELex.tgfLextvDblClick(Sender: TObject);
 begin
   inherited;
   tgfLextvClick(Sender);
-  if (tgfLex.SelectedNode <> nil) and (tgfLex.SelectedNode.VUID <> '+') then
+  var selectedNode := tgfLex.SelectedNode;
+  if (selectedNode <> nil) and (selectedNode.VUID <> '') and (selectedNode.VUID <> '+') then
     cmdOKClick(Sender);
 end;
 

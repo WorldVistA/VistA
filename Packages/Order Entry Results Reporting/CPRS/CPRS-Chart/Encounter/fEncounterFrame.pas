@@ -160,7 +160,6 @@ begin
     CT_EXAMS:         Result := CT_XamNm;
     CT_VITALS:        Result := CT_VitNm;
     CT_GAF:           Result := CT_GAFNm;
-    CT_STANDARDCODES: Result := CT_STDNm;
   end;
 end;
 
@@ -243,7 +242,6 @@ begin
   formList.add(CT_XamNm);
   if MHClinic(Location) then
     formList.add(CT_GAFNm);
- // formList.add(CT_STDNm); - moved to EP1
 end;
 
 
@@ -471,7 +469,7 @@ begin
   finally
     // frmEncounterFrame.Free;   v22.11 (JD and SM)
     frmEncounterFrame.Release;
-    //frmEncounterFrame := nil;  access violation source?  removed 7/28/03 RV
+    frmEncounterFrame := nil;
   end;
 end;
 
@@ -599,47 +597,24 @@ begin
     end;
 end;
 
-//procedure TfrmEncounterFrame.SynchPCEVimmSubData;
-//begin
-//  with uEncPCEData do                               // load any existing data from PCEData
-//    begin
-//      if FormListContains(CT_DiagNm) then
-//        begin
-//          frmDiagnoses.removeAll;
-//          frmDiagnoses.InitTab(CopyDiagnoses, ListDiagnosisSections);
-//        end;
-//      if FormListContains(CT_ProcNm) then
-//        begin
-//          frmProcedures.removeAll;
-//          frmProcedures.InitTab(CopyProcedures, ListProcedureSections);
-//        end;
-//    end;
-//end;
+///////////////////////////////////////////////////////////////////////////////
+// Name: procedure TfrmEncounterFrame.FormDestroy(Sender: TObject);
+// Created: Jan 1999
+// By: Robert Bott
+// Location: ISL
+// Description: Free up objects in memory when destroying form.
+///////////////////////////////////////////////////////////////////////////////
 
-{///////////////////////////////////////////////////////////////////////////////
-//Name: procedure TfrmEncounterFrame.FormDestroy(Sender: TObject);
-//Created: Jan 1999
-//By: Robert Bott
-//Location: ISL
-//Description: Free up objects in memory when destroying form.
-///////////////////////////////////////////////////////////////////////////////}
 procedure TfrmEncounterFrame.FormDestroy(Sender: TObject);
-var
-  i: integer;
-
 begin
-  inherited;
-  for i := ComponentCount-1 downto 0 do
-    if(Components[i] is TForm) then
-      TForm(Components[i]).Free;
-  formlist.clear;
-  KillObj(@uProviders);
-  uVisitType.Free;
-  Formlist.free;
+  FormList.Clear;
+  FreeAndNil(uProviders);
+  FreeAndNil(uVisitType);
+  FreeAndNil(FormList);
   if (not uInit.TimedOut) and (not Application.Terminated) then
     TResponsiveGUI.ProcessMessages;
+  inherited;
 end;
-
 
 {///////////////////////////////////////////////////////////////////////////////
 //Name: procedure TfrmEncounterFrame.FormCreate(Sender: TObject);
@@ -672,32 +647,13 @@ end;
 function TfrmEncounterFrame.SendData: boolean;
 //send PCE data to the RPC
 var
-  StoreMessage: string;
   GAFScore: integer;
   GAFDate: TFMDateTime;
   GAFStaff: Int64;
-
 begin
   inherited;
   // do validation for vitals & anything else here
-   Result := true;
-  //process vitals
-  if FormListContains(CT_VitNm) then
-  begin
-    with frmEncVitals do
-    if HasData then
-    begin
-      if AssignVitals then
-      begin
-        StoreMessage := ValAndStoreVitals(frmEncVitals.VitalNew);
-        if (Storemessage <> 'True') then
-        begin
-          ShowMsg(storemessage);
-//        exit;
-        end;
-      end;
-    end;
-  end;
+  Result := true;
 
   if(FormListContains(CT_GAFNm)) then
   begin
@@ -707,7 +663,6 @@ begin
   end;
 
   //PCE
-
   UpdateEncounter(uEncPCEData);
   with uEncPCEData do
   begin
@@ -785,9 +740,6 @@ begin
   end;
 
   uVisitType.Provider := uProviders.PrimaryIEN;  {RV - v20.1}
-
-  if FormListContains(CT_VitNm) then
-    CanClose := frmEncVitals.OK2SaveVitals;
 
   if CanClose and FormListContains(CT_ProcNm) then
     begin
@@ -880,9 +832,16 @@ procedure TfrmEncounterFrame.SelectTab(NewTabName: string);
 var
   AllowChange: boolean;
 begin
-  AllowChange := True;
-  tabControl.TabIndex := FormList.IndexOf(NewTabName);
-  tabPageChange(Self, tabControl.TabIndex, AllowChange);
+  if FormList <> nil then
+  begin
+    var idx := FormList.IndexOf(NewTabName);
+    if idx <> -1 then
+    begin
+      AllowChange := True;
+      tabControl.TabIndex := idx;
+      tabPageChange(Self, tabControl.TabIndex, AllowChange);
+    end;
+  end;
 end;
 
 procedure TfrmEncounterFrame.TabControlEnter(Sender: TObject);

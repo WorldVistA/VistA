@@ -28,6 +28,7 @@ function VitalInvalid(VitalControl: TControl; UnitsControl: TControl = nil;
 function VitalControlTag(VType: TVitalType; UnitControl: boolean = FALSE): integer;
 function ConvertHeight2Inches(Ht: string): string;
 function FormatVitalForNote(VitalStr: string):String;
+function FormatVitalForNoteNoConv(VitalStr: string):String;
 function ConvertVitalData(const Value: string; VitalType: TVitalType; UnitType: string = ''): string;
 procedure VitalsFrameCreated(Frame: TFrame);
 function ValidVitalsDate(var ADate: TFMDateTime; SkipFirst: boolean = FALSE; Show: boolean = true): boolean;
@@ -188,6 +189,9 @@ const
   vnumType  = 2;
   vnumValue = 3;
   vnumDate  = 4;
+  // vnumPrimary and vnumSecondary only apply to vtTemp, vtHeight, vtWeight
+  vnumPrimary = 5;
+  vnumSecondary = 6;
 
 implementation
 
@@ -501,6 +505,7 @@ var
   v: TVitalType;
 
 begin
+  Result := '';
   Code := UpperCase(Piece(VitalStr, U, vnumType));
   for v := low(TValidVitalTypes) to high(TValidVitalTypes) do
   begin
@@ -509,6 +514,34 @@ begin
       Value := ConvertVitalData(Piece(VitalStr, U, vnumValue), v);
       if(v = vtPain) and (Value = '99') then
         Value := 'Unable to respond.';
+      Result := VitalFormatedDesc[v] + Value + '    ' +
+      FormatFmDateTime('mmm dd,yyyy hh:nn',(StrToFloat(Piece(VitalStr, U, vnumDate))));
+    end
+  end;
+end;
+
+function FormatVitalForNoteNoConv(VitalStr: string):String;
+var
+  Code, Value: string;
+  v: TVitalType;
+begin
+  Result := '';
+  Code := UpperCase(Piece(VitalStr, U, vnumType));
+  for v := low(TValidVitalTypes) to high(TValidVitalTypes) do
+  begin
+    if(Code = VitalCodes[v]) then
+    begin
+      if v in [vtTemp, vtHeight, vtWeight] then
+      begin
+        Value := Piece(VitalStr, U, vnumPrimary) + ' ' +
+          Piece(VitalStr, U, vnumSecondary);
+      end
+      else
+      begin
+        Value := Piece(VitalStr, U, vnumValue);
+        if(v = vtPain) and (Value = '99') then
+          Value := 'Unable to respond.';
+      end;
       Result := VitalFormatedDesc[v] + Value + '    ' +
       FormatFmDateTime('mmm dd,yyyy hh:nn',(StrToFloat(Piece(VitalStr, U, vnumDate))));
     end

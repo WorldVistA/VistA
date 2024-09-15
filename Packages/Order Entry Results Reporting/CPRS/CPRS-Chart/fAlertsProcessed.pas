@@ -488,7 +488,6 @@ end;
 procedure TfrmAlertsProcessed.LoadProcessedAlerts(Init: boolean = False);
 var
   List: TStrings;
-  i: Integer;
   bShowMore:Boolean;
   sStartDate,sEndDate,sValue,sProcessed : String;
 
@@ -571,17 +570,18 @@ Column #               Piece
       end;
   end;
 
+var
+  ACurrentCursor: TCursor;
 begin
   if Init and FAlertsLoaded then
     exit;
+
+  ACurrentCursor := Screen.Cursor;
   Screen.Cursor := crHourGlass;
   try
-    lstvProcessedAlerts.Items.BeginUpdate;
-    lstvProcessedAlerts.Items.Clear;
     List := TStringList.Create;
     try
       List.Clear;
-      lstvProcessedAlerts.GroupView := False;
       // Load the list here
       sStartDate := FloatToStr(FStrtDate);
       sEndDate := FloatToStr(FEndDate);
@@ -595,10 +595,15 @@ begin
         FpaAlertsFound := fMaxAlertNum;
       updateAlertInfo(bShowMore);
 
-      for i := 0 to FpaAlertsFound - 1 do
-        ProcessRecord(List[i]);
-
-      lstvProcessedAlerts.Items.EndUpdate;
+      lstvProcessedAlerts.Items.BeginUpdate;
+      try
+        lstvProcessedAlerts.Items.Clear;
+        lstvProcessedAlerts.GroupView := False;
+        for var I := 0 to FpaAlertsFound - 1 do
+          ProcessRecord(List[I]);
+      finally
+        lstvProcessedAlerts.Items.EndUpdate;
+      end;
 
       if ScreenReaderActive then
         GetScreenReader.Speak(Format('Found %d Notifications',
@@ -607,15 +612,15 @@ begin
       List.Free;
     end;
   finally
-    Screen.Cursor := crDefault;
+    Screen.Cursor := ACurrentCursor;
   end;
+
   FAlertsLoaded := True;
 end;
 
 procedure TfrmAlertsProcessed.updateAlertInfo(ShowMore:Boolean=False);
 var
   msg:String;
-  i: integer;
 const
 {$IFDEF DEBUG}
   fmtAlertInfoDateTime = 'mm/dd/yyyy hh:nn:ss';
@@ -628,16 +633,10 @@ begin
   else
     msg := format('Found %d Notifications',[FpaAlertsFound]);
 
-  TResponsiveGUI.ProcessMessages;
-  msg :=
+  stxtDateRange.Caption :=
     FormatDateTime(fmtAlertInfoDateTime, FMDateTimeToDateTime(FStrtDate)) + ' -- ' +
     FormatDateTime(fmtAlertInfoDateTime, FMDateTimeToDateTime(FEndDate))
     + '    ' + msg;
-  i := TextWidthByFont(stxtDateRange.Font.Handle, msg) + 8;
-  stxtDateRange.Caption := msg;
-  stxtDateRange.Width := i;
-  stxtDateRange.InvalidateAll;
-  TResponsiveGUI.ProcessMessages;
 end;
 
 procedure TfrmAlertsProcessed.paSetColumnHeaders;

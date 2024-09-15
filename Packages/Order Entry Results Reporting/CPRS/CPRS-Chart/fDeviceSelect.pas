@@ -115,7 +115,7 @@ end;
 procedure TfrmDeviceSelect.cmdOKClick(Sender: TObject);
 begin
   inherited;
-  if cboDevice.ItemID = '' then
+  if (cboDevice.ItemID = '') or (cboDevice.ItemIndex < 0) then
   begin
     InfoBox(TX_NODEVICE, TX_NODEVICE_CAP, MB_OK);
     Exit;

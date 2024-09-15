@@ -18,14 +18,14 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ComCtrls;
+  Dialogs, ComCtrls, fBase508Form, VA508AccessibilityManager;
 
 type
   // Indicates which tab key is used, if any
   TTabKeyUsed = (tkuTab, tkuShiftTab, tkuNone);
   
   // Focus Dialog  
-  TdlgFocusedControls = class(TForm)
+  TdlgFocusedControls = class(TfrmBase508Form)
     sbar: TStatusBar;
     lv: TListView;
     procedure FormCreate(Sender: TObject);

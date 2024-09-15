@@ -34,7 +34,7 @@ procedure Register;
 
 implementation
 
-uses ORStaticText, ORRadioCheck, ORSplitter;
+uses ORStaticText, ORRadioCheck, ORSplitter, UORForm;
 
 { TORImageIndexesPropertyEditor }
 
@@ -161,6 +161,8 @@ begin
     TCaptionListView, TCaptionStringGrid, TCaptionRichEdit, TORStaticText, TORRadioCheck, TORSplitter{, TORCheckPanel, TORAlignBitBtn, TORCalendar}]);
   RegisterPropertyEditor( TypeInfo(string), TORCheckBox, 'ImageIndexes',
                           TORImageIndexesPropertyEditor);
+  RegisterNoIcon([TORForm]);
+  RegisterCustomModule(TORForm, TCustomModule);
 end;
 
 end.

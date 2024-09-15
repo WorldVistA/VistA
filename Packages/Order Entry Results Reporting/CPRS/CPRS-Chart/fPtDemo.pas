@@ -3,14 +3,15 @@ unit fPtDemo;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, ORCtrls, ORFn, ComCtrls, fBase508Form,
+  ORExtensions,
+  Winapi.Windows, Messages, SysUtils, Classes, Graphics, Vcl.Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls, ORCtrls, ORFn, ComCtrls, fBase508Form,
   VA508AccessibilityManager, uReports, U_CPTEditMonitor, uPrinting;
 
 type
   TfrmPtDemo = class(TfrmBase508Form)
     lblFontTest: TLabel;
-    memPtDemo: TRichEdit;
+    memPtDemo: ORExtensions.TRichEdit;
     dlgPrintReport: uPrinting.TPrintDialog;
     CPPtDemo: TCopyEditMonitor;
     pnlTop: TPanel;
@@ -22,11 +23,15 @@ type
     procedure FormCreate(Sender: TObject);
     procedure cmdPrintClick(Sender: TObject);
     procedure CopyToMonitor(Sender: TObject; var AllowMonitor: Boolean);
+    procedure FormDestroy(Sender: TObject);
+    procedure memPtDemoMouseMove(Sender: TObject; Shift: TShiftState; X,
+      Y: Integer);
+  strict private
+    FOldApplicationShowHint: TShowHintEvent;
+    procedure ApplicationShowHint(var HintStr: string; var CanShow: Boolean;
+      var HintInfo: Vcl.Controls.THintInfo);
   private
-    { Private declarations }
     FNewPt: Boolean;
-  public
-    { Public declarations }
   end;
 
 procedure PatientInquiry(var NewPt: Boolean);
@@ -35,7 +40,15 @@ implementation
 
 {$R *.DFM}
 
-uses rCover, rReports, Printers, uCore;
+uses
+  rCover,
+  rReports,
+  Printers,
+  uCore,
+  UMemoTools,
+  uConst,
+  System.Types,
+  VAUtils;
 
 procedure PatientInquiry(var NewPt: Boolean);
 { displays patient demographics, returns true in NewPt if the user pressed 'Select New' btn }
@@ -57,8 +70,6 @@ begin
 end;
 
 procedure TfrmPtDemo.FormCreate(Sender: TObject);
-var
-  i, MaxWidth, AWidth, AHeight: Integer;
 
   // RTC #953958 begin
   procedure AdjustButtonSize(aButton: TButton);
@@ -87,6 +98,8 @@ var
   end;
   // RTC #953958 end
 
+var
+  i, MaxWidth, AWidth, AHeight: Integer;
 begin
   FNewPt := False;
   LoadDemographics(memPtDemo.Lines);
@@ -125,12 +138,63 @@ begin
     ButtonWidth(cmdClose) + GetSystemMetrics(SM_CXBORDER) +
     GetSystemMetrics(SM_CXBORDER) + 7;
   // RTC #953958 end
+  FOldApplicationShowHint := Application.OnShowHint;
+  Application.OnShowHint := ApplicationShowHint;
+end;
+
+procedure TfrmPtDemo.FormDestroy(Sender: TObject);
+begin
+  Application.OnShowHint := FOldApplicationShowHint;
+  inherited;
+end;
+
+procedure TfrmPtDemo.memPtDemoMouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
+begin
+  if TMemoTools.FindStringsAtCursor(memPtDemo, Point(X, Y),
+    SIGI_HINT_TRIGGERS) then
+  begin
+    Cursor := crHelp;
+    Winapi.Windows.SetCursor(Screen.Cursors[crHelp]);
+  end else begin
+    Cursor := crDefault;
+  end;
 end;
 
 procedure TfrmPtDemo.cmdNewPtClick(Sender: TObject);
 begin
   FNewPt := True;
   Close;
+end;
+
+procedure TfrmPtDemo.ApplicationShowHint(var HintStr: string;
+  var CanShow: Boolean; var HintInfo: Vcl.Controls.THintInfo);
+var
+  I: Integer;
+begin
+  if HintInfo.HintControl = memPtDemo then
+  begin
+    if HintInfo.CursorRect.TopLeft.X < HintInfo.CursorPos.X - 5 then
+      HintInfo.CursorRect.TopLeft.X := HintInfo.CursorPos.X - 5;
+    if HintInfo.CursorRect.TopLeft.Y < HintInfo.CursorPos.Y - 5 then
+      HintInfo.CursorRect.TopLeft.Y := HintInfo.CursorPos.Y - 5;
+    if HintInfo.CursorRect.BottomRight.X > HintInfo.CursorPos.X + 5 then
+      HintInfo.CursorRect.BottomRight.X := HintInfo.CursorPos.X + 5;
+    if HintInfo.CursorRect.BottomRight.Y > HintInfo.CursorPos.Y + 5 then
+      HintInfo.CursorRect.BottomRight.Y := HintInfo.CursorPos.Y + 5;
+
+    if TMemoTools.FindStringsAtCursor(memPtDemo, HintInfo.CursorPos,
+      SIGI_HINT_TRIGGERS, I) then
+    begin
+      HintStr := SIGI_HINTS[I];
+    end else begin
+      if Assigned(FOldApplicationShowHint) then
+        FOldApplicationShowHint(HintStr, CanShow, HintInfo);
+    end;
+  end else begin
+    if Assigned(FOldApplicationShowHint) then
+      FOldApplicationShowHint(HintStr, CanShow, HintInfo);
+  end;
 end;
 
 procedure TfrmPtDemo.cmdCloseClick(Sender: TObject);
@@ -141,6 +205,7 @@ end;
 procedure TfrmPtDemo.cmdPrintClick(Sender: TObject);
 var
   AHeader: TStringList;
+  AOrigin: TStrings;
   memPrintReport: TRichEdit;
   StartLine, MaxLines, LastLine, ThisPage, i: Integer;
   ErrMsg: string;
@@ -153,6 +218,7 @@ begin
   RemoteQuery := '';
   if dlgPrintReport.Execute then
   begin
+    AOrigin := memPtDemo.Lines;
     AHeader := TStringList.Create;
     CreatePatientHeader(AHeader, self.Caption);
     memPrintReport := CreateReportTextComponent(self);
@@ -167,16 +233,15 @@ begin
           with Lines do
           begin
             for i := StartLine to MaxLines do
-              // if i < memPtDemo.Lines.Count - 1 then
-              if i < memPtDemo.Lines.Count then
-                Add(memPtDemo.Lines[LastLine + i])
+              if i < AOrigin.Count then
+                Add(AOrigin[LastLine + i])
               else
                 Break;
             LastLine := LastLine + i;
             Add(' ');
             Add(' ');
             Add(StringOfChar('-', 74));
-            if LastLine >= memPtDemo.Lines.Count - 1 then
+            if LastLine >= AOrigin.Count - 1 then
               Add('End of report')
             else
             begin
@@ -186,7 +251,7 @@ begin
               StartLine := 0;
             end;
           end;
-        until LastLine >= memPtDemo.Lines.Count - 1;
+        until LastLine >= AOrigin.Count - 1;
         PrintWindowsReport(memPrintReport, PAGE_BREAK, self.Caption,
           ErrMsg, True);
       end;

@@ -4,13 +4,15 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, uConst, ExtCtrls;
+  Dialogs, StdCtrls, uConst, ExtCtrls, fBase508Form, VA508AccessibilityManager;
 
 type
-  TfrmSpellNotify = class(TForm)
+  TfrmSpellNotify = class(TfrmBase508Form)
     lblMain: TLabel;
     tmrMain: TTimer;
     lblOptions: TLabel;
+    pnlWord: TPanel;
+    pnlLabels: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure Refocus(Sender: TObject);
@@ -66,7 +68,7 @@ end;
 
 procedure TfrmSpellNotify.UMDoSpellCheck(var Message: TMessage);
 begin
-  InternalSpellCheck(SpellCheck, EditControl);
+  InternalSpellCheck(SpellCheck, EditControl, pnlWord);
   ModalResult := mrOK;
 end;
 

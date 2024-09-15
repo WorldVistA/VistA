@@ -6,24 +6,24 @@ inherited frmDupPts: TfrmDupPts
   BorderIcons = [biSystemMenu]
   Caption = 'Similar Patients'
   ClientHeight = 247
-  ClientWidth = 452
+  ClientWidth = 642
   Constraints.MinHeight = 240
   Constraints.MinWidth = 320
   Position = poScreenCenter
   OnCloseQuery = FormCloseQuery
-  ExplicitWidth = 460
+  ExplicitWidth = 654
   ExplicitHeight = 274
   PixelsPerInch = 96
   TextHeight = 13
   object pnlDupPts: TPanel [0]
     Left = 0
     Top = 0
-    Width = 452
+    Width = 642
     Height = 203
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
-    ExplicitWidth = 508
+    ExplicitWidth = 687
     ExplicitHeight = 212
     object lblSelDupPts: TLabel
       Left = 1
@@ -37,16 +37,16 @@ inherited frmDupPts: TfrmDupPts
   object pnlSelDupPt: TPanel [1]
     Left = 0
     Top = 0
-    Width = 452
+    Width = 642
     Height = 203
     Align = alClient
     TabOrder = 1
-    ExplicitWidth = 508
+    ExplicitWidth = 687
     ExplicitHeight = 212
     object lboSelPt: TCaptionListView
       Left = 1
       Top = 39
-      Width = 450
+      Width = 640
       Height = 163
       Margins.Left = 8
       Margins.Right = 8
@@ -60,12 +60,28 @@ inherited frmDupPts: TfrmDupPts
         item
           Caption = 'DOB'
           Tag = 1
-          Width = 100
+          Width = 76
         end
         item
           Caption = 'SSN'
           Tag = 2
-          Width = 160
+          Width = 76
+        end
+        item
+          Caption = 'Location'
+          Width = 76
+        end
+        item
+          Caption = 'Physician'
+          Width = 76
+        end
+        item
+          Caption = 'Last Visit'
+          Width = 76
+        end
+        item
+          Caption = 'Last Location'
+          Width = 76
         end>
       HideSelection = False
       HoverTime = 0
@@ -81,32 +97,31 @@ inherited frmDupPts: TfrmDupPts
       OnDblClick = lboSelPtDblClick
       AutoSize = False
       Caption = 'Please select the correct patient'
-      Pieces = '2,3,4'
-      ExplicitWidth = 506
-      ExplicitHeight = 172
+      Pieces = '2,3,4,5,6,7,8'
+      ExplicitWidth = 685
     end
     object pnlHeader: TPanel
       Left = 1
       Top = 1
-      Width = 450
+      Width = 640
       Height = 38
       Align = alTop
       Alignment = taLeftJustify
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitWidth = 506
+      ExplicitWidth = 685
     end
   end
   object Panel1: TPanel [2]
     Left = 0
     Top = 203
-    Width = 452
+    Width = 642
     Height = 44
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 2
     ExplicitTop = 212
-    ExplicitWidth = 508
+    ExplicitWidth = 687
     object Panel2: TPanel
       Left = 283
       Top = 0

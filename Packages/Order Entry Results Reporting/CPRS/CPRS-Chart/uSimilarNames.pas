@@ -398,7 +398,7 @@ function CheckForSimilarName(aCmbBox: TORComboBox; out aErrMsg: String;
     Result := False;
 
     // If we are at the start or the end of the list there might be others, so make the call
-    if (aCmbBox.ItemIndex = 0) or (aCmbBox.ItemIndex = aCmbBox.Items.Count - 1) then
+    if (aCmbBox.ItemIndex <= 0) or (aCmbBox.ItemIndex = aCmbBox.Items.Count - 1) then
       Exit;
 
     aLookupName := GetDispStr(aCmbBox.ItemIndex);

@@ -208,34 +208,6 @@ begin
     if GetIEN(i) = -1 then AnIndex := i;
   if AnIndex > -1 then lstQuickList.Items[AnIndex] := '-1^' + txtDisplayName.Text;
 end;
-{
-procedure TfrmSaveQuickOrder.cmdUpClick(Sender: TObject);
-var
-  NewIndex: Integer;
-begin
-  inherited;
-  with lstQuickList do
-  begin
-    if ItemIndex < 1 then Exit;
-    NewIndex := ItemIndex - 1;
-    Items.Move(ItemIndex, NewIndex);
-    ItemIndex := NewIndex;
-  end;
-end;
-
-procedure TfrmSaveQuickOrder.cmdDownClick(Sender: TObject);
-var
-  NewIndex: Integer;
-begin
-  inherited;
-  with lstQuickList do
-  begin
-    if ItemIndex > Items.Count - 2 then Exit;
-    NewIndex := ItemIndex + 1;
-    Items.Move(ItemIndex, NewIndex);
-    ItemIndex := NewIndex;
-  end;
-end; }
 
 procedure TfrmSaveQuickOrder.cmdRenameClick(Sender: TObject);
 var
@@ -262,24 +234,21 @@ end;
 procedure TfrmSaveQuickOrder.cmdUpMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 var
- NewIndex: Integer;
+  NewIndex: Integer;
 begin
- inherited;
- with lstQuickList do
- begin
-  ItemTipEnable := false;
-  if ItemIndex < 1 then Exit;
-  NewIndex := ItemIndex - 1;
-  Items.Move(ItemIndex, NewIndex);
-  ItemIndex := NewIndex;
- end;
+  inherited;
+  lstQuickList.ItemTipEnable := False;
+  if lstQuickList.ItemIndex < 1 then Exit;
+  NewIndex := lstQuickList.ItemIndex - 1;
+  lstQuickList.Items.Move(lstQuickList.ItemIndex, NewIndex);
+  lstQuickList.ItemIndex := NewIndex;
 end;
 
 procedure TfrmSaveQuickOrder.cmdUpMouseUp(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
   inherited;
-  lstQuickList.ItemTipEnable := true;
+  lstQuickList.ItemTipEnable := True;
 end;
 
 procedure TfrmSaveQuickOrder.cmdDeleteClick(Sender: TObject);
@@ -301,24 +270,22 @@ end;
 procedure TfrmSaveQuickOrder.cmdDownMouseDown(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 var
- NewIndex: Integer;
+  NewIndex: Integer;
 begin
- inherited;
- with lstQuickList do
- begin
-  ItemTipEnable := false;
-  if ItemIndex > Items.Count - 2 then Exit;
-  NewIndex := ItemIndex + 1;
-  Items.Move(ItemIndex, NewIndex);
-  ItemIndex := NewIndex;
- end;
+  inherited;
+  if (lstQuickList.ItemIndex < 0) then Exit;  // nothing selected
+  lstQuickList.ItemTipEnable := False;
+  if (lstQuickList.ItemIndex > lstQuickList.Items.Count - 2) then Exit;
+  NewIndex := lstQuickList.ItemIndex + 1;
+  lstQuickList.Items.Move(lstQuickList.ItemIndex, NewIndex);
+  lstQuickList.ItemIndex := NewIndex;
 end;
 
 procedure TfrmSaveQuickOrder.cmdDownMouseUp(Sender: TObject;
   Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
 begin
   inherited;
-  lstQuickList.ItemTipEnable := true;
+  lstQuickList.ItemTipEnable := True;
 end;
 
 procedure TfrmSaveQuickOrder.FormCreate(Sender: TObject);

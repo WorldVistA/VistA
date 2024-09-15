@@ -83,8 +83,7 @@ begin
   AddColumn(0, 'Vital');
   AddColumn(1, 'Value');
   AddColumn(2, 'Date Taken');
-  AddColumn(3, 'Conv. Value');
-  AddColumn(4, 'Quals');
+  AddColumn(3, 'Quals');
   CollapseColumns;
 end;
 
@@ -175,16 +174,20 @@ begin
 
         with lvData.Items.Add do
           begin
+            //Vital
             Caption := aRec.GetPiece(2);
-            SubItems.Add(aRec.GetPiece(5));
+            // Value (Conversion Value)
+            SubItems.Add(aRec.GetPiece(5) + ' '+ aRec.GetPiece(6));
+            //Date Time
             SubItems.Add(FormatDateTime(DT_FORMAT, aRec.GetPieceAsTDateTime(4)));
-            SubItems.Add(aRec.GetPiece(6));
+
 
 //            SubItems.Add(aRec.GetPiece(7));
             aData := aRec.GetPiece(7);
             aQual := aRec.GetPiece(8); // e.g. for POX details are in piece 8
             if Trim(aQual) <> '' then
               aData := aData + ' ' + aQual;
+            //Quals
             SubItems.Add(aData);
 
             Data := aRec;

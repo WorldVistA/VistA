@@ -210,7 +210,7 @@ begin
   // For Windows 7:
   // HKEY_LOCAL_MACHINE\Software\Wow6432Node\Vista\Broker\Servers
   // HKEY_CURRENT_USER\Software\Vista\Broker\Servers
-  // server.site.med.domain,19300 REG_SZ xxxvista
+  // server.site.domain.ext,19300 REG_SZ xxxvista
   with rpcConfig do
   begin
     tmpServerPairs := TStringList.Create;
@@ -306,7 +306,7 @@ end;
 
 // On Windows 7, btnNewClick writes to:
 // HKEY_CURRENT_USER\Software\Vista\Broker\Servers
-// server.site.med.domain,19300 REG_SZ xxxvista
+// server.site.domain.ext,19300 REG_SZ xxxvista
 procedure TrpcConfig.btnNewClick(Sender: TObject);
 var
   I: integer;

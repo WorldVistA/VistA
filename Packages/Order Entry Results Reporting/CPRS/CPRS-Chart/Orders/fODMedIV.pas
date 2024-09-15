@@ -157,7 +157,6 @@ type
     FIndications: TIndications;
     //FInitialOrderID: boolean;
     procedure SetValuesFromResponses;
-    procedure DoSetFontSize( FontSize: integer);
     procedure ClickOnGridCell(keypressed: Char);
     procedure SetLimitationControl(aValue: string);
     function CreateOtherSchedule: string;
@@ -290,7 +289,6 @@ begin
     exit;
   end;
   OrdAction := -1;
-  DoSetFontSize(MainFontSize);
   FillerID := 'PSIV'; // does 'on Display' order check **KCM**
   StatusText('Loading Dialog Definition');
   if dlgFormId = OD_CLINICINF then
@@ -2511,7 +2509,6 @@ end;
 procedure TfrmODMedIV.SetFontSize( FontSize: integer);
 begin
   inherited SetFontSize( FontSize );
-//  DoSetFontSize( FontSize );
   pnlTop.ColumnCollection[8].Value := getMainFormTextWidth(cmdAccept.Caption) + 26;
 end;
 
@@ -2524,15 +2521,6 @@ begin
       self.chkDoseNow.Visible := false;
     end;
   if status = true then self.chkDoseNow.Visible := true;
-end;
-
-procedure TfrmODMedIV.DoSetFontSize( FontSize: integer);
-begin
-//  tabFluid.TabHeight := Abs(Font.Height) + 4;
-//  grdSelected.DefaultRowHeight := Abs(Font.Height) + 8;
-//
-//  SetScrollBarHeight(FontSize);
-//  Self.Font.Assign(Screen.IconFont);
 end;
 
 procedure TfrmODMedIV.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);

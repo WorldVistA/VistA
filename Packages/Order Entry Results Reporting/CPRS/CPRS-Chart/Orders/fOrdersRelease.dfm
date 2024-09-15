@@ -16,7 +16,6 @@ inherited frmReleaseOrders: TfrmReleaseOrders
     Height = 296
     Align = alClient
     BevelOuter = bvNone
-    Caption = 'Panel1'
     Constraints.MinHeight = 260
     TabOrder = 0
     OnResize = Panel1Resize

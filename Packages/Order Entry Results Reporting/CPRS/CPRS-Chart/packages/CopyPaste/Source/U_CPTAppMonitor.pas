@@ -331,36 +331,44 @@ end;
 
 {$REGION 'CopyApplicationMonitor'}
 
-procedure TCopyApplicationMonitor.AddEditMonitorToList(aEditMonitor: tComponent);
+procedure TCopyApplicationMonitor.AddEditMonitorToList
+  (aEditMonitor: TComponent);
 begin
- if aEditMonitor is TCopyEditMonitor then
- begin
-   if fEditMonitorList.IndexOf(aEditMonitor) = -1 then
-    fEditMonitorList.Add(aEditMonitor);
- end;
+  if not(csDesigning in ComponentState) then
+  begin
+    if aEditMonitor is TCopyEditMonitor then
+    begin
+      if fEditMonitorList.IndexOf(aEditMonitor) = -1 then
+        fEditMonitorList.Add(aEditMonitor);
+    end;
+  end;
 end;
 
 procedure TCopyApplicationMonitor.RemoveFromMonitorList(aEditMonitor: tComponent);
 begin
-  fEditMonitorList.Remove(aEditMonitor);
+  if not(csDesigning in ComponentState) then
+    fEditMonitorList.Remove(aEditMonitor);
 end;
 
-function TCopyApplicationMonitor.TrackedByCP(aEdit: TCustomEdit): boolean;
+function TCopyApplicationMonitor.TrackedByCP(aEdit: TCustomEdit): Boolean;
 var
   aComponent: TComponent;
 begin
- result := false;
- for aComponent in fEditMonitorList do
- begin
-   if Assigned(aComponent) and (aComponent is TCopyEditMonitor) then
-   begin
-    if TCopyEditMonitor(aComponent).IsTracked(aEdit) then
+  result := false;
+  if not(csDesigning in ComponentState) then
+  begin
+    for aComponent in fEditMonitorList do
     begin
-      result := true;
-      break;
+      if Assigned(aComponent) and (aComponent is TCopyEditMonitor) then
+      begin
+        if TCopyEditMonitor(aComponent).IsTracked(aEdit) then
+        begin
+          result := true;
+          break;
+        end;
+      end;
     end;
-   end;
- end;
+  end;
 end;
 
 
@@ -404,6 +412,8 @@ var
   aHashString: String;
   aMatchFnd: Boolean;
 begin
+  if (csDesigning in ComponentState) then
+    exit;
   FCriticalSection.Enter;
   try
     if not Enabled then
@@ -893,6 +903,8 @@ var
 
 
 begin
+  if (csDesigning in ComponentState) then
+    exit;
   if not Enabled then
     Exit;
   Found := false;
@@ -1434,6 +1446,9 @@ var
   I, SaveCnt, aIdx: Integer;
   ErrOccurred: Boolean;
 begin
+  if (csDesigning in ComponentState) then
+    exit;
+
   FCriticalSection.Enter;
   try
     ErrOccurred := false;
@@ -1996,17 +2011,20 @@ function TCopyApplicationMonitor.FromExcludedApp(AppName: String): Boolean;
 var
   I: Integer;
 begin
+  if (csDesigning in ComponentState) then
+    Exit(false);
+
   FCriticalSection.Enter;
   try
-    Result := false;
+    result := false;
     if not Enabled then
       Exit;
     for I := 0 to ExcludeApps.Count - 1 do
     begin
       if UpperCase(Piece(ExcludeApps[I], '^', 1)) = UpperCase(AppName) then
       begin
-        Result := true;
-        Break;
+        result := true;
+        break;
       end;
     end;
   finally

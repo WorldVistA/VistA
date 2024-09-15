@@ -20,17 +20,8 @@
   <outputPath>C:/Users/ZZZZZZROBINT/Documents/My RoboHelp Projects/outputs/CPRS Online Help/Printed Documentation</outputPath>
   <starterPage>CPRS_Online_Help.pdf</starterPage>
   <pdf>
-    <multiheaders type="boolean">false</multiheaders>
-    <margin type="array">
-      <marginitem>15mm</marginitem>
-      <marginitem>15mm</marginitem>
-      <marginitem>15mm</marginitem>
-      <marginitem>15mm</marginitem>
-    </margin>
     <useEncryption type="boolean">false</useEncryption>
     <useTopicsAndChaptersForToc type="boolean">true</useTopicsAndChaptersForToc>
-    <portraitLayout type="boolean">true</portraitLayout>
-    <startChapterFromNewPage type="boolean">true</startChapterFromNewPage>
     <embeddFonts type="boolean">true</embeddFonts>
     <compression type="boolean">false</compression>
     <toclevel type="number">1</toclevel>
@@ -39,8 +30,8 @@
     <mergePdfs type="boolean">true</mergePdfs>
     <showWatermark type="boolean">false</showWatermark>
     <embedMultimedia type="boolean">false</embedMultimedia>
-    <startTopicsFromNewPage type="boolean">true</startTopicsFromNewPage>
     <createTagged type="boolean">false</createTagged>
+    <splitPdf type="boolean">false</splitPdf>
   </pdf>
   <search>
     <context type="boolean">false</context>
@@ -56,4 +47,15 @@
   <title>CPRS Online Help</title>
   <lowercasenames type="number">0</lowercasenames>
   <undefined type="boolean">false</undefined>
+  <template>
+    <path>../templates/Printed Documentation/pdf.tpl</path>
+  </template>
+  <excludeTopicCss type="boolean">true</excludeTopicCss>
+  <metadataNew type="array">
+    <metadataNewitem>
+      <propkey>Title</propkey>
+      <propvalue>CPRS Online Help</propvalue>
+    </metadataNewitem>
+  </metadataNew>
+  <metadataOptions>list</metadataOptions>
 </preset>

@@ -14,7 +14,6 @@ object frPDMPReviewItem: TfrPDMPReviewItem
     Height = 99
     Align = alClient
     BevelOuter = bvNone
-    Caption = 'pnlItem'
     ParentColor = True
     ShowCaption = False
     TabOrder = 0

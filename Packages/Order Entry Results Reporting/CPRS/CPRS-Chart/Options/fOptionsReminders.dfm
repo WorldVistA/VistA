@@ -67,7 +67,6 @@ inherited frmOptionsReminders: TfrmOptionsReminders
     Height = 255
     Align = alClient
     BevelOuter = bvNone
-    Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 3
     ExplicitTop = 344

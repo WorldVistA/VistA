@@ -678,7 +678,7 @@ var
 implementation
 
 uses uCore, rPCE, rCore, rTIU, fEncounterFrame, uVitals, fFrame,
-     fPCEProvider, rVitals, uReminders, rMisc, uGlobalVar, uDlgComponents,
+  fPCEProvider, rVitals, uReminders, rMisc, uGlobalVar, uDlgComponents,
   fReminderDialog, uMisc, uWriteAccess;
 
 const
@@ -4361,7 +4361,7 @@ var
 
 begin
   for i := 0 to Data.Count-1 do
-    List.Add(FormatVitalForNote(Data[i]));
+    List.Add(FormatVitalForNoteNoConv(Data[i]));
 end;
 
 function TPCEData.PersonClassDate: TFMDateTime;

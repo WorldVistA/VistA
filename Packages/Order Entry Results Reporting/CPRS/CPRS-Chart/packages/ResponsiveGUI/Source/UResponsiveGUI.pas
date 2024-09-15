@@ -39,11 +39,13 @@ type
   strict private
     class var FEnabled: Boolean;
   public
-    class procedure ProcessMessages(AAllowUserInput: Boolean = False); overload;
+    class procedure ProcessMessages(AAllowUserInput: Boolean = False;
+      AProcessRelease: Boolean = False); overload;
     class procedure ProcessMessages(AStop: TDateTime;
-      AAllowUserInput: Boolean = False); overload;
+      AAllowUserInput: Boolean = False;
+      AProcessRelease: Boolean = False); overload;
     class procedure ProcessMessages(AStop: TDateTime;
-      AFilter: Cardinal); overload;
+      AFilter: Cardinal; AProcessRelease: Boolean = False); overload;
     class procedure Sleep(AMilliseconds: Cardinal);
     class property Enabled: Boolean read FEnabled write FEnabled;
   end;
@@ -53,30 +55,34 @@ implementation
 uses
   Vcl.Dialogs,
   Vcl.Forms,
+  Vcl.Controls,
   Winapi.Messages,
+  System.Classes,
   System.SysUtils,
-  System.DateUtils;
+  System.DateUtils,
+  System.Generics.Collections;
 
 class procedure TResponsiveGUI.ProcessMessages(
-  AAllowUserInput: Boolean = False);
+  AAllowUserInput: Boolean = False;
+  AProcessRelease: Boolean = False);
 begin
-  TResponsiveGUI.ProcessMessages(0, AAllowUserInput);
+  TResponsiveGUI.ProcessMessages(0, AAllowUserInput, AProcessRelease);
 end;
 
 class procedure TResponsiveGUI.ProcessMessages(AStop: TDateTime;
-  AAllowUserInput: Boolean = False);
+  AAllowUserInput: Boolean = False; AProcessRelease: Boolean = False);
 begin
   if AAllowUserInput then
-    TResponsiveGUI.ProcessMessages(AStop, PM_QS_ALL)
+    TResponsiveGUI.ProcessMessages(AStop, PM_QS_ALL, AProcessRelease)
   else
-    TResponsiveGUI.ProcessMessages(AStop, PM_QS_NOT_INPUT);
+    TResponsiveGUI.ProcessMessages(AStop, PM_QS_NOT_INPUT, AProcessRelease);
 end;
 
 type
   TApplicationHack = class(TApplication);
 
 class procedure TResponsiveGUI.ProcessMessages(AStop: TDateTime;
-  AFilter: Cardinal);
+  AFilter: Cardinal; AProcessRelease: Boolean = False);
 // Processes just the paint messages on the message queue.
 // AStop: the system time after which this procedure is no longer allowed to
 //   run. 0 means no stop time
@@ -125,6 +131,7 @@ class procedure TResponsiveGUI.ProcessMessages(AStop: TDateTime;
 var
   AMsg: TMsg;
   AHasDispatchedMsg: Boolean;
+  AMsgs: System.Generics.Collections.TList<Winapi.Windows.TMsg>;
 begin
   if not FEnabled then
   begin
@@ -132,46 +139,69 @@ begin
     Exit;
   end;
 
-  if AFilter = PM_QS_ALL then
+  if (AFilter = PM_QS_ALL) and AProcessRelease and (AStop <= 0) then
   begin
+    // Bypass option. Just call TResponsiveGUI.ProcessMessages(True, True);
     Application.ProcessMessages;
     Exit;
   end;
 
   AHasDispatchedMsg := False;
-
-  while Winapi.Windows.PeekMessage(AMsg, 0, 0, 0, PM_NOREMOVE or AFilter) do
-  begin
-    if AMsg.message = WM_QUIT then
+  AMsgs := System.Generics.Collections.TList<Winapi.Windows.TMsg>.Create;
+  try
+    while Winapi.Windows.PeekMessage(AMsg, 0, 0, 0, PM_NOREMOVE or AFilter) do
     begin
-      Application.ProcessMessages;
-      Break;
-    end else begin
-      DispatchMsg(AMsg, 0, 0, PM_REMOVE or AFilter);
+      if AMsg.message = WM_QUIT then
+      begin
+        // A WM_QUIT message triggers regular processmessages
+        Application.ProcessMessages;
+        Break;
+      end else begin
+        if (AMsg.message = CM_RELEASE) and (not AProcessRelease) then
+        begin
+          // A CM_RELEASE message is taken out of the queue, but remembered
+          // on the AMsgs list
+          AMsgs.Add(AMsg);
+          Winapi.Windows.PeekMessage(AMsg, 0, 0, 0, PM_REMOVE or AFilter);
+        end else begin
+          DispatchMsg(AMsg, 0, 0, PM_REMOVE or AFilter);
+        end;
+      end;
+      AHasDispatchedMsg := True;
+      if (AStop > 0) and (Now > AStop) then
+        Break;
     end;
-    AHasDispatchedMsg := True;
-    if (AStop > 0) and (Now > AStop) then
-      Break;
-  end;
 
-  if AHasDispatchedMsg and (AStop > 0) and (Now > AStop) then Exit;
-  while PeekMsg(AMsg, WM_TIMER, WM_TIMER, PM_NOREMOVE) do
-  begin
-    DispatchMsg(AMsg, WM_TIMER, WM_TIMER, PM_REMOVE);
-    AHasDispatchedMsg := True;
-    if (AStop > 0) and (Now > AStop) then
-      Break;
-  end;
+    if AHasDispatchedMsg and (AStop > 0) and (Now > AStop) then Exit;
+    while PeekMsg(AMsg, WM_TIMER, WM_TIMER, PM_NOREMOVE) do
+    begin
+      // Handle all WM_TIMER messages in the queue
+      DispatchMsg(AMsg, WM_TIMER, WM_TIMER, PM_REMOVE);
+      AHasDispatchedMsg := True;
+      if (AStop > 0) and (Now > AStop) then
+        Break;
+    end;
 
-  if AHasDispatchedMsg and (AStop > 0) and (Now > AStop) then Exit;
-  while PeekMsg(AMsg, WM_PAINT, WM_PAINT, PM_NOREMOVE) do
-  begin
-    DispatchMsg(AMsg, WM_PAINT, WM_PAINT, PM_REMOVE);
-    // AHasDispatchedMsg := True;
-    if (AStop > 0) and (Now > AStop) then
-      Break;
-  end;
+    if AHasDispatchedMsg and (AStop > 0) and (Now > AStop) then Exit;
+    while PeekMsg(AMsg, WM_PAINT, WM_PAINT, PM_NOREMOVE) do
+    begin
+      // Handle all WM_PAINT messages in the queue
+      DispatchMsg(AMsg, WM_PAINT, WM_PAINT, PM_REMOVE);
+      // AHasDispatchedMsg := True;
+      if (AStop > 0) and (Now > AStop) then
+        Break;
+    end;
 
+    for AMsg in AMsgs do begin
+      // Go through the saved messages and put them back on the queue, but don't
+      // process them. A real application.ProcessMessages (not a
+      // TResponsiveGUI.ProcessMessages) will process these.
+      // Right now, this happens to CM_RELEASE messages
+      PostMessage(AMsg.hwnd, AMsg.message, AMsg.wParam, AMsg.lParam);
+    end;
+  finally
+    FreeAndNil(AMsgs);
+  end;
 end;
 
 class procedure TResponsiveGUI.Sleep(AMilliseconds: Cardinal);

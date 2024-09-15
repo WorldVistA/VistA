@@ -6,6 +6,7 @@ inherited frmEncounter: TfrmEncounter
   Caption = 'Provider & Location for Current Activities'
   ClientHeight = 423
   ClientWidth = 469
+  Constraints.MinHeight = 380
   Constraints.MinWidth = 470
   OldCreateOrder = True
   Position = poScreenCenter
@@ -16,7 +17,6 @@ inherited frmEncounter: TfrmEncounter
   DesignSize = (
     469
     423)
-  PixelsPerInch = 96
   TextHeight = 13
   object lblInstruct: TLabel [0]
     Left = 6

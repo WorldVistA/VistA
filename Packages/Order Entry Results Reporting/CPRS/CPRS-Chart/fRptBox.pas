@@ -3,6 +3,7 @@ unit fRptBox;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ORFn, ComCtrls, ExtCtrls, fFrame, fBase508Form, Types,
   VA508AccessibilityManager, uReports, Vcl.Menus, U_CPTEditMonitor, fDeviceSelect,
@@ -10,8 +11,7 @@ uses
 
 type
   TfrmReportBox = class(TfrmBase508Form)
-    lblFontTest: TLabel;
-    memReport: TRichEdit;
+    memReport: ORExtensions.TRichEdit;
     pnlButton: TPanel;
     cmdPrint: TButton;
     dlgPrintReport: uPrinting.TPrintDialog;
@@ -49,138 +49,119 @@ uses
 
 {$R *.DFM}
 
-function CreateReportBox(ReportText: TStrings; ReportTitle: string; AllowPrint: boolean; includeHeader: boolean = true;
-                        VistAPrintOnly: boolean = true): TfrmReportBox;
-var
-  i, AWidth, MinWidth, MaxWidth, AHeight: Integer;
-  BtnArray: array of TButton;
-  BtnRight: array of integer;
-  BtnLeft:  array of integer;
-  //cmdCloseRightMargin: integer;
-  //cmdPrintRightMargin: integer;
-  j, k: integer;
-  line: string;
-  Format: TCharFormat2;
-  AdjWidth: boolean;
+function CreateReportBox(ReportText: TStrings; ReportTitle: string;
+  AllowPrint: Boolean; includeHeader: Boolean = true;
+  VistAPrintOnly: Boolean = true): TfrmReportBox;
 
+  procedure PreventHyperLinkWrap(aForm: TfrmReportBox; aRichEdit: TRichEdit);
+  var
+    i, j, MaxWidth, AWidth: Integer;
+    AdjWidth: Boolean;
+    line: String;
+    Format: TCharFormat2;
+  begin
+    AdjWidth := False;
+
+    if aRichEdit.Lines.Count > 1 then
+    begin
+      i := 0;
+      repeat
+        line := aRichEdit.Lines[i];
+        j := Length(line);
+        if (j > 0) and (ord(line[j]) > 32) and
+          (Length(aRichEdit.Lines[i + 1]) > 0) and
+          (ord(aRichEdit.Lines[i + 1][1]) > 32) then
+        begin
+          aRichEdit.CaretPos := Point(j - 1, i);
+          aRichEdit.SelLength := 1;
+          FillChar(Format, SizeOf(TCharFormat2), 0);
+          Format.cbSize := SizeOf(TCharFormat2);
+          SendGetStructMessage(aRichEdit.Handle, EM_GETCHARFORMAT, WPARAM(true),
+            Format, true);
+          if (Format.dwEffects and CFE_LINK) <> 0 then
+          begin
+            line := line + aRichEdit.Lines[i + 1];
+            aRichEdit.Lines[i] := line;
+            aRichEdit.Lines.Delete(i + 1);
+            dec(i);
+            AdjWidth := true;
+          end;
+        end;
+        inc(i);
+      until i >= (aRichEdit.Lines.Count - 1);
+    end;
+    aRichEdit.SelStart := 0;
+    if AdjWidth then
+    begin
+      MaxWidth := 350;
+      for i := 0 to aRichEdit.Lines.Count - 1 do
+      begin
+        AWidth := TextWidthByFont(MainFont.Handle, aRichEdit.Lines[i]);
+        if AWidth > MaxWidth then
+          MaxWidth := AWidth;
+      end;
+      MaxWidth := MaxWidth + GetSystemMetrics(SM_CXVSCROLL) + MainFont.Size;
+      if MaxWidth > Screen.Width then
+        MaxWidth := Screen.Width;
+      aForm.ClientWidth := MaxWidth;
+    end;
+  end;
+
+  procedure AutoAdjustFormSize(aForm: TfrmReportBox);
+  Var
+    tmp, AWidth, aHeight: Integer;
+    s: String;
+  begin
+    AWidth := aForm.Constraints.MinWidth;
+
+    for s in ReportText do
+      AWidth := HigherOf(AWidth, TextWidthByFont(MainFont.Handle, s));
+
+    inc(AWidth, (GetSystemMetrics(SM_CXVSCROLL) * 2));
+    AWidth := LowerOf(AWidth, Screen.Width);
+
+    tmp := (ReportText.Count * (TextHeightByFont(MainFont.Handle, 'X') + 2));
+    inc(tmp, (GetSystemMetrics(SM_CXHSCROLL) * 2));
+    tmp := HigherOf(tmp, 250);
+    aHeight := LowerOf(tmp + aForm.pnlButton.Height, (Screen.Height - 80));
+
+    aForm.ClientWidth := AWidth;
+    aForm.ClientHeight := aHeight;
+
+  end;
+
+var
+  i: Integer;
 begin
   Result := TfrmReportBox.Create(Application);
   try
-    with Result do
-    begin
-      { Enable URL detection in the memReport TRichEdit }
-      i := SendMessage(memReport.Handle, EM_GETEVENTMASK, 0, 0);
-      SendMessage(memReport.Handle, EM_SETEVENTMASK, 0, i or ENM_LINK);
-      SendMessage(memReport.Handle, EM_AUTOURLDETECT, Integer(True), 0);
-      lblFontTest.Font.Size := MainFontSize;
-      k := 0;
-      MinWidth := 0;
-      with pnlButton do for j := 0 to ControlCount - 1 do
-        if Controls[j] is TButton then
-          begin
-            SetLength(BtnArray, k+1);
-            SetLength(BtnRight, k+1);
-            BtnArray[k] := TButton(Controls[j]);
-            BtnRight[k] := ResizeWidth(Font, MainFont, BtnArray[k].Width - BtnArray[k].Width - BtnArray[k].Left);
-            k := k + 1;
-          end;
-      //cmdCloseRightMargin := ResizeWidth(Font, MainFont, pnlButton.Width - cmdClose.Width - cmdClose.Left);
-      //cmdPrintRightMargin := ResizeWidth(Font, MainFont, pnlButton.Width - cmdPrint.Width - cmdPrint.Left);
-      MaxWidth := 350;
-      for i := 0 to ReportText.Count - 1 do
-      begin
-        AWidth := lblFontTest.Canvas.TextWidth(ReportText[i]);
-        if AWidth > MaxWidth then MaxWidth := AWidth;
-      end;
-      cmdPrint.Visible := AllowPrint;
-      printHeader := includeHeader;
-      vistaPrint := VistaPrintOnly;
-      vistaDevice := '';
-      MaxWidth := MaxWidth + GetSystemMetrics(SM_CXVSCROLL);
-      AHeight := (ReportText.Count * (lblFontTest.Height + 2)) + pnlbutton.Height;
-      AHeight := HigherOf(AHeight, 250);
-      if AHeight > (Screen.Height - 80) then AHeight := Screen.Height - 80;
-      if MaxWidth > Screen.Width then MaxWidth := Screen.Width;
-      ClientWidth := MaxWidth;
-      ClientHeight := AHeight;
-      ResizeAnchoredFormToFont(Result);
-      memReport.Align := alClient; //CQ6661
-      //CQ6889 - force Print & Close buttons to bottom right of form regardless of selected font size
-      cmdClose.Left := (pnlButton.Left+pnlButton.Width)-cmdClose.Width;
-      cmdPrint.Left := (cmdClose.Left-cmdPrint.Width)-1;
-      //end CQ6889
-      SetLength(BtnLeft, k);
-      for j := 0 to k - 1 do
-      begin
-        BtnLeft[j] := pnlButton.Width - BtnArray[j].Width - BtnRight[j];
-        MinWidth := MinWidth + BtnArray[j].Width;
-      end;
-      Width := width + (GetSystemMetrics(SM_CXVSCROLL) *2);
-      Constraints.MinWidth := MinWidth + (MinWidth div 2) + (GetSystemMetrics(SM_CXVSCROLL) *2);
-      if (mainFontSize = 8) then Constraints.MinHeight := 285
-      else if (mainFontSize = 10) then Constraints.MinHeight := 325
-      else if (mainFontSize = 12) then Constraints.MinHeight := 390
-      else if mainFontSize = 14 then Constraints.MinHeight := 460
-      else Constraints.MinHeight := 575;
-      QuickCopy(ReportText, memReport);
-      for i := 1 to Length(ReportTitle) do if ReportTitle[i] = #9 then ReportTitle[i] := ' ';
-      Caption := ReportTitle;
+    // Setup variables
+    Result.PrintHeader := includeHeader;
+    Result.VistAPrint := VistAPrintOnly;
+    Result.VistADevice := '';
 
-      // RTC 1291792
-      AdjWidth := False;
-      with memReport do
-      begin
-        if Lines.Count > 1 then
-        begin
-          i := 0;
-          repeat
-            line := Lines[i];
-            j := Length(line);
-            if (j > 0) and (ord(line[j]) > 32) and (Length(Lines[i + 1]) > 0)
-              and (ord(Lines[i + 1][1]) > 32) then
-            begin
-              CaretPos := Point(j - 1, i);
-              SelLength := 1;
-              FillChar(Format, SizeOf(TCharFormat2), 0);
-              Format.cbSize := SizeOf(TCharFormat2);
-              SendGetStructMessage(Handle, EM_GETCHARFORMAT, WPARAM(true),
-                Format, true);
-              if (Format.dwEffects and CFE_LINK) <> 0 then
-              begin
-                line := line + Lines[i + 1];
-                Lines[i] := line;
-                Lines.Delete(i + 1);
-                dec(i);
-                AdjWidth := true;
-              end;
-            end;
-            inc(i);
-          until i >= (Lines.Count - 1);
-        end;
-        SelStart := 0;
-        if AdjWidth then
-        begin
-          MaxWidth := 350;
-          for i := 0 to Lines.Count - 1 do
-          begin
-            AWidth := lblFontTest.Canvas.TextWidth(Lines[i]);
-            if AWidth > MaxWidth then
-              MaxWidth := AWidth;
-          end;
-          MaxWidth := MaxWidth + GetSystemMetrics(SM_CXVSCROLL) + MainFont.Size;
-          if MaxWidth > Screen.Width then
-            MaxWidth := Screen.Width;
-          Result.ClientWidth := MaxWidth;
-        end;
-      end;
+    // Setup buttons
+    Result.cmdPrint.Visible := AllowPrint;
 
-      ForceInsideWorkArea(Result);
-      SetLength(BtnArray, 0);
-      SetLength(BtnRight, 0);
-      SetLength(BtnLeft, 0);
-    end;
+    // Enable URL detection
+    i := SendMessage(Result.memReport.Handle, EM_GETEVENTMASK, 0, 0);
+    SendMessage(Result.memReport.Handle, EM_SETEVENTMASK, 0, i or ENM_LINK);
+    SendMessage(Result.memReport.Handle, EM_AUTOURLDETECT, Integer(true), 0);
+
+    // Setup memo
+    QuickCopy(ReportText, Result.memReport);
+    for i := 1 to Length(ReportTitle) do
+      if ReportTitle[i] = #9 then
+        ReportTitle[i] := ' ';
+    Result.Caption := ReportTitle;
+
+    // Adjust form hyperlink wrap
+    PreventHyperLinkWrap(Result, Result.memReport);
+
+    // Adjust the form height
+    AutoAdjustFormSize(Result);
   except
-    KillObj(@Result);
+    FreeAndNil(Result);
     raise;
   end;
 end;
@@ -196,7 +177,8 @@ begin
   try
     frmReportBox.ShowModal;
   finally
-    frmReportBox.Release;
+    FreeAndNil(frmReportBox);
+   //frmReportBox.Release;
     Screen.Cursor := crDefault;
     fFrame.frmFrame.mnuFileOpen.Enabled := True;
   end;

@@ -465,6 +465,9 @@ var
   i, j: integer;
   AskLoc: boolean;
   ch: Char;
+  MaxDays: Double;
+  MaxDate: TDateTime;
+  ALongMessage: String;
 
   procedure SetError(const x: string);
   begin
@@ -568,6 +571,8 @@ begin
   with cboSubmit do
     if Enabled and (ItemIEN = 0)then SetError(TX_NO_IMAGING_LOCATION);
 
+  MaxDays := SystemParameters.AsTypeDef<Double>('radiologyFutureDateLimit',0);
+  MaxDate := FMDateTimeToDateTime(FMToday) + MaxDays;
   with calRequestDate do
   begin
     if FMDateTime = 0 then
@@ -575,7 +580,14 @@ begin
     else if FMDateTime < 0 then
       SetError(TX_BAD_DATE)
     else if FMDateTime < FMToday then
-      SetError(TX_PAST_DATE);
+      SetError(TX_PAST_DATE)
+    else if FMDateTimeToDateTime(FMDateTime) > MaxDate then
+      begin
+        ALongMessage := TX_BAD_DATE + CRLF + 'Please choose a date between ' +
+          FormatFMDateTime('mm/dd/yyyy', FMToday) + ' and ' +
+            FormatDateTime('mm/dd/yyyy',MaxDate);
+        SetError(ALongMessage);
+      end;
   end;
 
 end;
@@ -794,6 +806,7 @@ begin
         lblImType.Cursor := crHandPoint;
       end;
     end;
+  StatusText('');
 end;
 
 {Assigned to cbolmType.OnDropDownClose and cbolmType.OnExit, instead of

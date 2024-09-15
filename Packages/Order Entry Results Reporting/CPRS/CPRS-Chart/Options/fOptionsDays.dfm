@@ -65,7 +65,6 @@ inherited frmOptionsDays: TfrmOptionsDays
     Width = 288
     Height = 317
     Align = alClient
-    Caption = 'Panel11'
     ShowCaption = False
     TabOrder = 1
     ExplicitLeft = 72

@@ -40,14 +40,17 @@ requires
   IndySystem,
   IndyProtocols,
   IndyCore,
-  ResponsiveGUI_R10_4_2;
+  ResponsiveGUI_R10_4_2,
+  VAShared_R10_4_2;
 
 contains
   AVCatcher in '..\..\Source\AVCatcher.pas' {AppExcept},
   uMapParser in '..\..\Source\uMapParser.pas',
   UStopWatch in '..\..\Source\UStopWatch.pas',
   UThreadPool in '..\..\Source\UThreadPool.pas',
-  UExceptHook in '..\..\Source\UExceptHook.pas';
-
+  UExceptHook in '..\..\Source\UExceptHook.pas',
+  Outlook2010,
+  Office2010,
+  uModuleParser in '..\..\Source\uModuleParser.pas';
 end.
 

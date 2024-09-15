@@ -19,7 +19,6 @@ inherited frmPtSelMsg: TfrmPtSelMsg
     Width = 367
     Height = 115
     Align = alClient
-    Caption = 'Panel1'
     Color = clCream
     ParentBackground = False
     ShowCaption = False

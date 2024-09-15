@@ -51,7 +51,6 @@ uses
   fRptBox,
   uCore,
   uConst,
-  fAllgyBox,
   rODAllergy;
 
 const

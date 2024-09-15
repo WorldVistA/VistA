@@ -17,10 +17,13 @@ uses
   uConst,
   ORClasses,
   uCombatVet,
-  UJSONParameters,
-  uWriteAccess;
+  UORJSONParameters,
+  uWriteAccess,
+  Controls;
 
 type
+  TWinControlHack = Class(Controls.TWinControl);
+
   TUser = class(TObject)
   private
     FDUZ:             Int64;                      // User DUZ (IEN in New Person file)
@@ -99,6 +102,10 @@ type
     FDOB:        TFMDateTime;                    // Date of Birth in Fileman format
     FAge:        Integer;                        // Patient Age
     FSex:        Char;                           // Male, Female, Unknown
+    FSIGI:       string;                         // SIGI: Male, Female, TransMale, TransFemale,
+                                                 //       TransMan, Transwoman, Male-to-Female,
+                                                 //       Female-to-Male, Individual chooses not to answer
+    FPronoun:    string;                         // he/him/she/her/they/them
     FCWAD:       string;                         // chars identify if pt has CWAD warnings
     FRestricted: Boolean;                        // True if this is a restricted record
     FInpatient:  Boolean;                        // True if that patient is an inpatient
@@ -143,6 +150,8 @@ type
     property DOB:              TFMDateTime read FDOB;
     property Age:              Integer     read FAge;
     property Sex:              Char        read FSex;
+    property SIGI:             string      read FSIGI; // NSR#20130305
+    property Pronoun:          string      read FPronoun;
     property CWAD:             string      read FCWAD;
     property Inpatient:        Boolean     read FInpatient;
     property Status:           string      read FStatus;
@@ -165,7 +174,7 @@ type
     property PtIsVAA:          boolean     read GetPtIsVAA;
   end;
 
-  TEncounter = class(TObject, IORNotifier)
+  TEncounter = class(TObject)
   private
     FChanged:       Boolean;                     // one or more visit fields have changed
     FDateTime:      TFMDateTime;                 // date/time of encounter (appt, admission)
@@ -177,7 +186,7 @@ type
     FProviderName:  string;                      // Name in New Person file
     FVisitCategory: Char;                        // A=ambulatory,T=Telephone,H=inpt,E=historic
     FStandAlone:    Boolean;                     // true if visit not related to appointment
-    FNotifier:      IORNotifier;                 // Event handlers for location changes
+    FNotifier:      TORNotifier;                 // Event handlers for location changes
     function GetLocationName: string;
     function GetLocationText: string;
     function GetProviderName: string;
@@ -211,7 +220,7 @@ type
     property StandAlone:      Boolean     read FStandAlone write SetStandAlone;
     property VisitCategory:   Char        read GetVisitCategory write SetVisitCategory;
     property VisitStr:        string      read GetVisitStr;
-    property Notifier:        IORNotifier read FNotifier implements IORNotifier;
+    property Notifier:        TORNotifier read FNotifier;
   end;
 
   TChangeItem = class
@@ -469,7 +478,7 @@ procedure TerminateOtherAppNotification;
 procedure GotoWebPage(const URL: WideString);
 function subtractMinutesFromDateTime(Time1 : TDateTime;Minutes : extended) : TDateTime;
 function AllowAccessToSensitivePatient(NewDFN: string; var AccessStatus: integer): boolean;
-function SystemParameters: TJSONParameters;
+function SystemParameters: TORJSONParameters;
 procedure ClearSystemParameters;
 function EHRActive: boolean;
 
@@ -612,7 +621,8 @@ begin
         AResult := nil;
 {$WARN SYMBOL_DEPRECATED OFF} // researched
 {$WARN SYMBOL_PLATFORM OFF}
-        SendMessageTimeout(HWND_BROADCAST, MsgCode, WPARAM(Application.MainForm.Handle), LPARAM(AnAtom),
+        if (not Application.Terminated) or (assigned(Application.MainForm) and (TWinControlHack(Application.MainForm).WindowHandle <> 0)) then
+          SendMessageTimeout(HWND_BROADCAST, MsgCode, WPARAM(Application.MainForm.Handle), LPARAM(AnAtom),
                 SMTO_ABORTIFHUNG or SMTO_BLOCK, timeout, AResult^);
 {$WARN SYMBOL_PLATFORM ON}
 {$WARN SYMBOL_DEPRECATED ON}
@@ -934,6 +944,8 @@ begin
   FSSN        := PtSelect.SSN;
   FDOB        := PtSelect.DOB;
   FAge        := PtSelect.Age;
+  FSigi       := PtSelect.SIGI;
+  FPronoun    := PtSelect.Pronoun;
   FSex        := PtSelect.Sex;
   FCWAD       := PtSelect.CWAD;
   FRestricted := PtSelect.Restricted;
@@ -968,7 +980,7 @@ end;
 
 destructor TEncounter.Destroy;
 begin
-  FNotifier := nil; // Frees instance
+  FreeAndNil(FNotifier);
   inherited;
 end;
 
@@ -1921,9 +1933,9 @@ begin
 end;
 
 var
-  GlobalSystemParameters: TJSONParameters;
+  GlobalSystemParameters: TORJSONParameters;
 
-function SystemParameters: TJSONParameters;
+function SystemParameters: TORJSONParameters;
 // Just In Time creation of SystemParameters.
 // A small potential memory leak is solved with this fix, as well as the need
 // to check for Assigned every time you try and use it.

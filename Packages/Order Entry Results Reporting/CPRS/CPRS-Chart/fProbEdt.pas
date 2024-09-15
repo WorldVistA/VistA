@@ -3,10 +3,18 @@ unit fProbEdt;
 interface
 
 uses
-  SysUtils, windows, Messages, Classes, Graphics, Vcl.Controls,
-  Forms, Dialogs, StdCtrls, Buttons, ExtCtrls, Grids,
-  ORCtrls, Vawrgrid, uCore, Menus, uConst, fBase508Form,
-  VA508AccessibilityManager, Vcl.ComCtrls, iCoverSheetIntf;
+  uConst,
+  VA508AccessibilityManager,
+  ORCtrls,
+  fBase508Form,
+  Vcl.Forms,
+  Vcl.Controls,
+  Vcl.StdCtrls,
+  Vcl.ComCtrls,
+  Vcl.ExtCtrls,
+  Vcl.Buttons,
+  Winapi.Messages,
+  System.Classes;
 
 const
   SOC_QUIT = 1;        { close single dialog }
@@ -104,7 +112,6 @@ type
     procedure lstCommentsChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
   private
-    { Private declarations }
     FEditing: Boolean;
     FInitialShow: Boolean;
     FModified: Boolean;
@@ -128,7 +135,6 @@ type
     procedure ShowServiceCombo;
     procedure ShowClinicLocationCombo;
     procedure HandleVA508Caption();
-
   protected
     procedure CreateParams(var Params: TCreateParams); override;
     procedure DoShow; override;
@@ -137,8 +143,8 @@ type
     function  LackRequired: Boolean; virtual;
     procedure LoadDefaults; virtual;
     property  InitialFocus: TWinControl read FInitialFocus write FInitialFocus;
+    procedure DoSetFontSize(FontSize: Integer); override;
   public
-    { Public declarations }
     Reason:Char;
     problemIFN:String;
     subjProb:string; {parameters for problem being added}
@@ -151,16 +157,36 @@ type
     property LocationID: Longint read FLocationID write FLocationID;
     property SourceOfClose: Integer read FSourceOfClose write FSourceOfClose;
     property OnInitiate: TNotifyEvent read FOnInitiate write FOnInitiate;
-    procedure SetFontSize( NewFontSize: integer);
+    procedure SetFontSize(NewFontSize: Integer);
     property CanQuit: boolean read FCanQuit write FCanQuit;
-  end ;
+  end;
 
 implementation
 
 {$R *.DFM}
 
-uses ORFn, uProbs, fProbs, rProbs, rCover, rCore, rOrders, fProbCmt, fProbLex, rPCE, uInit  ,
-     VA508AccessibilityRouter, VAUtils, rMisc, uGlobalVar, uORLists, uSimilarNames;
+uses
+  System.SysUtils,
+  Winapi.Windows,
+  Vcl.Dialogs,
+  iCoverSheetIntf,
+  uCore,
+  ORFn,
+  uProbs,
+  fProbs,
+  rProbs,
+  rCore,
+  rOrders,
+  fProbCmt,
+  fProbLex,
+  rPCE,
+  uInit,
+  VA508AccessibilityRouter,
+  VAUtils,
+  rMisc,
+  uGlobalVar,
+  uORLists,
+  uSimilarNames;
 
 type
   TDialogItem = class { for loading edits & quick orders }
@@ -412,35 +438,38 @@ end;
 
 procedure TfrmdlgProb.FormShow(Sender: TObject);
 var
-  alist: TstringList;
-  Anchorses: Array of TAnchors;
-  i: integer;
+  AList: TStringList;
+  AnchorsArray: array of TAnchors;
+  I: Integer;
 begin
-  if ProbRec <> nil then exit;
-  if (ResizeWidth(Font,MainFont,Width) >= Parent.ClientWidth) and
-    (ResizeHeight(Font,MainFont,Height) >= Parent.ClientHeight) then
+  if ProbRec <> nil then Exit;
+
+  // Font resizing
+  if (ResizeWidth(Font, MainFont, Width) >= Parent.ClientWidth) and
+    (ResizeHeight(Font, MainFont, Height) >= Parent.ClientHeight) then
   begin  //This form won't fit when it resizes, so we have to take Drastic Measures
-    SetLength(Anchorses, dlgProbs.ControlCount);
-    for i := 0 to ControlCount - 1 do
-    begin
-      Anchorses[i] := Controls[i].Anchors;
-      Controls[i].Anchors := [akLeft, akTop];
+    SetLength(AnchorsArray, ControlCount);
+    for I := 0 to ControlCount - 1 do
+      AnchorsArray[I] := Controls[I].Anchors;
+    try
+      for I := 0 to ControlCount - 1 do
+        Controls[I].Anchors := [akLeft, akTop];
+      SetFontSize(MainFontSize);
+      RequestAlign;
+    finally
+      for I := 0 to ControlCount - 1 do
+        Controls[I].Anchors := AnchorsArray[I];
     end;
-    SetFontSize(MainFontSize);
-    RequestAlign;
-    for i := 0 to ControlCount - 1 do
-      Controls[i].Anchors := Anchorses[i];
-  end
-  else
-  begin
+  end else begin
     SetFontSize(MainFontSize);
     RequestAlign;
   end;
+
   frmProblems.mnuView.Enabled := False;
   frmProblems.mnuAct.Enabled := False ;
   frmProblems.lstView.Enabled := False;
   frmProblems.bbNewProb.Enabled := False ;
-  Alist := TstringList.create;
+  AList := TStringList.Create;
   try
     if Reason = 'E' then
       lblact.caption := 'Editing:'
@@ -491,17 +520,17 @@ begin
     if Reason <> 'A' then
       begin {edit,remove or display existing problem}
         problemIFN := Piece(subjProb, u, 1);
-        EditLoad(aList, ProblemIFN);   //V17.5   RV
+        EditLoad(AList, ProblemIFN);   //V17.5   RV
       end
     else {new  problem}
-      SetDefaultProb(Alist, subjProb);
-    if Alist.count = 0 then
+      SetDefaultProb(AList, subjProb);
+    if AList.Count = 0 then
       begin
         InfoBox('No Data on Host for problem ' + ProblemIFN, 'Information', MB_OK or MB_ICONINFORMATION);
         close;
         exit;
       end;
-    ProbRec := TProbRec.Create(Alist); {create a problem object}
+    ProbRec := TProbRec.Create(AList); {create a problem object}
     ProbRec.PIFN := ProblemIFN;
     ProbRec.EnteredBy.DHCPtoKeyVal(inttostr(User.DUZ) + u + User.Name);
     ProbRec.RecordedBy.DHCPtoKeyVal(inttostr(Encounter.Provider) + u + Encounter.ProviderName);
@@ -729,7 +758,7 @@ begin
     if ScreenReaderActive then
      HandleVA508Caption();
   finally
-    alist.free;
+    AList.Free;
   end;
 end;
 
@@ -1242,8 +1271,6 @@ begin
   FInitialShow := True;
   FModified := False;
   FEditing := False;
-
-
 end;
 
 procedure TfrmdlgProb.CreateParams(var Params: TCreateParams);
@@ -1282,15 +1309,22 @@ begin
   ControlChange(Sender);
 end;
 
+procedure TfrmdlgProb.DoSetFontSize(FontSize: Integer);
+begin
+  // This form should not be resizing to font size, as it does a lot of
+  // resizing logic elsewhere and the result is not optimal.
+  Exit;
+end;
+
 procedure TfrmdlgProb.DoShow;
 begin
   FInitialShow := False;
   inherited DoShow;
 end;
 
-procedure TfrmdlgProb.SetFontSize( NewFontSize: integer);
+procedure TfrmdlgProb.SetFontSize(NewFontSize: Integer);
 begin
-  ResizeAnchoredFormToFont( self );
+  ResizeAnchoredFormToFont(Self);
 end;
 
 procedure TfrmdlgProb.ShowClinicLocationCombo;
@@ -1354,9 +1388,9 @@ var
 begin
   if PLUser.usUseLexicon then
     begin
-      frmPLLex:=TfrmPLLex.create(Application);
+      frmPLLex := TfrmPLLex.create(nil);
       try
-        frmPLLex.showmodal;
+        frmPLLex.ShowModal;
       finally
         frmPLLex.Free;
       end;
@@ -1493,9 +1527,6 @@ begin
  end;
 end;
 
-
-
 initialization
   SpecifyFormIsNotADialog(TfrmdlgProb);
-
 end.

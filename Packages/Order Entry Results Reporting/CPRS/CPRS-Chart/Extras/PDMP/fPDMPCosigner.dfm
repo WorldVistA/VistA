@@ -71,7 +71,6 @@ object pdmpCosigner: TpdmpCosigner
     Height = 288
     Align = alClient
     BevelOuter = bvNone
-    Caption = 'pnlMain'
     ShowCaption = False
     TabOrder = 0
     object lblCosigner: TLabel

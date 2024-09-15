@@ -9,6 +9,7 @@ inherited frmConsultAction: TfrmConsultAction
   Constraints.MinWidth = 600
   OldCreateOrder = True
   Position = poScreenCenter
+  OnResize = ORFormResize
   ExplicitWidth = 600
   ExplicitHeight = 453
   PixelsPerInch = 96
@@ -383,6 +384,7 @@ inherited frmConsultAction: TfrmConsultAction
         Width = 354
         Height = 58
         Align = alBottom
+        AutoSize = True
         BevelOuter = bvNone
         TabOrder = 2
         object lblAutoAlerts: TStaticText
@@ -400,7 +402,7 @@ inherited frmConsultAction: TfrmConsultAction
           Top = 38
           Width = 348
           Height = 17
-          Align = alBottom
+          Align = alTop
           Caption = 'Send additional alerts'
           TabOrder = 0
           OnClick = ckAlertClick
@@ -416,7 +418,6 @@ inherited frmConsultAction: TfrmConsultAction
     Height = 30
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'pnlButtons'
     ShowCaption = False
     TabOrder = 1
     object cmdCancel: TORAlignButton

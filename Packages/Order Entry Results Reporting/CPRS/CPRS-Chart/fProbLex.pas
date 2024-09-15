@@ -30,7 +30,6 @@ type
     procedure DisableExtend;
     procedure EnableFreeText;
     procedure DisableFreeText;
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure bbOKClick(Sender: TObject);
     procedure bbCanClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -46,6 +45,7 @@ type
     procedure tgfLextvEnter(Sender: TObject);
     procedure tgfLextvExit(Sender: TObject);
     procedure tgfLextvDblClick(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     FExtendOffered: Boolean;
     FSuppressCodes: Boolean;
@@ -107,12 +107,6 @@ const
                      'on a term from the list, or click on the Extend Search button, to extend your ' +
                      'search to include the entire Clinical Findings Hierarchy of SNOMED CT.';
   SUPPRESS_CODES = False;
-
-procedure TfrmPLLex.FormClose(Sender: TObject; var Action: TCloseAction);
-begin
-  ProblemNOSs.Free;
-  Release;
-end;
 
 procedure TfrmPLLex.bbExtendedSearchClick(Sender: TObject);
 begin
@@ -266,6 +260,12 @@ begin
 
   tgfLex.DefTreeViewWndProc := tgfLex.tv.WindowProc;
   tgfLex.tv.WindowProc := tgfLex.TreeViewWndProc;
+end;
+
+procedure TfrmPLLex.FormDestroy(Sender: TObject);
+begin
+  FreeAndNil(ProblemNOSs);
+  inherited;
 end;
 
 procedure TfrmPLLex.ebLexKeyPress(Sender: TObject; var Key: Char);

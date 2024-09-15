@@ -1,4 +1,4 @@
-object frmWVEIEReasonsDlg: TfrmWVEIEReasonsDlg
+inherited frmWVEIEReasonsDlg: TfrmWVEIEReasonsDlg
   Left = 0
   Top = 0
   BorderStyle = bsDialog
@@ -26,7 +26,6 @@ object frmWVEIEReasonsDlg: TfrmWVEIEReasonsDlg
     Height = 25
     Anchors = [akLeft, akTop, akRight]
     BevelOuter = bvNone
-    Caption = 'pnlOther'
     DoubleBuffered = True
     ParentDoubleBuffered = False
     ShowCaption = False

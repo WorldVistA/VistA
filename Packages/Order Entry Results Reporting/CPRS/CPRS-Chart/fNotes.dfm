@@ -37,12 +37,8 @@ inherited frmNotes: TfrmNotes
   object pnlLeft: TPanel [2]
     Left = 0
     Top = 0
-    Width = 201
-    Height = 705
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Width = 188
+    Height = 564
     Align = alLeft
     BevelOuter = bvNone
     DoubleBuffered = True
@@ -455,14 +451,10 @@ inherited frmNotes: TfrmNotes
     object stNotes: TVA508StaticText
       Name = 'stNotes'
       AlignWithMargins = True
-      Left = 4
-      Top = 4
-      Width = 193
-      Height = 15
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 3
+      Top = 3
+      Width = 182
+      Height = 12
       Align = alTop
       Alignment = taLeftJustify
       AutoSize = True
@@ -473,7 +465,9 @@ inherited frmNotes: TfrmNotes
       TabOrder = 3
       VerticalAlignment = taAlignBottom
       ShowAccelChar = True
-      ExplicitWidth = 74
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
   end
   object pnlReminder: TPanel [3]

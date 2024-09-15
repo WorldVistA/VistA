@@ -1,7 +1,3 @@
-{$WARN UNSAFE_CODE OFF}
-{$WARN UNSAFE_CAST OFF}
-{$WARN UNSAFE_TYPE OFF}
-
 unit VAUtils;
 
 {TODO  -oJeremy Merrill -cMessageHandlers : Change component list to use hex address for uComponentList
@@ -115,7 +111,9 @@ const
 { returns the Nth piece (PieceNum) of a string delimited by Delim }
 function Piece(const S: string; Delim: char; PieceNum: Integer): string;
 { returns several contiguous pieces }
-function Pieces(const S: string; Delim: char; FirstNum, LastNum: Integer): string;
+function Pieces(const S: string; Delim: char; FirstNum, LastNum: Integer): string; overload;
+
+function Pieces(const S: string; PieceNumbers: array of Integer; PieceDelim, ReturnDelim: Char): string; overload;
 
 // Same as FreeAndNil, but for TString objects only
 // Frees any objects in the TStrings Objects list as well the TStrings object
@@ -337,9 +335,21 @@ function CountStringOccurrences(const aSubStr, aStr: String; aCutOff: Integer = 
 
 function ShouldFocus(Control: TWinControl): boolean;
 
+/// <summary>Changes a rectangle's coordinates so that it fits inside the work area
+///    of the current monitor.  The width and height of the rectangle is preserved
+///    unless it is larger than the work area width or height.  If the rectangle
+///    displays completely or partially outside the work area, it will be repositioned
+///    as needed.</summary>
+/// <param name="Rect">[<see cref="system.types|TRect"/>]  The rectangle to modify.</param>
+/// <param name="WinControl (optional)">[<see cref=" vcl.controls|TWinControl"/>]
+///    If a WinControl is passed, the work area used is determined by calling
+///    Screen.MonitorFromWindow(WinControl.Handle).WorkAreaRect.  If no WinControl is
+///    passed, the work area is determined by calling Screen.WorkAreaRect.</param>
+procedure ForceRectInsideWorkArea(var Rect: TRect; WinControl: TWinControl = nil);
+
 implementation
 
-uses tlhelp32;
+uses tlhelp32, VAPieceHelper, System.Generics.Collections;
 
 function Piece(const S: string; Delim: char; PieceNum: Integer): string;
 { returns the Nth piece (PieceNum) of a string delimited by Delim }
@@ -368,6 +378,14 @@ begin
   Result := '';
   for PieceNum := FirstNum to LastNum do Result := Result + Piece(S, Delim, PieceNum) + Delim;
   if Length(Result) > 0 then Delete(Result, Length(Result), 1);
+end;
+
+function Pieces(const S: string; PieceNumbers: array of Integer; PieceDelim, ReturnDelim: Char): string;
+Var
+  PieceStr: TPiece;
+begin
+  PieceStr := TPiece(S);
+  Result := PieceStr.Pieces(PieceNumbers, PieceDelim, ReturnDelim);
 end;
 
 procedure ShowMessage(const Text: string);
@@ -2269,13 +2287,51 @@ begin
   end;
 end;
 
+procedure ForceRectInsideWorkArea(var Rect: TRect; WinControl: TWinControl = nil);
+var
+  Frame: TRect;
+begin
+  if assigned(WinControl) then
+    Frame := Screen.MonitorFromWindow(WinControl.Handle).WorkAreaRect
+  else
+    Frame := Screen.WorkAreaRect;
+  // Vertical version:
+  // Align bottom (preserving height) if needed
+  if Rect.Bottom > Frame.Bottom then
+  begin
+    Rect.Top := Rect.Top + Frame.Bottom - Rect.Bottom;
+    Rect.Bottom := Frame.Bottom;
+  end;
+  // Then align top (preserving height) if needed
+  if Rect.Top < Frame.Top then
+  begin
+    Rect.Bottom := Rect.Bottom + Frame.Top - Rect.Top;
+    Rect.Top := Frame.Top;
+  end;
+  // Now shrink (preserving top) if needed
+  if Rect.Bottom > Frame.Bottom then
+    Rect.Bottom := Frame.Bottom;
+  if Rect.Top < Frame.Top then
+    Rect.Top := Frame.Top;
+  // Horizontal version:
+  if Rect.Right > Frame.Right then
+  begin
+    Rect.Left := Rect.Left + Frame.Right - Rect.Right;
+    Rect.Right := Frame.Right;
+  end;
+  if Rect.Left < Frame.Left then
+  begin
+    Rect.Right := Rect.Right + Frame.Left - Rect.Left;
+    Rect.Left := Frame.Left;
+  end;
+  if Rect.Right > Frame.Right then
+    Rect.Right := Frame.Right;
+  if Rect.Left < Frame.Left then
+    Rect.Left := Frame.Left;
+end;
+
 initialization
   ScreenReaderSupportEnabled;
-
 finalization
   CleanupMessageHandlerSystem;
-
-{$WARN UNSAFE_TYPE ON}
-{$WARN UNSAFE_CAST ON}
-{$WARN UNSAFE_CODE ON}
 end.

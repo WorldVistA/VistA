@@ -1,4 +1,4 @@
-object frmDeferDialog: TfrmDeferDialog
+inherited frmDeferDialog: TfrmDeferDialog
   Left = 0
   Top = 0
   BorderStyle = bsDialog
@@ -224,7 +224,6 @@ object frmDeferDialog: TfrmDeferDialog
     Height = 282
     Align = alClient
     BevelOuter = bvNone
-    Caption = 'pnlLeft'
     ShowCaption = False
     TabOrder = 2
     ExplicitWidth = 326

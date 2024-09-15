@@ -107,7 +107,6 @@ inherited frmConsultAlertsTo: TfrmConsultAlertsTo
     Height = 33
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'pnlButtons'
     ShowCaption = False
     TabOrder = 1
     object cmdOK: TButton

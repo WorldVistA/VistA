@@ -106,7 +106,6 @@ begin
   finally
     frmOrdersEvntRelease.FEvtList.Clear;
     frmOrdersEvntRelease.Release;
-    frmOrdersEvntRelease.FOkPressed := False;
   end;
 end;
 

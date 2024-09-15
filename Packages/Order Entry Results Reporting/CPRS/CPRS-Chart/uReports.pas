@@ -2,7 +2,7 @@ unit uReports;
 
 interface
 
-uses sysutils, classes, ORFN, ComCtrls, Forms, Graphics;
+uses ORExtensions, sysutils, classes, ORFN, ComCtrls, Forms, Graphics;
 
 type
 
@@ -108,7 +108,7 @@ function MakePrntProcTreeObject(x: string): PProcTreeObj;
 //procedures & functions for Report Fonts
 
 procedure ReportTextFontChange(Self, Sender: TObject);
-function CreateReportTextComponent(ParentForm: TForm): TRichEdit;
+function CreateReportTextComponent(ParentForm: TForm): ORExtensions.TRichEdit;
 
 
 implementation
@@ -356,11 +356,11 @@ begin
 end;
 
 // CQ#70295
-function CreateReportTextComponent(ParentForm: TForm): TRichEdit;
+function CreateReportTextComponent(ParentForm: TForm): ORExtensions.TRichEdit;
 var
   m: TMethod;
 begin
-  Result := TRichEdit.Create(ParentForm);
+  Result := ORExtensions.TRichEdit.Create(ParentForm);
   with Result do
   begin
     Parent := ParentForm;

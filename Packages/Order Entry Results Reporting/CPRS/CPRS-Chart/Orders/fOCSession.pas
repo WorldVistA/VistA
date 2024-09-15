@@ -87,6 +87,7 @@ type
     // procedure memNoteSetText(str: string);
   protected
     procedure ExecuteOrderCheckCallBack(Sender: TObject);
+    procedure DoSetFontSize(FontSize: integer); override;
   private
     FOrderList: tStringListArray;
     overrideRecord: TOrderRec;
@@ -601,6 +602,11 @@ begin
   finally
     monoList.Free;
   end;
+end;
+
+procedure TfrmOCSession.DoSetFontSize(FontSize: integer);
+begin
+  // Don't do inherited;
 end;
 
 procedure TfrmOCSession.ExecuteOrderCheckCallBack(Sender: TObject);

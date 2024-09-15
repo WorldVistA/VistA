@@ -23,7 +23,7 @@ type
     ViewInformation1: TMenuItem;
     acClinMaint: TMenuItem;
     lstHistory: ORextensions.TListView;
-    remDetails: TRichEdit;
+    remDetails: ORExtensions.TRichEdit;
     procedure AddImmunization1Click(Sender: TObject);
     procedure ViewInformation1Click(Sender: TObject);
     procedure acClinMaintClick(Sender: TObject);

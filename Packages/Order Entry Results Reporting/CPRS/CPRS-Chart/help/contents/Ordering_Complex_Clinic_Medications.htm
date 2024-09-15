@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <meta name="generator" content="Adobe RoboHelp 2020" />
+  <meta name="generator" content="Adobe RoboHelp 2022" />
   <title>Ordering Complex Clinic Medications</title>
   <link rel="StyleSheet" href="assets/css/CPRS.css" type="text/css" />
   <meta name="rh-index-keywords" content="Inpatient Meds,Inpatient Meds:for outpatient,Medications,Medications:ordering inpatient for outpatient,Orders,Orders:inpatient for outpatient" />
@@ -25,7 +25,7 @@
     </li>
     <li style="font-size: 12pt;">If prompted, enter the appropriate clinic for the encounter information. This will generally happen with an outpatient that does not yet have an encounter defined.
       <p style="margin-left: 0px;">You can use an existing appointment if one exists or create a new one. To use Clinic Medications, you must enter a location that was previously defined clinic. If you chose a clinic location, you will see this dialog.</p>
-      <p style="margin-bottom: 6.00pt;"><img alt="this screen capture shows the dialog that invites the user to confirm that they intend to write a Clinic Medications order" border="0" src="assets/images/Clinic_Med_confirm.gif" style="border: none;" /></p>
+      <p style="margin-bottom: 6.00pt;"><img alt="this screen capture shows the dialog that invites the user to confirm that they intend to write a Clinic Medications order" src="assets/images/image52.png" /></p>
       <p style="margin-bottom: 6.00pt; margin-left: 0px;">This dialog is to ensure that the user knows they are about to enter Clinic Medications.</p>
       <p> </p>
     </li>
@@ -39,8 +39,14 @@
       <p style="margin-left: 48px; text-indent: -48px; font-size: 12pt;">Select the quick order or medication name using the mouse or keyboard.</p>
       <p style="margin-left: 0px;">Once the name is selected, CPRS displays a second dialog to select the items for the rest of the order. In the top field of the second dialog, the generic medication name and the synonym (usually a brand name) are displayed</p>
       <p style="margin-left: 50px; text-indent: -50px;"><span style="font-weight: bold; font-size: 12pt;">Note:</span>  If the selected medication is a controlled substance that requires the signature of a provider with a DEA or VA number, the DEA# Required dialog appears. CPRS allows orders for controlled substances only when selected providers are able to sign the orders. You may need to exit the Medication Order dialog, change the provider selection, and then reenter the dialog.</p>
-      <p style="margin-left: 0px;"><img alt="This screen capture shows the diallog that indicates that the user needs to have a DEA number or VA number to order the selected medication." border="0" src="assets/images/2015-02-20_DEA_or_VA_num_required.gif" style="border: none;" /></p>
-      <p>You must have a DEA# or VA# to order certain medications</p>
+      <p style="margin-left: 0px;"><img alt="Order not completed popup with Retry button selected." src="assets/images/image53.png" /></p>
+      <p><strong>You must have a DEA# or VA# to order certain medications</strong><br />
+        <br />
+        <strong>Note</strong>:     CPRS requires a patient have a valid address if the selected outpatient medication is a controlled substance that requires the signature of a provider with a DEA number. For outpatient controlled substances, CPRS displays a message – “Controlled substance prescriptions require a patient address. Please contact administrative support to update patient address information.” if the patient does not have a valid address. The contact information in the display may be customized using the Enter/Edit Missing ZIP Code Message option in the GUI Parameters menu.<br />
+        <br />
+        <img src="assets/images/image54.png" /><br />
+        <strong>Controlled substance prescriptions require a patient address </strong>
+      </p>
       <p> </p>
     </li>
     <li style="font-size: 12pt;">Select the <b>Complex</b> tab.
@@ -77,15 +83,16 @@
         </li>
         <li style="font-size: 12pt;">Review the Schedule field.</li>
         <li style="font-size: 12pt;">When you have the correct schedule, select OK.
-          <p><img alt="This screen capture shows the Order with schedule Other dialog which enables the user to create a special schedule for the medication." border="0" src="assets/images/2015-02-20_Order_with_schedule_othere.gif" style="border: none;" /></p>
-          <p style="margin-bottom: 6.00pt;">The Order with Schedule ‘OTHER’ dialog allows you to enter a customized day-of-week and/or administration-time schedule. The user can enter specific administration times or select a schedule from the available list.</p>
-          <p style="margin-bottom: 6.00pt;"> </p>
+          <p><img alt="This screen capture shows the Order with schedule Other dialog which enables the user to create a special schedule for the medication." src="assets/images/image55.png" /><br />
+            The Order with Schedule ‘OTHER’ dialog allows you to enter a customized day-of-week and/or administration-time schedule. The user can enter specific administration times or select a schedule from the available list.</p>
         </li>
       </ol>
     </li>
     <li style="font-size: 12pt;">If necessary, select PRN.
-      <p style="margin-left: 0px;">PRN will display in the schedule field if the PRN checkbox is checked or if the schedule is defined in the Pharmacy files as a PRN schedule</p>
-      <p> </p>
+      <p style="margin-left: 0px;">PRN will display in the schedule field if the PRN checkbox is checked or if the schedule is defined in the Pharmacy files as a PRN schedule<br />
+        <br />
+        <strong>Note:</strong> When selecting the PRN checkbox, the quantity and say supply are zeroed out and will need to be adjusted manually. If the checkbox was accidentally selected, de-selecting it corrects the quantity and day supply.<br />
+      </p>
     </li>
     <li style="font-size: 12pt;">Select the <b>Duration</b> field and select the amount of time that the patient should use the specified dose.</li>
     <li style="font-size: 12pt;">In the <b>then/and</b> field, select the appropriate conjunction for the order.
@@ -110,14 +117,27 @@
       <p style="font-size: 12pt;">The date and time that the patient is scheduled to receive the first dose of the medication appears under the Comments field. (For example, CPRS cannot show an expected first dose for “on call” or schedules with PRN. On the complex tab, it will not try to determine an expected first dose after a THEN because the first item must be completed.)</p>
     </li>
     <li style="font-size: 12pt;">If you want the patient to receive an additional dose now, select the <b>Give additional dose now</b> check box. If you select the check box, the Give Additional Dose Now for Complex Order warning dialog box appears, as shown below.
-      <p><img alt="" border="0" src="assets/images/Give_Additional_dose_now_for_complex_2015-02-25.gif" style="border: none;" /></p>
+      <p><br />
+        <img alt="Give Additional Dose Now for Complex Order warning." src="assets/images/image56.png" />
+      </p>
       <p style="font-size: 8pt;">This graphic shows an example of the Give Additional Dose Now for Complex Order warning.</p>
       <p> </p>
-      <p style="margin-left: 54px; text-indent: -54px;"><span style="font-weight: bold; font-size: 12pt;">Note:</span>   Make sure that you are careful about using give-additional-dose-now functionality. When you click the check box, CPRS creates two new orders and sends it to Inpatient Medications. Make sure the “Give additional dose now” and the regular order with the original schedule you entered do not overmedicate the patient. “Give additional dose now” is not available for ONCE, ONE-TIME, or NOW orders. It is also not available for delayed orders.</p>
+      <p style="margin-left: 54px; text-indent: -54px;"><span style="font-weight: bold; font-size: 12pt;"></span></p>
+      <p style="margin-top:8px; margin-bottom:8px"><span style="font-size:11pt"><span style="font-family:&quot;Times New Roman&quot;,serif">When you select the <b>Give additional dose now</b> check box, CPRS creates two new orders. Depending on your version of CPRS, the order priority and dosing schedule may be set automatically or may require manual adjustments. The pop-up messages displayed will also vary. </span></span></p>
+      <p style="margin-top:8px; margin-bottom:8px"><span style="font-size:11pt"><span style="font-family:&quot;Times New Roman&quot;,serif">The dosing schedule and priority are set automatically for each order. The first order is scheduled for immediate administration (NOW) and is assigned a priority of ASAP (or a site-specific alternative). The second order is given the priority ROUTINE and follows the regular dosing schedule that you defined when placing the order.</span></span></p>
+      <p style="margin-top:8px; margin-bottom:8px"><span style="font-size:11pt"><span style="font-family:&quot;Times New Roman&quot;,serif">If you select a value for the <b>Priority</b> field before you select the <b>Give additional dose now</b> checkbox, a message notifies you that the selected priority will be changed to the “Give additional dose now” priority settings. </span></span></p>
+      <p style="margin-top:8px; margin-bottom:8px"><span style="font-size:11pt"><span style="font-family:&quot;Times New Roman&quot;,serif"><b>Note:</b>  If your site does not use the priority ASAP, then an alternative priority (for example, STAT) will display in place of ASAP. </span></span></p>
+      <p style="margin-top:8px; margin-bottom:8px"><span style="font-size:11pt"><span style="font-family:&quot;Times New Roman&quot;,serif"><img alt="Warning displayed when “Give additional dose now” is selected." id="Picture_x0020_563766" src="assets/images/image57.png" style="width: 252pt; height: 129pt;" />  </span></span></p>
+      <p class="MsoCaption" style="margin-bottom:4px"><span style="font-size:10pt"><span style="line-height:107%"><span style="font-family:Arial,sans-serif"><span style="color:black"><span style="font-weight:bold">Warning displayed when “Give additional dose now” is selected </span></span></span></span></span></p>
       <p> </p>
     </li>
     <li style="font-size: 12pt;">Check the orders and then select OK to close the warning dialog.</li>
-    <li style="font-size: 12pt;">Choose a priority from the <b>Priority</b> drop-down list.</li>
+    <li style="font-size: 12pt;">Choose a priority from the <b>Priority</b> drop-down list.
+      <p style="margin-top:8px; margin-bottom:8px"><span style="font-size:11pt"><span style="font-family:&quot;Times New Roman&quot;,serif">When <b>Give additional dose now</b> is selected, the <b>Priority</b> field is automatically set to ASAP (or a site-specific alternative). If you select a value for the <b>Priority</b> field before you select the <b>Give additional dose now</b> checkbox, a message notifies you that the selected priority will be changed to the “Give additional dose now” priority settings.</span></span></p>
+      <p style="margin-top:8px; margin-bottom:8px"><span style="font-size:11pt"><span style="font-family:&quot;Times New Roman&quot;,serif"><img alt="Give Additional Dose Now Warning message." id="Picture_x0020_563767" src="assets/images/image58.png" style="width:252pt; height:73.5pt" />  </span></span></p>
+      <p class="MsoCaption" style="margin-bottom:4px"><span style="font-size:10pt"><span style="line-height:107%"><span style="font-family:Arial,sans-serif"><span style="color:black"><span style="font-weight:bold">CPRS displays a notification that “Give additional dose now” overrides any previously selected priority </span></span></span></span></span></p>
+      <p style="margin-top:8px; margin-bottom:8px"><span style="font-size:11pt"><span style="font-family:&quot;Times New Roman&quot;,serif">The default value of ASAP can be changed by selecting a different value from the <b>Priority</b> field before submitting the order.</span></span></p>
+    </li>
     <li style="font-size: 12pt;">Select <b>Accept Order</b>.
       <p style="margin-left: 54px; text-indent: -54px;"><span style="font-weight: bold; font-size: 12pt;">Note:</span>   If you do not complete the mandatory items, or if the information is incorrect, CPRS sends a message to tell you that the information is incorrect and shows you the correct type of response.</p>
       <p> </p>
@@ -139,7 +159,7 @@
   <p> </p>
   <p style="font-size: 12pt;">On the Orders tab, CPRS displays Clinic Medications in the Clinic Medications display group, with the clinic location in the Location column.</p>
   <p style="font-size: 12pt;"> </p>
-  <p style="font-size: 12pt;"><img alt="On the Orders tab, CPRS displays Clinic Medication orders under the Clinic Medications display group, with the ordering location in the Location column" src="assets/images/Clinic_Meds_2021_05_03.gif" /></p>
+  <p style="font-size: 12pt;"><img alt="On the Orders tab, CPRS displays Clinic Medication orders under the Clinic Medications display group." src="assets/images/image59.png" /></p>
   <p> </p>
   <p style="margin-top: 6.00pt; margin-bottom: 0.00pt; border-bottom: 0.75pt solid #000000;">
     <font color="#010100" size="2" style="font-size: 10pt; font-weight: bold;">Related topics</font>

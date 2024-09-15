@@ -1,4 +1,4 @@
-unit fODText;
+﻿unit fODText;
 
 interface
 
@@ -27,6 +27,7 @@ type
     procedure lblOrderSigClick(Sender: TObject);
   private
     fShowMessage: Boolean;
+    procedure UpdateVisualControls;
   public
     procedure InitDialog; override;
     procedure SetupDialog(OrderAction: Integer; const ID: string); override;
@@ -147,20 +148,21 @@ procedure TfrmODText.cmdAcceptClick(Sender: TObject);
 var
   ReleasePending: boolean;
   Msg: TMsg;
-
 begin
   LockOwnerWrapper(Self);
   try
     inherited;
+    // if the order dialog has ASK FOR ANOTHER ORDER set to YES, the form
+    // will need to stick around
+    // this is verified in the inherited cmdAcceptClick by calling AskAnotherOrder(..)
+    // so if we're not *already* releasing, don't force the issue
     ReleasePending := PeekMessage(Msg, Handle, CM_RELEASE, CM_RELEASE, PM_REMOVE);
-
     TResponsiveGUI.ProcessMessages; //CQ 14670
     memText.Lines.Text := Trim(memText.Lines.Text); //CQ 14670
-
     if ReleasePending then
       Release;
   finally
-    UnlockOwnerWrepper(Self);
+    UnlockOwnerWrapper(Self);
   end;
 end;
 
@@ -175,11 +177,7 @@ begin
 end;
 
 procedure TfrmODText.SetupControls;
-//var
- //i, iHeight, iWidth: Integer;
-
 begin
-  //iHeight := getMainFormTextHeight;
   // Move inherited controls onto the TGridPanel
   gpMain.ControlCollection.BeginUpdate;
   try
@@ -202,45 +200,11 @@ begin
     cmdQuit.Align := alTop;
     cmdQuit.AlignWithMargins := True;
 
-//    gpMain.RowCollection[0].Value := iHeight + 8;
-//    gpMain.RowCollection[2].Value := iHeight + 8;
-//    gpMain.RowCollection[3].Value := iHeight + 8 + 6;
-//    gpMain.RowCollection[4].Value := iHeight + 8;
-//    gpMain.RowCollection[5].Value := iHeight + 8 + 6;
-//    gpMain.RowCollection[6].Value := iHeight + 8;
-//
-//    iWidth := getMainFormTextWidth(lblText.Caption);
-//    gpMain.ColumnCollection[0].Value := iWidth + 8;
-
   finally
     gpMain.ControlCollection.EndUpdate;
   end;
-{
-  gpMain.RowCollection[0].Value := iHeight + 8;
-  gpMain.RowCollection[2].Value := iHeight + 8;
-  gpMain.RowCollection[3].Value := iHeight + 8 + 6;
-  gpMain.RowCollection[4].Value := iHeight + 8;
-  gpMain.RowCollection[5].Value := iHeight + 8 + 6;
-  gpMain.RowCollection[6].Value := iHeight + 8;
 
-  iWidth := getMainFormTextWidth(lblText.Caption);
-  gpMain.ColumnCollection[0].Value := iWidth + 8;
-
-
-  i := (iHeight + 10) * 3 + 8;
-  if gpMain.RowCollection[7].Value < i then
-  gpMain.RowCollection[7].Value := i;
-  constraints.MinHeight := i * 5;
-
-  pnlGridMessage.Height := round(gpMain.RowCollection[7].Value);
-
-  i := getMainFormTextWidth('Accept Order') + 24;
-  if gpMain.ColumnCollection[2].Value < i then
-  gpMain.ColumnCollection[2].Value := i;
-
-  constraints.MinWidth := i * 8;
-  }
-  setFontSize(0);
+  UpdateVisualControls;
 
   pnlGridMessage.Margins.Right := round(gpMain.ColumnCollection[2].Value);
 
@@ -267,14 +231,10 @@ begin
   Invalidate;
 end;
 
-procedure TfrmODText.SetFontSize(FontSize: Integer);
+procedure TfrmODText.UpdateVisualControls;
 var
   i, iHeight, iWidth: Integer;
-
 begin
-  Font.Size := FontSize;
-  memMessage.DefAttributes.Size := FontSize;
-
   iHeight := getMainFormTextHeight;
   gpMain.ControlCollection.BeginUpdate;
   gpMain.RowCollection[0].Value := iHeight + 8;
@@ -300,6 +260,15 @@ begin
 
   constraints.MinWidth := i * 8;
   gpMain.ControlCollection.EndUpdate;
+end;
+
+procedure TfrmODText.SetFontSize(FontSize: Integer);
+
+
+begin
+  Font.Size := FontSize;
+  memMessage.DefAttributes.Size := FontSize;
+  UpdateVisualControls;
 end;
 
 end.

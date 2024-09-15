@@ -35,6 +35,8 @@ uses fLabs, rLabs;
 {$R *.DFM}
 
 function ExecuteLabInfo: Boolean;
+var
+  frmLabInfo: TfrmLabInfo;
 begin
   Result := False;
   frmLabInfo := TfrmLabInfo.Create(Application);
@@ -57,9 +59,12 @@ end;
 procedure TfrmLabInfo.FormCreate(Sender: TObject);
 
 begin
-  RedrawSuspend(cboTests.Handle);
-  cboTests.InitLongList('');
-  RedrawActivate(cboTests.Handle);
+  cboTests.LockDrawing;
+  try
+    cboTests.InitLongList('');
+  finally
+    cboTests.UnlockDrawing;
+  end;
 end;
 
 procedure TfrmLabInfo.cboTestsNeedData(Sender: TObject; const StartFrom: string;

@@ -169,8 +169,8 @@ object ORfrmDtTm: TORfrmDtTm
     Top = 8
     Width = 72
     Height = 21
-    Anchors = [akTop, akRight]
     Caption = 'OK'
+    Default = True
     TabOrder = 8
     OnClick = cmdOKClick
   end
@@ -179,7 +179,6 @@ object ORfrmDtTm: TORfrmDtTm
     Top = 37
     Width = 72
     Height = 21
-    Anchors = [akTop, akRight]
     Caption = 'Cancel'
     TabOrder = 9
     OnClick = cmdCancelClick
@@ -206,7 +205,7 @@ object ORfrmDtTm: TORfrmDtTm
   end
   object cmdNow: TButton
     Left = 225
-    Top = 204
+    Top = 200
     Width = 31
     Height = 23
     Caption = 'Now'
@@ -215,7 +214,7 @@ object ORfrmDtTm: TORfrmDtTm
   end
   object cmdMidnight: TButton
     Left = 262
-    Top = 204
+    Top = 200
     Width = 50
     Height = 23
     Caption = 'Midnight'

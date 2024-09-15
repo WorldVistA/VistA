@@ -73,7 +73,7 @@ const
 
   ordDivider = '----------------------------------------'+ CRLF;
 
-function getOrderFlagInfoList(aList: TStrings): TStrings;
+procedure getOrderFlagInfoList(OrderList, FlagList: TStrings);
 function getOrderFlagExpireDefault:TDateTime;
 
 implementation
@@ -85,29 +85,25 @@ uses
 var
   InfoCollection: TCollection;
 
-function getOrderFlagInfoList(aList: TStrings): TStrings;
+procedure getOrderFlagInfoList(OrderList, FlagList: TStrings);
 var
   i: Integer;
   ord: TOrder;
   FlagInfo: TOrderFlag;
 
 begin
-  Result := nil;
-  if not assigned(aList) then
-  begin
-//    ShowMessage('Blank List is not a good assignment');
+  if (not assigned(OrderList)) or (not assigned(FlagList)) then
     exit;
-  end;
-  Result := TStringList.Create;
-  for i := 0 to aList.Count - 1 do
+  FlagList.Clear;
+  for i := 0 to OrderList.Count - 1 do
   begin
-    ord := TOrder(aList.Objects[i]);
+    ord := TOrder(OrderList.Objects[i]);
     if assigned(ord) then
     begin
       FlagInfo := TOrderFlag.FlagInfoCreateDefault; // (OrdersToProcess);
       FlagInfo.SetByOrder(ord);
-      FlagInfo.Tag := StrToIntDef(piece(aList[i], U, 1), -1);
-      Result.AddObject(FlagInfo.Description, FlagInfo);
+      FlagInfo.Tag := StrToIntDef(piece(OrderList[i], U, 1), -1);
+      FlagList.AddObject(FlagInfo.Description, FlagInfo);
     end;
   end;
 end;

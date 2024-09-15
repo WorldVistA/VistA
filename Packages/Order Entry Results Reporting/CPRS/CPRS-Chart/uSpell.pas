@@ -8,7 +8,7 @@ unit uSpell;
 interface
 
 uses
-  Windows,
+  WinAPI.Windows,
   Messages,
   SysUtils,
   Classes,
@@ -40,7 +40,7 @@ procedure SpellCheckForControl(AnEditControl: TCustomMemo);
 procedure GrammarCheckForControl(AnEditControl: TCustomMemo);
 
 // Do Not Call these routines - internal use only
-procedure InternalSpellCheck(SpellCheck: boolean; EditControl: TCustomMemo);
+procedure InternalSpellCheck(SpellCheck: boolean; EditControl: TCustomMemo; DisplayPanel: TPanel);
 procedure RefocusSpellCheckWindow;
 
 const
@@ -106,10 +106,12 @@ type
     FResultMessage: string;
     FSpellChecking: boolean;
     FLock: TRTLCriticalSection;
+    fDisplayPanel: TPanel;
     procedure OnFormChange(Sender: TObject);
     procedure OnAppActivate(Sender: TObject);
     procedure OnThreadTerminate(Sender: TObject);
     procedure FindDocumentWindow;
+    procedure EmbedDocumentWindow;
     procedure TransferText;
     function RunWithErrorTrap(AMethod: TThreadMethod;
       SpellCheckErrorMessage, GrammarCheckErrorMessage, AdditionalErrorMessage: string;
@@ -265,9 +267,10 @@ begin
   end;
 end;
 
-procedure InternalSpellCheck(SpellCheck: boolean; EditControl: TCustomMemo);
+procedure InternalSpellCheck(SpellCheck: boolean; EditControl: TCustomMemo; DisplayPanel: TPanel);
 begin
   MSWordThread := TMSWordThread.CreateThread(SpellCheck, EditControl);
+  MSWordThread.fDisplayPanel := DisplayPanel;
   while Assigned(MSWordThread) do
     TResponsiveGUI.Sleep(50);
 end;
@@ -336,6 +339,11 @@ procedure TMSWordThread.Execute;
 var
   ok: boolean;
 
+  procedure DockAndHideWord;
+  begin
+    Synchronize(EmbedDocumentWindow);
+  end;
+
   procedure EnableAppActivation;
   begin
     FWord.Caption := FTitle;
@@ -392,6 +400,7 @@ begin
         begin
           try
             EnableAppActivation;
+            DockAndHideWord;
             Run(SaveWordSettings);
             Run(ConfigWord);
             Run(ConfigDoc);
@@ -458,6 +467,23 @@ begin
   end
   else
     Result := True;
+end;
+
+procedure TMSWordThread.EmbedDocumentWindow;
+begin
+
+  // create not visible
+  SetWindowLong(FDocWindowHandle, GWL_STYLE, not WS_VISIBLE);
+
+  // Ensure this does not show up on the task bar
+  SetWindowLong(FDocWindowHandle, GWL_EXSTYLE, WS_EX_NOACTIVATE);
+
+  // Dock the window
+  if assigned(fDisplayPanel) then
+    WinAPI.Windows.SetParent(FDocWindowHandle, fDisplayPanel.Handle);
+
+  // Show the window
+  ShowWindow(FDocWindowHandle, SW_SHOW);
 end;
 
 procedure TMSWordThread.FindDocumentWindow;

@@ -324,6 +324,8 @@ type
     FOrderTitlecaption: string;
     FNoOrderingOrWriteAccess: boolean;
     FAllowAlertAction: boolean;
+    FSigning: boolean;
+    FRenewing: boolean;
     function CanChangeOrderView: Boolean;
     function GetEvtIFN(AnIndex: Integer): string;
     function DisplayDefaultDlgList(ADest: TORListBox;
@@ -1033,22 +1035,25 @@ begin
       for i := 0 to Items.Count - 1 do
         if Selected[i] and (Items.Objects[i] is TOrder) then
           SelectedIDs := SelectedIDs + TOrder(Items.Objects[i]).ID + U;
-    RedrawSuspend(Handle);
-    SaveTop := TopIndex;
-    Clear;
-    repaint;
-    for i := 0 to uOrderList.Count - 1 do
-    begin
-      AnOrder := TOrder(uOrderList.Items[i]);
-      if (AnOrder.OrderTime <= 0) then
-        Continue;
-      idx := Items.AddObject(AnOrder.ID, AnOrder);
-      Items[idx] := GetPlainText(AnOrder, idx);
-      if KeepSelection and (Pos(U + AnOrder.ID + U, SelectedIDs) > 0) then
-        Selected[idx] := True;
+    LockDrawing;
+    try
+      SaveTop := TopIndex;
+      Clear;
+      repaint;
+      for i := 0 to uOrderList.Count - 1 do
+      begin
+        AnOrder := TOrder(uOrderList.Items[i]);
+        if (AnOrder.OrderTime <= 0) then
+          Continue;
+        idx := Items.AddObject(AnOrder.ID, AnOrder);
+        Items[idx] := GetPlainText(AnOrder, idx);
+        if KeepSelection and (Pos(U + AnOrder.ID + U, SelectedIDs) > 0) then
+          Selected[idx] := True;
+      end;
+      TopIndex := SaveTop;
+    finally
+      UnlockDrawing;
     end;
-    TopIndex := SaveTop;
-    RedrawActivate(Handle);
   end;
 end;
 
@@ -1061,78 +1066,81 @@ begin
   begin
     if EventDelay.EventIFN > 0 then
       FCompress := False;
-    RedrawSuspend(lstOrders.Handle);
-    lstOrders.Clear;
-    if FromServer then
-    begin
-      StatusText('Retrieving orders list...');
-      if not FFromDCRelease then
+    lstOrders.LockDrawing;
+    try
+      lstOrders.Clear;
+      if FromServer then
       begin
-        if not Notifications.IndOrderDisplay then
+        StatusText('Retrieving orders list...');
+        if not FFromDCRelease then
         begin
-          if FCurrentView.Filter = -1 then
+          if not Notifications.IndOrderDisplay then
           begin
-            SetCannedView(STS_ACTIVE, DGroupAll,
-              'Active Orders (includes Pending & Recent Activity) - ALL SERVICES',
-              False);
+            if FCurrentView.Filter = -1 then
+            begin
+              SetCannedView(STS_ACTIVE, DGroupAll,
+                'Active Orders (includes Pending & Recent Activity) - ALL SERVICES',
+                False);
+            end;
+            LoadOrdersAbbr(uOrderList, FCurrentView, APtEvtID)
+          end
+          else
+          begin
+            LoadOrdersAbbr(uOrderList, FCurrentView, APtEvtID,
+              Piece(Notifications.RecordID, '^', 2));
+            StatusText(Notifications.RecordID);
           end;
-          LoadOrdersAbbr(uOrderList, FCurrentView, APtEvtID)
         end
         else
         begin
-          LoadOrdersAbbr(uOrderList, FCurrentView, APtEvtID,
-            Piece(Notifications.RecordID, '^', 2));
-          StatusText(Notifications.RecordID);
+          ClearOrders(uOrderList);
+          uEvtDCList.Clear;
+          uEvtRLList.Clear;
+          LoadOrdersAbbr(uEvtDCList, uEvtRLList, FCurrentView, APtEvtID);
         end;
-      end
+      end;
+      if ((Length(APtEvtID) > 0) or (FCurrentView.Filter in [15, 16, 17, 24]) or
+        (FCurrentView.EventDelay.PtEventIFN > 0)) and
+        ((not FCompress) or (lstSheets.ItemIndex < 0)) and (not FFromDCRelease)
+      then
+        ExpandEventSection
       else
+        CompressEventSection;
+      if not FFromDCRelease then
       begin
-        ClearOrders(uOrderList);
-        uEvtDCList.Clear;
-        uEvtRLList.Clear;
-        LoadOrdersAbbr(uEvtDCList, uEvtRLList, FCurrentView, APtEvtID);
+        if FRightAfterWriteOrderBox and (EventDelay.EventIFN > 0) then
+        begin
+          SortOrders(uOrderList, False, True);
+          FRightAfterWriteOrderBox := False;
+        end;
+        Callvista('ORTO DGROUP', [DGroup], DGroupName);  //rtw
+        if ((DGroupName = 'PHARMACY UAP') or (DGroupName = 'DISCHARGE MEDS')) then
+        begin
+          SetOrderRevwCol(uOrderList) ;
+        end
+        else
+            SortOrders(uOrderList, ByService, InvChrono);
+        AddToListBox(uOrderList);
       end;
+      if FFromDCRelease then
+      begin
+        if uEvtRLList.Count > 0 then
+        begin
+          SortOrders(uEvtRLList, True, True);
+          for i := 0 to uEvtRLList.Count - 1 do
+            uOrderList.Add(TOrder(uEvtRLList[i]));
+        end;
+        if uEvtDCList.Count > 0 then
+        begin
+          SortOrders(uEvtDCList, True, True);
+          for i := 0 to uEvtDCList.Count - 1 do
+            uOrderList.Add(TOrder(uEvtDCList[i]));
+        end;
+        AddToListBox(uOrderList);
+      end;
+    finally
+      lstOrders.UnlockDrawing;
     end;
-    if ((Length(APtEvtID) > 0) or (FCurrentView.Filter in [15, 16, 17, 24]) or
-      (FCurrentView.EventDelay.PtEventIFN > 0)) and
-      ((not FCompress) or (lstSheets.ItemIndex < 0)) and (not FFromDCRelease)
-    then
-      ExpandEventSection
-    else
-      CompressEventSection;
-    if not FFromDCRelease then
-    begin
-      if FRightAfterWriteOrderBox and (EventDelay.EventIFN > 0) then
-      begin
-        SortOrders(uOrderList, False, True);
-        FRightAfterWriteOrderBox := False;
-      end;
-      Callvista('ORTO DGROUP', [DGroup], DGroupName);  //rtw
-      if ((DGroupName = 'PHARMACY UAP') or (DGroupName = 'DISCHARGE MEDS')) then
-      begin
-        SetOrderRevwCol(uOrderList) ;
-      end
-      else
-          SortOrders(uOrderList, ByService, InvChrono);
-      AddToListBox(uOrderList);
-    end;
-    if FFromDCRelease then
-    begin
-      if uEvtRLList.Count > 0 then
-      begin
-        SortOrders(uEvtRLList, True, True);
-        for i := 0 to uEvtRLList.Count - 1 do
-          uOrderList.Add(TOrder(uEvtRLList[i]));
-      end;
-      if uEvtDCList.Count > 0 then
-      begin
-        SortOrders(uEvtDCList, True, True);
-        for i := 0 to uEvtDCList.Count - 1 do
-          uOrderList.Add(TOrder(uEvtDCList[i]));
-      end;
-      AddToListBox(uOrderList);
-    end;
-    RedrawActivate(lstOrders.Handle);
     lblOrders.Caption := ViewName;
     lstOrders.Caption := ViewName;
     if ViewName = 'Medications, Expiring' then
@@ -1210,6 +1218,7 @@ var
 begin
   if not CanChangeOrderView then
     Exit;
+  if lstSheets.Items.Count <= 0 then lstSheets.Items.Add('C;0^' + AViewName);
   lstSheets.ItemIndex := 0;
   FCurrentView := TOrderView(lstSheets.Items.Objects[0]);
   if FCurrentView = nil then
@@ -1623,11 +1632,10 @@ end;
 procedure TfrmOrders.ClearOrderSheets;
 { delete all order sheets & associated TOrderView objects, set current view to nil }
 var
-  i: Integer;
+  I: Integer;
 begin
-  with lstSheets do
-    for i := 0 to Items.Count - 1 do
-      TOrderView(Items.Objects[i]).Free;
+  for I := 0 to lstSheets.Items.Count - 1 do
+    TOrderView(lstSheets.Items.Objects[I]).Free;
   lstSheets.Clear;
   FCurrentView := nil;
 end;
@@ -2778,49 +2786,56 @@ var
   SelectedList: TList;
   ParntOrder: TOrder;
 begin
-  inherited;
-  if NoneSelected(TX_NOSEL) then
+  if FRenewing then
     Exit;
-  if not AuthorizedUser then
-    Exit;
-  if not EncounterPresent then
-    Exit; // make sure have provider & location
-  if not LockedForOrdering then
-    Exit;
-  SelectedList := TList.Create;
+  FRenewing := True;
   try
-    if CheckOrderStatus = True then
+    inherited;
+    if NoneSelected(TX_NOSEL) then
       Exit;
-    ValidateSelected(OA_RENEW, TX_NO_RENEW, TC_NO_RENEW);
-    // validate renew action for each
-    MakeSelectedList(SelectedList); // build list of orders that remain
-    if Length(FParentComplexOrderID) > 0 then
-    begin
-      ParntOrder := GetOrderByIFN(FParentComplexOrderID);
-      if CharAt(ParntOrder.Text, 1) = '+' then
-        ParntOrder.Text := Copy(ParntOrder.Text, 2, Length(ParntOrder.Text));
-      if Pos('First Dose NOW', ParntOrder.Text) > 1 then
-        Delete(ParntOrder.Text, Pos('First Dose NOW', ParntOrder.Text),
-          Length('First Dose NOW'));
-      SelectedList.Add(ParntOrder);
-      FParentComplexOrderID := '';
-    end;
-    if ExecuteRenewOrders(SelectedList) then
-    begin
-      AddSelectedToChanges(SelectedList);
-      // should this happen in ExecuteRenewOrders?
-      SynchListToOrders;
-    end;
-    UpdateExpiringMedAlerts(Patient.DFN);
-    if not uInit.TimedOut then
-    begin
-      SendMessage(Application.MainForm.Handle, UM_NEWORDER, ORDER_SIGN, 0);
-      if lstSheets.ItemIndex < 0 then
-        lstSheets.ItemIndex := 0;
+    if not AuthorizedUser then
+      Exit;
+    if not EncounterPresent then
+      Exit; // make sure have provider & location
+    if not LockedForOrdering then
+      Exit;
+    SelectedList := TList.Create;
+    try
+      if CheckOrderStatus = True then
+        Exit;
+      ValidateSelected(OA_RENEW, TX_NO_RENEW, TC_NO_RENEW);
+      // validate renew action for each
+      MakeSelectedList(SelectedList); // build list of orders that remain
+      if Length(FParentComplexOrderID) > 0 then
+      begin
+        ParntOrder := GetOrderByIFN(FParentComplexOrderID);
+        if CharAt(ParntOrder.Text, 1) = '+' then
+          ParntOrder.Text := Copy(ParntOrder.Text, 2, Length(ParntOrder.Text));
+        if Pos('First Dose NOW', ParntOrder.Text) > 1 then
+          Delete(ParntOrder.Text, Pos('First Dose NOW', ParntOrder.Text),
+            Length('First Dose NOW'));
+        SelectedList.Add(ParntOrder);
+        FParentComplexOrderID := '';
+      end;
+      if ExecuteRenewOrders(SelectedList) then
+      begin
+        AddSelectedToChanges(SelectedList);
+        // should this happen in ExecuteRenewOrders?
+        SynchListToOrders;
+      end;
+      UpdateExpiringMedAlerts(Patient.DFN);
+      if not uInit.TimedOut then
+      begin
+        SendMessage(Application.MainForm.Handle, UM_NEWORDER, ORDER_SIGN, 0);
+        if lstSheets.ItemIndex < 0 then
+          lstSheets.ItemIndex := 0;
+      end;
+    finally
+      SelectedList.Free;
+      UnlockIfAble;
     end;
   finally
-    SelectedList.Free;
-    UnlockIfAble;
+    FRenewing := False;
   end;
 end;
 
@@ -3414,85 +3429,91 @@ var
   SelectedList: TList;
   Delayed: Boolean;
 begin
-  inherited;
-  Delayed := False;
-  if NoneSelected(TX_NOSEL_SIGN) then
+  if FSigning then
     Exit;
-  if not AuthorizedUser then
-    Exit;
-  if (User.OrderRole <> 2) and (User.OrderRole <> 3) then
-  begin
-    ShowMsg('Sorry, You don''t have the permission to release selected orders manually');
-    Exit;
-  end;
-  if not(FCurrentView.EventDelay.EventIFN > 0) then
-  begin
-    if not EncounterPresent(TX_SIGN_LOC) then
-      Exit;
-  end;
-  if not LockedForOrdering then
-    Exit;
+  FSigning := True;
   try
-    // CQ 18392 and CQ 18121 Made changes to this code, PtEVTComplete function and the finally statement at the end to support the fix for these CQs
-    if (FCurrentView.EventDelay.PtEventIFN > 0) then
-      Delayed := (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN,
-        FCurrentView.EventDelay.EventName, False, True));
-    // if (FCurrentView.EventDelay.PtEventIFN>0) and (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN, FCurrentView.EventDelay.EventName)) then
-    // Exit;
-
-    SelectedList := TList.Create;
+    Delayed := False;
+    if NoneSelected(TX_NOSEL_SIGN) then
+      Exit;
+    if not AuthorizedUser then
+      Exit;
+    if (User.OrderRole <> 2) and (User.OrderRole <> 3) then
+    begin
+      ShowMsg('Sorry, You don''t have the permission to release selected orders manually');
+      Exit;
+    end;
+    if not(FCurrentView.EventDelay.EventIFN > 0) then
+    begin
+      if not EncounterPresent(TX_SIGN_LOC) then
+        Exit;
+    end;
+    if not LockedForOrdering then
+      Exit;
     try
-      ValidateSelected(OA_SIGN, TX_NO_SIGN, TC_NO_SIGN);
-      // validate sign action on each order
-      MakeSelectedList(SelectedList);
-      { billing Aware }
-      if BILLING_AWARE then
-      begin
-        UBACore.rpcBuildSCIEList(SelectedList);
-        // build list of orders and Billable Status
-        UBACore.CompleteUnsignedBillingInfo
-          (rpcGetUnsignedOrdersBillingData(OrderListSCEI));
-      end;
+      // CQ 18392 and CQ 18121 Made changes to this code, PtEVTComplete function and the finally statement at the end to support the fix for these CQs
+      if (FCurrentView.EventDelay.PtEventIFN > 0) then
+        Delayed := (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN,
+          FCurrentView.EventDelay.EventName, False, True));
+      // if (FCurrentView.EventDelay.PtEventIFN>0) and (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN, FCurrentView.EventDelay.EventName)) then
+      // Exit;
 
-      { billing Aware }
-      ExecuteReleaseOrderChecks(SelectedList); // call order checking
+      SelectedList := TList.Create;
+      try
+        ValidateSelected(OA_SIGN, TX_NO_SIGN, TC_NO_SIGN);
+        // validate sign action on each order
+        MakeSelectedList(SelectedList);
+        { billing Aware }
+        if BILLING_AWARE then
+        begin
+          UBACore.rpcBuildSCIEList(SelectedList);
+          // build list of orders and Billable Status
+          UBACore.CompleteUnsignedBillingInfo
+            (rpcGetUnsignedOrdersBillingData(OrderListSCEI));
+        end;
 
-      if not uInit.TimedOut then
-        if ExecuteSignOrders(SelectedList) // confirm, sign & release
-        then
-          RemoveSelectedFromChanges(SelectedList);
-      // remove signed orders from Changes
-      UpdateUnsignedOrderAlerts(Patient.DFN);
-      with Notifications do
-        if Active and (FollowUp = NF_ORDER_REQUIRES_ELEC_SIGNATURE) then
-          UnsignedOrderAlertFollowup(Piece(RecordID, U, 2));
-      if Active then
-      begin
-        UpdateExpiringMedAlerts(Patient.DFN);
-        UpdateUnverifiedMedAlerts(Patient.DFN);
-        UpdateUnverifiedOrderAlerts(Patient.DFN);
-      end;
-      if not uInit.TimedOut then
-      begin
-        SendMessage(Application.MainForm.Handle, UM_NEWORDER, ORDER_SIGN, 0);
-        if lstSheets.ItemIndex < 0 then
-          lstSheets.ItemIndex := 0;
+        { billing Aware }
+        ExecuteReleaseOrderChecks(SelectedList); // call order checking
+
+        if not uInit.TimedOut then
+          if ExecuteSignOrders(SelectedList) // confirm, sign & release
+          then
+            RemoveSelectedFromChanges(SelectedList);
+        // remove signed orders from Changes
+        UpdateUnsignedOrderAlerts(Patient.DFN);
+        with Notifications do
+          if Active and (FollowUp = NF_ORDER_REQUIRES_ELEC_SIGNATURE) then
+            UnsignedOrderAlertFollowup(Piece(RecordID, U, 2));
+        if Active then
+        begin
+          UpdateExpiringMedAlerts(Patient.DFN);
+          UpdateUnverifiedMedAlerts(Patient.DFN);
+          UpdateUnverifiedOrderAlerts(Patient.DFN);
+        end;
+        if not uInit.TimedOut then
+        begin
+          SendMessage(Application.MainForm.Handle, UM_NEWORDER, ORDER_SIGN, 0);
+          if lstSheets.ItemIndex < 0 then
+            lstSheets.ItemIndex := 0;
+        end;
+      finally
+        SelectedList.Free;
       end;
     finally
-      SelectedList.Free;
+      UnlockIfAble;
+      // CQ #17491: Added UpdatePtInfoOnRefresh here to allow for the updating of the patient
+      // status indicator in the header bar if the patient becomes admitted/discharged.
+      frmFrame.UpdatePtInfoOnRefresh;
+      if Delayed = True then
+      begin
+        InitOrderSheetsForEvtDelay;
+        lstSheets.ItemIndex := 0;
+        lstSheetsClick(Self);
+        RefreshOrderList(True);
+      end;
     end;
   finally
-    UnlockIfAble;
-    // CQ #17491: Added UpdatePtInfoOnRefresh here to allow for the updating of the patient
-    // status indicator in the header bar if the patient becomes admitted/discharged.
-    frmFrame.UpdatePtInfoOnRefresh;
-    if Delayed = True then
-    begin
-      InitOrderSheetsForEvtDelay;
-      lstSheets.ItemIndex := 0;
-      lstSheetsClick(Self);
-      RefreshOrderList(True);
-    end;
+    FSigning := False;
   end;
 end;
 

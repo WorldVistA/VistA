@@ -1,4 +1,4 @@
-object frmAlertNoteSelector: TfrmAlertNoteSelector
+inherited frmAlertNoteSelector: TfrmAlertNoteSelector
   Left = 0
   Top = 0
   BorderStyle = bsDialog

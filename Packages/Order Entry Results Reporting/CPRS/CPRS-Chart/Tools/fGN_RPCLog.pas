@@ -3,13 +3,13 @@ unit fGN_RPCLog;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, DateUtils, ORNet, ORFn, System.UITypes
-{$IFDEF STANDALONE} // RPC log viewer application
-{$ELSE}
-    , rMisc, fBase508Form
+  StdCtrls, DateUtils, ORNet, ORFn, System.UITypes,
+{$IFNDEF STANDALONE} // not RPC log viewer application
+  rMisc,
 {$ENDIF}
-    , ComCtrls, Buttons, ExtCtrls,
+  ComCtrls, Buttons, ExtCtrls, fBase508Form,
   ORCtrls, ORSystem, VA508AccessibilityManager, VAUtils,
   Winapi.RichEdit, Vcl.Menus, Vcl.ImgList, Vcl.ToolWin, System.ImageList,
   System.Actions, Vcl.ActnList, Vcl.StdActns, Vcl.Tabs, Vcl.DockTabSet;
@@ -26,7 +26,7 @@ type
     destructor Destroy; override;
   end;
 
-  TfrmRPCLog = class(TForm)
+  TfrmRPCLog = class(TfrmBase508Form)
     c: TImageList;
     alLog: TActionList;
     ilWindow: TImageList;
@@ -66,7 +66,7 @@ type
     Label2: TLabel;
     edTarget: TComboBox;
     pnlMain: TPanel;
-    memData: TRichEdit;
+    memData: ORExtensions.TRichEdit;
     Panel2: TPanel;
     lblCallID: TStaticText;
     pnlMainToolbar: TPanel;

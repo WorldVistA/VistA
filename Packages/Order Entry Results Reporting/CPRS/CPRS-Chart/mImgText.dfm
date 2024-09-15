@@ -24,7 +24,6 @@ object fraImgText: TfraImgText
     Height = 20
     Align = alClient
     BevelOuter = bvNone
-    Caption = 'gp'
     ColumnCollection = <
       item
         SizeStyle = ssAbsolute

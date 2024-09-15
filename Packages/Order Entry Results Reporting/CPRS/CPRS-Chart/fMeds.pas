@@ -195,6 +195,7 @@ type
     ChildODList: TStringList;
     FSortView: Integer;
     FOrderTitlecaption: string;
+    FRenewing: boolean;
     function ListSelected(const ErrMsg: string): TListBox;
     procedure ValidateSelected(AListBox: TListBox;
       const AnAction, WarningMsg, WarningTitle: string);
@@ -573,21 +574,21 @@ begin
         AMedList.Insert(0, NewMedRec);
         if AMedList = uMedListIn then
         begin
-          lstMedsIn.Items.Insert(0, GetPlainText(lstMedsIn, 0));
+          lstMedsIn.Items.InsertObject(0, GetPlainText(lstMedsIn, 0), NewMedRec);
           uPharmacyOrdersIn.Insert(0, U + AnOrder.ID);
         end
         else
         begin
           if AMedList = uMedListOut then
           begin
-            lstMedsOut.Items.Insert(0, GetPlainText(lstMedsOut, 0));
+            lstMedsOut.Items.InsertObject(0, GetPlainText(lstMedsOut, 0), NewMedRec);
             uPharmacyOrdersOut.Insert(0, U + AnOrder.ID);
           end
           else
           begin
             if AMedList = uMedListNonVA then
             begin
-              lstMedsNonVA.Items.Insert(0, GetPlainText(lstMedsNonVA, 0));
+              lstMedsNonVA.Items.InsertObject(0, GetPlainText(lstMedsNonVA, 0), NewMedRec);
               uNonVAOrdersOut.Insert(0, U + AnOrder.ID);
             end;
           end;
@@ -1146,8 +1147,13 @@ var
   X, Y: string;
 begin
   Result := '';
-  AMed := TMedListRec(GetMedList(Control)[Index]);
+  var aMedList := GetMedList(Control);
+  if aMedList = nil then
+    Exit;
+  AMed := TMedListRec(aMedList[Index]);
   AHeader := GetHeader(Control);
+  if AHeader = nil then
+    Exit;
   for i := 0 to AHeader.Sections.Count - 1 do
   begin
     X := GetListText (AMed, i, Y);
@@ -1213,34 +1219,37 @@ begin
   NewHeight := AHeight;
   AHeader := GetHeader(Control);
   AMedList := GetMedList(Control);
-  with Control as TListBox do
-    if Index < Items.Count then
-    begin
-      AMed := TMedListRec(AMedList[Index]);
-      // can't use Items.Objects here - its not there yet
-      if AMed <> nil then
+  if (AHeader <> nil) and (AMedList <> nil) then
+  begin
+    with Control as TListBox do
+      if Index < Items.Count then
       begin
-        ARect := ItemRect(Index);
-        ARect.Left := AHeader.Sections[0].Width + 2;
-        ARect.Right := ARect.Left + AHeader.Sections[1].Width - 6;
-        AnAction := uPendingChanges.Values[Piece(AMed.OrderID, ';', 1)];
-        if Length(AnAction) > 0 then
-          Canvas.Font.Style := [fsBold];
-        X := GetInstructText(AMed, Y);
-        RecRight := ARect.Right;
-        NewHeight := WrappedTextHeightByFont(Canvas, Font, X, ARect);
-        if (Length(Y) > 0) then
+        AMed := TMedListRec(AMedList[Index]);
+        // can't use Items.Objects here - its not there yet
+        if AMed <> nil then
         begin
-          ARect.Left := AHeader.Sections[0].Width + FMT_INDENT;
-          ARect.Right := RecRight; // Draw Text alters ARect.
-          inc(NewHeight, WrappedTextHeightByFont(Canvas, Font, Y, ARect));
-        end;
-        if NewHeight > 255 then
-          NewHeight := 255; // windows appears to only look at 8 bits *KCM*
-        if NewHeight < 13 then
-          NewHeight := 13; // show at least one line                 *KCM*
-      end; { if AMed }
-    end; { if Index }
+          ARect := ItemRect(Index);
+          ARect.Left := AHeader.Sections[0].Width + 2;
+          ARect.Right := ARect.Left + AHeader.Sections[1].Width - 6;
+          AnAction := uPendingChanges.Values[Piece(AMed.OrderID, ';', 1)];
+          if Length(AnAction) > 0 then
+            Canvas.Font.Style := [fsBold];
+          X := GetInstructText(AMed, Y);
+          RecRight := ARect.Right;
+          NewHeight := WrappedTextHeightByFont(Canvas, Font, X, ARect);
+          if (Length(Y) > 0) then
+          begin
+            ARect.Left := AHeader.Sections[0].Width + FMT_INDENT;
+            ARect.Right := RecRight; // Draw Text alters ARect.
+            inc(NewHeight, WrappedTextHeightByFont(Canvas, Font, Y, ARect));
+          end;
+          if NewHeight > 255 then
+            NewHeight := 255; // windows appears to only look at 8 bits *KCM*
+          if NewHeight < 13 then
+            NewHeight := 13; // show at least one line                 *KCM*
+        end; { if AMed }
+      end; { if Index }
+  end;
   AHeight := NewHeight;
 end;
 
@@ -1259,6 +1268,8 @@ begin
   inherited;
   AHeader := GetHeader(Control);
   AMedList := GetMedList(Control);
+  if (AHeader = nil) or (AMedList = nil) then
+    Exit;
   ListGridDrawLines(TListBox(Control), AHeader, Index, State);
   with Control as TListBox do
     if Index < Items.Count then
@@ -1393,10 +1404,12 @@ var
   end;
 
 begin
-  aPoint := Mouse.CursorPos;
-  aPoint := Sender.ScreenToClient(aPoint);
   AHeader := GetHeader(Sender);
   AMedList := GetMedList(Sender);
+  if (AHeader = nil) or (AMedList = nil) then
+    Exit;
+  aPoint := Mouse.CursorPos;
+  aPoint := Sender.ScreenToClient(aPoint);
   iStart := AHeader.Sections.Items[0].Width + AHeader.Sections.Items[1].Width
     + AHeader.Sections.Items[2].Width + 3;
   iStop := iStart + AHeader.Sections.Items[3].Width;
@@ -1428,14 +1441,17 @@ procedure TfrmMeds.hdrMedsOutSectionResize(HeaderControl: THeaderControl;
   Section: THeaderSection);
 begin
   inherited;
-  RedrawSuspend(self.Handle);
-  with lstMedsOut do
-  begin
-    IntegralHeight := not IntegralHeight;
-    // both lines are necessary, this forces the
-    IntegralHeight := not IntegralHeight; // listbox window to be recreated
+  LockDrawing;
+  try
+    with lstMedsOut do
+    begin
+      IntegralHeight := not IntegralHeight;
+      // both lines are necessary, this forces the
+      IntegralHeight := not IntegralHeight; // listbox window to be recreated
+    end;
+  finally
+    UnlockDrawing;
   end;
-  RedrawActivate(self.Handle);
   lstMedsOut.Invalidate;
   Refresh;
 end;
@@ -1444,15 +1460,17 @@ procedure TfrmMeds.hdrMedsInSectionResize(HeaderControl: THeaderControl;
   Section: THeaderSection);
 begin
   inherited;
-  RedrawSuspend(self.Handle);
-  with lstMedsIn do
-  begin
-    IntegralHeight := not IntegralHeight;
-    // both lines are necessary, this forces the
-    IntegralHeight := not IntegralHeight; // listbox window to be recreated
+  LockDrawing;
+  try
+    with lstMedsIn do
+    begin
+      IntegralHeight := not IntegralHeight;
+      // both lines are necessary, this forces the
+      IntegralHeight := not IntegralHeight; // listbox window to be recreated
+    end;
+  finally
+    UnlockDrawing;
   end;
-
-  RedrawActivate(self.Handle);
   lstMedsIn.Invalidate;
   Refresh;
 end;
@@ -1641,42 +1659,49 @@ var
   SelectedList: TList;
   ParntOrder: TOrder;
 begin
-  inherited;
-  ActiveList := ListSelected(TX_NOSEL);
-  if ActiveList = nil then
+  if FRenewing then
     Exit;
-  SelectedList := TList.Create;
+  FRenewing := True;
   try
-    FIterating := True;
-    if CheckMedStatus(ActiveList) = True then
+    inherited;
+    ActiveList := ListSelected(TX_NOSEL);
+    if ActiveList = nil then
       Exit;
-    if AuthorizedUser and EncounterPresent and LockedForOrdering then
-    begin
-      ValidateSelected(ActiveList, OA_RENEW, TX_NO_RENEW, TC_NO_RENEW);
-      MakeSelectedList(ActiveList, SelectedList);
-      if Length(FParentComplexOrderID) > 0 then
+    SelectedList := TList.Create;
+    try
+      FIterating := True;
+      if CheckMedStatus(ActiveList) = True then
+        Exit;
+      if AuthorizedUser and EncounterPresent and LockedForOrdering then
       begin
-        ParntOrder := GetOrderByIFN(FParentComplexOrderID);
-        if CharAt(ParntOrder.Text, 1) = '+' then
-          ParntOrder.Text := Copy(ParntOrder.Text, 2, Length(ParntOrder.Text));
-        if Pos('First Dose NOW', ParntOrder.Text) > 1 then
-          Delete(ParntOrder.Text, Pos('First Dose NOW', ParntOrder.Text),
-            Length('First Dose NOW'));
-        SelectedList.Add(ParntOrder);
-        FParentComplexOrderID := '';
+        ValidateSelected(ActiveList, OA_RENEW, TX_NO_RENEW, TC_NO_RENEW);
+        MakeSelectedList(ActiveList, SelectedList);
+        if Length(FParentComplexOrderID) > 0 then
+        begin
+          ParntOrder := GetOrderByIFN(FParentComplexOrderID);
+          if CharAt(ParntOrder.Text, 1) = '+' then
+            ParntOrder.Text := Copy(ParntOrder.Text, 2, Length(ParntOrder.Text));
+          if Pos('First Dose NOW', ParntOrder.Text) > 1 then
+            Delete(ParntOrder.Text, Pos('First Dose NOW', ParntOrder.Text),
+              Length('First Dose NOW'));
+          SelectedList.Add(ParntOrder);
+          FParentComplexOrderID := '';
+        end;
+        if ExecuteRenewOrders(SelectedList) then
+        begin
+          AddSelectedToChanges(SelectedList);
+          ResetSelectedForList(ActiveList);
+          SynchListToOrders(ActiveList, SelectedList);
+        end;
       end;
-      if ExecuteRenewOrders(SelectedList) then
-      begin
-        AddSelectedToChanges(SelectedList);
-        ResetSelectedForList(ActiveList);
-        SynchListToOrders(ActiveList, SelectedList);
-      end;
+    finally
+      ActiveList.SetFocus;
+      FIterating := False;
+      SelectedList.Free;
+      UnlockIfAble;
     end;
   finally
-    ActiveList.SetFocus;
-    FIterating := False;
-    SelectedList.Free;
-    UnlockIfAble;
+    FRenewing := False;
   end;
 end;
 
@@ -1803,8 +1828,6 @@ begin
   if not Assigned(ActiveList) then
     Exit;
   if CheckMedStatus(ActiveList) = True then
-    Exit;
-  if ActiveList = nil then
     Exit;
   FIterating := true;
   ValidateSelected(ActiveList, OA_COPY, TX_NO_COPY, TC_NO_COPY);
@@ -2391,14 +2414,17 @@ procedure TfrmMeds.hdrMedsNonVASectionResize(HeaderControl: THeaderControl;
   Section: THeaderSection);
 begin
   inherited;
-  RedrawSuspend(self.Handle);
-  with lstMedsNonVA do
-  begin
-    IntegralHeight := not IntegralHeight;
-    // both lines are necessary, this forces the
-    IntegralHeight := not IntegralHeight; // listbox window to be recreated
+  LockDrawing;
+  try
+    with lstMedsNonVA do
+    begin
+      IntegralHeight := not IntegralHeight;
+      // both lines are necessary, this forces the
+      IntegralHeight := not IntegralHeight; // listbox window to be recreated
+    end;
+  finally
+    UnlockDrawing;
   end;
-  RedrawActivate(self.Handle);
   lstMedsNonVA.Invalidate;
   Refresh;
 end;
@@ -2760,13 +2786,12 @@ var
   Str: string;
   AMed: TMedListRec;
   AMedList: TList;
-
 begin
   Result := False;
   tmpList := TStringList.Create;
-  if TMedListRec = nil then
-    Exit;
   AMedList := GetMedList(ActiveList);
+  if AMedList = nil then
+    Exit;
   for i := 0 to ActiveList.Count - 1 do
     if ActiveList.Selected[i] then
     begin
@@ -2781,7 +2806,7 @@ begin
   end;
   if Result = True then
   begin
-    MessageDlg('The Medication status has change.' + #13#10#13 +
+    MessageDlg('The Medication status has changed.' + #13#10#13 +
       'CPRS needs to refresh patient information to display the correct medication status',
       mtWarning, [mbOK], 0);
     frmFrame.mnuFileRefreshClick(Application);

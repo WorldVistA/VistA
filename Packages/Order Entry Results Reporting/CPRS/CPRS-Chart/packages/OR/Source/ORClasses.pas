@@ -38,34 +38,19 @@ type
 
   TCanNotifyEvent = procedure(Sender: TObject; var CanNotify: boolean) of object;
 
-  IORNotifier = interface(IUnknown)
-    function GetOnNotify: TCanNotifyEvent;
-    procedure SetOnNotify(Value: TCanNotifyEvent);
-    procedure BeginUpdate;
-    procedure EndUpdate(DoNotify: boolean = FALSE);
-    procedure NotifyWhenChanged(Event: TNotifyEvent); overload;
-    procedure NotifyWhenChanged(Event: TNotifyProc); overload;
-    procedure RemoveNotify(Event: TNotifyEvent); overload;
-    procedure RemoveNotify(Event: TNotifyProc); overload;
-    procedure Notify; overload;
-    procedure Notify(Sender: TObject); overload;
-    function NotifyMethod: TNotifyEvent;
-    property OnNotify: TCanNotifyEvent read GetOnNotify Write SetOnNotify;
-  end;
-
-  TORNotifier = class(TInterfacedObject, IORNotifier)
+  TORNotifier = class(TObject)
   private
     FNotifyList: TORNotifyList;
     FUpdateCount: integer;
     FOwner: TObject;
     FOnNotify: TCanNotifyEvent;
+    function GetOnNotify: TCanNotifyEvent;
+    procedure SetOnNotify(Value: TCanNotifyEvent);
   protected
     procedure DoNotify(Sender: TObject);
   public
     constructor Create(Owner: TObject = nil; SingleInstance: boolean = FALSE);
     destructor Destroy; override;
-    function GetOnNotify: TCanNotifyEvent;
-    procedure SetOnNotify(Value: TCanNotifyEvent);
     procedure BeginUpdate;
     procedure EndUpdate(DoNotify: boolean = FALSE);
     procedure NotifyWhenChanged(Event: TNotifyEvent); overload;
@@ -74,15 +59,14 @@ type
     procedure RemoveNotify(Event: TNotifyProc); overload;
     procedure Notify; overload;
     procedure Notify(Sender: TObject); overload;
-    function NotifyMethod: TNotifyEvent;
     property OnNotify: TCanNotifyEvent read GetOnNotify Write SetOnNotify;
   end;
 
-  TORStringList = class(TStringList, IORNotifier)
+  TORStringList = class(TStringList)
   private
-    FNotifier: IORNotifier;
+    FNotifier: TORNotifier;
   protected
-    function GetNotifier: IORNotifier;
+    function GetNotifier: TORNotifier;
     procedure Changed; override;
   public
     destructor Destroy; override;
@@ -113,7 +97,7 @@ type
     procedure SortByPiece(PieceNum: integer; Delim: Char = '^');
     procedure SortByPieces(Pieces: array of integer; Delim: Char = '^');
     procedure RemoveDuplicates(CaseSensitive: boolean = TRUE);
-    property Notifier: IORNotifier read GetNotifier implements IORNotifier;
+    property Notifier: TORNotifier read GetNotifier;
   end;
 
 { Do NOT add ANTHING to the ORExposed Classes except to change the scope
@@ -448,11 +432,6 @@ begin
     FNotifyList.Remove(Event);
 end;
 
-function TORNotifier.NotifyMethod: TNotifyEvent;
-begin
-  Result := Notify;
-end;
-
 function TORNotifier.GetOnNotify: TCanNotifyEvent;
 begin
   Result := FOnNotify;
@@ -479,7 +458,7 @@ end;
 
 destructor TORStringList.Destroy;
 begin
-  FNotifier := nil; // Frees instance
+  FreeAndNil(FNotifier);
   inherited;
 end;
 
@@ -497,7 +476,7 @@ begin
   begin
     OldEvnt := OnChange;
     try
-      OnChange := FNotifier.NotifyMethod;
+      OnChange := FNotifier.Notify;//Method;
       inherited; // Conditionally Calls FNotifier.Notify
     finally
       OnChange := OldEvnt;
@@ -547,7 +526,7 @@ begin
   Result := IndexOfPieces(Values, U, [], StartIdx);
 end;
 
-function TORStringList.GetNotifier: IORNotifier;
+function TORStringList.GetNotifier: TORNotifier;
 begin
   if(not assigned(FNotifier)) then
     FNotifier := TORNotifier.Create(Self);

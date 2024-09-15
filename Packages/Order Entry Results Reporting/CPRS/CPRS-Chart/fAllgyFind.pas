@@ -40,6 +40,8 @@ type
     procedure tvAgentChange(Sender: TObject; Node: TTreeNode);
     procedure tvAgentDblClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
+    procedure tvAgentKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     FAllergy: string   ;
     FExpanded : boolean;
@@ -483,7 +485,21 @@ end;
 procedure TfrmAllgyFind.tvAgentDblClick(Sender: TObject);
 begin
   inherited;
-  cmdOKClick(Self);
+  if cmdOK.CanFocus then // no executing of the click if the button is invisible or disabled
+    cmdOKClick(Self);
+end;
+
+procedure TfrmAllgyFind.tvAgentKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  inherited;
+  if key = VK_RETURN then
+  begin
+    if cmdOK.CanFocus then  // no executing of the click if the button is invisible or disabled
+    begin
+      cmdOK.Click;
+    end;
+  end;
 end;
 
 end.

@@ -10,6 +10,7 @@ unit fAllgyAR;
 interface
 
 uses
+  ORExtensions,
   SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
   Forms, Dialogs, StdCtrls, ORCtrls, ORfn, ExtCtrls, ComCtrls, uConst,
   Menus, ORDtTm, Buttons, fODBase, fAutoSz, fOMAction, rODAllergy, uOrders,
@@ -50,11 +51,11 @@ type
     calObservedDate: TORDateBox;
     cmdPrevObs: TButton;
     lblComments: TOROffsetLabel;
-    memComments: TRichEdit;
+    memComments: ORExtensions.TRichEdit;
     cmdPrevCmts: TButton;
     tabEnteredInError: TTabSheet;
     ckEnteredInError: TCheckBox;
-    memErrCmts: TRichEdit;
+    memErrCmts: ORExtensions.TRichEdit;
     lblErrCmts: TLabel;
     lblEnteredInError: TLabel;
     lblAllergyType: TOROffsetLabel;

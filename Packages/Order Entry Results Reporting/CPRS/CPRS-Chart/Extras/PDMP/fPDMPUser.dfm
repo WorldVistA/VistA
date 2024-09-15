@@ -72,7 +72,6 @@ object pdmpUserForm: TpdmpUserForm
     Height = 288
     Align = alClient
     BevelOuter = bvNone
-    Caption = 'pnlMain'
     ShowCaption = False
     TabOrder = 0
     object lblUser: TLabel

@@ -196,7 +196,7 @@ begin
                     GMV_CONTEXT,
                     GMV_CONTEXT,
                     Patient.Name,
-                    frmFrame.lblPtSSN.Caption + '    ' + frmFrame.lblPtAge.Caption,
+                    frmFrame.PatientInfoLabelCaption,
                     Encounter.LocationName + U + VitalType)
        else
          MessageDLG('Can''t find function "'+string(GMV_FName)+'".',mtError,[mbok],0);
@@ -650,6 +650,7 @@ begin
       lstDatesClick(self);
     finally
       frmvit.release;
+      frmvit := nil;
     end;
 end;
 

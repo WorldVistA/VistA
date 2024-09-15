@@ -114,7 +114,6 @@ inherited frmTemplateFieldEditor: TfrmTemplateFieldEditor
     Width = 429
     Height = 371
     Align = alLeft
-    Caption = 'pnlObjs'
     TabOrder = 1
     object lblObjs: TLabel
       Left = 1

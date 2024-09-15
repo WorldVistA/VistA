@@ -185,12 +185,12 @@ inherited frmNoteProperties: TfrmNoteProperties
       Align = alBottom
       Columns = <
         item
-          Caption = 'Used For Screen Readers'
-          Width = 1
+          AutoSize = True
+          Caption = 'Flag'
         end
         item
           AutoSize = True
-          Caption = 'Flag'
+          Caption = 'Facility'
         end
         item
           AutoSize = True
@@ -210,7 +210,9 @@ inherited frmNoteProperties: TfrmNoteProperties
       RowSelect = True
       TabOrder = 0
       ViewStyle = vsReport
+      OnCompare = lvPRFCompare
       AutoSize = False
+      Pieces = '1,8,6,3,9'
     end
   end
   object pnlSurgery: TPanel [2]
@@ -310,7 +312,6 @@ inherited frmNoteProperties: TfrmNoteProperties
     Height = 169
     Align = alClient
     BevelOuter = bvNone
-    Caption = 'gpMain'
     ColumnCollection = <
       item
         SizeStyle = ssAbsolute
@@ -716,7 +717,9 @@ inherited frmNoteProperties: TfrmNoteProperties
         'Status = stsDefault')
       (
         'Component = lvPRF'
-        'Status = stsDefault')
+        'Status = stsDefault'
+        'Columns'
+        ())
       (
         'Component = frmNoteProperties'
         'Status = stsDefault')
@@ -731,7 +734,9 @@ inherited frmNoteProperties: TfrmNoteProperties
         'Status = stsDefault')
       (
         'Component = lstSurgery'
-        'Status = stsDefault')
+        'Status = stsDefault'
+        'Columns'
+        ())
       (
         'Component = pnlCTop'
         'Status = stsDefault')
@@ -750,7 +755,9 @@ inherited frmNoteProperties: TfrmNoteProperties
           'Text = This progress note title must be associated with a consul' +
           't request.'#13#10'Select one of the following or choose a different ti' +
           'tle.'
-        'Status = stsOK')
+        'Status = stsOK'
+        'Columns'
+        ())
       (
         'Component = gpMain'
         'Status = stsDefault'))

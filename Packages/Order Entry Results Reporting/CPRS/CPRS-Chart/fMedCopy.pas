@@ -214,6 +214,7 @@ begin
   finally
     frmMedCopy.fraEvntDelayList.ResetProperty;
     frmMedCopy.Release;
+    frmMedCopy := nil;
   end;
 end;
 

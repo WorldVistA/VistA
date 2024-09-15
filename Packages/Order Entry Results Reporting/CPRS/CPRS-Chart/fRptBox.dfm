@@ -8,29 +8,19 @@ inherited frmReportBox: TfrmReportBox
   Caption = 'frmReportBox'
   ClientHeight = 319
   ClientWidth = 348
+  Constraints.MinHeight = 200
+  Constraints.MinWidth = 350
+  DoubleBuffered = True
   Font.Charset = ANSI_CHARSET
   OldCreateOrder = True
   Position = poScreenCenter
   OnClose = FormClose
   OnResize = FormResize
-  ExplicitWidth = 356
+  OldCreateOrder = True
   ExplicitHeight = 346
   PixelsPerInch = 96
   TextHeight = 16
-  object lblFontTest: TLabel [0]
-    Left = 148
-    Top = 208
-    Width = 77
-    Height = 15
-    Caption = 'lblFontTest'
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -12
-    Font.Name = 'Courier New'
-    Font.Style = []
-    ParentFont = False
-  end
-  object memReport: TRichEdit [1]
+  object memReport: TRichEdit [0]
     Left = 0
     Top = 0
     Width = 348
@@ -55,7 +45,7 @@ inherited frmReportBox: TfrmReportBox
     WordWrap = False
     Zoom = 100
   end
-  object pnlButton: TPanel [2]
+  object pnlButton: TPanel [1]
     Left = 0
     Top = 287
     Width = 348

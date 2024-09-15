@@ -4,10 +4,11 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ComCtrls, DateUtils;
+  Dialogs, StdCtrls, ComCtrls, DateUtils, fBase508Form,
+  VA508AccessibilityManager;
 
 type
-  TfrmFindingTemplates = class(TForm)
+  TfrmFindingTemplates = class(TfrmBase508Form)
     animSearch: TAnimate;
     lblFind: TLabel;
     Label2: TLabel;
@@ -25,9 +26,7 @@ type
     FWholeWords: boolean;
     FFoundNode: TTreeNode;
     FIsNext: boolean;
-    { Private declarations }
     procedure Find;
-  public
   end;
 
 function FindTemplate(SearchString: string; Tree: TTreeView; OwningForm: TForm;

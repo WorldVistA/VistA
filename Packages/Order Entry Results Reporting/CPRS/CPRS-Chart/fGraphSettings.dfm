@@ -28,7 +28,6 @@ inherited frmGraphSettings: TfrmGraphSettings
     Height = 32
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 1
     object lblConversions: TLabel
@@ -122,7 +121,6 @@ inherited frmGraphSettings: TfrmGraphSettings
     Width = 594
     Height = 349
     Align = alClient
-    Caption = 'Panel2'
     ShowCaption = False
     TabOrder = 0
     object lblOptionsInfo: TLabel

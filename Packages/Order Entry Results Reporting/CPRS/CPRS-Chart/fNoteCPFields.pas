@@ -9,11 +9,11 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fAutoSz, StdCtrls, ORCtrls, ORFn, ORDtTm, VA508AccessibilityManager,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, fBase508Form;
 
 type
 
-  TfrmNoteCPFields = class(TForm)
+  TfrmNoteCPFields = class(TfrmBase508Form)
     lblAuthor: TLabel;
     cboAuthor: TORComboBox;
     lblProcSummCode: TOROffsetLabel;

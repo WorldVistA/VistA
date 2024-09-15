@@ -23,7 +23,6 @@ inherited frmNewAllergyCheck: TfrmNewAllergyCheck
     Align = alTop
     AutoSize = True
     BevelOuter = bvNone
-    Caption = 'pnlCheck'
     ShowCaption = False
     TabOrder = 0
     object Check: TMemo

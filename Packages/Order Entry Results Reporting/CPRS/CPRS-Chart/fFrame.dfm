@@ -2,23 +2,22 @@ inherited frmFrame: TfrmFrame
   Left = 219
   Top = 102
   Caption = ']='
-  ClientHeight = 825
+  ClientHeight = 730
   ClientWidth = 976
   FormStyle = fsMDIForm
   Menu = mnuFrame
-  OldCreateOrder = True
   Visible = True
   OnCloseQuery = FormCloseQuery
   OnResize = FormResize
-  ExplicitWidth = 992
-  ExplicitHeight = 884
-  PixelsPerInch = 96
+  OldCreateOrder = True
+  ExplicitWidth = 988
+  ExplicitHeight = 788
   TextHeight = 13
   object pnlNoPatientSelected: TPanel [0]
     Left = 0
     Top = 0
     Width = 976
-    Height = 825
+    Height = 730
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -33,18 +32,22 @@ inherited frmFrame: TfrmFrame
     ParentFont = False
     TabOrder = 1
     Visible = False
+    ExplicitWidth = 972
+    ExplicitHeight = 729
   end
   object pnlPatientSelected: TPanel [1]
     Left = 0
     Top = 0
     Width = 976
-    Height = 825
+    Height = 730
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
     Align = alClient
     TabOrder = 0
+    ExplicitWidth = 972
+    ExplicitHeight = 729
     object bvlPageTop: TBevel
       Left = 1
       Top = 103
@@ -69,6 +72,7 @@ inherited frmFrame: TfrmFrame
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
+      ExplicitWidth = 970
       object bvlToolTop: TBevel
         Left = 0
         Top = 0
@@ -190,7 +194,7 @@ inherited frmFrame: TfrmFrame
           OnMouseDown = pnlPatientMouseDown
           OnMouseUp = pnlPatientMouseUp
         end
-        object lblPtSSN: TStaticText
+        object lblPtInfo: TStaticText
           Left = 9
           Top = 28
           Width = 106
@@ -209,29 +213,6 @@ inherited frmFrame: TfrmFrame
           ParentShowHint = False
           ShowHint = False
           TabOrder = 1
-          OnClick = pnlPatientClick
-          OnMouseDown = pnlPatientMouseDown
-          OnMouseUp = pnlPatientMouseUp
-        end
-        object lblPtAge: TStaticText
-          Left = 265
-          Top = 28
-          Width = 4
-          Height = 4
-          Margins.Left = 5
-          Margins.Top = 5
-          Margins.Right = 5
-          Margins.Bottom = 5
-          Alignment = taRightJustify
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clInfoText
-          Font.Height = -19
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          ParentFont = False
-          ParentShowHint = False
-          ShowHint = False
-          TabOrder = 2
           OnClick = pnlPatientClick
           OnMouseDown = pnlPatientMouseDown
           OnMouseUp = pnlPatientMouseUp
@@ -429,6 +410,7 @@ inherited frmFrame: TfrmFrame
         OnExit = pnlPrimaryCareExit
         OnMouseDown = pnlRemindersMouseDown
         OnMouseUp = pnlRemindersMouseUp
+        ExplicitLeft = 810
         object imgReminder: TImage
           Left = 2
           Top = 2
@@ -484,6 +466,7 @@ inherited frmFrame: TfrmFrame
         OnExit = pnlPrimaryCareExit
         OnMouseDown = pnlPostingsMouseDown
         OnMouseUp = pnlPostingsMouseUp
+        ExplicitLeft = 862
         object lblPtPostings: TStaticText
           Left = 7
           Top = 6
@@ -556,6 +539,7 @@ inherited frmFrame: TfrmFrame
         OnExit = pnlOTHDExit
         OnMouseDown = pnlOTHDMouseDown
         OnMouseUp = pnlOTHDMouseUp
+        ExplicitLeft = 452
         object lblOTHDTitle: TStaticText
           Left = 7
           Top = 2
@@ -619,6 +603,7 @@ inherited frmFrame: TfrmFrame
         TabOrder = 5
         Visible = False
         OnResize = paVAAResize
+        ExplicitLeft = 362
         object laVAA2: TButton
           Left = 0
           Top = 24
@@ -665,6 +650,7 @@ inherited frmFrame: TfrmFrame
         Margins.Bottom = 5
         Align = alRight
         TabOrder = 6
+        ExplicitLeft = 561
         object btnCombatVet: TButton
           Left = 1
           Top = 32
@@ -747,6 +733,9 @@ inherited frmFrame: TfrmFrame
           TabOrder = 2
           Visible = False
           ShowAccelChar = True
+          WordWrap = False
+          LabelAlignment = taCenter
+          LabelLayout = tlTop
         end
       end
       object pnlRemoteData: TKeyClickPanel
@@ -776,6 +765,7 @@ inherited frmFrame: TfrmFrame
         OnExit = pnlPrimaryCareExit
         OnMouseDown = pnlCIRNMouseDown
         OnMouseUp = pnlCIRNMouseUp
+        ExplicitLeft = 699
         object pnlVistaWeb: TKeyClickPanel
           Left = 2
           Top = 2
@@ -884,7 +874,7 @@ inherited frmFrame: TfrmFrame
     end
     object stsArea: TStatusBar
       Left = 1
-      Top = 803
+      Top = 708
       Width = 974
       Height = 21
       Margins.Left = 5
@@ -913,10 +903,12 @@ inherited frmFrame: TfrmFrame
         end>
       PopupMenu = popAlerts
       SizeGrip = False
+      ExplicitTop = 707
+      ExplicitWidth = 970
     end
     object tabPage: TTabControl
       Left = 1
-      Top = 776
+      Top = 681
       Width = 974
       Height = 27
       Margins.Left = 4
@@ -935,12 +927,14 @@ inherited frmFrame: TfrmFrame
       OnChange = tabPageChange
       OnMouseDown = tabPageMouseDown
       OnMouseUp = tabPageMouseUp
+      ExplicitTop = 680
+      ExplicitWidth = 970
     end
     object pnlPage: TPanel
       Left = 1
       Top = 105
       Width = 974
-      Height = 671
+      Height = 576
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -954,6 +948,8 @@ inherited frmFrame: TfrmFrame
       Font.Style = []
       ParentFont = False
       TabOrder = 2
+      ExplicitWidth = 970
+      ExplicitHeight = 575
       object lstCIRNLocations: TORListBox
         Left = 642
         Top = 0
@@ -1007,6 +1003,7 @@ inherited frmFrame: TfrmFrame
       OnClick = pnlOtherInfoClick
       OnMouseDown = pnlOtherInfoMouseDown
       OnMouseUp = pnlOtherInfoMouseUp
+      ExplicitWidth = 970
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -1015,183 +1012,108 @@ inherited frmFrame: TfrmFrame
     Data = (
       (
         'Component = pnlNoPatientSelected'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlPatientSelected'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlToolbar'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlCCOW'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlPatient'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblPtName'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
-        'Component = lblPtSSN'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
-        'Status = stsDefault')
-      (
-        'Component = lblPtAge'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
+        'Component = lblPtInfo'
         'Status = stsDefault')
       (
         'Component = pnlVisit'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblPtLocation'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblPtProvider'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlPrimaryCare'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblPtCare'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblPtAttending'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlReminders'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = anmtRemSearch'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlPostings'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblPtPostings'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblPtCWAD'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = paVAA'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = laVAA2'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = laMHV'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = stsArea'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = tabPage'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlPage'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lstCIRNLocations'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = frmFrame'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlCVnFlag'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = btnCombatVet'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlFlag'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlRemoteData'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlVistaWeb'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlCIRN'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblPtMHTC'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = txtCmdFlags'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lblOTHDDtl'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault'))
   end
   object mnuFrame: TMainMenu
@@ -1538,6 +1460,10 @@ inherited frmFrame: TfrmFrame
         AutoCheck = True
         Caption = 'Show Focus Changes'
         OnClick = mnuFocusChangesClick
+      end
+      object mnuShowActivityLog: TMenuItem
+        Caption = 'Show &Activity Log'
+        OnClick = mnuShowActivityLogClick
       end
       object Z6: TMenuItem
         Caption = '-'

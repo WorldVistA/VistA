@@ -1,4 +1,4 @@
-object frmFindingTemplates: TfrmFindingTemplates
+inherited frmFindingTemplates: TfrmFindingTemplates
   Left = 0
   Top = 0
   Cursor = crAppStart

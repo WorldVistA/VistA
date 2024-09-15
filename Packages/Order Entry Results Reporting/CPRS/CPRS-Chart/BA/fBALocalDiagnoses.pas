@@ -158,8 +158,9 @@ begin
    ResizeFormToFont(TForm(frmBALocalDiagnoses));
    frmBALocalDiagnoses.ShowModal;
    frmBALocalDiagnoses.Release;
-
+   frmBALocalDiagnoses := nil;
 end;
+
 procedure TfrmBALocalDiagnoses.FormCreate(Sender: TObject);
 begin
      MaxDx := 4;

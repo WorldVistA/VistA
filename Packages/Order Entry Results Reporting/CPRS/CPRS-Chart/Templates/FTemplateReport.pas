@@ -3,9 +3,10 @@ unit FTemplateReport;
 interface
 
 uses
+  ORExtensions,
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, fBase508Form, Vcl.StdCtrls,
-  Vcl.ComCtrls, Vcl.ExtCtrls, uConst;
+  Vcl.ComCtrls, Vcl.ExtCtrls, uConst, VA508AccessibilityManager;
 
 const
   UM_TEMPLATE_FIELDS = UM_SELECT + 10;
@@ -14,7 +15,7 @@ const
 type
   TfrmTemplateReport = class(TfrmBase508Form)
     pnlButtons: TPanel;
-    reReport: TRichEdit;
+    reReport: ORExtensions.TRichEdit;
     pnlStatusBar: TPanel;
     btnCopy: TButton;
     lblCurrent: TLabel;
@@ -45,7 +46,7 @@ implementation
 
 {$R *.dfm}
 uses ORFn, uTemplateFields, rTemplates, Clipbrd, uTemplates, dShared,
-UResponsiveGUI;
+  UResponsiveGUI;
 
 procedure RunTemplateErrorReport(RunTemplateFields: boolean = false);
 var

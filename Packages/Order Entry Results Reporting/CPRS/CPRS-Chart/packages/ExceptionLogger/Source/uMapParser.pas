@@ -6,7 +6,7 @@
 ///        This unit is responsible for parsing out he map file              ///
 ///        and searching for the map info from provided addresses            ///
 ///                                                                          ///
-///                                                                          ///
+///                                                                           ///
 ///                                                                          ///
 ///                                                                          ///
 ///     -IMPLEMNTATION                                                       ///
@@ -31,11 +31,12 @@ type
   /// <param name="aTarget">The search criteria</param>
   /// <param name="aLine">The direction to move</param>
   /// <returns>The direction to move</returns>
-  TWeight = function(aTarget, aLine: String): Integer;
+  TWeight = function(aTarget, aLine: string): Integer;
   /// <summary>Function to be called by the thread</summary>
   /// <param name="aMasterList">The main list to move through</param>
   /// <param name="aResultList">The results list</param>
-  TWorkThreadFunc = procedure(aParser: TMapParser; aMasterList, aResultList: TStringList);
+  TWorkThreadFunc = procedure(aParser: TMapParser;
+    aMasterList, aResultList: TStringList);
 
   /// <summary>Additional methodes for the TStringList object</summary>
   TStringsHelper = class helper for TStrings
@@ -44,7 +45,8 @@ type
     /// <param name="S">Substring that we want to find (should not have spaces)</param>
     /// <param name="OffSet">defines our starting position for the search</param>
     /// <returns>The index of the string or -1 if not found</returns>
-    function IndexOfStrippedString(const S: string; OffSet: Integer = 0): Integer;
+    function IndexOfStrippedString(const S: string;
+      OffSet: Integer = 0): Integer;
     /// <summary>Finds the index where a specific substring exist</summary>
     /// <param name="S">Substring to search for</param>
     /// <param name="OffSet">The starting point to begin the search</param>
@@ -54,18 +56,20 @@ type
     /// <param name="ReturnList">Return list where the strings should be placed</param>
     /// <param name="OffSet">Index to start processing at</param>
     /// <param name="Linecnt">How many lines to go past the Offset</param>
-    Procedure StringsByNum(ReturnList: TStringList; OffSet: Integer = 0; Linecnt: Integer = 1);
+    procedure StringsByNum(ReturnList: TStringList; OffSet: Integer = 0;
+      Linecnt: Integer = 1);
   end;
 
- // * Thread Types *
- // <table>
- //    Type Name      Meaning
- //    -------------  -------------
- //    TYPE_UNIT      Processing the unit section
- //    TYPE_METHOD    Processing the Method section
- //    TYPE_LINES     Processing the Lines section
- //</table>
-  tThreadType = (ttLoadUnits, ttLoadMethods, ttLoadLines, ttSortUnits, ttSortMethods, ttSortLines);
+  // * Thread Types *
+  // <table>
+  // Type Name      Meaning
+  // -------------  -------------
+  // TYPE_UNIT      Processing the unit section
+  // TYPE_METHOD    Processing the Method section
+  // TYPE_LINES     Processing the Lines section
+  // </table>
+  tThreadType = (ttLoadUnits, ttLoadMethods, ttLoadLines, ttSortUnits,
+    ttSortMethods, ttSortLines);
 
   TWorker = class
     FWorkerID: Integer;
@@ -84,9 +88,9 @@ type
     destructor Destroy(); override;
     procedure FireThread;
     property ResultList: TStringList read fResultList;
-    Property ThreadFunction: TWorkThreadFunc read fThreadFunc write fThreadFunc;
+    property ThreadFunction: TWorkThreadFunc read fThreadFunc write fThreadFunc;
     property ThreadType: tThreadType read fThreadType write fThreadType;
-    Property WorkerID: Integer read FWorkerID write FWorkerID;
+    property WorkerID: Integer read FWorkerID write FWorkerID;
   end;
 
   TSegmentInfo = record
@@ -94,35 +98,45 @@ type
     EndAddress: LongWord;
   end;
 
+  TSegmentList = class(TList<TSegmentInfo>)
+    procedure Assign(Source: TSegmentList);
+  end;
+
   TMapParser = class(TObject)
   private
-    fMapLoaded: Boolean;
-    fMapFile: TStringList;
-    fSegments: TList<TSegmentInfo>;
-    fUnitSection: TStringList;
-    fMethodSection: TStringList;
-    fLines: TStringList;
-    fFileName: String;
-  //  fStopWatch: TStopWatch;
-    fworkerArray: TObjectList<TWorker>;
-    fThreadPool: TThreadPool;
-    fEndOfUnit: LongWord;
-    Function LoadMapFile: Boolean;
-    Function LoadUnits: Boolean;
-    Function LoadMethods: Boolean;
-    Function LoadLines: Boolean;
+    FMapLoaded: Boolean;
+    FMapFile: TStringList;
+    FSegments: TSegmentList;
+    FUnitSection: TStringList;
+    FMethodSection: TStringList;
+    FLines: TStringList;
+    FFileName: string;
+    FWorkerArray: TObjectList<TWorker>;
+    FThreadPool: TThreadPool;
+    FEndOfUnit: LongWord;
+    function LoadMapFile: Boolean;
+    function LoadUnits: Boolean;
+    function LoadMethods: Boolean;
+    function LoadLines: Boolean;
     function GetUnitName(const LookUpAddr: LongWord): string;
     function GetMethodName(const LookUpAddr: LongWord): string;
-    function GetLineNum(const LookUpAddr: LongWord; const UnitName: string): string;
-    function GetAddress(const addr: String): LongWord;
-    procedure CreateThreaded(Const ThreadOnDemand: Boolean);
+    function GetLineNum(const LookUpAddr: LongWord;
+      const UnitName: string): string;
+    function GetAddress(const addr: string): LongWord;
+    procedure LoadUpMapFileThreaded(const ThreadOnDemand: Boolean);
+    function GetIsMapLoaded: Boolean;
   public
-    constructor Create(aFileName: string = ''); overload;
-    constructor Create(ThreadOnDemand: Boolean; aFileName: string = ''); overload;
+    constructor Create(AFileName: string = ''); overload;
+    constructor CreateAndLoadThreaded(AThreadOnDemand: Boolean;
+      AFileName: string = '');
+    constructor CreateAndLoad(AFileName: string = ''; ADummy: Integer = 0);
     destructor Destroy; override;
-    procedure LookupInMap(const LookUpAddr: LongWord; out aUnit, aMethod, aLineNumber: String);
-    Property FileName: string read fFileName;
-    property MapLoaded: Boolean read fMapLoaded;
+    procedure Assign(Source: TMapParser);
+    procedure LookupInMap(const LookUpAddr: LongWord;
+      out AUnit, AMethod, ALineNumber: string);
+    procedure LoadUpMapFile;
+    property FileName: string read FFileName;
+    property IsMapLoaded: Boolean read GetIsMapLoaded;
     property _UnitName[const LookUpAddr: LongWord]: string read GetUnitName;
     property _MethodName[const LookUpAddr: LongWord]: string read GetMethodName;
   end;
@@ -135,7 +149,10 @@ uses
   System.Generics.Defaults,
   Vcl.Forms,
   Vcl.Controls,
-  System.Math;
+  System.Math,
+  WinAPI.Windows,
+  System.IOUtils,
+  AVCatcher;
 
 const
   UnitPrefix = ' M=';
@@ -145,10 +162,6 @@ const
   UnitSection = 'Line numbers for ';
   LookUpErrorNum = -3;
   OutsideMapAddress = $FFFFFFFF;
-
-Procedure LoadUnitsThreaded(aParser: TMapParser; aMasterList, aResultList: TStringList); forward;
-Procedure LoadMethodsThreaded(aParser: TMapParser; aMasterList, aResultList: TStringList); forward;
-Procedure LoadLinesThreaded(aParser: TMapParser; aMasterList, aResultList: TStringList); forward;
 
 {$REGION 'Utils'}
 
@@ -188,7 +201,7 @@ begin
   S := S - 1; // zero based
   t := 0; // variable T needs to be initialized...
   setlength(c, Length(input));
-  for b := 0 to pred(High(c)) do
+  for b := 0 to pred(high(c)) do
   begin
     c[b + 1] := posex(schar, input, succ(c[b]));
     // BREAK LOOP if posex looped (position before previous)
@@ -223,15 +236,16 @@ begin
   end;
 end;
 
-function PieceByString(Value, Delimiter: string; StartPiece, EndPiece: Integer): string;
+function PieceByString(Value, Delimiter: string;
+  StartPiece, EndPiece: Integer): string;
 var
   dlen, i, pnum: Integer;
-  buf: String;
+  buf: string;
 begin
   Result := '';
-//  Value := Uppercase(Value);
-//  Delimiter := Uppercase(Delimiter);
-  if (Value <> '') And (StartPiece > 0) And (EndPiece >= StartPiece) then
+  // Value := Uppercase(Value);
+  // Delimiter := Uppercase(Delimiter);
+  if (Value <> '') and (StartPiece > 0) and (EndPiece >= StartPiece) then
   begin
     dlen := Length(Delimiter);
     i := Pos(Delimiter, Value) - 1;
@@ -251,14 +265,15 @@ begin
         Delete(buf, 1, i + dlen);
         i := Pos(Delimiter, buf) - 1;
         Inc(pnum);
-      until (i < 0) And (buf = '');
+      until (i < 0) and (buf = '');
     end
     else if StartPiece = 1 then
       Result := Value;
   end;
 end;
 
-procedure SetPiece(var x: string; Delim: char; PieceNum: Integer; const NewPiece: string);
+procedure SetPiece(var x: string; Delim: char; PieceNum: Integer;
+  const NewPiece: string);
 { sets the Nth piece (PieceNum) of a string to NewPiece, adding delimiters as necessary }
 var
   i: Integer;
@@ -291,7 +306,8 @@ begin
   Result := Format('%.*d', [10, addr]);
 end;
 
-procedure SetPieces(var x: string; Delim: char; Pieces: Array of Integer; FromString: string);
+procedure SetPieces(var x: string; Delim: char; Pieces: array of Integer;
+  FromString: string);
 var
   i: Integer;
 begin
@@ -299,11 +315,12 @@ begin
     SetPiece(x, Delim, Pieces[i], Piece(FromString, Delim, Pieces[i]));
 end;
 
-function MapWeightAddress(aTarget: String; aLine: String): Integer;
+function MapWeightAddress(aTarget: string; aLine: string): Integer;
 
-  Function StrToLongWord(var aLngWrd: LongWord; aStr: String; aAdjustment: Integer = 0): Boolean;
+  function StrToLongWord(var aLngWrd: LongWord; aStr: string;
+    aAdjustment: Integer = 0): Boolean;
   var
-   aInt: Integer;
+    aInt: Integer;
   begin
     Result := false;
     aInt := StrToIntDef(aStr, -1) + aAdjustment;
@@ -334,11 +351,13 @@ begin
       Result := 0
     else
       Result := 1;
-  end else
-   Result := LookUpErrorNum;
+  end
+  else
+    Result := LookUpErrorNum;
 end;
 
-function findPosition(aList: TStrings; aTarget: String; aStartPos, aEndPos: Integer; aWeight: TWeight): Integer;
+function findPosition(aList: TStrings; aTarget: string;
+  aStartPos, aEndPos: Integer; aWeight: TWeight): Integer;
 var
   S: string;
   Pos, step, dir: Integer;
@@ -358,7 +377,7 @@ begin
   if dir = LookUpErrorNum then
   begin
     Result := -2;
-    exit;
+    Exit;
   end;
   case dir of
     - 1:
@@ -396,13 +415,13 @@ begin
         if dir = LookUpErrorNum then
         begin
           Result := -2;
-          exit;
+          Exit;
         end;
         Found := dir = 0;
         if Found then
           Result := Pos;
       end;
-    Finally
+    finally
       FreeAndNil(CacheLookup);
     end;
   end;
@@ -429,7 +448,8 @@ begin
   end;
 end;
 
-procedure Replace(Var InString: String; WhatToReplace, WhatToReplaceWith: String);
+procedure Replace(var InString: string;
+  WhatToReplace, WhatToReplaceWith: string);
 {
   does a search and replace within InString. Replaces all occurrences
   of "WhatToReplace" with "WhatToReplaceWith".
@@ -454,17 +474,96 @@ begin
       Delete(InString, ReplacePosition, Length(WhatToReplace));
       Insert(WhatToReplaceWith, InString, ReplacePosition);
       // ReplacePosition:=PosEx(WhatToReplace,InString,ReplacePosition);
-      ReplacePosition := Pos(WhatToReplace, InString); // Remarkably, Pos is faster than PosEX, despite the ReplacePosition parameter in PosEx
+      ReplacePosition := Pos(WhatToReplace, InString);
+      // Remarkably, Pos is faster than PosEX, despite the ReplacePosition parameter in PosEx
     until ReplacePosition = 0;
   end; // if
 
 end; // procedure
 
 {$ENDREGION}
+
+procedure LoadUnitsThreaded(aParser: TMapParser;
+  aMasterList, aResultList: TStringList);
+var
+  idx: Integer;
+  line, UnitName: string;
+  addr, Next: LongWord;
+
+begin
+  for idx := 0 to aMasterList.Count - 1 do
+  begin
+    line := aMasterList[idx];
+    addr := aParser.GetAddress(line);
+    if addr <> OutsideMapAddress then
+    begin
+      Next := addr + HexToInt(Piece(line, ' ', 3));
+      UnitName := Piece(PieceByString(line, UnitPrefix, 2, 2), ' ', 1);
+      aResultList.Add(AddrStr(addr) + '^' + AddrStr(Next) + '^' + UnitName);
+    end;
+  end;
+end;
+
+procedure LoadMethodsThreaded(aParser: TMapParser;
+  aMasterList, aResultList: TStringList);
+var
+  idx: Integer;
+  line, UnitName: string;
+  addr: LongWord;
+begin
+  for idx := 0 to aMasterList.Count - 1 do
+  begin
+    line := aMasterList[idx];
+    addr := aParser.GetAddress(line);
+    if addr <> OutsideMapAddress then
+    begin
+      UnitName := Trim(Copy(line, Pos(' ', line, 3), MaxInt));
+      aResultList.Add(AddrStr(addr) + '^^' + UnitName + '^' + Copy(line, 2, 4));
+    end;
+  end;
+end;
+
+procedure LoadLinesThreaded(aParser: TMapParser;
+  aMasterList, AResultList1: TStringList);
+var
+  idx, p: Integer;
+  line, seg, lineNum: string;
+  addr: LongWord;
+
+begin
+  for idx := 0 to aMasterList.Count - 1 do
+  begin
+    line := Trim(aMasterList[idx]);
+    if (line <> '') and (Pos(UnitSection, line) = 0) then
+    begin
+      while line <> '' do
+      begin
+        addr := aParser.GetAddress(line);
+        if (addr = OutsideMapAddress) or (addr = aParser.FEndOfUnit) then
+          line := ''
+        else
+        begin
+          seg := Copy(line, Pos(':', line) - 4, 4);
+          lineNum := Piece(line, ' ', 1);
+          AResultList1.Add(AddrStr(addr) + '^^' + lineNum + '^' + seg);
+        end;
+        p := Pos(' ', line, 15);
+        if p > 0 then
+        begin
+          Delete(line, 1, p);
+          line := Trim(line);
+        end
+        else
+          line := '';
+      end;
+    end;
+  end;
+end;
+
 {$REGION 'tMapParser'}
 {$REGION 'Threaded'}
 
-procedure tMapParser.CreateThreaded(Const ThreadOnDemand: Boolean);
+procedure TMapParser.LoadUpMapFileThreaded(const ThreadOnDemand: Boolean);
 const
   MaxLineCnt = 3; // Number of lines to process for each thread
 var
@@ -472,7 +571,8 @@ var
   CanContinue: Boolean;
   RtnCursor: Integer;
 
-  function PreLoadWorkers(StrtStr: String; WorkerType: tThreadType; EndStr: string = ''): Boolean;
+  function PreLoadWorkers(StrtStr: string; WorkerType: tThreadType;
+    EndStr: string = ''): Boolean;
   var
     i, FromIdx, ToIdx, LastPos, SegmentCnt, LoopCnt: Integer;
     tmpStrLst: TStringList;
@@ -481,10 +581,10 @@ var
     Result := false;
 
     // find the start and end point of the file
-    FromIdx := fMapFile.IndexOfStrippedString(StrtStr);
+    FromIdx := FMapFile.IndexOfStrippedString(StrtStr);
     if WorkerType = ttLoadLines then
-      FromIdx := fMapFile.IndexOfPiece(UnitSection, FromIdx);
-    ToIdx := fMapFile.IndexOfStrippedString(EndStr, FromIdx + 2);
+      FromIdx := FMapFile.IndexOfPiece(UnitSection, FromIdx);
+    ToIdx := FMapFile.IndexOfStrippedString(EndStr, FromIdx + 2);
 
     // Ensure that we have our points
     if (FromIdx = -1) or (ToIdx = -1) then
@@ -506,10 +606,11 @@ var
 
         // Grab the text
         tmpStrLst.Clear;
-        fMapFile.StringsByNum(tmpStrLst, LastPos, SegmentCnt);
+        FMapFile.StringsByNum(tmpStrLst, LastPos, SegmentCnt);
 
         // Create the worker
-        aObj := TWorker.Create(Self, fThreadPool, WorkerType, tmpStrLst, fworkerArray.Count + 1);
+        aObj := TWorker.Create(Self, FThreadPool, WorkerType, tmpStrLst,
+          FWorkerArray.Count + 1);
 
         // set the callback
         case WorkerType of
@@ -520,7 +621,7 @@ var
           ttLoadLines:
             aObj.ThreadFunction := LoadLinesThreaded;
         end;
-        fworkerArray.Add(aObj);
+        FWorkerArray.Add(aObj);
 
         // This will start the new thread (can be called after all have been setup too)
         if ThreadOnDemand then
@@ -541,8 +642,8 @@ var
     aObj: TWorker;
 
   begin
-    aObj := TWorker.Create(Self, fThreadPool, aThreadType, list, 0);
-    fworkerArray.Add(aObj);
+    aObj := TWorker.Create(Self, FThreadPool, aThreadType, list, 0);
+    FWorkerArray.Add(aObj);
     if ThreadOnDemand then
       aObj.FireThread;
   end;
@@ -552,7 +653,7 @@ var
     aObj: TWorker;
   begin
     // Will loop throgh and start the threads
-    for aObj in fworkerArray do
+    for aObj in FWorkerArray do
       aObj.FireThread;
   end;
 
@@ -566,24 +667,26 @@ var
     Comp := TComparer<TWorker>.Construct(
       function(const Left, Right: TWorker): Integer
       begin
-        Result := TComparer<tThreadType>.Default.Compare(Left.ThreadType, Right.ThreadType);
+        Result := TComparer<tThreadType>.Default.Compare(Left.ThreadType,
+          Right.ThreadType);
         if Result = 0 then
-          Result := TComparer<Integer>.Default.Compare(Left.WorkerID, Right.WorkerID);
+          Result := TComparer<Integer>.Default.Compare(Left.WorkerID,
+            Right.WorkerID);
       end);
 
     // Sort the data array
-    fworkerArray.Sort(Comp);
+    FWorkerArray.Sort(Comp);
 
     // Need to grad the last addrss from methods and add it to the start of the first (for the next part)
-    for aObj in fworkerArray do
+    for aObj in FWorkerArray do
     begin
       case aObj.ThreadType of
         ttLoadUnits:
-          fUnitSection.AddStrings(aObj.ResultList);
+          FUnitSection.AddStrings(aObj.ResultList);
         ttLoadMethods:
-          fMethodSection.AddStrings(aObj.ResultList);
+          FMethodSection.AddStrings(aObj.ResultList);
         ttLoadLines:
-          fLines.AddStrings(aObj.ResultList);
+          FLines.AddStrings(aObj.ResultList);
       end;
     end;
   end;
@@ -594,26 +697,27 @@ begin
   try
 
     // Assume we can load it
-    fMapLoaded := LoadMapFile;
+    FMapLoaded := LoadMapFile;
 
     // Init our variables
-    fworkerArray := TObjectList<TWorker>.Create;
+    FWorkerArray := TObjectList<TWorker>.Create;
     try
       CoreCnt := CPUCount - 1;
-      if CoreCnt < 1 then   // in case there's only 1 CPU
+      if CoreCnt < 1 then // in case there's only 1 CPU
         CoreCnt := 1;
-      fThreadPool := TThreadPool.Create(CoreCnt * 3); // one for each PreLoad
+      FThreadPool := TThreadPool.Create(CoreCnt * 3); // one for each PreLoad
 
       // Run our setup
       CanContinue := PreLoadWorkers(SegmentMap, ttLoadUnits);
       if CanContinue then
         CanContinue := PreLoadWorkers(PublicsByValue, ttLoadMethods);
       if CanContinue then
-        CanContinue := PreLoadWorkers(PublicsByValue, ttLoadLines, BoundResource);
+        CanContinue := PreLoadWorkers(PublicsByValue, ttLoadLines,
+          BoundResource);
 
       if not CanContinue then
       begin
-        fMapLoaded := false;
+        FMapLoaded := false;
         Exit;
       end;
 
@@ -621,116 +725,43 @@ begin
         FireOffThreads;
 
       // Wait while we run
-      While Not(fThreadPool.AllTasksFinished) Do
+      while not(FThreadPool.AllTasksFinished) do
         Sleep(0);
 
-      fUnitSection := TStringList.Create;
-      fMethodSection := TStringList.Create;
-      fLines := TStringList.Create;
+      FUnitSection := TStringList.Create;
+      FMethodSection := TStringList.Create;
+      FLines := TStringList.Create;
 
       LoadResults;
 
-      fworkerArray.Clear;
+      FWorkerArray.Clear;
 
-      PostLoadWorkers(fUnitSection, ttSortUnits);
-      PostLoadWorkers(fMethodSection, ttSortMethods);
-      PostLoadWorkers(fLines, ttSortLines);
+      PostLoadWorkers(FUnitSection, ttSortUnits);
+      PostLoadWorkers(FMethodSection, ttSortMethods);
+      PostLoadWorkers(FLines, ttSortLines);
 
       if not ThreadOnDemand then
         FireOffThreads;
 
       // Wait while we run
-      While Not(fThreadPool.AllTasksFinished) Do
+      while not(FThreadPool.AllTasksFinished) do
         Sleep(0);
 
     finally
-      FreeAndNil(fworkerArray);
+      FreeAndNil(FWorkerArray);
     end;
 
-  Finally
+  finally
     Screen.Cursor := RtnCursor;
   end;
 end;
 
-procedure LoadUnitsThreaded(aParser: TMapParser; aMasterList, aResultList: TStringList);
-var
-  idx: Integer;
-  line, UnitName: string;
-  addr, Next: LongWord;
-
-begin
-  for idx := 0 to aMasterList.Count - 1 do
-  begin
-    line := aMasterList[idx];
-    addr := aParser.GetAddress(line);
-    if addr <> OutsideMapAddress then
-    begin
-      Next := addr + HexToInt(Piece(line, ' ', 3));
-      UnitName := Piece(PieceByString(line, UnitPrefix, 2, 2), ' ', 1);
-      aResultList.Add(AddrStr(addr) + '^' + AddrStr(Next) + '^' + UnitName);
-    end;
-  end;
-end;
-
-Procedure LoadMethodsThreaded(aParser: TMapParser; aMasterList, aResultList: TStringList);
-var
-  idx: Integer;
-  line, UnitName: string;
-  addr: LongWord;
-begin
-  for idx := 0 to aMasterList.Count - 1 do
-  begin
-    line := aMasterList[idx];
-    addr := aParser.GetAddress(line);
-    if addr <> OutsideMapAddress then
-    begin
-      UnitName := trim(copy(line, Pos(' ', line, 3), MaxInt));
-      aResultList.Add(AddrStr(addr) + '^^' + UnitName + '^' + copy(line,2,4));
-    end;
-  end;
-end;
-
-Procedure LoadLinesThreaded(aParser: TMapParser; aMasterList, aResultList: TStringList);
-var
-  idx, p: Integer;
-  line, seg, lineNum: string;
-  addr: LongWord;
-
-begin
-  for idx := 0 to aMasterList.Count - 1 do
-  begin
-    line := trim(aMasterList[idx]);
-    if (line <> '') and (pos(UnitSection, line) = 0) then
-    begin
-      while line <> '' do
-      begin
-        addr := aParser.GetAddress(line);
-        if (addr = OutsideMapAddress) or (addr = aParser.fEndOfUnit) then
-          line := ''
-        else
-        begin
-          seg := copy(line, pos(':', line) - 4, 4);
-          lineNum := Piece(line, ' ', 1);
-          aResultList.Add(AddrStr(addr) + '^^' + lineNum + '^' + seg);
-        end;
-        p := pos(' ', line, 15);
-        if p > 0 then
-        begin
-          delete(line, 1, p);
-          line := trim(line);
-        end
-        else
-          line := '';
-      end;
-    end;
-  end;
-end;
 
 procedure WorkerUpdate(aParser: TMapParser; list: TStringList);
 var
-  i, s: Integer;
-  lastline, line, seg, lastseg, next: String;
-  getNext: boolean;
+  i, S: Integer;
+  lastline, line, seg, lastseg, Next: string;
+  getNext: Boolean;
 
 begin
   lastseg := '';
@@ -741,159 +772,157 @@ begin
       line := '^^^FFFF'
     else
       line := list[i];
-    next := '';
-    seg := piece(line, '^', 4);
+    Next := '';
+    seg := Piece(line, '^', 4);
     if (seg = lastseg) then
-      getNext := True
+      getNext := true
     else
     begin
       if lastseg = '' then
-        getNext := True
+        getNext := true
       else
       begin
         getNext := false;
-        s := HexToInt(lastseg);
-        next := AddrStr(aParser.fSegments[s].EndAddress);
+        S := HexToInt(lastseg);
+        Next := AddrStr(aParser.FSegments[S].EndAddress);
       end;
       lastseg := seg;
     end;
     if getNext then
-      next := Piece(line, '^', 1);
-    SetPiece(lastline, '^', 2, next);
+      Next := Piece(line, '^', 1);
+    SetPiece(lastline, '^', 2, Next);
     list[i - 1] := lastline;
   end;
 end;
 
-constructor tMapParser.Create(ThreadOnDemand: Boolean; aFileName: string = '');
+procedure TMapParser.Assign(Source: TMapParser);
 begin
-  inherited Create;
- // fStopWatch := TStopWatch.Create(nil, true);
- // try
- //   fStopWatch.Start;
- //   try
-      fFileName := aFileName;
-      CreateThreaded(ThreadOnDemand);
- //   finally
-  //    fStopWatch.Stop;
- //     ShowMessage('Load of the map file: ' + fStopWatch.Elapsed);
- //   end;
- // finally
- //   fStopWatch.Free;
- // end;
+  Self.FMapLoaded := Source.FMapLoaded;
+  Self.FMapFile.Assign(Source.FMapFile);
+  Self.FSegments.Assign(Source.FSegments);
+  Self.FUnitSection.Assign(Source.FUnitSection);
+  Self.FMethodSection.Assign(Source.FMethodSection);
+  Self.FLines.Assign(Source.FLines);
+  Self.FFileName := Source.FFileName;
+  Self.FEndOfUnit := Source.FEndOfUnit;
+end;
 
+constructor TMapParser.CreateAndLoadThreaded(AThreadOnDemand: Boolean;
+AFileName: string);
+begin
+  Create(AFileName);
+  LoadUpMapFileThreaded(AThreadOnDemand);
 end;
 
 {$ENDREGION}
 {$REGION 'Non Threaded'}
 
-constructor tMapParser.Create(aFileName: string = '');
+constructor TMapParser.Create(AFileName: string = '');
 begin
   inherited Create;
- // fStopWatch := TStopWatch.Create(nil, true);
-//  try
-  //  fStopWatch.Start;
-  //  try
-      // Assume we can load it
-
-      fFileName := aFileName;
-      fMapLoaded := LoadMapFile;
-
-      // No need to waste time if we are missing some info
-      if fMapLoaded then
-        fMapLoaded := LoadUnits;
-      if fMapLoaded then
-        fMapLoaded := LoadMethods;
-      if fMapLoaded then
-        fMapLoaded := LoadLines;
-  //  finally
-  //    fStopWatch.Stop;
-  //    ShowMessage('Load of the map file: ' + fStopWatch.Elapsed);
-  //  end;
-
- // finally
- //   fStopWatch.Free;
- // end;
+  FFileName := AFileName;
+  FMapFile := TStringList.Create;
+  FSegments := TSegmentList.Create;
+  FUnitSection := TStringList.Create;
+  FMethodSection := TStringList.Create;
+  FLines := TStringList.Create;
 end;
 
-Function tMapParser.LoadMapFile: Boolean;
-const
-  MapFileExt = '.map';
-  SegmentList =  'StartLengthNameClass';
+constructor TMapParser.CreateAndLoad(AFileName: string = '';
+ADummy: Integer = 0);
+begin
+  Create(AFileName);
+  LoadUpMapFile;
+end;
 
-  function LoadSegments: boolean;
+procedure TMapParser.LoadUpMapFile;
+begin
+  FMapLoaded := FMapLoaded or (LoadMapFile and LoadUnits and LoadMethods and LoadLines);
+end;
+
+function TMapParser.LoadMapFile: Boolean;
+
+  // Returns True if segments were found and added to FSegments
+  function LoadSegments: Boolean;
+  const
+    SegmentList = 'StartLengthNameClass';
   var
-    i, p, seg: integer;
+    i, p, seg: Integer;
     line: string;
     info: TSegmentInfo;
 
   begin
-    Result := False;
-    i := fMapFile.IndexOfStrippedString(SegmentList);
+    Result := false;
+    i := FMapFile.IndexOfStrippedString(SegmentList);
     if i < 0 then
-      exit;
-    inc(i);
-    if assigned(fSegments) then
-      fSegments.Clear
-    else
-      fSegments := TList<TSegmentInfo>.Create;
+      Exit;
+    Inc(i);
+
+    FSegments.Clear;
     info.StartAddress := 0;
     info.EndAddress := 0;
-    while (i < fMapFile.Count) do
+    while (i < FMapFile.Count) do
     begin
-      line := fMapFile[i];
-      p := pos(':', line);
+      line := FMapFile[i];
+      p := Pos(':', line);
       if p > 4 then
       begin
-        seg := HexToInt(copy(line, p - 4, 4));
-        while fSegments.Count < seg do
-          fSegments.Add(info);
-        info.StartAddress := HexToInt(copy(line, p + 1, 8));
-        info.EndAddress := info.StartAddress + HexToInt(copy(piece(line, ' ', 3),1,8)) - 1;
-        fSegments.Add(info);
+        seg := HexToInt(Copy(line, p - 4, 4));
+        while FSegments.Count < seg do
+          FSegments.Add(info);
+        info.StartAddress := HexToInt(Copy(line, p + 1, 8));
+        info.EndAddress := info.StartAddress +
+          HexToInt(Copy(Piece(line, ' ', 3), 1, 8)) - 1;
+        FSegments.Add(info);
         if seg = 1 then
-          fEndOfUnit := info.StartAddress;
-        Result := True;
+          FEndOfUnit := info.StartAddress;
+        Result := true;
         Inc(i);
       end
       else
-        exit;
+        Exit;
     end;
   end;
 
+const
+  MapFileExt = '.map';
 begin
-  fMapFile := TStringList.Create;
-  if fFileName = '' then
+  if FFileName = '' then
   begin
-    fFileName := ExtractFileName(Application.exename);
-    fFileName := ChangeFileExt(fFileName, MapFileExt);
+    // Check for file name with version number first
+    FFileName := TPath.GetFileNameWithoutExtension(Application.ExeName) +
+      TExceptionLogger.FileVersion(Application.ExeName) + MapFileExt;
+    if not FileExists(FFileName) then
+    begin
+      FFileName := ExtractFileName(Application.ExeName);
+      FFileName := ChangeFileExt(FFileName, MapFileExt);
+    end;
   end;
-  if FileExists(fFileName) then
+  if FileExists(FFileName) then
   begin
-    fMapFile.LoadFromFile(fFileName);
+    FMapFile.LoadFromFile(FFileName);
     Result := LoadSegments;
   end
   else
     Result := false;
 end;
 
-destructor tMapParser.Destroy;
+destructor TMapParser.Destroy;
 begin
-  fMapFile.Free;
-  if assigned(fSegments) then
-    fSegments.Free;
-  fUnitSection.Free;
-  fMethodSection.Free;
-  fLines.Free;
-  if assigned(fThreadPool) then
-    FreeAndNil(fThreadPool);
+  FreeAndNil(FLines);
+  FreeAndNil(FMethodSection);
+  FreeAndNil(FUnitSection);
+  FreeAndNil(FSegments);
+  FreeAndNil(FMapFile);
+  FreeAndNil(FThreadPool);
   inherited;
 end;
 
-Function tMapParser.LoadUnits: Boolean;
+function TMapParser.LoadUnits: Boolean;
 
-  Function FindStartLoc: Integer;
+  function FindStartLoc: Integer;
   begin
-    Result := fMapFile.IndexOfStrippedString(SegmentMap);
+    Result := FMapFile.IndexOfStrippedString(SegmentMap);
   end;
 
 var
@@ -902,7 +931,6 @@ var
   addr, Next: LongWord;
 
 begin
-  fUnitSection := TStringList.Create;
 
   idx := FindStartLoc;
 
@@ -919,40 +947,39 @@ begin
   try
     Inc(idx, 2);
     repeat
-      line := fMapFile[idx];
+      line := FMapFile[idx];
       addr := GetAddress(line);
       if addr <> OutsideMapAddress then
       begin
         Next := addr + HexToInt(Piece(line, ' ', 3));
         UnitName := Piece(PieceByString(line, UnitPrefix, 2, 2), ' ', 1);
-        fUnitSection.Add(AddrStr(addr) + '^' + AddrStr(Next) + '^' + UnitName);
+        FUnitSection.Add(AddrStr(addr) + '^' + AddrStr(Next) + '^' + UnitName);
       end;
       Inc(idx, 1);
     until (line = '');
 
-    fUnitSection.Sort;
+    FUnitSection.Sort;
   except
     Result := false;
   end;
 end;
 
 // Last Address^ current Address^ Method
-Function tMapParser.LoadMethods: Boolean;
+function TMapParser.LoadMethods: Boolean;
 
-  Function FindStartLoc: Integer;
+  function FindStartLoc: Integer;
   const
     Val1 = 'AddressPublicsbyValue';
   begin
-    Result := fMapFile.IndexOfStrippedString(Val1);
+    Result := FMapFile.IndexOfStrippedString(Val1);
   end;
 
 var
-  idx, s, idx2: Integer;
+  idx, S, idx2: Integer;
   line, seg, lastseg, lastline, UnitName: string;
-  addr, next: LongWord;
+  addr, Next: LongWord;
 
 begin
-  fMethodSection := TStringList.Create;
 
   idx := FindStartLoc;
 
@@ -971,7 +998,7 @@ begin
     seg := '';
     lastseg := '';
     repeat
-      line := fMapFile[idx];
+      line := FMapFile[idx];
       if line = '' then
         seg := 'FFFF'
       else
@@ -980,39 +1007,39 @@ begin
         if addr <> OutsideMapAddress then
         begin
           seg := Copy(line, Pos(':', line) - 4, 4);
-          UnitName := trim(copy(line, pos(' ', line, 3), MaxInt));
-          fMethodSection.Add(AddrStr(addr) + '^^' + UnitName);
+          UnitName := Trim(Copy(line, Pos(' ', line, 3), MaxInt));
+          FMethodSection.Add(AddrStr(addr) + '^^' + UnitName);
         end;
       end;
       if (seg <> lastseg) then
       begin
         if lastseg <> '' then
         begin
-          s := HexToInt(lastseg);
-          next := fSegments[s].EndAddress;
+          S := HexToInt(lastseg);
+          Next := FSegments[S].EndAddress;
           if line = '' then
             idx2 := 1
           else
             idx2 := 2;
-          lastline := fMethodSection[fMethodSection.Count - idx2];
-          SetPiece(lastline, '^', 2, AddrStr(next));
-          fMethodSection[fMethodSection.Count - idx2] := lastline;
+          lastline := FMethodSection[FMethodSection.Count - idx2];
+          SetPiece(lastline, '^', 2, AddrStr(Next));
+          FMethodSection[FMethodSection.Count - idx2] := lastline;
         end;
         lastseg := seg
       end;
       Inc(idx, 1);
     until (line = '');
 
-    fMethodSection.Sort;
+    FMethodSection.Sort;
 
-    for idx := 1 to fMethodSection.Count-1 do
+    for idx := 1 to FMethodSection.Count - 1 do
     begin
-      lastline := fMethodSection[idx - 1];
-      if piece(lastline, '^', 2) = '' then
+      lastline := FMethodSection[idx - 1];
+      if Piece(lastline, '^', 2) = '' then
       begin
-        line := fMethodSection[idx];
+        line := FMethodSection[idx];
         SetPiece(lastline, '^', 2, Piece(line, '^', 1));
-        fMethodSection[idx - 1] := lastline;
+        FMethodSection[idx - 1] := lastline;
       end;
     end;
 
@@ -1021,31 +1048,30 @@ begin
   end;
 end;
 
-Function tMapParser.LoadLines: Boolean;
+function TMapParser.LoadLines: Boolean;
 
-  Function FindStartLoc: Integer;
+  function FindStartLoc: Integer;
   const
     Val1 = 'AddressPublicsbyValue';
   begin
-    Result := fMapFile.IndexOfStrippedString(Val1);
+    Result := FMapFile.IndexOfStrippedString(Val1);
   end;
 
-  Function FindEndLoc(OffSet: Integer): Integer;
+  function FindEndLoc(OffSet: Integer): Integer;
   const
     Val1 = 'Boundresourcefiles';
   begin
-    Result := fMapFile.IndexOfStrippedString(Val1, OffSet);
+    Result := FMapFile.IndexOfStrippedString(Val1, OffSet);
   end;
 
 var
   idx, EndIdx: Integer;
-  line, lastLine, lineNum, seg, lastseg, next: string;
-  i, p, s: Integer;
+  line, lastline, lineNum, seg, lastseg, Next: string;
+  i, p, S: Integer;
   addr: LongWord;
-  getNext: boolean;
+  getNext: Boolean;
 
 begin
-  fLines := TStringList.Create;
 
   idx := FindStartLoc;
   EndIdx := FindEndLoc(idx);
@@ -1062,7 +1088,7 @@ begin
   // while Pos(UnitSection, fMapFile[idx]) = 0 do
   // Inc(idx);
   Inc(idx, 2);
-  while fMapFile[idx] <> '' do
+  while FMapFile[idx] <> '' do
     Inc(idx);
 
   // Move down 2 lines
@@ -1072,26 +1098,26 @@ begin
     lastseg := '';
     for i := idx to EndIdx do
     begin
-      line := trim(fMapFile[i]);
+      line := Trim(FMapFile[i]);
 
-      if (line <> '') and (pos(UnitSection, line) = 0) then
+      if (line <> '') and (Pos(UnitSection, line) = 0) then
       begin
         while line <> '' do
         begin
           addr := GetAddress(line);
-          if (addr = OutsideMapAddress) or (addr = fEndOfUnit) then
+          if (addr = OutsideMapAddress) or (addr = FEndOfUnit) then
             line := ''
           else
           begin
-            seg := copy(line, pos(':', line) - 4, 4);
+            seg := Copy(line, Pos(':', line) - 4, 4);
             lineNum := Piece(line, ' ', 1);
-            fLines.Add(AddrStr(addr) + '^^' + lineNum + '^' + seg);
+            FLines.Add(AddrStr(addr) + '^^' + lineNum + '^' + seg);
           end;
-          p := pos(' ', line, 15);
+          p := Pos(' ', line, 15);
           if p > 0 then
           begin
-            delete(line, 1, p);
-            line := trim(line);
+            Delete(line, 1, p);
+            line := Trim(line);
           end
           else
             line := '';
@@ -1099,44 +1125,44 @@ begin
       end;
     end;
 
-    fLines.Sort;
+    FLines.Sort;
 
-    for i := 1 to fLines.Count do
+    for i := 1 to FLines.Count do
     begin
-      lastline := fLines[i - 1];
-      if (i = fLines.Count) then
+      lastline := FLines[i - 1];
+      if (i = FLines.Count) then
         line := '^^^FFFF'
       else
-        line := fLines[i];
-      next := '';
-      seg := piece(line, '^', 4);
+        line := FLines[i];
+      Next := '';
+      seg := Piece(line, '^', 4);
       if (seg = lastseg) then
-        getNext := True
+        getNext := true
       else
       begin
         if lastseg = '' then
-          getNext := True
+          getNext := true
         else
         begin
           getNext := false;
-          s := HexToInt(lastseg);
-          next := AddrStr(fSegments[s].EndAddress);
+          S := HexToInt(lastseg);
+          Next := AddrStr(FSegments[S].EndAddress);
         end;
         lastseg := seg
       end;
       if getNext then
-        next := Piece(line, '^', 1);
-      SetPiece(lastline, '^', 2, next);
-      fLines[i - 1] := lastline;
+        Next := Piece(line, '^', 1);
+      SetPiece(lastline, '^', 2, Next);
+      FLines[i - 1] := lastline;
     end;
   except
     Result := false;
   end;
 end;
 
-function TMapParser.GetAddress(const addr: String): LongWord;
+function TMapParser.GetAddress(const addr: string): LongWord;
 var
-  seg, p: integer;
+  seg, p: Integer;
   overflow: Int64;
 
 begin
@@ -1145,71 +1171,83 @@ begin
   if p > 4 then
   begin
     seg := HexToInt(Copy(addr, p - 4, 4));
-    if seg < fSegments.Count then
+    if seg < FSegments.Count then
     begin
-      overflow :=  Int64(fSegments[seg].StartAddress) + Int64(HexToInt(copy(addr, p + 1, 8)));
+      overflow := Int64(FSegments[seg].StartAddress) +
+        Int64(HexToInt(Copy(addr, p + 1, 8)));
       if overflow > OutsideMapAddress then
-         Result := OutsideMapAddress
+        Result := OutsideMapAddress
       else
         Result := LongWord(overflow);
     end;
   end;
 end;
 
-procedure tMapParser.LookupInMap(const LookUpAddr: LongWord; out aUnit, aMethod, aLineNumber: String);
+procedure TMapParser.LookupInMap(const LookUpAddr: LongWord;
+out AUnit, AMethod, ALineNumber: string);
 begin
-  aUnit := GetUnitName(LookUpAddr);
-  if (aUnit = 'NA') then
+  AUnit := GetUnitName(LookUpAddr);
+  if (AUnit = 'NA') then
   begin
-    aMethod := '*** Unknown ***';
-    aLineNumber := '-1';
+    AMethod := '*** Unknown ***';
+    ALineNumber := '-1';
   end
   else
   begin
-    aMethod := GetMethodName(LookUpAddr);
-    aLineNumber := GetLineNum(LookUpAddr, aUnit);
+    AMethod := GetMethodName(LookUpAddr);
+    ALineNumber := GetLineNum(LookUpAddr, AUnit);
   end;
 end;
 
-function tMapParser.GetUnitName(const LookUpAddr: LongWord): string;
+function TMapParser.GetUnitName(const LookUpAddr: LongWord): string;
 var
   UnitLineNum: Integer;
 begin
   Result := 'NA';
-  UnitLineNum := findPosition(fUnitSection, AddrStr(LookUpAddr), 0, fUnitSection.Count - 1, MapWeightAddress);
+  UnitLineNum := findPosition(FUnitSection, AddrStr(LookUpAddr), 0,
+    FUnitSection.Count - 1, MapWeightAddress);
   if UnitLineNum > -1 then
-    Result := Piece(fUnitSection[UnitLineNum], '^', 3);
+    Result := Piece(FUnitSection[UnitLineNum], '^', 3);
 end;
 
-function tMapParser.GetMethodName(const LookUpAddr: LongWord): string;
+function TMapParser.GetIsMapLoaded: Boolean;
+begin
+  Result := FMapLoaded;
+end;
+
+function TMapParser.GetMethodName(const LookUpAddr: LongWord): string;
 var
   MethodLineNum: Integer;
 begin
   Result := '*** Unknown ***';
-  MethodLineNum := findPosition(fMethodSection, AddrStr(LookUpAddr), 0, fMethodSection.Count - 1, MapWeightAddress);
+  MethodLineNum := findPosition(FMethodSection, AddrStr(LookUpAddr), 0,
+    FMethodSection.Count - 1, MapWeightAddress);
   if MethodLineNum = -1 then
     Exit;
-  Result := Trim(Piece(fMethodSection[MethodLineNum], '^', 3));
+  Result := Trim(Piece(FMethodSection[MethodLineNum], '^', 3));
 end;
 
-function tMapParser.GetLineNum(const LookUpAddr: LongWord; const UnitName: string): string;
+function TMapParser.GetLineNum(const LookUpAddr: LongWord;
+const UnitName: string): string;
 var
-  idx: integer;
+  idx: Integer;
 
 begin
   Result := '-1'; // '*** Unknown ***';
-  idx := findPosition(fLines, AddrStr(LookUpAddr), 0, fLines.Count - 1, MapWeightAddress);
+  idx := findPosition(FLines, AddrStr(LookUpAddr), 0, FLines.Count - 1,
+    MapWeightAddress);
   if idx = -1 then
     Exit;
-  Result := Trim(Piece(fLines[idx], '^', 3));
+  Result := Trim(Piece(FLines[idx], '^', 3));
 end;
 {$ENDREGION}
 {$ENDREGION}
 {$REGION 'TStringsHelper'}
 
-function TStringsHelper.IndexOfStrippedString(const S: string; OffSet: Integer = 0): Integer;
+function TStringsHelper.IndexOfStrippedString(const S: string;
+OffSet: Integer = 0): Integer;
 var
-  tmpStr: String;
+  tmpStr: string;
 begin
   Result := -1;
   if OffSet > GetCount - 1 then
@@ -1225,7 +1263,8 @@ begin
   Result := -1;
 end;
 
-function TStringsHelper.IndexOfPiece(const S: string; OffSet: Integer = 0): Integer;
+function TStringsHelper.IndexOfPiece(const S: string;
+OffSet: Integer = 0): Integer;
 begin
   Result := -1;
   if OffSet > GetCount - 1 then
@@ -1237,7 +1276,8 @@ begin
   Result := -1;
 end;
 
-Procedure TStringsHelper.StringsByNum(ReturnList: TStringList; OffSet: Integer = 0; Linecnt: Integer = 1);
+procedure TStringsHelper.StringsByNum(ReturnList: TStringList;
+OffSet: Integer = 0; Linecnt: Integer = 1);
 var
   i: Integer;
 begin
@@ -1249,8 +1289,8 @@ end;
 {$REGION 'TWorker'}
 
 constructor TWorker.Create(const aParser: TMapParser;
-  const Handler: TThreadPool; aThreadType: tThreadType;
-  const aMasterList: TStringList; const aWrokerID: Integer);
+const Handler: TThreadPool; aThreadType: tThreadType;
+const aMasterList: TStringList; const aWrokerID: Integer);
 
 begin
   fParser := aParser;
@@ -1306,5 +1346,16 @@ begin
 end;
 
 {$ENDREGION}
+{ TSegmentList }
+
+procedure TSegmentList.Assign(Source: TSegmentList);
+var
+  SegmentInfo: TSegmentInfo;
+begin
+  for SegmentInfo in Source do
+  begin
+    Self.Add(SegmentInfo);
+  end;
+end;
 
 end.

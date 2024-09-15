@@ -3,6 +3,7 @@ unit fTemplateView;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ComCtrls, ExtCtrls, Menus, ORFn, fBase508Form,
   VA508AccessibilityManager;
@@ -10,7 +11,7 @@ uses
 type
   TfrmTemplateView = class(TfrmBase508Form)
     pnlBottom: TPanel;
-    reMain: TRichEdit;
+    reMain: ORExtensions.TRichEdit;
     btnClose: TButton;
     cbStayOnTop: TCheckBox;
     popView: TPopupMenu;

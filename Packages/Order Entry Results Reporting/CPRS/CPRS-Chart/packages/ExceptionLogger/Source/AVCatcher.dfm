@@ -3,6 +3,7 @@ object AppExcept: TAppExcept
   Top = 0
   AutoSize = True
   BorderIcons = []
+  BorderStyle = bsDialog
   Caption = 'Error Dialog'
   ClientHeight = 388
   ClientWidth = 458
@@ -12,27 +13,9 @@ object AppExcept: TAppExcept
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poMainFormCenter
   OnCreate = FormCreate
-  PixelsPerInch = 96
   TextHeight = 13
-  object lblAVText: TLabel
-    AlignWithMargins = True
-    Left = 10
-    Top = 83
-    Width = 438
-    Height = 13
-    Margins.Left = 10
-    Margins.Top = 10
-    Margins.Right = 10
-    Align = alTop
-    Caption = 
-      'Access vilation at address 006FDBRK in module '#39'MyApp.exe'#39'. Read ' +
-      'of address 0000569'
-    WordWrap = True
-    ExplicitWidth = 418
-  end
   object pnlBottom: TPanel
     AlignWithMargins = True
     Left = 10
@@ -45,7 +28,7 @@ object AppExcept: TAppExcept
     Margins.Bottom = 0
     Align = alTop
     BevelOuter = bvNone
-    TabOrder = 0
+    TabOrder = 1
     object pnlBtns: TGridPanel
       Left = 0
       Top = 0
@@ -160,7 +143,7 @@ object AppExcept: TAppExcept
     BorderStyle = bsSingle
     Color = clWhite
     ParentBackground = False
-    TabOrder = 1
+    TabOrder = 2
     object imgAV: TImage
       Left = 402
       Top = 11
@@ -233,7 +216,7 @@ object AppExcept: TAppExcept
     Margins.Bottom = 0
     Align = alTop
     BevelOuter = bvNone
-    TabOrder = 2
+    TabOrder = 3
     Visible = False
     object LogDetails: TMemo
       Left = 0
@@ -247,6 +230,7 @@ object AppExcept: TAppExcept
       Font.Name = 'Courier New'
       Font.Style = []
       ParentFont = False
+      ReadOnly = True
       ScrollBars = ssBoth
       TabOrder = 0
       OnChange = LogDetailsChange
@@ -264,7 +248,7 @@ object AppExcept: TAppExcept
     Margins.Bottom = 0
     Align = alTop
     BevelOuter = bvNone
-    TabOrder = 3
+    TabOrder = 4
     object lblDeatailTxt1: TLabel
       Left = 0
       Top = 0
@@ -289,6 +273,28 @@ object AppExcept: TAppExcept
       Align = alClient
       Caption = ' to see what data the error log contains'
     end
+  end
+  object lblAVText: TVA508StaticText
+    Name = 'VA508StaticText1'
+    AlignWithMargins = True
+    Left = 3
+    Top = 76
+    Width = 464
+    Height = 25
+    Align = alTop
+    Alignment = taLeftJustify
+    AutoSize = True
+    Caption = 
+      'Access violation at address 006FDBRK in module '#39'MyApp.exe'#39'. Read' +
+      ' of address 0000569'
+    Padding.Left = 10
+    Padding.Top = 10
+    Padding.Right = 10
+    TabOrder = 0
+    ShowAccelChar = True
+    WordWrap = True
+    LabelAlignment = taLeftJustify
+    LabelLayout = tlTop
   end
   object ImageList1: TImageList
     ColorDepth = cd32Bit

@@ -1,4 +1,4 @@
-object fraAnatPathSpecimen: TfraAnatPathSpecimen
+inherited fraAnatPathSpecimen: TfraAnatPathSpecimen
   Left = 0
   Top = 0
   Align = alClient
@@ -294,7 +294,7 @@ object fraAnatPathSpecimen: TfraAnatPathSpecimen
       TabOrder = 0
     end
   end
-  object VA508AccessibilityManager1: TVA508AccessibilityManager
+  inherited amgrMain: TVA508AccessibilityManager
     Left = 320
     Top = 123
     Data = (

@@ -273,6 +273,7 @@ type
     FNextLabel: TVA508ChainedLabel;
     FDeletingChain: boolean;
     FInitTabStop: boolean;
+    FWordWrap: Boolean;
     procedure DeleteChain(FromLabel, ToLabel: TVA508ChainedLabel);
     procedure SetNextLabel(const Value: TVA508ChainedLabel);
     function GetLabelCaption: string;
@@ -286,11 +287,18 @@ type
     procedure CMFontChanged(var Message: TMessage); message CM_FONTCHANGED;
     function GetAlignment: TAlignment;
     procedure SetAlignment(const Value: TAlignment);
+    function GetWordWrap: Boolean;
+    procedure SetWordWrap(const Value: Boolean);
+    function GetLabelAlignment: TAlignment;
+    function GetLabelLayout: TTextLayout;
+    procedure SetLabelAlignment(const Value: TAlignment);
+    procedure SetLabelLayout(const Value: TTextLayout);
   protected
     procedure Notification(AComponent: TComponent; Operation: TOperation); override;
     procedure DoEnter; override;
     procedure DoExit; override;
     procedure Paint; override;
+    procedure Resize; override;
     procedure SetParent(AParent: TWinControl); override;
     property StaticLabel: TLabel read FLabel;
   public
@@ -306,6 +314,9 @@ type
     property Name: string read GetRootName write SetRootName;
     property ShowAccelChar: boolean read GetShowAccelChar write SetShowAccelChar;
     property Alignment: TAlignment read GetAlignment write SetAlignment;
+    Property WordWrap: Boolean read GetWordWrap write SetWordWrap;
+    property LabelAlignment: TAlignment read GetLabelAlignment write SetLabelAlignment;
+    property LabelLayout: TTextLayout read GetLabelLayout write SetLabelLayout;
   end;
 
   TVA508SilentComponent = class(TVA508ComponentManager)
@@ -3370,6 +3381,7 @@ begin
   FLabel := TLabel.Create(Self);
   FLabel.Parent := Self;
   FLabel.Align := alClient;
+  FWordWrap := False;
   ControlStyle := ControlStyle - [csAcceptsControls];
   FInitTabStop := (not TabStop);
 end;
@@ -3425,14 +3437,32 @@ begin
      FOnExit(Self);
 end;
 
+procedure TVA508StaticText.Resize;
+begin
+  inherited Resize;
+  InvalidateAll;
+  if AutoSize then
+    TFriendLabel(FLabel).AdjustBounds;
+end;
+
 function TVA508StaticText.GetAlignment: TAlignment;
 begin
   Result := FLabel.Alignment;
 end;
 
+function TVA508StaticText.GetLabelAlignment: TAlignment;
+begin
+ Result := FLabel.Alignment;
+end;
+
 function TVA508StaticText.GetLabelCaption: string;
 begin
   Result := FLabel.Caption;
+end;
+
+function TVA508StaticText.GetLabelLayout: TTextLayout;
+begin
+  Result := FLabel.Layout;
 end;
 
 function TVA508StaticText.GetRootName: string;
@@ -3443,6 +3473,11 @@ end;
 function TVA508StaticText.GetShowAccelChar: boolean;
 begin
   Result := FLabel.ShowAccelChar;
+end;
+
+function TVA508StaticText.GetWordWrap: Boolean;
+begin
+ Result := FWordWrap;
 end;
 
 procedure TVA508StaticText.InvalidateAll;
@@ -3585,6 +3620,11 @@ begin
   FLabel.Alignment := Value;
 end;
 
+procedure TVA508StaticText.SetLabelAlignment(const Value: TAlignment);
+begin
+  FLabel.Alignment := Value
+end;
+
 procedure TVA508StaticText.SetLabelCaption(const Value: string);
 begin
   if FLabel.Caption <> Value then
@@ -3594,14 +3634,21 @@ begin
   end;
 end;
 
-procedure TVA508StaticText.SetRootName(const Value: string);
+procedure TVA508StaticText.SetLabelLayout(const Value: TTextLayout);
 begin
-  if inherited Name <> Value then
+  FLabel.Layout := Value;
+end;
+
+procedure TVA508StaticText.SetRootName(const Value: string);
+var
+  OldName: String;
+begin
+  OldName := Name;
+  inherited;
+  if OldName <> Value then
   begin
-    if FLabel.Caption = inherited Name then
+    if FLabel.Caption = OldName then
       FLabel.Caption := Value;
-    inherited Name := Value;
-    inherited Caption := '';
   end;
 end;
 
@@ -3643,15 +3690,38 @@ begin
   FLabel.ShowAccelChar := Value;
 end;
 
-procedure TVA508StaticText.UpdateSize;
+procedure TVA508StaticText.SetWordWrap(const Value: Boolean);
 begin
-  FLabel.Align := alNone;
-  try
-    TFriendLabel(FLabel).AdjustBounds;
-    Height := FLabel.Height + 2;
-    Width := FLabel.Width + 2;
-  finally
+  FWordWrap := Value;
+
+  if FWordWrap then
+  begin
+    FLabel.Align := alTop;
+    FLabel.AutoSize := True;
+    FLabel.WordWrap := True;
+  end
+  else
+  begin
     FLabel.Align := alClient;
+    Self.AutoSize := FALSE;
+  end;
+end;
+
+procedure TVA508StaticText.UpdateSize;
+var
+  RtnAlignment: TAlign;
+begin
+  if not AutoSize then
+  begin
+    RtnAlignment := FLabel.Align;
+    FLabel.Align := alNone;
+    try
+      TFriendLabel(FLabel).AdjustBounds;
+      Height := FLabel.Height + 2;
+      Width := FLabel.Width + 2;
+    finally
+      FLabel.Align := RtnAlignment;
+    end;
   end;
 end;
 

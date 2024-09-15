@@ -3,6 +3,7 @@ unit fNotePrt;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fAutoSz, ORCtrls, StdCtrls, Mask, ORNet, ORFn, ComCtrls, uPrinting,
   VA508AccessibilityManager;
@@ -34,7 +35,7 @@ type
   private
     { Private declarations }
     FNote: Integer;
-    FReportText: TRichEdit;
+    FReportText: ORExtensions.TRichEdit;
     procedure DisplaySelectDevice;
   public
     { Public declarations }

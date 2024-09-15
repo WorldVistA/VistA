@@ -7,29 +7,28 @@ inherited frmPtSel: TfrmPtSel
   ClientWidth = 868
   Constraints.MinHeight = 600
   Constraints.MinWidth = 800
-  OldCreateOrder = True
   Position = poMainFormCenter
   OnCloseQuery = FormCloseQuery
   OnResize = FormResize
   ExplicitWidth = 884
   ExplicitHeight = 612
-  PixelsPerInch = 96
   TextHeight = 13
   object sptVert: TSplitter [0]
     Left = 0
-    Top = 284
+    Top = 370
     Width = 868
     Height = 4
     Cursor = crVSplit
     Align = alTop
+    OnCanResize = sptVertCanResize
     OnMoved = sptVertMoved
     ExplicitTop = 283
   end
   object pcProcNoti: TPageControl [1]
     Left = 0
-    Top = 288
+    Top = 374
     Width = 868
-    Height = 285
+    Height = 199
     ActivePage = tsPendNoti
     Align = alClient
     TabOrder = 1
@@ -319,7 +318,7 @@ inherited frmPtSel: TfrmPtSel
     Left = 0
     Top = 0
     Width = 868
-    Height = 284
+    Height = 370
     Margins.Left = 6
     Align = alTop
     ColumnCollection = <
@@ -525,8 +524,8 @@ inherited frmPtSel: TfrmPtSel
       ExplicitWidth = 190
       ExplicitHeight = 276
       inherited gpMain: TGridPanel
-        Width = 190
-        Height = 276
+        Width = 269
+        Height = 362
         ControlCollection = <
           item
             Column = 0
@@ -711,144 +710,214 @@ inherited frmPtSel: TfrmPtSel
     end
     inline fraPtSelDemog: TfraPtSelDemog
       AlignWithMargins = True
-      Left = 476
+      Left = 554
       Top = 46
-      Width = 388
-      Height = 213
+      Width = 310
+      Height = 299
       Align = alClient
+      Constraints.MinHeight = 200
       TabOrder = 3
-      ExplicitLeft = 476
-      ExplicitTop = 46
-      ExplicitWidth = 388
-      ExplicitHeight = 213
-      inherited gpMain: TGridPanel
-        Width = 388
-        Height = 213
+      ExplicitLeft = 545
+      ExplicitTop = -59
+      inherited gPanel: TGridPanel
+        Width = 304
+        Height = 276
         ControlCollection = <
           item
             Column = 0
-            ColumnSpan = 3
-            Control = fraPtSelDemog.Memo
-            Row = 9
+            Control = fraPtSelDemog.stxSSN
+            Row = 0
           end
           item
-            Column = 0
-            ColumnSpan = 3
-            Control = fraPtSelDemog.lblPtName
+            Column = 1
+            Control = fraPtSelDemog.lblPtSSN
             Row = 0
           end
           item
             Column = 0
-            Control = fraPtSelDemog.lblSSN
+            Control = fraPtSelDemog.stxDOB
             Row = 1
           end
           item
             Column = 1
-            ColumnSpan = 2
-            Control = fraPtSelDemog.lblPtSSN
-            Row = 1
-          end
-          item
-            Column = 0
-            Control = fraPtSelDemog.lblDOB
-            Row = 2
-          end
-          item
-            Column = 1
-            ColumnSpan = 2
             Control = fraPtSelDemog.lblPtDOB
+            Row = 1
+          end
+          item
+            Column = 0
+            Control = fraPtSelDemog.stxSexAge
+            Row = 2
+          end
+          item
+            Column = 1
+            Control = fraPtSelDemog.lblPtSex
             Row = 2
           end
           item
             Column = 0
-            ColumnSpan = 3
-            Control = fraPtSelDemog.lblPtSex
+            Control = fraPtSelDemog.stxSIGI
+            Row = 3
+          end
+          item
+            Column = 1
+            Control = fraPtSelDemog.lblPtSigi
             Row = 3
           end
           item
             Column = 0
-            ColumnSpan = 3
+            Control = fraPtSelDemog.stxVeteran
+            Row = 4
+          end
+          item
+            Column = 1
             Control = fraPtSelDemog.lblPtVet
             Row = 4
           end
           item
             Column = 0
-            ColumnSpan = 3
+            Control = fraPtSelDemog.stxSC
+            Row = 5
+          end
+          item
+            Column = 1
             Control = fraPtSelDemog.lblPtSC
             Row = 5
           end
           item
             Column = 0
-            ColumnSpan = 2
-            Control = fraPtSelDemog.lblLocation
+            Control = fraPtSelDemog.stxLocation
             Row = 6
           end
           item
-            Column = 2
+            Column = 1
             Control = fraPtSelDemog.lblPtLocation
             Row = 6
           end
           item
             Column = 0
-            ColumnSpan = 2
-            Control = fraPtSelDemog.lblRoomBed
+            Control = fraPtSelDemog.stxRoomBed
             Row = 7
           end
           item
-            Column = 2
+            Column = 1
             Control = fraPtSelDemog.lblPtRoomBed
             Row = 7
           end
           item
-            Column = 0
-            ColumnSpan = 3
+            Column = 1
             Control = fraPtSelDemog.lblCombatVet
             Row = 8
+          end
+          item
+            Column = 0
+            Control = fraPtSelDemog.lblVeteran
+            Row = 8
+          end
+          item
+            Column = 0
+            Control = fraPtSelDemog.stxPrimaryProvider
+            Row = 9
+          end
+          item
+            Column = 1
+            Control = fraPtSelDemog.stxPtPrimaryProvider
+            Row = 9
+          end
+          item
+            Column = 0
+            Control = fraPtSelDemog.stxInpatientProvider
+            Row = 10
+          end
+          item
+            Column = 1
+            Control = fraPtSelDemog.stxPtInpatientProvider
+            Row = 10
+          end
+          item
+            Column = 0
+            Control = fraPtSelDemog.stxAttending
+            Row = 11
+          end
+          item
+            Column = 1
+            Control = fraPtSelDemog.stxPtAttending
+            Row = 11
+          end
+          item
+            Column = 0
+            Control = fraPtSelDemog.stxLastVisitLocation
+            Row = 12
+          end
+          item
+            Column = 1
+            Control = fraPtSelDemog.stxPtLastVisitLocation
+            Row = 12
+          end
+          item
+            Column = 0
+            Control = fraPtSelDemog.stxLastVisitDate
+            Row = 13
+          end
+          item
+            Column = 1
+            Control = fraPtSelDemog.stxPtLastVisitDate
+            Row = 13
+          end
+          item
+            Column = 0
+            ColumnSpan = 2
+            Control = fraPtSelDemog.Memo
+            Row = 14
           end>
-        ExplicitWidth = 388
-        ExplicitHeight = 213
-        inherited Memo: TCaptionMemo
-          Width = 388
-          Height = 33
-          ExplicitWidth = 388
-          ExplicitHeight = 33
-        end
-        inherited lblPtName: TStaticText
-          Width = 388
-          ExplicitWidth = 388
-        end
         inherited lblPtSSN: TStaticText
-          Width = 358
-          ExplicitWidth = 358
+          Width = 178
         end
         inherited lblPtDOB: TStaticText
-          Width = 358
-          ExplicitWidth = 358
+          Width = 178
         end
         inherited lblPtSex: TStaticText
-          Width = 388
-          ExplicitWidth = 388
+          Width = 178
+        end
+        inherited lblPtSigi: TStaticText
+          Width = 178
         end
         inherited lblPtVet: TStaticText
-          Width = 388
-          ExplicitWidth = 388
+          Width = 178
         end
         inherited lblPtSC: TStaticText
-          Width = 388
-          ExplicitWidth = 388
+          Width = 178
         end
         inherited lblPtLocation: TStaticText
-          Width = 330
-          ExplicitWidth = 330
+          Width = 178
         end
         inherited lblPtRoomBed: TStaticText
-          Width = 330
-          ExplicitWidth = 330
+          Width = 178
         end
         inherited lblCombatVet: TStaticText
-          Width = 388
-          ExplicitWidth = 388
+          Width = 178
         end
+        inherited stxPtPrimaryProvider: TStaticText
+          Width = 178
+        end
+        inherited stxPtInpatientProvider: TStaticText
+          Width = 178
+        end
+        inherited stxPtAttending: TStaticText
+          Width = 178
+        end
+        inherited stxPtLastVisitLocation: TStaticText
+          Width = 178
+        end
+        inherited stxPtLastVisitDate: TStaticText
+          Width = 178
+        end
+        inherited Memo: TCaptionMemo
+          Width = 298
+          Height = 0
+        end
+      end
+      inherited lblPtName: TStaticText
+        Width = 304
       end
     end
   end

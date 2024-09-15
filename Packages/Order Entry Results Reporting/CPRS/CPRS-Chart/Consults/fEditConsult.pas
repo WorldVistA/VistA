@@ -8,6 +8,7 @@ Update History
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ORCtrls, ExtCtrls, ComCtrls, ORfn, uConst, uConsults, Buttons,
   Menus, fAutoSz, ORDtTm, VA508AccessibilityManager, fBase508Form, oDST;
@@ -17,7 +18,7 @@ type
   TfrmEditCslt = class(TfrmAutoSz)
     pnlMessage: TPanel;
     imgMessage: TImage;
-    memMessage: TRichEdit;
+    memMessage: ORExtensions.TRichEdit;
     cmdAccept: TButton;
     cmdQuit: TButton;
     pnlMain: TPanel;
@@ -30,7 +31,7 @@ type
     lblAttn: TStaticText;
     lblProvDiag: TStaticText;
     lblInpOutp: TStaticText;
-    memReason: TRichEdit;
+    memReason: ORExtensions.TRichEdit;
     cboService: TORComboBox;
     cboUrgency: TORComboBox;
     radInpatient: TRadioButton;
@@ -39,7 +40,7 @@ type
     txtProvDiag: TCaptionEdit;
     cboAttn: TORComboBox;
     cboCategory: TORComboBox;
-    memComment: TRichEdit;
+    memComment: ORExtensions.TRichEdit;
     cmdLexSearch: TButton;
     lblClinicallyIndicated: TStaticText;
     calClinicallyIndicated: TORDateBox;
@@ -117,7 +118,7 @@ type
     procedure SetUpClinicallyIndicatedDate;
 //    procedure SetUpCINLTDate;
     procedure clearNLTD;
-    procedure DoSetFontSize(FontSize: Integer = -1);
+    procedure DoSetFontSize(FontSize: Integer = -1); reintroduce;
 
   protected
     procedure InitDialog;
@@ -138,7 +139,7 @@ implementation
 uses
     rODBase, rConsults, uCore, rCore, fConsults, fRptBox, fPCELex, rPCE,
     ORClasses, clipbrd, UBAGlobals, rOrders, uORLists, uSimilarNames, VAUtils,
-    uMisc, uSizing, fFrame, uDstConst;
+    uMisc, uSizing, fFrame, uDstConst, DateUtils;
 
 var
   SvcList: TStrings ;
@@ -206,6 +207,7 @@ begin
     SvcList.Free;
     Defaults.Free;
     frmEditCslt.Release;
+    frmEditCslt := nil;
   end;
 end;
 
@@ -286,7 +288,10 @@ function TfrmEditCslt.Validate(var AnErrMsg: string): Boolean;
     AnErrMsg := AnErrMsg + x;
   end;
 var
- rtnErrMsg: String;
+  rtnErrMsg: string;
+  MaxDays: Double;
+  MaxDate: TDateTime;
+  TodaysFMDate: TFMDateTime;
 begin
   inherited;
   Result := true;
@@ -310,10 +315,22 @@ begin
     end;
   if OldRec.ProvDxCodeInactive and ProvDx.CodeInactive then
     SetError(TX_INACTIVE_CODE);
-  if Not FProstheticsSvc then     //wat v28
+  if Not FProstheticsSvc then // wat v28
+  begin
+    TodaysFMDate := FMToday;
+    if calClinicallyIndicated.FMDateTime < TodaysFMDate then
+      SetError(TX_PAST_DATE);
+    MaxDays := SystemParameters.AsType<Double>('consultFutureDateLimit');
+    MaxDate := FMDateTimeToDateTime(TodaysFMDate) + MaxDays;
+    with calClinicallyIndicated do
     begin
-      if calClinicallyIndicated.FMDateTime < FMToday     then SetError(TX_PAST_DATE);
+      if FMDateTimeToDateTime(FMDateTime) > MaxDate then
+        SetError('Clinically Indicated Date is greater than ' +
+          DateTimeToStr(MaxDate) + CRLF + 'Please choose a date between ' +
+          FormatFMDateTime('mm/dd/yyyy', TodaysFMDate) + ' and ' +
+          DateTimeToStr(MaxDate));
     end;
+  end;
 
   if not CheckForSimilarName(cboAttn, rtnErrMsg, sPr) then
   begin
@@ -1027,7 +1044,6 @@ var
 
   function getMinHeight: Integer;
   begin
-    //Result := pnlDetails.Height;
     Result := 0;
     if pnlCombatVet.Visible then
       Result := Result + getCombatVetHeight;
@@ -1051,4 +1067,5 @@ begin
 
   Constraints.MinHeight := getMinHeight;
 end;
+
 end.

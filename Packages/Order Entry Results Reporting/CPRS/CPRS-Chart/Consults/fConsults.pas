@@ -32,7 +32,7 @@ type
     Z2: TMenuItem;
     pnlRead: TPanel;
     lblTitle: TOROffsetLabel;
-    memConsult: TRichEdit;
+    memConsult: ORExtensions.TRichEdit;
     pnlAction: TPanel;
     cmdNewConsult: TORAlignButton;
     Z3: TMenuItem;
@@ -58,11 +58,11 @@ type
     mnuActMakeAddendum: TMenuItem;
     mnuViewCustom: TMenuItem;
     pnlResults: TPanel;
-    memResults: TRichEdit;
+    memResults: ORExtensions.TRichEdit;
     mnuActNoteEdit: TMenuItem;
     mnuActNoteDelete: TMenuItem;
     sptVert: TSplitter;
-    memPCEShow: TRichEdit;
+    memPCEShow: ORExtensions.TRichEdit;
     cmdEditResubmit: TORAlignButton;
     cmdPCE: TORAlignButton;
     mnuActConsultResults: TMenuItem;
@@ -5017,54 +5017,56 @@ var
 begin
   tmpList := TStringList.Create;
   try
-
     FCsltList.Clear;
     uChanging := True;
-    RedrawSuspend(memConsult.Handle);
-    tvConsults.Items.BeginUpdate;
+    memConsult.LockDrawing;
     try
-      lstConsults.Items.Clear;
-      KillDocTreeObjects(tvConsults);
-      tvConsults.Items.Clear;
-    finally
-      tvConsults.Items.EndUpdate;
-    end;
-    tvCsltNotes.Items.BeginUpdate;
-    try
-      KillDocTreeObjects(tvCsltNotes);
-      tvCsltNotes.Items.Clear;
-    finally
-      tvCsltNotes.Items.EndUpdate;
-    end;
-    lstNotes.Clear;
-    memConsult.Clear;
-    memConsult.Invalidate;
-    lblTitle.Caption := '';
-    lblTitle.Hint := lblTitle.Caption;
-    with FCurrentContext do
-      begin
-        GetConsultsList(tmpList, StrToFMDateTime(BeginDate), StrToFMDateTime(EndDate), Service, Status, Ascending);
-        CreateListItemsforConsultTree(FCsltList, tmpList, ViewContext, GroupBy, Ascending);
-        UpdateConsultsTreeView(FCsltList, tvConsults);
-        FastAssign(tmpList, lstConsults.Items);
+      tvConsults.Items.BeginUpdate;
+      try
+        lstConsults.Items.Clear;
+        KillDocTreeObjects(tvConsults);
+        tvConsults.Items.Clear;
+      finally
+        tvConsults.Items.EndUpdate;
       end;
-    with tvConsults do
-      begin
-        uChanging := True;
-        Items.BeginUpdate;
-        try
-          ANode := Items.GetFirstNode;
-          if ANode <> nil then Selected := ANode.getFirstChild;
-          memConsult.Clear;
-          //RemoveParentsWithNoChildren(tvConsults, FCurrentContext);
-        finally
-          Items.EndUpdate;
+      tvCsltNotes.Items.BeginUpdate;
+      try
+        KillDocTreeObjects(tvCsltNotes);
+        tvCsltNotes.Items.Clear;
+      finally
+        tvCsltNotes.Items.EndUpdate;
+      end;
+      lstNotes.Clear;
+      memConsult.Clear;
+      memConsult.Invalidate;
+      lblTitle.Caption := '';
+      lblTitle.Hint := lblTitle.Caption;
+      with FCurrentContext do
+        begin
+          GetConsultsList(tmpList, StrToFMDateTime(BeginDate), StrToFMDateTime(EndDate), Service, Status, Ascending);
+          CreateListItemsforConsultTree(FCsltList, tmpList, ViewContext, GroupBy, Ascending);
+          UpdateConsultsTreeView(FCsltList, tvConsults);
+          FastAssign(tmpList, lstConsults.Items);
         end;
-        uChanging := False;
-        if (Self.Active) and (Selected <> nil) then tvConsultsChange(Self, Selected);
-      end;
+      with tvConsults do
+        begin
+          uChanging := True;
+          Items.BeginUpdate;
+          try
+            ANode := Items.GetFirstNode;
+            if ANode <> nil then Selected := ANode.getFirstChild;
+            memConsult.Clear;
+            //RemoveParentsWithNoChildren(tvConsults, FCurrentContext);
+          finally
+            Items.EndUpdate;
+          end;
+          uChanging := False;
+          if (Self.Active) and (Selected <> nil) then tvConsultsChange(Self, Selected);
+        end;
+    finally
+      memConsult.UnlockDrawing;
+    end;
   finally
-    RedrawActivate(memConsult.Handle);
     tmpList.Free;
   end;
 end;
@@ -5186,7 +5188,7 @@ begin
           lstConsults.SelectByID(Piece(x, U, 1));
           lstConsultsClick(Self);
           //tvConsults.SetFocus;
-          SendMessage(memConsult.Handle, WM_VSCROLL, SB_TOP, 0);
+          // SendMessage(memConsult.Handle, WM_VSCROLL, SB_TOP, 0);
         end;
     end;
 end;

@@ -8,7 +8,7 @@ interface // -------------------------------------------------------------------
 
 uses Windows, Messages, SysUtils, Classes, Graphics, Controls, StdCtrls, Forms,
   ComCtrls, Commctrl, Buttons, ExtCtrls, Grids, ImgList, Menus, CheckLst,
-  Variants, VAClasses, typinfo, System.Math, OREventCache;
+  Variants, VAClasses, typinfo, System.Math, OREventCache, ORCtrls.ORRichEdit;
 
 const
   UM_SHOWTIP = (WM_USER + 9436); // message id to display item tip         **was 300
@@ -974,8 +974,17 @@ type
   *)
 
   TKeyClickPanel = class(TPanel)
+  private
+    FOnPaint: TNotifyEvent;
+    FCanvas: TControlCanvas;
+    procedure CMFocusChanged(var Message: TCMFocusChanged); message CM_FOCUSCHANGED;
   protected
     procedure KeyDown(var Key: Word; Shift: TShiftState); override;
+    procedure Paint; override;
+  public
+    destructor Destroy; override;
+  published
+    property OnPaint: TNotifyEvent read FOnPaint write FOnPaint;
   end;
 
   TKeyClickRadioGroup = class(TRadioGroup)
@@ -1071,7 +1080,7 @@ type
     property Caption: string read GetCaption write SetCaption;
   end;
 
-  TCaptionRichEdit = class(TRichEdit, IVADynamicProperty)
+  TCaptionRichEdit = class(ORCtrls.ORRichEdit.TORRichEdit, IVADynamicProperty)
   private
   protected
     FCaption: string;
@@ -1113,6 +1122,8 @@ type
      constructor CreateWithParent(Parent: TObject);
   end;
 
+  THeaderSortState = (hssNone, hssAscending, hssDescending);
+
   TCaptionListView = class(TListView, IVADynamicProperty)
   private
     FPieces: array[0..MAX_TABS] of Integer;
@@ -1121,6 +1132,7 @@ type
     FAutoSize: Boolean;
     FHideTinyColumns: Boolean;
     FTinyColumns: string;
+    FColumnToSort: Integer;
     function GetPieces: string;
     function Get(Index: Integer): String;
     function GetObj(Index: Integer): TObject;
@@ -1137,14 +1149,23 @@ type
     procedure CreateItemClass(Sender: TCustomListView; var ItemClass: TListItemClass);
     function AddItemToList(aStr: string; aObject: TObject): TCaptionListItem;
     procedure SetHideTinyColumns(const Value: Boolean);
+    procedure DoColumnSort(Column: TListColumn); virtual;
+    function GetListHeaderSortState(Column: TListColumn): THeaderSortState;
+    procedure SetListHeaderSortState(Column: TListColumn; Value: THeaderSortState);
+    function GetListHeaderSortStateByIndex(ColumnIndex: Integer): THeaderSortState;
+    procedure SetListHeaderSortStateByIndex(ColumnIndex: Integer; Value: THeaderSortState);
   protected
     procedure Loaded; override;
     procedure CreateWnd; override;
     procedure DestroyWnd; override;
+    procedure ColClick(Column: TListColumn); override;
   public
     property ItemIEN: Int64 read GetItemIEN;
     property ItemID: Variant read GetItemID;
     property ItemsStrings: TCaptionListStringList read GetItemsStrings write SetFromStringList;
+    property SortStateByColumn[Column: TListColumn]: THeaderSortState read GetListHeaderSortState write SetListHeaderSortState;
+    property SortStateByIndex[ColumnIndex: Integer]: THeaderSortState read GetListHeaderSortStateByIndex write SetListHeaderSortStateByIndex;
+    property SortColumn: integer read FColumnToSort;
     procedure ResetTinyColumns;
     function SupportsDynamicProperty(PropertyID: integer): boolean;
     function GetDynamicProperty(PropertyID: integer): string;
@@ -1201,6 +1222,8 @@ implementation // --------------------------------------------------------------
 {$R ORCTRLS}
 
 uses
+  System.Generics.Defaults,
+  System.Generics.Collections,
   System.Types, Vcl.ComStrs, VAUtils;
 
 const
@@ -2252,7 +2275,7 @@ begin
       Dispose(ItemRec);
     end;
     if (not FKeepItemID) and (FLastItemID <> '') and (Integer(wParam) > -1) and
-      (Integer(wParam) < Items.count) and (FLastItemID = Items[wParam]) then
+      (Integer(wParam) < Items.count) and (CompareText(FLastItemID, Items[wParam]) = 0) then
       FLastItemID := '';
   end;
   FFromSelf := True; // FFromSelf is set here because, under NT, LBResetContent is called
@@ -3316,16 +3339,50 @@ begin
 end;
 
 procedure TORListBox.SetTabPositions(const Value: string);
-{ converts a string of character position tab stops to an array of integer & sets now tabs }
+// converts a string of character position tab stops to an array of integer &
+// sets now tabs
+
+  procedure SortArray(var AArray: array of Integer);
+  // Sort an array created with StringToIntArray on absolute values from Low to
+  // High. This code replaces the code that generated an error on wrong order.
+  var
+    I: Integer;
+    BArray: array of Integer;
+  begin
+    if AArray[0] > High(AArray) then
+      raise Exception.Create('Too many elements in AArray');
+
+    // AArray[0] is real count. Copy only real AArray values to BArray
+    SetLength(BArray, AArray[0]);
+    for I := 0 to AArray[0] - 1 do BArray[I] := AArray[I + 1];
+
+    // Sort BArray
+    System.Generics.Collections.TArray.Sort<Integer>(BArray,
+      TDelegatedComparer<Integer>.Construct(
+      function(const Left, Right: Integer): Integer
+      begin
+        Result := TComparer<Integer>.Default.Compare(Abs(Left), Abs(Right));
+        if Result = 0 then TComparer<Integer>.Default.Compare(Left, Right);
+      end));
+
+    // Remove duplicates from BArray (There was no Abs comparison for this in
+    // the original code so I am assuming that is correct)
+    for I := High(BArray) - 1 downto 1 do
+      if BArray[I] = BArray[I - 1] then Delete(BArray, I, 1);
+
+    // Copy BArray values back to AArray
+    for I := 0 to High(BArray) do AArray[I + 1] := BArray[I];
+
+    // Fill empty spaces in AArray (due to deletions) with zeroes
+    for I := High(BArray) + 2 to AArray[0] do AArray[I] := 0;
+  end;
+
 var
   TabTmp: array[0..MAX_TABS] of Integer;
   i: Integer;
 begin
   StringToIntArray(Value, TabTmp, TRUE);
-  for i := 2 to TabTmp[0] do
-    if (abs(TabTmp[i]) < abs(TabTmp[i - 1])) or
-      (TabTmp[i] = TabTmp[i - 1]) then
-      raise Exception.Create('Tab positions must be in ascending order');
+  SortArray(TabTmp);
   if (FTabPosInPixels) then
   begin
     for i := 0 to TabTmp[0] do FTabPix[i] := TabTmp[i];
@@ -3574,6 +3631,7 @@ begin
   FLongList := False;
   FScrollBar.Free; // don't call from destroy because scrollbar may already be free
   FScrollBar := nil;
+  FLastItemID := '';
 end;
 
 procedure TORListBox.ForDataUse(Strings: TStrings);
@@ -3618,11 +3676,13 @@ begin
   if FLongList and (ItemIndex < 0) and (FLastItemID <> '') then
   begin
     for i := 0 to Items.Count - 1 do
-      if Items[i] = FLastItemID then
+      if CompareText(Items[i], FLastItemID) = 0 then
       begin
         ItemIndex := i;
         break;
       end;
+    if ItemIndex = -1 then
+      FLastItemID := '';
   end;
 end;
 
@@ -3702,7 +3762,7 @@ begin {NeedData}
     FFirstLoad := False;
     FDataAdded := False;
     FDirection := Direction;
-    SendMessage(Handle, WM_SETREDRAW, NOREDRAW, 0);
+    LockDrawing;
     if Items.Count > 1000 then ClearLong;
     case FDirection of
       LL_REVERSE: if FWaterMark < Items.Count then StartFrom := DisplayText[FWaterMark];
@@ -3749,7 +3809,7 @@ begin {NeedData}
       FLastInsertAt := FInsertAt;
       FOnNeedData(Self, FLastStartFrom, FLastDirection, FLastInsertAt);
     end;
-    SendMessage(Handle, WM_SETREDRAW, DOREDRAW, 0);
+    UnlockDrawing;
   finally
     FKeepItemID := False;
     FFromNeedData := False;
@@ -7321,6 +7381,12 @@ end;
 
 { TKeyClickPanel ----------------------------------------------------------------------------- }
 
+
+procedure TKeyClickPanel.CMFocusChanged(var Message: TCMFocusChanged);
+begin
+  Invalidate;
+end;
+
 procedure TKeyClickPanel.KeyDown(var Key: Word; Shift: TShiftState);
 begin
   case Key of
@@ -7329,6 +7395,43 @@ begin
   end;
 end;
 
+procedure TKeyClickPanel.Paint;
+var
+  Rect: TRect;
+  DC: HDC;
+begin
+  inherited;
+  if Focused then
+  begin
+    Rect := ClientRect;
+    // Account for bevel
+    AdjustClientRect(Rect);
+
+    // Draw blue border
+    Frame3D(Canvas, Rect, clHighlight, clHighlight, 2);
+
+    // Draw focus border
+    if (not assigned(FCanvas)) then
+      FCanvas := TControlCanvas.Create;
+
+    DC := GetDC(Handle);
+    try
+      FCanvas.Handle := DC;
+      FCanvas.DrawFocusRect(Rect);
+    finally
+      ReleaseDC(Handle, DC);
+    end;
+
+  end;
+  if assigned(FOnPaint) then
+    FOnPaint(Self);
+end;
+
+destructor TKeyClickPanel.Destroy;
+begin
+  FreeAndNil(FCanvas);
+  Inherited;
+end;
 { TKeyClickRadioGroup }
 
 procedure TKeyClickRadioGroup.Click;
@@ -7923,6 +8026,7 @@ begin
   FAutoSize := False;
   self.OnCreateItemClass := CreateItemClass;
   FItemsStrings := TCaptionListStringList.CreateWithParent(self);
+  FColumnToSort := 0;
 end;
 
 destructor TCaptionListView.Destroy;
@@ -8023,7 +8127,7 @@ procedure TCaptionListView.DestroyWnd;
 var
   i: integer;
 begin
-  if (csRecreating in ControlState) then
+  if (csRecreating in ControlState) and (not OwnerData) then
   begin
     if not assigned(FItemsStringsBackup) then
       FItemsStringsBackup := TStringList.Create
@@ -8229,6 +8333,122 @@ begin
   if not (csLoading in ComponentState) then
     ResetTinyColumns;
 end;
+
+function TCaptionListView.GetListHeaderSortStateByIndex(ColumnIndex: integer)
+  : THeaderSortState;
+var
+  i: integer;
+  Column: TListColumn;
+begin
+  Result := hssNone;
+  for i := 0 to Self.Columns.Count - 1 do
+  begin
+    Column := Self.Columns.Items[i];
+    if Column.index = ColumnIndex then
+    begin
+      Result := GetListHeaderSortState(Column);
+      break;
+    end;
+  end;
+end;
+
+procedure TCaptionListView.SetListHeaderSortStateByIndex(ColumnIndex: Integer; Value: THeaderSortState);
+var
+  i: integer;
+  Column: TListColumn;
+begin
+  for i := 0 to Self.Columns.Count - 1 do
+  begin
+    Column := Self.Columns.Items[i];
+    if Column.index = ColumnIndex then
+    begin
+      SetListHeaderSortState(Column, Value);
+      break;
+    end;
+  end;
+end;
+
+function TCaptionListView.GetListHeaderSortState(Column: TListColumn)
+  : THeaderSortState;
+var
+  Header: hwnd;
+  Item: THDItem;
+begin
+  Header := ListView_GetHeader(Self.Handle);
+  ZeroMemory(@Item, SizeOf(Item));
+  Item.mask := HDI_FORMAT;
+  Header_GetItem(Header, Column.index, Item);
+
+  // Get the current sort direction
+  if Item.fmt and HDF_SORTUP <> 0 then
+    Result := hssAscending
+  else if Item.fmt and HDF_SORTDOWN <> 0 then
+    Result := hssDescending
+  else
+    Result := hssNone;
+end;
+
+procedure TCaptionListView.SetListHeaderSortState(Column: TListColumn;
+  Value: THeaderSortState);
+var
+  Header: hwnd;
+  Item: THDItem;
+begin
+  Header := ListView_GetHeader(Self.Handle);
+  ZeroMemory(@Item, SizeOf(Item));
+  Item.mask := HDI_FORMAT;
+
+  // Clear sort indicators
+  Header_GetItem(Header, Column.index, Item);
+  Item.fmt := Item.fmt and not(HDF_SORTUP or HDF_SORTDOWN);
+
+  // Set the sort indicator
+  case Value of
+    hssAscending:
+      Item.fmt := Item.fmt or HDF_SORTUP ;
+    hssDescending:
+      Item.fmt := Item.fmt or HDF_SORTDOWN;
+    else
+      Item.fmt := Item.fmt and not(HDF_SORTUP or HDF_SORTDOWN);
+  end;
+  Header_SetItem(Header, Column.index, Item);
+end;
+
+procedure TCaptionListView.ColClick(Column: TListColumn);
+begin
+  inherited;
+  DoColumnSort(Column);
+end;
+
+procedure TCaptionListView.DoColumnSort(Column: TListColumn);
+var
+  i: integer;
+  SortState: THeaderSortState;
+begin
+  if Assigned(Self.OnCompare) then
+  begin
+    // set the sort column and call the sort (which calls OnCompare)
+    FColumnToSort := Column.index;
+    Self.AlphaSort;
+
+    // Update Column sort indicators
+    for i := 0 to Self.Columns.count - 1 do
+    begin
+      if Self.Column[i] = Column then
+      begin
+        if GetListHeaderSortState(Column) <> hssAscending then
+          SortState := hssAscending
+        else
+          SortState := hssDescending;
+      end
+      else
+        SortState := hssNone;
+
+      SetListHeaderSortState(Self.Column[i], SortState);
+    end;
+  end;
+end;
+
 
 function TCaptionListView.GetIEN(AnIndex: Integer): Int64;
 { return as an integer the first piece of the Item identified by AnIndex }

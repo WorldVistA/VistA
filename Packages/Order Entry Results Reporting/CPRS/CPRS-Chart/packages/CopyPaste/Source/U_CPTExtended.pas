@@ -28,6 +28,7 @@ unit U_CPTExtended;
 interface
 
 uses
+  ORExtensions,
   Winapi.Windows, Classes, Vcl.StdCtrls, Vcl.Graphics, Vcl.Controls,
   Winapi.Messages, U_CPTCommon, System.SysUtils,
   Vcl.Clipbrd, Vcl.ComCtrls, Vcl.Forms, Vcl.ExtCtrls;
@@ -42,7 +43,7 @@ Type
   TSelectorBox = class(TListBox)
   private
     fSelectorColor: TColor;
-    fLinkedRichEdit: TRichEdit;
+    fLinkedRichEdit: ORExtensions.TRichEdit;
     procedure OurDrawItem(Control: TWinControl; Index: Integer; Rect: TRect;
       State: TOwnerDrawState);
     procedure WMSetFocus(var Message: TWMSetFocus); message WM_SETFOCUS;
@@ -52,7 +53,8 @@ Type
     procedure Click; override;
     constructor Create(AOwner: TComponent); override;
     Property SelectorColor: TColor Read fSelectorColor write fSelectorColor;
-    Property LinkedRichEdit: TRichEdit read fLinkedRichEdit write fLinkedRichEdit;
+    property LinkedRichEdit: ORExtensions.TRichEdit read fLinkedRichEdit
+      write fLinkedRichEdit;
   end;
 
   TTrackOnlyItem = class(TCollectionItem)
@@ -302,13 +304,12 @@ end;
       begin
         ResetMask := fLinkedRichEdit.Perform(EM_GETEVENTMASK, 0, 0);
         fLinkedRichEdit.Perform(EM_SETEVENTMASK, 0, 0);
-        fLinkedRichEdit.Perform(WM_SETREDRAW, Ord(False), 0);
+        fLinkedRichEdit.LockDrawing;
         try
           fLinkedRichEdit.SelAttributes.Size := font.Size;
           fLinkedRichEdit.font.Size := font.Size;
         finally
-          fLinkedRichEdit.Perform(WM_SETREDRAW, Ord(true), 0);
-          InvalidateRect(fLinkedRichEdit.Handle, NIL, true);
+          fLinkedRichEdit.UnlockDrawing;
           fLinkedRichEdit.Perform(EM_SETEVENTMASK, 0, ResetMask);
         end;
       end;

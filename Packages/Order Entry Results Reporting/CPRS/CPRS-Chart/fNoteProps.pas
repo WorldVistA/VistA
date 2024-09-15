@@ -1,9 +1,5 @@
 unit fNoteProps;
-{------------------------------------------------------------------------------
-Update History
 
-    2016-02-25: NSR#20110606 (Similar Provider/Cosigner names)
--------------------------------------------------------------------------------}
 interface
 
 uses
@@ -91,6 +87,8 @@ type
       Change: TItemChange);
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure lvPRFCompare(Sender: TObject; Item1, Item2: TListItem;
+      Data: Integer; var Compare: Integer);
   private
     FCheckDefault: boolean;
     FIsNewNote : Boolean;     // Is set at the begining of the function: ExecuteNoteProperties
@@ -122,7 +120,6 @@ type
     procedure ShowClinProcFields(YesNo: boolean);
     function getGenericFormSize: Integer;
     procedure SelectNoteTitle;
-    procedure Init508;
     procedure UMCheckDefault(var Message: TMessage); message UM_MISC;
     procedure SetPanelVisible(Panel: TPanel; IsVisible: boolean);
     procedure UpdateConsultsPanel;
@@ -151,7 +148,7 @@ implementation
 
 uses uCore, rCore, rConsults, uConsults, rSurgery, fRptBox, VA508AccessibilityRouter,
   uORLists, uSimilarNames, VAUtils, uSizing, UCaptionListView508Manager,
-  UResponsiveGUI;
+  UResponsiveGUI, CommCtrl, System.DateUtils;
 
 { Initial values in ANote
 
@@ -201,8 +198,6 @@ const
 
   ACTIVE_STATUS = 'ACTIVE,PENDING,SCHEDULED';
 
-  PRF_LABEL = 'Which Patient Record Flag Action should this Note be linked to?';
-
   FLAG_NAME = 1;
   PRF_IEN = 2;
   ACTION_NAME = 3;
@@ -210,7 +205,17 @@ const
   ACTION_DATE_I = 5;
   ACTION_DATE = 6;
   NOTE_IEN = 7;
+  FACILITY_NO = 8;
+  HAS_NOTE = 9;
 
+  FAC_COL_WIDTH = 150;
+
+  //Columns
+  COL_FLAG_NAME   = 0;
+  COL_FACILITY_NO = 1;
+  COL_ACTION_DATE = 2;
+  COL_ACTION_NAME = 3;
+  COL_HASNOTE     = 4;
 
 var
   uConsultsList: TStringList;
@@ -435,6 +440,8 @@ begin
                             end
                           else if (pnlPRF.Visible) and (lvPRF.ItemIndex >= 0) then //PRF
                             begin
+                              // NOTE: this PRF_IEN is (uTIU/TEditNoteRec.PRF_IEN)
+                              // aNote.PRF_IEN is an Integer, not the constant defined in fNoteProps; rpk 12/8/2017
                               PRF_IEN := FPRFActions.GetPRF_IEN(lvPRF.ItemIndex);
                               ActionIEN := FPRFActions.GetActionIEN(lvPRF.ItemIndex);
                             end
@@ -936,7 +943,6 @@ procedure TfrmNoteProperties.FormCreate(Sender: TObject);
 begin
   inherited;
   FCheckDefault := True;
-  Init508;
 end;
 
 procedure TfrmNoteProperties.calNoteEnter(Sender: TObject);
@@ -951,38 +957,38 @@ begin
   btnDetails.Enabled := (lstRequests.ItemIEN > 0);
 end;
 
-procedure TfrmNoteProperties.ShowPRFList(ShouldShow: Boolean);
+procedure TfrmNoteProperties.ShowPRFList(ShouldShow: boolean);
+const
+  PRF_LABEL = 'Which Patient Record Flag Action should this Note be linked to?';
 var
- item: TVA508AccessibilityItem;
+  Item: TVA508AccessibilityItem;
   sl: TStrings;
 begin
   SetPanelVisible(pnlPRF, ShouldShow and not(FDocType = TYP_ADDENDUM));
   if pnlPRF.Visible then
   begin
-//    ClientHeight := cboCosigner.Top + cboCosigner.Height + PIXEL_SPACE +
-//      pnlPRF.Height;
     if FPRFActions = nil then
       FPRFActions := TPRFActions.Create;
     sl := TStringList.Create;
     try
       FPRFActions.Load(sl, cboNewTitle.ItemIEN, Patient.DFN);
-//      if RPCBrokerV.Results.Count <> 0 then
       if sl.Count <> 0 then
-      lblPRF.Caption := PRF_LABEL
-    else
-      lblPRF.Caption := 'No Linkable Actions for this Patient and/or Title.';
+        lblPRF.Caption := PRF_LABEL
+      else
+        lblPRF.Caption := 'No Linkable Actions for this Patient and/or Title.';
 
     finally
       sl.Free;
     end;
+
     FPRFActions.ShowActionsOnList(lvPRF);
-    //Fix for CQ: 6926
+    // Fix for CQ: 6926
     lvPRF.Columns.BeginUpdate;
     lvPRF.Columns.EndUpdate;
-    //End Fix for CQ: 6926
+    // End Fix for CQ: 6926
 
-    item := amgrMain.AccessData.FindItem(lvPRF, False);
-    amgrMain.AccessData[item.Index].AccessText := lblPRF.Caption;
+    Item := amgrMain.AccessData.FindItem(lvPRF, False);
+    amgrMain.AccessData[Item.Index].AccessText := lblPRF.Caption;
   end
 end;
 
@@ -990,16 +996,6 @@ function TfrmNoteProperties.getGenericFormSize: Integer;
 begin
   result :=
     gpMain.Height + gpMain.Margins.Top + gpMain.Margins.Bottom;
-end;
-
-procedure TfrmNoteProperties.Init508;
-begin
-  if ScreenReaderActive then
-    begin
-      TCaptionListView508Manager.Create(amgrMain, lstSurgery);
-      TCaptionListView508Manager.Create(amgrMain, lstRequests);
-      TCaptionListView508Manager.Create(amgrMain, lvPRF);
-    end;
 end;
 
 { TPRFActions }
@@ -1027,9 +1023,23 @@ begin
 end;
 
 function TPRFActions.Load(aDest:TStrings; TitleIEN : Int64; DFN : String): Integer;
+var
+  i: integer;
+  s: string;
 begin
   CallVistA('TIU GET PRF ACTIONS', [TitleIEN,DFN], aDest{FPRFActionList});
   FPRFActionList.Assign(aDest);
+
+  for i := 0 to FPRFActionList.Count - 1 do
+  begin
+    s := FPRFActionList[i];
+    if Piece(s, U, NOTE_IEN) <> '' then
+      SetPiece(s, U, HAS_NOTE, 'Yes')
+    else
+      SetPiece(s, U, HAS_NOTE, 'No');
+    FPRFActionList[i] := s;
+  end;
+
   Result := aDest.Count;
 end;
 
@@ -1042,22 +1052,21 @@ end;
 
 procedure TPRFActions.ShowActionsOnList(DisplayList: TCaptionListView);
 var
-  i : integer;
-  ListItem: TListItem;
+  i: Integer;
 begin
-  DisplayList.Clear;
-  for i := 0 to FPRFActionList.Count-1 do
-  begin
-    //Caption="Text for Screen Reader" SubItem1=Flag SubItem2=Date SubItem3=Action SubItem4=Note
-    ListItem := DisplayList.Items.Add;
-    ListItem.Caption := PRF_LABEL; //Screen readers don't read the first column title on a listview.
-    ListItem.SubItems.Add(Piece(FPRFActionList[i],U,FLAG_NAME));
-    ListItem.SubItems.Add(Piece(FPRFActionList[i],U,ACTION_DATE));
-    ListItem.SubItems.Add(Piece(FPRFActionList[i],U,ACTION_NAME));
-    if SelActionHasNote(i) then
-      ListItem.SubItems.Add('Yes')
-    else
-      ListItem.SubItems.Add('No');
+  DisplayList.Items.BeginUpdate;
+  try
+    DisplayList.Clear;
+
+    // Assign the column items list
+    DisplayList.ItemsStrings.Assign(FPRFActionList);
+
+    // Update the column widths
+    for i := 0 to DisplayList.Columns.Count - 1 do
+      DisplayList.Columns[i].Width := LVSCW_AUTOSIZE or
+        LVSCW_AUTOSIZE_USEHEADER;
+  finally
+    DisplayList.Items.EndUpdate;
   end;
 end;
 
@@ -1155,5 +1164,34 @@ begin
     FCheckDefault := False;
   end;
 end;
+
+procedure TfrmNoteProperties.lvPRFCompare(Sender: TObject;
+  Item1, Item2: TListItem; Data: Integer; var Compare: Integer);
+var
+  d1, d2: Double;
+begin
+  Compare := 0;
+  case lvPRF.SortColumn of
+    COL_ACTION_DATE:
+      begin
+        d1 := StrToFloatDef(Piece((Item1 as TCaptionListItem).ItemString, U,
+          ACTION_DATE_I), 0);
+        d2 := StrToFloatDef(Piece((Item2 as TCaptionListItem).ItemString, U,
+          ACTION_DATE_I), 0);
+
+        Compare := CompareDateTime(FMDateTimeToDateTime(d2), FMDateTimeToDateTime(d1));
+
+      end;
+    0:
+      Compare := AnsiCompareText(Item2.Caption, Item1.Caption);
+  else
+    Compare := AnsiCompareText(Item2.subitems.Strings[lvPRF.SortColumn - 1],
+      Item1.subitems.Strings[lvPRF.SortColumn - 1]);
+  end;
+
+  if not(lvPRF.SortStateByIndex[lvPRF.SortColumn] = hssAscending) then
+    Compare := -Compare;
+end;
+
 
 end.

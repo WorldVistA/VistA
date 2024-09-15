@@ -602,7 +602,7 @@ begin
   begin
     radDflt.Enabled := False;
     radAll.Checked := True;                  // causes radHideSrcClick to be called
-    pnlRad.TabStop := True;
+  //  pnlRad.TabStop := True;
     pnlRad.Hint := 'No default radio button unavailable 1 of 7 to move to the other patient list categories press tab';
     FRadRows := 4;
   end;

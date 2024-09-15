@@ -451,7 +451,7 @@ begin
     try
       CallVistA('ORWCV1 COVERSHEET LIST', [], aReturn);
       // Proof of concepts!
-      // aReturn.Insert(0, '1001^My Web Browser^http://www.domain^1');
+      // aReturn.Insert(0, '1001^My Web Browser^http://domain.ext^1');
       // aReturn.Insert(0, '1001^My Web Page');
       // aReturn.Insert(0, '1000^Clock');
 

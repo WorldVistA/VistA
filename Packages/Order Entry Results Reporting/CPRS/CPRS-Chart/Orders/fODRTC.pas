@@ -77,16 +77,12 @@ type
     procedure loadAdditionalComments(input: string);
     procedure loadPreReq(input: string);
     procedure cboRTCClinicChange(Sender: TObject);
-
-
   private
     OffSet: integer;
     systemInfo: boolean;
     systemPre: boolean;
-
-    {edit}
-
   protected
+    procedure Loaded; override;
     procedure InitDialog; override;
     procedure Validate(var AnErrMsg: string); override;
     procedure SetValuesFromResponses;
@@ -671,6 +667,12 @@ begin
   finally
     FreeAndNil(addInfoText);
   end;
+end;
+
+procedure TfrmODRTC.Loaded;
+begin
+  AutoSizeDisabled := True;
+  inherited;
 end;
 
 procedure TfrmODRTC.loadPreReq(input: string);

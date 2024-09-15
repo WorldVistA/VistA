@@ -131,7 +131,6 @@ type
     procedure CleanupChangesList(Sender: TObject; ChangeItem: TChangeItem);
     { **RV** }
     procedure FormatListForScreenReader(Sender: TObject);
-    function CheckListBox(AObject: TObject): TCaptionCheckListBox;
   public
     property FormID: string read FFormID write FFormID;
   end;
@@ -765,7 +764,7 @@ begin
   if ((lstReview.Count = 0) and (lstCSReview.Count = 0)) then
     Exit;
 
-  lstHeight := MainFontTextHeight * 6;
+  lstHeight := Canvas.TextHeight('Ty') * 6;
 
   // keeping the component visibility logic of the original implementation //////
   if lstCSReview.Count = 0 then
@@ -790,8 +789,7 @@ begin
 
   /// /////////////////////////////////////////////////////////////////////////////
 
-  newHeight := GetSystemMetrics(SM_CYCAPTION) // window header
-    + GetSystemMetrics(SM_CXBORDER); // window border
+  newHeight := Height - ClientHeight;
 
   btnHeight := cmdOK.Height + MainFont.Size - 14;
   if pnlOrderAction.Visible then
@@ -847,7 +845,7 @@ begin
   Height := newHeight;
 
   { Check for CS Items checked for signature }
-  lblDEAText.Visible := nonDCCSItemsAreChecked;
+  pnlDEAText.Visible := nonDCCSItemsAreChecked;
 
   lblSmartCardNeeded.Visible := lblDEAText.Visible;
 
@@ -862,7 +860,7 @@ begin
   else if pnlReview.Visible or pnlCSReview.Visible then
     FormID := FormID + '1';
   if Save then
-    SetFormPosition(Self, FormID);
+    SetFormPosition(Self, FormID, True);
 end;
 
 procedure TfrmReview.pnlCSReviewResize(Sender: TObject);
@@ -1829,13 +1827,6 @@ begin
   Close;
 end;
 
-function TfrmReview.CheckListBox(AObject: TObject): TCaptionCheckListBox;
-begin
-  if AObject.ClassType <> TCaptionCheckListBox then
-    raise Exception.Create('Invalid Component');
-  Result := TCaptionCheckListBox(AObject);
-end;
-
 procedure TfrmReview.CleanupChangesList(Sender: TObject;
   ChangeItem: TChangeItem);
 { Added for v15.3 - called by Changes.Remove, but only if fReview in progress }
@@ -1894,7 +1885,7 @@ var
   end;
 
 begin
-  aListView := CheckListBox(Sender);
+  aListView := Sender as TCaptionCheckListBox;
 
   if Sender = lstCSReview then
     with lstCSReview do
@@ -1928,7 +1919,7 @@ begin
     end;
 
     { Manage the PIV Card component visibility if actual CS order being placed }
-    lblDEAText.Visible := nonDCCSItemsAreChecked;
+    pnlDEAText.Visible := nonDCCSItemsAreChecked;
     lblSmartCardNeeded.Visible := lblDEAText.Visible;
 
     pnlSignature.Visible := IsSignatureRequired;
@@ -1942,48 +1933,41 @@ end;
 procedure TfrmReview.lstReviewDrawItem(Control: TWinControl; Index: Integer;
   Rect: TRect; State: TOwnerDrawState);
 { outdent the header items (thus hiding the checkbox) }
-var
-  aListView: TCaptionCheckListBox;
-  X: string;
-  ARect, TextRecord: TRect;
-  dy: Integer;
 
-  procedure UpdateTextRecord(r: TRect);
+  function UpdateTextRecord(R: TRect; DY: Integer): TRect;
   begin
-    TextRecord := r;
-    Inc(TextRecord.Top, dy);
-    dec(TextRecord.Bottom, dy);
+    Result := R;
+    Inc(Result.Top, DY);
+    Dec(Result.Bottom, DY);
   end;
 
+var
+  AListView: TCaptionCheckListBox;
+  ATextRecordRect: TRect;
+  S: string;
+  DY: Integer;
 begin
-  aListView := CheckListBox(Control);
+  AListView := Control as TCaptionCheckListBox;
+  if (Index < 0) or (Index >= AListView.Count) then Exit;
 
-  dy := SIG_ITEM_VERTICAL_PAD div 2;
-  X := '';
-  ARect := Rect;
+  DY := SIG_ITEM_VERTICAL_PAD div 2;
+  S := '';
+  if AListView.Items.Objects[Index] = nil then Rect.Left := 0;
+  AListView.Canvas.FillRect(Rect);
+  S := Trim(FilteredString(AListView.Items[Index]));
 
-  with aListView do
+  if (Rect.Left = 0) and (Length(S) > 0) then
   begin
-    if Items.Objects[Index] = nil then
-      ARect.Left := 0;
-
-    Canvas.FillRect(ARect);
-
-    if Index < Items.Count then
+    AListView.Canvas.TextOut(Rect.Left + 2, Rect.Top + DY, S);
+  end else begin
+    if (Rect.Left > 0) and (Length(S) > 0) then
     begin
-      X := Trim(FilteredString(Items[Index]));
-
-      if (ARect.Left = 0) and (Length(X) > 0) then
-        Canvas.TextOut(ARect.Left + 2, ARect.Top + dy, X)
-      else if (ARect.Left > 0) and (Length(X) > 0) then
-      begin
-        Canvas.Pen.Color := Get508CompliantColor(clSilver);
-        Canvas.MoveTo(0, ARect.Bottom - 1);
-        Canvas.LineTo(ARect.Right, ARect.Bottom - 1);
-        UpdateTextRecord(ARect);
-        DrawText(Canvas.Handle, PChar(X), Length(X), TextRecord,
-          DT_LEFT or DT_NOPREFIX or DT_WORDBREAK);
-      end;
+      AListView.Canvas.Pen.Color := Get508CompliantColor(clSilver);
+      AListView.Canvas.MoveTo(0, Rect.Bottom - 1);
+      AListView.Canvas.LineTo(Rect.Right, Rect.Bottom - 1);
+      ATextRecordRect := UpdateTextRecord(Rect, DY);
+      DrawText(AListView.Canvas.Handle, PChar(S), Length(S), ATextRecordRect,
+        DT_LEFT or DT_NOPREFIX or DT_WORDBREAK);
     end;
   end;
 end;
@@ -1998,29 +1982,25 @@ end;
 procedure TfrmReview.lstReviewMeasureItem(Control: TWinControl; Index: Integer;
   var AHeight: Integer);
 var
-  aListView: TCaptionCheckListBox;
-  X: string;
+  AListView: TCaptionCheckListBox;
+  S: string;
   ARect: TRect;
 begin
-  aListView := CheckListBox(Control);
-
+  AListView := Control as TCaptionCheckListBox;
   AHeight := SigItemHeight;
-  with aListView do
-    if Index < Items.Count then
-    begin
-      ARect := ItemRect(Index);
-      if CVarExists(TSigItems.RectWidth) then
-        ARect.Right := CVar[TSigItems.RectWidth];
-      ARect.Left := aListView.CheckWidth;
-      Canvas.FillRect(ARect);
-      X := FilteredString(Items[Index]);
-      AHeight := WrappedTextHeightByFont(aListView.Canvas, Font, X, ARect) +
-        SIG_ITEM_VERTICAL_PAD;
-      if AHeight > 255 then
-        AHeight := 255;
-      if AHeight < 13 then
-        AHeight := 15;
-    end;
+  if (Index >= 0) and (Index < AListView.Count) then
+  begin
+    ARect := AListView.ItemRect(Index);
+    if CVarExists(TSigItems.RectWidth) then
+      ARect.Right := CVar[TSigItems.RectWidth];
+    ARect.Left := AListView.CheckWidth;
+    AListView.Canvas.FillRect(ARect);
+    S := FilteredString(AListView.Items[Index]);
+    AHeight := WrappedTextHeightByFont(AListView.Canvas, Font, S, ARect) +
+      SIG_ITEM_VERTICAL_PAD;
+  end;
+  if AHeight > 255 then AHeight := 255;
+  if AHeight < 13 then AHeight := 15;
 end;
 
 procedure TfrmReview.lstReviewMouseMove(Sender: TObject; Shift: TShiftState;
@@ -2029,7 +2009,7 @@ var
   aItem: Integer;
   aListView: TCaptionCheckListBox;
 begin
-  aListView := CheckListBox(Sender);
+  aListView := Sender as TCaptionCheckListBox;
 
   aItem := aListView.ItemAtPos(Point(X, Y), True);
   if (aItem >= 0) then
@@ -2075,7 +2055,7 @@ begin
       begin
         for j := 0 to lstReview.Items.Count - 1 do
           lstReview.Selected[j] := False;
-        lstReview.Selected[1] := True;
+        if lstReview.Count >= 2 then lstReview.Selected[1] := True;
         lstReview.SetFocus;
       end;
     09:
@@ -2091,16 +2071,17 @@ end;
 procedure TfrmReview.FormKeyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  // CQ5063
   if Key = VK_Space then
   begin
     if lstReview.Focused then // CQ6657
     begin
-      lstReview.Selected[lstReview.Items.Count - 1] := False;
-      lstReview.Selected[FCurrentlySelectedItem] := True;
+      if lstReview.Count > 0 then
+        lstReview.Selected[lstReview.Items.Count - 1] := False;
+      if (FCurrentlySelectedItem >= 0) and
+        (lstReview.Count > FCurrentlySelectedItem) then
+        lstReview.Selected[FCurrentlySelectedItem] := True;
     end;
   end;
-  // end CQ5063
 end;
 
 procedure TfrmReview.FormMouseMove(Sender: TObject; Shift: TShiftState;
@@ -2160,7 +2141,7 @@ var
 begin
   if ScreenReaderActive then
   begin
-    aListView := CheckListBox(Sender);
+    aListView := Sender as TCaptionCheckListBox;
 
     if aListView.Count < 1 then
       Exit;

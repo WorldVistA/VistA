@@ -3,6 +3,7 @@ unit mDrawers;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ORCtrls, ComCtrls, Buttons, ExtCtrls, Menus, ActnList,
   uTemplates, ORClasses, System.Actions, U_CPTPasteDetails;
@@ -176,7 +177,7 @@ type
     fButtonMargin: integer;
     fBaseHeight: integer;
     FLastOpenSize: integer;
-    FRichEditControl: TRichEdit;
+    FRichEditControl: ORExtensions.TRichEdit;
     FOldDragDrop: TDragDropEvent;
     FOldDragOver: TDragOverEvent;
     FNewNoteButton: TButton;
@@ -202,7 +203,7 @@ type
     procedure RemindersChanged(Sender: TObject);
     procedure InsertText;
     function InsertOK(Ask: boolean): boolean;
-    procedure SetRichEditControl(const Value: TRichEdit);
+    procedure SetRichEditControl(const Value: ORExtensions.TRichEdit);
     procedure NewRECDragDrop(Sender, Source: TObject; X, Y: Integer);
     procedure NewRECDragOver(Sender, Source: TObject; X, Y: Integer;
                              State: TDragState; var Accept: Boolean);
@@ -231,7 +232,7 @@ type
     property ButtonMargin: integer read fButtonMargin write fButtonMargin;
     property BaseHeight: integer read fBaseHeight write SetBaseHeight;
     property LastOpenSize: integer read FLastOpenSize write FLastOpenSize;
-    property RichEditControl: TRichEdit read FRichEditControl write SetRichEditControl;
+    property RichEditControl: ORExtensions.TRichEdit read FRichEditControl write SetRichEditControl;
     property NewNoteButton: TButton read FNewNoteButton write FNewNoteButton;
     property FindNext: boolean read FFindNext write SetFindNext;
     property HasPersonalTemplates: boolean read FHasPersonalTemplates;
@@ -1040,7 +1041,7 @@ end;
 {---------------------------------------------}
 {  SetRichEditControl - Copied from fDrawers  }
 {---------------------------------------------}
-procedure TfraDrawers.SetRichEditControl(const Value: TRichEdit);
+procedure TfraDrawers.SetRichEditControl(const Value: ORExtensions.TRichEdit);
 begin
   if(FRichEditControl <> Value) then
   begin

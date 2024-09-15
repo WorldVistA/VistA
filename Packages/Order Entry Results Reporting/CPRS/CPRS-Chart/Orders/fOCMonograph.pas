@@ -8,16 +8,16 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ORFn, ORCtrls, rOrders, VA508AccessibilityManager, ExtCtrls;
+  Dialogs, StdCtrls, ORFn, ORCtrls, rOrders, VA508AccessibilityManager, ExtCtrls,
+  fBase508Form;
 
 type
-  TfrmOCMonograph = class(TForm)
+  TfrmOCMonograph = class(TfrmBase508Form)
     monoCmbLst: TComboBox;
     monoMemo: TCaptionMemo;
     cmdOK: TButton;
     VA508StaticText1: TVA508StaticText;
     VA508StaticText2: TVA508StaticText;
-    VA508AccessibilityManager1: TVA508AccessibilityManager;
     VA508ComponentAccessibility1: TVA508ComponentAccessibility;
     pnlBottom: TPanel;
     pnlTop: TPanel;

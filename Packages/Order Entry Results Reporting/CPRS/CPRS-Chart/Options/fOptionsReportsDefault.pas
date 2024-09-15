@@ -28,17 +28,11 @@ type
     procedure btnCancelClick(Sender: TObject);
     procedure btnResetClick(Sender: TObject);
     procedure edtDefaultMaxExit(Sender: TObject);
-    procedure edtDefaultStartKeyPress(Sender: TObject; var Key: Char);
-    procedure edtDefaultEndKeyPress(Sender: TObject; var Key: Char);
-    procedure edtDefaultMaxKeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
     procedure odcDfStartExit(Sender: TObject);
     procedure odcDfStopExit(Sender: TObject);
     procedure odcDfStartKeyPress(Sender: TObject; var Key: Char);
-    procedure odcDfStopKeyPress(Sender: TObject; var Key: Char);
-    procedure odcDfStartClick(Sender: TObject);
-    procedure odcDfStopClick(Sender: TObject);
-    procedure edtDefaultMaxClick(Sender: TObject);
+    procedure odcDfStartEnter(Sender: TObject);
   private
     { Private declarations }
     startDate, endDate, maxOcurs: integer;
@@ -108,7 +102,7 @@ begin
   if InfoBox('Do you really want to change all of the reports settings to the specified values as following?'
     +#13#13' Start date: ' + odcDfStart.Text
     +#13' End date: ' + odcDfStop.Text
-    +#13' Max occurences: ' + edtDefaultMax.Text
+    +#13' Max occurrences: ' + edtDefaultMax.Text
     +#13#13' Click Yes, all of the CPRS reports except for health summary reports will have these same settings.',
     'Confirmation', MB_YESNO or MB_ICONQUESTION) = IDYES then
   begin
@@ -187,35 +181,32 @@ end;
 procedure TfrmOptionsReportsDefault.edtDefaultMaxExit(Sender: TObject);
 var
   newValue: string;
-  I, code: integer;
+  I: integer;
 begin
   if edtDefaultMax.Modified then
   begin
-
-  newValue := edtDefaultMax.Text;
-  if length(newValue) = 0 then
-    begin
-      InfoBox('Invalid value of max occurences', 'Warning', MB_OK or MB_ICONWARNING);
-      edtDefaultMax.Text := '100';
-    end;
-  if length(newValue) > 0 then
-    begin
-      Val(newValue, I, code);
-      if I = 0 then begin end; //added to keep compiler from generating a hint
-      if code <> 0 then
-        begin
-          InfoBox('Invalid value of max occurences', 'Warning', MB_OK or MB_ICONWARNING);
-          edtDefaultMax.Text := inttostr(maxOcurs);
-        end;
-      if code = 0 then
-        if strtoint(edtDefaultMax.Text) <= 0 then
+    newValue := edtDefaultMax.Text;
+    if length(newValue) = 0 then
+      begin
+        InfoBox('Invalid value of max occurrences'#13#10 +
+                'Enter a number greater than 0', 'Warning', MB_OK or MB_ICONWARNING);
+        edtDefaultMax.Text := '100';
+        edtDefaultMax.Setfocus;
+        edtDefaultMax.SelectAll;
+      end
+    else
+      begin
+        I := StrToIntDef(newValue, 0);
+        if I <= 0 then
           begin
-            InfoBox('Invalid value of max occurences', 'Warning', MB_OK or MB_ICONWARNING);
-            edtDefaultMax.Text := inttostr(maxOcurs);
+            InfoBox('Invalid value of max occurrences'#13#10 +
+                    'Enter a number greater than 0', 'Warning', MB_OK or MB_ICONWARNING);
+            edtDefaultMax.Text := IntToStr(maxOcurs);
+            edtDefaultMax.Setfocus;
+            edtDefaultMax.SelectAll;
           end;
-    end;
-  fillLabelText;
-
+      end;
+    fillLabelText;
   end;
 end;
 
@@ -227,36 +218,6 @@ begin
   dayto := DateToStr(FMDateTimeToDateTime(odcDfStop.FMDateTime));
   lblDefaultText.Text := 'All of the CPRS reports except for Health Summary reports will be displayed on the CPRS Reports tab from start date: '
                        + fromday + ' to end date: ' + dayto + '.';
-end;
-
-procedure TfrmOptionsReportsDefault.edtDefaultStartKeyPress(Sender: TObject;
-  var Key: Char);
-begin
-  if Key = #13 then
-  begin
-    Perform(WM_NextDlgCtl, 0, 0);
-    exit;
-  end;
-end;
-
-procedure TfrmOptionsReportsDefault.edtDefaultEndKeyPress(Sender: TObject;
-  var Key: Char);
-begin
-  if Key = #13 then
-  begin
-    Perform(WM_NextDlgCtl, 0, 0);
-    exit;
-  end;
-end;
-
-procedure TfrmOptionsReportsDefault.edtDefaultMaxKeyPress(Sender: TObject;
-  var Key: Char);
-begin
-  if Key = #13 then
-  begin
-    Perform(WM_NextDlgCtl, 0, 0);
-    exit;
-  end;
 end;
 
 procedure TfrmOptionsReportsDefault.FormCreate(Sender: TObject);
@@ -294,29 +255,34 @@ begin
     end;
 end;
 
+procedure TfrmOptionsReportsDefault.odcDfStartEnter(Sender: TObject);
+begin
+  if Sender is TORDateBox then
+    TORDateBox(Sender).SelectAll;
+end;
+
 procedure TfrmOptionsReportsDefault.odcDfStartExit(Sender: TObject);
 const
   TX_BAD_START   = 'The start date is not valid.';
   TX_STOPSTART   = 'The start date must not be after the stop date.';
+  TX_DATEFORMAT = 'Use date format MM/DD/YYYY.';
 
 var
-  x,ErrMsg,datestart,datestop: String;
+  x,datestart,datestop: String;
 begin
     if odcDfStart.text = '' then
     begin
-      InfoBox(TX_BAD_START, 'Warning', MB_OK or MB_ICONWARNING);
+      InfoBox(TX_BAD_START + #13#10 + TX_DATEFORMAT, 'Warning', MB_OK or MB_ICONWARNING);
       odcDfStart.Text := sDate;
       odcDfStart.Setfocus;
       odcDfStart.SelectAll;
       exit;
     end;
 
-    ErrMsg := '';
     odcDfStart.Validate(x);
     if Length(x) > 0 then
       begin
-        ErrMsg := TX_BAD_START;
-        InfoBox(TX_BAD_START, 'Warning', MB_OK or MB_ICONWARNING);
+        InfoBox(TX_BAD_START + #13#10 + TX_DATEFORMAT, 'Warning', MB_OK or MB_ICONWARNING);
         odcDfStart.Text := sDate;
         odcDfStart.Setfocus;
         odcDfStart.SelectAll;
@@ -342,24 +308,23 @@ procedure TfrmOptionsReportsDefault.odcDfStopExit(Sender: TObject);
 const
   TX_BAD_STOP    = 'The stop date is not valid.';
   TX_BAD_ORDER   = 'The stop date must not be earlier than start date.';
+  TX_DATEFORMAT = 'Use date format MM/DD/YYYY.';
 var
-  x, ErrMsg,datestart,datestop: string;
+  x, datestart,datestop: string;
 begin
    if odcDfStop.text = '' then
    begin
-      InfoBox(TX_BAD_STOP, 'Warning', MB_OK or MB_ICONWARNING);
+      InfoBox(TX_BAD_STOP + #13#10 + TX_DATEFORMAT, 'Warning', MB_OK or MB_ICONWARNING);
       odcDfStop.Text := eDate;
       odcDfStop.Setfocus;
       odcDfStop.SelectAll;
       exit;
    end;
 
-   ErrMsg := '';
    odcDfStop.Validate(x);
    if Length(x) > 0 then
    begin
-     ErrMsg := TX_BAD_STOP;
-     InfoBox(TX_BAD_STOP, 'Warning', MB_OK or MB_ICONWARNING);
+     InfoBox(TX_BAD_STOP + #13#10 + TX_DATEFORMAT, 'Warning', MB_OK or MB_ICONWARNING);
      odcDfStop.Visible := True;
      odcDfStop.Text := eDate;
      odcDfStop.Setfocus;
@@ -386,46 +351,10 @@ end;
 procedure TfrmOptionsReportsDefault.odcDfStartKeyPress(Sender: TObject;
   var Key: Char);
 begin
-  if Key = #13 then
+  if Key = #27 then
   begin
-    Perform(WM_NextDlgCtl, 0, 0);
-    exit;
-  end;
-  if Key = #27 then //Escape
-  begin
-    Key := #0;
     btnCancel.Click;
   end;
-end;
-
-procedure TfrmOptionsReportsDefault.odcDfStopKeyPress(Sender: TObject;
-  var Key: Char);
-begin
-  if Key = #13 then
-  begin
-    Perform(WM_NextDlgCtl, 0, 0);
-    exit;
-  end;
-  if Key = #27 then //Escape
-  begin
-    Key := #0;
-    btnCancel.Click;
-  end;
-end;
-
-procedure TfrmOptionsReportsDefault.odcDfStartClick(Sender: TObject);
-begin
-  odcDfStart.SelectAll;
-end;
-
-procedure TfrmOptionsReportsDefault.odcDfStopClick(Sender: TObject);
-begin
-  odcDfStop.SelectAll;
-end;
-
-procedure TfrmOptionsReportsDefault.edtDefaultMaxClick(Sender: TObject);
-begin
-  edtDefaultMax.SelectAll;
 end;
 
 end.

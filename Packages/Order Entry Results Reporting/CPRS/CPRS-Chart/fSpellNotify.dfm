@@ -1,4 +1,4 @@
-object frmSpellNotify: TfrmSpellNotify
+inherited frmSpellNotify: TfrmSpellNotify
   Left = 0
   Top = 0
   Cursor = crHourGlass
@@ -23,11 +23,30 @@ object frmSpellNotify: TfrmSpellNotify
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
-  object lblMain: TLabel
+  object pnlWord: TPanel
     Left = 0
     Top = 0
-    Width = 355
-    Height = 55
+    Width = 356
+    Height = 71
+    Align = alClient
+    TabOrder = 0
+    ExplicitWidth = 352
+    ExplicitHeight = 70
+  end
+  object pnlLabels: TPanel
+    Left = 0
+    Top = 0
+    Width = 356
+    Height = 71
+    Align = alClient
+    TabOrder = 1
+    ExplicitWidth = 352
+    ExplicitHeight = 70
+    object lblMain: TLabel
+      Left = 1
+      Top = 1
+      Width = 354
+      Height = 50
     Align = alClient
     Alignment = taCenter
     Caption = 'Spell Check Running'
@@ -59,6 +78,7 @@ object frmSpellNotify: TfrmSpellNotify
     ParentFont = False
     ExplicitTop = 58
     ExplicitWidth = 256
+    end
   end
   object tmrMain: TTimer
     OnTimer = Refocus

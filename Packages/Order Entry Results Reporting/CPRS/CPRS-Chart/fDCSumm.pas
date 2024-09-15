@@ -67,7 +67,7 @@ type
     popSummListUnsigned: TMenuItem;
     pnlFields: TORAutoPanel;
     sptVert: TSplitter;
-    memPCEShow: TRichEdit;
+    memPCEShow: ORextensions.TRichEdit;
     mnuActIdentifyAddlSigners: TMenuItem;
     popSummMemoAddlSign: TMenuItem;
     Z11: TMenuItem;
@@ -779,24 +779,29 @@ begin
       if ActionSts.Success then
       begin
         StatusText('Retrieving encounter information...');
-        with uPCEMaster do
+
+        if lstSumms.ItemIndex > -1 then
         begin
-          NoteDateTime := MakeFMDateTime
+          uPCEMaster.NoteDateTime := MakeFMDateTime
             (Piece(lstSumms.Items[lstSumms.ItemIndex], U, 3));
-          PCEForNote(lstSumms.ItemIEN);
-          AddStrData(memPCEShow.Lines);
-          NoPCE := (memPCEShow.Lines.Count = 0);
-          VitalStr := TStringList.create;
-          try
-            GetVitalsFromNote(VitalStr, uPCEMaster, lstSumms.ItemIEN);
-            AddVitalData(VitalStr, memPCEShow.Lines);
-          finally
-            VitalStr.free;
-          end;
-          ShowPCEControls(memPCEShow.Lines.Count > 0);
-          if (NoPCE and memPCEShow.Visible) then
-            memPCEShow.Lines.Insert(0, TX_NOPCE);
+        end else begin
+          uPCEMaster.NoteDateTime := 0;
         end;
+
+        uPCEMaster.PCEForNote(lstSumms.ItemIEN);
+        uPCEMaster.AddStrData(memPCEShow.Lines);
+        NoPCE := (memPCEShow.Lines.Count = 0);
+        VitalStr := TStringList.create;
+        try
+          GetVitalsFromNote(VitalStr, uPCEMaster, lstSumms.ItemIEN);
+          uPCEMaster.AddVitalData(VitalStr, memPCEShow.Lines);
+        finally
+          VitalStr.free;
+        end;
+        ShowPCEControls(memPCEShow.Lines.Count > 0);
+        if (NoPCE and memPCEShow.Visible) then
+          memPCEShow.Lines.Insert(0, TX_NOPCE);
+
         StatusText('');
       end
       else
@@ -3298,123 +3303,126 @@ begin
   try
     FDocList.Clear;
     uChanging := True;
-    RedrawSuspend(memSumm.Handle);
-    RedrawSuspend(lvSumms.Handle);
-    tvSumms.Items.BeginUpdate;
+    lvSumms.LockDrawing;
+    memSumm.LockDrawing;
     try
-      lstSumms.Items.Clear;
-      KillDocTreeObjects(tvSumms);
-      tvSumms.Items.Clear;
-    finally
-      tvSumms.Items.EndUpdate;
-    end;
-    lvSumms.Items.Clear;
-    memSumm.Clear;
-    memSumm.Invalidate;
-    lblTitle.Caption := '';
-    lvSumms.Caption := lblTitle.Caption;
-    lblTitle.Hint := lblTitle.Caption;
-    with FCurrentContext do
-    begin
-      if Status <> IntToStr(NC_UNSIGNED) then
-      begin
-        ListSummsForTree(tmpList, NC_UNSIGNED, 0, 0, 0, 0, TreeAscending);
-        if tmpList.Count > 0 then
-        begin
-          CreateListItemsForDocumentTree(FDocList, tmpList, NC_UNSIGNED,
-            GroupBy, TreeAscending, CT_DCSUMM);
-          UpdateTreeView(FDocList, tvSumms);
-        end;
-        tmpList.Clear;
-        FDocList.Clear;
-      end;
-      if Status <> IntToStr(NC_UNCOSIGNED) then
-      begin
-        ListSummsForTree(tmpList, NC_UNCOSIGNED, 0, 0, 0, 0, TreeAscending);
-        if tmpList.Count > 0 then
-        begin
-          CreateListItemsForDocumentTree(FDocList, tmpList, NC_UNCOSIGNED,
-            GroupBy, TreeAscending, CT_DCSUMM);
-          UpdateTreeView(FDocList, tvSumms);
-        end;
-        tmpList.Clear;
-        FDocList.Clear;
-      end;
-      ListSummsForTree(tmpList, StrToIntDef(Status, 0), FMBeginDate, FMEndDate,
-        Author, MaxDocs, TreeAscending);
-      CreateListItemsForDocumentTree(FDocList, tmpList, StrToIntDef(Status, 0),
-        GroupBy, TreeAscending, CT_DCSUMM);
-      UpdateTreeView(FDocList, tvSumms);
-    end;
-    with tvSumms do
-    begin
-      uChanging := True;
       tvSumms.Items.BeginUpdate;
       try
-        RemoveParentsWithNoChildren(tvSumms, FCurrentContext);
-        // moved TO here in v15.9  (RV)
-        if FLastSummID <> '' then
-          Selected := FindPieceNode(FLastSummID, 1, U, nil);
-        if Selected = nil then
-        begin
-          if (FCurrentContext.GroupBy <> '') or (FCurrentContext.Filtered) then
-          begin
-            ANode := TORTreeNode(Items.GetFirstNode);
-            while ANode <> nil do
-            begin
-              ANode.Expand(False);
-              Selected := ANode;
-              ANode := TORTreeNode(ANode.GetNextSibling);
-            end;
-          end
-          else
-          begin
-            ANode := tvSumms.FindPieceNode(FCurrentContext.Status, 1, U, nil);
-            if ANode <> nil then
-              ANode.Expand(False);
-            ANode := tvSumms.FindPieceNode(IntToStr(NC_UNSIGNED), 1, U, nil);
-            if ANode = nil then
-              ANode := tvSumms.FindPieceNode(IntToStr(NC_UNCOSIGNED), 1, U, nil);
-            if ANode = nil then
-              ANode := tvSumms.FindPieceNode(FCurrentContext.Status, 1, U, nil);
-            if ANode <> nil then
-            begin
-              if ANode.getFirstChild <> nil then
-                Selected := ANode.getFirstChild
-              else
-                Selected := ANode;
-            end;
-          end;
-        end;
-        memSumm.Clear;
-        with lvSumms do
-        begin
-          Selected := nil;
-          if FCurrentContext.SortBy <> '' then
-            ColumnToSort := Pos(FCurrentContext.SortBy, 'RDSAL') - 1;
-          if not FCurrentContext.ShowSubject then
-          begin
-            Columns[1].Width := 2 * (Width div 5);
-            Columns[2].Width := 0;
-          end
-          else
-          begin
-            Columns[1].Width := Width div 5;
-            Columns[2].Width := Columns[1].Width;
-          end;
-        end;
-        // RemoveParentsWithNoChildren(tvSumms, FCurrentContext);  //moved FROM here in v15.9  (RV)
+        lstSumms.Items.Clear;
+        KillDocTreeObjects(tvSumms);
+        tvSumms.Items.Clear;
       finally
         tvSumms.Items.EndUpdate;
       end;
-      uChanging := False;
-      SendMessage(tvSumms.Handle, WM_VSCROLL, SB_TOP, 0);
-      if Selected <> nil then
-        tvSummsChange(Self, Selected);
+      lvSumms.Items.Clear;
+      memSumm.Clear;
+      memSumm.Invalidate;
+      lblTitle.Caption := '';
+      lvSumms.Caption := lblTitle.Caption;
+      lblTitle.Hint := lblTitle.Caption;
+      with FCurrentContext do
+      begin
+        if Status <> IntToStr(NC_UNSIGNED) then
+        begin
+          ListSummsForTree(tmpList, NC_UNSIGNED, 0, 0, 0, 0, TreeAscending);
+          if tmpList.Count > 0 then
+          begin
+            CreateListItemsForDocumentTree(FDocList, tmpList, NC_UNSIGNED,
+              GroupBy, TreeAscending, CT_DCSUMM);
+            UpdateTreeView(FDocList, tvSumms);
+          end;
+          tmpList.Clear;
+          FDocList.Clear;
+        end;
+        if Status <> IntToStr(NC_UNCOSIGNED) then
+        begin
+          ListSummsForTree(tmpList, NC_UNCOSIGNED, 0, 0, 0, 0, TreeAscending);
+          if tmpList.Count > 0 then
+          begin
+            CreateListItemsForDocumentTree(FDocList, tmpList, NC_UNCOSIGNED,
+              GroupBy, TreeAscending, CT_DCSUMM);
+            UpdateTreeView(FDocList, tvSumms);
+          end;
+          tmpList.Clear;
+          FDocList.Clear;
+        end;
+        ListSummsForTree(tmpList, StrToIntDef(Status, 0), FMBeginDate, FMEndDate,
+          Author, MaxDocs, TreeAscending);
+        CreateListItemsForDocumentTree(FDocList, tmpList, StrToIntDef(Status, 0),
+          GroupBy, TreeAscending, CT_DCSUMM);
+        UpdateTreeView(FDocList, tvSumms);
+      end;
+      with tvSumms do
+      begin
+        uChanging := True;
+        tvSumms.Items.BeginUpdate;
+        try
+          RemoveParentsWithNoChildren(tvSumms, FCurrentContext);
+          // moved TO here in v15.9  (RV)
+          if FLastSummID <> '' then
+            Selected := FindPieceNode(FLastSummID, 1, U, nil);
+          if Selected = nil then
+          begin
+            if (FCurrentContext.GroupBy <> '') or (FCurrentContext.Filtered) then
+            begin
+              ANode := TORTreeNode(Items.GetFirstNode);
+              while ANode <> nil do
+              begin
+                ANode.Expand(False);
+                Selected := ANode;
+                ANode := TORTreeNode(ANode.GetNextSibling);
+              end;
+            end
+            else
+            begin
+              ANode := tvSumms.FindPieceNode(FCurrentContext.Status, 1, U, nil);
+              if ANode <> nil then
+                ANode.Expand(False);
+              ANode := tvSumms.FindPieceNode(IntToStr(NC_UNSIGNED), 1, U, nil);
+              if ANode = nil then
+                ANode := tvSumms.FindPieceNode(IntToStr(NC_UNCOSIGNED), 1, U, nil);
+              if ANode = nil then
+                ANode := tvSumms.FindPieceNode(FCurrentContext.Status, 1, U, nil);
+              if ANode <> nil then
+              begin
+                if ANode.getFirstChild <> nil then
+                  Selected := ANode.getFirstChild
+                else
+                  Selected := ANode;
+              end;
+            end;
+          end;
+          memSumm.Clear;
+          with lvSumms do
+          begin
+            Selected := nil;
+            if FCurrentContext.SortBy <> '' then
+              ColumnToSort := Pos(FCurrentContext.SortBy, 'RDSAL') - 1;
+            if not FCurrentContext.ShowSubject then
+            begin
+              Columns[1].Width := 2 * (Width div 5);
+              Columns[2].Width := 0;
+            end
+            else
+            begin
+              Columns[1].Width := Width div 5;
+              Columns[2].Width := Columns[1].Width;
+            end;
+          end;
+          // RemoveParentsWithNoChildren(tvSumms, FCurrentContext);  //moved FROM here in v15.9  (RV)
+        finally
+          tvSumms.Items.EndUpdate;
+        end;
+        uChanging := False;
+        SendMessage(tvSumms.Handle, WM_VSCROLL, SB_TOP, 0);
+        if Selected <> nil then
+          tvSummsChange(Self, Selected);
+      end;
+    finally
+      memSumm.UnlockDrawing;
+      lvSumms.UnlockDrawing;
     end;
   finally
-    RedrawActivate(memSumm.Handle);
-    RedrawActivate(lvSumms.Handle);
     tmpList.free;
   end;
 end;
@@ -3487,121 +3495,124 @@ begin
         mnuActAddIDEntry.Enabled := False;
       popSummListAddIDEntry.Enabled := mnuActAddIDEntry.Enabled
     end;
-    RedrawSuspend(lvSumms.Handle);
-    RedrawSuspend(memSumm.Handle);
-    popSummListExpandSelected.Enabled := Selected.HasChildren;
-    popSummListCollapseSelected.Enabled := Selected.HasChildren;
-    X := TORTreeNode(Selected).StringData;
-    if (Selected.ImageIndex in [IMG_TOP_LEVEL, IMG_GROUP_OPEN, IMG_GROUP_SHUT])
-    then
-    begin
-      lvSumms.Visible := True;
-      lvSumms.Items.Clear;
-      lvSumms.Height := (2 * lvSumms.Parent.Height) div 5;
-      with lblTitle do
+    lvSumms.LockDrawing;
+    memSumm.LockDrawing;
+    try
+      popSummListExpandSelected.Enabled := Selected.HasChildren;
+      popSummListCollapseSelected.Enabled := Selected.HasChildren;
+      X := TORTreeNode(Selected).StringData;
+      if (Selected.ImageIndex in [IMG_TOP_LEVEL, IMG_GROUP_OPEN, IMG_GROUP_SHUT])
+      then
       begin
-        Caption := Trim(Selected.Text);
-        if (FCurrentContext.SearchField <> '') and (FCurrentContext.Filtered)
-        then
+        lvSumms.Visible := True;
+        lvSumms.Items.Clear;
+        lvSumms.Height := (2 * lvSumms.Parent.Height) div 5;
+        with lblTitle do
         begin
-          case FCurrentContext.SearchField[1] of
-            'T':
-              MySearch := 'TITLE';
-            'S':
-              MySearch := 'SUBJECT';
-            'B':
-              MySearch := 'TITLE or SUBJECT';
+          Caption := Trim(Selected.Text);
+          if (FCurrentContext.SearchField <> '') and (FCurrentContext.Filtered)
+          then
+          begin
+            case FCurrentContext.SearchField[1] of
+              'T':
+                MySearch := 'TITLE';
+              'S':
+                MySearch := 'SUBJECT';
+              'B':
+                MySearch := 'TITLE or SUBJECT';
+            end;
+            Caption := Caption + ' where ' + MySearch + ' contains "' +
+              UpperCase(FCurrentContext.Keyword) + '"';
           end;
-          Caption := Caption + ' where ' + MySearch + ' contains "' +
-            UpperCase(FCurrentContext.Keyword) + '"';
+          Hint := Caption;
+          lvSumms.Caption := Caption;
         end;
-        Hint := Caption;
-        lvSumms.Caption := Caption;
-      end;
 
-      tmpNode := Selected;
-      MyNodeID := '';
-      while assigned(tmpNode) do
-      begin
-        if tmpNode.ImageIndex = IMG_TOP_LEVEL then
+        tmpNode := Selected;
+        MyNodeID := '';
+        while assigned(tmpNode) do
         begin
-          MyNodeID := Piece(TORTreeNode(tmpNode).StringData, U, 1);
-          tmpNode := nil;
-        end
-        else
-          tmpNode := tmpNode.Parent;
-      end;
-      {
-      if Selected.ImageIndex = IMG_TOP_LEVEL then
-        MyNodeID := Piece(TORTreeNode(Selected).StringData, U, 1)
-      else if Selected.Parent.ImageIndex = IMG_TOP_LEVEL then
-        MyNodeID := Piece(TORTreeNode(Selected.Parent).StringData, U, 1)
-      else if Selected.Parent.Parent.ImageIndex = IMG_TOP_LEVEL then
-        MyNodeID := Piece(TORTreeNode(Selected.Parent.Parent).StringData, U, 1);
-      }
-      uChanging := True;
-      TraverseTree(tvSumms, lvSumms, Selected.getFirstChild, MyNodeID,
-        FCurrentContext);
-      with lvSumms do
-      begin
-        for i := 0 to Columns.Count - 1 do
-          Columns[i].ImageIndex := IMG_NONE;
-        ColumnSortForward := FCurrentContext.ListAscending;
-        if ColumnToSort = 5 then
-          ColumnToSort := 0;
-        if ColumnSortForward then
-          Columns[ColumnToSort].ImageIndex := IMG_ASCENDING
-        else
-          Columns[ColumnToSort].ImageIndex := IMG_DESCENDING;
-        if ColumnToSort = 0 then
-          ColumnToSort := 5;
-        AlphaSort;
-        Columns[5].Width := 0;
-        Columns[6].Width := 0;
-      end;
-      uChanging := False;
-      with lvSumms do
-        if Items.Count > 0 then
+          if tmpNode.ImageIndex = IMG_TOP_LEVEL then
+          begin
+            MyNodeID := Piece(TORTreeNode(tmpNode).StringData, U, 1);
+            tmpNode := nil;
+          end
+          else
+            tmpNode := tmpNode.Parent;
+        end;
+        {
+        if Selected.ImageIndex = IMG_TOP_LEVEL then
+          MyNodeID := Piece(TORTreeNode(Selected).StringData, U, 1)
+        else if Selected.Parent.ImageIndex = IMG_TOP_LEVEL then
+          MyNodeID := Piece(TORTreeNode(Selected.Parent).StringData, U, 1)
+        else if Selected.Parent.Parent.ImageIndex = IMG_TOP_LEVEL then
+          MyNodeID := Piece(TORTreeNode(Selected.Parent.Parent).StringData, U, 1);
+        }
+        uChanging := True;
+        TraverseTree(tvSumms, lvSumms, Selected.getFirstChild, MyNodeID,
+          FCurrentContext);
+        with lvSumms do
         begin
-          Selected := Items[0];
-          lvSummsSelectItem(Self, Selected, True);
-        end
-        else
-        begin
-          Selected := nil;
-          lstSumms.ItemIndex := -1;
-          memPCEShow.Clear;
+          for i := 0 to Columns.Count - 1 do
+            Columns[i].ImageIndex := IMG_NONE;
+          ColumnSortForward := FCurrentContext.ListAscending;
+          if ColumnToSort = 5 then
+            ColumnToSort := 0;
+          if ColumnSortForward then
+            Columns[ColumnToSort].ImageIndex := IMG_ASCENDING
+          else
+            Columns[ColumnToSort].ImageIndex := IMG_DESCENDING;
+          if ColumnToSort = 0 then
+            ColumnToSort := 5;
+          AlphaSort;
+          Columns[5].Width := 0;
+          Columns[6].Width := 0;
+        end;
+        uChanging := False;
+        with lvSumms do
+          if Items.Count > 0 then
+          begin
+            Selected := Items[0];
+            lvSummsSelectItem(Self, Selected, True);
+          end
+          else
+          begin
+            Selected := nil;
+            lstSumms.ItemIndex := -1;
+            memPCEShow.Clear;
+            ShowPCEControls(False);
+          end;
+        pnlWrite.Visible := False;
+        pnlRead.Visible := True;
+        AutoSizeColumns(lvSumms, [0]);
+        (* UpdateReminderFinish;
           ShowPCEControls(False);
-        end;
-      pnlWrite.Visible := False;
-      pnlRead.Visible := True;
-      AutoSizeColumns(lvSumms, [0]);
-      (* UpdateReminderFinish;
-        ShowPCEControls(False);
-        frmDrawers.DisplayDrawers(FALSE);
-        cmdNewSumm.Visible := TRUE;
-        cmdPCE.Visible := FALSE;
-        lblSpace1.Top := cmdNewSumm.Top - lblSpace1.Height; *)
-      // memSumm.Clear;
-    end
-    else if StrToIntDef(Piece(X, U, 1), 0) > 0 then
-    begin
-      memSumm.Clear;
-      lvSumms.Visible := False;
-      lstSumms.SelectByID(Piece(X, U, 1));
-      lstSummsClick(Self);
-      SendMessage(memSumm.Handle, WM_VSCROLL, SB_TOP, 0);
+          frmDrawers.DisplayDrawers(FALSE);
+          cmdNewSumm.Visible := TRUE;
+          cmdPCE.Visible := FALSE;
+          lblSpace1.Top := cmdNewSumm.Top - lblSpace1.Height; *)
+        // memSumm.Clear;
+      end
+      else if StrToIntDef(Piece(X, U, 1), 0) > 0 then
+      begin
+        memSumm.Clear;
+        lvSumms.Visible := False;
+        lstSumms.SelectByID(Piece(X, U, 1));
+        lstSummsClick(Self);
+        SendMessage(memSumm.Handle, WM_VSCROLL, SB_TOP, 0);
+      end;
+
+      // display orphaned warning
+  //      if PDocTreeObject(Selected.Data)^.Orphaned then -- 1211117
+        if assigned(Selected) and assigned(Selected.Data) and
+          PDocTreeObject(Selected.Data)^.Orphaned then
+          MessageDlg(ORPHANED_NOTE_TEXT, mtInformation, [mbOK], -1);
+
+      SendMessage(tvSumms.Handle, WM_HSCROLL, SB_THUMBTRACK, 0);
+    finally
+      memSumm.UnlockDrawing;
+      lvSumms.UnlockDrawing;
     end;
-
-    // display orphaned warning
-//      if PDocTreeObject(Selected.Data)^.Orphaned then -- 1211117
-      if assigned(Selected) and assigned(Selected.Data) and
-        PDocTreeObject(Selected.Data)^.Orphaned then
-        MessageDlg(ORPHANED_NOTE_TEXT, mtInformation, [mbOK], -1);
-
-    SendMessage(tvSumms.Handle, WM_HSCROLL, SB_THUMBTRACK, 0);
-    RedrawActivate(lvSumms.Handle);
-    RedrawActivate(memSumm.Handle);
   end;
 end;
 

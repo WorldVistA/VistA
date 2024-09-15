@@ -136,7 +136,6 @@ inherited frmOptionsTeams: TfrmOptionsTeams
     Height = 286
     Align = alClient
     BevelOuter = bvNone
-    Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 8
     ExplicitTop = 392

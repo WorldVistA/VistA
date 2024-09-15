@@ -3,6 +3,7 @@ unit fTemplateObjects;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ORCtrls, StdCtrls, ExtCtrls, ComCtrls, ORFn, dShared, uTemplates, fBase508Form,
   VA508AccessibilityManager;
@@ -21,13 +22,13 @@ type
     procedure btnRefreshClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
-    Fre: TRichEdit;
+    Fre: ORExtensions.TRichEdit;
     FAutoLongLines: TNotifyEvent;
     procedure InsertObject;
-    procedure Setre(const Value: TRichEdit);
+    procedure Setre(const Value: ORExtensions.TRichEdit);
   public
     procedure UpdateStatus;
-    property re: TRichEdit read Fre write Setre;
+    property re: ORExtensions.TRichEdit read Fre write Setre;
     property AutoLongLines: TNotifyEvent read FAutoLongLines write FAutoLongLines;
   end;
 
@@ -84,7 +85,7 @@ begin
   Action := caHide;
 end;
 
-procedure TfrmTemplateObjects.Setre(const Value: TRichEdit);
+procedure TfrmTemplateObjects.Setre(const Value: ORExtensions.TRichEdit);
 begin
   Fre := Value;
   UpdateStatus;

@@ -56,6 +56,7 @@ type
     procedure TrimAllMemos;
     procedure SetComponentName(Editor: TWinControl; Index: Integer; DialogCtrl: TDialogCtrl);
     procedure setupControls;
+    procedure UpdateVisualControls;
   protected
     FFormCloseCalled : Boolean;
     FCharHt: Integer;
@@ -683,20 +684,21 @@ procedure TfrmODGen.cmdAcceptClick(Sender: TObject);
 var
   ReleasePending: boolean;
   Msg: TMsg;
-
 begin
   LockOwnerWrapper(Self);
   try
     inherited;
+    // if the order dialog has ASK FOR ANOTHER ORDER set to YES, the form
+    // will need to stick around
+    // this is verified in the inherited cmdAcceptClick by calling AskAnotherOrder(..)
+    // so if we're not *already* releasing, don't force the issue
     ReleasePending := PeekMessage(Msg, Handle, CM_RELEASE, CM_RELEASE, PM_REMOVE);
-
     TrimAllMemos;
     TResponsiveGUI.ProcessMessages;
-
     if ReleasePending then
       Release;
   finally
-    UnlockOwnerWrepper(Self);
+    UnlockOwnerWrapper(Self);
   end;
 end;
 
@@ -769,8 +771,6 @@ begin
 end;
 
 procedure TfrmODGen.SetupControls;
-//var
-// i: Integer;
 begin
   // Move inherited controls onto the TGridPanel
   gpMain.ControlCollection.BeginUpdate;
@@ -793,24 +793,8 @@ begin
   finally
     gpMain.ControlCollection.EndUpdate;
   end;
-{
-  i := (getMainFormTextHeight + 10) * 4 + 8;
-  if gpMain.RowCollection[0].Value < i then
-    begin
-      gpMain.Height := i;
-      gpMain.RowCollection[0].Value := i;
-    end;
-  constraints.MinHeight := i * 4;
 
-  pnlGridMessage.Height := gpMain.Height;
-
-  i := getMainFormTextWidth('Accept Order') + 24;
-  if gpMain.ColumnCollection[1].Value < i then
-    gpMain.ColumnCollection[1].Value := i;
-
-  constraints.MinWidth := i * 8;
-}
-  setFontSize(0);
+  UpdateVisualControls;
 
   pnlGridMessage.Margins.Right := round(gpMain.ColumnCollection[1].Value);
 
@@ -820,20 +804,17 @@ begin
 
 end;
 
-procedure TfrmODGen.SetFontSize(FontSize: integer);
+procedure TfrmODGen.UpdateVisualControls;
 var
- i: Integer;
+  i: Integer;
 begin
-  Font.Size := FontSize;
-  memMessage.DefAttributes.Size := FontSize;
-
   gpMain.ControlCollection.BeginUpdate;
   i := (getMainFormTextHeight + 10) * 4 + 8;
   if gpMain.RowCollection[0].Value < i then
-    begin
-      gpMain.Height := i;
-      gpMain.RowCollection[0].Value := i;
-    end;
+  begin
+    gpMain.Height := i;
+    gpMain.RowCollection[0].Value := i;
+  end;
   constraints.MinHeight := i * 4;
 
   pnlGridMessage.Height := gpMain.Height;
@@ -844,7 +825,14 @@ begin
 
   constraints.MinWidth := i * 8;
   gpMain.ControlCollection.EndUpdate;
+end;
 
+procedure TfrmODGen.SetFontSize(FontSize: Integer);
+
+begin
+  Font.Size := FontSize;
+  memMessage.DefAttributes.Size := FontSize;
+  UpdateVisualControls;
 end;
 
 end.

@@ -560,7 +560,6 @@ inherited frmTIUView: TfrmTIUView
     Height = 39
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'pnlButtons'
     ShowCaption = False
     TabOrder = 1
     ExplicitTop = 470

@@ -10,7 +10,7 @@ uses
   System.Variants, System.Classes, System.Types, System.Generics.Collections,
   Vcl.Forms, Vcl.Controls, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls,
   Vcl.Graphics, Vcl.Menus, Vcl.CheckLst, Vcl.Buttons, ORCtrls, fODBase,
-  VA508AccessibilityManager, rODAnatPath, oODAnatPath;
+  VA508AccessibilityManager, rODAnatPath, oODAnatPath, fBase508Form;
 
 const
   WM_TRACK_DESC = WM_USER + 472;
@@ -55,7 +55,7 @@ type
     property CollectionSampleExternal: string read FCollSampE write FCollSampE;
   end;
 
-  TfraAnatPathSpecimen = class(TForm)
+  TfraAnatPathSpecimen = class(TfrmBase508Form)
     lblCharLimit: TLabel;
     gplBody: TGridPanel;
     cbxCollSamp: TORComboBox;
@@ -63,7 +63,6 @@ type
     lblDescription: TLabel;
     btnDelete: TBitBtn;
     edtSpecimenDesc: TEdit;
-    VA508AccessibilityManager1: TVA508AccessibilityManager;
     VA508SpecimenDescription: TVA508ComponentAccessibility;
     VA508Specimen: TVA508ComponentAccessibility;
     VA508CollectionSample: TVA508ComponentAccessibility;

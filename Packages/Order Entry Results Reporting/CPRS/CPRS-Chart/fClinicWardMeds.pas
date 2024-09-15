@@ -159,7 +159,7 @@ begin
     end;
     frmClinicWardMeds.ShowModal;
     frmClinicWardMeds.Release;
-
+    frmClinicWardMeds := nil;
 end;
 
 function  TfrmClinicWardMeds.BuildOrderLocList(pOrderList:TStringList; pLocation:integer):TStringList;

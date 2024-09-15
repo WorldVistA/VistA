@@ -1,4 +1,4 @@
-object frmTemplateReport: TfrmTemplateReport
+inherited frmTemplateReport: TfrmTemplateReport
   Left = 0
   Top = 0
   Caption = '-)'

@@ -323,7 +323,7 @@ procedure Register;
 implementation
 
 uses
-  System.UITypes, VAUtils, ORUnitTesting;
+  System.UITypes, VAUtils, ORUnitTesting, System.StrUtils;
 
 {$R *.DFM}
 {$R ORDtTm}
@@ -845,91 +845,74 @@ begin
 end;
 
 function TORfrmDtTm.TimeIsValid: Boolean;
-var
-  dt: TDateTime;
-  tm: TDateTime;
-const
-  fmtOutOfRange = 'Time entered %s is outside of the allowed range.' + CRLF +
-    'Please enter a valid time.';
 
-  procedure ReportError(aSelection: String);
+  procedure ReportError(const AErrorMessage: string; const Args: array of const);
   begin
-    InfoBox(Format(fmtOutOfRange, [aSelection])
-{$IFDEF DEBUG}
-    + CRLF + CRLF
-    + 'Min date:time ' + FormatDateTime('mm:dd:yyyy hh:nn',calSelect.fValidRange.MinDate) + CRLF
-    + 'Max date:time ' + FormatDateTime('mm:dd:yyyy hh:nn',calSelect.fValidRange.MaxDate) + CRLF
-{$ENDIF}
-    , 'Invalid Time', MB_OK);
+    InfoBox(Format(AErrorMessage, Args), 'Invalid Time', MB_OK or MB_ICONERROR);
   end;
 
+  procedure ReportDateRangeError(ADateTime: TDateTime);
+  const
+    AOutOfRangeFmt = 'Time entered "%s" is outside of the allowed range.' + CRLF +
+      'Please enter a valid time.';
+    ADateTimeFmt = {$IFDEF DEBUG} 'mm/dd/yyyy hh:nn' {$ELSE} 'mm/dd/yyyy' {$ENDIF};
+  begin  
+    ReportError(AOutOfRangeFmt
+      {$IFDEF DEBUG}
+      + CRLF + CRLF
+      + 'Min date:time ' + FormatDateTime(ADateTimeFmt, calSelect.fValidRange.MinDate) + CRLF
+      + 'Max date:time ' + FormatDateTime(ADateTimeFmt, calSelect.fValidRange.MaxDate) + CRLF
+      {$ENDIF},
+      [FormatDateTime(ADateTimeFmt, ADateTime)]);
+  end;
+  
+var
+  ADate: TDateTime;
+  ATime: TDateTime;
 begin
-  if not TimeIsRequired then
-    Result := True
+  Result := False;
+
+  if not TryStrToTime(txtTime.Text, ATime) then
+  begin
+    ReportError('Time entered "%s" is an invalid time string.' + CRLF +
+      'Please enter a valid time.', [txtTime.Text]);
+    Exit;
+  end;
+     
+  if IsRangeMode then
+  begin
+    ADate := Trunc(calSelect.CalendarDate) + ATime;
+    if calSelect.IsBetweenMinAndMax(ADate) then
+      Result := True
+    else
+      ReportDateRangeError(ADate);
+  end
   else
-    begin
-      Result := False;
-      if Length(txtTime.Text) > 0 then
-      begin
-        try
-          tm := strToTime(txtTime.Text);
-          if IsRangeMode then
-            begin
-              dt := calSelect.CalendarDate;
-              dt := trunc(dt) + tm;
-              if not calSelect.IsBetweenMinAndMax(dt) then
-                {$IFDEF DEBUG}
-                ReportError(formatDateTime('dd-mm-yyyy hh:nn',dt))
-                {$ELSE}
-                ReportError(txtTime.Text)
-                {$ENDIF}
-              else
-                Result := True;
-            end
-          else
-            Result := True;
-        except
-          on EConvertError do
-            ReportError('Invalid Time string' + CRLF + 'Please enter a valid time');
-        end;
-      end
-      else
-        ReportError('Please enter a valid time');
-    end;
+    Result := True;
 end;
 
 procedure TORfrmDtTm.cmdOKClick(Sender: TObject);
 var
-  X: string;
-
+  AIsTimeEntered: Boolean;
 begin
-  if not TimeIsRequired then
-    begin
-      ModalResult := mrOK;
-      exit;
-    end;
-
-  if TimeIsRequired and (Length(txtTime.Text) = 0) then
+  AIsTimeEntered := Length(txtTime.Text) > 0;
+         
+  if AIsTimeEntered then
   begin
-    InfoBox('An entry for time is required.', 'Missing Time', MB_OK);
-    exit;
-  end;
+    txtTime.Text := Trim(txtTime.Text);
 
-  if Length(txtTime.Text) > 0 then
-  begin
-    X := Trim(txtTime.Text);
-    if (X = '00:00') or (X = '0:00') or (X = '00:00:00') or (X = '0:00:00') then
-      X := '00:01'; // <------- CHANGED CODE
-    try
-      StrToTime(X);
-      txtTime.Text := X;
-      if TimeIsValid then // NSR20071216 AA 2016-01-29
-        ModalResult := mrOK;
-    except
-      on EConvertError do
-        InfoBox('Incorrect time value "'+X+'"', 'Invalid Time value', MB_OK);
-    end;
-  end;
+    if MatchText(txtTime.Text, ['00:00', '0:00', '00:00:00', '0:00:00']) then
+        txtTime.Text := '00:01';    
+
+    if TimeIsValid then // This shows a dialog if the time is invalid
+        ModalResult := mrOk;
+  end
+  else begin
+    if TimeIsRequired then
+      InfoBox('An entry for time is required.', 'Missing Time', MB_OK or MB_ICONERROR)
+    else 
+      ModalResult := mrOk;
+  end 
 end;
 
 procedure TORfrmDtTm.cmdCancelClick(Sender: TObject);
@@ -957,8 +940,8 @@ end;
 function TORDateTimeDlg.Execute: Boolean;
 const
   HORZ_SPACING = 8;
-  BASE_GAP = 6;
-  LIST_GAP = 4;
+  BASE_GAP = 15;
+  LIST_GAP = 3;
   BORDER_GAP = 16;
 
 var
@@ -1042,8 +1025,8 @@ begin
         cmdNow.Visible := False;
         cmdMidnight.Visible := False;
 //        bvlFrame.Width := bvlFrame.Width - txtTime.Width - HORZ_SPACING;
-//        cmdOK.Left := cmdOK.Left - txtTime.Width - HORZ_SPACING;
-//        cmdCancel.Left := cmdOK.Left;
+        cmdOK.Left := bvlFrame.Left + bvlFrame.Width + HORZ_SPACING;
+        cmdCancel.Left := cmdOK.Left;
         ClientWidth := ClientWidth - txtTime.Width - HORZ_SPACING;
       end
       else
@@ -1079,9 +1062,12 @@ begin
         cmdNow.Width := btn1;
         cmdMidnight.Width := btn2;
         cmdMidnight.Left := lst2 + lstMinute.Left - btn2;
+        cmdNow.Left := cmdMidnight.Left - cmdNow.Width - LIST_GAP;
         txtTime.Width := max;
         bvlFrame.Width := bvlFrame.Width + max + BORDER_GAP;
         bvlFrame.SendToBack;
+        cmdOK.Left := bvlFrame.Left + bvlFrame.Width + HORZ_SPACING;
+        cmdCancel.Left := cmdOk.Left;
         ClientWidth := bvlFrame.Left + bvlFrame.Width + BORDER_GAP + cmdOK.Width;
       end;
       Result := (ShowModal = IDOK);

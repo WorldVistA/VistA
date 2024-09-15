@@ -130,8 +130,8 @@ function MainFontWidth: Integer;
 function MainFontHeight: Integer;
 function MainFontTextHeight: Integer;
 function BaseFont: TFont;
-procedure RedrawSuspend(AHandle: HWnd);
-procedure RedrawActivate(AHandle: HWnd);
+procedure RedrawSuspend(AHandle: HWnd);  deprecated 'Use LockDrawing'
+procedure RedrawActivate(AHandle: HWnd); deprecated 'Use UnlockDrawing'
 //procedure ResetControl(AControl: TControl);
 procedure ResetSelectedForList(AListBox: TListBox);
 procedure ResizeFormToFont(AForm: TForm);
@@ -206,6 +206,7 @@ type
 implementation  // ---------------------------------------------------------------------------
 
 uses
+  System.Math,
   ORCtrls, Grids, VCLTee.Chart, CheckLst, VAUtils, VCLTee.TeEngine, VCLTee.TeCanvas,
   VCLTee.TeeProcs, ORUnitTesting, DateUtils;
 
@@ -1141,7 +1142,6 @@ type
 
 function QuickCopy(AFrom, ATo: TObject): boolean;
 var
-  ms: TMemoryStream;
   idx: integer;
   str: array[0..1] of TStrings;
   fix: array[0..1] of boolean;
@@ -1189,7 +1189,8 @@ var
     inc(idx);
   end;
 
-
+var
+  ms: TMemoryStream;
 begin
   Result := True;
   fix[0] := FALSE;
@@ -1656,20 +1657,21 @@ begin
   with AListBox do for i := 0 to Items.Count - 1 do Selected[i] := False;
 end;
 
-function ResizeWidth( OldFont: TFont; NewFont: TFont; OldWidth: integer): integer;
+function ResizeWidth(OldFont: TFont; NewFont: TFont; OldWidth: Integer)
+  : Integer;
 begin
   if not Assigned(OldFont) then Exit(OldWidth);
   if not Assigned(NewFont) then Exit(OldWidth);
-  result := Trunc( OldWidth *FontWidthSubPixel(NewFont) / FontWidthSubPixel(OldFont)
-    +0.5);
+  Result := Trunc(OldWidth * FontWidthSubPixel(NewFont) /
+    FontWidthSubPixel(OldFont) + 0.5);
 end;
 
-function ResizeHeight( OldFont: TFont; NewFont: TFont; OldHeight: integer): integer;
+function ResizeHeight(OldFont: TFont; NewFont: TFont;
+  OldHeight: Integer): Integer;
 begin
   if not Assigned(OldFont) then Exit(OldHeight);
   if not Assigned(NewFont) then Exit(OldHeight);
-  result := Trunc( OldHeight *Abs(NewFont.Height) / Abs(OldFont.Height)
-    +0.5);
+  Result := Trunc(OldHeight * Abs(NewFont.Height) / Abs(OldFont.Height) + 0.5);
 end;
 
 procedure ResizeToFont(FontSize: Integer; var W, H: Integer);
@@ -1876,63 +1878,19 @@ begin
   end;
 end;
 
-procedure InternalForceInsideWorkArea(var Rect: TRect; AForm: TForm);
-var
-  Frame: TRect;
-begin
-  if assigned(AForm) then
-    Frame := Screen.MonitorFromWindow(AForm.Handle).WorkAreaRect
-  else
-    Frame := Screen.WorkAreaRect;
-  {Veritcal version:}
-  {Align bottom (preserving height) if needed}
-  if Rect.Bottom > Frame.Bottom then
-  begin
-    Rect.Top := Rect.Top + Frame.Bottom - Rect.Bottom;
-    Rect.Bottom := Frame.Bottom;
-  end;
-  {Then align top (preserving height) if needed}
-  if Rect.Top < Frame.Top then
-  begin
-    Rect.Bottom := Rect.Bottom + Frame.Top - Rect.Top;
-    Rect.Top := Frame.Top;
-  end;
-  {Now shrink (preserving top) if needed}
-  if Rect.Bottom > Frame.Bottom then
-    Rect.Bottom := Frame.Bottom;
-  if Rect.Top < Frame.Top then
-    Rect.Top := Frame.Top;
-  {Horizontal version:}
-  if Rect.Right > Frame.Right then
-  begin
-    Rect.Left := Rect.Left + Frame.Right - Rect.Right;
-    Rect.Right := Frame.Right;
-  end;
-  if Rect.Left < Frame.Left then
-  begin
-    Rect.Right := Rect.Right + Frame.Left - Rect.Left;
-    Rect.Left := Frame.Left;
-  end;
-  if Rect.Right > Frame.Right then
-    Rect.Right := Frame.Right;
-  if Rect.Left < Frame.Left then
-    Rect.Left := Frame.Left;
-end;
-
 procedure ForceInsideWorkArea(var Rect: TRect);
 begin
-  InternalForceInsideWorkArea(Rect, Screen.ActiveForm);
+  ForceRectInsideWorkArea(Rect, Screen.ActiveForm);
 end;
 
 procedure ForceInsideWorkArea(AForm: TForm);
 var
   Rect: TRect;
   kb: IORKeepBounds;
-
 begin
   if not Assigned(AForm) then Exit;
   Rect := AForm.BoundsRect;
-  InternalForceInsideWorkArea(Rect, AForm);
+  ForceRectInsideWorkArea(Rect, AForm);
   AForm.BoundsRect := Rect;
   if AForm.GetInterface(IORKeepBounds, kb) then
     if assigned(kb) and kb.KeepBounds then
@@ -2075,6 +2033,16 @@ begin
     AForm.ClientHeight := ResizeHeight(AForm.Font, MainFont, AForm.ClientHeight);
     if not Assigned(AForm.Parent) then
       ForceInsideWorkArea(AForm);
+
+    // Resize min width and height constraints when they are defined. Avoid
+    // setting constraints higher than the current form sizes.
+    if AForm.Constraints.MinWidth > 0 then AForm.Constraints.MinWidth :=
+      Min(AForm.Width, ResizeWidth(AForm.Font, MainFont,
+      AForm.Constraints.MinWidth));
+    if AForm.Constraints.MinHeight > 0 then AForm.Constraints.MinHeight :=
+      Min(AForm.Height, ResizeHeight(AForm.Font, MainFont,
+      AForm.Constraints.MinHeight));
+
     ResizeDescendants(AForm.Font, MainFont, AForm);
     ResizeFontsInDescendants(AForm.Font, MainFont, AForm);
     //Important: We are using the font to calculate everything, so don't

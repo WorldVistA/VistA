@@ -5,9 +5,8 @@ inherited frmPtDemo: TfrmPtDemo
   Caption = 'Patient Inquiry'
   ClientHeight = 271
   ClientWidth = 580
-  OldCreateOrder = True
   Position = poScreenCenter
-  OnCreate = FormCreate
+  ExplicitWidth = 592
   ExplicitWidth = 596
   ExplicitHeight = 309
   PixelsPerInch = 96
@@ -43,13 +42,16 @@ inherited frmPtDemo: TfrmPtDemo
         'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123ABCDEFGHIJKLMNOPQRSTUVWXYZ0123abcd' +
         'efghijklmnopqrs')
     ParentFont = False
+    ParentShowHint = False
     PlainText = True
     ReadOnly = True
     ScrollBars = ssBoth
+    ShowHint = True
     TabOrder = 0
     WantReturns = False
     WordWrap = False
-    Zoom = 100
+    OnMouseMove = memPtDemoMouseMove
+    ExplicitWidth = 576
     ExplicitTop = 31
     ExplicitHeight = 209
   end
@@ -60,7 +62,6 @@ inherited frmPtDemo: TfrmPtDemo
     Height = 31
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'pnlTop'
     ShowCaption = False
     TabOrder = 1
     object cmdNewPt: TButton

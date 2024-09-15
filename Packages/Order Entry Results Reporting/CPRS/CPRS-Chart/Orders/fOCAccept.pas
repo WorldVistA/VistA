@@ -3,6 +3,7 @@ unit fOCAccept;
 interface
 
 uses
+  ORExtensions,
   Windows,
   Messages,
   SysUtils,
@@ -28,7 +29,7 @@ type
     aOverrideReason: String = ''; aOverrideComment: String = ''): boolean of object;
 
   TfrmOCAccept = class(TfrmAutoSz)
-    memChecks: TRichEdit;
+    memChecks: ORExtensions.TRichEdit;
     pnlBottom: TPanel;
     cmdAccept: u508Button.TButton;
     cmdCancel: u508Button.TButton;

@@ -7,10 +7,7 @@ inherited frmProblems: TfrmProblems
   ClientWidth = 631
   HelpFile = 'overvw'
   Menu = mnuProbs
-  OnDestroy = FormDestroy
-  OnHide = FormHide
   OnMouseMove = FormMouseMove
-  OnShow = FormShow
   ExplicitWidth = 647
   ExplicitHeight = 413
   PixelsPerInch = 96

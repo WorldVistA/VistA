@@ -53,7 +53,6 @@ inherited frmEditProc: TfrmEditProc
     Align = alBottom
     BevelInner = bvRaised
     BorderStyle = bsSingle
-    Caption = 'pnlMessage'
     TabOrder = 2
     Visible = False
     object imgMessage: TImage
@@ -765,7 +764,6 @@ inherited frmEditProc: TfrmEditProc
     Height = 33
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'pnlButtons'
     ShowCaption = False
     TabOrder = 3
     object cmdAccept: TButton

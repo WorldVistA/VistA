@@ -6,6 +6,7 @@ bugs noticed:
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ExtCtrls, StdCtrls, Buttons, ORCtrls, ComCtrls, ImgList, uTemplates,
   Menus, ORClasses, ORFn, fBase508Form, VA508AccessibilityManager,
@@ -134,7 +135,7 @@ type
     FAskNode :TTreeNode;
     FDragNode :TTreeNode;
     FClickOccurred: boolean;
-    FRichEditControl: TRichEdit;
+    FRichEditControl: ORExtensions.TRichEdit;
     FFindNext: boolean;
     FLastFoundNode: TTreeNode;
     FSplitter: TSplitter;
@@ -157,7 +158,7 @@ type
     procedure RemindersChanged(Sender: TObject);
     procedure SetFindNext(const Value: boolean);
     procedure ReloadTemplates;
-    procedure SetRichEditControl(const Value: TRichEdit);
+    procedure SetRichEditControl(const Value: ORExtensions.TRichEdit);
     procedure CheckAsk;
     procedure FontChanged(Sender: TObject);
     procedure InitButtons;
@@ -197,7 +198,7 @@ type
     procedure NotifyWhenRemTreeChanges(Proc: TNotifyEvent);
     procedure RemoveNotifyWhenRemTreeChanges(Proc: TNotifyEvent);
     procedure ResetTemplates;
-    property RichEditControl: TRichEdit read FRichEditControl write SetRichEditControl;
+    property RichEditControl: ORExtensions.TRichEdit read FRichEditControl write SetRichEditControl;
     property NewNoteButton: TButton read FNewNoteButton write FNewNoteButton;
     property Splitter: TSplitter read FSplitter write SetSplitter;
     property HasPersonalTemplates: boolean read FHasPersonalTemplates;
@@ -800,7 +801,7 @@ begin
   CheckAsk;
 end;
 
-procedure TfrmDrawers.SetRichEditControl(const Value: TRichEdit);
+procedure TfrmDrawers.SetRichEditControl(const Value: ORExtensions.TRichEdit);
 begin
   if(FRichEditControl <> Value) then
   begin

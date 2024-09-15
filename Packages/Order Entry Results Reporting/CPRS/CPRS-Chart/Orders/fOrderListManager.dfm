@@ -101,9 +101,10 @@ inherited frmListManager: TfrmListManager
       Top = 3
       Width = 119
       Height = 25
-      Action = frmOrderFlag.acRecipientSelect
       Align = alLeft
+      Caption = 'Add &Recipients'
       TabOrder = 0
+      OnClick = btnFlagRecipientsClick
     end
   end
   object pnlCanvas: TPanel [1]

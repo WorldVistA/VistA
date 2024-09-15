@@ -17,7 +17,6 @@ inherited frmOMVerify: TfrmOMVerify
     Height = 32
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'pnlButtons'
     ShowCaption = False
     TabOrder = 1
     ExplicitTop = 149
@@ -73,7 +72,6 @@ inherited frmOMVerify: TfrmOMVerify
     Width = 560
     Height = 170
     Align = alClient
-    Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 0
     ExplicitLeft = 208

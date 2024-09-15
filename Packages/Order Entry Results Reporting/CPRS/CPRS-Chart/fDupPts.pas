@@ -51,6 +51,10 @@ constructor TfrmDupPts.CreateSelector(ASelector:TSelector; aList:TStrings; anExc
 const
   fmtCaptionWindow = 'Similar %ss';
   fmtCaptionList = '  Please select the correct %s:';
+var
+  I: integer;
+  S: string;
+  ANeedLocation: Boolean;
 begin
   inherited Create(Application);
   fExceptions := anExceptions;
@@ -61,14 +65,34 @@ begin
     sPt : fItemName := 'patient';
   end;
   pnlHeader.Caption := Format(fmtCaptionList,[fItemName]);
+  lboSelPt.Caption := Format('Please select the correct %s', [fItemName]);
   fItemName := uppercase(copy(fItemName,1,1))+copy(fItemName,2,Length(fItemName));
   Caption := Format(fmtCaptionWindow,[fItemName]);
 
   if ASelector <> sPt then
   begin
     lboSelPt.Columns[1].Caption := 'Position';
-    lboSelPt.Columns[1].Width := lboSelPt.Width - lboSelPt.Columns[0].Width - 24;
-    lboSelPt.Columns.Delete(2);
+    lboSelPt.Columns[1].Width := lboSelPt.Width - lboSelPt.Columns[0]
+      .Width - 24;
+    for I := lboSelPt.Columns.Count - 1 downto 2 do
+      lboSelPt.Columns.Delete(I);
+  end else begin
+    ANeedLocation := False;
+    for S in AList do
+    begin
+      ANeedLocation := Piece(S, U, 5) <> '';
+      if ANeedLocation then
+        Break;
+    end;
+    if ANeedLocation then
+    begin
+      lboSelPt.Pieces := '2,3,4,5,6,7,8';
+    end else begin
+      lboSelPt.Columns[4].Width := lboSelPt.Columns[3].Width +
+        lboSelPt.Columns[4].Width;
+      lboSelPt.Columns.Delete(3);
+      lboSelPt.Pieces := '2,3,4,6,7,8';
+    end;
   end;
 
   if Assigned(aList) then

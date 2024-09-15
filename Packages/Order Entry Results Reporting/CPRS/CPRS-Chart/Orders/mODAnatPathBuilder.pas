@@ -10,7 +10,7 @@ uses
   System.Variants, System.Classes, System.Generics.Collections, Vcl.Forms,
   Vcl.Controls, Vcl.StdCtrls, Vcl.ComCtrls, Vcl.ExtCtrls, Vcl.Graphics,
   Vcl.Menus, Vcl.CheckLst, ORCtrls, ORextensions, fODBase,
-  oODAnatPath, rODAnatPath, VA508AccessibilityManager;
+  oODAnatPath, rODAnatPath, VA508AccessibilityManager, fBase508Form;
 
 const
   LEFT_MARGIN = 4;
@@ -35,7 +35,7 @@ type
     property RestoredText: TStringLIst read FRestoredText write FRestoredText;
   end;
 
-  TfraAnatPathBuilder = class(TForm)
+  TfraAnatPathBuilder = class(TfrmBase508Form)
     pnl1: TPanel;
     pnl2: TPanel;
     pnl4: TPanel;
@@ -54,7 +54,6 @@ type
     sbx2: TScrollBox;
     mnuNoteMenuInsert: TMenuItem;
     lblCheckList: TLabel;
-    VA508AccessibilityManager1: TVA508AccessibilityManager;
     VA508ListBox: TVA508ComponentAccessibility;
     procedure VA508CaptionQuery(Sender: TObject; var Text: string);
     procedure pnl4Resize(Sender: TObject);

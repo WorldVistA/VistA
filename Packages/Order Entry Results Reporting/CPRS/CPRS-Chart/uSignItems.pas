@@ -1006,13 +1006,13 @@ procedure TSigItems.lbResize(Sender: TObject);
 begin
   if assigned(FOldResizeEvent) then
     FOldResizeEvent(Sender);
-  RedrawSuspend(Flb.Handle);
+  Flb.LockDrawing;
   try
     CalcFX;
     Flb.ForceItemHeightRecalc;
     Flb.Invalidate;
   finally
-    RedrawActivate(Flb.Handle);
+    Flb.UnlockDrawing;
   end;
 end;
 

@@ -1,4 +1,4 @@
-object frmDebugReport: TfrmDebugReport
+inherited frmDebugReport: TfrmDebugReport
   Left = 0
   Top = 0
   BorderIcons = []

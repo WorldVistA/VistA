@@ -1,4 +1,4 @@
-object frmAllergyCheck: TfrmAllergyCheck
+inherited frmAllergyCheck: TfrmAllergyCheck
   Left = 0
   Top = 0
   Caption = 'Selected Medication Allergy Check'
@@ -24,7 +24,6 @@ object frmAllergyCheck: TfrmAllergyCheck
     Height = 32
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'pnlBUttons'
     ShowCaption = False
     TabOrder = 0
     object btnCancel: TButton
@@ -119,7 +118,7 @@ object frmAllergyCheck: TfrmAllergyCheck
     TabOrder = 1
     Zoom = 100
   end
-  object amgrMain: TVA508AccessibilityManager
+  inherited amgrMain: TVA508AccessibilityManager
     Left = 16
     Top = 16
     Data = (

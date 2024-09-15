@@ -386,6 +386,7 @@ inherited frmReportsAdhocSubItem1: TfrmReportsAdhocSubItem1
         'Status = stsDefault'))
   end
   object Timer2: TTimer
+    Enabled = False
     OnTimer = Timer2Timer
     Left = 392
     Top = 16

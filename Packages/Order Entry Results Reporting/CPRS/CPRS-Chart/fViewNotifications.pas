@@ -22,10 +22,13 @@ uses
   Vcl.ActnList,
   ORCtrls, ORFn,
   uInfoBoxWithBtnControls,
-  ClipBrd, ORDtTm;
+  ClipBrd,
+  ORDtTm,
+  fBase508Form,
+  VA508AccessibilityManager;
 
 type
-  TfrmViewNotifications = class(TForm)
+  TfrmViewNotifications = class(TfrmBase508Form)
     acList: TActionList;
     acClose: TAction;
     acProcess: TAction;

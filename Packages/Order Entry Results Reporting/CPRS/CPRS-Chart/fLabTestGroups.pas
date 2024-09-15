@@ -123,31 +123,35 @@ var
   i: integer;
   blood, urine, serum, plasma: string;
 begin
-  RedrawSuspend(cboTests.Handle);
-  cboTests.InitLongList('');
-  RedrawActivate(cboTests.Handle);
-  RedrawSuspend(cboSpecimen.Handle);
-  cboSpecimen.InitLongList('');
-  SpecimenDefaults(blood, urine, serum, plasma);
-  cboSpecimen.Items.Add('0^Any');
-  cboSpecimen.Items.Add(serum + '^Serum');
-  cboSpecimen.Items.Add(blood + '^Blood');
-  cboSpecimen.Items.Add(plasma + '^Plasma');
-  cboSpecimen.Items.Add(urine + '^Urine');
-  cboSpecimen.Items.Add(LLS_LINE);
-  cboSpecimen.Items.Add(LLS_SPACE);
-  cboSpecimen.ItemIndex := 0;
-  RedrawActivate(cboSpecimen.Handle);
-  RedrawSuspend(cboTests.Handle);
-  cboUsers.InitLongList(User.Name);
-  for i := 0 to cboUsers.Items.Count - 1 do
-    if StrToInt64Def(Piece(cboUsers.Items[i], '^', 1), 0) = User.DUZ then
-    begin
-      cboUsers.ItemIndex := i;
-      break;
+  cboTests.LockDrawing;
+  try
+    cboTests.InitLongList('');
+    cboSpecimen.LockDrawing;
+    try
+      cboSpecimen.InitLongList('');
+      SpecimenDefaults(blood, urine, serum, plasma);
+      cboSpecimen.Items.Add('0^Any');
+      cboSpecimen.Items.Add(serum + '^Serum');
+      cboSpecimen.Items.Add(blood + '^Blood');
+      cboSpecimen.Items.Add(plasma + '^Plasma');
+      cboSpecimen.Items.Add(urine + '^Urine');
+      cboSpecimen.Items.Add(LLS_LINE);
+      cboSpecimen.Items.Add(LLS_SPACE);
+      cboSpecimen.ItemIndex := 0;
+    finally
+      cboSpecimen.UnlockDrawing;
     end;
-  if cboUsers.ItemIndex > -1 then cboUsersClick(self);
-  RedrawActivate(cboTests.Handle);
+    cboUsers.InitLongList(User.Name);
+    for i := 0 to cboUsers.Items.Count - 1 do
+      if StrToInt64Def(Piece(cboUsers.Items[i], '^', 1), 0) = User.DUZ then
+      begin
+        cboUsers.ItemIndex := i;
+        break;
+      end;
+    if cboUsers.ItemIndex > -1 then cboUsersClick(self);
+  finally
+    cboTests.UnlockDrawing;
+  end;
   cmdUp.Enabled := false;
   pnlUpButton.TabStop := false;
   cmdDown.Enabled := false;

@@ -111,6 +111,7 @@ type
     procedure acModeAddExecute(Sender: TObject);
     procedure lvItemsClick(Sender: TObject);
     procedure acReUsePropertiesExecute(Sender: TObject);
+    procedure btnFlagRecipientsClick(Sender: TObject);
   private
     { Private declarations }
     bIgnore: Boolean;
@@ -155,17 +156,19 @@ implementation
 uses fOptions, uFormUtils, Math, fOrders, System.UITypes, VAUtils,
 UResponsiveGUI;
 
-var
-  frmListManager: TfrmListManager;
-
 function ProcessOrderList(aList: TStrings; aCaption, aComment: String;
   aMode: TActionMode; aMaster: TForm): Integer;
+var
+  frmListManager: TfrmListManager;
+  FlagList: TStringList;
 begin
   Result := -1;
   if aList.Count < 1 then
     exit;
+  FlagList := nil;
+  frmListManager := TfrmListManager.Create(Application);
   try
-    frmListManager := TfrmListManager.Create(nil);
+    FlagList := TStringList.Create(True);
 {$IFDEF DEBUG}
     frmListManager.acDebug.Visible := True;
 {$ELSE}
@@ -179,7 +182,8 @@ begin
       begin
         frmListManager.PropertiesEditor :=
           TfrmOrderFlag(frmListManager.ItemEditor);
-        frmListManager.InitItemList(getOrderFlagInfoList(aList));
+        getOrderFlagInfoList(aList, FlagList);
+        frmListManager.InitItemList(FlagList);
         frmListManager.SelectListItem(frmListManager.lvItems.Items[0]);
         frmListManager.Caption := aCaption;
         frmListManager.pnlTop.Caption := '  ' + aComment;
@@ -197,8 +201,8 @@ begin
     else
       ShowMessage('Error creating Order Flag Editor');
   finally
-    frmListManager.Release;
-    frmListManager := nil;
+    FlagList.Free;
+    frmListManager.Free;
   end;
 end;
 
@@ -263,9 +267,8 @@ var
 begin
   inherited;
   NoErrors := True;
-  if Assigned(frmListManager.ItemEditor) and
-    (frmListManager.ItemEditor is TfrmOrderFlag) then
-    NoErrors := TfrmOrderFlag(frmListManager.ItemEditor).CheckFlag;
+  if Assigned(ItemEditor) and (ItemEditor is TfrmOrderFlag) then
+    NoErrors := TfrmOrderFlag(ItemEditor).CheckFlag;
   if NoErrors then PerformAction(OrderFlagSet);
 end;
 
@@ -326,6 +329,13 @@ begin
   inherited;
   acShowStatus.Checked := not acShowStatus.Checked;
   pnlListStatus.Visible := acShowStatus.Checked;
+end;
+
+procedure TfrmListManager.btnFlagRecipientsClick(Sender: TObject);
+begin
+  inherited;
+  if assigned(ItemEditor) and (ItemEditor is TfrmOrderFlag) then
+    TfrmOrderFlag(ItemEditor).acRecipientSelect.Execute;
 end;
 
 procedure TfrmListManager.acFont8Execute(Sender: TObject);

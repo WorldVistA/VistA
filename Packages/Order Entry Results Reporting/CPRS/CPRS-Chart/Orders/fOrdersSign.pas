@@ -302,7 +302,7 @@ begin
     with frmSignOrders do
       begin
         topHeight := pnlTop.Height;
-        lstHeight := MainFontTextHeight * 5;
+        lstHeight := Canvas.TextHeight('Ty') * 5;
         deaHeight := pnlDEAText.Height;
         if clstCSOrders.Count > 0 then
           minWidth := Canvas.TextWidth(lblCSOrderList.Caption +
@@ -392,7 +392,7 @@ begin
           FormID := FormID + '1';
       end;
 
-    SetFormPosition(frmSignOrders, FormID);
+    SetFormPosition(frmSignOrders, FormID, True);
     frmSignOrders.ShowModal;
     SaveUserBounds(frmSignOrders, FormID);
 

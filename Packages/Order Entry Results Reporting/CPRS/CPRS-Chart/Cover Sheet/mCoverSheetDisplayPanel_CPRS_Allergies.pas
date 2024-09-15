@@ -210,14 +210,21 @@ begin
   inherited;
 end;
 
-procedure TfraCoverSheetDisplayPanel_CPRS_Allergies.OnPopupMenuInit(Sender: TObject);
+procedure TfraCoverSheetDisplayPanel_CPRS_Allergies.OnPopupMenuInit
+  (Sender: TObject);
 begin
   inherited;
   if not WriteAccess(waAllergies) then exit;
   fSeparator := NewLine;
-  fEnterNewAllergy := NewItem('Enter New Allergy ...', 0, False, False, pmnEnterNewAllergy, 0, 'pmnEnterNewAllergy');
-  fMarkSelectedAsEnteredInError := NewItem('Mark Selected Allergy as Entered in Error ...', 0, False, False, pmnMarkSelectedAsEnteredInError, 0, 'pmnMarkSelectedAllergyAsEnteredInError');
-  fMarkPtAsNKA := NewItem('Mark Patient As Having "No Known Allergies" (NKA) ...', 0, False, False, pmnMarkPtAsNKA, 0, 'pmnPtAsNKA');
+  fEnterNewAllergy := NewItem('Enter New Allergy/Adverse Reaction...', 0, False,
+    False, pmnEnterNewAllergy, 0, 'pmnEnterNewAllergy');
+  fMarkSelectedAsEnteredInError :=
+    NewItem('Mark Selected Allergy as Entered in Error ...', 0, False, False,
+    pmnMarkSelectedAsEnteredInError, 0,
+    'pmnMarkSelectedAllergyAsEnteredInError');
+  fMarkPtAsNKA :=
+    NewItem('Mark Patient As Having "No Known Allergies" (NKA) ...', 0, False,
+    False, pmnMarkPtAsNKA, 0, 'pmnPtAsNKA');
 
   pmn.Items.Add(fSeparator);
   pmn.Items.Add(fEnterNewAllergy);

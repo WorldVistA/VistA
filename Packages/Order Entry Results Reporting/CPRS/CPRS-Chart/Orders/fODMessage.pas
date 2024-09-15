@@ -3,12 +3,13 @@ unit fODMessage;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ExtCtrls, StdCtrls, ComCtrls, fBase508Form, VA508AccessibilityManager;
 
 type
   TfrmODMessage = class(TfrmBase508Form)
-    memMessage: TRichEdit;
+    memMessage: ORExtensions.TRichEdit;
     imgMessage: TImage;
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -45,7 +46,11 @@ end;
 
 procedure HideOrderMessage;
 begin
-  if frmODMessage <> nil then frmODMessage.Release;
+  if frmODMessage <> nil then
+  begin
+    frmODMessage.Release;
+    frmODMessage := nil;
+  end;
 end;
 
 procedure TfrmODMessage.FormDestroy(Sender: TObject);

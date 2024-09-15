@@ -35,7 +35,6 @@ inherited frmODMedNVA: TfrmODMedNVA
     Margins.Bottom = 4
     Anchors = [akLeft, akTop, akRight, akBottom]
     BevelOuter = bvNone
-    Caption = 'pnlMeds'
     TabOrder = 1
     object sptSelect: TSplitter
       Left = 0

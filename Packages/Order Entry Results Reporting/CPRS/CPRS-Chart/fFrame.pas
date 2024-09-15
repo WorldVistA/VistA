@@ -26,8 +26,7 @@ type
     bvlToolTop: TBevel;
     pnlPatient: TKeyClickPanel;
     lblPtName: TStaticText;
-    lblPtSSN: TStaticText;
-    lblPtAge: TStaticText;
+    lblPtInfo: TStaticText;
     pnlVisit: TKeyClickPanel;
     lblPtLocation: TStaticText;
     lblPtProvider: TStaticText;
@@ -161,6 +160,7 @@ type
     pnlOtherInfo: TKeyClickPanel;
     N2: TMenuItem;
     mnuWAPermissions: TMenuItem;
+    mnuShowActivityLog: TMenuItem;
     procedure tabPageChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -298,6 +298,7 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure AppEventsIdle(Sender: TObject; var Done: Boolean);
     procedure mnuWAPermissionsClick(Sender: TObject);
+    procedure mnuShowActivityLogClick(Sender: TObject);
   private
     FProccessingNextClick : boolean;
     FJustEnteredApp : boolean;
@@ -343,12 +344,15 @@ type
     FCPRSClosing: boolean;
     FInitCPRSClose: boolean;
     FForceCloseTimer: TTimer;
+    FPatientInfoCaption: String;
+    FRPCExceptionLogSize: integer;
     procedure RefreshFixedStatusWidth;
     procedure FocusApplicationTopForm;
     procedure AppActivated(Sender: TObject);
     procedure AppDeActivated(Sender: TObject);
     procedure AppException(Sender: TObject; E: Exception);
     procedure AfterAppException(Sender: TObject; E: Exception);
+    procedure CPRSExceptionDetails(var CustomDetails: TStringList);
     function checkOtherForms(var Reason: String): boolean;
     function AllowContextChangeAll(var Reason: string):  Boolean;
     procedure ClearPatient(Fully: boolean = False);
@@ -420,6 +424,7 @@ type
     procedure ClearOTHD;
     procedure updateOTHD;
     procedure ForceCloseTimer(Sender: TObject);
+    function GetPatientInfoLabelDisplay: string;
   public
     EnduringPtSelSplitterPos, frmFrameHeight, pnlPatientSelectedHeight: integer;
     EnduringPtSelColumns: string;
@@ -458,6 +463,7 @@ type
 
     function EditInProgress: String;
     function SaveEditInProgress(var ShowMessage: Boolean): Boolean;
+    property PatientInfoLabelCaption: string read GetPatientInfoLabelDisplay;
   end;
 
   TRpcRecord = record
@@ -513,7 +519,8 @@ uses
   uVersionCheck, uFormUtils
   , oPDMPData, rPDMP, fPDMPView
   , uInfoBoxWithBtnControls, uSimilarNames, fODBase, UExceptHook, ORExtensions,
-  UResponsiveGUI, uWriteAccess;
+  UResponsiveGUI, uWriteAccess, System.Math, UMHDll,
+  ORCtrls.ActivityLog, ORCtrls.ActivityLogDisplay;
 
 //PaPI =========================================================================
 procedure SwitchToThisWindow(h1: hWnd; x: bool); stdcall;
@@ -704,7 +711,7 @@ begin
         RtnCursor := Screen.cursor;
         Screen.cursor := crHourGlass;
         try
-          LogBrokerErrors(E.Message);
+          LogBrokerErrors(E.Message, 5);
         finally
           Screen.cursor := RtnCursor;
         end;
@@ -721,6 +728,96 @@ begin
     ExceptionLog.TerminateApp := True;
   end;
 
+end;
+
+procedure TfrmFrame.CPRSExceptionDetails(var CustomDetails: TStringList);
+var
+  Division, ParentDivision: string;
+
+  procedure ShowRPCLog;
+  var
+    Text: string;
+    i, Count, RPCCount: Integer;
+  begin
+    LockRPCCallList;
+    try
+      Count := FRPCExceptionLogSize;
+      RPCCount := RetainedRPCCount;
+      if Count > RPCCount then
+        Count := RPCCount;
+      if Count > 0 then
+      begin
+        ExceptionLog.AddSectionHeader(CustomDetails, 'RPC Log', soFirst);
+        for i := 1 to Count do
+        begin
+          Text := RetrieveRPCName(RPCCount - i);
+          if Text <> '' then
+            CustomDetails.Add(Text);
+        end;
+      end;
+    finally
+      UnlockRPCCallList;
+    end;
+  end;
+
+  procedure AddInfo(Caption: string; Component: TComponent);
+  begin
+    if Assigned(Component) then
+      CustomDetails.Add(TORActivityLog.ComponentDescription(Component, Caption))
+    else
+      CustomDetails.Add(Caption + 'None;');
+  end;
+
+  procedure ShowLog(Log: TORActivityLog.TLogWrapper; LogName: string);
+  var
+    i: integer;
+  begin
+    if Log.Running and (Log.Count > 0) then
+    begin
+      ExceptionLog.AddSectionHeader(CustomDetails, LogName, soFirst);
+      for i := Log.Count - 1 downto 0 do
+        CustomDetails.Add(Log[i]);
+    end;
+  end;
+
+begin
+  Division := SystemParameters.AsTypeDef<string>('division.child', '');
+  if Division = '' then
+  begin
+    Division := Piece(RPCBrokerV.User.Division, '^', 1);
+    If (Trim(Division) = '') and (RPCBrokerV.Connected) then
+      Division := GetDivisionID
+    else
+      Division := RPCBrokerV.User.Division;
+    Division := Division.Replace('^', '  ');
+  end;
+  ExceptionLog.AddDetail(CustomDetails, 'Division', Division);
+  ParentDivision := SystemParameters.AsTypeDef<string>('division.parent', '');
+  if ParentDivision <> '' then
+    CustomDetails.Add(StringOfChar(' ', TExceptionLogger.ErrorNamePadding + 2) +
+    ParentDivision);
+
+  if RPCBrokerV.Connected then
+    Text := 'Connected'
+  else
+    Text := 'Disconnected';
+  ExceptionLog.AddDetail(CustomDetails, 'Broker', Text);
+
+  ExceptionLog.AddSectionHeader(CustomDetails, 'Current Control');
+  if (tabPage.TabIndex < 0) or (tabPage.TabIndex >= tabPage.Tabs.Count) then
+    Text := 'None'
+  else
+    Text := tabPage.Tabs[tabPage.TabIndex];
+  CustomDetails.Add('Current Tab = ' + Text);
+  if Assigned(Screen.ActiveControl) then
+    AddInfo('Active Control = ', Screen.ActiveControl)
+  else
+    AddInfo('Active Form = ', Screen.ActiveForm);
+
+  ShowRPCLog;
+
+  ShowLog(TORActivityLog.ActivityLog, 'Activity Log');
+  ShowLog(TORActivityLog.MessageLog, 'Windows Message Queue Log');
 end;
 
 procedure TfrmFrame.btnCombatVetClick(Sender: TObject);
@@ -814,10 +911,10 @@ begin
 
   //if frmFrame.Timedout then Exit; // added to correct Access Violation when "Refresh Patient Information" selected
   lblPtName.Caption     := '';
-  lblPtSSN.Caption      := '';
-  lblPtAge.Caption      := '';
+  lblPtInfo.Caption      := '';
   pnlPatient.Caption    := '';
   lblPtCWAD.Caption     := '';
+  FPatientInfoCaption := '';
 
   clearOTHD;
 
@@ -927,7 +1024,7 @@ end;
 
 function TfrmFrame.DLLActive: boolean;
 begin
-  Result := (VitalsDLLHandle <> 0) or (MHDLLHandle <> 0);
+  Result := (VitalsDLLHandle <> 0) or TMHDll.IsLoaded;
 end;
 
 { Form Events (Create, Destroy) ----------------------------------------------------------- }
@@ -946,28 +1043,48 @@ var
   bConnect: Boolean;
 
   Procedure LoadExceptionLogger;
+  const
+    Log = 'orCPRSExceptionLog.';
   var
-    aTmpLst: TStringList;
-    TmpStr: String;
+    I: Integer;
   begin
-    ExceptionLog.DaysToPurge := SystemParameters.AsTypeDef<Integer>('orCPRSExceptionPurge', 60);
+    ExceptionLog.DaysToPurge := SystemParameters.AsTypeDef<Integer>
+      (Log + 'daysToPurge', 60);
     {$IFDEF FASTMM}
-      ExceptionLog.Enabled := FALSE;
+    ExceptionLog.Enabled := FALSE;
     {$ELSE}
-      ExceptionLog.Enabled := SystemParameters.AsTypeDef<Boolean>('orCPRSExceptionLogger', False);
+    ExceptionLog.Enabled := SystemParameters.AsTypeDef<Boolean>
+      (Log + 'enabled', False);
     {$ENDIF}
-
-    aTmpLst := TStringList.Create;
-    try
-      aTmpLst.Text := SystemParameters.AsTypeDef<string>('orCPRSExceptionEmail','');
-      for TmpStr in aTmpLst do
-        ExceptionLog.EmailTo.Add(Piece(TmpStr, '=', 2));
-    finally
-      aTmpLst.Free;
+    if ExceptionLog.Enabled then
+    begin
+      TORActivityLog.ActivityLog.MaxSize := SystemParameters.AsTypeDef<Integer>
+        (Log + 'activityLogSize', 0);
+      TORActivityLog.MessageLog.MaxSize := SystemParameters.AsTypeDef<Integer>
+        (Log + 'winMessageLogSize', 0);
+      FRPCExceptionLogSize := SystemParameters.AsTypeDef<Integer>
+        (Log + 'RPCLogSize', 0);;
+    end
+    else
+    begin
+      TORActivityLog.ActivityLog.MaxSize := 0;
+      TORActivityLog.MessageLog.MaxSize := 0;
+      FRPCExceptionLogSize := 0;
     end;
+    if (not ExceptionLog.Enabled) or ((TORActivityLog.ActivityLog.MaxSize = 0) and
+      (TORActivityLog.MessageLog.MaxSize = 0)) then
+      mnuShowActivityLog.Visible := False;
+
+    ExceptionLog.IncludeModuleInfo := SystemParameters.AsTypeDef<Boolean>
+      (Log + 'includeModuleInfo', False);
+
+    for i := 0 to SystemParameters.CountItems(Log + 'email') - 1 do
+      ExceptionLog.EmailTo.Add(SystemParameters.AsTypeDef<string>
+        (Format('orCPRSExceptionLog.email[%d].Email', [i]), ''));
 
     ExceptionLog.OnAppException := AppException;
     ExceptionLog.OnAfterAppException := AfterAppException;
+    ExceptionLog.OnCustomExceptionDetails := CPRSExceptionDetails;
   end;
 
 begin
@@ -1306,6 +1423,8 @@ procedure TfrmFrame.FormDestroy(Sender: TObject);
 Var
  I:integer;
 begin
+  if Assigned(frmActivityLogDisplay) then
+    FreeAndNil(frmActivityLogDisplay);
   Application.OnActivate := FOldActivate;
   Screen.OnActiveFormChange := FOldActiveFormChange;
   FNextButtonBitmap.Free;
@@ -1539,6 +1658,10 @@ var
     Msg: TMsg;
 
   begin
+    // Ensure the control hasn't been cleaned up already
+    if not assigned(ctrl) then
+      exit;
+
     for i := 0 to ctrl.ControlCount - 1 do
       if ctrl.Controls[i] is TWinControl then
         ClearMessages(TWinControl(ctrl.Controls[i]));
@@ -1570,6 +1693,11 @@ var
 begin
   FClosing := TRUE;
   FInitCPRSClose := False;
+
+  TORActivityLog.ActivityLog.MaxSize := 0;
+  TORActivityLog.MessageLog.MaxSize := 0;
+  FreeAndNil(frmActivityLogDisplay);
+
   if assigned(FForceCloseTimer) then
     FForceCloseTimer.Enabled := False;
   SetFormMonitoring(false);
@@ -1592,6 +1720,7 @@ begin
     if frmFrame.GraphFloatActive then
       GraphFloat.Close;
     GraphFloat.Release;
+    GraphFloat := nil;
   end;
 
   // unhook the timeout hooks
@@ -1623,7 +1752,7 @@ begin
     repeat
       Done := True;
       try
-        TResponsiveGUI.ProcessMessages(True);
+        TResponsiveGUI.ProcessMessages(True, True);
       except
         Done := False;
       end;
@@ -1920,9 +2049,27 @@ end;
 
 { File Menu Events ------------------------------------------------------------------------- }
 
-procedure TfrmFrame.SetupPatient(AFlaggedList : TStringList);
+procedure TfrmFrame.SetupPatient(AFlaggedList: TStringList);
+
+  function DetermineStringWidth(AString: string; AFont: TFont): Integer;
+  var
+    Lbl: TLabel;
+  begin
+    Lbl := TLabel.Create(pnlPage);
+    try
+      Lbl.Parent := pnlPage;
+      Lbl.Font.Assign(AFont);
+      Result := Lbl.Canvas.TextWidth(AString);
+    finally
+      FreeAndNil(Lbl);
+    end;
+  end;
+
+const
+  PnlPatientHint = 'Click for more patient information.';
 var
   AMsg, SelectMsg: string;
+  InfoLen, NameLen: integer;
 begin
   with Patient do
   begin
@@ -1932,9 +2079,37 @@ begin
     Visible := True;
     TResponsiveGUI.ProcessMessages;
     lblPtName.Caption := Name + Status; //CQ #17491: Allow for the display of the patient status indicator in header bar.
-    lblPtSSN.Caption := SSN;
-    lblPtAge.Caption := FormatFMDateTime('mmm dd,yyyy', DOB) + ' (' + IntToStr(Age) + ')';
-    pnlPatient.Caption := lblPtName.Caption + ' ' + lblPtSSN.Caption + ' ' + lblPtAge.Caption;
+
+    lblPtInfo.Caption := PatientInfoLabelCaption;
+
+    if Trim(Piece(SIGI, '/', 1)) = '' then
+    begin
+      pnlPatient.Hint := PnlPatientHint;
+    end else begin
+      pnlPatient.Hint := Format('%0:s'#13#10#13#10'%1:s',
+        [PnlPatientHint, SigiHintLong(SystemParameters)]);
+    end;
+
+    //Name length + buffer
+    NameLen := DetermineStringWidth(Trim(lblPtName.Caption), lblPtName.Font) + lblPtName.Left * 2 ;
+    //Info length + buffer
+    InfoLen := DetermineStringWidth(Trim(lblPtInfo.Caption), lblPtInfo.Font) +  lblPtInfo.Left * 2;
+
+    pnlPatient.Width := Max(NameLen, InfoLen);
+
+    // This is where the 508 reading for Jaws is determined
+    if Trim(Piece(SIGI, '/', 1)) = '' then
+    begin
+      pnlPatient.Caption := Format('%0:s %1:s',
+        [lblPtName.Caption, lblPtInfo.Caption]);
+    end else begin
+      pnlPatient.Caption := StringReplace(Format('%0:s %1:s %2:s.',
+          [lblPtName.Caption, lblPtInfo.Caption, StringReplace(
+            StringReplace(SIGI_HINTS[1], #9, ' is ', [rfReplaceAll]),
+            #13#10, '. ', [rfReplaceAll])
+          ]),
+        ':', ' is ', [rfReplaceAll]);
+    end;
 
     updateOTHD;
 
@@ -1964,7 +2139,12 @@ begin
       NotifyOtherApps(NAE_NEWPT, SSN + U + FloatToStr(DOB) + U + Name);
     SelectMsg := '';
     if MeansTestRequired(Patient.DFN, AMsg) then SelectMsg := AMsg;
-    if HasLegacyData(Patient.DFN, AMsg)     then SelectMsg := SelectMsg + CRLF + AMsg;
+    if HasLegacyData(Patient.DFN, AMsg) then
+    begin
+      if SelectMsg <> '' then
+        SelectMsg := SelectMsg + CRLF;
+      SelectMsg := SelectMsg + AMsg;
+    end;
 
     HasActiveFlg(FlagList, HasFlag, Patient.DFN);
     if HasFlag then begin
@@ -2953,8 +3133,7 @@ begin
   if pnlPatient.BevelOuter = bvLowered then exit;
   pnlPatient.BevelOuter := bvLowered;
   with lblPtName do SetBounds(Left+2, Top+2, Width, Height);
-  with lblPtSSN  do SetBounds(Left+2, Top+2, Width, Height);
-  with lblPtAge  do SetBounds(Left+2, Top+2, Width, Height);
+  with lblPtInfo  do SetBounds(Left+2, Top+2, Width, Height);
 end;
 
 procedure TfrmFrame.pnlPatientMouseUp(Sender: TObject; Button: TMouseButton;
@@ -2964,8 +3143,7 @@ begin
   if pnlPatient.BevelOuter = bvRaised then exit;
   pnlPatient.BevelOuter := bvRaised;
   with lblPtName do SetBounds(Left-2, Top-2, Width, Height);
-  with lblPtSSN  do SetBounds(Left-2, Top-2, Width, Height);
-  with lblPtAge  do SetBounds(Left-2, Top-2, Width, Height);
+  with lblPtInfo  do SetBounds(Left-2, Top-2, Width, Height);
 end;
 
 procedure TfrmFrame.pnlVisitMouseDown(Sender: TObject; Button: TMouseButton;
@@ -3292,8 +3470,7 @@ begin
       OldFont.Assign(Font);
       with Self          do Font.Size := NewFontSize;
       with lblPtName     do Font.Size := NewFontSize;   // must change BOLDED labels by hand
-      with lblPtSSN      do Font.Size := NewFontSize;
-      with lblPtAge      do Font.Size := NewFontSize;
+      with lblPtInfo      do Font.Size := NewFontSize;
       with lblOTHDTitle  do Font.Size := NewFontSize;  // rpk 11/28/2017
       with lblOTHDDtl    do Font.Size := NewFontSize;  // rpk 11/28/2017
       with lblPtLocation do Font.Size := NewFontSize;
@@ -3373,6 +3550,9 @@ begin
   if assigned(OrdDlg) then
     OrdDlg.setFontSize(NewFontSize);
 
+  if Assigned(frmActivityLogDisplay) then
+    frmActivityLogDisplay.SetFontSize(NewFontSize);
+
 //  if assigned(fPDMPMgr) then
 //    fPDMPMgr.updateFont;
 //
@@ -3416,12 +3596,10 @@ begin
       pnlToolbar.Height  := (LINES_HIGH2 * lblPtName.Height) + M_HORIZ + M_MIDDLE + M_HORIZ + M_MIDDLE;
     end;
   end;
-  pnlPatient.Width   := HigherOf(PATIENT_WIDTH * MainFontWidth, lblPtName.Width + (M_WVERT * 2));
-  lblPtSSN.Top       := M_HORIZ + lblPtName.Height + M_MIDDLE;
-  lblPtAge.Top       := lblPtSSN.Top;
-  lblPtAge.Left      := pnlPatient.Width - lblPtAge.Width - M_WVERT;
+  pnlPatient.Width   := HigherOf(PATIENT_WIDTH * MainFontWidth, Max(lblPtName.Width, lblPtInfo.Width) + (M_WVERT * 2));
+  lblPtInfo.Top       := M_HORIZ + lblPtName.Height + M_MIDDLE;
 ////////////////////////////////////////////////////////////////////////////////
-  lblOTHDDtl.Top        := lblPtSSN.Top; // rpk 12/6/2017
+  lblOTHDDtl.Top        := lblPtInfo.Top; // rpk 12/6/2017
   pnlOTHD.Width      := HigherOf( (lblOTHDTitle.Width + (M_WVERT * 2)),
                           (lblOTHDDtl.Width + (M_WVERT * 2)) );  // rpk 12/6/2017
 
@@ -3434,9 +3612,9 @@ begin
                                          HigherOf(lblPtProvider.Width + (M_WVERT * 2),
                                                   lblPtLocation.Width + (M_WVERT * 2))),
                                  PATIENT_WIDTH * MainFontWidth);
-  lblPtProvider.Top  := lblPtSSN.Top;
-  lblPtAttending.Top := lblPtSSN.Top;
-  lblPtMHTC.Top       := M_MIDDLE + lblPtSSN.Height + lblPtSSN.Top;
+  lblPtProvider.Top  := lblPtInfo.Top;
+  lblPtAttending.Top := lblPtInfo.Top;
+  lblPtMHTC.Top       := M_MIDDLE + lblPtInfo.Height + lblPtInfo.Top;
   pnlPostings.Width  := Round(POSTING_WIDTH * MainFontWidth);
   if btnCombatVet.Visible then
    begin
@@ -3461,15 +3639,14 @@ begin
   with lblPtPostings do
     SetBounds(M_WVERT, M_HORIZ, pnlPostings.Width-M_WVERT-M_WVERT, lblPtName.Height);
   with lblPtCWAD     do
-    SetBounds(M_WVERT, lblPtSSN.Top, lblPtPostings.Width, lblPtName.Height);
+    SetBounds(M_WVERT, lblPtInfo.Top, lblPtPostings.Width, lblPtName.Height);
   //Low resolution handling: First, try to fit everything on by shrinking fields
   if pnlPrimaryCare.Width < HigherOf( lblPtCare.Left + lblPtCare.Width, HigherOf(lblPtAttending.Left + lblPtAttending.Width,lblPtMHTC.Left + lblPtMHTC.Width)) + TINY_MARGIN then
   //if pnlPrimaryCare.Width < HigherOf( lblPtCare.Left + lblPtCare.Width, lblPtAttending.Left + lblPtAttending.Width) + TINY_MARGIN then
   begin
-    lblPtAge.Left := lblPtAge.Left - (lblPtName.Left - TINY_MARGIN);
     lblPtName.Left := TINY_MARGIN;
-    lblPTSSN.Left := TINY_MARGIN;
-    pnlPatient.Width := HigherOf( lblPtName.Left + lblPtName.Width, lblPtAge.Left + lblPtAge.Width)+ TINY_MARGIN;
+    lblPtInfo.Left := TINY_MARGIN;
+    pnlPatient.Width := HigherOf( lblPtName.Left + lblPtName.Width, lblPtInfo.Left + lblPtInfo.Width)+ TINY_MARGIN;
     lblPtLocation.Left := TINY_MARGIN;
     lblPtProvider.Left := TINY_MARGIN;
     pnlVisit.Width := HigherOf( lblPtLocation.Left + lblPtLocation.Width, lblPtProvider.Left + lblPtProvider.Width)+ TINY_MARGIN;
@@ -4761,7 +4938,7 @@ end;
 //=========================== PDMP =============================================
 procedure TfrmFrame.pdmpAlign;
 var
-  iLeft: Integer;
+  iLeft, aTabOrder: Integer;
 begin
   if not assigned(fPDMPMgr) then
     exit;
@@ -4770,12 +4947,17 @@ begin
     exit;
 
   if pnlOTHD.Visible then
-    iLeft := pnlOTHD.Left
-  else
+  begin
+    iLeft := pnlOTHD.Left;
+    aTabOrder := pnlOTHD.TabOrder;
+  end else
+  begin
     iLeft := paVAA.Left;
+    aTabOrder := paVAA.TabOrder;
+  end;
 
   fPDMPMgr.Left := iLeft - fPDMPMgr.Width;
-
+  fPDMPMgr.TabOrder := aTabOrder;
   TResponsiveGUI.ProcessMessages;
 end;
 
@@ -4824,7 +5006,7 @@ begin
       acPDMPCancel.Enabled := False; // not expecting to run the request
       if fPDMPMgr.CachedData then
         fPDMPMgr.doCache(Patient.DFN, sl)
-      else if (fPDMPMgr.PDMPData.PatIEN <> aPatientDFN) then
+      else if (not Assigned(fPDMPMgr.PDMPData)) or (fPDMPMgr.PDMPData.PatIEN <> aPatientDFN) then
         fPDMPMgr.getLastReviewDate(Patient.DFN);
     finally
       sl.Free;
@@ -5424,7 +5606,7 @@ var
   PtSubject: string;
 begin
   data := IContextItemCollection(aContextItemCollection) ;
-  anItem := data.Present('[hds_med_domain]request.id.name');
+  anItem := data.Present('[hds_domain.ext]request.id.name');
   // Retrieve the ContextItem name and value as strings
   if anItem <> nil then
     begin
@@ -5487,6 +5669,17 @@ begin
   mnuView.Enabled := False;
   mnuTools.Enabled := False;
   if FNextButtonActive then FNextButton.Visible := False;
+end;
+
+procedure TfrmFrame.mnuShowActivityLogClick(Sender: TObject);
+begin
+  inherited;
+  if not Assigned(frmActivityLogDisplay) then
+    frmActivityLogDisplay := TfrmActivityLogDisplay.Create(Self);
+  if frmActivityLogDisplay.WindowState = TWindowState.wsMinimized then
+    frmActivityLogDisplay.WindowState := TWindowState.wsNormal;
+  frmActivityLogDisplay.Show;
+  frmActivityLogDisplay.BringToFront;
 end;
 
 procedure TfrmFrame.ShowEverything;
@@ -6206,6 +6399,60 @@ begin
  finally
   VistaList.Free;
  end;
+end;
+
+function TfrmFrame.GetPatientInfoLabelDisplay: string;
+const
+  GapSpaces = 3;
+var
+  SIGI, ProNoun, DOB, Gap, FullCaption: String;
+  NameLenPixels, SpaceLenPixels, X: Integer;
+begin
+  if Trim(FPatientInfoCaption) = '' then
+  begin
+    // Length per Character on info
+    SpaceLenPixels := TextWidthByFont(lblPtInfo.Font.Handle, ' ');
+
+    // Length of name
+    NameLenPixels := TextWidthByFont(lblPtName.Font.Handle, lblPtName.Caption);
+
+    // Setup Gap
+    Gap := Gap.PadLeft(GapSpaces);
+
+    // Full text - Used for calculations
+    FullCaption := Patient.SSN;
+
+    SIGI := Trim(Piece(Patient.SIGI, '/', 1));
+    if SIGI <> '' then
+    begin
+      SIGI := Gap + SIGI;
+      FullCaption := FullCaption + SIGI;
+    end;
+
+    ProNoun := Trim(Patient.ProNoun);
+    if ProNoun <> '' then
+    begin
+      ProNoun := Gap + ProNoun;
+      FullCaption := FullCaption + ProNoun;
+    end;
+
+    DOB := Gap + FormatFMDateTime('mmm dd,yyyy', Patient.DOB) + ' (' +
+      IntToStr(Patient.Age) + ')';
+
+    // pixels currenlty used by text
+    X := TextWidthByFont(lblPtInfo.Font.Handle, FullCaption);
+    // remaining pixels between info text and name text
+    X := (NameLenPixels - X) - TextWidthByFont(lblPtInfo.Font.Handle, DOB);
+    // number of spaces by pixels
+    X := X DIV SpaceLenPixels;
+    // Pad spaces between current text and dob (right justified)
+    DOB := DOB.PadLeft(X + Length(DOB));
+
+    // Output result
+    FPatientInfoCaption := Format('%0:s%1:s%2:s%3:s',
+      [Patient.SSN, SIGI, ProNoun, DOB]);
+  end;
+  Result := FPatientInfoCaption;
 end;
 
 // PDMP Messages processing ====================================================

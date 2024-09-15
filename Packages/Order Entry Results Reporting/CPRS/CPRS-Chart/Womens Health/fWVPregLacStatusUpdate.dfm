@@ -1,4 +1,4 @@
-object frmWVPregLacStatusUpdate: TfrmWVPregLacStatusUpdate
+inherited frmWVPregLacStatusUpdate: TfrmWVPregLacStatusUpdate
   Left = 0
   Top = 0
   Caption = 'Women'#39's Health - Pregnancy and Lactation Status Update'
@@ -666,7 +666,7 @@ object frmWVPregLacStatusUpdate: TfrmWVPregLacStatusUpdate
       end
     end
   end
-  object VA508AccessibilityManager1: TVA508AccessibilityManager
+  inherited amgrMain: TVA508AccessibilityManager
     Left = 240
     Top = 448
     Data = (

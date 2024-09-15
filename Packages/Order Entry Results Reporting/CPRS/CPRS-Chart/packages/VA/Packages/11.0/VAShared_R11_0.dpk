@@ -1,0 +1,50 @@
+package VAShared_R11_0;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'VA Shared Units - 11.0'}
+{$RUNONLY}
+{$IMPLICITBUILD OFF}
+
+requires
+  rtl,
+  vcl;
+
+contains
+  VAUtils in '..\..\Source\VAUtils.pas',
+  VAClasses in '..\..\Source\VAClasses.pas',
+  HRBuffers in '..\..\Source\HRBuffers.pas',
+  HRParser in '..\..\Source\HRParser.pas',
+  HRParserPas in '..\..\Source\HRParserPas.pas',
+  VA2006Utils in '..\..\Source\VA2006Utils.pas',
+  VAPieceHelper in '..\..\Source\VAPieceHelper.pas',
+  ULockBroker in '..\..\Source\ULockBroker.pas',
+  uWinMsgNames in '..\..\Source\uWinMsgNames.pas',
+  UTextWrapper in '..\..\Source\UTextWrapper.pas',
+  VAShared.UJSONParameters in '..\..\Source\VAShared.UJSONParameters.pas',
+  VAShared.UJSONValueHelper in '..\..\Source\VAShared.UJSONValueHelper.pas';
+
+end.

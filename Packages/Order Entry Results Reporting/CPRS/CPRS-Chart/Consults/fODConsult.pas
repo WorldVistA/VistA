@@ -1,4 +1,4 @@
-unit fODConsult;
+﻿unit fODConsult;
 {------------------------------------------------------------------------------
 Update History
 
@@ -13,6 +13,7 @@ Update History
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fODBase, StdCtrls, ORCtrls, ExtCtrls, ComCtrls, ORfn, uConst, Buttons,
   Menus,
@@ -27,7 +28,7 @@ type
     pnlMain: TPanel;
     pnlReason: TPanel;
     lblReason: TLabel;
-    memReason: TRichEdit;
+    memReason: ORExtensions.TRichEdit;
     mnuPopProvDx: TPopupMenu;
     mnuPopProvDxDelete: TMenuItem;
     popReason: TPopupMenu;
@@ -79,7 +80,6 @@ type
     procedure ControlChange(Sender: TObject);
     procedure treServiceExit(Sender: TObject);
     procedure cmdAcceptClick(Sender: TObject);
-    procedure memReasonExit(Sender: TObject);
     procedure cboServiceSelect(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnServiceTreeClick(Sender: TObject);
@@ -134,8 +134,7 @@ type
     procedure SetupReasonForRequest(OrderAction: integer);
     procedure GetProvDxandValidateCode(AResponses: TResponses);
     function ShowPrerequisites: boolean;
-//    procedure DoSetFontSize(FontSize: integer; FromCreate: boolean = false);
-    procedure DoSetFontSize(FontSize: integer = -1);
+    procedure DoSetFontSize(FontSize: Integer = -1); reintroduce;
     procedure SetUpQuickOrderDX;
     procedure SaveConsultDxForNurse(pDiagnosis: string);  // save the dx entered by nurese if Master BA switch is ON
     procedure SetUpCopyConsultDiagnoses(pOrderID:string);
@@ -211,6 +210,7 @@ const
   TX_INACTIVE_CODE_REQD     = 'Another code must be selected before the order can be saved.';
   TX_INACTIVE_CODE_OPTIONAL = 'If another code is not selected, no code will be saved.';
   TX_PAST_DATE       = 'Clinically indicated date must be today or later.';
+  TX_BAD_DATE         = 'The clinically indicated date you have entered is invalid.';
   TX_NLTD_GREATER    = 'No later than date must be greater than or equal to the' + #13#10;
   TX_NLTD_GREATER1   = 'clinically indicated date';
 
@@ -667,6 +667,10 @@ end;
 
 
 procedure TfrmODCslt.Validate(var AnErrMsg: string);
+var
+  MaxDays: Double;
+  MaxDate: TDateTime;
+  ALongMessage: String;
 
   procedure SetError(const x: string);
   begin
@@ -696,7 +700,22 @@ begin
       else
         SetError(TX_SELECT_DIAG);
     end;
-  if (lblClinicallyIndicated.Enabled) and (calClinicallyIndicated.FMDateTime < FMToday) then SetError(TX_PAST_DATE);
+  MaxDays := SystemParameters.AsTypeDef<Double>('consultFutureDateLimit',0);
+  MaxDate := FMDateTimeToDateTime(FMToday) + MaxDays;
+  if (lblClinicallyIndicated.Enabled) then
+    begin
+      if calClinicallyIndicated.FMDateTime < FMToday then
+        SetError(TX_PAST_DATE)
+      else if FMDateTimeToDateTime(calClinicallyIndicated.FMDateTime) > MaxDate then
+        begin
+          ALongMessage := TX_BAD_DATE + CRLF + 'Please choose a date between ' +
+            FormatFMDateTime('mm/dd/yyyy', FMToday) + ' and ' +
+              FormatDateTime('mm/dd/yyyy', MaxDate);
+          SetError(ALongMessage);
+        end
+
+    end;
+
 //  if (calLatest.Enabled) and (calLatest.FMDateTime < calClinicallyIndicated.FMDateTime) then SetError(TX_NLTD_GREATER + TX_NLTD_GREATER1);
 //  if (cboUrgency.Text = 'SPECIAL INSTRUCTIONS') and (calLatest.FMDateTime = 0) then SetError(TX_NLTD_SI_URG);
 
@@ -1082,24 +1101,6 @@ begin
   end;
 end;
 
-procedure TfrmODCslt.memReasonExit(Sender: TObject);
-var
-  AStringList: TStringList;
-begin
-  inherited;
-  AStringList := TStringList.Create;
-  try
-    //QuickCopy(memReason, AStringList);
-    AStringList.Text := memReason.Text;
-    LimitStringLength(AStringList, 74);
-    //QuickCopy(AstringList, memReason);
-    memReason.Text := AStringList.Text;
-    ControlChange(Self);
-  finally
-    AStringList.Free;
-  end;
-end;
-
 procedure TfrmODCslt.cboServiceSelect(Sender: TObject);
 var
   tmpSvc: string;
@@ -1442,6 +1443,11 @@ begin
     EncounterDate := FMNow;
 
  LexiconLookup(Match, LX_ICD, EncounterDate);
+ // INC13824577 - DRM - 2021-1-14
+ // If the user clicks to another app while in the lexicon lookup, then comes back
+ // to CPRS, this form can be pushed "behind" uOrderMenu. This is because both forms
+ // have fsStayOnTop.
+ BringToFront;
  if Match = '' then Exit;
  ProvDx.Code := Piece(Piece(Match, U, 1), '/', 1);
  ProvDx.Text := Piece(Match, U, 2);
@@ -1730,8 +1736,8 @@ begin
   DocInfo := '';
   TmpSL := TStringList.Create;
   try
-    setDefaultReasonForRequest(aDest, Service + CSLT_PTR, Resolve);
-    TmpSL.Text := aDest.Text;
+    setDefaultReasonForRequest(TmpSL, Service + CSLT_PTR, Resolve);
+    aDest.Text := TmpSL.Text;
     X := TmpSL.Text;
     ExpandOrderObjects(X, HasObjects);
     TmpSL.Text := X;
@@ -1748,7 +1754,19 @@ begin
     end
     else
     begin
-      aDest.Assign(TmpSL);
+      // INC29657166/VISTAOR-35988 - 2024-1-24 - DRM
+      // Using SaveToStream/LoadFromStream to bypass a problem in TRichEdit.
+      // Sometimes EM_GETLINECOUNT always returns 0, which causes the Assign method,
+      // or assigning to the Text property, to reverse the lines.
+      aDest.Clear;
+      var mStream := TMemoryStream.Create;
+      try
+        TmpSL.SaveToStream(mStream);
+        mStream.Position := 0;
+        aDest.LoadFromStream(mStream);
+      finally
+        mStream.Free;
+      end;
       if aDest.Count > 0 then
         SpeakTextInserted;
     end;
@@ -1805,14 +1823,10 @@ begin
   doSetFontSize;
 end;
 
-//procedure TfrmODCslt.DoSetFontSize(FontSize: integer; FromCreate: boolean = false);
-procedure TfrmODCslt.DoSetFontSize(FontSize: integer = -1);
+procedure TfrmODCslt.DoSetFontSize(FontSize: Integer = -1);
 var
-//  pad: integer;
   iButtonHeight, iButtonWidth, iWidth,
   iTextHeight, iTextWidth: Integer;
-
-
 begin
   if FontSize = -1 then
     FontSize := Application.MainForm.Font.Size;
@@ -1838,19 +1852,10 @@ begin
   grdDstControls.Height := iTextHeight + GAP + 2 * (iButtonHeight + GAP);
   grdDstControls.RowCollection[2].Value := iButtonHeight + GAP;
 
-
-
   memReason.DefAttributes.Size := FontSize;
   treService.Font.Size := FontSize * 7 div 8;
 
-//  if FromCreate then
-//    pad := FontSize - 8
-//  else
-//    pad := (bvlBottom.Height - cmdAccept.Height) div 2;
-
   Constraints.MinHeight := getMinHeight;
-//cmdAccept.Top := ClientHeight - cmdAccept.Height - pad;
-  //cmdQuit.Top := cmdAccept.Top;
 end;
 
 procedure TfrmODCslt.SetFontSize(FontSize: integer);

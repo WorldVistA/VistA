@@ -81,7 +81,6 @@ inherited frmOptionsOther: TfrmOptionsOther
     Height = 542
     Align = alClient
     BevelOuter = bvNone
-    Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 3
     ExplicitTop = 400

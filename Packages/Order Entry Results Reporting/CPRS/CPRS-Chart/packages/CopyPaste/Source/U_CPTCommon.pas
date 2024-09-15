@@ -112,11 +112,15 @@ type
 
   CprsClipboardArry = Array of TCprsClipboard;
 
-  tHighlightRecord = record
-    LineToHighlight: WideString;
+  THighlightRecord = record
     AboveWrdCnt: Boolean;
-  Public
-    procedure Assign(const Source: tHighlightRecord);
+  strict private
+    FLineToHighlight: WideString;
+    function GetLineToHighlight: WideString;
+  public
+    procedure Assign(const Source: THighlightRecord);
+    property LineToHighlight: WideString read GetLineToHighlight
+      write FLineToHighlight;
   end;
 
   THighlightRecordArray = Array of tHighlightRecord;
@@ -236,11 +240,18 @@ const
   // used to send update status msg to main form
 
 implementation
+uses
+  System.SysUtils;
 
-procedure tHighlightRecord.Assign(const Source: tHighlightRecord);
+procedure THighlightRecord.Assign(const Source: THighlightRecord);
 begin
   LineToHighlight := Source.LineToHighlight;
   AboveWrdCnt := Source.AboveWrdCnt;
+end;
+
+function THighlightRecord.GetLineToHighlight: WideString;
+begin
+  Result := System.SysUtils.Trim(FLineToHighlight);
 end;
 
 procedure TGroupRecord.Assign(const Source: TGroupRecord);
@@ -312,4 +323,3 @@ begin
 end;
 
 end.
-

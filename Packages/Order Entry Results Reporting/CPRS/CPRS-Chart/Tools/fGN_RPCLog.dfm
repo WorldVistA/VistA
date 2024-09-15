@@ -1,4 +1,4 @@
-object frmRPCLog: TfrmRPCLog
+inherited frmRPCLog: TfrmRPCLog
   Left = 338
   Top = 235
   Caption = 'RPC Log'
@@ -52,7 +52,6 @@ object frmRPCLog: TfrmRPCLog
     Height = 535
     Align = alLeft
     BevelOuter = bvNone
-    Caption = 'pnlRPC'
     Color = clCream
     ParentBackground = False
     ShowCaption = False

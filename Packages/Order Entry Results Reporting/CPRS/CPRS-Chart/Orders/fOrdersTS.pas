@@ -151,10 +151,11 @@ begin
       Result := frmOrdersTS.FResult;
     end;
   finally
-    frmOrdersTS.Release;
     frmOrdersTS.FImmediatelyRelease := False;
     frmOrdersTS.FCurrSpecialty := '';
     frmOrdersTS.fraEvntDelayList.ResetProperty;
+    frmOrdersTS.Release;
+    frmOrdersTS := nil;
   end;
 end;
 

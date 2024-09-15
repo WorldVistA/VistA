@@ -1,0 +1,26 @@
+#!/bin/sh
+
+
+# Get the name of the current branch.
+branchname=$(git branch | grep ^* | sed 's/\* //g')
+
+regex="(VISTAOR-[0-9]*)"
+# Enable case insensitive match, jira project codes are uppercase
+shopt -s nocasematch
+
+if [[ $branchname =~ $regex ]]
+then
+
+  # Get the captured portion of the branch name.
+  jiraTicketName="[#${BASH_REMATCH[1]}]" 
+  jiraTicketName=$(echo $jiraTicketName | tr '[:lower:]' '[:upper:]')
+
+  # If the message already begins with PROJECTNAME-#, do not edit the commit message.
+  if [[ $(cat "$1") == "$jiraTicketName"* ]]; then
+    exit 0
+  fi
+	
+  echo -n "$jiraTicketName"': '|cat - "$1" > /tmp/out && mv /tmp/out "$1"
+
+fi
+# else => do not edit the commit message.

@@ -266,6 +266,10 @@ inherited frmAlertsProcessed: TfrmAlertsProcessed
         ParentBackground = False
         TabOrder = 1
         ShowAccelChar = True
+        WordWrap = False
+        LabelAlignment = taLeftJustify
+        LabelLayout = tlTop
+        ExplicitLeft = 763
       end
       object stxtDateRange: TVA508StaticText
         Name = 'stxtDateRange'
@@ -280,6 +284,9 @@ inherited frmAlertsProcessed: TfrmAlertsProcessed
         ParentBackground = False
         TabOrder = 2
         ShowAccelChar = True
+        WordWrap = False
+        LabelAlignment = taLeftJustify
+        LabelLayout = tlTop
       end
     end
   end

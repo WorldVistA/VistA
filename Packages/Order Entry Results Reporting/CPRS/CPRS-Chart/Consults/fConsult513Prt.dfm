@@ -22,7 +22,6 @@ inherited frm513Print: Tfrm513Print
     Height = 33
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'pnlBUttons'
     ShowCaption = False
     TabOrder = 1
     object cmdOK: TButton
@@ -66,7 +65,6 @@ inherited frm513Print: Tfrm513Print
     Width = 433
     Height = 304
     Align = alClient
-    Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 0
     object Panel2: TPanel

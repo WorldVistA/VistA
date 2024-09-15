@@ -21,7 +21,6 @@ inherited frmOptionsNotes: TfrmOptionsNotes
     Height = 158
     Align = alClient
     BevelOuter = bvNone
-    Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 0
     ExplicitLeft = 200

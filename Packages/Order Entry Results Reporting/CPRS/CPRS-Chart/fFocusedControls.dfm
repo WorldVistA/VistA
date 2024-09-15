@@ -1,4 +1,4 @@
-object dlgFocusedControls: TdlgFocusedControls
+inherited dlgFocusedControls: TdlgFocusedControls
   Left = 0
   Top = 0
   Caption = 'Focused Controls'

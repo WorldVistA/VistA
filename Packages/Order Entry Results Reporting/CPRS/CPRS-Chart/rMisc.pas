@@ -20,7 +20,7 @@ type
   end;
 
   TDLL_Return_Type = (DLL_Success, DLL_Missing, DLL_VersionErr);
-  TDLLCloseProc = procedure(Handle: THandle);
+  TDLLCloseProc = reference to procedure(Handle: THandle);
 
   TDllRtnRec = record
     DLLName: string;

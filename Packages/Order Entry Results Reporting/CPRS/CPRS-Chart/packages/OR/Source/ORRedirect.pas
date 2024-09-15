@@ -12,14 +12,23 @@ unit ORRedirect;
 
 interface
 
+uses
+  Vcl.Forms,
+  Vcl.Controls;
+
 type
   TORRedirect = class(TObject)
   private
+    class var FOldSetFocus: procedure(Self: TWinControl);
+    class var FOldFormSetFocus: procedure(Self: TCustomForm);
+    class var FOldSetActiveControl: procedure(Self: TCustomForm;
+      Control: TWinControl);
     class var FIsStarted: Boolean;
+  protected
+    class destructor Destroy;
   public
     class procedure Start;
     class procedure Stop;
-    class procedure Init; // for compatibility
     class property IsStarted: Boolean read FIsStarted;
   end;
 
@@ -30,170 +39,132 @@ uses
   System.SysUtils,
   System.Rtti,
   Vcl.Consts,
-  Vcl.Forms,
-  Vcl.Controls,
   DDetours;
-
-var
-  SetFocusTrampoline: procedure(Self: TWinControl) = nil;
-  FormSetFocusTrampoline: procedure(Self: TCustomForm) = nil;
-  SetActiveControlTrampoline: procedure(Self: TCustomForm;
-    Control: TWinControl) = nil;
-
-var
-  SParentRequiredMatch: string;
-
-function ShouldRaiseFocusException(E: Exception): Boolean;
-// Returns true if exception should not be swallowed
-begin
-  // This Result := False; statement is only here for v32 of CPRS.
-  // It should be removed for v33.
-  Result := False;
-  // Uncomment these lines for v33
-  // if not(E is EInvalidOperation) then
-  //   Exit(True);
-  // Result := (Pos(SCannotFocus, E.Message) <= 0) and
-  //   (Pos(SParentRequiredMatch, E.Message) <= 0);
-end;
 
 procedure InterceptSetFocus(Self: TWinControl);
 begin
   try
-    if Assigned(Self) and (not(csDestroying in Self.ComponentState)) then
-      SetFocusTrampoline(Self);
+    if Assigned(TORRedirect.FOldSetFocus) and
+      Assigned(Self) and (not(csDestroying in Self.ComponentState))
+    then
+      TORRedirect.FOldSetFocus(Self);
   except
-    on E: Exception do
-      if ShouldRaiseFocusException(E) then
-        raise;
+    on E: Exception do; // nothing
   end;
 end;
 
 procedure InterceptFormSetFocus(Self: TCustomForm);
 begin
   try
-    if Assigned(Self) and (not(csDestroying in Self.ComponentState)) then
-      FormSetFocusTrampoline(Self);
-  except
-    on E: Exception do
-      if ShouldRaiseFocusException(E) then
-        raise;
-  end;
-end;
-
-procedure InterceptSetActiveControl(Self: TCustomForm; Control: TWinControl);
-begin
-  try
-    if Assigned(Self) and (not(csDestroying in Self.ComponentState)) and
-      (not Assigned(Control) or (not(csDestroying in Control.ComponentState)))
+    if Assigned(TORRedirect.FOldFormSetFocus) and
+      Assigned(Self) and (not(csDestroying in Self.ComponentState))
     then
-      SetActiveControlTrampoline(Self, Control);
+      TORRedirect.FOldFormSetFocus(Self);
   except
-    on E: Exception do
-      if ShouldRaiseFocusException(E) then
-        raise;
+    on E: Exception do; // nothing
   end;
 end;
 
-function FindRttiType(ARttiContext: TRttiContext; AClass: TClass): TRttiType;
+procedure InterceptSetActiveControl(Self: TCustomForm; AControl: TWinControl);
 begin
-  Result := ARttiContext.GetType(AClass);
-end;
-
-function FindRttiProperty(ARttiContext: TRttiContext; AClass: TClass;
-  const APropertyName: string): TRttiProperty;
-var
-  ARttiType: TRttiType;
-begin
-  ARttiType := FindRttiType(ARttiContext, AClass);
-  if Assigned(ARttiType) then
-    Result := ARttiType.GetProperty(APropertyName)
-  else
-    Result := nil;
-end;
-
-function FindPropertySet(ARttiContext: TRttiContext; AClass: TClass;
-  APropertyName: string): Pointer;
-var
-  ARttiProperty: TRttiProperty;
-begin
-  ARttiProperty := FindRttiProperty(ARttiContext, AClass, APropertyName);
-  if Assigned(ARttiProperty) and (ARttiProperty is TRttiInstanceProperty) and
-    Assigned(TRttiInstanceProperty(ARttiProperty).PropInfo) then
-    Result := TRttiInstanceProperty(ARttiProperty).PropInfo^.SetProc
-  else
-    Result := nil;
-end;
-
-procedure StartIntercepting;
-var
-  AHandle: THandle;
-  ARttiContext: TRttiContext;
-  APropSetAddr: pointer;
-begin
-  AHandle := BeginTransaction;
   try
-    SParentRequiredMatch := Copy(SParentRequired, Length(SParentRequired)
-      - 19, 20);
-
-    // Set up the interception of TWinControl.SetFocus
-    SetFocusTrampoline := InterceptCreate(@TWinControl.SetFocus,
-      @InterceptSetFocus);
-
-    // Set up the interception of TCustomForm.SetFocus
-    FormSetFocusTrampoline := InterceptCreate(@TCustomForm.SetFocus,
-      @InterceptFormSetFocus);
-
-    // Set up the interception of the setter proc for property
-    // TCustomForm.ActiveControl
-    ARttiContext := TRttiContext.Create;
-    try
-      APropSetAddr := FindPropertySet(ARttiContext, TCustomForm,
-        'ActiveControl');
-      if Assigned(APropSetAddr) then
-        SetActiveControlTrampoline := InterceptCreate(APropSetAddr,
-          @InterceptSetActiveControl);
-    finally
-      ARttiContext.Free;
-    end;
-
-  finally
-    EndTransaction(AHandle);
+    if Assigned(TORRedirect.FOldSetActiveControl) and
+      Assigned(Self) and (not(csDestroying in Self.ComponentState)) and
+      (not Assigned(AControl) or (not(csDestroying in AControl.ComponentState)))
+    then
+      TORRedirect.FOldSetActiveControl(Self, AControl);
+  except
+    on E: Exception do; // nothing
   end;
 end;
 
-procedure StopIntercepting;
-var
-  AHandle: THandle;
+class destructor TORRedirect.Destroy;
 begin
-  AHandle := BeginTransaction;
-  try
-    InterceptRemove(@SetActiveControlTrampoline);
-    SetActiveControlTrampoline := nil;
-    InterceptRemove(@FormSetFocusTrampoline);
-    FormSetFocusTrampoline := nil;
-    InterceptRemove(@SetFocusTrampoline);
-    SetFocusTrampoline := nil;
-  finally
-    EndTransaction(AHandle);
-  end;
+  Stop;
 end;
 
-// TORRedirect
 class procedure TORRedirect.Start;
+
+  procedure StartIntercepting;
+  var
+    AHandle: THandle;
+    ASetProc: Pointer;
+    ARttiContext: TRttiContext;
+    ARttiType: TRttiType;
+    ARttiProperty: TRttiProperty;
+  begin
+    AHandle := BeginTransaction;
+    try
+      // Set up the interception of TWinControl.SetFocus
+      FOldSetFocus := InterceptCreate(@TWinControl.SetFocus,
+        @InterceptSetFocus);
+      if not Assigned(FOldSetFocus) then
+        raise Exception.Create('FOldSetFocus not assigned');
+
+      // Set up the interception of TCustomForm.SetFocus
+      FOldFormSetFocus := InterceptCreate(@TCustomForm.SetFocus,
+        @InterceptFormSetFocus);
+      if not Assigned(FOldFormSetFocus) then
+        raise Exception.Create('FOldFormSetFocus not assigned');
+
+      // Set up the interception of the setter proc for property
+      // TCustomForm.ActiveControl
+      ASetProc := nil;
+      ARttiType := ARttiContext.GetType(TCustomForm);
+      if Assigned(ARttiType) then
+      begin
+        ARttiProperty := ARttiType.GetProperty('ActiveControl');
+        if Assigned(ARttiProperty) and
+          (ARttiProperty is TRttiInstanceProperty) and
+          // GetPropInfo is abstract, so I am making sure we get a child of
+          // TRttiInstanceProperty, and not an TRttiInstanceProperty
+          (ARttiProperty.ClassType <> TRttiInstanceProperty) and
+          Assigned(TRttiInstanceProperty(ARttiProperty).PropInfo) then
+          ASetProc := TRttiInstanceProperty(ARttiProperty).PropInfo.SetProc;
+      end;
+      if not Assigned(ASetProc) then
+        raise Exception.Create('ASetProc not assigned');
+      FOldSetActiveControl := InterceptCreate(ASetProc,
+        @InterceptSetActiveControl);
+      if not Assigned(FOldSetActiveControl) then
+        raise Exception.Create('FOldSetActiveControl not assigned');
+    finally
+      EndTransaction(AHandle);
+    end;
+  end;
+
 begin
   if not FIsStarted then
   begin
     try
-      StartIntercepting;
       FIsStarted := True;
+      StartIntercepting;
     except
-      StopIntercepting;
+      Stop;
       raise;
     end;
   end;
 end;
 
 class procedure TORRedirect.Stop;
+
+  procedure StopIntercepting;
+  var
+    AHandle: THandle;
+  begin
+    AHandle := BeginTransaction;
+    try
+      InterceptRemove(@FOldSetActiveControl);
+      FOldSetActiveControl := nil;
+      InterceptRemove(@FOldFormSetFocus);
+      FOldFormSetFocus := nil;
+      InterceptRemove(@FOldSetFocus);
+      FOldSetFocus := nil;
+    finally
+      EndTransaction(AHandle);
+    end;
+  end;
+
 begin
   if FIsStarted then
   begin
@@ -204,16 +175,5 @@ begin
     end;
   end;
 end;
-
-class procedure TORRedirect.Init;
-begin
-  Start;
-end;
-
-initialization
-
-finalization
-
-TORRedirect.Stop;
 
 end.

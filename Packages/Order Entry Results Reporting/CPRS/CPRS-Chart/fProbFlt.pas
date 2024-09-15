@@ -31,7 +31,6 @@ type
     procedure cmdRemoveClick(Sender: TObject);
     procedure cmdRemoveAllClick(Sender: TObject);
     procedure SetButtons;
-    procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure rgVuClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
     procedure cmdOKClick(Sender: TObject);
@@ -354,12 +353,6 @@ begin
   FFilterChanged := True;
   Close;
   //ModalResult := mrOK ; }
-end;
-
-procedure TfrmPlVuFilt.FormClose(Sender: TObject;
-  var Action: TCloseAction);
-begin
- Release;
 end;
 
 procedure TfrmPlVuFilt.GetClinicList;

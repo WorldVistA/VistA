@@ -44,7 +44,7 @@ type
     Timer1: TTimer;
     pnlRightBottom: TPanel;
     Memo1: TMemo;
-    memLab: TRichEdit;
+    memLab: ORExtensions.TRichEdit;
     pnlRightTop: TPanel;
     bvlHeader: TBevel;
     pnlHeader: TORAutoPanel;
@@ -201,7 +201,7 @@ type
     procedure tvReportsExpanding(Sender: TObject; Node: TTreeNode;
       var AllowExpansion: Boolean);
     procedure lvReportsKeyUp(Sender: TObject; var Key: Word;
-      Shift: TShiftState); 
+      Shift: TShiftState);
     procedure SelectAll1Click(Sender: TObject);
     procedure Print1Click(Sender: TObject);
     procedure Copy1Click(Sender: TObject);
@@ -256,9 +256,11 @@ type
     procedure grdLabExit(Sender: TObject);
 
   private
-    { Private declarations }
+    FmemLabDrawingLocked, FtvReportsDrawingLocked: Boolean;
     SortIdx1, SortIdx2, SortIdx3: Integer;
     grdLab508Manager : TGridLab508Manager;
+    procedure LockDrawing(AWinControl: TWinControl); overload;
+    procedure UnlockDrawing(AWinControl: TWinControl); overload;
     procedure HGrid(griddata: TStrings);
     procedure VGrid(griddata: TStrings);
     procedure FillGrid(agrid: TStringGrid; aitems: TStrings);
@@ -505,8 +507,11 @@ begin
   uRDOStick := false;
   uDateOverride := false;
   uRDOPick := 0;
+  btnAppearLt.Ignore508StateChange := true;
+  btnAppearRt.Ignore508StateChange := true;
   if User.HasKey('XUPROGMODE') then
     begin
+      btnAppearLt.Enabled := true;
       btnAppearRt.Enabled := true;
     end;
   if ScreenReaderActive then
@@ -1214,7 +1219,7 @@ begin
         memLab.Visible := true;
         memLab.TabStop := true;
         memLab.BringToFront;
-        RedrawActivate(memLab.Handle);
+        UnlockDrawing(memLab);
       end;
     uLabLocalReportData.Clear;
     uLabRemoteReportData.Clear;
@@ -2181,19 +2186,26 @@ end;
 procedure TfrmLabs.GridComments(aitems: TStrings);
 var
   i, start: integer;
+  memoComments: TStringList;
 begin
-  if aitems.Count > 0 then
-    start := strtointdef(Piece(aitems[0], '^', 5), 1)
-  else
-    start := 1;
-  memLab.Clear;
-  uLabLocalReportData.Clear;
-  uLabRemoteReportData.Clear;
-  for i := start to aitems.Count - 1 do
-    memLab.Lines.Add(aitems[i]);
-  if (memLab.Lines.Count = 0) and (aitems.Count > 1) then
-    memLab.Lines.Add('<No comments on specimens.>');
-  memLab.SelStart := 0;
+  memoComments := TStringList.Create;
+  try
+    if aitems.Count > 0 then
+      start := StrToIntDef(piece(aitems[0], '^', 5), 1)
+    else
+      start := 1;
+    memLab.Clear;
+    uLabLocalReportData.Clear;
+    uLabRemoteReportData.Clear;
+    for i := start to aitems.Count - 1 do
+      memoComments.Add(aitems[i]);
+    if (memoComments.Count = 0) and (aitems.Count > 1) then
+      memoComments.Add('No comments on specimens.');
+    QuickCopy(memoComments, memLab);
+    memLab.SelStart := 0;
+  finally
+    memoComments.Free;
+  end;
 end;
 
 procedure TfrmLabs.FormDestroy(Sender: TObject);
@@ -2265,23 +2277,31 @@ begin
   end;
 end;
 
-procedure TfrmLabs.FillComments(amemo: TRichEdit; aitems:TStrings);
+procedure TfrmLabs.FillComments(AMemo: TRichEdit; AItems: TStrings);
 var
-  testcnt, i: integer;
-  specimen, accession, provider: string;
+  TestCount, I: Integer;
+  Specimen, Accession, Provider: string;
+  AStream: TStringStream;
 begin
-  amemo.Lines.Clear;
-  if aitems.Count > 0 then
-  begin
-    specimen := Piece(aitems[0], '^', 5);
-    accession := Piece(aitems[0], '^', 6);
-    provider := Piece(aitems[0], '^', 7);
-    amemo.Lines.Add('Specimen: ' + specimen + ';    Accession: ' + accession + ';    Provider: ' + provider);
-    testcnt := strtoint(Piece(aitems[0], '^', 1));
-    for i := testcnt + 1 to aitems.Count - 1 do
-      amemo.Lines.Add(aitems[i]);
-    amemo.SelStart := 0;
+  AStream := TStringStream.Create;
+  try
+    if AItems.Count > 0 then
+    begin
+      Specimen := Piece(AItems[0], '^', 5);
+      Accession := Piece(AItems[0], '^', 6);
+      Provider := Piece(AItems[0], '^', 7);
+      AStream.WriteString('Specimen: ' + Specimen + ';    Accession: ' +
+        Accession + ';    Provider: ' + Provider);
+      TestCount := StrToInt(Piece(AItems[0], '^', 1));
+      for I := TestCount + 1 to AItems.Count - 1 do
+        AStream.WriteString(#13#10 + AItems[I]);
+    end;
+    AStream.Position := 0;
+    AMemo.Lines.LoadFromStream(AStream);
+  finally
+    FreeAndNil(AStream);
   end;
+  AMemo.SelStart := 0;
 end;
 
 procedure TfrmLabs.GetInterimGrid(adatetime: TFMDateTime; direction: integer);
@@ -3507,6 +3527,54 @@ begin
   end;
 end;
 
+procedure TfrmLabs.LockDrawing(AWinControl: TWinControl);
+begin
+  if not Assigned(AWinControl) then Exit;
+  if AWinControl = memLab then
+  begin
+    if not FmemLabDrawingLocked then
+    begin
+      FmemLabDrawingLocked := True;
+      memLab.LockDrawing;
+    end;
+  end else begin
+    if AWinControl = tvReports then
+    begin
+      if not FtvReportsDrawingLocked then
+      begin
+        FtvReportsDrawingLocked := True;
+        tvReports.LockDrawing;
+      end;
+    end else begin
+      raise Exception.Create('Object locking not implemented');
+    end;
+  end;
+end;
+
+procedure TfrmLabs.UnlockDrawing(AWinControl: TWinControl);
+begin
+  if not Assigned(AWinControl) then Exit;
+  if AWinControl = memLab then
+  begin
+    if FmemLabDrawingLocked then
+    begin
+      memLab.UnlockDrawing;
+      FmemLabDrawingLocked := False;
+    end;
+  end else begin
+    if AWinControl = tvReports then
+    begin
+      if FtvReportsDrawingLocked then
+      begin
+        tvReports.UnlockDrawing;
+        FtvReportsDrawingLocked := False;
+      end;
+    end else begin
+      raise Exception.Create('Object locking not implemented');
+    end;
+  end;
+end;
+
 procedure TfrmLabs.PopupMenu3Popup(Sender: TObject);
 begin
  inherited;
@@ -3520,7 +3588,7 @@ begin
   Else
     FreezeText1.Enabled := False;
   If Memo1.Visible Then
-    UnFreezeText1.Enabled := True;                              
+    UnFreezeText1.Enabled := True;
 end;
 
 procedure TfrmLabs.ProcessNotifications;
@@ -4099,8 +4167,8 @@ begin
   uSortOrder := aSortOrder;
   uLabRemoteType := aRemote + '^' + aReportType + '^' + IntToStr(aIFN) + '^' + aHeading + '^' + aRptCode + '^' + aDaysBack + '^' + aHDR + '^' + aFHIE + '^' + aFHIEONLY;
   pnlRightTop.Height := lblTitle.Height;  // see below
-  RedrawSuspend(tvReports.Handle);
-  RedrawSuspend(memLab.Handle);
+  LockDrawing(tvReports);
+  LockDrawing(memLab);
   uHState := aHSTag;
   Timer1.Enabled := False;
   HideTabControl;
@@ -4155,38 +4223,40 @@ begin
       begin
         with lvReports do
           begin
-            RedrawSuspend(lvReports.Handle);
-            Columns.BeginUpdate;
-            ViewStyle := vsReport;
-            ColumnHeaders(uColumns, IntToStr(aIFN));
-            for i := 0 to uColumns.Count -1 do
-              begin
-                uNewColumn := Columns.Add;
-                uNewColumn.Caption := piece(uColumns.Strings[i],'^',1);
-                if length(uColChange) < 1 then uColChange := IntToStr(aIFN) + '^';
-                if piece(uColumns.Strings[i],'^',2) = '1' then
-                  begin
-                    uNewColumn.Width := 0;
-                    uColChange := uColChange + '0,';
-                  end
-                else
-                  if length(piece(uColumns.Strings[i],'^',10)) > 0 then
+            lvReports.LockDrawing;
+            try
+              Columns.BeginUpdate;
+              ViewStyle := vsReport;
+              ColumnHeaders(uColumns, IntToStr(aIFN));
+              for i := 0 to uColumns.Count -1 do
+                begin
+                  uNewColumn := Columns.Add;
+                  uNewColumn.Caption := piece(uColumns.Strings[i],'^',1);
+                  if length(uColChange) < 1 then uColChange := IntToStr(aIFN) + '^';
+                  if piece(uColumns.Strings[i],'^',2) = '1' then
                     begin
-                      uColChange := uColChange + piece(uColumns.Strings[i],'^',10) + ',';
-                      uNewColumn.Width := StrToInt(piece(uColumns.Strings[i],'^',10))
+                      uNewColumn.Width := 0;
+                      uColChange := uColChange + '0,';
                     end
                   else
-                    uNewColumn.Width := ColumnHeaderWidth;  //ColumnTextWidth for width of text
-                if (i = 0) and (((aRemote <> '2') and (aRemote <> '1')) or ((TabControl1.Tabs.Count < 2) and (not (aHDR = '1')))) then
-                  uNewColumn.Width := 0;
-              end;
-            Columns.EndUpdate;
-            ResetTinyColumns;
-            for i := 0 to Columns.Count -1 do
-              if Columns[i].Width > TINY_COLS_MAX_WIDTH then
-                Columns[i].MinWidth := 12;
-
-            RedrawActivate(lvReports.Handle);
+                    if length(piece(uColumns.Strings[i],'^',10)) > 0 then
+                      begin
+                        uColChange := uColChange + piece(uColumns.Strings[i],'^',10) + ',';
+                        uNewColumn.Width := StrToInt(piece(uColumns.Strings[i],'^',10))
+                      end
+                    else
+                      uNewColumn.Width := ColumnHeaderWidth;  //ColumnTextWidth for width of text
+                  if (i = 0) and (((aRemote <> '2') and (aRemote <> '1')) or ((TabControl1.Tabs.Count < 2) and (not (aHDR = '1')))) then
+                    uNewColumn.Width := 0;
+                end;
+              Columns.EndUpdate;
+              ResetTinyColumns;
+              for i := 0 to Columns.Count -1 do
+                if Columns[i].Width > TINY_COLS_MAX_WIDTH then
+                  Columns[i].MinWidth := 12;
+            finally
+              lvReports.UnlockDrawing;
+            end;
           end;
         pnlRightTopHeader.Visible := true;
         sptHorzRightTop.Visible := true;
@@ -4198,7 +4268,7 @@ begin
         memLab.Visible := true;
         memLab.TabStop := true;
         memLab.BringToFront;
-        RedrawActivate(memLab.Handle);
+        UnlockDrawing(memLab);
       end
     else
       begin
@@ -4364,7 +4434,7 @@ begin
                      chkBrowser;
                      if upnlLeftTopHeight_2 >0 then pnlLefTop.Height := upnlLeftTopHeight_2;
                      FormResize(self);
-                     RedrawActivate(memLab.Handle);
+                     UnlockDrawing(memLab);
                      uRDOChanging := true;
                      lstDatesClick(self);
                      uRDOChanging := false;
@@ -4505,7 +4575,7 @@ begin
                      memLab.Align := alClient;
                      CommonComponentVisible(false,false,false,false,false,false,false,false,false,false,false,false);
                      pnlRightTop.Visible := false;
-                     RedrawActivate(memLab.Handle);
+                     UnlockDrawing(memLab);
                      StatusText('');
                      memLab.Lines.Insert(0, ' ');
                      memLab.Lines.Insert(1, 'Graphing activated');
@@ -4548,7 +4618,7 @@ begin
                        lstTestGraph.Items.Clear;
                        lstTestGraph.Width := 0;
                        FormResize(self);
-                       RedrawActivate(memLab.Handle);
+                       UnlockDrawing(memLab);
                        lblFooter.Caption := '';
                        if lbl508Footer.Enabled then lbl508Footer.Caption := '';
                        chkGraphZoom.Checked := false;
@@ -4621,7 +4691,7 @@ begin
                           Reports(uLabLocalReportData,Patient.DFN, 'L:' + Piece(aID,':',1), '0', '9999', '1', 0, 0, uReportRPC);
                           if TabControl1.TabIndex < 1 then
                             QuickCopy(uLabLocalReportData,memLab);
-                          RedrawActivate(memLab.Handle);
+                          UnlockDrawing(memLab);
                           StatusText('');
                           memLab.Lines.Insert(0,' ');
                           memLab.Lines.Delete(0);
@@ -4687,7 +4757,7 @@ begin
                            end;
                           end;
                           if pnlLeftBotUpper.Height < 20 then pnlLeftBotUpper.Height := (pnlLeftBottom.Height div 2);
-                          RedrawActivate(memLab.Handle);
+                          UnlockDrawing(memLab);
                           StatusText('');
                           memLab.Lines.Insert(0,' ');
                           memLab.Lines.Delete(0);
@@ -5321,7 +5391,7 @@ begin
       if upnlLeftTopHeight_4 >0 then pnlLefTop.Height := upnlLeftTopHeight_4;
     end;
   SendMessage(tvReports.Handle, WM_HSCROLL, SB_THUMBTRACK, 0);
-  RedrawActivate(tvReports.Handle);
+  UnlockDrawing(tvReports);
   if WebBrowser.Visible  then begin
     BlankWeb;
     WebBrowser.BringToFront;
@@ -5337,7 +5407,7 @@ begin
     memLab.Visible := true;
     memLab.TabStop := true;
     memLab.BringToFront;
-    RedrawActivate(memLab.Handle);
+    UnlockDrawing(memLab);
   end;
   lvReports.Columns.BeginUpdate;
   lvReports.Columns.EndUpdate;

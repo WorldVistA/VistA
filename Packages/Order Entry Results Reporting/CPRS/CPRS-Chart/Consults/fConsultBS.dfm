@@ -100,7 +100,6 @@ inherited frmConsultsByService: TfrmConsultsByService
     Height = 33
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 1
     ExplicitTop = 409

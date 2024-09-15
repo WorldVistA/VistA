@@ -173,9 +173,11 @@ uses
   Vcl.Forms,
   Vcl.StdCtrls,
   uCore,
+  ORClasses,
   ORNet,
   fRptBox,
   rOrders,
+  rODBase,
   rMisc,
   rODRad,
   VAInfoDialog;
@@ -551,15 +553,35 @@ var
   end;
 
   procedure InitDieteticsInfo;
+  const
+    DietDGNames = 'DO^TF^D AO^E/L T^PREC^MEAL';
   var
-    DietList: TStringList;
+    DietList: TORStringList;
     line, DG, Code, SName: string;
-    i: Integer;
-
+    i, DGIdx: Integer;
   begin
-    DietList := TStringList.Create;
+    DietList := TORStringList.Create;
     try
       GetDieteticsGroupInfo(DietList);
+      if (DietList.Count < 1) or (DietList[0] <> 'DIETETICS') then
+        DietList.Insert(0, 'DIETETICS');
+      i := 0;
+      repeat
+        inc(i);
+        SName := Piece(DietDGNames, U, i);
+        if (SName <> '') and (DietList.IndexOfPiece(SName, U, 3) < 0) then
+        begin
+          if SName = 'D AO' then
+            Code := 'A'
+          else
+            Code := SName[1];
+          DGIdx := DisplayGroupByName(SName);
+          if DGIdx <= 0 then
+            raise Exception.Create('Dietetics Display Group ' + SName +
+              ' missing from Display Group file.');
+          DietList.Add(DGIdx.ToString + U + Code + U + SNAME)
+        end;
+      until SName = '';
       with TDGWriteAccessDietetics do
       begin
         for i := 0 to DietList.Count - 1 do

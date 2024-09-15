@@ -23,7 +23,6 @@ object fraGridPanelFrame: TfraGridPanelFrame
     Margins.Bottom = 2
     Align = alClient
     BevelOuter = bvNone
-    Caption = 'pnlMain'
     ParentBackground = False
     ShowCaption = False
     TabOrder = 0

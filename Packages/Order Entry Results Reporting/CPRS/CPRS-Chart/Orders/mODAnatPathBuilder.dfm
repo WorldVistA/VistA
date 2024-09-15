@@ -1,4 +1,4 @@
-object fraAnatPathBuilder: TfraAnatPathBuilder
+inherited fraAnatPathBuilder: TfraAnatPathBuilder
   Left = 0
   Top = 0
   Align = alClient
@@ -177,31 +177,7 @@ object fraAnatPathBuilder: TfraAnatPathBuilder
       Caption = ''
     end
   end
-  object mnuNoteMemo: TPopupMenu
-    Left = 772
-    Top = 72
-    object mnuNoteMemoCut: TMenuItem
-      Caption = 'Cu&t'
-      ShortCut = 16472
-      OnClick = mnuNoteMemoCutClick
-    end
-    object mnuNoteMemoCopy: TMenuItem
-      Caption = '&Copy'
-      ShortCut = 16451
-      OnClick = mnuNoteMemoCopyClick
-    end
-    object mnuNoteMemoPaste: TMenuItem
-      Caption = '&Paste'
-      ShortCut = 16470
-      OnClick = mnuNoteMemoPasteClick
-    end
-    object mnuNoteMenuInsert: TMenuItem
-      Caption = '&Insert'
-      ShortCut = 8237
-      OnClick = mnuNoteMemoPasteClick
-    end
-  end
-  object VA508AccessibilityManager1: TVA508AccessibilityManager
+  inherited amgrMain: TVA508AccessibilityManager
     Left = 56
     Top = 30
     Data = (
@@ -241,6 +217,30 @@ object fraAnatPathBuilder: TfraAnatPathBuilder
       (
         'Component = memNote'
         'Status = stsDefault'))
+  end
+  object mnuNoteMemo: TPopupMenu
+    Left = 772
+    Top = 72
+    object mnuNoteMemoCut: TMenuItem
+      Caption = 'Cu&t'
+      ShortCut = 16472
+      OnClick = mnuNoteMemoCutClick
+    end
+    object mnuNoteMemoCopy: TMenuItem
+      Caption = '&Copy'
+      ShortCut = 16451
+      OnClick = mnuNoteMemoCopyClick
+    end
+    object mnuNoteMemoPaste: TMenuItem
+      Caption = '&Paste'
+      ShortCut = 16470
+      OnClick = mnuNoteMemoPasteClick
+    end
+    object mnuNoteMenuInsert: TMenuItem
+      Caption = '&Insert'
+      ShortCut = 8237
+      OnClick = mnuNoteMemoPasteClick
+    end
   end
   object VA508ListBox: TVA508ComponentAccessibility
     Tag = 1

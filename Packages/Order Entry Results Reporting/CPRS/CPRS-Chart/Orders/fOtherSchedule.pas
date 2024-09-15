@@ -42,7 +42,6 @@ type
     btnSchRemove: TButton;
     txtSchedule: TEdit;
     procedure FormCreate(Sender: TObject);
-    procedure btnCancelClick(Sender: TObject);
     procedure btn0k1Click(Sender: TObject);
     procedure cbo7Click(Sender: TObject);
     procedure cbo1Click(Sender: TObject);
@@ -68,6 +67,7 @@ type
     procedure NSScboScheduleExit(Sender: TObject);
     procedure NSScboScheduleKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure btnCancelClick(Sender: TObject);
   private
     FDaySchedule: array [1..7] of string;
     FTimeSchedule: TStringList;
@@ -97,36 +97,38 @@ implementation
 uses ORFn, ORNet, rOrders;
 {$R *.dfm}
 
-function ShowOtherSchedule(var ASchedule: string):
-
-boolean;
+function ShowOtherSchedule(var ASchedule: string): boolean;
 var
-
+  frmOtherSchedule: TfrmOtherSchedule;
   AdminTime, SchType: string;
 begin
   Result := False;
   try
    ASchedule := '';
    frmOtherSchedule := TfrmOtherSchedule.Create(Application);
-   ResizeFormToFont(TForm(frmOtherSchedule));
-   SetFormPosition(frmOtherSchedule);
-   if frmOtherSchedule.ShowModal = mrOK then
-   begin
-     ASchedule := UpperCase(frmOtherSchedule.FOtherSchedule);
-     if frmOtherSchedule.GroupBox3.Enabled = True then
-       begin
-         AdminTime := Piece(frmOtherSchedule.NSScboSchedule.Items.Strings[frmOtherSchedule.NSScboSchedule.itemindex],U,4);
-         schType := Piece(frmOtherSchedule.NSScboSchedule.Items.Strings[frmOtherSchedule.NSScboSchedule.itemindex],U,3);
-         ASchedule := ASchedule + U + AdminTime + U + schType;
-         //if (schType = 'P') or (schType = 'OC') then ASchedule := ASchedule + U + '1'
-         //else ASchedule := ASchedule + U + '0';
-       end
-     else if frmOtherSchedule.GroupBox2.Enabled = true then
-       begin
-         AdminTime := Piece(ASchedule,'@',2);
-         ASchedule := ASchedule + U + AdminTime + U + 'C';
-       end;
-     Result := True;
+   try
+     ResizeFormToFont(TForm(frmOtherSchedule));
+     SetFormPosition(frmOtherSchedule);
+     if frmOtherSchedule.ShowModal = mrOK then
+     begin
+       ASchedule := UpperCase(frmOtherSchedule.FOtherSchedule);
+       if frmOtherSchedule.GroupBox3.Enabled = True then
+         begin
+           AdminTime := Piece(frmOtherSchedule.NSScboSchedule.Items.Strings[frmOtherSchedule.NSScboSchedule.itemindex],U,4);
+           schType := Piece(frmOtherSchedule.NSScboSchedule.Items.Strings[frmOtherSchedule.NSScboSchedule.itemindex],U,3);
+           ASchedule := ASchedule + U + AdminTime + U + schType;
+           //if (schType = 'P') or (schType = 'OC') then ASchedule := ASchedule + U + '1'
+           //else ASchedule := ASchedule + U + '0';
+         end
+       else if frmOtherSchedule.GroupBox2.Enabled = true then
+         begin
+           AdminTime := Piece(ASchedule,'@',2);
+           ASchedule := ASchedule + U + AdminTime + U + 'C';
+         end;
+       Result := True;
+     end;
+   finally
+     FreeAndNil(frmOtherSchedule);
    end;
   except
    ShowMsg('Error happen when building other schedule');
@@ -139,7 +141,6 @@ var
   i: integer;
   nssMsg: string;
 begin
-  frmOtherSchedule := nil;
   FFromCheckBox := False;
   FFromEditBox := False;
   image1.Picture.Icon.Handle := LoadIcon(0, IDI_WARNING);
@@ -162,14 +163,8 @@ begin
   inherited;
     //FDaySchedule
     FTimeSchedule.Free;
-    frmOtherSchedule := nil;
     //FSchedule: String;
     //FOtherSchedule: String;
-end;
-
-procedure TfrmOtherSchedule.btnCancelClick(Sender: TObject);
-begin
-  frmOtherSchedule.Release;
 end;
 
 procedure TfrmOtherSchedule.btn0k1Click(Sender: TObject);
@@ -395,6 +390,12 @@ begin
   if FTimeSchedule.Count > 0 then EnabledSch(False);
 end;
 
+procedure TfrmOtherSchedule.btnCancelClick(Sender: TObject);
+begin
+  inherited;
+  modalResult := mrCancel;
+end;
+
 procedure TfrmOtherSchedule.btnResetClick(Sender: TObject);
 var
   i : integer;
@@ -506,7 +507,6 @@ begin
   except
     Action := caFree;
   end;
-  //frmOtherSchedule := nil;
 end;
 
 procedure TfrmOtherSchedule.UpdateOnFreeTextInput;

@@ -1,4 +1,4 @@
-object frmNotificationProcessor: TfrmNotificationProcessor
+inherited frmNotificationProcessor: TfrmNotificationProcessor
   Left = 0
   Top = 0
   Caption = 'CPRS Notification Processor'

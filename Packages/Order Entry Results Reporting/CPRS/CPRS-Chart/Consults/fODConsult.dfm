@@ -552,7 +552,6 @@ inherited frmODCslt: TfrmODCslt
     Height = 81
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'grdDstControls'
     ColumnCollection = <
       item
         Value = 100.000000000000000000

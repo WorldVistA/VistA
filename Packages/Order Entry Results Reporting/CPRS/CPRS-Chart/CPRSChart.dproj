@@ -88,27 +88,28 @@
         <SanitizedProjectName>CPRSChart</SanitizedProjectName>
         <DCC_IOChecking>false</DCC_IOChecking>
         <DCC_DebugInformation>0</DCC_DebugInformation>
-        <VerInfo_Build>2</VerInfo_Build>
+        <VerInfo_Build>1</VerInfo_Build>
         <DCC_Description>Computerized Patient Record System</DCC_Description>
         <DCC_WriteableConstants>true</DCC_WriteableConstants>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Release>515</VerInfo_Release>
+        <VerInfo_Release>109</VerInfo_Release>
         <DCC_DcuOutput>.\dcu</DCC_DcuOutput>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <DCC_ImageBase>00400000</DCC_ImageBase>
-        <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;VCLTee;Vcl.Win;System.Win;$(DCC_Namespace)</DCC_Namespace>
+        <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;VCLTee;Vcl.Win;System.Win;VAShared;ORCtrls;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_F>false</DCC_F>
-        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=Computerized Patient Record System;FileVersion=1.32.515.2;InternalName=1.32.515.2 server required;LegalCopyright=Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.;LegalTrademarks=;OriginalFilename=Patch OR*3.0*588;ProductName=Computerized Patient Record System;ProductVersion=1.32.515.2;Comments=Version 1.32.515.2;CFBundleName=;CFBundleDisplayName=;CFBundleIdentifier=;CFBundleVersion=;CFBundlePackageType=;CFBundleSignature=;CFBundleAllowMixedLocalizations=;CFBundleExecutable=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=Computerized Patient Record System;FileVersion=1.33.109.1;InternalName=1.33.109.1 server required;LegalCopyright=Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.;LegalTrademarks=;OriginalFilename=Patch OR*3.0*608;ProductName=Computerized Patient Record System;ProductVersion=1.33.109.1;Comments=Version 1.33.109.1;CFBundleName=;CFBundleDisplayName=;CFBundleIdentifier=;CFBundleVersion=;CFBundlePackageType=;CFBundleSignature=;CFBundleAllowMixedLocalizations=;CFBundleExecutable=</VerInfo_Keys>
         <DCC_S>false</DCC_S>
         <DCC_E>false</DCC_E>
         <DCC_K>false</DCC_K>
         <DCC_N>false</DCC_N>
-        <VerInfo_MinorVer>32</VerInfo_MinorVer>
+        <VerInfo_MinorVer>33</VerInfo_MinorVer>
         <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
         <DCC_UnitSearchPath>$(Packages)\508\Source;$(Packages)\Borland\Source;$(Packages)\Broker\Source;$(Packages)\CopyPaste\Source;$(Packages)\ExceptionLogger\Source;$(Packages)\FilemanComponents\Source;$(Packages)\OR\Source;$(Packages)\PKI\Source;$(Packages)\VA\Source;$(Packages)\ResponsiveGUI\Source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_DebugDCUs>true</DCC_DebugDCUs>
+        <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <DCC_DcuOutput>.\dcu</DCC_DcuOutput>
@@ -120,6 +121,7 @@
         <DCC_N>false</DCC_N>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <Icon_MainIcon>CPRSChart.ico</Icon_MainIcon>
+        <Debugger_RunParams>S=adomain.dom.aa.ext.ext.ext.ext P=9011 CCOW=DISABLE  /RPCLOG </Debugger_RunParams>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <DCC_Namespace>Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
@@ -136,7 +138,6 @@
         <DCC_LocalDebugSymbols>true</DCC_LocalDebugSymbols>
         <DCC_SymbolReferenceInfo>2</DCC_SymbolReferenceInfo>
         <DCC_DebugInformation>2</DCC_DebugInformation>
-        <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
         <DCC_MapFile>3</DCC_MapFile>
         <DCC_DcuOutput>.\dcu</DCC_DcuOutput>
         <DCC_ImageBase>00400000</DCC_ImageBase>
@@ -146,8 +147,7 @@
         <DCC_K>false</DCC_K>
         <DCC_N>false</DCC_N>
         <BT_BuildType>Debug</BT_BuildType>
-        <Debugger_RunParams>S=10.224.21.242 P=19005</Debugger_RunParams>
-        <AppDPIAwarenessMode>none</AppDPIAwarenessMode>
+        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <Icon_MainIcon>CPRSChart.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
@@ -155,7 +155,6 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
-        <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
         <DCC_Optimize>false</DCC_Optimize>
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
         <DCC_DebugInfoInExe>true</DCC_DebugInfoInExe>
@@ -178,8 +177,8 @@
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <BT_BuildType>Debug</BT_BuildType>
         <DCC_Define>blj;$(DCC_Define)</DCC_Define>
-        <Debugger_RunParams>S=10.245.163.135 P=9009  CCOW=DISABLE  /RPCLOG </Debugger_RunParams>
         <Icon_MainIcon>CPRSChart.ico</Icon_MainIcon>
+        <Debugger_RunParams>S=adomain.dom.aa.ext.ext.ext.ext P=9011 CCOW=DISABLE  /RPCLOG SHOWCERTS</Debugger_RunParams>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
@@ -845,9 +844,6 @@
         <DCCReference Include="fARTFreeTextMsg.pas">
             <Form>frmARTFreeTextMsg</Form>
         </DCCReference>
-        <DCCReference Include="fAllgyBox.pas">
-            <Form>frmAllgyBox</Form>
-        </DCCReference>
         <DCCReference Include="BA\UBACore.pas"/>
         <DCCReference Include="BA\fBAOptionsDiagnoses.pas">
             <Form>frmBAOptionsDiagnoses</Form>
@@ -1232,8 +1228,6 @@
         <DCCReference Include="Utils\uVersionCheck.pas"/>
         <DCCReference Include="uIndications.pas"/>
         <DCCReference Include="Utils\uOwnerWrapper.pas"/>
-        <DCCReference Include="ORExtensions.pas"/>
-        <DCCReference Include="UJSONParameters.pas"/>
         <DCCReference Include="Tools\UCaptionListView508Manager.pas"/>
         <DCCReference Include="uHelpNetworkMGR.pas"/>
         <DCCReference Include="Tools\u508Extensions.pas"/>
@@ -1259,6 +1253,8 @@
         </DCCReference>
         <DCCReference Include="Utils\uComponentNexus.pas"/>
         <DCCReference Include="uWriteAccess.pas"/>
+        <DCCReference Include="Tools\UMemoTools.pas"/>
+        <DCCReference Include="UMHDll.pas"/>
         <RidlCompile Include="CPRSChart.ridl"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
@@ -1323,10 +1319,7 @@
                     <VersionInfoKeys Name="CFBundleAllowMixedLocalizations"/>
                     <VersionInfoKeys Name="CFBundleExecutable"/>
                 </VersionInfoKeys>
-                <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k280.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp280.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
-                </Excluded_Packages>
+                <Excluded_Packages/>
             </Delphi.Personality>
             <Platforms>
                 <Platform value="Win32">True</Platform>

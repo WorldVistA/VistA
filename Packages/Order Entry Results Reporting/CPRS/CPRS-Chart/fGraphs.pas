@@ -35,8 +35,8 @@ type
     lvwItemsTop: ORExtensions.TListView;
     memBottom: TMemo;
     memTop: TMemo;
-    memViewsBottom: TRichEdit;
-    memViewsTop: TRichEdit;
+    memViewsBottom: ORExtensions.TRichEdit;
+    memViewsTop: ORExtensions.TRichEdit;
     mnuCustom: TMenuItem;
     mnuFunctions1: TMenuItem;
     mnuGraphData: TMenuItem;
@@ -5566,7 +5566,6 @@ var
 begin
   if FFastTrack then
     Exit;
-  TResponsiveGUI.ProcessMessages;
   TypeToCheck := UpperCase(TypeToCheck);
   if (TypeToCheck = 'SELECT') and (lvwItemsTop.SelCount = 0) and
     (lvwItemsBottom.SelCount = 0) then

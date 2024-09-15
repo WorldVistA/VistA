@@ -1,0 +1,144 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{F8E15202-4A9E-4237-8BB3-000B788BB4ED}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="..\..\VA\Packages\11.0\VAShared_R11_0.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\Broker\Packages\11.0\XWB_R11_0.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\PKI\Packages\11.0\PKI_R11_0.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\ResponsiveGUI\Packages\11.0\ResponsiveGUI_R11_0.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\Broker\Packages\11.0\XWB_D11_0.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\Borland\Packages\11.0\Borland_D11_0.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\508\Packages\11.0\VA508Access_D11_0.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\OR\Packages\11.0\ORCtrls_D11_0.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\CopyPaste\Packages\11.0\CopyPaste_D11_0.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\ExceptionLogger\Packages\11.0\ExceptionLogger_R11_0.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="VAShared_R11_0">
+        <MSBuild Projects="..\..\VA\Packages\11.0\VAShared_R11_0.dproj"/>
+    </Target>
+    <Target Name="VAShared_R11_0:Clean">
+        <MSBuild Projects="..\..\VA\Packages\11.0\VAShared_R11_0.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VAShared_R11_0:Make">
+        <MSBuild Projects="..\..\VA\Packages\11.0\VAShared_R11_0.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="XWB_R11_0">
+        <MSBuild Projects="..\..\Broker\Packages\11.0\XWB_R11_0.dproj"/>
+    </Target>
+    <Target Name="XWB_R11_0:Clean">
+        <MSBuild Projects="..\..\Broker\Packages\11.0\XWB_R11_0.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="XWB_R11_0:Make">
+        <MSBuild Projects="..\..\Broker\Packages\11.0\XWB_R11_0.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="PKI_R11_0">
+        <MSBuild Projects="..\..\PKI\Packages\11.0\PKI_R11_0.dproj"/>
+    </Target>
+    <Target Name="PKI_R11_0:Clean">
+        <MSBuild Projects="..\..\PKI\Packages\11.0\PKI_R11_0.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PKI_R11_0:Make">
+        <MSBuild Projects="..\..\PKI\Packages\11.0\PKI_R11_0.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ResponsiveGUI_R11_0">
+        <MSBuild Projects="..\..\ResponsiveGUI\Packages\11.0\ResponsiveGUI_R11_0.dproj"/>
+    </Target>
+    <Target Name="ResponsiveGUI_R11_0:Clean">
+        <MSBuild Projects="..\..\ResponsiveGUI\Packages\11.0\ResponsiveGUI_R11_0.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ResponsiveGUI_R11_0:Make">
+        <MSBuild Projects="..\..\ResponsiveGUI\Packages\11.0\ResponsiveGUI_R11_0.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="XWB_D11_0">
+        <MSBuild Projects="..\..\Broker\Packages\11.0\XWB_D11_0.dproj"/>
+    </Target>
+    <Target Name="XWB_D11_0:Clean">
+        <MSBuild Projects="..\..\Broker\Packages\11.0\XWB_D11_0.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="XWB_D11_0:Make">
+        <MSBuild Projects="..\..\Broker\Packages\11.0\XWB_D11_0.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Borland_D11_0">
+        <MSBuild Projects="..\..\Borland\Packages\11.0\Borland_D11_0.dproj"/>
+    </Target>
+    <Target Name="Borland_D11_0:Clean">
+        <MSBuild Projects="..\..\Borland\Packages\11.0\Borland_D11_0.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Borland_D11_0:Make">
+        <MSBuild Projects="..\..\Borland\Packages\11.0\Borland_D11_0.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VA508Access_D11_0">
+        <MSBuild Projects="..\..\508\Packages\11.0\VA508Access_D11_0.dproj"/>
+    </Target>
+    <Target Name="VA508Access_D11_0:Clean">
+        <MSBuild Projects="..\..\508\Packages\11.0\VA508Access_D11_0.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VA508Access_D11_0:Make">
+        <MSBuild Projects="..\..\508\Packages\11.0\VA508Access_D11_0.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ORCtrls_D11_0">
+        <MSBuild Projects="..\..\OR\Packages\11.0\ORCtrls_D11_0.dproj"/>
+    </Target>
+    <Target Name="ORCtrls_D11_0:Clean">
+        <MSBuild Projects="..\..\OR\Packages\11.0\ORCtrls_D11_0.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ORCtrls_D11_0:Make">
+        <MSBuild Projects="..\..\OR\Packages\11.0\ORCtrls_D11_0.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="CopyPaste_D11_0">
+        <MSBuild Projects="..\..\CopyPaste\Packages\11.0\CopyPaste_D11_0.dproj"/>
+    </Target>
+    <Target Name="CopyPaste_D11_0:Clean">
+        <MSBuild Projects="..\..\CopyPaste\Packages\11.0\CopyPaste_D11_0.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CopyPaste_D11_0:Make">
+        <MSBuild Projects="..\..\CopyPaste\Packages\11.0\CopyPaste_D11_0.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ExceptionLogger_R11_0">
+        <MSBuild Projects="..\..\ExceptionLogger\Packages\11.0\ExceptionLogger_R11_0.dproj"/>
+    </Target>
+    <Target Name="ExceptionLogger_R11_0:Clean">
+        <MSBuild Projects="..\..\ExceptionLogger\Packages\11.0\ExceptionLogger_R11_0.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ExceptionLogger_R11_0:Make">
+        <MSBuild Projects="..\..\ExceptionLogger\Packages\11.0\ExceptionLogger_R11_0.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="VAShared_R11_0;XWB_R11_0;PKI_R11_0;ResponsiveGUI_R11_0;XWB_D11_0;Borland_D11_0;VA508Access_D11_0;ORCtrls_D11_0;CopyPaste_D11_0;ExceptionLogger_R11_0"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="VAShared_R11_0:Clean;XWB_R11_0:Clean;PKI_R11_0:Clean;ResponsiveGUI_R11_0:Clean;XWB_D11_0:Clean;Borland_D11_0:Clean;VA508Access_D11_0:Clean;ORCtrls_D11_0:Clean;CopyPaste_D11_0:Clean;ExceptionLogger_R11_0:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="VAShared_R11_0:Make;XWB_R11_0:Make;PKI_R11_0:Make;ResponsiveGUI_R11_0:Make;XWB_D11_0:Make;Borland_D11_0:Make;VA508Access_D11_0:Make;ORCtrls_D11_0:Make;CopyPaste_D11_0:Make;ExceptionLogger_R11_0:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

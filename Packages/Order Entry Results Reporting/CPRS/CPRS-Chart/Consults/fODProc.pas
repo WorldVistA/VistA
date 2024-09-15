@@ -99,8 +99,8 @@ type
     procedure SetupReasonForRequest(OrderAction: integer);
     procedure GetProvDxandValidateCode(AResponses: TResponses);
     function ShowPrerequisites: boolean;
-    procedure DoSetFontSize( FontSize: integer; FromCreate: boolean = false);
-//    procedure SetUpCombatVet;
+    procedure DoSetFontSize(FontSize: Integer; FromCreate: Boolean = False);
+      reintroduce;
     procedure SetUpCombatVet(Eligable:Boolean);  // RTC#722078
     procedure updateService;
     procedure setup508Label(text: string; lbl: TVA508StaticText; ctrl: TControl);
@@ -998,10 +998,10 @@ begin
     end;
 end;
 
-procedure TfrmODProc.DoSetFontSize(FontSize: integer; FromCreate: boolean = false);
+procedure TfrmODProc.DoSetFontSize(FontSize: Integer;
+  FromCreate: boolean = False);
 var
   x, y: integer;
-
 begin
   memReason.Width := pnlReason.ClientWidth;
   memReason.Height := pnlReason.ClientHeight;// - memReason.Height;  MAC-0104-61043 - RV
@@ -1016,7 +1016,6 @@ begin
   x := (memOrder.Left + memOrder.Width + 6) - cmdAccept.left;
   if x > 0 then
   begin
-//    Width := Width + x;
     inc(x, memOrder.Margins.Right);
     memOrder.Margins.Right := x;
     pnlMessage.Margins.Right := x;

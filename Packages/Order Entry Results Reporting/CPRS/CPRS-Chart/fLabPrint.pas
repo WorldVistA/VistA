@@ -3,6 +3,7 @@ unit fLabPrint;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ORCtrls, ORNet, Mask, ComCtrls, fBase508Form, uPrinting,
   VA508AccessibilityManager;
@@ -31,7 +32,7 @@ type
     { Private declarations }
     FReports: String;
     FDaysBack: Integer;
-    FReportText: TRichEdit;
+    FReportText: ORExtensions.TRichEdit;
     procedure DisplaySelectDevice;
   public
     { Public declarations }

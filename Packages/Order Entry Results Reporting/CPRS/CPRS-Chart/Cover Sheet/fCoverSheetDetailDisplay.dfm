@@ -1,4 +1,4 @@
-object frmCoverSheetDetailDisplay: TfrmCoverSheetDetailDisplay
+inherited frmCoverSheetDetailDisplay: TfrmCoverSheetDetailDisplay
   Left = 0
   Top = 0
   BorderIcons = [biSystemMenu]
@@ -24,7 +24,6 @@ object frmCoverSheetDetailDisplay: TfrmCoverSheetDetailDisplay
     Height = 50
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'pnlOptions'
     Color = cl3DLight
     ParentBackground = False
     ShowCaption = False

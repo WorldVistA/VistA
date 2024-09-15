@@ -3,6 +3,7 @@ unit fPreReq;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ORFn, ComCtrls, ExtCtrls, fBase508Form, VA508AccessibilityManager,
   uReports, uPrinting;
@@ -10,7 +11,7 @@ uses
 type
   TfrmPrerequisites = class(TfrmBase508Form)
     lblFontTest: TLabel;
-    memReport: TRichEdit;
+    memReport: ORExtensions.TRichEdit;
     pnlButton: TPanel;
     cmdContinue: TButton;
     cmdCancel: TButton;
@@ -110,7 +111,7 @@ end;
 procedure TfrmPrerequisites.cmdPrintClick(Sender: TObject);
 var
   AHeader: TStringList;
-  memPrintReport: TRichEdit;
+  memPrintReport: ORExtensions.TRichEdit;
   MaxLines, LastLine, ThisPage, i: integer;
   ErrMsg: string;
   RemoteSiteID: string;    //for Remote site printing

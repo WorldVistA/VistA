@@ -19,6 +19,10 @@ function ValAndStoreVitals(VitalList: TStringList):string;      //9/18/98
 procedure GetVitalFromNoteIEN(Dest: TStrings; const PatientID: string; NoteIEN: Integer);  //*DFN*
 procedure GetVitalsFromEncDateTime(Dest: TStrings; const PatientID: string; datetime: TFMDateTime);  //*DFN*
 
+const
+  ORQQVI_METRIC_FIRST_IGNORE = 0;
+  ORQQVI_METRIC_FIRST_HONOR = 1;
+
 var
   uVitalsMetric: boolean = FALSE;
   uVitCVPmmHg: boolean = FALSE;
@@ -36,7 +40,7 @@ var
   IDString: String;
 begin
   IDString := patientid;  //*DFN*
-  CallVistA('ORQQVI VITALS', [IDString], Dest);
+  CallVistA('ORQQVI VITALS', [IDString, '', '', ORQQVI_METRIC_FIRST_HONOR], Dest);
 end;
 
 function VerifyVital(typ,rte,unt: String):boolean;
@@ -82,7 +86,7 @@ var
 begin
   IDString := PatientID; // *DFN*
   NoteIENStr := IntToStr(NoteIEN);
-  CallVistA('ORQQVI NOTEVIT', [IDString, NoteIENStr], Dest);
+  CallVistA('ORQQVI NOTEVIT', [IDString, NoteIENStr, ORQQVI_METRIC_FIRST_HONOR], Dest);
 end;
 
 procedure GetVitalsFromEncDateTime(Dest: TStrings; const PatientID: string; datetime: TFMDateTime); // *DFN*
@@ -92,7 +96,7 @@ var
 begin
   IDString := PatientID; // *DFN*
   EncDate := FloatToStr(datetime);
-  CallVistA('ORQQVI VITALS', [IDString, EncDate], Dest);
+  CallVistA('ORQQVI VITALS', [IDString, EncDate, '', ORQQVI_METRIC_FIRST_HONOR], Dest);
 end;
 
 initialization

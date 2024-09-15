@@ -18,10 +18,12 @@ uses
   ORNet,
   ORFn,
   ComCtrls,
-  UITypes;
+  UITypes,
+  fBase508Form,
+  VA508AccessibilityManager;
 
 type
-  TfrmAlertNoteSelector = class(TForm)
+  TfrmAlertNoteSelector = class(TfrmBase508Form)
     rbtnNewNote: TRadioButton;
     rbtnSelectAddendum: TRadioButton;
     rbtnSelectOwn: TRadioButton;

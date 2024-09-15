@@ -15,7 +15,6 @@ inherited frmODText: TfrmODText
     Margins.Bottom = 0
     Align = alClient
     BevelOuter = bvNone
-    Caption = 'gpMain'
     ColumnCollection = <
       item
         SizeStyle = ssAbsolute
@@ -200,7 +199,6 @@ inherited frmODText: TfrmODText
     Margins.Top = 0
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'pnlGridMessage'
     Ctl3D = False
     ParentBackground = False
     ParentColor = True

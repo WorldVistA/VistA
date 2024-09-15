@@ -3,6 +3,7 @@ unit fPtSelMsg;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ExtCtrls, StdCtrls, ComCtrls, fBase508Form, VA508AccessibilityManager;
 
@@ -10,7 +11,7 @@ type
   TfrmPtSelMsg = class(TfrmBase508Form)
     cmdClose: TButton;
     timClose: TTimer;
-    memMessages: TRichEdit;
+    memMessages: ORExtensions.TRichEdit;
     pnlButtons: TPanel;
     Panel1: TPanel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -38,7 +39,7 @@ implementation
 
 {$R *.DFM}
 
-uses ORFn, uCore, fFrame, VAUtils;
+uses ORFn, uCore, fFrame, VAUtils, rMisc;
 
 var
   frmPtSelMsg: TfrmPtSelMsg = nil;
@@ -52,6 +53,7 @@ begin
   end;
   if Length(AMsg) = 0 then Exit;
   frmPtSelMsg := TfrmPtSelMsg.Create(Application);
+  SetFormPosition(frmPtSelMsg);
   ResizeAnchoredFormToFont(frmPtSelMsg);
   frmPtSelMsg.memMessages.Lines.SetText(PChar(AMsg));  // Text := AMsg doesn't seem to work
   frmPtSelMsg.memMessages.SelStart := 0;
@@ -95,6 +97,7 @@ var
 
 begin
   Action := caFree;
+  SaveUserBounds(Self);
   // VISTAOR 26913
   // Some modal dialogs displayed on top of this dialog are assigned a windows
   // parent of this dialog.  If these dialogs are not reset to another parent

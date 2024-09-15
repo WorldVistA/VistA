@@ -1,6 +1,5 @@
 inherited fraCoverSheetDisplayPanel: TfraCoverSheetDisplayPanel
   inherited pnlMain: TPanel
-    Caption = ''
     inherited pnlWorkspace: TPanel
       AlignWithMargins = False
       Left = 32

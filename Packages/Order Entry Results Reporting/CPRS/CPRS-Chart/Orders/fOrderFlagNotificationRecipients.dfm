@@ -56,7 +56,6 @@ inherited frmOrderFlagRecipients: TfrmOrderFlagRecipients
     Width = 464
     Height = 251
     Align = alClient
-    Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 0
     object grbRecipients: TGroupBox

@@ -1349,7 +1349,7 @@ begin
   if uOrderDialog <> nil then
     uOrderDialog.Close;
 
-  TResponsiveGUI.ProcessMessages; // Important - call should be after Close statement above
+  TResponsiveGUI.ProcessMessages(False, True); // Important - call should be after Close statement above
                                   // or can cause duplicate order dialogs at the same time
   if (uOrderDialog <> nil) then
   begin
@@ -1866,8 +1866,7 @@ begin
               (AbortOrder and GMRCCanCloseDialog(uOrderDialog)) then
             begin
               Close;
-              if Assigned(uOrderDialog) then
-                uOrderDialog.Destroy;
+              FreeAndNil(uOrderDialog); // force the order dialog to just go away
               Exit;
             end;
           end;
@@ -2028,7 +2027,7 @@ begin
           // End BAPHII 1.3.2
 
         finally
-          UnlockOwnerWrepper(uOrderDialog);
+          UnlockOwnerWrapper(uOrderDialog);
         end;
 
         if Assigned(uOrderDialog) then
@@ -2039,7 +2038,10 @@ begin
   else
   begin
     if assigned(uOrderDialog) then
+    begin
       uOrderDialog.Release;
+      uOrderDialog := nil;
+    end;
     Result := False;
     // TResponsiveGUI.ProcessMessages;       // to allow dialog to finish closing
     // Exit;                              // so result is not returned true
@@ -2113,6 +2115,7 @@ begin
   ASetList := TStringList.Create;
   FastAssign(uOrderHTML.SetList, ASetList);
   uOrderHTML.Release;
+  uOrderHTML := nil;
   if ASetList.Count = 0 then
     Exit;
   Result := ActivateOrderList(ASetList, AnEvent, AnOwner, ARefNum, '', '');
@@ -2277,7 +2280,7 @@ begin
   if uOrderSet <> nil then
   begin
     uOrderSet.Close;
-    TResponsiveGUI.ProcessMessages;
+    TResponsiveGUI.ProcessMessages(False, True);
     if (uOrderSet <> nil) and not(fsModal in uOrderSet.FormState) then
       Exit;
   end;
@@ -2285,34 +2288,34 @@ begin
   if uOrderDialog <> nil then
   begin
     uOrderDialog.Close;
-    TResponsiveGUI.ProcessMessages; // allow close to finish
+    TResponsiveGUI.ProcessMessages(False, True); // allow close to finish
     if (uOrderDialog <> nil) and not(fsModal in uOrderDialog.FormState) then
       Exit;
   end;
   if uOrderHTML <> nil then
   begin
     uOrderHTML.Close;
-    TResponsiveGUI.ProcessMessages; // allow browser to close
+    TResponsiveGUI.ProcessMessages(False, True); // allow browser to close
     Assert(uOrderHTML = nil);
   end;
   { close any open ordering menu }
   if uOrderMenu <> nil then
   begin
     uOrderMenu.Close;
-    TResponsiveGUI.ProcessMessages; // allow menu to close
+    TResponsiveGUI.ProcessMessages(False, True); // allow menu to close
     Assert(uOrderMenu = nil);
   end;
   if uOrderAction <> nil then
   begin
     uOrderAction.Close;
-    TResponsiveGUI.ProcessMessages;
+    TResponsiveGUI.ProcessMessages(False, True);
     if (uOrderAction <> nil) and not(fsModal in uOrderAction.FormState) then
       Exit;
   end;
   if frmARTAllergy <> nil then // SMT Add to account for allergies.
   begin
     frmARTAllergy.Close;
-    TResponsiveGUI.ProcessMessages;
+    TResponsiveGUI.ProcessMessages(False, True);
     if frmARTAllergy <> nil then
       Exit;
   end;
@@ -2445,7 +2448,7 @@ begin
   if uOrderDialog <> nil then
   begin
     uOrderDialog.Close;
-    TResponsiveGUI.ProcessMessages; // allow close to finish
+    TResponsiveGUI.ProcessMessages(False, True); // allow close to finish
   end;
 
   if not ActiveOrdering then // allow change while entering new
@@ -2500,7 +2503,7 @@ begin
     // X + ORIFN for change
     if EventDefaultOD = 1 then
       EventDefaultOD := 0;
-    TResponsiveGUI.ProcessMessages; // give uOrderDialog a chance to go back to nil
+    TResponsiveGUI.ProcessMessages(False, True); // give uOrderDialog a chance to go back to nil
     if BILLING_AWARE then // hds6265
     begin // hds6265
       UBAGlobals.SourceOrderID := AList[i]; // hds6265
@@ -2517,13 +2520,13 @@ begin
   if uOrderDialog <> nil then
   begin
     uOrderDialog.Close;
-    TResponsiveGUI.ProcessMessages;
+    TResponsiveGUI.ProcessMessages(False, True);
   end;
   if not ActiveOrdering then
     if not ReadyForNewOrder(AnEvent) then
       Exit;
   Result := ActivateOrderDialog('X' + AnOrderID, AnEvent, Application, -1);
-  TResponsiveGUI.ProcessMessages;
+  TResponsiveGUI.ProcessMessages(False, True);
   UnlockIfAble;
 end;
 
@@ -2576,7 +2579,7 @@ begin
     then
       Result := True;
 
-    TResponsiveGUI.ProcessMessages; // give uOrderDialog a chance to go back to nil
+    TResponsiveGUI.ProcessMessages(False, True); // give uOrderDialog a chance to go back to nil
     OrderSource := '';
 
     if (not DoesEventOccur) and (AnEvent.PtEventIFN > 0) and
@@ -2656,7 +2659,7 @@ begin
         ANeedVerify) then
         Result := True;
     end;
-    TResponsiveGUI.ProcessMessages; // give uOrderDialog a chance to go back to nil
+    TResponsiveGUI.ProcessMessages(False, True); // give uOrderDialog a chance to go back to nil
     OrderSource := '';
     if (not DoesEventOccur) and (AnEvent.PtEventIFN > 0) and
       IsCompletedPtEvt(AnEvent.PtEventIFN) then

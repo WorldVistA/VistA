@@ -54,7 +54,6 @@ inherited frmOptionsPrimaryList: TfrmOptionsPrimaryList
     Width = 474
     Height = 200
     Align = alClient
-    Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 0
     ExplicitLeft = 72

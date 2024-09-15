@@ -16,12 +16,14 @@ uses
   Vcl.StdCtrls,
   Vcl.ExtCtrls,
   System.Actions,
-  Vcl.ActnList;
+  Vcl.ActnList,
+  fBase508Form,
+  VA508AccessibilityManager;
 
 type
   TNotificationAction = (naCancel, naNewNote, naAddendum);
 
-  TfrmNotificationProcessor = class(TForm)
+  TfrmNotificationProcessor = class(TfrmBase508Form)
     btnCancel: TButton;
     btnOK: TButton;
 

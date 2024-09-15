@@ -96,6 +96,7 @@ object fraPtSelOptns: TfraPtSelOptns
         Width = 226
         Height = 103
         Align = alClient
+        Caption = 'Patient List'
         ColumnCollection = <
           item
             Value = 50.000000000000000000
@@ -166,6 +167,7 @@ object fraPtSelOptns: TfraPtSelOptns
           item
             Value = 20.000000000000000000
           end>
+        ShowCaption = False  
         TabOrder = 0
         object radDflt: TRadioButton
           Tag = 11

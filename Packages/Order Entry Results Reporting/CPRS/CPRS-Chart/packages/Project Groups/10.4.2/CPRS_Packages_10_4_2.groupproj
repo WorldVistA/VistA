@@ -3,9 +3,6 @@
         <ProjectGuid>{4B5EF8DE-93DC-49F2-9719-BB61D1E1495B}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="..\..\CPRSShared\Packages\10.4.2\CPRSShared.dproj">
-            <Dependencies/>
-        </Projects>
         <Projects Include="..\..\VA\Packages\10.4.2\VAShared_R10_4_2.dproj">
             <Dependencies/>
         </Projects>
@@ -47,15 +44,6 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
-    <Target Name="CPRSShared">
-        <MSBuild Projects="..\..\CPRSShared\Packages\10.4.2\CPRSShared.dproj"/>
-    </Target>
-    <Target Name="CPRSShared:Clean">
-        <MSBuild Projects="..\..\CPRSShared\Packages\10.4.2\CPRSShared.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="CPRSShared:Make">
-        <MSBuild Projects="..\..\CPRSShared\Packages\10.4.2\CPRSShared.dproj" Targets="Make"/>
-    </Target>
     <Target Name="VAShared_R10_4_2">
         <MSBuild Projects="..\..\VA\Packages\10.4.2\VAShared_R10_4_2.dproj"/>
     </Target>
@@ -156,13 +144,13 @@
         <MSBuild Projects="..\..\FilemanComponents\Packages\10.4.2\FMDC_D10_4_2.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="CPRSShared;VAShared_R10_4_2;XWB_R10_4_2;PKI_R10_4_2;ResponsiveGUI_R10_4_2;ExceptionLogger_R10_4_2;XWB_D10_4_2;Borland_D10_4_2;VA508Access_D10_4_2;ORCtrls_D10_4_2;CopyPaste_D10_4_2;FMDC_D10_4_2"/>
+        <CallTarget Targets="VAShared_R10_4_2;XWB_R10_4_2;PKI_R10_4_2;ResponsiveGUI_R10_4_2;ExceptionLogger_R10_4_2;XWB_D10_4_2;Borland_D10_4_2;VA508Access_D10_4_2;ORCtrls_D10_4_2;CopyPaste_D10_4_2;FMDC_D10_4_2"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="CPRSShared:Clean;VAShared_R10_4_2:Clean;XWB_R10_4_2:Clean;PKI_R10_4_2:Clean;ResponsiveGUI_R10_4_2:Clean;ExceptionLogger_R10_4_2:Clean;XWB_D10_4_2:Clean;Borland_D10_4_2:Clean;VA508Access_D10_4_2:Clean;ORCtrls_D10_4_2:Clean;CopyPaste_D10_4_2:Clean;FMDC_D10_4_2:Clean"/>
+        <CallTarget Targets="VAShared_R10_4_2:Clean;XWB_R10_4_2:Clean;PKI_R10_4_2:Clean;ResponsiveGUI_R10_4_2:Clean;ExceptionLogger_R10_4_2:Clean;XWB_D10_4_2:Clean;Borland_D10_4_2:Clean;VA508Access_D10_4_2:Clean;ORCtrls_D10_4_2:Clean;CopyPaste_D10_4_2:Clean;FMDC_D10_4_2:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="CPRSShared:Make;VAShared_R10_4_2:Make;XWB_R10_4_2:Make;PKI_R10_4_2:Make;ResponsiveGUI_R10_4_2:Make;ExceptionLogger_R10_4_2:Make;XWB_D10_4_2:Make;Borland_D10_4_2:Make;VA508Access_D10_4_2:Make;ORCtrls_D10_4_2:Make;CopyPaste_D10_4_2:Make;FMDC_D10_4_2:Make"/>
+        <CallTarget Targets="VAShared_R10_4_2:Make;XWB_R10_4_2:Make;PKI_R10_4_2:Make;ResponsiveGUI_R10_4_2:Make;ExceptionLogger_R10_4_2:Make;XWB_D10_4_2:Make;Borland_D10_4_2:Make;VA508Access_D10_4_2:Make;ORCtrls_D10_4_2:Make;CopyPaste_D10_4_2:Make;FMDC_D10_4_2:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

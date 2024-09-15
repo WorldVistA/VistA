@@ -23,13 +23,9 @@ type
     lblWarningContinue: TLabel;
     lblWarningPatient: TLabel;
     procedure FormCreate(Sender: TObject);
-    procedure cmdContinueClick(Sender: TObject);
     procedure timCountDownTimer(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure btnCloseClick(Sender: TObject);
   private
-    { Private declarations }
-    FContinue: Boolean;
     FCount: Integer;
   end;
 
@@ -45,13 +41,14 @@ function AllowTimeout: Boolean;
 var
   frmTimeout: TfrmTimeout;
 begin
-  frmTimeout := TfrmTimeout.Create(Application);
+  frmTimeout := TfrmTimeout.Create(nil);
   try
-    ResizeFormToFont(TForm(frmTimeout));
-    frmTimeout.ShowModal;
-    Result := not frmTimeout.FContinue;
+    ResizeFormToFont(frmTimeout);
+    Result := frmTimeout.ShowModal = mrOK;
+    // ModalResult mrOK: shut down
+    // ModalResult mrCancel: don't shut down
   finally
-    frmTimeout.Release;
+    FreeAndNil(frmTimeout);
   end;
 end;
 
@@ -78,20 +75,6 @@ begin
   end;
 end;
 
-procedure TfrmTimeout.btnCloseClick(Sender: TObject);
-begin
-  inherited;
-  FContinue := False;
-  Close;
-end;
-
-procedure TfrmTimeout.cmdContinueClick(Sender: TObject);
-begin
-  inherited;
-  FContinue := True;
-  Close;
-end;
-
 procedure TfrmTimeout.timCountDownTimer(Sender: TObject);
 begin
   inherited;
@@ -99,15 +82,18 @@ begin
   begin
     MessageBeep(MB_ICONASTERISK);
     timCountDown.Enabled  := False;
-    timCountDown.Interval := 1000;
-    timCountDown.Enabled  := True;
+    try
+      timCountDown.Interval := 1000;
+    finally
+      timCountDown.Enabled  := True;
+    end;
   end;
   Dec(FCount);
   lblCount.Caption := IntToStr(FCount);
   if FCount < 1 then
   begin
     timCountDown.Enabled := False;
-    Close;
+    ModalResult := mrOK;
   end;
 end;
 

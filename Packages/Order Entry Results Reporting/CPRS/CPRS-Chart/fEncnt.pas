@@ -542,31 +542,33 @@ var
   aErrMsg: String;
   ADate, AMaxDate: TDateTime;
 begin
-  inherited;
   if ModalResult = mrCancel then
-    exit;
-  if (not DoNotNeedLocation) or (DoNotNeedLocation and (FLocation > 0)) then
+  begin
+    CanClose := True;
+    Exit;
+  end;
+  inherited;
+  if CanClose and ((not DoNotNeedLocation) or
+    (DoNotNeedLocation and (FLocation > 0))) then
+  begin
+    msg := '';
+    if FLocation = 0 then msg := TX_NO_LOC;
+    if FDateTime <= 0 then msg := msg + CRLF + TX_NO_DATE
+    else if(pos('.',FloatToStr(FDateTime)) = 0) then msg := msg + CRLF + TX_NO_TIME;
+    if(msg <> '') then
     begin
-      msg := '';
-      if FLocation = 0 then msg := TX_NO_LOC;
-      if FDateTime <= 0 then msg := msg + CRLF + TX_NO_DATE
-      else if(pos('.',FloatToStr(FDateTime)) = 0) then msg := msg + CRLF + TX_NO_TIME;
-      if(msg <> '') then
-        begin
-          InfoBox(msg, TC_MISSING, MB_OK);
-          CanClose := False; //Exit;
-        end
-      else
-        begin
-          ADate := FMDateTimeToDateTime(Trunc(FDateTime));
-          AMaxDate := FMDateTimeToDateTime(FMToday) + StrToIntDef(FEncFutureLimit, 0);
-          if ADate > AMaxDate then
-            if InfoBox(TX_FUTURE_WARNING, TC_FUTURE_WARNING, MB_YESNO or MB_ICONQUESTION) = MRNO then
-              CanClose := False; //exit;
-        end;
+      InfoBox(msg, TC_MISSING, MB_OK);
+      CanClose := False;
+    end else begin
+      ADate := FMDateTimeToDateTime(Trunc(FDateTime));
+      AMaxDate := FMDateTimeToDateTime(FMToday) + StrToIntDef(FEncFutureLimit, 0);
+      if ADate > AMaxDate then
+        if InfoBox(TX_FUTURE_WARNING, TC_FUTURE_WARNING, MB_YESNO or MB_ICONQUESTION) = MRNO then
+          CanClose := False;
     end;
+  end;
 
-  if not CheckForSimilarName(cboPtProvider, aErrMsg, sPr) then
+  if CanClose and (not CheckForSimilarName(cboPtProvider, aErrMsg, sPr)) then
   begin
     ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Similiar Name Selection');
     CanClose := False;

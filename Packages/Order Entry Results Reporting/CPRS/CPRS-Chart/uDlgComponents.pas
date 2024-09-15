@@ -3,6 +3,7 @@ unit uDlgComponents;
 interface
 
 uses
+  ORExtensions,
   SysUtils, Windows, Messages, Classes, Controls, StdCtrls, ComCtrls, ExtCtrls, uReminders,
   TypInfo, StrUtils, ORCtrls, ORDtTm, Forms, Graphics, Dialogs, RTLConsts, Buttons,
   VA508AccessibilityManager;
@@ -162,7 +163,7 @@ type
     property CPRSDialogData: ICPRSDialogComponent read FCPRSDialogInfo implements ICPRSDialogComponent;
   end;
 
-  TCPRSDialogRichEdit = class(TRichEdit, ICPRSDialogComponent)
+  TCPRSDialogRichEdit = class(ORExtensions.TRichEdit, ICPRSDialogComponent)
   private
     FCPRSDialogData: ICPRSDialogComponent;
   public

@@ -364,6 +364,7 @@ begin
                   lstProbPick.TabStop := True;
                   lstView.TabStop := False;
                   bbNewProb.TabStop := False;
+                  lstCatPick.SetFocus;
                   pnlProbList.BringToFront ;
                   pnlProbCats.ClientHeight := (pnlProbList.ClientHeight - pnlButtons.ClientHeight) div 2;
                   pnlProbEnt.Visible  := False;
@@ -755,9 +756,9 @@ var
   frmPLLex: TfrmPLLex;
 begin
   if not PLUser.usUseLexicon then exit; {don't allow lookup}
-  frmPLLex := TFrmPLLex.create(Application);
+  frmPLLex := TFrmPLLex.Create(nil);
   try
-    frmPLLex.showmodal;
+    frmPLLex.ShowModal;
   finally
     frmPLLex.Free;
   end;
@@ -1859,19 +1860,22 @@ procedure TfrmProblems.RefreshList;
 var
   i: integer;
 begin
-  RedrawSuspend(wgProbData.Handle);
-  wgProbData.Clear;
-  FItemData.Clear;
-  for i := 0 to FAllProblems.Count-1 do
-    if FProblemsVisible[i] = 'Y' then begin
-      FItemData.Add(IntToStr(i));
-      if Piece(FAllProblems[i], U, 1) <> '' then
-        wgProbData.Items.Add(PlainText(FAllProblems[i]))
-      else
-        wgProbData.Items.Add(FAllProblems[i]);
-    end;
-  wgProbData.Invalidate;
-  RedrawActivate(wgProbData.Handle);
+  wgProbData.LockDrawing;
+  try
+    wgProbData.Clear;
+    FItemData.Clear;
+    for i := 0 to FAllProblems.Count-1 do
+      if FProblemsVisible[i] = 'Y' then begin
+        FItemData.Add(IntToStr(i));
+        if Piece(FAllProblems[i], U, 1) <> '' then
+          wgProbData.Items.Add(PlainText(FAllProblems[i]))
+        else
+          wgProbData.Items.Add(FAllProblems[i]);
+      end;
+    wgProbData.Invalidate;
+  finally
+    wgProbData.UnlockDrawing;
+  end;
 end;
 
 procedure TfrmProblems.wgProbDataMeasureItem(Control: TWinControl;
@@ -1935,13 +1939,6 @@ procedure TfrmProblems.HeaderControlSectionResize(
 begin
   inherited;
   wgProbData.Invalidate;
-  {FEvtColWidth := HeaderControl.Sections[0].Width;     //code from fOrders
-  RedrawSuspend(Self.Handle);
-  //RedrawOrderList;
-  RedrawActivate(Self.Handle);
-  wgProbData.Invalidate;
-  pnlRight.Refresh;
-  pnlLeft.Refresh; }
 end;
 
 {Tab Order tricks.  Need to change
@@ -2068,6 +2065,8 @@ begin
   mnuActNew.Enabled := WriteAccess(waProblems);
   lstView.TabStop := true;
   bbNewProb.TabStop := true;
+  lstCatPick.TabStop := False;
+  lstProbPick.TabStop := False;
 end;
 
 procedure TfrmProblems.ViewInfo(Sender: TObject);

@@ -15,7 +15,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ImgList, StdCtrls, Buttons, ExtCtrls, ORNet, Trpcb, uCore,
-  Vcl.ComCtrls, VAUtils;
+  Vcl.ComCtrls, VAUtils, fBase508Form, VA508AccessibilityManager;
 
 type
 
@@ -43,7 +43,7 @@ type
      Procedure Clear;
   End;
 
-  TfrmDebugReport = class(TForm)
+  TfrmDebugReport = class(TfrmBase508Form)
     pnlLeft: TPanel;
     img1: TImage;
     pnlMain: TPanel;
@@ -68,14 +68,17 @@ type
     { Private declarations }
     fRPCS: tRPCArrayIdent;
     fDebugReportBroker: TRPCBroker;
-    fCallbackCrntLoop: Integer;
+    fCallbackRPCIndex: Integer;
     fCallBackKey: String;
+    fCallBackMaxLoops: Integer;
     fTaskDLG: TTaskDialog;
     fErrTxt: String;
+    fLoopCounter: Integer;
     procedure RunNonThread();
     function GetTopRPCNumber: Integer;
   public
     { Public declarations }
+    constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     function FilteredString(const x: string; ATabWidth: Integer = 8): string;
     procedure SendTheRpc(RPCList: TStringList; UniqueKey: string);
@@ -86,17 +89,17 @@ type
     Property TopRPCNumber: Integer read GetTopRPCNumber;
     property RPCS: tRPCArrayIdent read fRPCS write fRPCS;
     property DebugReportBroker: TRPCBroker read fDebugReportBroker write fDebugReportBroker;
-    property CallbackCurrentLoop: Integer read fCallbackCrntLoop write fCallbackCrntLoop;
+    property CallbackRPCIndex: Integer read fCallbackRPCIndex write fCallbackRPCIndex;
+    property CallBackMaxLoops: Integer read fCallBackMaxLoops write fCallBackMaxLoops;
     property CallbackKey: String read fCallBackKey write fCallBackKey;
     property ErrorText: String read fErrTxt write fErrTxt;
     property TaskDlg: TTaskDialog read fTaskDLG write fTaskDLG;
   end;
 
-Procedure LogBrokerErrors(const ErrTxt: String);
+Procedure LogBrokerErrors(const ErrTxt: String; const TotalRPCSToSend: Integer);
 
 Const
   UseMultThread: Boolean = false;
-  MAX_CALLS = 95;
 
 var
   frmDebugReport: TfrmDebugReport;
@@ -105,7 +108,7 @@ implementation
 
 {$R *.dfm}
 
-Procedure LogBrokerErrors(const ErrTxt: String);
+procedure LogBrokerErrors(const ErrTxt: string; const TotalRPCSToSend: Integer);
 var
   frmDebug: TfrmDebugReport;
   ReturnCursor: Integer;
@@ -114,15 +117,17 @@ begin
   ReturnCursor := Screen.cursor;
   Screen.cursor := crHourGlass;
   try
-    //set unique key
-    frmDebug.CallbackKey := IntToStr(User.DUZ) + '^' + FormatDateTime('mm/dd/yyyy hh:mm:ss', Now());
-    //save the Error text
+    // set unique key
+    frmDebug.CallbackKey := IntToStr(User.DUZ) + '^' +
+      FormatDateTime('mm/dd/yyyy hh:mm:ss', Now());
+    // save the Error text
     frmDebug.ErrorText := ErrTxt;
-    //set the loop
-    frmDebug.CallbackCurrentLoop := frmDebug.TopRPCNumber;
-    //create the task dialog
-    frmDebug.TaskDLG := TTaskDialog.Create(nil);
-    with frmDebug.TaskDLG do
+    // set the loop
+    frmDebug.CallbackRPCIndex := frmDebug.TopRPCNumber;
+    frmDebug.CallBackMaxLoops := TotalRPCSToSend;
+    // create the task dialog
+    frmDebug.TaskDlg := TTaskDialog.Create(nil);
+    with frmDebug.TaskDlg do
     begin
       try
         Caption := 'CPRS Error Log';
@@ -132,16 +137,17 @@ begin
         MainIcon := tdiInformation;
         ProgressBar.Position := 70;
         ProgressBar.MarqueeSpeed := 1;
-        Flags := [tfShowMarqueeProgressBar, tfCallbackTimer, tfAllowDialogCancellation ];
+        Flags := [tfShowMarqueeProgressBar, tfCallbackTimer,
+          tfAllowDialogCancellation];
         OnTimer := frmDebug.SendDataCallback;
         Execute;
       finally
         Free;
       end
     end;
-  Finally
-   Screen.cursor := ReturnCursor;
-   FreeAndNil(frmDebug);
+  finally
+    Screen.cursor := ReturnCursor;
+    FreeAndNil(frmDebug);
   end;
 end;
 
@@ -150,41 +156,42 @@ procedure TfrmDebugReport.SendDataCallback(Sender: TObject; TickCount: Cardinal;
 var
   RPCData: TStringList;
 begin
- RPCData := TStringList.Create;
- //Pause the timer
- fTaskDLG.OnTimer := nil;
- try
-  // 1st call
-  if fCallbackCrntLoop = TopRPCNumber then
-  begin
-    // ensure the broker exist
-    EnsureDebugBroker;
-    //Send the error message
-    RPCData.Add(fErrTxt);
-    SendTheDesc(RPCData, fCallBackKey);
-    RPCData.Clear;
+  RPCData := TStringList.Create;
+  // Pause the timer
+  fTaskDLG.OnTimer := nil;
+  try
+    if fLoopCounter < fCallBackMaxLoops then
+    begin
+      // 1st call
+      if fLoopCounter = 0 then
+      begin
+        // ensure the broker exist
+        EnsureDebugBroker;
+        // Send the error message
+        RPCData.Add(fErrTxt);
+        SendTheDesc(RPCData, fCallBackKey);
+        RPCData.Clear;
+      end;
+
+      // Need to sync this call
+      LoadRPCData(RPCData, fCallbackRPCIndex);
+
+      // Send in the rpc list
+      SendTheRpc(RPCData, fCallBackKey);
+
+      Inc(fLoopCounter);
+    end else begin
+      fTaskDLG.OnTimer := nil;
+      fTaskDLG.ProgressBar.Position := 100;
+      fTaskDLG.ModalResult := mrOk;
+      SendMessage(fTaskDLG.Handle, WM_CLOSE, 0, 0);
+    end;
+
+  finally
+    // reset the timer
+    fTaskDLG.OnTimer := SendDataCallback;
+    FreeAndNil(RPCData);
   end;
-
-   //Need to sync this call
-   LoadRPCData(RPCData, fCallbackCrntLoop);
-
-   //Send in the rpc list
-   SendTheRpc(RPCData, fCallBackKey);
-
-   if fCallbackCrntLoop = MAX_CALLS then
-   begin
-    fTaskDLG.OnTimer := nil;
-    fTaskDLG.ProgressBar.Position := 100;
-    fTaskDLG.ModalResult := mrOk;
-    SendMessage(fTaskDLG.Handle, WM_CLOSE, 0 , 0);
-   end else
-    dec(fCallbackCrntLoop);
-
- finally
-  // reset the timer
-  fTaskDLG.OnTimer := SendDataCallback;
-  FreeandNil(RPCData);
- end;
 end;
 
 procedure TfrmDebugReport.ActionMemoChange(Sender: TObject);
@@ -231,6 +238,13 @@ begin
   finally
    Screen.Cursor := ReturnCursor;
   end;
+end;
+
+constructor TfrmDebugReport.Create(AOwner: TComponent);
+begin
+  inherited;
+  fCallBackMaxLoops := 0;
+  fLoopCounter := 0;
 end;
 
 procedure TfrmDebugReport.FormShow(Sender: TObject);

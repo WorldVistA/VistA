@@ -1,0 +1,85 @@
+package ORCtrls_D11_0;
+
+{$R *.res}
+{$R '..\..\Source\ORCtrlsDsgn.dcr'}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'CPRS Custom Controls - 11.0'}
+{$DESIGNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  vcl,
+  vclx,
+  designide,
+  rtl,
+  Tee,
+  dbrtl,
+  VclSmp,
+  vcldb,
+  VA508Access_D11_0,
+  VAShared_R11_0,
+  XWB_R11_0,
+  ResponsiveGUI_R11_0;
+
+contains
+  ORCtrls in '..\..\Source\ORCtrls.pas',
+  ORCtrlsDsgn in '..\..\Source\ORCtrlsDsgn.pas',
+  ORStaticText in '..\..\Source\ORStaticText.pas',
+  ORSystem in '..\..\Source\ORSystem.pas',
+  ORFn in '..\..\Source\ORFn.pas',
+  ORClasses in '..\..\Source\ORClasses.pas',
+  ORNet in '..\..\Source\ORNet.pas',
+  ORCtrlsVA508Compatibility in '..\..\Source\ORCtrlsVA508Compatibility.pas',
+  OR2006Compatibility in '..\..\Source\OR2006Compatibility.pas' {frm2006Compatibility},
+  ORDtTmRng in '..\..\Source\ORDtTmRng.pas' {ORfrmDateRange},
+  ORDtTmCal in '..\..\Source\ORDtTmCal.pas',
+  ORDtTm in '..\..\Source\ORDtTm.pas' {ORfrmDtTm},
+  ORRadioCheck in '..\..\Source\ORRadioCheck.pas',
+  ORSplitter in '..\..\Source\ORSplitter.pas',
+  ORNetIntf in '..\..\Source\ORNetIntf.pas',
+  ORNetMult in '..\..\Source\ORNetMult.pas',
+  Vawrgrid in '..\..\Source\Vawrgrid.pas',
+  XMLUtils in '..\..\Source\XMLUtils.pas',
+  MSXML_TLB in '..\..\Source\MSXML_TLB.pas',
+  ORDtTmListBox in '..\..\Source\ORDtTmListBox.pas',
+  ORUnitTesting in '..\..\Source\ORUnitTesting.pas',
+  ORRedirect in '..\..\Source\ORRedirect.pas',
+  DDetours in '..\..\Source\DDetours.pas',
+  LegacyTypes in '..\..\Source\LegacyTypes.pas',
+  CPUID in '..\..\Source\CPUID.pas',
+  InstDecode in '..\..\Source\InstDecode.pas',
+  OREventCache in '..\..\Source\OREventCache.pas',
+  UORForm in '..\..\Source\UORForm.pas',
+  ORCtrls.ActivityLog in '..\..\Source\ORCtrls.ActivityLog.pas',
+  ORCtrls.UORJSONParameters in '..\..\Source\ORCtrls.UORJSONParameters.pas',
+  UIndicationsComboBox in '..\..\Source\UIndicationsComboBox.pas',
+  ORCtrls.ActivityLogDisplay in '..\..\Source\ORCtrls.ActivityLogDisplay.pas' {frmActivityLogDisplay},
+  ORExtensions in '..\..\Source\ORExtensions.pas',
+  ORCtrls.ORRichEdit in '..\..\Source\ORCtrls.ORRichEdit.pas';
+
+end.
+
+

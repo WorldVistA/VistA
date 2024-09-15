@@ -2,6 +2,7 @@ unit fODBBank;
 interface
 
 uses
+  ORExtensions,
   SysUtils, WinTypes, WinProcs, Messages, Classes, Graphics, Controls,
   Forms, Dialogs, StdCtrls, ORCtrls, ORfn, fODBase, ExtCtrls, ComCtrls, uConst,
   ORDtTm, Buttons, Menus, ImgList, VA508AccessibilityManager, VAUtils;
@@ -46,7 +47,7 @@ type
     btnRemoveAll: TButton;
     cboReasons: TORComboBox;
     lblRequiredField: TLabel;
-    memDiagComment: TRichEdit;
+    memDiagComment: ORExtensions.TRichEdit;
     lblCollType: TLabel;
     cboCollType: TORComboBox;
     lblCollTime: TLabel;

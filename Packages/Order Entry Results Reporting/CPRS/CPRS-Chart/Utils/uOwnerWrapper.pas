@@ -56,7 +56,7 @@ uses
 function CreateWrappedComponent(Owner: TComponent; ComponentClass: TComponentClass): TComponent;
 function UnwrappedOwner(obj: TComponent): TComponent;
 procedure LockOwnerWrapper(obj: TComponent);
-procedure UnlockOwnerWrepper(obj: TComponent);
+procedure UnlockOwnerWrapper(obj: TComponent);
 
 implementation
 
@@ -125,7 +125,7 @@ begin
     inc(TWrapper(obj.Owner).FLockCount);
 end;
 
-procedure UnlockOwnerWrepper(obj: TComponent);
+procedure UnlockOwnerWrapper(obj: TComponent);
 var
   idx: integer;
   w: TWrapper;

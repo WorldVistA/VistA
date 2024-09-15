@@ -67,7 +67,6 @@ inherited frmConsultsByStatus: TfrmConsultsByStatus
     Height = 33
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'Panel1'
     ShowCaption = False
     TabOrder = 1
     object cmdOK: TButton

@@ -5,6 +5,7 @@ unit fODBase;
 interface
 
 uses
+  ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, fAutoSz, StdCtrls,
   ORCtrls, ORFn, uConst, rOrders, rODBase, uCore, ComCtrls, ExtCtrls, Menus, Mask,
   Buttons, UBAGlobals, UBACore, VA508AccessibilityManager, CheckLst, uInfoBoxWithBtnControls;
@@ -132,7 +133,7 @@ type
     cmdQuit: TButton;
     pnlMessage: TPanel;
     imgMessage: TImage;
-    memMessage: TRichEdit;
+    memMessage: ORExtensions.TRichEdit;
     tmrBringToFront: TTimer;
     procedure cmdQuitClick(Sender: TObject);
     procedure cmdAcceptClick(Sender: TObject);
@@ -186,7 +187,6 @@ type
     function GetEffectiveDate: TFMDateTime;
     procedure SetDisplayGroup(Value: Integer);
     procedure SetFillerID(const Value: string);
-    procedure DoSetFontSize( FontSize: integer);
     procedure BuildOrderChecks(var aReturnList: TStringList);
     function OverrideFunction(aReturnList: TStringList; aOverrideType: String;
       aOverrideReason: String = ''; aOverrideComment: String = ''): boolean;
@@ -202,6 +202,7 @@ type
     procedure ShowOrderMessage(Show: boolean); virtual;
     property MergeOrderChecks: boolean read FMergeOrderChecks write FMergeOrderChecks;
     procedure DoShow; override;
+    procedure DoSetFontSize(FontSize: integer); override;
   public
     function OrderForInpatient: Boolean;
     procedure SetDefaultCoPay(AnOrderID: string);
@@ -2064,7 +2065,7 @@ end;
 procedure TfrmODBase.DoSetFontSize( FontSize: integer);
 begin
   if AutoSizeDisabled then
-    ResizeAnchoredFormToFont( Self )
+    inherited DoSetFontSize(FontSize)
   else
   begin
     //You get to resize the window yourself!

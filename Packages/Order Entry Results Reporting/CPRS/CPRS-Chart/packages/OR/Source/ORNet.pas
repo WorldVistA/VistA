@@ -27,12 +27,15 @@ function RetainedRPCCount: Integer;
 procedure SetRetainedRPCMax(Value: Integer);
 function GetRPCMax: Integer;
 procedure LoadRPCData(Dest: TStrings; ID: Integer);
+function RetrieveRPCName(ID: Integer): string;
 function DottedIPStr: string;
 procedure CallRPCWhenIdle(CallProc: TORIdleCallProc; Msg: string);
 function ShowRPCList: boolean;
 procedure EnsureBroker;
 procedure LockBroker;
 procedure UnlockBroker;
+procedure LockRPCCallList;
+procedure UnlockRPCCallList;
 
 // =========== Backward Compatiable Code ===========//
 procedure SetRPCFlaged(Value: string);
@@ -88,10 +91,13 @@ procedure SetAfterRPCEvent(Value: TAfterRPCEvent);
 implementation
 
 uses
+  System.Generics.Collections,
+  System.SyncObjs,
   ORNetIntf,
   Winsock,
   DateUtils,
-  uLockBroker, ORUnitTesting,
+  uLockBroker,
+  ORUnitTesting,
   UResponsiveGUI;
 
 const
@@ -104,8 +110,26 @@ const
   PARAM_SHOW_CERTS = 'SHOWCERTS';
   MAX_RPC_TRIES = 3;
 
+type
+  TCallList = class(TObject)
+  private
+    FList: TObjectList<TStringList>;
+    FLock: TCriticalSection;
+    function GetItems(Index: integer): TStringList;
+    function GetCount: Integer;
+  public
+    constructor Create;
+    destructor Destroy; override;
+    procedure Add(Item: TStringList);
+    procedure Delete(Index: Integer);
+    procedure Lock;
+    procedure Unlock;
+    property Count: Integer read GetCount;
+    property Items[Index: integer]: TStringList read GetItems; default;
+  end;
+
 var
-  uCallList: TList;
+  uCallList: TCallList;
   uMaxCalls: Integer;
   uShowRPCs: boolean;
   uBaseContext: string = '';
@@ -127,6 +151,16 @@ end;
 procedure UnlockBroker;
 begin
   uLockBroker.UnlockBroker;
+end;
+
+procedure LockRPCCallList;
+begin
+  uCallList.Lock;
+end;
+
+procedure UnlockRPCCallList;
+begin
+  uCallList.Unlock;
 end;
 
 type
@@ -170,15 +204,15 @@ var
   aStr: string;
 begin
   with RPCBrokerV.Param[ParamIndex] do
+  begin
+    PType := list;
+    i := 1;
+    if Assigned(AStringList) then for aStr in AStringList do
     begin
-      PType := list;
-      i := 1;
-      for aStr in AStringList do
-        begin
-          Mult[IntToStr(i)] := NullStrippedString(aStr);
-          inc(i);
-        end;
+      Mult[IntToStr(i)] := NullStrippedString(aStr);
+      inc(i);
     end;
+  end;
 end;
 
 procedure SetParams(const RPCName: string; const aParam: array of const);
@@ -189,92 +223,91 @@ var
   i: Integer;
   TmpExt: Extended;
   aORNetParam: IORNetParam;
-
 begin
   RPCLastCall := RPCName + ' (SetParam begin)';
   if Length(RPCName) = 0 then raise Exception.Create('No RPC Name');
   EnsureBroker;
   with RPCBrokerV do
-    begin
-      ClearParameters := True;
-      RemoteProcedure := RPCName;
-      for i := 0 to high(aParam) do
-        with aParam[i] do
-          begin
-            Param[i].PType := literal;
-            case VType of
-              vtInteger: Param[i].Value := IntToStr(VInteger);
-              vtBoolean: Param[i].Value := BoolChar[VBoolean];
-              vtChar: if VChar = #0 then
-                  Param[i].Value := ''
-                else
-                  Param[i].Value := string(VChar);
-              vtExtended:
-                begin
-                  TmpExt := VExtended^;
-                  if (abs(TmpExt) < 0.0000000000001) then TmpExt := 0;
-                  Param[i].Value := FloatToStr(TmpExt);
-                end;
-              vtString: with Param[i] do
-                  begin
-                    Value := NullStrippedString(string(VString^));
-                    if (Length(Value) > 0) and (Value[1] = #1) then
-                      begin
-                        Value := Copy(Value, 2, Length(Value));
-                        PType := reference;
-                      end;
-                  end;
-              vtPointer: if VPointer = nil then
-                begin
-                  if i=0 then
-                    ClearParameters := True
-                  else
-                    Param[i].PType := empty;
-                end
-                else
-                  raise Exception.Create('Pointer type must be nil.');
-              vtPChar: Param[i].Value := NullStrippedString(string(AnsiChar(VPChar)));
-
-              vtInterface:
-                if IInterface(VInterface).QueryInterface(IORNetParam, aORNetParam) = 0 then
-                  aORNetParam.AssignToParamRecord(Param[i]);
-
-              vtObject:
-                begin
-                  if VObject is TStrings then
-                    SetList(TStrings(VObject), i)
-                  else if VObject.GetInterface(IORNetParam, aORNetParam) then
-                    aORNetParam.AssignToParamRecord(Param[i]);
-                end;
-
-              vtWideChar: if VChar = #0 then
-                  Param[i].Value := ''
-                else
-                  Param[i].Value := string(VWideChar);
-              vtAnsiString: with Param[i] do
-                  begin
-                    Value := NullStrippedString(string(VAnsiString));
-                    if (Length(Value) > 0) and (Value[1] = #1) then
-                      begin
-                        Value := Copy(Value, 2, Length(Value));
-                        PType := reference;
-                      end;
-                  end;
-              vtInt64: Param[i].Value := IntToStr(VInt64^);
-              vtUnicodeString: with Param[i] do
-                  begin
-                    Value := NullStrippedString(string(VUnicodeString));
-                    if (Length(Value) > 0) and (Value[1] = #1) then
-                      begin
-                        Value := Copy(Value, 2, Length(Value));
-                        PType := reference;
-                      end;
-                  end;
+  begin
+    ClearParameters := True;
+    RemoteProcedure := RPCName;
+    for i := 0 to high(aParam) do
+      with aParam[i] do
+      begin
+        Param[i].PType := literal;
+        case VType of
+          vtInteger: Param[i].Value := IntToStr(VInteger);
+          vtBoolean: Param[i].Value := BoolChar[VBoolean];
+          vtChar: if VChar = #0 then
+              Param[i].Value := ''
             else
-              raise Exception.Create('RPC: ' + string(RemoteProcedure) + ' Unable to pass parameter type ' + IntToStr(VType) + ' to Broker.');
-            end; { case }
-          end; { for }
-    end; { with }
+              Param[i].Value := string(VChar);
+          vtExtended:
+            begin
+              TmpExt := VExtended^;
+              if (abs(TmpExt) < 0.0000000000001) then TmpExt := 0;
+              Param[i].Value := FloatToStr(TmpExt);
+            end;
+          vtString: with Param[i] do
+            begin
+              Value := NullStrippedString(string(VString^));
+              if (Length(Value) > 0) and (Value[1] = #1) then
+              begin
+                Value := Copy(Value, 2, Length(Value));
+                PType := reference;
+              end;
+            end;
+          vtPointer: if VPointer = nil then
+            begin
+              if i=0 then
+                ClearParameters := True
+              else
+                Param[i].PType := empty;
+            end
+            else
+              raise Exception.Create('Pointer type must be nil.');
+          vtPChar: Param[i].Value := NullStrippedString(string(AnsiChar(VPChar)));
+
+          vtInterface:
+            if IInterface(VInterface).QueryInterface(IORNetParam, aORNetParam) = 0 then
+              aORNetParam.AssignToParamRecord(Param[i]);
+
+          vtObject:
+            begin
+              if VObject is TStrings or (not Assigned(VObject)) then
+                SetList(TStrings(VObject), i)
+              else if VObject.GetInterface(IORNetParam, aORNetParam) then
+                aORNetParam.AssignToParamRecord(Param[i]);
+            end;
+
+          vtWideChar: if VChar = #0 then
+              Param[i].Value := ''
+            else
+              Param[i].Value := string(VWideChar);
+          vtAnsiString: with Param[i] do
+            begin
+              Value := NullStrippedString(string(VAnsiString));
+              if (Length(Value) > 0) and (Value[1] = #1) then
+              begin
+                Value := Copy(Value, 2, Length(Value));
+                PType := reference;
+              end;
+            end;
+          vtInt64: Param[i].Value := IntToStr(VInt64^);
+          vtUnicodeString: with Param[i] do
+            begin
+              Value := NullStrippedString(string(VUnicodeString));
+              if (Length(Value) > 0) and (Value[1] = #1) then
+              begin
+                Value := Copy(Value, 2, Length(Value));
+                PType := reference;
+              end;
+            end;
+        else
+          raise Exception.Create('RPC: ' + string(RemoteProcedure) + ' Unable to pass parameter type ' + IntToStr(VType) + ' to Broker.');
+        end; { case }
+      end; { for }
+  end; { with }
   RPCLastCall := RPCName + ' (SetParam end)';
 end;
 
@@ -384,19 +417,22 @@ function CallVistA(const aRPCName: string; const aParam: array of const;
 begin
   if AbortRPCCall then
   begin
-    aReturn.Clear;
+    if Assigned(aReturn) then aReturn.Clear;
     Result := False;
     Exit;
   end;
   LockBroker;
   try
     SetParams(aRPCName, aParam);
-    aReturn.Clear;
-    Result := CallBroker(aReturn, RequireResults);   
+    if Assigned(aReturn) then aReturn.Clear;
+    Result := CallBroker(aReturn, RequireResults);
   finally
-    RPCBrokerV.Results.Clear;
-    RPCBrokerV.Param.Clear;
-    UnlockBroker;
+    try
+      RPCBrokerV.Results.Clear;
+      RPCBrokerV.Param.Clear;
+    finally
+      UnlockBroker;
+    end;
   end;
 end;
 
@@ -509,12 +545,13 @@ begin
               ClearResults := True;
               Exit;
             end;
-        while uCallList.Count >= uMaxCalls do
-          begin
-            AStringList := uCallList.Items[0];
-            AStringList.Free;
+        uCallList.Lock;
+        try
+          while uCallList.Count >= uMaxCalls do
             uCallList.Delete(0);
-          end;
+        finally
+          uCallList.Unlock;
+        end;
         AStringList := TStringList.Create;
         try
           AStringList.Add(string(RPCBrokerV.RemoteProcedure));
@@ -886,7 +923,29 @@ end;
 
 procedure LoadRPCData(Dest: TStrings; ID: Integer);
 begin
-  if (ID > -1) and (ID < uCallList.Count) then FastAssign(TStringList(uCallList.Items[ID]), Dest);
+  uCallList.Lock;
+  try
+    if (ID > -1) and (ID < uCallList.Count) then
+      Dest.Assign(uCallList.Items[ID]);
+  finally
+    uCallList.Unlock;
+  end;
+end;
+
+function RetrieveRPCName(ID: Integer): string;
+begin
+  uCallList.Lock;
+  try
+    Result := '';
+    if (ID > -1) and (ID < uCallList.Count) then
+    begin
+      // the first line of the RPC Broker data the RPC Name
+      if uCallList.Items[ID].Count > 0 then
+        Result := uCallList.Items[ID][0];
+    end;
+  finally
+    uCallList.Unlock;
+  end;
 end;
 
 function DottedIPStr: string;
@@ -1056,7 +1115,6 @@ type
 procedure tPulseObject.PulseError(RPCBroker: TRPCBroker; ErrorText: String);
 var
   DoError: boolean;
-
 begin
   if Application.Terminated then
     Exit;
@@ -1096,22 +1154,83 @@ begin
   end;
 end;
 
+{ TCallList }
+
+procedure TCallList.Add(Item: TStringList);
+begin
+  Lock;
+  try
+    FList.Add(Item);
+  finally
+    Unlock;
+  end;
+end;
+
+constructor TCallList.Create;
+begin
+  inherited;
+  FList := TObjectList<TStringList>.Create;
+  FLock := TCriticalSection.Create;
+end;
+
+procedure TCallList.Delete(Index: Integer);
+begin
+  Lock;
+  try
+    FList.Delete(Index);
+  finally
+    Unlock;
+  end;
+end;
+
+destructor TCallList.Destroy;
+begin
+  FreeAndNil(FLock);
+  FreeAndNil(FList);
+  inherited;
+end;
+
+function TCallList.GetCount: Integer;
+begin
+  Lock;
+  try
+    Result := FList.Count;
+  finally
+    Unlock;
+  end;
+end;
+
+function TCallList.GetItems(Index: integer): TStringList;
+begin
+  Lock;
+  try
+    Result := FList[Index];
+  finally
+    Unlock;
+  end;
+end;
+
+procedure TCallList.Lock;
+begin
+  FLock.Acquire;
+end;
+
+procedure TCallList.Unlock;
+begin
+  FLock.Release;
+end;
+
 initialization
   RPCBrokerV := nil;
   RPCLastCall := 'No RPCs called';
-  uCallList := TList.Create;
+  uCallList := TCallList.Create;
   uMaxCalls := 100;
   uShowRPCs := False;
   uDTList := TStringList.Create;
   PulseObject := tPulseObject.Create;
 
 finalization
-  while uCallList.Count > 0 do
-  begin
-    TStringList(uCallList.Items[0]).Free;
-    uCallList.Delete(0);
-  end;
-  uCallList.Free;
+  FreeAndNil(uCallList);
   uDTList.Free;
   PulseObject.Free;
 

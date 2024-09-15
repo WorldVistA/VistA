@@ -1,64 +1,49 @@
-object frmViewNotifications: TfrmViewNotifications
+inherited frmViewNotifications: TfrmViewNotifications
   Left = 0
   Top = 0
   Caption = 'All Current Notifications for Patient'
-  ClientHeight = 424
-  ClientWidth = 801
-  Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = -14
-  Font.Name = 'Tahoma'
-  Font.Style = []
-  OldCreateOrder = False
-  Position = poOwnerFormCenter
-  OnCreate = FormCreate
+  ClientHeight = 362
+  ClientWidth = 722
+  Constraints.MinHeight = 150
+  Constraints.MinWidth = 734
   OnResize = FormResize
-  PixelsPerInch = 120
-  TextHeight = 17
-  object clvNotifications: TCaptionListView
+  ExplicitWidth = 734
+  ExplicitHeight = 400
+  TextHeight = 13
+  object clvNotifications: TCaptionListView [0]
     AlignWithMargins = True
-    Left = 6
-    Top = 6
-    Width = 789
-    Height = 355
-    Margins.Left = 6
-    Margins.Top = 6
-    Margins.Right = 6
-    Margins.Bottom = 6
+    Left = 3
+    Top = 3
+    Width = 716
+    Height = 325
     Align = alClient
     Columns = <
       item
         Caption = 'My To Do'
-        Width = 63
       end
       item
         Caption = 'Info'
-        Width = 63
       end
       item
         Caption = 'Location'
-        Width = 80
+        Width = 64
       end
       item
         Caption = 'Urgency'
-        Width = 80
+        Width = 64
       end
       item
         Caption = 'Alert Date/Time'
-        Width = 120
+        Width = 96
       end
       item
         Caption = 'Message'
-        Width = 63
       end
       item
         Caption = 'Ordering Provider'
-        Width = 63
       end
       item
         Caption = 'Forwarded By/When'
-        Width = 63
       end>
     MultiSelect = True
     ReadOnly = True
@@ -69,134 +54,182 @@ object frmViewNotifications: TfrmViewNotifications
     OnDblClick = acProcessExecute
     AutoSize = False
     Caption = 'clvNotifications'
-    HideTinyColumns = False
-    ExplicitWidth = 941
-    ExplicitHeight = 446
+    ExplicitWidth = 712
+    ExplicitHeight = 324
   end
-  object pnlBottom: TPanel
+  object pnlBottom: TPanel [1]
     Left = 0
-    Top = 367
-    Width = 801
-    Height = 57
+    Top = 331
+    Width = 722
+    Height = 31
     Align = alBottom
+    AutoSize = True
+    BevelEdges = []
+    BevelOuter = bvNone
     TabOrder = 1
-    ExplicitLeft = -6
-    ExplicitTop = 370
-    ExplicitWidth = 793
-    DesignSize = (
-      801
-      57)
-    object lblFrom: TLabel
-      Left = 12
-      Top = 18
-      Width = 37
-      Height = 17
-      Alignment = taRightJustify
-      Caption = 'From:'
-    end
-    object lblTo: TLabel
-      Left = 197
-      Top = 18
-      Width = 21
-      Height = 17
-      Alignment = taRightJustify
-      Caption = 'To:'
-    end
-    object btnClose: TButton
-      Left = 721
-      Top = 13
-      Width = 73
-      Height = 30
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Action = acClose
-      Anchors = [akRight, akBottom]
-      TabOrder = 0
-      ExplicitLeft = 873
-    end
-    object btnDefer: TButton
-      Left = 638
-      Top = 13
-      Width = 74
-      Height = 30
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Action = acDefer
-      Anchors = [akRight, akBottom]
+    ExplicitTop = 330
+    ExplicitWidth = 718
+    object pnlBottomRight: TPanel
+      Left = 401
+      Top = 0
+      Width = 321
+      Height = 31
+      Align = alRight
+      AutoSize = True
+      BevelEdges = []
+      BevelOuter = bvNone
       TabOrder = 1
-      ExplicitLeft = 790
+      ExplicitLeft = 397
+      object btnClose: TButton
+        AlignWithMargins = True
+        Left = 245
+        Top = 3
+        Width = 73
+        Height = 25
+        Action = acClose
+        Align = alRight
+        TabOrder = 3
+      end
+      object btnDefer: TButton
+        AlignWithMargins = True
+        Left = 165
+        Top = 3
+        Width = 74
+        Height = 25
+        Action = acDefer
+        Align = alRight
+        TabOrder = 2
+      end
+      object btnProcess: TButton
+        AlignWithMargins = True
+        Left = 84
+        Top = 3
+        Width = 75
+        Height = 25
+        Action = acProcess
+        Align = alRight
+        TabOrder = 1
+      end
+      object btnDetails: TButton
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 75
+        Height = 25
+        Action = acDetails
+        Align = alRight
+        TabOrder = 0
+      end
     end
-    object btnProcess: TButton
-      Left = 555
-      Top = 13
-      Width = 75
-      Height = 30
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Action = acProcess
-      Anchors = [akRight, akBottom]
-      TabOrder = 2
-      ExplicitLeft = 592
+    object pnlBottomLeft: TPanel
+      Left = 0
+      Top = 0
+      Width = 401
+      Height = 31
+      Align = alLeft
+      BevelEdges = []
+      BevelOuter = bvNone
+      TabOrder = 0
+      object lblFrom: TLabel
+        Left = 3
+        Top = 9
+        Width = 26
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'From:'
+      end
+      object lblTo: TLabel
+        Left = 162
+        Top = 9
+        Width = 16
+        Height = 13
+        Alignment = taRightJustify
+        Caption = 'To:'
+      end
+      object ordbFrom: TORDateBox
+        Left = 32
+        Top = 6
+        Width = 121
+        Height = 21
+        TabOrder = 0
+        Text = 'ordbFrom'
+        OnChange = ordbFromChange
+        DateOnly = True
+        RequireTime = False
+        Caption = ''
+      end
+      object ordbTo: TORDateBox
+        Left = 181
+        Top = 6
+        Width = 121
+        Height = 21
+        TabOrder = 2
+        Text = 'ordbTo'
+        OnChange = ordbToChange
+        DateOnly = True
+        RequireTime = False
+        Caption = ''
+      end
+      object btnUpdate: TButton
+        AlignWithMargins = True
+        Left = 320
+        Top = 3
+        Width = 78
+        Height = 25
+        Align = alRight
+        Caption = '&Update List'
+        TabOrder = 4
+        OnClick = btnUpdateClick
+      end
     end
-    object ordbFrom: TORDateBox
-      Left = 55
-      Top = 16
-      Width = 121
-      Height = 25
-      TabOrder = 3
-      Text = 'ordbFrom'
-      OnChange = ordbFromChange
-      DateOnly = True
-      RequireTime = False
-      Caption = ''
-    end
-    object ordbTo: TORDateBox
-      Left = 223
-      Top = 16
-      Width = 121
-      Height = 25
-      TabOrder = 4
-      Text = 'ordbTo'
-      OnChange = ordbToChange
-      DateOnly = True
-      RequireTime = False
-      Caption = ''
-    end
-    object btnUpdate: TButton
-      Left = 351
-      Top = 13
-      Width = 100
-      Height = 30
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akLeft, akBottom]
-      Caption = '&Update List'
-      TabOrder = 7
-      OnClick = btnUpdateClick
-    end
-    object btnDetails: TButton
-      Left = 472
-      Top = 13
-      Width = 75
-      Height = 30
-      Action = acDetails
-      Anchors = [akRight, akBottom]
-      TabOrder = 8
-      ExplicitLeft = 509
-    end
+  end
+  inherited amgrMain: TVA508AccessibilityManager
+    Left = 16
+    Top = 16
+    Data = (
+      (
+        'Component = clvNotifications'
+        'Status = stsDefault')
+      (
+        'Component = frmViewNotifications'
+        'Status = stsDefault')
+      (
+        'Component = pnlBottom'
+        'Status = stsDefault')
+      (
+        'Component = pnlBottomRight'
+        'Status = stsDefault')
+      (
+        'Component = btnClose'
+        'Status = stsDefault')
+      (
+        'Component = btnDefer'
+        'Status = stsDefault')
+      (
+        'Component = btnProcess'
+        'Status = stsDefault')
+      (
+        'Component = btnDetails'
+        'Status = stsDefault')
+      (
+        'Component = pnlBottomLeft'
+        'Status = stsDefault')
+      (
+        'Component = ordbFrom'
+        'Label = lblFrom'
+        'Status = stsOK')
+      (
+        'Component = ordbTo'
+        'Label = lblTo'
+        'Status = stsOK')
+      (
+        'Component = btnUpdate'
+        'Status = stsDefault'))
   end
   object acList: TActionList
     OnUpdate = acListUpdate
-    Left = 24
-    Top = 48
+    Left = 80
+    Top = 16
     object acProcess: TAction
       Caption = '&Process'
       OnExecute = acProcessExecute

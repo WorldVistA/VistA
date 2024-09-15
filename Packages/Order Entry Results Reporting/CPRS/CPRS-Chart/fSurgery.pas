@@ -122,7 +122,7 @@ type
     mnuChartSurgery: TMenuItem;
     lstNotes: TORListBox;
     sptVert: TSplitter;
-    memPCEShow: TRichEdit;
+    memPCEShow: ORExtensions.TRichEdit;
     cmdPCE: TORAlignButton;
     popNoteListBySurgeon: TMenuItem;
     popNoteListUnsigned: TMenuItem;
@@ -2858,65 +2858,68 @@ begin
       Exit;
     popNoteListExpandSelected.Enabled := Selected.HasChildren;
     popNoteListCollapseSelected.Enabled := Selected.HasChildren;
-    RedrawSuspend(memSurgery.Handle);
-    memSurgery.Clear;
-    if not(Selected.ImageIndex in [IMG_SURG_TOP_LEVEL, IMG_SURG_GROUP_OPEN,
-      IMG_SURG_GROUP_SHUT]) then
-    begin
-      x := TORTreeNode(Selected).StringData;
+    memSurgery.LockDrawing;
+    try
       memSurgery.Clear;
-      StatusText('Retrieving selected surgery report...');
-      Screen.Cursor := crHourGlass;
-      pnlRead.Visible := True;
-      pnlWrite.Visible := False;
-      // UpdateReminderFinish;
-      IsTIUDocument := PCaseTreeObject(Selected.Data)^.PkgRef <> '';
-      EnableDisableMenus(IsTIUDocument);
-      if not IsTIUDocument then
+      if not(Selected.ImageIndex in [IMG_SURG_TOP_LEVEL, IMG_SURG_GROUP_OPEN,
+        IMG_SURG_GROUP_SHUT]) then
       begin
-        lblTitle.Caption := MakeSurgeryCaseDisplayText(x);
-        lblTitle.Hint := lblTitle.Caption;
-        // LoadOpTop(memSurgery.Lines, StrToIntDef(Piece(x, U, 1), 0), PCaseTreeObject(Selected.Data)^.IsNonORProc, ShowReport);
-        // --------------------------------------------------------------------------------------------------------
-        // DON'T DO THIS UNTIL SURGERY API IS CHANGED - OTHERWISE WILL GIVE FALSE '0' COUNT FOR EVERY CASE  (RV)
-        (* MsgString := 'SUR^' + Piece(x, U, 1);
-          HasImages := BOOLCHAR[PCaseTreeObject(Selected.Data)^.ImageCount > 0];
-          SetPiece(MsgString, U, 10, HasImages);
-          NotifyOtherApps(NAE_REPORT, 'SUR^' + MsgString); *)
-        // --------------------------------------------------------------------------------------------------------
-        NotifyOtherApps(NAE_REPORT, 'SUR^' + Piece(x, U, 1));
-        lstNotes.ItemIndex := -1;
+        x := TORTreeNode(Selected).StringData;
+        memSurgery.Clear;
+        StatusText('Retrieving selected surgery report...');
+        Screen.Cursor := crHourGlass;
+        pnlRead.Visible := True;
+        pnlWrite.Visible := False;
+        // UpdateReminderFinish;
+        IsTIUDocument := PCaseTreeObject(Selected.Data)^.PkgRef <> '';
+        EnableDisableMenus(IsTIUDocument);
+        if not IsTIUDocument then
+        begin
+          lblTitle.Caption := MakeSurgeryCaseDisplayText(x);
+          lblTitle.Hint := lblTitle.Caption;
+          // LoadOpTop(memSurgery.Lines, StrToIntDef(Piece(x, U, 1), 0), PCaseTreeObject(Selected.Data)^.IsNonORProc, ShowReport);
+          // --------------------------------------------------------------------------------------------------------
+          // DON'T DO THIS UNTIL SURGERY API IS CHANGED - OTHERWISE WILL GIVE FALSE '0' COUNT FOR EVERY CASE  (RV)
+          (* MsgString := 'SUR^' + Piece(x, U, 1);
+            HasImages := BOOLCHAR[PCaseTreeObject(Selected.Data)^.ImageCount > 0];
+            SetPiece(MsgString, U, 10, HasImages);
+            NotifyOtherApps(NAE_REPORT, 'SUR^' + MsgString); *)
+          // --------------------------------------------------------------------------------------------------------
+          NotifyOtherApps(NAE_REPORT, 'SUR^' + Piece(x, U, 1));
+          lstNotes.ItemIndex := -1;
+        end
+        else
+        begin
+          lstNotes.SelectByID(Piece(x, U, 1));
+          lstNotesClick(Self);
+        end;
+        Screen.Cursor := crDefault;
+        StatusText('');
+        SendMessage(memSurgery.Handle, WM_VSCROLL, SB_TOP, 0);
       end
       else
       begin
-        lstNotes.SelectByID(Piece(x, U, 1));
-        lstNotesClick(Self);
+        lblTitle.Caption := '';
+        lblTitle.Hint := lblTitle.Caption;
+        pnlWrite.Visible := False;
+        pnlRead.Visible := True;
+        // UpdateReminderFinish;
+        ShowPCEControls(False);
+        frmDrawers.DisplayDrawers(WriteAccess(waSurgeryTemplates),
+          [odTemplates], [odTemplates]); // FALSE);
+        ShowPCEButtons(False);
+        memSurgery.Clear;
       end;
-      Screen.Cursor := crDefault;
-      StatusText('');
-      SendMessage(memSurgery.Handle, WM_VSCROLL, SB_TOP, 0);
-    end
-    else
-    begin
-      lblTitle.Caption := '';
-      lblTitle.Hint := lblTitle.Caption;
-      pnlWrite.Visible := False;
-      pnlRead.Visible := True;
-      // UpdateReminderFinish;
-      ShowPCEControls(False);
-      frmDrawers.DisplayDrawers(WriteAccess(waSurgeryTemplates),
-        [odTemplates], [odTemplates]); // FALSE);
-      ShowPCEButtons(False);
-      memSurgery.Clear;
+      if (Assigned(frmReminderTree)) then
+        frmReminderTree.EnableActions;
+      DisplayPCE;
+      pnlRight.Refresh;
+      memNewNote.Repaint;
+      memSurgery.Repaint;
+      SendMessage(tvSurgery.Handle, WM_HSCROLL, SB_THUMBTRACK, 0);
+    finally
+      memSurgery.UnlockDrawing;
     end;
-    if (Assigned(frmReminderTree)) then
-      frmReminderTree.EnableActions;
-    DisplayPCE;
-    pnlRight.Refresh;
-    memNewNote.Repaint;
-    memSurgery.Repaint;
-    SendMessage(tvSurgery.Handle, WM_HSCROLL, SB_THUMBTRACK, 0);
-    RedrawActivate(memSurgery.Handle);
   end;
 end;
 
@@ -2956,69 +2959,72 @@ begin
   try
     FCaseList.Clear;
     uChanging := True;
-    RedrawSuspend(memSurgery.Handle);
-    tvSurgery.Items.BeginUpdate;
+    memSurgery.LockDrawing;
     try
-      KillCaseTreeObjects(tvSurgery);
-      tvSurgery.Items.Clear;
-    finally
-      tvSurgery.Items.EndUpdate;
-    end;
-    lstNotes.Items.Clear;
-    memSurgery.Clear;
-    memSurgery.Invalidate;
-    lblTitle.Caption := '';
-    lblTitle.Hint := lblTitle.Caption;
-    ShowPCEControls(False);
-    with FCurrentContext do
-    begin
-      GetSurgCaseList(tmpList, FMBeginDate, FMEndDate, SR_ALL, MaxDocs);
-      CreateListItemsForCaseTree(FCaseList, tmpList, SR_ALL, GroupBy,
-        TreeAscending);
-      UpdateTreeView(FCaseList, tvSurgery);
-    end;
-    tmpList.Clear;
-    FCaseList.Clear;
-    with tvSurgery do
-    begin
-      uChanging := True;
       tvSurgery.Items.BeginUpdate;
       try
-        if FLastNoteID <> '' then
-          Selected := FindPieceNode(FLastNoteID, 1, U, nil);
-        if Selected = nil then
-        begin
-          if (uSurgeryContext.GroupBy <> '') then
-          begin
-            ANode := TORTreeNode(Items.GetFirstNode);
-            while ANode <> nil do
-            begin
-              ANode.Expand(False);
-              Selected := ANode;
-              ANode := TORTreeNode(ANode.GetNextSibling);
-            end;
-          end
-          else
-          begin
-            ANode := tvSurgery.FindPieceNode(IntToStr(SR_ALL), 1, U, nil);
-            if ANode <> nil then
-              Selected := ANode.getFirstChild;
-          end;
-        end;
-        memSurgery.Clear;
-        RemoveParentsWithNoChildren(tvSurgery, uSurgeryContext);
+        KillCaseTreeObjects(tvSurgery);
+        tvSurgery.Items.Clear;
       finally
         tvSurgery.Items.EndUpdate;
       end;
-      uChanging := False;
-      lblCases.Caption := SetSurgTreeLabel(FCurrentContext);
-      tvSurgery.Caption := lblCases.Caption;
-      SendMessage(tvSurgery.Handle, WM_VSCROLL, SB_TOP, 0);
-      if Selected <> nil then
-        tvSurgeryChange(Self, Selected);
+      lstNotes.Items.Clear;
+      memSurgery.Clear;
+      memSurgery.Invalidate;
+      lblTitle.Caption := '';
+      lblTitle.Hint := lblTitle.Caption;
+      ShowPCEControls(False);
+      with FCurrentContext do
+      begin
+        GetSurgCaseList(tmpList, FMBeginDate, FMEndDate, SR_ALL, MaxDocs);
+        CreateListItemsForCaseTree(FCaseList, tmpList, SR_ALL, GroupBy,
+          TreeAscending);
+        UpdateTreeView(FCaseList, tvSurgery);
+      end;
+      tmpList.Clear;
+      FCaseList.Clear;
+      with tvSurgery do
+      begin
+        uChanging := True;
+        tvSurgery.Items.BeginUpdate;
+        try
+          if FLastNoteID <> '' then
+            Selected := FindPieceNode(FLastNoteID, 1, U, nil);
+          if Selected = nil then
+          begin
+            if (uSurgeryContext.GroupBy <> '') then
+            begin
+              ANode := TORTreeNode(Items.GetFirstNode);
+              while ANode <> nil do
+              begin
+                ANode.Expand(False);
+                Selected := ANode;
+                ANode := TORTreeNode(ANode.GetNextSibling);
+              end;
+            end
+            else
+            begin
+              ANode := tvSurgery.FindPieceNode(IntToStr(SR_ALL), 1, U, nil);
+              if ANode <> nil then
+                Selected := ANode.getFirstChild;
+            end;
+          end;
+          memSurgery.Clear;
+          RemoveParentsWithNoChildren(tvSurgery, uSurgeryContext);
+        finally
+          tvSurgery.Items.EndUpdate;
+        end;
+        uChanging := False;
+        lblCases.Caption := SetSurgTreeLabel(FCurrentContext);
+        tvSurgery.Caption := lblCases.Caption;
+        SendMessage(tvSurgery.Handle, WM_VSCROLL, SB_TOP, 0);
+        if Selected <> nil then
+          tvSurgeryChange(Self, Selected);
+      end;
+    finally
+      memSurgery.UnlockDrawing;
     end;
   finally
-    RedrawActivate(memSurgery.Handle);
     tmpList.Free;
   end;
 end;

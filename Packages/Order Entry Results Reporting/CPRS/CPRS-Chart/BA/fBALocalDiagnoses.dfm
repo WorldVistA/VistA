@@ -21,7 +21,6 @@ inherited frmBALocalDiagnoses: TfrmBALocalDiagnoses
     Margins.Right = 4
     Margins.Bottom = 4
     Align = alTop
-    Caption = 'pnlTop'
     TabOrder = 0
     DesignSize = (
       753

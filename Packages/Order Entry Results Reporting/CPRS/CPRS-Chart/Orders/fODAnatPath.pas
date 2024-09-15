@@ -806,9 +806,9 @@ begin
 
   Changing := True;
   try
-    RedrawSuspend(pgctrlSpecimen.Handle);
+    pgctrlSpecimen.LockDrawing;
     try
-      RedrawSuspend(pgctrlText.Handle);
+      pgctrlText.LockDrawing;
       try
         FLastLabIEN := cbxAvailTest.ItemIEN;
         if not (FOrderAction in [ORDER_COPY, ORDER_EDIT, ORDER_QUICK]) then
@@ -835,10 +835,10 @@ begin
         FChangeMessage := CustomChangeMessage(ALabTest.OrderableItemInternal);
         SetUpSpecimen;                                                          // *** Specimen
       finally
-        RedrawActivate(pgctrlText.Handle);
+        pgctrlText.UnlockDrawing;
       end;
     finally
-      RedrawActivate(pgctrlSpecimen.Handle);
+      pgctrlSpecimen.UnlockDrawing;
     end;
   finally
     Changing := False;

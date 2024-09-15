@@ -63,7 +63,6 @@ inherited frmODGen: TfrmODGen
     Height = 59
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'gpMain'
     ColumnCollection = <
       item
         Value = 100.000000000000000000
@@ -95,7 +94,6 @@ inherited frmODGen: TfrmODGen
     Width = 113
     Height = 41
     BevelOuter = bvNone
-    Caption = 'pnlButtons'
     ParentColor = True
     ShowCaption = False
     TabOrder = 7
@@ -108,7 +106,6 @@ inherited frmODGen: TfrmODGen
     Height = 73
     Align = alBottom
     BevelOuter = bvNone
-    Caption = 'pnlButtons'
     Ctl3D = False
     ParentBackground = False
     ParentColor = True

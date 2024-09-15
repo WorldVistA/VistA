@@ -42,10 +42,12 @@ uses
   ORCtrls,
   VAUtils,
   ORDtTm,
-  rReminders, VA508AccessibilityManager;
+  rReminders,
+  fBase508Form,
+  VA508AccessibilityManager;
 
 type
-  TfrmWVPregLacStatusUpdate = class(TForm)
+  TfrmWVPregLacStatusUpdate = class(TfrmBase508Form)
     btnCancel: TButton;
     btnSave: TButton;
     pnlOptions: TPanel;
@@ -74,7 +76,6 @@ type
     edtOther: TEdit;
     scrollBox: TScrollBox;
     pnlForm: TPanel;
-    VA508AccessibilityManager1: TVA508AccessibilityManager;
     robnLactatingYes: TRadioButton;
     robnPregnantUnsure: TRadioButton;
     robnPregnantNo: TRadioButton;

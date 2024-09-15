@@ -18,12 +18,14 @@ uses
   Vcl.StdCtrls,
   Vcl.ExtCtrls,
   Vcl.ActnList,
-  Vcl.ComCtrls;
+  Vcl.ComCtrls,
+  fBase508Form,
+  VA508AccessibilityManager;
 
 type
   TDeferBy = (dfbCustom, dfb1H, dfb2H, dfb3H, dfb4H, dfb6H, dfb8H, dfb12H, dfb1D, dfb2D, dfb3D, dfb4D, dfb5D, dfb6D, dfb7D, dfb8D, dfb9D, dfb10D, dfb11D, dfb12D, dfb13D, dfb14D);
 
-  TfrmDeferDialog = class(TForm)
+  TfrmDeferDialog = class(TfrmBase508Form)
     acList: TActionList;
     acNewDeferalClicked: TAction;
     acDefer: TAction;

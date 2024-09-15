@@ -1,79 +1,61 @@
 inherited frmVisitType: TfrmVisitType
   Left = 260
   Caption = 'Encounter VisitType'
-  ClientHeight = 548
-  ClientWidth = 740
-  Constraints.MinHeight = 581
-  Constraints.MinWidth = 750
+  ClientHeight = 438
+  ClientWidth = 595
+  Constraints.MinHeight = 465
+  Constraints.MinWidth = 600
   OnCloseQuery = FormCloseQuery
-  ExplicitWidth = 756
-  ExplicitHeight = 587
-  PixelsPerInch = 120
+  ExplicitWidth = 607
+  ExplicitHeight = 476
   TextHeight = 13
   inherited btnOK: TBitBtn
-    Left = 545
-    Top = 518
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
-    TabOrder = 3
-    ExplicitLeft = 545
-    ExplicitTop = 518
-  end
-  object pnlTop: TPanel [1]
-    Left = 0
-    Top = 0
-    Width = 740
-    Height = 131
+    Left = 432
+    Top = 414
+    Width = 60
+    Height = 17
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
+    TabOrder = 3
+    ExplicitLeft = 428
+    ExplicitTop = 413
+    ExplicitWidth = 60
+    ExplicitHeight = 17
+  end
+  object pnlTop: TPanel [1]
+    Left = 0
+    Top = 0
+    Width = 595
+    Height = 105
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitWidth = 591
     object splLeft: TSplitter
-      Left = 181
+      Left = 145
       Top = 0
-      Width = 4
-      Height = 131
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Height = 105
     end
     object splRight: TSplitter
-      Left = 451
+      Left = 361
       Top = 0
-      Width = 4
-      Height = 131
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Height = 105
     end
     object pnlLeft: TPanel
       Left = 0
       Top = 0
-      Width = 181
-      Height = 131
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 145
+      Height = 105
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
       object lblVTypeSection: TLabel
         Left = 0
         Top = 0
-        Width = 181
+        Width = 145
         Height = 13
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Align = alTop
         Caption = 'Type of Visit'
         ExplicitWidth = 58
@@ -82,12 +64,8 @@ inherited frmVisitType: TfrmVisitType
         Tag = 10
         Left = 0
         Top = 13
-        Width = 181
-        Height = 118
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 145
+        Height = 92
         Align = alClient
         ItemHeight = 13
         ParentShowHint = False
@@ -102,27 +80,20 @@ inherited frmVisitType: TfrmVisitType
       end
     end
     object pnlModifiers: TPanel
-      Left = 455
+      Left = 364
       Top = 0
-      Width = 285
-      Height = 131
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 231
+      Height = 105
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 2
+      ExplicitWidth = 227
       object lblMod: TLabel
         Left = 0
         Top = 0
-        Width = 285
+        Width = 231
         Height = 13
         Hint = 'Modifiers'
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Align = alTop
         Caption = 'Modifiers'
         ParentShowHint = False
@@ -132,20 +103,10 @@ inherited frmVisitType: TfrmVisitType
       object lbMods: TORListBox
         Left = 0
         Top = 13
-        Width = 285
-        Height = 118
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 231
+        Height = 92
         Style = lbOwnerDrawFixed
         Align = alClient
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -14
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
-        ParentFont = False
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
@@ -157,17 +118,14 @@ inherited frmVisitType: TfrmVisitType
         CheckBoxes = True
         CheckEntireLine = True
         OnClickCheck = lbModsClickCheck
+        ExplicitWidth = 227
       end
     end
     object pnlSection: TPanel
-      Left = 185
+      Left = 148
       Top = 0
-      Width = 266
-      Height = 131
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 213
+      Height = 105
       Align = alLeft
       BevelOuter = bvNone
       Caption = 'pnlSection'
@@ -175,12 +133,8 @@ inherited frmVisitType: TfrmVisitType
       object lblVType: TLabel
         Left = 0
         Top = 0
-        Width = 266
+        Width = 213
         Height = 13
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Align = alTop
         Caption = 'Section Name'
         ExplicitWidth = 67
@@ -189,14 +143,11 @@ inherited frmVisitType: TfrmVisitType
         Tag = 10
         Left = 0
         Top = 13
-        Width = 266
-        Height = 118
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 213
+        Height = 92
         Style = lbOwnerDrawFixed
         Align = alClient
+        ItemHeight = 13
         ParentShowHint = False
         ShowHint = True
         TabOrder = 0
@@ -214,21 +165,18 @@ inherited frmVisitType: TfrmVisitType
   end
   object pnlMiddle: TPanel [2]
     Left = 0
-    Top = 131
-    Width = 740
-    Height = 205
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 105
+    Width = 595
+    Height = 164
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
+    ExplicitWidth = 591
     inline fraVisitRelated: TfraVisitRelated
-      Left = 428
+      Left = 283
       Top = 0
       Width = 312
-      Height = 205
+      Height = 164
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -236,18 +184,18 @@ inherited frmVisitType: TfrmVisitType
       Align = alRight
       TabOrder = 1
       TabStop = True
-      ExplicitLeft = 428
+      ExplicitLeft = 279
       ExplicitWidth = 312
-      ExplicitHeight = 205
+      ExplicitHeight = 164
       inherited ScrollBox1: TScrollBox
         Width = 312
-        Height = 205
+        Height = 164
         Margins.Left = 4
         Margins.Top = 4
         Margins.Right = 4
         Margins.Bottom = 4
         ExplicitWidth = 312
-        ExplicitHeight = 205
+        ExplicitHeight = 164
         inherited Panel1: TPanel
           Width = 295
           Height = 226
@@ -267,78 +215,56 @@ inherited frmVisitType: TfrmVisitType
             ExplicitWidth = 295
             ExplicitHeight = 226
             inherited chkSCYes: TCheckBox
-              Left = 9
-              Top = 41
               Width = 17
               Height = 22
               Margins.Left = 4
               Margins.Top = 4
               Margins.Right = 4
               Margins.Bottom = 4
-              ExplicitLeft = 9
-              ExplicitTop = 41
               ExplicitWidth = 17
               ExplicitHeight = 22
             end
             inherited chkAOYes: TCheckBox
-              Left = 9
-              Top = 81
               Width = 17
               Height = 22
               Margins.Left = 4
               Margins.Top = 4
               Margins.Right = 4
               Margins.Bottom = 4
-              ExplicitLeft = 9
-              ExplicitTop = 81
               ExplicitWidth = 17
               ExplicitHeight = 22
             end
             inherited chkIRYes: TCheckBox
-              Left = 9
-              Top = 101
               Width = 17
               Height = 22
               Margins.Left = 4
               Margins.Top = 4
               Margins.Right = 4
               Margins.Bottom = 4
-              ExplicitLeft = 9
-              ExplicitTop = 101
               ExplicitWidth = 17
               ExplicitHeight = 22
             end
             inherited chkECYes: TCheckBox
-              Left = 9
-              Top = 121
               Width = 17
               Height = 22
               Margins.Left = 4
               Margins.Top = 4
               Margins.Right = 4
               Margins.Bottom = 4
-              ExplicitLeft = 9
-              ExplicitTop = 121
               ExplicitWidth = 17
               ExplicitHeight = 22
             end
             inherited chkMSTYes: TCheckBox
-              Left = 9
-              Top = 159
               Width = 17
               Height = 21
               Margins.Left = 4
               Margins.Top = 4
               Margins.Right = 4
               Margins.Bottom = 4
-              ExplicitLeft = 9
-              ExplicitTop = 159
               ExplicitWidth = 17
               ExplicitHeight = 21
             end
             inherited chkMSTNo: TCheckBox
-              Left = 34
-              Top = 159
               Width = 89
               Height = 21
               Margins.Left = 4
@@ -346,14 +272,10 @@ inherited frmVisitType: TfrmVisitType
               Margins.Right = 4
               Margins.Bottom = 4
               Caption = 'MST  '
-              ExplicitLeft = 34
-              ExplicitTop = 159
               ExplicitWidth = 89
               ExplicitHeight = 21
             end
             inherited chkECNo: TCheckBox
-              Left = 34
-              Top = 121
               Width = 257
               Height = 22
               Margins.Left = 4
@@ -361,14 +283,10 @@ inherited frmVisitType: TfrmVisitType
               Margins.Right = 4
               Margins.Bottom = 4
               Caption = 'Southwest Asia Conditions  '
-              ExplicitLeft = 34
-              ExplicitTop = 121
               ExplicitWidth = 257
               ExplicitHeight = 22
             end
             inherited chkIRNo: TCheckBox
-              Left = 34
-              Top = 101
               Width = 257
               Height = 22
               Margins.Left = 4
@@ -376,14 +294,10 @@ inherited frmVisitType: TfrmVisitType
               Margins.Right = 4
               Margins.Bottom = 4
               Caption = 'Ionizing Radiation Exposure  '
-              ExplicitLeft = 34
-              ExplicitTop = 101
               ExplicitWidth = 257
               ExplicitHeight = 22
             end
             inherited chkAONo: TCheckBox
-              Left = 34
-              Top = 81
               Width = 257
               Height = 22
               Margins.Left = 4
@@ -391,14 +305,10 @@ inherited frmVisitType: TfrmVisitType
               Margins.Right = 4
               Margins.Bottom = 4
               Caption = 'Agent Orange Exposure '
-              ExplicitLeft = 34
-              ExplicitTop = 81
               ExplicitWidth = 257
               ExplicitHeight = 22
             end
             inherited chkSCNo: TCheckBox
-              Left = 34
-              Top = 41
               Width = 257
               Height = 22
               Margins.Left = 4
@@ -406,56 +316,40 @@ inherited frmVisitType: TfrmVisitType
               Margins.Right = 4
               Margins.Bottom = 4
               Caption = 'Service Connected Condition '
-              ExplicitLeft = 34
-              ExplicitTop = 41
               ExplicitWidth = 257
               ExplicitHeight = 22
             end
             inherited chkHNCYes: TCheckBox
-              Left = 9
-              Top = 179
               Width = 17
               Height = 21
               Margins.Left = 4
               Margins.Top = 4
               Margins.Right = 4
               Margins.Bottom = 4
-              ExplicitLeft = 9
-              ExplicitTop = 179
               ExplicitWidth = 17
               ExplicitHeight = 21
             end
             inherited chkHNCNo: TCheckBox
-              Left = 34
-              Top = 178
               Width = 187
               Height = 22
               Margins.Left = 4
               Margins.Top = 4
               Margins.Right = 4
               Margins.Bottom = 4
-              ExplicitLeft = 34
-              ExplicitTop = 178
               ExplicitWidth = 187
               ExplicitHeight = 22
             end
             inherited chkCVYes: TCheckBox
-              Left = 9
-              Top = 61
               Width = 17
               Height = 22
               Margins.Left = 4
               Margins.Top = 4
               Margins.Right = 4
               Margins.Bottom = 4
-              ExplicitLeft = 9
-              ExplicitTop = 61
               ExplicitWidth = 17
               ExplicitHeight = 22
             end
             inherited chkCVNo: TCheckBox
-              Left = 34
-              Top = 61
               Width = 257
               Height = 22
               Margins.Left = 4
@@ -463,94 +357,66 @@ inherited frmVisitType: TfrmVisitType
               Margins.Right = 4
               Margins.Bottom = 4
               Caption = 'Combat Vet (Combat Related)  '
-              ExplicitLeft = 34
-              ExplicitTop = 61
               ExplicitWidth = 257
               ExplicitHeight = 22
             end
             inherited chkSHDYes: TCheckBox
-              Left = 9
-              Top = 140
               Width = 17
               Height = 21
               Margins.Left = 4
               Margins.Top = 4
               Margins.Right = 4
               Margins.Bottom = 4
-              ExplicitLeft = 9
-              ExplicitTop = 140
               ExplicitWidth = 17
               ExplicitHeight = 21
             end
             inherited chkSHDNo: TCheckBox
-              Left = 34
-              Top = 140
               Width = 257
               Height = 21
               Margins.Left = 4
               Margins.Top = 4
               Margins.Right = 4
               Margins.Bottom = 4
-              ExplicitLeft = 34
-              ExplicitTop = 140
               ExplicitWidth = 257
               ExplicitHeight = 21
             end
-            inherited lblSCNo: TStaticText
-              Left = 34
-              Top = 20
-              Width = 22
-              Height = 16
+            inherited lblSCYes: TStaticText [16]
+              Height = 17
               Margins.Left = 4
               Margins.Top = 4
               Margins.Right = 4
               Margins.Bottom = 4
-              ExplicitLeft = 34
-              ExplicitTop = 20
-              ExplicitWidth = 22
-              ExplicitHeight = 16
+              AutoSize = True
+              ExplicitHeight = 17
             end
-            inherited lblSCYes: TStaticText
-              Left = 5
-              Top = 20
-              Width = 28
-              Height = 16
-              Margins.Left = 4
-              Margins.Top = 4
-              Margins.Right = 4
-              Margins.Bottom = 4
-              ExplicitLeft = 5
-              ExplicitTop = 20
-              ExplicitWidth = 28
-              ExplicitHeight = 16
-            end
-            inherited chkCLYes: TCheckBox
-              Left = 9
-              Top = 201
+            inherited chkCLYes: TCheckBox [17]
               Width = 180
               Height = 22
               Margins.Left = 4
               Margins.Top = 4
               Margins.Right = 4
               Margins.Bottom = 4
-              ExplicitLeft = 9
-              ExplicitTop = 201
               ExplicitWidth = 180
               ExplicitHeight = 22
             end
-            inherited chkCLNo: TCheckBox
-              Left = 34
-              Top = 201
+            inherited chkCLNo: TCheckBox [18]
               Width = 237
               Height = 22
               Margins.Left = 4
               Margins.Top = 4
               Margins.Right = 4
               Margins.Bottom = 4
-              ExplicitLeft = 34
-              ExplicitTop = 201
               ExplicitWidth = 237
               ExplicitHeight = 22
+            end
+            inherited lblSCNo: TStaticText [19]
+              Height = 17
+              Margins.Left = 4
+              Margins.Top = 4
+              Margins.Right = 4
+              Margins.Bottom = 4
+              AutoSize = True
+              ExplicitHeight = 17
             end
           end
         end
@@ -559,24 +425,17 @@ inherited frmVisitType: TfrmVisitType
     object pnlSC: TPanel
       Left = 0
       Top = 0
-      Width = 428
-      Height = 205
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 283
+      Height = 164
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
+      ExplicitWidth = 279
       object lblSCDisplay: TLabel
         Left = 0
         Top = 0
-        Width = 428
+        Width = 283
         Height = 13
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Align = alTop
         Caption = 'Service Connection && Rated Disabilities'
         ExplicitWidth = 186
@@ -584,12 +443,8 @@ inherited frmVisitType: TfrmVisitType
       object memSCDisplay: TCaptionMemo
         Left = 0
         Top = 13
-        Width = 428
-        Height = 192
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 283
+        Height = 151
         Align = alClient
         Color = clBtnFace
         Lines.Strings = (
@@ -599,56 +454,42 @@ inherited frmVisitType: TfrmVisitType
         TabOrder = 0
         OnEnter = memSCDisplayEnter
         Caption = 'Service Connection && Rated Disabilities'
+        ExplicitWidth = 279
       end
     end
   end
   object pnlBottom: TPanel [3]
     Left = 0
-    Top = 336
-    Width = 740
-    Height = 177
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 269
+    Width = 595
+    Height = 141
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
+    ExplicitWidth = 591
     object btnAdd: TButton
-      Left = 325
-      Top = 44
-      Width = 94
-      Height = 26
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 260
+      Top = 35
+      Width = 75
+      Height = 21
       Caption = 'Add'
       TabOrder = 1
       OnClick = btnAddClick
     end
     object btnDelete: TButton
-      Left = 325
-      Top = 90
-      Width = 94
-      Height = 26
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 260
+      Top = 72
+      Width = 75
+      Height = 21
       Caption = 'Remove'
       TabOrder = 2
       OnClick = btnDeleteClick
     end
     object btnPrimary: TButton
-      Left = 325
-      Top = 140
-      Width = 94
-      Height = 26
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Left = 260
+      Top = 112
+      Width = 75
+      Height = 21
       Caption = 'Primary'
       TabOrder = 3
       OnClick = btnPrimaryClick
@@ -656,24 +497,16 @@ inherited frmVisitType: TfrmVisitType
     object pnlBottomLeft: TPanel
       Left = 0
       Top = 0
-      Width = 300
-      Height = 177
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 240
+      Height = 141
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
       object lblProvider: TLabel
         Left = 0
         Top = 0
-        Width = 300
+        Width = 240
         Height = 13
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Align = alTop
         Caption = 'Available providers'
         ExplicitWidth = 89
@@ -681,12 +514,8 @@ inherited frmVisitType: TfrmVisitType
       object cboPtProvider: TORComboBox
         Left = 0
         Top = 13
-        Width = 300
-        Height = 164
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 240
+        Height = 128
         Style = orcsSimple
         Align = alClient
         AutoSelect = True
@@ -714,26 +543,19 @@ inherited frmVisitType: TfrmVisitType
       end
     end
     object pnlBottomRight: TPanel
-      Left = 440
+      Left = 355
       Top = 0
-      Width = 300
-      Height = 177
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+      Width = 240
+      Height = 141
       Align = alRight
       BevelOuter = bvNone
       TabOrder = 4
+      ExplicitLeft = 351
       object lblCurrentProv: TLabel
         Left = 0
         Top = 0
-        Width = 300
+        Width = 240
         Height = 13
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Align = alTop
         Caption = 'Current providers for this encounter'
         ExplicitWidth = 165
@@ -741,12 +563,8 @@ inherited frmVisitType: TfrmVisitType
       object lbProviders: TORListBox
         Left = 0
         Top = 13
-        Width = 300
-        Height = 164
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
+        Width = 240
+        Height = 128
         Align = alClient
         ItemHeight = 13
         ParentShowHint = False
@@ -763,15 +581,19 @@ inherited frmVisitType: TfrmVisitType
     end
   end
   inherited btnCancel: TBitBtn
-    Left = 646
-    Top = 518
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
+    Left = 513
+    Top = 414
+    Width = 60
+    Height = 17
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
     TabOrder = 4
-    ExplicitLeft = 646
-    ExplicitTop = 518
+    ExplicitLeft = 509
+    ExplicitTop = 413
+    ExplicitWidth = 60
+    ExplicitHeight = 17
   end
   inherited amgrMain: TVA508AccessibilityManager
     Left = 8
