@@ -467,7 +467,7 @@ class KIDSBuildParser(ISectionParser):
   DIC_LINE = re.compile(r"^\"\^DIC\"")
   PRE_LINE = re.compile(r"^\"PRE\"\)$")
   FIA_LINE = re.compile(r"^\"FIA\"")
-  IX_LINE = re.compile("r^\"IX\"")
+  IX_LINE = re.compile(r"^\"IX\"")
   KEY_LINE = re.compile(r"^\"KEY\"")
   KEYPTR_LINE = re.compile(r"^\"KEYPTR\"")
   PGL_LINE = re.compile(r"^\"PGL\"")
