@@ -26,7 +26,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #---------------------------------------------------------------------------
-from past.builtins import cmp
 from functools import cmp_to_key
 from builtins import object
 import sys
@@ -62,7 +61,8 @@ def order_long_to_short(l,r):
     elif len(l) < len(r):
         return +1
     else:
-        return cmp(l,r)
+        # cmp replaced: https://stackoverflow.com/questions/22490366/how-to-use-cmp-in-python-3
+        return (l > r) - (l < r)
 
 def place(src,dst):
     sys.stdout.write('%s => %s\n' % (src,dst))
