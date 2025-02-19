@@ -3,6 +3,7 @@
 # A XindexLogParser class to parse XINDEX log files and generate the routine/package information in CrossReference Structure
 #---------------------------------------------------------------------------
 # Copyright 2011 The Open Source Electronic Health Record Agent
+# Copyright 2025 Sam Habiel
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -385,6 +386,9 @@ class PackageInfoSectionParser (AbstractSectionParser):
       if sectionHeader:
         self._localSection = sectionHeader
         self._localHandler = sectHandleDict.get(sectionHeader)
+      else:
+        self._localHandler._addVarToRoutine = None
+        self._localHandler._postParsingRoutine = None
       if self.__ignoreLine__(line):
           return
       result = self.__isNameValuePairLine__(line, pkgInfo=True)
