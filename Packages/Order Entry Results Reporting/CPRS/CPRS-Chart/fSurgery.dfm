@@ -242,114 +242,261 @@ inherited frmSurgery: TfrmSurgery
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
-        OnResize = pnlFieldsResize
         DesignSize = (
           764
           67)
-        object bvlNewTitle: TBevel
-          Left = 5
-          Top = 5
-          Width = 117
-          Height = 15
-        end
-        object lblRefDate: TLabel
-          Left = 237
-          Top = 6
-          Width = 113
-          Height = 16
-          Hint = 'Press "Change..." to change date/time of note.'
-          Alignment = taCenter
-          Caption = 'Oct 20,1999@15:30'
-          ParentShowHint = False
-          ShowAccelChar = False
-          ShowHint = True
-        end
-        object lblAuthor: TLabel
-          Left = 508
-          Top = 6
-          Width = 185
-          Height = 16
-          Hint = 'Press "Change..." to select a different author.'
-          Alignment = taRightJustify
-          Anchors = [akTop, akRight]
-          Caption = 'Winchester,Charles Emerson III'
-          ParentShowHint = False
-          ShowAccelChar = False
-          ShowHint = True
-        end
-        object lblVisit: TLabel
-          Left = 6
-          Top = 21
-          Width = 246
-          Height = 16
-          Caption = 'Vst: 10/20/99 Pulmonary Clinic, Dr. Welby'
-          ShowAccelChar = False
-        end
-        object lblCosigner: TLabel
-          Left = 450
-          Top = 21
-          Width = 243
-          Height = 13
-          Hint = 'Press "Change..." to select a different cosigner.'
-          Alignment = taRightJustify
-          Anchors = [akTop, akRight]
-          AutoSize = False
-          Caption = 'Expected Cosigner: Winchester,Charles Emerson III'
-          ParentShowHint = False
-          ShowAccelChar = False
-          ShowHint = True
-          ExplicitLeft = 330
-        end
-        object lblSubject: TLabel
-          Left = 6
-          Top = 43
-          Width = 48
-          Height = 16
-          Caption = 'Subject:'
-        end
-        object lblNewTitle: TLabel
-          Left = 6
-          Top = 6
-          Width = 144
-          Height = 16
-          Hint = 'Press "Change..." to select a different title.'
-          Caption = ' General Medicine Note '
-          Color = clCream
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -12
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          ParentColor = False
-          ParentFont = False
-          ParentShowHint = False
-          ShowAccelChar = False
-          ShowHint = True
-        end
-        object cmdChange: TButton
-          Left = 699
-          Top = 6
-          Width = 58
-          Height = 21
-          Anchors = [akTop, akRight]
-          Caption = 'Change...'
+
+        object grdFields: TGridPanel
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 758
+          Height = 67
+          Align = alTop
+          ColumnCollection = <
+            item
+              Value = 8.816963525280565000
+            end
+            item
+              Value = 30.352516052470630000
+            end
+            item
+              Value = 9.796626139200630000
+            end
+            item
+              Value = 9.796626139200630000
+            end
+            item
+              Value = 30.352516052470630000
+            end
+            item
+              Value = 10.884752091376920000
+            end>
+          ControlCollection = <
+            item
+              Column = 1
+              ColumnSpan = 5
+              Control = txtSubject
+              Row = 2
+            end
+            item
+              Column = 1
+              Row = 2
+            end
+            item
+              Column = 0
+              Control = lblSubject
+              Row = 2
+            end
+            item
+              Column = 0
+              ColumnSpan = 3
+              Control = lblVisit
+              Row = 1
+            end
+            item
+              Column = 3
+              ColumnSpan = 2
+              Control = lblCosigner
+              Row = 1
+            end
+            item
+              Column = 4
+              Control = lblAuthor
+              Row = 0
+            end
+            item
+              Column = 2
+              ColumnSpan = 2
+              Control = lblRefDate
+              Row = 0
+            end
+            item
+              Column = 5
+              Control = cmdChange
+              Row = 0
+              RowSpan = 2
+            end
+            item
+              Column = 0
+              ColumnSpan = 2
+              Control = pnlNewTitle
+              Row = 0
+            end>
+          ExpandStyle = emFixedSize
+          RowCollection = <
+            item
+              Value = 33.333333333333340000
+            end
+            item
+              Value = 33.333333333333340000
+            end
+            item
+              Value = 33.333333333333340000
+            end>
           TabOrder = 0
-          OnClick = cmdChangeClick
-        end
-        object txtSubject: TCaptionEdit
-          Left = 48
-          Top = 40
-          Width = 709
-          Height = 24
-          Hint = 'Subject is limited to a maximum of 80 characters.'
-          Anchors = [akLeft, akTop, akRight]
-          MaxLength = 80
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 2
-          Text = 'txtSubject'
-          Caption = 'Subject'
-        end
+          ExplicitLeft = 0
+          ExplicitTop = 96
+          ExplicitWidth = 764
+          ExplicitHeight = 73
+          DesignSize = (
+            758
+            67)
+          object pnlNewTitle: TPanel
+            Left = 1
+            Top = 1
+            Width = 296
+            Height = 22
+            Align = alClient
+            BevelOuter = bvNone
+            TabOrder = 2
+            ExplicitWidth = 185
+            ExplicitHeight = 9
+            object bvlNewTitle: TBevel
+              AlignWithMargins = True
+              Left = 3
+              Top = 3
+              Width = 117
+              Height = 15
+            end
+            object lblNewTitle: TLabel
+              AlignWithMargins = True
+              Left = 3
+              Top = 3
+              Width = 290
+              Height = 16
+              Hint = 'Press "Change..." to select a different title.'
+              Align = alClient
+              Caption = ' General Medicine Note '
+              Color = clCream
+              ParentColor = False
+              ParentShowHint = False
+              ShowAccelChar = False
+              ShowHint = True
+              ExplicitLeft = 1
+              ExplicitTop = 1
+              ExplicitWidth = 115
+              ExplicitHeight = 13
+            end
+          end
+          object lblRefDate: TLabel
+            AlignWithMargins = True
+            Left = 300
+            Top = 4
+            Width = 142
+            Height = 16
+            Hint = 'Press "Change..." to change date/time of note.'
+            Align = alClient
+            Alignment = taCenter
+            Caption = 'Oct 20,1999@15:30'
+            ParentShowHint = False
+            ShowAccelChar = False
+            ShowHint = True
+            ExplicitLeft = 237
+            ExplicitTop = 6
+            ExplicitWidth = 97
+            ExplicitHeight = 13
+          end
+          object lblAuthor: TLabel
+            AlignWithMargins = True
+            Left = 448
+            Top = 4
+            Width = 224
+            Height = 16
+            Hint = 'Press "Change..." to select a different author.'
+            Align = alClient
+            Alignment = taRightJustify
+            Caption = 'Winchester,Charles Emerson III'
+            ParentShowHint = False
+            ShowAccelChar = False
+            ShowHint = True
+            ExplicitLeft = 366
+            ExplicitTop = 1
+            ExplicitWidth = 319
+            ExplicitHeight = 23
+          end
+          object lblVisit: TLabel
+            AlignWithMargins = True
+            Left = 4
+            Top = 26
+            Width = 364
+            Height = 15
+            Align = alClient
+            Caption = 'Vst: 10/20/99 Pulmonary Clinic, Dr. Welby'
+            ShowAccelChar = False
+            ExplicitLeft = 2
+            ExplicitTop = 25
+            ExplicitWidth = 191
+            ExplicitHeight = 13
+          end
+          object lblCosigner: TLabel
+            AlignWithMargins = True
+            Left = 374
+            Top = 26
+            Width = 298
+            Height = 15
+            Hint = 'Press "Change..." to select a different cosigner.'
+            Align = alClient
+            Alignment = taRightJustify
+            AutoSize = False
+            Caption = 'Expected Cosigner: Winchester,Charles Emerson III'
+            ParentShowHint = False
+            ShowAccelChar = False
+            ShowHint = True
+            ExplicitLeft = 354
+            ExplicitTop = 25
+            ExplicitWidth = 603
+            ExplicitHeight = 23
+          end
+          object lblSubject: TLabel
+            AlignWithMargins = True
+            Left = 4
+            Top = 47
+            Width = 61
+            Height = 16
+            Align = alClient
+            Caption = 'Subject:'
+            Layout = tlCenter
+            ExplicitLeft = 6
+            ExplicitTop = 43
+            ExplicitWidth = 39
+            ExplicitHeight = 13
+          end
+          object cmdChange: TButton
+            AlignWithMargins = True
+            Left = 678
+            Top = 12
+            Width = 76
+            Height = 21
+            Margins.Top = 11
+            Margins.Bottom = 11
+            Align = alClient
+            Caption = 'Change...'
+            TabOrder = 0
+            OnClick = cmdChangeClick
+            ExplicitLeft = 6
+            ExplicitTop = 16
+            ExplicitWidth = 58
+          end
+          object txtSubject: TCaptionEdit
+            Left = 68
+            Top = 44
+            Width = 689
+            Height = 22
+            Hint = 'Subject is limited to a maximum of 80 characters.'
+            Align = alClient
+            MaxLength = 80
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 3
+            Text = 'txtSubject'
+            Caption = 'Subject'
+            ExplicitLeft = 46
+            ExplicitTop = 48
+            ExplicitWidth = 717
+            ExplicitHeight = 21
+          end
+		end
       end
       object CPMemNewNote: TCopyPasteDetails
         Left = 0
@@ -614,6 +761,12 @@ inherited frmSurgery: TfrmSurgery
         'Status = stsDefault')
       (
         'Component = CPMemNewNote'
+        'Status = stsDefault')
+      (
+        'Component = grdFields'
+        'Status = stsDefault')
+      (
+        'Component = pnlNewTitle'
         'Status = stsDefault'))
   end
   object mnuNotes: TMainMenu

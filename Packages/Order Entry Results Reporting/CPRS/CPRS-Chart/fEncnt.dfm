@@ -14,6 +14,7 @@ inherited frmEncounter: TfrmEncounter
   OnCloseQuery = FormCloseQuery
   ExplicitWidth = 485
   ExplicitHeight = 462
+  IsResizeContraintsEnabled = True
   DesignSize = (
     469
     423)

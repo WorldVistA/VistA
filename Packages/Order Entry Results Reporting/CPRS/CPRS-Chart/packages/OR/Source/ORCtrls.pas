@@ -146,6 +146,7 @@ type
     FDetectLastEmpty: boolean;
     FKeepItemID: boolean;
     FLastItemID: string;
+    FIsInLoadRecreateItems: Boolean;
     function SearchMsg: UINT;
     procedure AdjustScrollBar;
     procedure CreateScrollBar;
@@ -231,6 +232,7 @@ type
     procedure MeasureItem(Index: Integer; var Height: Integer); override;
     procedure DrawItem(Index: Integer; Rect: TRect; State: TOwnerDrawState); override;
     function GetIndexFromY(YPos: integer): integer;
+    procedure LoadRecreateItems(RecreateItems: TStrings); override;
     property isPartOfComboBox: boolean read FIsPartOfComboBox write FIsPartOfComboBox default False;
     property HideSynonyms: boolean read FHideSynonyms write SetHideSynonyms default FALSE;
     property SynonymChars: string read FSynonymChars write SetSynonymChars;
@@ -2306,8 +2308,9 @@ begin
     end;
     Perform(LB_SETCOUNT, 0, 0);
   end;
-  // This was casuing pain for ResetItems when FWaterMark was being cleared for short lists
-  if FLongList then
+  // This was causing pain for ResetItems when FWaterMark was being cleared for short lists
+  // Only clear FWaterMark if we aren't recreating the items
+  if FLongList and not FIsInLoadRecreateItems then
     FWaterMark := 0;
   inherited;
 end;
@@ -3050,6 +3053,19 @@ begin
   end
   else
     Result := (YPos div ItemHeight) + TopIndex;
+end;
+
+procedure TORListBox.LoadRecreateItems(RecreateItems: TStrings);
+var
+  AOldIsInLoadRecreateItems: Boolean;
+begin
+  AOldIsInLoadRecreateItems := FIsInLoadRecreateItems;
+  FIsInLoadRecreateItems := True;
+  try
+    inherited;
+  finally
+    FIsInLoadRecreateItems := AOldIsInLoadRecreateItems;
+  end;
 end;
 
 procedure TORListBox.SetFocusIndex(Value: Integer);

@@ -115,7 +115,7 @@ function CreateReportBox(ReportText: TStrings; ReportTitle: string;
     AWidth := aForm.Constraints.MinWidth;
 
     for s in ReportText do
-      AWidth := HigherOf(AWidth, TextWidthByFont(MainFont.Handle, s));
+      AWidth := HigherOf(AWidth, TextWidthByFont(aForm.memReport.Font.Handle, s));
 
     inc(AWidth, (GetSystemMetrics(SM_CXVSCROLL) * 2));
     AWidth := LowerOf(AWidth, Screen.Width);

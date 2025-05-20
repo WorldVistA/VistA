@@ -3,7 +3,7 @@ unit fWVPregLacStatusUpdate;
   ================================================================================
   *
   *       Application:  TDrugs Patch OR*3*377 and WV*1*24
-  *       Developer:    doma.user@domain.ext
+  *       Developer:    dan.petit@domain.ext
   *       Site:         Salt Lake City ISC
   *
   *       Description:  Update form to enter the appropriate information for

@@ -473,8 +473,7 @@ end;
 procedure TfraAnatPathBuilder.AddControlItem(sIEN,sTitle,sList,sDefault,sVals: string);
 var
   BuilderElement: TBuilderElement;
-  i, w, max: integer;
-
+  i, w, max, InternalHeightSbx1, InternalHeightSbx2: Integer;
 begin
   // CheckList
   if sList = '1' then
@@ -507,26 +506,36 @@ begin
   end
   else
   begin
-    if (not pnl1.Visible) or (InternalHeight(sbx1) < 150) then
-    begin
-      pnl1.Visible := True;
-      BuilderElement := TBuilderElement.Create(Self);
-      BuilderElement.Parent := sbx1;
+    BuilderElement := TBuilderElement.Create(Self);
+    try
+      InternalHeightSbx1 := InternalHeight(sbx1);
+      if (not pnl1.Visible) or (InternalHeightSbx1 < 150) then
+      begin
+        pnl1.Visible := True;
+        BuilderElement.Parent := sbx1;
+      end else begin
+        InternalHeightSbx2 := InternalHeight(sbx2);
+        if (not pnl2.Visible) or (InternalHeightSbx2 < 150) then
+        begin
+          pnl2.Visible := True;
+          BuilderElement.Parent := sbx2;
+        end else begin
+          // Put the element on the smallest scrollbox if both are full
+          if InternalHeightSbx1 < InternalHeightSbx2 then
+            BuilderElement.Parent := sbx1
+          else
+            BuilderElement.Parent := sbx2;
+        end;
+      end;
       BuilderElement.IEN := sIEN;
-    end
-    else if (not pnl2.Visible) or (InternalHeight(sbx2) < 150) then
-    begin
-      pnl2.Visible := True;
-      BuilderElement := TBuilderElement.Create(Self);
-      BuilderElement.Parent := sbx2;
-      BuilderElement.IEN := sIEN;
-    end
-    else
-      Exit;
 
-    // Need to have the BuilderElement added to FElements first
-    // before running Add due to vDefault
-    FElements.Add(BuilderElement);
+      // Need to have the BuilderElement added to FElements first
+      // before running Add due to vDefault
+      FElements.Add(BuilderElement);
+    except
+      FreeAndNil(BuilderElement);
+      raise;
+    end;
 
     BuilderElement.Caption := sTitle;
     BuilderElement.Align := alTop;

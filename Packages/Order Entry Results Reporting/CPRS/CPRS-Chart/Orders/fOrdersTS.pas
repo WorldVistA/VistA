@@ -12,7 +12,6 @@ type
     pnlMiddle: TPanel;
     pnlTop: TPanel;
     lblPtInfo: TVA508StaticText;
-    grpChoice: TGroupBox;
     radReleaseNow: TRadioButton;
     radDelayed: TRadioButton;
     pnldif: TPanel;
@@ -23,6 +22,8 @@ type
     lblUseTransfer: TVA508StaticText;
     pnlBottom: TPanel;
     fraEvntDelayList: TfraEvntDelayList;
+    pnlButtons: TPanel;
+    sbxReleaseEvent: TScrollBox;
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -37,6 +38,7 @@ type
       Shift: TShiftState);
     procedure FormResize(Sender: TObject);
   private
+    FIsReleaseEventSelected: Boolean;
     OKPressed: Boolean;
     FResult  : Boolean;
     FImmediatelyRelease: boolean;
@@ -192,7 +194,7 @@ var
 
 begin
   inherited;
-  if grpChoice.Tag = 0 then
+  if not FIsReleaseEventSelected then
   begin
     InfoBox('A release event has not been selected.', 'No Selection Made', MB_OK);
     Exit;
@@ -239,13 +241,13 @@ begin
   inherited;
   fraEvntDelayList.Visible := True;
   fraEvntDelayList.DisplayEvntDelayList;
-  grpChoice.Tag := 1;
+  FIsReleaseEventSelected := True;
 end;
 
 procedure TfrmOrdersTS.radReleaseNowClick(Sender: TObject);
 begin
   inherited;
-  grpChoice.Tag := 1;
+  FIsReleaseEventSelected := True;
   if InfoBox('Would you like to close this window and return to the Orders Tab?',
         'Confirmation', MB_OKCANCEL or MB_ICONQUESTION) = IDOK then
   begin
@@ -273,7 +275,7 @@ end;
 procedure TfrmOrdersTS.UMStillDelay(var message: TMessage);
 begin
   inherited;
-  if grpChoice.Tag = 0 then
+  if not FIsReleaseEventSelected then
   begin
     InfoBox('A release event has not been selected.', 'No Selection Made', MB_OK);
     Exit;

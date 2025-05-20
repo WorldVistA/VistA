@@ -15,6 +15,7 @@ type
     btnCancel: TButton;
     cklstOrders: TCaptionCheckListBox;
     lblRelease: TLabel;
+    pnlButtons: TPanel;
     procedure btnCancelClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnOKClick(Sender: TObject);

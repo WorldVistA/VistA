@@ -21,57 +21,71 @@ inherited frmOrdersTS: TfrmOrdersTS
     Align = alTop
     Constraints.MinHeight = 45
     TabOrder = 1
-    object grpChoice: TGroupBox
+    object pnlButtons: TPanel
+      Left = 376
+      Top = 1
+      Width = 79
+      Height = 54
+      Align = alRight
+      BevelEdges = [beRight]
+      BevelOuter = bvNone
+      Constraints.MinHeight = 45
+      TabOrder = 1
+      ExplicitLeft = 372
+      object cmdCancel: TButton
+        AlignWithMargins = True
+        Left = 3
+        Top = 29
+        Width = 73
+        Height = 20
+        Align = alTop
+        Cancel = True
+        Caption = 'Cancel'
+        TabOrder = 1
+        OnClick = cmdCancelClick
+      end
+      object cmdOK: TButton
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 73
+        Height = 20
+        Align = alTop
+        Caption = 'OK'
+        Default = True
+        TabOrder = 0
+        OnClick = cmdOKClick
+      end
+    end
+    object sbxReleaseEvent: TScrollBox
       Left = 1
       Top = 1
-      Width = 454
+      Width = 375
       Height = 54
       Align = alClient
+      BevelInner = bvNone
+      BevelOuter = bvNone
+      BorderStyle = bsNone
       Constraints.MinHeight = 45
       TabOrder = 0
-      DesignSize = (
-        454
-        54)
-      object radReleaseNow: TRadioButton
-        Left = 20
-        Top = 13
-        Width = 333
-        Height = 17
-        Caption = '  &Release new orders immediately'
-        Enabled = False
-        TabOrder = 0
-        OnClick = radReleaseNowClick
-      end
       object radDelayed: TRadioButton
-        Left = 20
-        Top = 29
-        Width = 329
+        Left = 12
+        Top = 23
+        Width = 197
         Height = 21
         Caption = '  &Delay release of new order(s) until'
         TabOrder = 1
         OnClick = radDelayedClick
       end
-      object cmdOK: TButton
-        Left = 355
-        Top = 9
-        Width = 75
-        Height = 20
-        Anchors = [akRight, akBottom]
-        Caption = 'OK'
-        Default = True
-        TabOrder = 2
-        OnClick = cmdOKClick
-      end
-      object cmdCancel: TButton
-        Left = 355
-        Top = 31
-        Width = 75
-        Height = 20
-        Anchors = [akRight, akBottom]
-        Cancel = True
-        Caption = 'Cancel'
-        TabOrder = 3
-        OnClick = cmdCancelClick
+      object radReleaseNow: TRadioButton
+        Left = 12
+        Top = 7
+        Width = 197
+        Height = 17
+        Caption = '  &Release new orders immediately'
+        Enabled = False
+        TabOrder = 0
+        OnClick = radReleaseNowClick
       end
     end
   end
@@ -224,9 +238,6 @@ inherited frmOrdersTS: TfrmOrdersTS
         'Component = pnlMiddle'
         'Status = stsDefault')
       (
-        'Component = grpChoice'
-        'Status = stsDefault')
-      (
         'Component = radReleaseNow'
         'Status = stsDefault')
       (
@@ -276,6 +287,12 @@ inherited frmOrdersTS: TfrmOrdersTS
         'Status = stsDefault')
       (
         'Component = lblUseAdmit'
+        'Status = stsDefault')
+      (
+        'Component = pnlButtons'
+        'Status = stsDefault')
+      (
+        'Component = sbReleaseEvent'
         'Status = stsDefault'))
   end
 end

@@ -4,12 +4,17 @@ interface
 
 uses
   Vcl.Forms,
-  System.Classes;
+  System.Classes,
+  Vcl.Graphics,
+  Vcl.Controls;
 
 type
   TORForm = class(TForm)
   private
     FOldCreateOrder: Boolean;
+    FOriginalFont: TFont;
+    FOriginalConstraints: TSizeConstraints;
+    FIsResizeContraintsEnabled: Boolean; // Scale size constraints with the font
     procedure ReadOldCreateOrder(Reader: TReader);
     procedure WriteOldCreateOrder(Writer: TWriter);
   protected
@@ -26,14 +31,21 @@ type
   published
     property OldCreateOrder: Boolean read FOldCreateOrder write FOldCreateOrder
       stored True;
+    property IsResizeContraintsEnabled: Boolean
+      read FIsResizeContraintsEnabled write FIsResizeContraintsEnabled default False;
   end;
 
 implementation
 uses
-  ORFn;
+  ORFn,
+  System.SysUtils;
 
 constructor TORForm.Create(AOwner: TComponent);
 begin
+  // Create the Font and Constraints first, before the inherited Create,
+  // to avoid an access violation in Loaded
+  FOriginalFont := TFont.Create;
+  FOriginalConstraints := TSizeConstraints.Create(Self);
   OldCreateOrder := True;
   inherited Create(AOwner);
   if OldCreateOrder then OldDoCreate;
@@ -43,6 +55,8 @@ destructor TORForm.Destroy;
 begin
   if OldCreateOrder then OldDoDestroy;
   inherited Destroy;
+  FreeAndNil(FOriginalConstraints);
+  FreeAndNil(FOriginalFont);
 end;
 
 procedure TORForm.OldDoCreate;
@@ -78,7 +92,8 @@ end;
 procedure TORForm.DoSetFontSize(FontSize: Integer);
 // This may be overriden in child classes (FE: unit fODBase in CPRS)
 begin
-  ORFn.ResizeAnchoredFormToFont(Self);
+  ORFn.ResizeAnchoredFormToFont(Self, FIsResizeContraintsEnabled,
+    FOriginalFont, FOriginalConstraints);
 end;
 
 procedure TORForm.Loaded;
@@ -89,6 +104,10 @@ begin
   // components on the form with ParentFont set to True. If the form itself
   // uses ParentFont we leave Font.Size alone.
   if not ParentFont then Font.Size := 8;
+
+  // Save the original Font and constraints to be used when scaling for font
+  FOriginalFont.Assign(Font);
+  FOriginalConstraints.Assign(Constraints);
 end;
 
 procedure TORForm.ReadOldCreateOrder(Reader: TReader);

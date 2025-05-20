@@ -135,7 +135,9 @@ procedure RedrawActivate(AHandle: HWnd); deprecated 'Use UnlockDrawing'
 //procedure ResetControl(AControl: TControl);
 procedure ResetSelectedForList(AListBox: TListBox);
 procedure ResizeFormToFont(AForm: TForm);
-procedure ResizeAnchoredFormToFont( AForm: TForm);
+procedure ResizeAnchoredFormToFont(AForm: TForm); overload;
+procedure ResizeAnchoredFormToFont(AForm: TForm; AIsResizeContraintsEnabled: Boolean;
+  AOriginalFont: TFont; AOriginalConstraints: TSizeConstraints); overload;
 procedure ChangeAllFonts(aControl: TWinControl; FontSize: integer);
 procedure AdjustForWindowsXPStyleTitleBar(AForm: TForm);
 function ResizeWidth( OldFont: TFont; NewFont: TFont; OldWidth: integer): integer;
@@ -2016,6 +2018,12 @@ begin
 end;
 
 procedure ResizeAnchoredFormToFont(AForm: TForm);
+begin
+  ResizeAnchoredFormToFont(AForm, False, nil, nil);
+end;
+
+procedure ResizeAnchoredFormToFont(AForm: TForm; AIsResizeContraintsEnabled: Boolean;
+  AOriginalFont: TFont; AOriginalConstraints: TSizeConstraints);
 var
   keep: TRect;
   OldResize: TNotifyEvent;
@@ -2034,14 +2042,29 @@ begin
     if not Assigned(AForm.Parent) then
       ForceInsideWorkArea(AForm);
 
-    // Resize min width and height constraints when they are defined. Avoid
-    // setting constraints higher than the current form sizes.
-    if AForm.Constraints.MinWidth > 0 then AForm.Constraints.MinWidth :=
-      Min(AForm.Width, ResizeWidth(AForm.Font, MainFont,
-      AForm.Constraints.MinWidth));
-    if AForm.Constraints.MinHeight > 0 then AForm.Constraints.MinHeight :=
-      Min(AForm.Height, ResizeHeight(AForm.Font, MainFont,
-      AForm.Constraints.MinHeight));
+    if AIsResizeContraintsEnabled then
+    begin
+      if not Assigned(AOriginalFont) or not Assigned(AOriginalConstraints) then
+      begin
+        AOriginalFont := AForm.Font;
+        AOriginalConstraints := AForm.Constraints;
+      end;
+
+      // Resize min width and height constraints when they are defined. Avoid
+      // setting constraints higher than the current form or screen sizes.
+      if AForm.Constraints.MinWidth > 0 then
+      begin
+        AForm.Constraints.MinWidth :=
+          Min(Screen.DesktopWidth, Min(AForm.Width,
+            ResizeWidth(AOriginalFont, MainFont, AOriginalConstraints.MinWidth)));
+      end;
+      if AForm.Constraints.MinHeight > 0 then
+      begin
+        AForm.Constraints.MinHeight :=
+          Min(Screen.DesktopHeight, Min(AForm.Height,
+            ResizeHeight(AOriginalFont, MainFont, AOriginalConstraints.MinHeight)));
+      end;
+    end;
 
     ResizeDescendants(AForm.Font, MainFont, AForm);
     ResizeFontsInDescendants(AForm.Font, MainFont, AForm);

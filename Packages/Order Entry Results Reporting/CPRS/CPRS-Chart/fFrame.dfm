@@ -2,7 +2,7 @@ inherited frmFrame: TfrmFrame
   Left = 219
   Top = 102
   Caption = ']='
-  ClientHeight = 730
+  ClientHeight = 825
   ClientWidth = 976
   FormStyle = fsMDIForm
   Menu = mnuFrame
@@ -10,14 +10,14 @@ inherited frmFrame: TfrmFrame
   OnCloseQuery = FormCloseQuery
   OnResize = FormResize
   OldCreateOrder = True
-  ExplicitWidth = 988
-  ExplicitHeight = 788
+  ExplicitHeight = 884
+  PixelsPerInch = 96
   TextHeight = 13
   object pnlNoPatientSelected: TPanel [0]
     Left = 0
     Top = 0
     Width = 976
-    Height = 730
+    Height = 825
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -32,22 +32,18 @@ inherited frmFrame: TfrmFrame
     ParentFont = False
     TabOrder = 1
     Visible = False
-    ExplicitWidth = 972
-    ExplicitHeight = 729
   end
   object pnlPatientSelected: TPanel [1]
     Left = 0
     Top = 0
     Width = 976
-    Height = 730
+    Height = 825
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
     Margins.Bottom = 4
     Align = alClient
     TabOrder = 0
-    ExplicitWidth = 972
-    ExplicitHeight = 729
     object bvlPageTop: TBevel
       Left = 1
       Top = 103
@@ -72,7 +68,6 @@ inherited frmFrame: TfrmFrame
       Align = alTop
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitWidth = 970
       object bvlToolTop: TBevel
         Left = 0
         Top = 0
@@ -410,7 +405,6 @@ inherited frmFrame: TfrmFrame
         OnExit = pnlPrimaryCareExit
         OnMouseDown = pnlRemindersMouseDown
         OnMouseUp = pnlRemindersMouseUp
-        ExplicitLeft = 810
         object imgReminder: TImage
           Left = 2
           Top = 2
@@ -466,7 +460,6 @@ inherited frmFrame: TfrmFrame
         OnExit = pnlPrimaryCareExit
         OnMouseDown = pnlPostingsMouseDown
         OnMouseUp = pnlPostingsMouseUp
-        ExplicitLeft = 862
         object lblPtPostings: TStaticText
           Left = 7
           Top = 6
@@ -539,7 +532,6 @@ inherited frmFrame: TfrmFrame
         OnExit = pnlOTHDExit
         OnMouseDown = pnlOTHDMouseDown
         OnMouseUp = pnlOTHDMouseUp
-        ExplicitLeft = 452
         object lblOTHDTitle: TStaticText
           Left = 7
           Top = 2
@@ -603,7 +595,6 @@ inherited frmFrame: TfrmFrame
         TabOrder = 5
         Visible = False
         OnResize = paVAAResize
-        ExplicitLeft = 362
         object laVAA2: TButton
           Left = 0
           Top = 24
@@ -650,7 +641,6 @@ inherited frmFrame: TfrmFrame
         Margins.Bottom = 5
         Align = alRight
         TabOrder = 6
-        ExplicitLeft = 561
         object btnCombatVet: TButton
           Left = 1
           Top = 32
@@ -765,7 +755,6 @@ inherited frmFrame: TfrmFrame
         OnExit = pnlPrimaryCareExit
         OnMouseDown = pnlCIRNMouseDown
         OnMouseUp = pnlCIRNMouseUp
-        ExplicitLeft = 699
         object pnlVistaWeb: TKeyClickPanel
           Left = 2
           Top = 2
@@ -874,7 +863,7 @@ inherited frmFrame: TfrmFrame
     end
     object stsArea: TStatusBar
       Left = 1
-      Top = 708
+      Top = 803
       Width = 974
       Height = 21
       Margins.Left = 5
@@ -903,12 +892,10 @@ inherited frmFrame: TfrmFrame
         end>
       PopupMenu = popAlerts
       SizeGrip = False
-      ExplicitTop = 707
-      ExplicitWidth = 970
     end
     object tabPage: TTabControl
       Left = 1
-      Top = 681
+      Top = 776
       Width = 974
       Height = 27
       Margins.Left = 4
@@ -927,14 +914,12 @@ inherited frmFrame: TfrmFrame
       OnChange = tabPageChange
       OnMouseDown = tabPageMouseDown
       OnMouseUp = tabPageMouseUp
-      ExplicitTop = 680
-      ExplicitWidth = 970
     end
     object pnlPage: TPanel
       Left = 1
       Top = 105
       Width = 974
-      Height = 576
+      Height = 671
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -948,8 +933,6 @@ inherited frmFrame: TfrmFrame
       Font.Style = []
       ParentFont = False
       TabOrder = 2
-      ExplicitWidth = 970
-      ExplicitHeight = 575
       object lstCIRNLocations: TORListBox
         Left = 642
         Top = 0
@@ -1003,7 +986,6 @@ inherited frmFrame: TfrmFrame
       OnClick = pnlOtherInfoClick
       OnMouseDown = pnlOtherInfoMouseDown
       OnMouseUp = pnlOtherInfoMouseUp
-      ExplicitWidth = 970
     end
   end
   inherited amgrMain: TVA508AccessibilityManager

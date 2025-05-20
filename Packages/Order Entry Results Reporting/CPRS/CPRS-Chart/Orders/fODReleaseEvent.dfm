@@ -4,6 +4,8 @@ inherited frmOrdersReleaseEvent: TfrmOrdersReleaseEvent
   Caption = 'Release to Service'
   ClientHeight = 567
   ClientWidth = 598
+  Constraints.MinHeight = 300
+  Constraints.MinWidth = 350
   Position = poScreenCenter
   OnCreate = FormCreate
   OnDestroy = FormDestroy
@@ -58,46 +60,45 @@ inherited frmOrdersReleaseEvent: TfrmOrdersReleaseEvent
   end
   object pnlBottom: TPanel [2]
     Left = 0
-    Top = 524
-    Width = 598
-    Height = 43
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
+    Top = 419
+    Width = 478
+    Height = 35
     Align = alBottom
     TabOrder = 1
-    DesignSize = (
-      598
-      43)
-    object btnOK: TButton
-      Left = 399
-      Top = 10
-      Width = 85
-      Height = 24
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akTop, akRight, akBottom]
-      Caption = 'OK'
+    object pnlButtons: TPanel
+      AlignWithMargins = True
+      Left = 288
+      Top = 3
+      Width = 186
+      Height = 29
+      Margins.Top = 2
+      Margins.Bottom = 2
+      Align = alRight
+      BevelOuter = bvNone
       TabOrder = 0
-      OnClick = btnOKClick
-    end
-    object btnCancel: TButton
-      Left = 497
-      Top = 10
-      Width = 85
-      Height = 24
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Anchors = [akTop, akRight, akBottom]
-      Cancel = True
-      Caption = 'Cancel'
-      TabOrder = 1
-      OnClick = btnCancelClick
+      object btnOK: TButton
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 85
+        Height = 23
+        Align = alLeft
+        Caption = 'OK'
+        TabOrder = 0
+        OnClick = btnOKClick
+      end
+      object btnCancel: TButton
+        AlignWithMargins = True
+        Left = 94
+        Top = 3
+        Width = 85
+        Height = 23
+        Align = alLeft
+        Cancel = True
+        Caption = 'Cancel'
+        TabOrder = 1
+        OnClick = btnCancelClick
+      end
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -119,6 +120,9 @@ inherited frmOrdersReleaseEvent: TfrmOrdersReleaseEvent
         'Status = stsDefault')
       (
         'Component = frmOrdersReleaseEvent'
+        'Status = stsDefault')
+      (
+        'Component = pnlButtons'
         'Status = stsDefault'))
   end
 end

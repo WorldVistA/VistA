@@ -1149,7 +1149,7 @@ procedure TVA508AccessibilityManager.GetLabelStrings(list: TStringList);
       else
       begin
         if (control is TWinControl) and
-           ((csAcceptsControls in control.ControlStyle) or (control is TFrame)) then
+           ((csAcceptsControls in control.ControlStyle) or (control is TFrame) or (control is TPageControl)) then
             AddLabels(TWinControl(control));
       end;
     end;

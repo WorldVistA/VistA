@@ -528,11 +528,12 @@ const
   TC_DGSR_ERR    = 'Error';
   TC_DGSR_SHOW   = 'Restricted Record';
   TC_DGSR_DENY   = 'Access Denied';
-  TX_DGSR_YESNO  = CRLF + 'Do you want to continue processing this patient record?';
+  TX_DGSR_YESNO  = 'Do you want to continue accessing this patient record? No/Yes';
   TC_NEXT_NOTIF  = 'NEXT NOTIFICATION:  ';
 var
   //AccessStatus: integer;
   AMsg, PrefixC, PrefixT: string;
+  ASensitivePatientPrompt: string;
 begin
   Result := TRUE;
   if Notifications.Active then
@@ -545,22 +546,35 @@ begin
     PrefixT := '';
     PrefixC := '';
   end;
+
   CheckSensitiveRecordAccess(NewDFN, AccessStatus, AMsg);
   case AccessStatus of
-  DGSR_FAIL: begin
-               InfoBox(PrefixT + TX_DGSR_ERR, PrefixC + TC_DGSR_ERR, MB_OK);
-               Result := FALSE;
-             end;
-  DGSR_NONE: { Nothing - allow access to the patient. };
-  DGSR_SHOW: InfoBox(PrefixT + AMsg, PrefixC + TC_DGSR_SHOW, MB_OK);
-  DGSR_ASK:  if InfoBox(PrefixT + AMsg + TX_DGSR_YESNO, PrefixC + TC_DGSR_SHOW, MB_YESNO or MB_ICONWARNING or
-               MB_DEFBUTTON2) = IDYES then LogSensitiveRecordAccess(NewDFN)
-             else Result := FALSE;
-  else       begin
-               InfoBox(PrefixT + AMsg, PrefixC + TC_DGSR_DENY, MB_OK);
-               if Notifications.Active then Notifications.DeleteForCurrentUser;
-               Result := FALSE;
-             end;
+    DGSR_FAIL:
+      begin
+        InfoBox(PrefixT + TX_DGSR_ERR, PrefixC + TC_DGSR_ERR, MB_OK);
+        Result := False;
+      end;
+    DGSR_NONE: { Nothing - allow access to the patient. };
+    DGSR_SHOW:
+      InfoBox(PrefixT + AMsg, PrefixC + TC_DGSR_SHOW, MB_OK);
+    DGSR_ASK:
+      begin
+        ASensitivePatientPrompt := SystemParameters.AsTypeDef<string>
+          ('sensitivePatientPrompt', TX_DGSR_YESNO);
+
+        if InfoBox(PrefixT + AMsg + CRLF + ASensitivePatientPrompt, PrefixC + TC_DGSR_SHOW,
+          MB_YESNO or MB_ICONWARNING or MB_DEFBUTTON2) = IDYES then
+          LogSensitiveRecordAccess(NewDFN)
+        else
+          Result := False;
+      end
+  else
+    begin
+      InfoBox(PrefixT + AMsg, PrefixC + TC_DGSR_DENY, MB_OK);
+      if Notifications.Active then
+        Notifications.DeleteForCurrentUser;
+      Result := False;
+    end;
   end;
 end;
 

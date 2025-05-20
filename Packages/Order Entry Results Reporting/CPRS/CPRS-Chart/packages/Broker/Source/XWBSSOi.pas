@@ -1,4 +1,4 @@
-﻿{ **************************************************************
+{ **************************************************************
   Package: XWB - Kernel RPCBroker
   Date Created: Sept 18, 1997 (Version 1.1)
   Site Name: Oakland, OI Field Office, Dept of Veteran Affairs

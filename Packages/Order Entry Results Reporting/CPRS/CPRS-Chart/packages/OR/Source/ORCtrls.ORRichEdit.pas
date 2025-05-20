@@ -27,6 +27,8 @@ type
     FMustScrollBackLine: Integer;
     FLockDrawingCalled: Boolean;
     FVirtualMethodInterceptor: TVirtualMethodInterceptor;
+    FIsAutoScrollEnabled: Boolean;
+    FIsVScrollBottomEnabled: Boolean;
   protected
     procedure BeforeLinesInsert(const Args: TArray<TValue>);
     procedure AfterLinesInsert(Sender: TObject);
@@ -38,6 +40,11 @@ type
     procedure InsertStringBefore(const S: string);
     procedure WMPaste(var Message: TMessage); message WM_PASTE;
     procedure WMKeyDown(var Message: TMessage); message WM_KEYDOWN;
+    procedure OnVScroll(var Msg: TMessage); message WM_VSCROLL;
+  published
+    // Toggles auto-scrolling to the bottom after a line is inserted
+    property IsAutoScrollEnabled: Boolean read FIsAutoScrollEnabled
+      write FIsAutoScrollEnabled default False;
   end;
 
 implementation
@@ -87,20 +94,18 @@ begin
   S := StringReplace(S, #13, '', [rfReplaceAll]);
   Args[1] := S;
 
-  if not (csloading in ComponentState) then
+  if not IsAutoScrollEnabled and not (csloading in ComponentState) then
   begin
     ANeedToPostMessage := False;
-    if (FMustScrollBackLine < 0) and
-      (Args[0].AsType<Integer> = Lines.Count) then
+    if FIsVScrollBottomEnabled and (Args[0].AsType<Integer> = Lines.Count) then
     begin
-      FMustScrollBackLine := Perform(EM_GETFIRSTVISIBLELINE, 0, 0);
+      FIsVScrollBottomEnabled := False;
       ANeedToPostMessage := True;
     end;
 
     if (not FLockDrawingCalled) and CanFocus then
     begin
       LockDrawing;
-      Lines.BeginUpdate;
       FLockDrawingCalled := True;
       ANeedToPostMessage := True;
     end;
@@ -112,18 +117,10 @@ end;
 
 procedure TORRichEdit.AfterLinesInsert(Sender: TObject);
 begin
-  if FMustScrollBackLine >= 0 then
-  begin
-    if FMustScrollBackLine > 0 then
-      Perform(EM_LINESCROLL, 0,
-        FMustScrollBackLine - Perform(EM_GETFIRSTVISIBLELINE, 0, 0))
-    else
-      Perform(WM_VSCROLL, SB_TOP, 0);
-    FMustScrollBackLine := -1;
-  end;
+  FIsVScrollBottomEnabled := True;
+
   if FLockDrawingCalled then
   begin
-    Lines.EndUpdate;
     UnlockDrawing;
     FLockDrawingCalled := False;
   end;
@@ -165,8 +162,17 @@ begin
   AStream := TStringStream.Create;
   try
     Lines.SaveToStream(AStream);
-    AStream.Seek(-SizeOf('}'#0), soFromEnd);
-    AStream.WriteString(StringToRTFString(S) + '}');
+
+    if Self.PlainText then
+    begin
+      AStream.Seek(0, soFromEnd);
+      AStream.WriteString(#13#10 + S);
+    end
+    else begin
+      AStream.Seek(-SizeOf('}'#0), soFromEnd);
+      AStream.WriteString(StringToRTFString(S) + '}');
+    end;
+
     AStream.Seek(0, soFromBeginning);
     Lines.LoadFromStream(AStream);
   finally
@@ -295,9 +301,16 @@ begin
   end;
 end;
 
+procedure TORRichEdit.OnVScroll(var Msg: TMessage);
+begin
+  if (Msg.WParam = SB_BOTTOM) and not FIsVScrollBottomEnabled then Exit;
+  inherited;
+end;
+
 constructor TORRichEdit.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
+  FIsVScrollBottomEnabled := True;
   FMessageReceiver := TMessageReceiver.Create(AfterLinesInsert);
 
   FVirtualMethodInterceptor := TVirtualMethodInterceptor.Create

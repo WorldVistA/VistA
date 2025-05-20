@@ -9,25 +9,6 @@ uses
   u508Button;
 
 type
-  {This object holds a List of Actions as Returned VIA the RPCBroker}
-  TPRFActions = class(TObject)
-  private
-    FPRFActionList : TStringList;
-  public
-    //procedure to show the Action in a ListView, requires a listview parameter
-    procedure ShowActionsOnList(DisplayList : TCaptionListView);
-    //procedure to load the actions, this will call the RPC
-    function Load(aDest: TStrings; TitleIEN : Int64; DFN : String): Integer;
-    //returns true if the Action at the Index passed is associated with a note
-    function SelActionHasNote(lstIndex : integer) : boolean;
-    //return the Action IEN at the Index passed
-    function GetActionIEN(lstIndex : integer) : String;
-    //return the PRF IEN at the Index passed
-    function GetPRF_IEN(lstIndex : integer) : integer;
-    constructor Create();
-    destructor Destroy(); override;
-  end;
-
   TfrmNoteProperties = class(TfrmBase508Form)
     lblNewTitle: TLabel;
     cboNewTitle: TORComboBox;
@@ -81,7 +62,6 @@ type
     procedure btnShowListClick(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure calNoteEnter(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
     procedure btnDetailsClick(Sender: TObject);
     procedure CaptionListView1Change(Sender: TObject; Item: TListItem;
       Change: TItemChange);
@@ -109,7 +89,6 @@ type
     FProcSummCode: integer;
     FProcDateTime: TFMDateTime;
     FCPStatusFlag: integer;
-    FPRFActions : TPRFActions;
     FStarting: boolean;
     FFirstCosignerAssign: boolean;
     procedure SetCosignerRequired(DoSetup: boolean);
@@ -123,6 +102,14 @@ type
     procedure UMCheckDefault(var Message: TMessage); message UM_MISC;
     procedure SetPanelVisible(Panel: TPanel; IsVisible: boolean);
     procedure UpdateConsultsPanel;
+    //procedure to load the actions, this will call the RPC
+    function LoadPRFActions(ADest: TStrings; TitleIEN : Int64; DFN : string): Integer;
+    // returns the Action IEN of the selected action
+    function GetActionIEN: string;
+    // returns the PRF IEN of the selected action
+    function GetPRFIEN: Integer;
+    // returns true if the selected action is associated with a note
+    function GetActionHasNote: Boolean;
   public
     { Public declarations }
   protected
@@ -148,7 +135,7 @@ implementation
 
 uses uCore, rCore, rConsults, uConsults, rSurgery, fRptBox, VA508AccessibilityRouter,
   uORLists, uSimilarNames, VAUtils, uSizing, UCaptionListView508Manager,
-  UResponsiveGUI, CommCtrl, System.DateUtils;
+  UResponsiveGUI, CommCtrl, System.DateUtils, VAHelpers, System.Math;
 
 { Initial values in ANote
 
@@ -442,8 +429,8 @@ begin
                             begin
                               // NOTE: this PRF_IEN is (uTIU/TEditNoteRec.PRF_IEN)
                               // aNote.PRF_IEN is an Integer, not the constant defined in fNoteProps; rpk 12/8/2017
-                              PRF_IEN := FPRFActions.GetPRF_IEN(lvPRF.ItemIndex);
-                              ActionIEN := FPRFActions.GetActionIEN(lvPRF.ItemIndex);
+                              PRF_IEN := GetPRFIEN;
+                              ActionIEN := GetActionIEN;
                             end
                           else
                             begin
@@ -803,7 +790,7 @@ begin
           begin
             if (lvPRF.ItemIndex < 0) and (FIsNewNote) then
               ErrMsg := ErrMsg + TX_REQ_PRF_ACTION;
-            if (lvPRF.ItemIndex >= 0) and (FPRFActions.SelActionHasNote(lvPRF.ItemIndex)) then
+            if (lvPRF.ItemIndex >= 0) and (GetActionHasNote) then
               ErrMsg := ErrMsg + TX_REQ_PRF_NOTE;
           end;
         end;
@@ -960,32 +947,44 @@ end;
 procedure TfrmNoteProperties.ShowPRFList(ShouldShow: boolean);
 const
   PRF_LABEL = 'Which Patient Record Flag Action should this Note be linked to?';
+  AMinColWidth = 8;
+  AMaxVisibleRows = 5;
 var
   Item: TVA508AccessibilityItem;
   sl: TStrings;
+  AVisibleRows: Integer;
 begin
   SetPanelVisible(pnlPRF, ShouldShow and not(FDocType = TYP_ADDENDUM));
   if pnlPRF.Visible then
   begin
-    if FPRFActions = nil then
-      FPRFActions := TPRFActions.Create;
-    sl := TStringList.Create;
+    lvPRF.LockDrawing;
+    lvPRF.Items.BeginUpdate; // Fix for CQ: 6926
     try
-      FPRFActions.Load(sl, cboNewTitle.ItemIEN, Patient.DFN);
-      if sl.Count <> 0 then
-        lblPRF.Caption := PRF_LABEL
-      else
-        lblPRF.Caption := 'No Linkable Actions for this Patient and/or Title.';
+      sl := TStringList.Create;
+      try
+        LoadPRFActions(sl, cboNewTitle.ItemIEN, Patient.DFN);
+        lvPRF.ItemsStrings.Assign(sl);
+        if sl.Count <> 0 then
+          lblPRF.Caption := PRF_LABEL
+        else
+          lblPRF.Caption := 'No Linkable Actions for this Patient and/or Title.';
+      finally
+        sl.Free;
+      end;
 
+      pnlPRF.DisableAlign;
+      try
+        lvPRF.AutoSizeReportViewColumnWidths(AMinColWidth);
+        AVisibleRows := Min(AMaxVisibleRows, lvPRF.Items.Count);
+        lvPRF.AutoSizeReportViewHeight(AVisibleRows);
+        pnlPRF.ClientHeight := lblPRF.ClientHeight + lvPRF.ClientHeight;
+      finally
+        pnlPRF.EnableAlign;
+      end;
     finally
-      sl.Free;
+      lvPRF.Items.EndUpdate;
+      lvPRF.UnlockDrawing;
     end;
-
-    FPRFActions.ShowActionsOnList(lvPRF);
-    // Fix for CQ: 6926
-    lvPRF.Columns.BeginUpdate;
-    lvPRF.Columns.EndUpdate;
-    // End Fix for CQ: 6926
 
     Item := amgrMain.AccessData.FindItem(lvPRF, False);
     amgrMain.AccessData[Item.Index].AccessText := lblPRF.Caption;
@@ -998,81 +997,46 @@ begin
     gpMain.Height + gpMain.Margins.Top + gpMain.Margins.Bottom;
 end;
 
-{ TPRFActions }
-
-constructor TPRFActions.Create;
+function TfrmNoteProperties.GetActionIEN: string;
 begin
-  inherited;
-  FPRFActionList := TStringList.Create;
+  if lvPRF.ItemIndex < 0  then Exit('');
+  var action := TCaptionListItem(lvPRF.Items[lvPRF.ItemIndex]).ItemString;
+  Result := Piece(action, U, ACTION_IEN);
 end;
 
-destructor TPRFActions.Destroy;
+function TfrmNoteProperties.GetPRFIEN: Integer;
 begin
-  FPRFActionList.Free;
-  inherited;
+  if lvPRF.ItemIndex < 0  then Exit(-1);
+  var action := TCaptionListItem(lvPRF.Items[lvPRF.ItemIndex]).ItemString;
+  Result := StrToInt(Piece(action, U, PRF_IEN));
 end;
 
-function TPRFActions.GetActionIEN(lstIndex: integer): String;
-begin
-  Result := Piece(FPRFActionList[lstIndex],U,ACTION_IEN);
-end;
-
-function TPRFActions.GetPRF_IEN(lstIndex: integer): integer;
-begin
-  Result := StrToInt(Piece(FPRFActionList[lstIndex],U,PRF_IEN));
-end;
-
-function TPRFActions.Load(aDest:TStrings; TitleIEN : Int64; DFN : String): Integer;
+function TfrmNoteProperties.LoadPRFActions(ADest: TStrings; TitleIEN: Int64;
+  DFN: string): Integer;
 var
-  i: integer;
-  s: string;
+  I: Integer;
+  S: string;
 begin
-  CallVistA('TIU GET PRF ACTIONS', [TitleIEN,DFN], aDest{FPRFActionList});
-  FPRFActionList.Assign(aDest);
+  CallVistA('TIU GET PRF ACTIONS', [TitleIEN, DFN], ADest);
 
-  for i := 0 to FPRFActionList.Count - 1 do
+  for I := 0 to ADest.Count - 1 do
   begin
-    s := FPRFActionList[i];
-    if Piece(s, U, NOTE_IEN) <> '' then
-      SetPiece(s, U, HAS_NOTE, 'Yes')
+    S := ADest[I];
+    if Piece(S, U, NOTE_IEN) <> '' then
+      SetPiece(S, U, HAS_NOTE, 'Yes')
     else
-      SetPiece(s, U, HAS_NOTE, 'No');
-    FPRFActionList[i] := s;
+      SetPiece(S, U, HAS_NOTE, 'No');
+    aDest[I] := S;
   end;
 
-  Result := aDest.Count;
+  Result := ADest.Count;
 end;
 
-function TPRFActions.SelActionHasNote(lstIndex: integer): boolean;
+function TfrmNoteProperties.GetActionHasNote: boolean;
 begin
-  Result := false;
-  if Piece(FPRFActionList[lstIndex],U,NOTE_IEN) <> '' then
-    Result := true;
-end;
-
-procedure TPRFActions.ShowActionsOnList(DisplayList: TCaptionListView);
-var
-  i: Integer;
-begin
-  DisplayList.Items.BeginUpdate;
-  try
-    DisplayList.Clear;
-
-    // Assign the column items list
-    DisplayList.ItemsStrings.Assign(FPRFActionList);
-
-    // Update the column widths
-    for i := 0 to DisplayList.Columns.Count - 1 do
-      DisplayList.Columns[i].Width := LVSCW_AUTOSIZE or
-        LVSCW_AUTOSIZE_USEHEADER;
-  finally
-    DisplayList.Items.EndUpdate;
-  end;
-end;
-
-procedure TfrmNoteProperties.FormDestroy(Sender: TObject);
-begin
-  FPRFActions.Free;
+  if lvPRF.ItemIndex < 0  then Exit(False);
+  var action := TCaptionListItem(lvPRF.Items[lvPRF.ItemIndex]).ItemString;
+  Result := Piece(action, U, NOTE_IEN) <> '';
 end;
 
 procedure TfrmNoteProperties.btnDetailsClick(Sender: TObject);

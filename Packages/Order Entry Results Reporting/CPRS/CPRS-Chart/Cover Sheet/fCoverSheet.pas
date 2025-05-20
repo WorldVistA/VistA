@@ -3,7 +3,7 @@ unit fCoverSheet;
   ================================================================================
   *
   *       Application:  CPRS - Coversheet
-  *       Developer:    doma.user@domain.ext
+  *       Developer:    dan.petit@domain.ext
   *       Site:         Salt Lake City ISC
   *       Date:         2015-12-21
   *

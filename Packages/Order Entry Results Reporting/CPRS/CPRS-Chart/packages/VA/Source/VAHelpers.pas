@@ -6,7 +6,8 @@ uses
   System.Classes,
   System.SysUtils,
   Vcl.StdCtrls,
-  System.Generics.Collections;
+  System.Generics.Collections,
+  Vcl.ComCtrls;
 
 type
   TVACustomListBoxHelper = class helper for TCustomListBox
@@ -69,7 +70,19 @@ type
     function CVarExists(AName: string): boolean;
   end;
 
+  TListViewHelper = class helper for TListView
+  public
+    procedure AutoSizeReportViewColumnWidths(
+      const AMinWidth: Integer = -1; const AMaxWidth: Integer = -1);
+    procedure AutoSizeReportViewHeight(const AVisibleRowCount: Integer);
+  end;
+
+
 implementation
+
+uses
+  Winapi.Windows,
+  Winapi.CommCtrl;
 
 { TVACustomListBoxHelper }
 
@@ -253,6 +266,67 @@ begin
     if idx >= 0 then
       FCVarList.Delete(idx);
   end;
+end;
+
+{ TListViewHelper }
+
+procedure TListViewHelper.AutoSizeReportViewColumnWidths(
+  const AMinWidth: Integer; const AMaxWidth: Integer);
+var
+  AColumn, AItem: Integer;
+  AHeaderWidth, AItemWidth: Integer;
+  ACellCaption: string;
+  ANewWidth: Integer;
+begin
+  if ViewStyle <> vsReport then Exit;
+
+  Columns.BeginUpdate;
+  LockDrawing;
+  try
+    for AColumn := 0 to Columns.Count - 1 do
+    begin
+      ANewWidth := LVSCW_AUTOSIZE_USEHEADER; // Auto-size to fit the header text
+
+      if AMinWidth > -1 then Columns[AColumn].MinWidth := AMinWidth;
+      if AMaxWidth > -1 then Columns[AColumn].MaxWidth := AMaxWidth;
+
+      AHeaderWidth := ListView_GetStringWidth(Handle,
+        PChar(Columns[AColumn].Caption));
+
+      for AItem := 0 to Items.Count - 1 do
+      begin
+        // The first column uses Items and the rest use SubItems
+        if AColumn = 0 then
+          ACellCaption := Items[AItem].Caption
+        else if AColumn <= Items[AItem].SubItems.Count  then
+          ACellCaption := Items[AItem].SubItems[AColumn - 1]
+        else
+          ACellCaption := '';
+
+        AItemWidth := ListView_GetStringWidth(Handle, PChar(ACellCaption));
+
+        // Check if the cell caption is larger than the header caption
+        if AItemWidth > AHeaderWidth then
+        begin
+          ANewWidth := LVSCW_AUTOSIZE; // Auto-size to fit the item text
+          Break;
+        end;
+      end;
+
+      Columns[AColumn].Width := ANewWidth;
+    end;
+  finally
+    UnlockDrawing;
+    Columns.EndUpdate;
+  end;
+end;
+
+procedure TListViewHelper.AutoSizeReportViewHeight(const AVisibleRowCount: Integer);
+begin
+  if ViewStyle <> vsReport then Exit;
+
+  // HiWord is height, LoWord is width
+  ClientHeight := HiWord(ListView_ApproximateViewRect(Handle, Height, Width, AVisibleRowCount));
 end;
 
 end.

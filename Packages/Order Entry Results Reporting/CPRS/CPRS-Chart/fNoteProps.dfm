@@ -182,7 +182,7 @@ inherited frmNoteProperties: TfrmNoteProperties
       Top = 32
       Width = 691
       Height = 121
-      Align = alBottom
+      Align = alClient
       Columns = <
         item
           AutoSize = True

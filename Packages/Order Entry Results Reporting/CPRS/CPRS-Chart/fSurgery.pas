@@ -147,6 +147,8 @@ type
     spDetails: TSplitter;
     CPMemNewNote: TCopyPasteDetails;
     spEditDetails: TSplitter;
+    grdFields: TGridPanel;
+    pnlNewTitle: TPanel;
     procedure mnuChartTabClick(Sender: TObject);
     procedure pnlRightResize(Sender: TObject);
     procedure cmdNewNoteClick(Sender: TObject);
@@ -181,7 +183,6 @@ type
     procedure mnuOptionsClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure cmdChangeClick(Sender: TObject);
-    procedure pnlFieldsResize(Sender: TObject);
     procedure timAutoSaveTimer(Sender: TObject);
     procedure memNewNoteChange(Sender: TObject);
     procedure popNoteMemoReformatClick(Sender: TObject);
@@ -1699,15 +1700,6 @@ procedure TfrmSurgery.memNewNoteChange(Sender: TObject);
 begin
   inherited;
   FChanged := True;
-end;
-
-procedure TfrmSurgery.pnlFieldsResize(Sender: TObject);
-{ center the reference date on the panel }
-begin
-  inherited;
-  lblRefDate.Left := (pnlFields.Width - lblRefDate.Width) div 2;
-  if lblRefDate.Left < (lblNewTitle.Left + lblNewTitle.Width + 6) then
-    lblRefDate.Left := (lblNewTitle.Left + lblNewTitle.Width);
 end;
 
 procedure TfrmSurgery.DoAutoSave(Suppress: Integer = 1);
