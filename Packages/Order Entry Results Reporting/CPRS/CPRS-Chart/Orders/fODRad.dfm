@@ -605,6 +605,9 @@ inherited frmODRad: TfrmODRad
         TabOrder = 5
         Visible = False
         ShowAccelChar = True
+        WordWrap = False
+        LabelAlignment = taLeftJustify
+        LabelLayout = tlTop
       end
     end
     object pnlHandR: TPanel

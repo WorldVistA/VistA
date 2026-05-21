@@ -7,7 +7,17 @@ Update History
 
 interface
 
-uses SysUtils, Classes, ORNet, ORFn, uCore, rCore, rTIU, rConsults, ORCtrls;
+uses
+  SysUtils,
+  Classes,
+  ORNet,
+  ORFn,
+  uCore,
+  rCore,
+  rTIU,
+  rConsults,
+  ORCtrls,
+  UNewPersonParams;
 
 procedure rpcGetNotifications(aResults: TStrings);
 procedure rpcGetOrderChecks(aResults: TStrings);
@@ -140,10 +150,9 @@ function rpcSetSurrogateParams(aValue:String):Boolean;
 
 implementation
 
-//..............................................................................
+uses
+  uSimilarNames;
 
-
-uses uSimilarNames;
 procedure rpcGetNotifications(aResults: TStrings);
 begin
   CallVistA('ORWTPP GETNOT', [nil], aResults);
@@ -235,9 +244,21 @@ end;
 
 procedure rpcGetCosigners(AORComboBox: TORComboBox; const StartFrom: string;
   Direction: Integer; aResults: TStrings);
+var
+  ANewPersonParams: TNewPersonParams;
 begin
-  SNCallVistA(AORComboBox, SN_ORWTPP_GETCOS, [StartFrom, Direction], aResults);
-  MixedCaseList(aResults);
+  ANewPersonParams := TNewPersonParams.Create(AORComboBox);
+  try
+    ANewPersonParams.From := StartFrom;
+    ANewPersonParams.Direction := Direction;
+    ANewPersonParams.DefaultCosigner := 1;
+    ANewPersonParams.RDV := 1;
+    TSimilarNames.CallVistA(AORComboBox, [ANewPersonParams.CreateORNetMult],
+      aResults);
+    MixedCaseList(aResults);
+  finally
+    FreeAndNil(ANewPersonParams);
+  end;
 end;
 
 function rpcGetDefaultCosigner: String;

@@ -4,10 +4,10 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, uDlgComponents, VA508AccessibilityManager;
+  StdCtrls, ExtCtrls, uDlgComponents, VA508AccessibilityManager, fBase508Frame;
 
 type
-  TfraTemplateFieldButton = class(TFrame, ICPRSDialogComponent)
+  TfraTemplateFieldButton = class(TBase508Frame, ICPRSDialogComponent)
     pnlBtn: TPanel;
     lblText: TLabel;
     pbFocus: TPaintBox;

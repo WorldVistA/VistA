@@ -306,6 +306,9 @@ inherited frmPLLex: TfrmPLLex
       Caption = ''
       TabOrder = 0
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
   end
   inherited amgrMain: TVA508AccessibilityManager

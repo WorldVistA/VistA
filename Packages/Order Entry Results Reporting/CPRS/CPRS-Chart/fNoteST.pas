@@ -18,6 +18,8 @@ type
     lblAuthor: TLabel;
     cmdOK: TButton;
     cmdCancel: TButton;
+    pnlButtonPanel: TPanel;
+    pnlSearchInfoPanel: TPanel;
     procedure cmdCancelClick(Sender: TObject);
     procedure cmdOKClick(Sender: TObject);
     procedure FormShow(Sender: TObject);

@@ -943,6 +943,9 @@ inherited frmODMeds: TfrmODMeds
             TabOrder = 17
             TabStop = True
             ShowAccelChar = True
+            WordWrap = False
+            LabelAlignment = taLeftJustify
+            LabelLayout = tlTop
           end
           object chkTitration: TCheckBox
             Left = 503

@@ -80,7 +80,9 @@ procedure ShowFlags(FlagId: integer = 0);
 
 implementation
 
-uses uCore,uOrPtf,ORFn, ORNet, uConst, fRptBox, rCover, VAUtils;
+uses uCore,uOrPtf,ORFn, ORNet, uConst, fRptBox, rCover, VAUtils,
+VA508AccessibilityRouter;
+
 {$R *.dfm}
 
 procedure ShowFlags(FlagId: integer);

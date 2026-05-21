@@ -3,7 +3,7 @@ inherited frmNewAllergyCheck: TfrmNewAllergyCheck
   Top = 470
   BorderIcons = []
   Caption = 'Existing Medication Allergy'
-  ClientHeight = 425
+  ClientHeight = 426
   ClientWidth = 573
   Constraints.MinHeight = 433
   Constraints.MinWidth = 589
@@ -42,7 +42,7 @@ inherited frmNewAllergyCheck: TfrmNewAllergyCheck
   object pnlOptRecipients: TPanel [1]
     AlignWithMargins = True
     Left = 3
-    Top = 209
+    Top = 210
     Width = 567
     Height = 173
     Align = alBottom
@@ -68,11 +68,12 @@ inherited frmNewAllergyCheck: TfrmNewAllergyCheck
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
-      object OptRecip: TORComboBox
-        Left = 0
-        Top = 0
+      object OptRecip: TORCheckComboBox
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
         Width = 241
-        Height = 154
+        Height = 148
         Style = orcsSimple
         Align = alLeft
         AutoSelect = True
@@ -96,12 +97,17 @@ inherited frmNewAllergyCheck: TfrmNewAllergyCheck
         OnDblClick = OptRecipDblClick
         OnEnter = OptRecipEnter
         OnKeyDown = OptRecipKeyDown
+        OnMouseClick = OptRecipMouseClick
         OnNeedData = OptRecipNeedData
         CharsNeedMatch = 1
         UniqueAutoComplete = True
+        MainCheckBoxCaption = 'Include Non-VA Provides'
+        MainCheckBoxVisible = True
+        MainCheckBoxAlignment = calBottom
+        OnMainCheckboxClick = OptRecipMainCheckboxClick
       end
       object pnlOptRecipientsButtons: TPanel
-        Left = 241
+        Left = 247
         Top = 0
         Width = 84
         Height = 154
@@ -141,9 +147,9 @@ inherited frmNewAllergyCheck: TfrmNewAllergyCheck
       end
       object SelRecip: TORListBox
         AlignWithMargins = True
-        Left = 328
+        Left = 334
         Top = 3
-        Width = 231
+        Width = 225
         Height = 148
         Margins.Right = 8
         Align = alClient
@@ -166,7 +172,7 @@ inherited frmNewAllergyCheck: TfrmNewAllergyCheck
   object pnlButton: TPanel [2]
     AlignWithMargins = True
     Left = 3
-    Top = 388
+    Top = 389
     Width = 567
     Height = 34
     Align = alBottom
@@ -190,7 +196,7 @@ inherited frmNewAllergyCheck: TfrmNewAllergyCheck
     Left = 3
     Top = 122
     Width = 567
-    Height = 81
+    Height = 82
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
@@ -210,7 +216,7 @@ inherited frmNewAllergyCheck: TfrmNewAllergyCheck
       Left = 3
       Top = 19
       Width = 561
-      Height = 59
+      Height = 60
       Align = alClient
       ItemHeight = 13
       ParentShowHint = False

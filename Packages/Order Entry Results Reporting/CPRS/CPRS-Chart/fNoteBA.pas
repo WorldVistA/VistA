@@ -5,20 +5,22 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ExtCtrls, ORCtrls, StdCtrls, ORFn, uTIU, fBase508Form,
-  VA508AccessibilityManager;
+  VA508AccessibilityManager, ORCheckComboBox, uMisc;
 
 type
   TfrmNotesByAuthor = class(TfrmBase508Form)
     pnlBase: TORAutoPanel;
     lblAuthor: TLabel;
     radSort: TRadioGroup;
-    cboAuthor: TORComboBox;
+    cboAuthor: TORCheckComboBox;
     cmdOK: TButton;
     cmdCancel: TButton;
     procedure cboAuthorNeedData(Sender: TObject; const StartFrom: string;
       Direction, InsertAt: Integer);
     procedure cmdCancelClick(Sender: TObject);
     procedure cmdOKClick(Sender: TObject);
+    procedure cboAuthorMainCheckboxClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     FChanged: Boolean;
     FAuthor: Int64;
@@ -92,17 +94,24 @@ begin
   end;
 end;
 
+procedure TfrmNotesByAuthor.cboAuthorMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  cboAuthor.ReInitLongList;
+end;
+
 procedure TfrmNotesByAuthor.cboAuthorNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
 var
-  sl: TStrings;
+  AStrings: TStrings;
 begin
-  sl := TSTringList.Create;
+  AStrings := TSTringList.Create;
   try
-    setSubSetOfActiveAndInactivePersons(cboAuthor, sl, StartFrom, Direction);
-    cboAuthor.ForDataUse(sl);
+    setSubSetOfActiveAndInactivePersons(cboAuthor, AStrings, StartFrom,
+      Direction);
+    cboAuthor.ForDataUse(AStrings);
   finally
-    sl.Free;
+    FreeAndNil(AStrings);
   end;
 end;
 
@@ -132,6 +141,12 @@ begin
   FAuthorName := cboAuthor.DisplayText[cboAuthor.ItemIndex];
   FAscending := radSort.ItemIndex = 0;
   Close;
+end;
+
+procedure TfrmNotesByAuthor.FormCreate(Sender: TObject);
+begin
+  inherited;
+  cboAuthor.MainCheckBoxVisible := IncludeNonVAProviders(cboAuthor);
 end;
 
 end.

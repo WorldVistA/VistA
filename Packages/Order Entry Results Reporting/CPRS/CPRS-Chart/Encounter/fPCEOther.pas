@@ -4,24 +4,30 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  fAutoSz, ORFn, ORCtrls, StdCtrls, VA508AccessibilityManager;
+  fAutoSz, ORFn, ORCtrls, StdCtrls, VA508AccessibilityManager, Vcl.Buttons,
+  Vcl.ExtCtrls;
 
 type
   TfrmPCEOther = class(TfrmAutoSz)
-    cmdCancel: TButton;
-    cmdOK: TButton;
     cboOther: TORComboBox;
+    pnlBottom: TPanel;
+    btnOK: TBitBtn;
+    btnCancel: TBitBtn;
     procedure cmdOKClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
     procedure cboOtherDblClick(Sender: TObject);
     procedure cboOtherChange(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     fOtherApp: Integer;
     FCode:   string;
     procedure SetApp(OtherApp: Integer);
+  protected
+    procedure Loaded; override;
   public
     { Public declarations }
+    procedure SetFontSize(aSize: Integer);
   end;
 
 
@@ -31,7 +37,7 @@ implementation
 
 {$R *.DFM}
 
-uses rPCE, fEncounterFrame;
+uses rPCE, fEncounterFrame, uSizing;
 
 procedure OtherLookup(var Code: string; OtherApp: Integer);
 var
@@ -63,6 +69,11 @@ begin
   LoadcboOther(cboOther.Items, uEncPCEData.Location, OtherApp);
 end;
 
+procedure TfrmPCEOther.Loaded;
+begin
+  AutoSizeDisabled := true;
+  inherited;
+end;
 
 procedure TfrmPCEOther.cmdOKClick(Sender: TObject);
 begin
@@ -83,6 +94,12 @@ begin
 end;
 
 
+procedure TfrmPCEOther.FormShow(Sender: TObject);
+begin
+  inherited;
+  setFontSize(Application.MainForm.Font.size);
+end;
+
 procedure TfrmPCEOther.cmdCancelClick(Sender: TObject);
 begin
   inherited;
@@ -99,7 +116,13 @@ end;
 procedure TfrmPCEOther.cboOtherChange(Sender: TObject);
 begin
   inherited;
-  cmdOK.Enabled := (cboOther.ItemIndex >= 0);
+  btnOK.Enabled := (cboOther.ItemIndex >= 0);
+end;
+
+procedure TfrmPCEOther.SetFontSize(aSize: Integer);
+begin
+  Font.Size := aSize;
+  adjustToolPanel(pnlBottom);
 end;
 
 end.

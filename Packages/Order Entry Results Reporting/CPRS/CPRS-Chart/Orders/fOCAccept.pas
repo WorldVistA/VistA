@@ -60,11 +60,6 @@ type
       write fOnOverride;
   end;
 
-  tStringListHelper = class helper for TStringList
-      function FuzzyIndexOf(const S: String): Integer;
-      function ContainsStringAtPiece(const S: String; const PieceNum: Integer): boolean;
-    end;
-
   function AcceptOrderWithChecks(OCList: tStringList; aOnAllergyAssesment: TRetrieveOrderChecksFunction = nil;
     aOnOverrideSetup: TRetrieveOverrideFunction = nil): boolean;
 
@@ -78,7 +73,8 @@ uses
   uCore, uConst,
   fAllgyAR,
   ShellAPI,
-  System.StrUtils;
+  System.StrUtils,
+  VAShared.UTStringsHelper;
 
 function AcceptOrderWithChecks(OCList: tStringList; aOnAllergyAssesment: TRetrieveOrderChecksFunction = nil;
   aOnOverrideSetup: TRetrieveOverrideFunction = nil): boolean;
@@ -209,7 +205,7 @@ var
   CanShow: boolean;
 begin
   // if allergy in orders then check
-  if OCList.ContainsStringAtPiece('3', 2) then
+  if OCList.ContainsStringAtPiece('3', U, 2) then
   begin
     if assigned(fOnOverride) then
     begin
@@ -226,7 +222,7 @@ begin
           cbAllergyReason.Items.Assign(OverrideReturnList);
 
           //do we need to show the comment section
-          if OCList.ContainsStringAtPiece('1', 5) then
+          if OCList.ContainsStringAtPiece('1', U, 5) then
           begin
             // Get the possible comments
             OverrideReturnList.clear;
@@ -315,44 +311,6 @@ begin
     end;
 
   inherited;
-end;
-
-
-{ tStringListHelper }
-
-function tStringListHelper.FuzzyIndexOf(const S: String): Integer;
-var
-  I: Integer;
-begin
-  Result := -1;
-
-  // Loop though each item and see if it contains the given text
-  for I := 0 to Count - 1 do
-  begin
-    if ContainsText(Strings[I], S) then
-    begin
-      //Return index
-      Result := I;
-      break;
-    end;
-
-  end;
-end;
-
-//Looks for given text at a specific piece
-function tStringListHelper.ContainsStringAtPiece(const S: String; const PieceNum: Integer): Boolean;
-var
-  CheckString: String;
-begin
-  result := false;
-  for CheckString in self do
-  begin
-    if trim(Piece(CheckString, U, PieceNum)) = Trim(S) then
-    begin
-      Result := True;
-      break;
-    end;
-  end;
 end;
 
 procedure TfrmOCAccept.SetButtonStatus;

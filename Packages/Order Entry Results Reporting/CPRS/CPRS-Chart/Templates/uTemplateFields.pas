@@ -296,7 +296,7 @@ implementation
 uses
   rTemplates, ORCtrls, mTemplateFieldButton, dShared, uCore, rCore, Windows,
   VAUtils, VA508AccessibilityManager, VA508AccessibilityRouter, System.UITypes, System.Types,
-  fTemplateDialog, dRequiredFields, system.Math, uTemplates;
+  fTemplateDialog, dRequiredFields, system.Math, uTemplates, VAShared.UTStringsHelper;
 
 const
   NewTemplateField = 'NEW TEMPLATE FIELD';

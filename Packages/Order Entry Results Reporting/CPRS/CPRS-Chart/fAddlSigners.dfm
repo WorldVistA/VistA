@@ -3,33 +3,35 @@ inherited frmAddlSigners: TfrmAddlSigners
   Top = 164
   BorderStyle = bsDialog
   Caption = 'Identify Additional Signers'
-  ClientHeight = 359
-  ClientWidth = 524
-  OldCreateOrder = True
+  ClientHeight = 388
+  ClientWidth = 520
   Position = poScreenCenter
-  ExplicitWidth = 530
-  ExplicitHeight = 388
-  PixelsPerInch = 96
+  ExplicitWidth = 532
+  ExplicitHeight = 392
   TextHeight = 13
   object pnlBase: TPanel [0]
     Left = 0
     Top = 0
-    Width = 524
-    Height = 359
+    Width = 520
+    Height = 388
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitWidth = 516
+    ExplicitHeight = 353
     object pnlButtons: TORAutoPanel
       Left = 0
-      Top = 324
-      Width = 524
+      Top = 353
+      Width = 520
       Height = 35
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 2
+      ExplicitTop = 318
+      ExplicitWidth = 516
       object cmdOK: TButton
         AlignWithMargins = True
-        Left = 360
+        Left = 356
         Top = 3
         Width = 75
         Height = 29
@@ -37,10 +39,11 @@ inherited frmAddlSigners: TfrmAddlSigners
         Caption = '&OK'
         TabOrder = 0
         OnClick = cmdOKClick
+        ExplicitLeft = 352
       end
       object cmdCancel: TButton
         AlignWithMargins = True
-        Left = 441
+        Left = 437
         Top = 3
         Width = 75
         Height = 29
@@ -50,34 +53,37 @@ inherited frmAddlSigners: TfrmAddlSigners
         Caption = '&Cancel'
         TabOrder = 1
         OnClick = cmdCancelClick
+        ExplicitLeft = 433
       end
     end
     object pnlAdditional: TORAutoPanel
       Left = 0
-      Top = 70
-      Width = 524
+      Top = 99
+      Width = 520
       Height = 254
       Align = alClient
       TabOrder = 1
+      ExplicitTop = 77
+      ExplicitWidth = 516
+      ExplicitHeight = 241
       object SrcLabel: TLabel
-        Left = 11
-        Top = 15
-        Width = 202
-        Height = 16
-        AutoSize = False
+        Left = 8
+        Top = 6
+        Width = 153
+        Height = 13
         Caption = 'Select or enter additional signers'
       end
       object DstLabel: TLabel
-        Left = 298
-        Top = 15
-        Width = 170
-        Height = 16
-        AutoSize = False
+        Left = 299
+        Top = 6
+        Width = 118
+        Height = 13
         Caption = 'Current additional signers'
       end
-      object cboSrcList: TORComboBox
-        Left = 11
-        Top = 37
+      object cboSrcList: TORCheckComboBox
+        AlignWithMargins = True
+        Left = 8
+        Top = 25
         Width = 202
         Height = 216
         Style = orcsSimple
@@ -104,12 +110,18 @@ inherited frmAddlSigners: TfrmAddlSigners
         OnNeedData = NewPersonNeedData
         CharsNeedMatch = 1
         UniqueAutoComplete = True
+        MainCheckBoxCaption = 'Include Non-VA Providers'
+        MainCheckBoxVisible = True
+        MainCheckBoxAlignment = calBottom
+        OnMainCheckboxClick = cboSrcListMainCheckboxClick
+        DropdownStyle = ddsControl
       end
       object DstList: TORListBox
+        AlignWithMargins = True
         Left = 299
-        Top = 37
+        Top = 21
         Width = 216
-        Height = 204
+        Height = 220
         ItemHeight = 13
         MultiSelect = True
         ParentShowHint = False
@@ -155,41 +167,54 @@ inherited frmAddlSigners: TfrmAddlSigners
         OnClick = btnRemoveAllSignersClick
       end
     end
-    object pnlTop: TORAutoPanel
+    object pnlTop: TPanel
       Left = 0
       Top = 0
-      Width = 524
-      Height = 70
+      Width = 520
+      Height = 99
       Align = alTop
+      AutoSize = True
       BevelOuter = bvNone
+      Padding.Top = 6
+      Padding.Bottom = 8
       TabOrder = 0
-      object lblAuthor: TOROffsetLabel
-        Left = 11
-        Top = 6
-        Width = 134
-        Height = 31
+      DesignSize = (
+        520
+        93)
+      object lblAuthor: TLabel
+        Left = 8
+        Top = 36
+        Width = 95
+        Height = 13
         Caption = 'Author (not editable)'
-        HorzOffset = 2
         Transparent = False
-        VertOffset = 2
-        WordWrap = False
       end
-      object lblCosigner: TOROffsetLabel
-        Left = 298
-        Top = 6
-        Width = 208
-        Height = 28
+      object lblCosigner: TLabel
+        Left = 299
+        Top = 36
+        Width = 168
+        Height = 13
         Caption = 'Expected Cosigner (not editable)     '
-        HorzOffset = 2
         Transparent = False
-        VertOffset = 2
-        WordWrap = False
       end
-      object cboCosigner: TORComboBox
-        Left = 298
-        Top = 40
-        Width = 216
+      object txtAuthor: TCaptionEdit
+        Left = 8
+        Top = 51
+        Width = 180
         Height = 21
+        TabStop = False
+        Anchors = [akLeft, akTop, akRight]
+        Color = clCream
+        ReadOnly = True
+        TabOrder = 0
+        Caption = 'Author (not editable)'
+      end
+      object cboCosigner: TORCheckComboBox
+        Left = 299
+        Top = 51
+        Width = 194
+        Height = 40
+        Anchors = [akLeft, akTop, akRight]
         Style = orcsDropDown
         AutoSelect = True
         Caption = 'object lblCosigner: TOROffsetLabel'
@@ -213,24 +238,17 @@ inherited frmAddlSigners: TfrmAddlSigners
         OnExit = cboCosignerExit
         OnNeedData = cboCosignerNeedData
         CharsNeedMatch = 1
-      end
-      object txtAuthor: TCaptionEdit
-        Left = 11
-        Top = 43
-        Width = 202
-        Height = 21
-        TabStop = False
-        AutoSize = False
-        Color = clCream
-        ReadOnly = True
-        TabOrder = 0
-        Caption = 'Author (not editable)'
+        MainCheckBoxCaption = 'Include Non-VA Providers'
+        MainCheckBoxVisible = True
+        MainCheckBoxAlignment = calBottom
+        OnMainCheckboxClick = cboCosignerMainCheckboxClick
+        DropdownStyle = ddsControl
       end
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
-    Left = 224
-    Top = 16
+    Left = 112
+    Top = 80
     Data = (
       (
         'Component = pnlBase'
@@ -263,16 +281,16 @@ inherited frmAddlSigners: TfrmAddlSigners
         'Component = pnlTop'
         'Status = stsDefault')
       (
-        'Component = cboCosigner'
+        'Component = frmAddlSigners'
+        'Status = stsDefault')
+      (
+        'Component = btnRemoveAllSigners'
         'Status = stsDefault')
       (
         'Component = txtAuthor'
         'Status = stsDefault')
       (
-        'Component = frmAddlSigners'
-        'Status = stsDefault')
-      (
-        'Component = btnRemoveAllSigners'
+        'Component = cboCosigner'
         'Status = stsDefault'))
   end
 end

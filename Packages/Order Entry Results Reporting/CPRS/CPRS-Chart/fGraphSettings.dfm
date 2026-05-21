@@ -627,6 +627,9 @@ inherited frmGraphSettings: TfrmGraphSettings
             TabOrder = 2
             Visible = False
             ShowAccelChar = True
+            WordWrap = False
+            LabelAlignment = taLeftJustify
+            LabelLayout = tlTop
           end
         end
         object Panel12: TPanel
@@ -692,6 +695,9 @@ inherited frmGraphSettings: TfrmGraphSettings
             TabOrder = 2
             Visible = False
             ShowAccelChar = True
+            WordWrap = False
+            LabelAlignment = taLeftJustify
+            LabelLayout = tlTop
           end
         end
       end

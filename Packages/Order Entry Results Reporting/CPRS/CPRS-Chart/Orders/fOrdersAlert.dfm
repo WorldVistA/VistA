@@ -2,10 +2,10 @@ inherited frmAlertOrders: TfrmAlertOrders
   Left = 374
   Top = 193
   Caption = 'Alert when Results Available'
-  ClientHeight = 251
+  ClientHeight = 268
   Position = poScreenCenter
   OnCloseQuery = FormCloseQuery
-  ExplicitHeight = 290
+  ExplicitHeight = 307
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel [0]
@@ -19,7 +19,7 @@ inherited frmAlertOrders: TfrmAlertOrders
   end
   object lblAlertRecipient: TLabel [1]
     Left = 8
-    Top = 208
+    Top = 204
     Width = 72
     Height = 13
     Caption = 'Alert Recipient:'
@@ -55,11 +55,11 @@ inherited frmAlertOrders: TfrmAlertOrders
     ModalResult = 2
     TabOrder = 3
   end
-  object cboAlertRecipient: TORComboBox [5]
+  object cboAlertRecipient: TORCheckComboBox [5]
     Left = 7
     Top = 222
     Width = 226
-    Height = 21
+    Height = 40
     HelpContext = 9102
     Style = orcsDropDown
     AutoSelect = True
@@ -80,6 +80,10 @@ inherited frmAlertOrders: TfrmAlertOrders
     Text = ''
     OnNeedData = cboAlertRecipientNeedData
     CharsNeedMatch = 1
+    MainCheckBoxCaption = 'Include Non-VA Providers'
+    MainCheckBoxVisible = True
+    MainCheckBoxAlignment = calBottom
+    OnMainCheckboxClick = cboAlertRecipientMainCheckboxClick
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (

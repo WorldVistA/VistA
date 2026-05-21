@@ -4,10 +4,10 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ORCtrls, ORDtTm, uCore, ORFn, ExtCtrls,UConst;
+  StdCtrls, ORCtrls, ORDtTm, uCore, ORFn, ExtCtrls,UConst,fBase508Frame;
 
 type
-  TfraEvntDelayList = class(TFrame)
+  TfraEvntDelayList = class(Tbase508Frame)
     pnlDate: TPanel;
     pnlList: TPanel;
     mlstEvents: TORListBox;

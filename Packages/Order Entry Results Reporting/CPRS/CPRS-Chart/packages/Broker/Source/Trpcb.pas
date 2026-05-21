@@ -3,13 +3,31 @@
   Date Created: Sept 18, 1997 (Version 1.1)
   Site Name: Oakland, OI Field Office, Dept of Veteran Affairs
   Developers: Danila Manapsal, Don Craven, Raul Mendoza, Joel Ivey,
-  Herlan Westra, Roy Gaber
+  Herlan Westra, Roy Gaber, Chris Grant
   Description: Contains TRPCBroker and related components.
   Unit: Tbrpc RPC broker.
-  Current Release: Version 1.1 Patch 72
+  Current Release: Version 1.1 Patch 74
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*74 (CLG 05/30/2024) XWB*1.1*74
+  1. Updated RPC Version to version 74.
+  2. Updated CURRENT_RPC_VERSION to version XWB*1.1*74
+  3. Changed the AuthenticateUser Procedure to do a 2nd attempt for SSOi login if
+  cert auto select fails to authenticate before going to A/V code authentication.
+  This 2nd attempt enables the cert selection dialog automatically, so the user
+  can select a cert for the 2nd attempt.  The SSOi 2nd attempt does not trigger
+  if the ShowCertDialog is set to True already.
+
+  Changes in XWB*1.1*73 (RGG 07/19/2021) XWB*1.1*73
+  1. Updated RPC Version to version 73.
+  2. Added a new property to the TRPCBroker component, this new property
+  is boolean in type and is set to False by default.  Setting this
+  property to True will present the certificate selection dialog during
+  login to a VistA instance, otherwise the user will not see the selection
+  dialog and their Authentiction certificate will be auto-selected
+  and used for login via PIV card.
+
   Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
   1. Updated RPC Version to version 72.
 
@@ -118,7 +136,7 @@ uses
 const
   NoMore: boolean = False;
   MIN_RPCTIMELIMIT: integer = 30;
-  CURRENT_RPC_VERSION: String = 'XWB*1.1*73';
+  CURRENT_RPC_VERSION: String = 'XWB*1.1*74';
 
 type
   TParamType = (literal, reference, list, global, empty, stream, undefined);
@@ -1442,6 +1460,7 @@ var
   OldHandle: THandle;
   thisSSOiToken: TXWBSSOiToken;
   currentSSOiToken: String;
+  SSOiRetry: Boolean;  // p74
 begin
   with ConnectingBroker do
   begin
@@ -1458,6 +1477,7 @@ begin
     SaveVistaLogin := FLogIn; // p13
   end; // with
   try
+    SSOiRetry := False;  //p74
     currentSSOiToken := '';
     blnSignedOn := False; // Initialize to bad sign-on
     // Silent AV Code start
@@ -1513,7 +1533,13 @@ begin
     begin
       // Set SSOi token values (get token from IAM).
       try
-        XWBSSOi.ShowCertDialog := ConnectingBroker.ShowCertDialog;
+        if ConnectingBroker.ShowCertDialog = True then
+            XWBSSOi.ShowCertDialog := ConnectingBroker.ShowCertDialog
+        else
+          begin
+            SSOiRetry := True;
+            XWBSSOi.ShowCertDialog := false;
+          end;
         thisSSOiToken := TXWBSSOiToken.Create(Application);
         currentSSOiToken := thisSSOiToken.SSOiToken;
         ConnectingBroker.SSOiToken := currentSSOiToken;
@@ -1527,6 +1553,84 @@ begin
           ConnectingBroker.LogIn.LogInHandle := ConnectingBroker.SSOiToken;
           ConnectingBroker.LogIn.Mode := lmSSOi;
           ConnectingBroker.KernelLogIn := False;
+          ConnectingBroker.ShowCertDialog := False;
+        end;
+      end; // try
+      // Try a silent login for SSOi
+      if (ConnectingBroker.LogIn.Mode = lmSSOi) and
+        (ConnectingBroker.KernelLogIn = False) then
+      begin
+        if ConnectingBroker.FLogIn <> nil then
+          blnSignedOn := SilentLogin(ConnectingBroker);
+        // SilentLogin in RpcSLogin unit
+        if not blnSignedOn then // Fail over to Access/Verify Codes
+        begin
+          ConnectingBroker.KernelLogIn := True;
+          ConnectingBroker.LogIn.Mode := lmAVCodes;
+          ConnectingBroker.Contextor := nil;
+          // Set Contextor nil so it won't try to set token
+        end // if not blnSignedOn
+        else // if blnSignedOn
+        begin
+          GetBrokerInfo(ConnectingBroker);
+          // Create in frmSignonMessage unit
+          frmSignonMsg := TfrmSignonMsg.Create(Application);
+          try
+            // ShowApplicationAndFocusOK(Application);
+            OldHandle := GetForegroundWindow;
+            SetForegroundWindow(frmSignonMsg.Handle);
+            PrepareSignonMessage(ConnectingBroker);
+            if SetUpMessage then // SetUpMessage in frmSignonMessage unit
+            begin // True if Message should be displayed
+              frmSignonMsg.ShowModal;
+              //FreeAndNil(frmSignonMsg);
+              // Show Sign-on Message (VA Handbook 6500 requirement)
+            end;
+          finally
+            FreeAndNil(frmSignonMsg);
+            ShowApplicationAndFocusOK(Application);
+          end; // try
+          if not SelDiv.ChooseDiv('', ConnectingBroker) then
+          begin
+            blnSignedOn := False;
+            ConnectingBroker.KernelLogIn := False;
+            // Do not fail over to A/V codes
+            ConnectingBroker.LogIn.ErrorText := 'Failed to select Division';
+            // p13 set some text indicating problem
+          end;
+          SetForegroundWindow(OldHandle);
+        end; // if blnSignedOn
+      end; // if not ConnectingBroker.FKernelLogIn (silent login)
+    end;
+
+    // p74 - SSOi 2nd attempt that enables user certificate prompting automatically.
+    // Occurs if auto-selection fails or no certificates found by policy filter.
+    if (SSOiRetry = True) and (not blnSignedOn) and (ConnectingBroker.KernelLogIn = True) and
+      (ConnectingBroker.SecurityPhrase = '') then
+    // p71 added and (ConnectingBroker.SecurityPhrase = '') in line above
+    begin
+      // Set SSOi token values (get token from IAM).
+      currentSSOiToken :='';  //re-initialize for 2nd attempt
+      ConnectingBroker.LogIn.Mode := lmSSOi;
+      try
+        // Enable cert prompting for 2nd attempt
+        ConnectingBroker.ShowCertDialog := True;
+        XWBSSOi.ShowCertDialog := True;
+        // User needs to select certificate due to first auto attempt failure
+        thisSSOiToken := TXWBSSOiToken.Create(Application);
+        currentSSOiToken := thisSSOiToken.SSOiToken;
+        ConnectingBroker.SSOiToken := currentSSOiToken;
+        ConnectingBroker.SSOiSECID := thisSSOiToken.SSOiSECID;
+        ConnectingBroker.SSOiADUPN := thisSSOiToken.SSOiADUPN;
+        ConnectingBroker.SSOiLogonName := thisSSOiToken.SSOiLogonName;
+        FreeAndNil(thisSSOiToken);
+      finally
+        if currentSSOiToken <> '' then
+        begin
+          ConnectingBroker.LogIn.LogInHandle := ConnectingBroker.SSOiToken;
+          ConnectingBroker.LogIn.Mode := lmSSOi;
+          ConnectingBroker.KernelLogIn := False;
+          ConnectingBroker.ShowCertDialog := False;
         end;
       end; // try
       // Try a silent login for SSOi
@@ -1804,6 +1908,7 @@ begin
     RpcVersion := SaveRpcVersion;
   end; // try
 end; // procedure TRPCBroker.DoPulseOnTimer
+
 
 { ----------------------- TRPCBroker.SetKernelLogIn -----------------
   ------------------------------------------------------------------ }

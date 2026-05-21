@@ -29,6 +29,7 @@ type
   public
     class procedure Start;
     class procedure Stop;
+    class procedure Init; deprecated;
     class property IsStarted: Boolean read FIsStarted;
   end;
 
@@ -174,6 +175,11 @@ begin
       FIsStarted := False;
     end;
   end;
+end;
+
+class procedure TORRedirect.Init;
+begin
+  Start;
 end;
 
 end.

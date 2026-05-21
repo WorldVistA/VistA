@@ -6,6 +6,15 @@ unit uSimilarNames;
   If so - requests confirmation of the selection.
   NSR#20110606 (Similar Provider/Cosigner names)
   ---------------------------------------------------------------------------- }
+////////////////////////////////////////////////////////////////////////////////
+///  Usage:
+///  1. Register an ORComboBox with TSimilarNames.RegORComboBox
+///  2. Use TSimilarNames.CallVista for the calls for data (there are wrapper
+///     functions in rCore, and a few other places, for this)
+///  3. Use CheckForSimilarName when the user selects an item in the ORComboBox
+///  4. Set the provider/cosigner/etc. to ORCombobox.ItemIEN
+////////////////////////////////////////////////////////////////////////////////
+
 interface
 
 uses
@@ -16,11 +25,6 @@ uses
   System.Generics.Collections,
   ORNetIntf;
 
-const
-  SN_ORWU_NEWPERS = 'ORWU NEWPERS';
-  SN_ORWU2_COSIGNER = 'ORWU2 COSIGNER';
-  SN_ORWTPP_GETCOS = 'ORWTPP GETCOS';
-
 type
   TSelector = (sPt, sPr, sCo, sUnknown);
     // sPr - provider
@@ -28,9 +32,9 @@ type
     // sPt - patient
 
   TSNRec = record
-    str: string;
-    int: IORNetParam;
-    list: TStringList;
+    Str: string;
+    Int: IORNetParam;
+    List: TStringList;
   end;
 
   TSNParamList = TArray<TSNRec>;
@@ -41,7 +45,7 @@ type
     FRPC: string;
     FParams: TSNParamList;
     procedure ClearParams;
-    procedure SetParamLength(len: integer);
+    procedure SetParamLength(ALength: integer);
     function GetNewList(Index: integer): TStringList;
   public
     destructor Destroy; override;
@@ -56,52 +60,54 @@ type
   private
     class var FWasWindowShown: boolean;
     class function GetData(AORComboBox: TORComboBox): TSNComboBoxData;
-    class procedure SaveParams(AORComboBox: TORComboBox; const RPCName: string;
-      const aParam: array of const);
+    class procedure SaveParams(AORComboBox: TORComboBox; const ARPCName: string;
+      const AParam: array of const);
   public
     class constructor Create;
-    class function IsORComboBoxChanged(AORComboBox: TORComboBox): boolean;
+    class function IsORComboBoxChanged(AORComboBox: TORComboBox): Boolean;
     class procedure RegORComboBox(AORComboBox: TORComboBox; AValue: Int64 = 0);
     class property WasWindowShown: boolean read FWasWindowShown; // Was a similarnames window shown during the last similarnames call?
     class property Enabled: boolean read FEnabled write FEnabled;
+
+    class function CallVistA(AORComboBox: TORComboBox;
+      const AParam: array of const; ARequireResults: Boolean = False)
+      : Boolean; overload;
+    class function CallVistA(AORComboBox: TORComboBox;
+      const AParam: array of const; var AReturn: Integer;
+      ARequireResults: Boolean = False; ADefault: Integer = 0)
+      : Boolean; overload;
+    class function CallVistA(AORComboBox: TORComboBox;
+      const AParam: array of const; var AReturn: Integer; ADefault: Integer;
+      ARequireResults: Boolean = False): Boolean; overload;
+    class function CallVistA(AORComboBox: TORComboBox;
+      const AParam: array of const; var AReturn: Double;
+      ARequireResults: Boolean = False; ADefault: Double = 0.0)
+      : Boolean; overload;
+    class function CallVistA(AORComboBox: TORComboBox;
+      const AParam: array of const; var AReturn: Double; ADefault: Double;
+      ARequireResults: Boolean = False): Boolean; overload;
+    class function CallVistA(AORComboBox: TORComboBox;
+      const AParam: array of const; var AReturn: string;
+      ARequireResults: Boolean = False; ADefault: string = '')
+      : Boolean; overload;
+    class function CallVistA(AORComboBox: TORComboBox;
+      const AParam: array of const; var AReturn: string; ADefault: string;
+      ARequireResults: Boolean = False): Boolean; overload;
+    class function CallVistA(AORComboBox: TORComboBox;
+      const AParam: array of const; AReturn: TStrings;
+      ARequireResults: Boolean = False): Boolean; overload;
   end;
 
-function SNCallVistA(AORComboBox: TORComboBox; const aRPCName: string;
-  const aParam: array of const; RequireResults: Boolean = False)
-  : Boolean; overload;
-function SNCallVistA(AORComboBox: TORComboBox; const aRPCName: string;
-  const aParam: array of const; var aReturn: Integer;
-  RequireResults: Boolean = False; aDefault: Integer = 0): Boolean; overload;
-function SNCallVistA(AORComboBox: TORComboBox; const aRPCName: string;
-  const aParam: array of const; var aReturn: Integer; aDefault: Integer;
-  RequireResults: Boolean = False): Boolean; overload;
-function SNCallVistA(AORComboBox: TORComboBox; const aRPCName: string;
-  const aParam: array of const; var aReturn: Double;
-  RequireResults: Boolean = False; aDefault: Double = 0.0): Boolean; overload;
-function SNCallVistA(AORComboBox: TORComboBox; const aRPCName: string;
-  const aParam: array of const; var aReturn: Double; aDefault: Double;
-  RequireResults: Boolean = False): Boolean; overload;
-function SNCallVistA(AORComboBox: TORComboBox; const aRPCName: string;
-  const aParam: array of const; var aReturn: string;
-  RequireResults: Boolean = False; aDefault: string = ''): Boolean; overload;
-function SNCallVistA(AORComboBox: TORComboBox; const aRPCName: string;
-  const aParam: array of const; var aReturn: string; aDefault: string;
-  RequireResults: Boolean = False): Boolean; overload;
-function SNCallVistA(AORComboBox: TORComboBox; const aRPCName: string;
-  const aParam: array of const; aReturn: TStrings;
-  RequireResults: Boolean = False): Boolean; overload;
+  // String return, since Patient DNF is string while Provider is Int64
+function getItemIDFromList(AList: TStrings; AType: TSelector = sPt;
+  AExceptions: TStrings = nil): string;
 
- // String return since Patient DNF is string while Provider is Int64
- function getItemIDFromList(aList: TStrings; aType: TSelector = sPt;
-  anExceptions: TStrings = nil): String;
-
-function CheckForSimilarName(aCmbBox: TORComboBox; out aErrMsg: String;
-  aSelectorType: TSelector; anExceptions: TStrings = nil): Boolean;
+function CheckForSimilarName(AORComboBox: TORComboBox; out AErrorMsg: string;
+  ASelectorType: TSelector; AExceptions: TStrings = nil): Boolean;
 
 implementation
 
 uses
-//  System.Generics.Defaults,
   rCore,
   uCore,
   System.UITypes,
@@ -112,22 +118,7 @@ uses
   ORNet;
 
 const
-  fmtInvalidItemSelected =
-    'The name selected is not a CPRS user name allowable for entry in this %s field.';
-  fmtMultipleItemNames =
-    'The %s name selected is not unique. The name confirmation is required.';
-
-type
-  TSNRPCInfo = record
-    RPCName: string;
-    ParamIndex: integer;
-  end;
-
-const
-  SN_RPC_TBL: array [0 .. 2] of TSNRPCInfo =
-    ((RPCName: SN_ORWU_NEWPERS; ParamIndex: 7),
-     (RPCName: SN_ORWU2_COSIGNER; ParamIndex: 5),
-     (RPCName: SN_ORWTPP_GETCOS; ParamIndex: 3));
+  RPCName = 'ORNEWPERS NEWPERSON';
 
 { TSNComboBoxData }
 
@@ -145,18 +136,17 @@ end;
 function TSNComboBoxData.GetNewList(Index: integer): TStringList;
 begin
   Result := TStringList.Create;
-  FParams[Index].list := Result;
+  FParams[Index].List := Result;
 end;
 
-procedure TSNComboBoxData.SetParamLength(len: integer);
+procedure TSNComboBoxData.SetParamLength(ALength: integer);
 var
-  i, old: integer;
-
+  I, Old: integer;
 begin
-  old := High(FParams);
-  for i := len to old do
-    FreeAndNil(FParams[i].list);
-  SetLength(FParams, len);
+  Old := High(FParams);
+  for I := ALength to Old do
+    FreeAndNil(FParams[I].List);
+  SetLength(FParams, ALength);
 end;
 
 { TSimilarNames }
@@ -171,481 +161,411 @@ end;
 class function TSimilarNames.GetData(AORComboBox: TORComboBox): TSNComboBoxData;
 begin
   Result := nil;
-  if assigned(AORComboBox) then
+  if Assigned(AORComboBox) then
   begin
-    if not assigned(AORComboBox.Data) then
+    if not Assigned(AORComboBox.Data) then
       AORComboBox.Data := TSNComboBoxData.Create;
+    if not(AORComboBox.Data is TSNComboBoxData) then
+      raise Exception.Create('AORComboBox.Data is not of type TSNComboBoxData');
     Result := AORComboBox.Data as TSNComboBoxData;
   end;
 end;
 
 class procedure TSimilarNames.RegORComboBox(AORComboBox: TORComboBox;
   AValue: Int64 = 0);
-var
-  val: Int64;
-
 begin
-  if AValue = 0 then
-  begin
-    if assigned(AORComboBox) and
-      (not(csDestroying in AORComboBox.ComponentState)) then
-      val := AORComboBox.ItemIEN
-    else
-      val := 0;
-  end
-  else
-    val := AValue;
-  GetData(AORComboBox).Value := val;
+  if (AValue = 0) and Assigned(AORComboBox) and
+    (not(csDestroying in AORComboBox.ComponentState)) then
+    AValue := AORComboBox.ItemIEN;
+  GetData(AORComboBox).Value := AValue;
 end;
 
 class procedure TSimilarNames.SaveParams(AORComboBox: TORComboBox;
-  const RPCName: string; const aParam: array of const);
+  const ARPCName: string; const AParam: array of const);
 var
-  i, len: Integer;
-  TmpExt: Extended;
-  aORNetParam: IORNetParam;
-  Error: String;
-  data: TSNComboBoxData;
-
+  I, ALength: Integer;
+  AExt: Extended;
+  AORNetParam: IORNetParam;
+  AError: String;
+  AData: TSNComboBoxData;
 begin
-  data := GetData(AORComboBox);
-  data.ClearParams;
-  data.RPC := RPCName;
-  Error := '';
-  len := Length(aParam);
-  data.SetParamLength(len);
-  for i := 0 to len - 1 do
+  AData := GetData(AORComboBox);
+  AData.ClearParams;
+  AData.RPC := ARPCName;
+  AError := '';
+  ALength := Length(AParam);
+  AData.SetParamLength(ALength);
+  for I := 0 to ALength - 1 do
   begin
-    with aParam[i] do
+    with AParam[I] do
     begin
       case VType of
         vtInteger:
-          data.Params[i].str := IntToStr(VInteger);
+          AData.Params[I].Str := IntToStr(VInteger);
         vtBoolean:
-          data.Params[i].str := BoolChar[VBoolean];
+          AData.Params[I].Str := BoolChar[VBoolean];
         vtChar:
           if VChar = #0 then
-            data.Params[i].str := ''
+            AData.Params[I].Str := ''
           else
-            data.Params[i].str := string(VChar);
+            AData.Params[I].Str := string(VChar);
         vtExtended:
           begin
-            TmpExt := VExtended^;
-            if (abs(TmpExt) < 0.0000000000001) then
-              TmpExt := 0;
-            data.Params[i].str := FloatToStr(TmpExt);
+            AExt := VExtended^;
+            if (Abs(AExt) < 0.0000000000001) then
+              AExt := 0;
+            AData.Params[I].Str := FloatToStr(AExt);
           end;
         vtString:
-          data.Params[i].str := string(VString^);
+          AData.Params[I].Str := string(VString^);
         vtPointer:
           begin
             if VPointer = nil then
-              Error := 'nil'
+              AError := 'nil'
             else
-              Error := IntToHex(Integer(VPointer));
-            Error := 'Pointer (' + Error + ')';
+              AError := IntToHex(Integer(VPointer));
+            AError := 'Pointer (' + AError + ')';
           end;
         vtPChar:
-          data.Params[i].str := string(AnsiChar(VPChar));
+          AData.Params[I].Str := string(AnsiChar(VPChar));
         vtInterface:
-          if IInterface(VInterface).QueryInterface(IORNetParam, aORNetParam) = S_OK
+          if IInterface(VInterface).QueryInterface(IORNetParam, AORNetParam) = S_OK
           then
-            data.Params[i].int := aORNetParam
+            AData.Params[I].Int := AORNetParam
           else
-            Error := 'Unknown Interface';
+            AError := 'Unknown Interface';
         vtObject:
           if VObject is TStrings then
-            data.GetNewList(i).Assign(TStrings(VObject))
-          else if VObject.GetInterface(IORNetParam, aORNetParam) then
-            data.Params[i].int := aORNetParam
+            AData.GetNewList(I).Assign(TStrings(VObject))
+          else if VObject.GetInterface(IORNetParam, AORNetParam) then
+            AData.Params[I].Int := AORNetParam
           else
-            Error := VObject.ClassName + ' Object';
+            AError := VObject.ClassName + ' Object';
         vtWideChar:
           if VChar = #0 then
-            data.Params[i].str := ''
+            AData.Params[I].Str := ''
           else
-            data.Params[i].str := string(VWideChar);
+            AData.Params[I].Str := string(VWideChar);
         vtAnsiString:
-          data.Params[i].str := string(VAnsiString);
+          AData.Params[I].Str := string(VAnsiString);
         vtInt64:
-          data.Params[i].str := IntToStr(VInt64^);
+          AData.Params[I].Str := IntToStr(VInt64^);
         vtUnicodeString:
-          data.Params[i].str := string(VUnicodeString);
+          AData.Params[I].Str := string(VUnicodeString);
       else
-        Error := IntToStr(VType);
-      end; { case }
-    end; { with }
-    if Error <> '' then
-      raise Exception.Create('Error sending parameters to RPC ' + RPCName +
-      '.  Unable to pass parameter type ' + Error + ' to CallVistA.');
-  end; { for }
+        AError := IntToStr(VType);
+      end;
+    end;
+    if AError <> '' then
+      raise Exception.Create('Error sending parameters to RPC ' + ARPCName +
+      '.  Unable to pass parameter type ' + AError + ' to CallVistA.');
+  end;
 end;
 
 class function TSimilarNames.IsORComboBoxChanged(
-  AORComboBox: TORComboBox): boolean;
+  AORComboBox: TORComboBox): Boolean;
 begin
   Result := (GetData(AORCombobox).Value <> AORComboBox.ItemIEN);
 end;
 
-function getItemIDFromList(aList: TStrings; aType: TSelector = sPt;
-  anExceptions: TStrings = nil): String;
+function getItemIDFromList(AList: TStrings; AType: TSelector = sPt;
+  AExceptions: TStrings = nil): string;
 var
-  frmDupPts: TfrmDupPts;
+  AFrmDupPts: TfrmDupPts;
 begin
   Result := '';
-  if assigned(aList) then
+  if Assigned(AList) then
   begin
-    frmDupPts := TfrmDupPts.CreateSelector(aType, aList, anExceptions);
+    AFrmDupPts := TfrmDupPts.CreateSelector(AType, AList, AExceptions);
     try
       TSimilarNames.FWasWindowShown := True;
-      if frmDupPts.ShowModal = mrOK then
-        Result := frmDupPts.lboSelPt.ItemID;
+      if AFrmDupPts.ShowModal = mrOK then
+        Result := AFrmDupPts.lboSelPt.ItemID;
     finally
-      frmDupPts.Release;
+      FreeAndNil(AFrmDupPts);
     end;
   end
 end;
 
-function SNCallVistA(AORComboBox: TORComboBox; const aRPCName: string;
-  const aParam: array of const; RequireResults: Boolean = False)
-  : Boolean; overload;
+class function TSimilarNames.CallVistA(AORComboBox: TORComboBox;
+  const AParam: array of const;
+  ARequireResults: Boolean = False): Boolean;
 begin
-  TSimilarNames.SaveParams(AORComboBox, aRPCName, aParam);
-  Result := CallVistA(aRPCName, aParam, RequireResults);
+  TSimilarNames.SaveParams(AORComboBox, RPCName, AParam);
+  Result := ORNet.CallVistA(RPCName, AParam, ARequireResults);
 end;
 
-function SNCallVistA(AORComboBox: TORComboBox; const aRPCName: string;
-  const aParam: array of const; var aReturn: Integer;
-  RequireResults: Boolean = False; aDefault: Integer = 0): Boolean; overload;
+class function TSimilarNames.CallVistA(AORComboBox: TORComboBox;
+  const AParam: array of const; var AReturn: Integer;
+  ARequireResults: Boolean = False; ADefault: Integer = 0): Boolean;
 begin
-  TSimilarNames.SaveParams(AORComboBox, aRPCName, aParam);
-  Result := CallVistA(aRPCName, aParam, aReturn, RequireResults, aDefault);
+  TSimilarNames.SaveParams(AORComboBox, RPCName, AParam);
+  Result := ORNet.CallVistA(RPCName, AParam, AReturn, ARequireResults,
+    ADefault);
 end;
 
-function SNCallVistA(AORComboBox: TORComboBox; const aRPCName: string;
-  const aParam: array of const; var aReturn: Integer; aDefault: Integer;
-  RequireResults: Boolean = False): Boolean; overload;
+class function TSimilarNames.CallVistA(AORComboBox: TORComboBox;
+  const AParam: array of const; var AReturn: Integer;
+  ADefault: Integer; ARequireResults: Boolean = False): Boolean;
 begin
-  TSimilarNames.SaveParams(AORComboBox, aRPCName, aParam);
-  Result := CallVistA(aRPCName, aParam, aReturn, aDefault, RequireResults);
+  TSimilarNames.SaveParams(AORComboBox, RPCName, AParam);
+  Result := ORNet.CallVistA(RPCName, AParam, AReturn, ADefault,
+    ARequireResults);
 end;
 
-function SNCallVistA(AORComboBox: TORComboBox; const aRPCName: string;
-  const aParam: array of const; var aReturn: Double;
-  RequireResults: Boolean = False; aDefault: Double = 0.0): Boolean; overload;
+class function TSimilarNames.CallVistA(AORComboBox: TORComboBox;
+  const AParam: array of const; var AReturn: Double;
+  ARequireResults: Boolean = False; ADefault: Double = 0.0): Boolean;
 begin
-  TSimilarNames.SaveParams(AORComboBox, aRPCName, aParam);
-  Result := CallVistA(aRPCName, aParam, aReturn, RequireResults, aDefault);
+  TSimilarNames.SaveParams(AORComboBox, RPCName, AParam);
+  Result := ORNet.CallVistA(RPCName, AParam, AReturn, ARequireResults,
+    ADefault);
 end;
 
-function SNCallVistA(AORComboBox: TORComboBox; const aRPCName: string;
-  const aParam: array of const; var aReturn: Double; aDefault: Double;
-  RequireResults: Boolean = False): Boolean; overload;
+class function TSimilarNames.CallVistA(AORComboBox: TORComboBox;
+  const AParam: array of const; var AReturn: Double;
+  ADefault: Double; ARequireResults: Boolean = False): Boolean;
 begin
-  TSimilarNames.SaveParams(AORComboBox, aRPCName, aParam);
-  Result := CallVistA(aRPCName, aParam, aReturn, aDefault, RequireResults);
+  TSimilarNames.SaveParams(AORComboBox, RPCName, AParam);
+  Result := ORNet.CallVistA(RPCName, AParam, AReturn, ADefault,
+    ARequireResults);
 end;
 
-function SNCallVistA(AORComboBox: TORComboBox; const aRPCName: string;
-  const aParam: array of const; var aReturn: string;
-  RequireResults: Boolean = False; aDefault: string = ''): Boolean; overload;
+class function TSimilarNames.CallVistA(AORComboBox: TORComboBox;
+  const AParam: array of const; var AReturn: string;
+  ARequireResults: Boolean = False; ADefault: string = ''): Boolean;
 begin
-  TSimilarNames.SaveParams(AORComboBox, aRPCName, aParam);
-  Result := CallVistA(aRPCName, aParam, aReturn, RequireResults, aDefault);
+  TSimilarNames.SaveParams(AORComboBox, RPCName, AParam);
+  Result := ORNet.CallVistA(RPCName, AParam, AReturn, ARequireResults,
+    ADefault);
 end;
 
-function SNCallVistA(AORComboBox: TORComboBox; const aRPCName: string;
-  const aParam: array of const; var aReturn: string; aDefault: string;
-  RequireResults: Boolean = False): Boolean; overload;
+class function TSimilarNames.CallVistA(AORComboBox: TORComboBox;
+  const AParam: array of const; var AReturn: string;
+  ADefault: string; ARequireResults: Boolean = False): Boolean;
 begin
-  TSimilarNames.SaveParams(AORComboBox, aRPCName, aParam);
-  Result := CallVistA(aRPCName, aParam, aReturn, aDefault, RequireResults);
+  TSimilarNames.SaveParams(AORComboBox, RPCName, AParam);
+  Result := ORNet.CallVistA(RPCName, AParam, AReturn, ADefault,
+    ARequireResults);
 end;
 
-function SNCallVistA(AORComboBox: TORComboBox; const aRPCName: string;
-  const aParam: array of const; aReturn: TStrings;
-  RequireResults: Boolean = False): Boolean; overload;
+class function TSimilarNames.CallVistA(AORComboBox: TORComboBox;
+  const AParam: array of const; AReturn: TStrings;
+  ARequireResults: Boolean = False): Boolean;
 begin
-  TSimilarNames.SaveParams(AORComboBox, aRPCName, aParam);
-  Result := CallVistA(aRPCName, aParam, aReturn, RequireResults);
+  TSimilarNames.SaveParams(AORComboBox, RPCName, AParam);
+  Result := ORNet.CallVistA(RPCName, AParam, AReturn, ARequireResults);
 end;
 
-function CheckForSimilarName(aCmbBox: TORComboBox; out aErrMsg: String;
-  aSelectorType: TSelector; anExceptions: TStrings = nil): Boolean;
+type
+  TSNRPCInfo = record
+    RPCName: string;
+    ParamIndex: integer;
+  end;
 
-  function InternalLookup(var aSl: TStrings): Boolean;
+function CheckForSimilarName(AORComboBox: TORComboBox; out AErrorMsg: string;
+  ASelectorType: TSelector; AExceptions: TStrings = nil): Boolean;
+
+  function InternalLookup(AStringList: TStringList): Boolean;
+  // Result = Success
+
+    function GetDataStr(AIndex: Integer): string;
+    begin
+      Result := AORComboBox.Items.Strings[AIndex];
+      if AORComboBox.LookupPiece = 0 then
+      begin
+        Result := AORComboBox.DisplayText[AIndex] +
+          AORComboBox.Delimiter + Result;
+      end;
+    end;
+
   var
-    aLookupName, aLastName, aFirstName, txt: string;
-    i, j: integer;
-
-    function GetDispStr(idx: integer): string;
-    begin
-      if aCmbBox.LookupPiece = 0 then
-        Result := aCmbBox.DisplayText[idx]
-      else
-        Result := Piece(aCmbBox.Items.Strings[idx],
-          aCmbBox.Delimiter, aCmbBox.LookupPiece);
-    end;
-
-    function GetDataStr(idx: integer): string;
-    begin
-      Result := aCmbBox.Items.Strings[idx];
-      if aCmbBox.LookupPiece = 0 then
-        Result := aCmbBox.DisplayText[idx] + aCmbBox.Delimiter + Result;
-    end;
-
+    ALookupName, ALastName, AFirstName, S: string;
+    I, J: Integer;
   begin
     Result := False;
 
     // If we are at the start or the end of the list there might be others, so make the call
-    if (aCmbBox.ItemIndex <= 0) or (aCmbBox.ItemIndex = aCmbBox.Items.Count - 1) then
-      Exit;
+    if (AORComboBox.ItemIndex <= 0) or
+      (AORComboBox.ItemIndex = AORComboBox.Items.Count - 1) then
+      Exit(False);
 
-    aLookupName := GetDispStr(aCmbBox.ItemIndex);
-    aLastName := Piece(aLookupName, ',', 1);
-    aFirstName := Copy(Piece(aLookupName, ',', 2), 0, 2);
+    ALookupName := AORComboBox.LookupString[AORComboBox.ItemIndex];
+    ALastName := Piece(ALookupName, ',', 1);
+    AFirstName := Copy(Piece(ALookupName, ',', 2), 0, 2);
 
-    if (Trim(aFirstName) = '') or (Trim(aLastName) = '') then
-      Exit;
+    if (Trim(AFirstName) = '') or (Trim(ALastName) = '') then
+      Exit(False);
 
-    aSl := TStringList.Create;
     // Add selected entry
-    aSl.Add(GetDataStr(aCmbBox.ItemIndex));
+    AStringList.Add(GetDataStr(AORComboBox.ItemIndex));
 
-    // Gather the other names for the return
-    i := aCmbBox.ItemIndex + 1;
-    while i <= aCmbBox.Items.Count - 1 do
+    // Look through the stringlist from the selected item to the end
+    for I := AORComboBox.ItemIndex + 1 to AORComboBox.Items.Count - 1 do
     begin
-      aLookupName := GetDispStr(i);
-      if (aLastName = Piece(aLookupName, ',', 1)) and
-        (aFirstName = Copy(Piece(aLookupName, ',', 2), 0, 2)) then
-        aSl.Add(GetDataStr(i))
-      else
+      ALookupName := AORComboBox.LookupString[I];
+      if (ALastName = Piece(ALookupName, ',', 1)) and
+        (AFirstName = Copy(Piece(ALookupName, ',', 2), 0, 2)) then
       begin
+        AStringList.Add(GetDataStr(I))
+      end else begin
+        // Item is not a match
         Result := True;
         Break;
       end;
-      Inc(i);
     end;
+    // The rest of the list contains only matches, so we can't do an internal lookup and we need to ask for more
+    if not Result then Exit;
 
-    // Rest of the list contaisn same last name so we need to ask for more
-    if not Result then
-    begin
-      FreeAndNil(aSl);
-      Exit;
-    end;
-
-    // Ensure that we dont have any others in this list
+    // Look through the stringlist from the selected item to the beginning
     Result := False;
-
     // Lookup for previous
-    i := aCmbBox.ItemIndex - 1;
-    while i >= 0 do
+    for I := AORComboBox.ItemIndex - 1 downto 0 do
     begin
-      aLookupName := GetDispStr(i);
-      if (aLastName = Piece(aLookupName, ',', 1)) and
-        (aFirstName = Copy(Piece(aLookupName, ',', 2), 0, 2)) then
-        aSl.Add(GetDataStr(i))
-      else
+      ALookupName := AORComboBox.LookupString[I];
+      if (ALastName = Piece(ALookupName, ',', 1)) and
+        (AFirstName = Copy(Piece(ALookupName, ',', 2), 0, 2)) then
       begin
+        AStringList.Add(GetDataStr(I))
+      end else begin
+        // Item is not a match
         Result := True;
         Break;
       end;
-      Dec(i);
     end;
+    // The previous part of the list contains only matches, so we can't do an internal lookup and we need to ask for more
+    if not Result then Exit;
 
-    // We dont know if the list could contain other last name so we need to ask for more
-    if not Result then
+    if AORComboBox.LookupPiece = 0 then
     begin
-      if assigned(aSl) then
-        FreeAndNil(aSl);
-      Exit;
-    end;
-
-    if aCmbBox.LookupPiece = 0 then
-    begin
-      SortByPiece(aSl, aCmbBox.Delimiter, 1);
-      for i := 0 to aSl.Count - 1do
+      SortByPiece(AStringList, AORComboBox.Delimiter, 1);
+      for I := 0 to AStringList.Count - 1 do
       begin
-        txt := aSl[i];
-        j := pos(aCmbBox.Delimiter, txt);
-        delete(txt, 1, j);
-        aSl[i] := txt;
+        S := AStringList[I];
+        J := Pos(AORComboBox.Delimiter, S);
+        Delete(S, 1, J);
+        AStringList[I] := S;
       end;
-    end
-    else
-      SortByPiece(aSl, aCmbBox.Delimiter, aCmbBox.LookupPiece);
+    end else begin
+      SortByPiece(AStringList, AORComboBox.Delimiter, AORComboBox.LookupPiece);
+    end;
   end;
 
-const
-  DirectionParamIndex = 1;
-
 var
-  i, ParamCount: integer;
-  ACmbBoxItemIEN, EmptyString, SimilarNameString: string;
-  SimilarNameParamIndex: integer;
-  Params: TArray<TVarRec>;
-  sDUZ: String;
-  SL: TStrings;
-  ID: Int64;
-  Data: TSNComboBoxData;
-
+  I: Integer;
+  AORNetMult: IORNetMult;
+  AParams: TArray<TVarRec>;
+  ADUZ: string;
+  AStringList: TStringList;
+  AID: Int64;
+  AData: TSNComboBoxData;
 begin
   TSimilarNames.FWasWindowShown := False;
-  aErrMsg := '';
-  Result := True;
+  AErrorMsg := '';
 
   if not TSimilarNames.Enabled then
     Exit(True); // if SimilarNames functionality is not enabled
-  if not aCmbBox.CanFocus then
-    Exit(True); // The box is invisible, or diabled. The user could not edit it.
-  if aCmbBox.ItemIEN = 0 then
-    Exit(True); // If no ID is selected
-  if aCmbBox.ItemIEN = User.DUZ then
-    Exit(True); // If they select themselves then it's ok
-  Data := TSimilarNames.GetData(aCmbBox);
-  if Data.RPC = '' then
-    Exit; // RPC never called
-  if not TSimilarNames.IsORComboBoxChanged(aCmbBox) then
-    Exit(True);
-  // The ComboBox wasn't changed since the last time it was registered
+  if not AORComboBox.CanFocus then
+    Exit(True); // The box is invisible, or disabled. The user could not edit it.
+  if AORComboBox.ItemIEN = 0 then
+    Exit(True); // If no AID is selected
+  if AORComboBox.ItemIEN = User.DUZ then
+    Exit(True); // If they select themselves then no similar name fumnctionality is invoked
+  AData := TSimilarNames.GetData(AORComboBox);
+  if AData.RPC = '' then
+    Exit(True); // The RPC was never called. Similar names functionality can't be invoked
+  if not TSimilarNames.IsORComboBoxChanged(AORComboBox) then
+    Exit(True); // The ComboBox ItemIEN hasn't changed since the last time it was registered
 
-  ID := -1;
-  SL := nil;
+  AID := -1;
+  AStringList := TStringList.Create;
   try
     // Try to look internally first
-    if not InternalLookup(SL) then
+    if not InternalLookup(AStringList) then // comment out this line to force the RPC call!
     begin
-      ParamCount := Length(Data.Params);
-
-      // Make sure the size of the array = at least 8 (newpers) or 6 (cosigner)
-      SetLength(Params, ParamCount);
-
-      SimilarNameParamIndex := -1;
-      for i := Low(SN_RPC_TBL) to High(SN_RPC_TBL) do
-        if Data.RPC = SN_RPC_TBL[i].RPCName then
-        begin
-          SimilarNameParamIndex := SN_RPC_TBL[i].ParamIndex;
-          break;
-        end;
-      if SimilarNameParamIndex < 0 then
+      // First, Copy AData.Params to Params
+      SetLength(AParams, Length(AData.Params));
+      AORNetMult := nil;
+      for I := Low(AData.Params) to High(AData.Params) do
       begin
-        // If you see this error, you need to add the new VISTA call to this
-        // if then else statement
-        raise Exception.CreateFmt
-          ('CheckForSimilarName called with an invalid RPC Name = %s',
-          [Data.RPC]);
-      end;
-
-      if ParamCount < (SimilarNameParamIndex + 1) then
-      begin
-        SetLength(Params, SimilarNameParamIndex + 1);
-
-        // Fill the just expanded part of the array with empty strings
-        EmptyString := '';
-        for i := ParamCount to High(Params) do
+        if Assigned(AData.Params[I].List) then
         begin
-          Params[i].VType := vtUnicodeString;
-          Params[i].VUnicodeString := Pointer(EmptyString);
-        end;
-      end;
-
-      // Set Param[0] to the ItemIEN of the passed in ORComboBox
-      ACmbBoxItemIEN := IntToStr(aCmbBox.ItemIEN);
-      Params[0].VType := vtUnicodeString;
-      Params[0].VUnicodeString := Pointer(ACmbBoxItemIEN);
-
-      // Set all other params to the passed in values
-      for i := 1 to ParamCount - 1 do
-      begin
-        if (i = DirectionParamIndex) or (i = SimilarNameParamIndex) then
-          continue;
-        if assigned(Data.Params[i].list) then
-        begin
-          Params[i].VType := vtObject;
-          Params[i].VObject := Data.Params[i].list;
+          AParams[I].VType := vtObject;
+          AParams[I].VObject := AData.Params[I].List;
         end
-        else if assigned(Data.Params[i].int) then
+        else if Assigned(AData.Params[I].Int) then
         begin
-          Params[i].VType := vtInterface;
-          Params[i].VInterface := Data.Params[i].int;
-        end
-        else
-        begin
-          Params[i].VType := vtUnicodeString;
-          Params[i].VUnicodeString := Pointer(Data.Params[i].str);
+          AParams[I].VType := vtInterface;
+          AParams[I].VInterface := AData.Params[I].Int;
+          if not Assigned(AORNetMult) then
+          begin
+            // If we've found an ORNetMult we need to hold on to it.
+            if not IInterface(AParams[I].VInterface).QueryInterface(IORNetMult,
+              AORNetMult) = S_OK then
+              AORNetMult := nil;
+          end;
+        end else begin
+          AParams[I].VType := vtUnicodeString;
+          AParams[I].VUnicodeString := Pointer(AData.Params[I].Str);
         end;
       end;
 
-      // Set the similar name parameter in the array to True
-      SimilarNameString := '1';
-      Params[SimilarNameParamIndex].VType := vtUnicodeString;
-      Params[SimilarNameParamIndex].VUnicodeString := Pointer(SimilarNameString);
-      // Set the Direction parameter in the array to 1 (forward)
-      Params[DirectionParamIndex].VType := vtUnicodeString;
-      Params[DirectionParamIndex].VUnicodeString := Pointer(SimilarNameString);
-      // happens to be 1
+      if not Assigned(AORNetMult) then
+        raise Exception.Create('Parameter of type IORNetMult was not found') ;
 
-      // Create a stringlist and use it to do the VISTA call
-      if assigned(SL) then
-        SL.Clear
-      else
-        SL := TStringList.Create;
-      try
-        CallVistA(Data.RPC, Params, SL);
-      except
-        FreeAndNil(SL);
-        raise;
-      end;
+      // Set the specific similar name params to the correct values
+      AORNetMult.AddSubscript('FROM', AORComboBox.ItemIEN);
+      AORNetMult.AddSubscript('DIR', 1);
+      AORNetMult.AddSubscript('SPN', 1);
+
+      // Clear the stringlist and use it to do the VISTA call
+      AStringList.Clear;
+      CallVistA(AData.RPC, AParams, AStringList);
     end;
 
-    // In case of no list
-    if not assigned(SL) then
-      Exit;
-
-    case SL.Count of
+    case AStringList.Count of
       // No other users
       0:
-        aErrMsg := Format(fmtInvalidItemSelected, ['']) +
-          ' Please Select another name';
+        AErrorMsg := 'The name selected is not a CPRS user name allowable ' +
+          'for entry in this field. Please Select another name.';
       // Only 1
       1:
         begin
-          sDUZ := Piece(SL[0], U, 1);
-          if sDUZ = IntToStr(aCmbBox.ItemIEN) then
-            ID := aCmbBox.ItemIEN
+          ADUZ := Piece(AStringList[0], U, 1);
+          if ADUZ = IntToStr(AORComboBox.ItemIEN) then
+            AID := AORComboBox.ItemIEN
           else
-            aErrMsg := 'LookupSimilarName:' + #13#10#13#10 + 'Search for DUZ=' +
-              IntToStr(aCmbBox.ItemIEN) +
-              ' returns one record with DUZ=' + sDUZ;
+            AErrorMsg := 'LookupSimilarName:' + #13#10#13#10 + 'Search for DUZ=' +
+              IntToStr(AORComboBox.ItemIEN) +
+              ' returns one record with DUZ=' + ADUZ;
         end
     else
-      // Pick the correct user from the list of more than 1
-      ID := StrToInt64Def(getItemIDFromList(SL, aSelectorType, anExceptions), -1);
+      // Let the user pick the correct user from the list of more than 1
+      AID := StrToInt64Def(getItemIDFromList(AStringList, ASelectorType,
+        AExceptions), -1);
     end;
   finally
-    if assigned(SL) then
-      SL.Free;
+    FreeAndNil(AStringList);
   end;
 
   // Set the results
-  TSimilarNames.RegORComboBox(aCmbBox, ID);
+  TSimilarNames.RegORComboBox(AORComboBox, AID);
   // Register with the value we are about to set
-  if aCmbBox.ItemIEN <> ID then
+  if AORComboBox.ItemIEN <> AID then
   begin
     // The user picked something different (might have even clicked cancel) => set the results
-    aCmbBox.SelectByIEN(ID); // Important: even if ID = -1 we need to set!
-    if ID >= 0 then
+    AORComboBox.SelectByIEN(AID); // Important: even if AID = -1 we need to set!
+    if AID >= 0 then
     begin
-      if aCmbBox.ItemIndex < 0 then
-        aCmbBox.SetExactByIEN(ID, ExternalName(ID, 200));
-      if assigned(aCmbBox.OnChange) then
-        aCmbBox.OnChange(aCmbBox);
+      if AORComboBox.ItemIndex < 0 then
+        AORComboBox.SetExactByIEN(AID, ExternalName(AID, 200));
+      if Assigned(AORComboBox.OnChange) then
+        AORComboBox.OnChange(AORComboBox);
       // Do not call OnChange for setting to -1, because it would end up calling OnChange twice
     end;
   end;
 
-  Result := ID >= 0;
+  Result := AID >= 0;
 end;
 
 end.

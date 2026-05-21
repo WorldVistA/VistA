@@ -156,7 +156,7 @@ inherited frmOrderFlagRecipients: TfrmOrderFlagRecipients
         BevelOuter = bvNone
         Constraints.MinWidth = 185
         TabOrder = 0
-        object cboAlertRecipient: TORComboBox
+        object cboAlertRecipient: TORCheckComboBox
           AlignWithMargins = True
           Left = 8
           Top = 3
@@ -191,6 +191,10 @@ inherited frmOrderFlagRecipients: TfrmOrderFlagRecipients
           OnNeedData = cboAlertRecipientNeedData
           CharsNeedMatch = 1
           UniqueAutoComplete = True
+          MainCheckBoxCaption = 'Include Non-VA Providers'
+          MainCheckBoxVisible = True
+          MainCheckBoxAlignment = calBottom
+          OnMainCheckboxClick = cboAlertRecipientMainCheckboxClick
         end
       end
     end

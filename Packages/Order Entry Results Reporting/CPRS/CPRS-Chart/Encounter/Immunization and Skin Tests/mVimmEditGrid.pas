@@ -142,7 +142,7 @@ begin
     for i := 0 to self.layout.controls.Count - 1 do
       begin
         layoutControl := tLayoutControl(self.layout.controls.Objects[i]);
-        edtObject := vEditObject.create(layoutControl, self, grdEditPanel);
+        edtObject := vEditObject.create(Self.layout, layoutControl, self, grdEditPanel);
         layoutControl.uiControl := edtObject;
         edtObject.layout := layout;
         grdEditPanel.ControlCollection.AddControl(edtObject.editPanel, layoutControl.colNum, layoutControl.rowNum);
@@ -152,13 +152,14 @@ begin
     grdEditPanel.ControlCollection.EndUpdate;
     btnSave.TabStop := true;
     btnCancel.TabStop := true;
-    self.ScrollBox1.Perform( WM_VSCROLL, MakeWParam(SB_Top,0),0);
+    ScrollBox1.AutoScroll := True;
+    ScrollBox1.Perform( WM_VSCROLL, MakeWParam(SB_Top,0),0);
 //    setInitialValues;
   finally
     FreeAndNil(editList);
 //    FreeAndNil(inputList);
   end;
-
+  AdjustGridForCheckComboBoxes;
 end;
 
 procedure TfraVimmEditGrid.initilizeLookups;
@@ -224,7 +225,7 @@ begin
             editObject.populateComponent;
             editObject.setDefaultValue;
             if (editObject.editComponent is TORComboBox) and
-              (layoutControl.control = 'ptCBO') and
+              (layoutControl.promptType = ptCBO) and
               ((editObject.editComponent as TORComboBox).Items.Count = 0) then
                 begin
                   (editObject.editComponent as TORComboBox).Enabled := false;

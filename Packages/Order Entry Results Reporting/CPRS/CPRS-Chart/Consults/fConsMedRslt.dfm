@@ -3,34 +3,34 @@ inherited frmConsMedRslt: TfrmConsMedRslt
   Top = 172
   BorderStyle = bsDialog
   Caption = 'Select Medicine Result'
-  ClientHeight = 264
+  ClientHeight = 281
   ClientWidth = 526
   Position = poScreenCenter
   ExplicitWidth = 532
-  ExplicitHeight = 297
+  ExplicitHeight = 310
   PixelsPerInch = 96
-  TextHeight = 16
+  TextHeight = 13
   object pnlBase: TORAutoPanel [0]
     Left = 0
     Top = 0
     Width = 526
-    Height = 231
+    Height = 248
     Align = alClient
     TabOrder = 0
     object pnlAction: TPanel
       Left = 1
-      Top = 168
+      Top = 176
       Width = 524
-      Height = 62
+      Height = 71
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 1
       DesignSize = (
         524
-        62)
+        71)
       object lblDateofAction: TOROffsetLabel
-        Left = 133
-        Top = -3
+        Left = 129
+        Top = 0
         Width = 157
         Height = 28
         Caption = 'Date/time of this action'
@@ -54,25 +54,25 @@ inherited frmConsMedRslt: TfrmConsMedRslt
         Left = 131
         Top = 23
         Width = 159
-        Height = 24
+        Height = 21
         TabOrder = 1
         Text = 'Now'
         DateOnly = False
         RequireTime = False
         Caption = 'Date/time of this action'
       end
-      object cboPerson: TORComboBox
+      object cboPerson: TORCheckComboBox
         Left = 296
         Top = 23
         Width = 216
-        Height = 24
+        Height = 43
         Anchors = [akLeft, akTop, akRight]
         Style = orcsDropDown
         AutoSelect = True
         Caption = 'Action by'
         Color = clWindow
         DropDownCount = 8
-        ItemHeight = 16
+        ItemHeight = 13
         ItemTipColor = clWindow
         ItemTipEnable = True
         ListItemsOnly = True
@@ -87,6 +87,10 @@ inherited frmConsMedRslt: TfrmConsMedRslt
         Text = ''
         OnNeedData = NewPersonNeedData
         CharsNeedMatch = 1
+        MainCheckBoxCaption = 'Include Non-VA Providers'
+        MainCheckBoxVisible = True
+        MainCheckBoxAlignment = calBottom
+        OnMainCheckboxClick = cboPersonMainCheckboxClick
       end
       object ckAlert: TCheckBox
         Left = 8
@@ -102,7 +106,7 @@ inherited frmConsMedRslt: TfrmConsMedRslt
       Left = 1
       Top = 1
       Width = 524
-      Height = 167
+      Height = 175
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
@@ -124,7 +128,7 @@ inherited frmConsMedRslt: TfrmConsMedRslt
         Left = 3
         Top = 25
         Width = 518
-        Height = 139
+        Height = 147
         Align = alClient
         Columns = <
           item
@@ -160,7 +164,7 @@ inherited frmConsMedRslt: TfrmConsMedRslt
   end
   object pnlbottom: TPanel [1]
     Left = 0
-    Top = 231
+    Top = 248
     Width = 526
     Height = 33
     Align = alBottom
@@ -217,43 +221,69 @@ inherited frmConsMedRslt: TfrmConsMedRslt
     Data = (
       (
         'Component = pnlBase'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = frmConsMedRslt'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlAction'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlMiddle'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlbottom'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlButtons'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = cmdOK'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = cmdCancel'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = ckAlert'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = cmdDetails'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = calDateofAction'
         'Text = Date/Time of this action. Press the enter key to access.'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsOK')
       (
         'Component = cboPerson'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lstMedResults'
+        'WatchEnable = False'
+        'IgnoreWatchEnable = False'
         'Status = stsDefault'))
   end
   object ImageList1: TImageList

@@ -2260,7 +2260,7 @@ begin
       Show;
     end;
   uOrderSet.InsertList(AList, AnOwner, ARefNum, KeyVarStr, AnEvent.EventType);
-  TResponsiveGUI.ProcessMessages;
+  TResponsiveGUI.ProcessMessages(False, True);
   Result := uOrderSet <> nil;
 end;
 
@@ -3082,6 +3082,8 @@ begin
         Exit;
       end;
 
+      // Work in progress can not be discarded in Order Com, so suspend
+      // CPRS' time out. This prevents incomplete administrations and orders.
       SuspendTimeout;
       tmpRtnRec := LoadMOBDLL;
       case tmpRtnRec.Return_Type of

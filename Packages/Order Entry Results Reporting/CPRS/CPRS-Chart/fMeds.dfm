@@ -13,7 +13,6 @@ inherited frmMeds: TfrmMeds
   OnResize = FormResize
   ExplicitWidth = 717
   ExplicitHeight = 727
-  PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
     Top = 524
@@ -81,6 +80,7 @@ inherited frmMeds: TfrmMeds
     Margins.Right = 4
     Margins.Bottom = 4
     Align = alTop
+    BevelOuter = bvNone
     ColumnCollection = <
       item
         Value = 50.000000000000000000
@@ -107,19 +107,24 @@ inherited frmMeds: TfrmMeds
     TabOrder = 0
     object txtView: TVA508StaticText
       Name = 'txtView'
-      Left = 1
-      Top = 1
-      Width = 699
-      Height = 21
+      AlignWithMargins = True
+      Left = 4
+      Top = 4
+      Width = 691
+      Height = 13
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
       Align = alClient
       Alignment = taLeftJustify
+      BevelOuter = bvNone
       Caption = 'txtView'
       TabOrder = 0
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
   end
   object gdpOut: TGridPanel [4]
@@ -132,6 +137,7 @@ inherited frmMeds: TfrmMeds
     Margins.Right = 4
     Margins.Bottom = 4
     Align = alTop
+    BevelOuter = bvNone
     BiDiMode = bdLeftToRight
     BorderStyle = bsSingle
     ColumnCollection = <
@@ -170,9 +176,11 @@ inherited frmMeds: TfrmMeds
         Column = 0
         Row = 3
       end>
+    Ctl3D = False
     DoubleBuffered = False
     ExpandStyle = emFixedSize
     ParentBiDiMode = False
+    ParentCtl3D = False
     ParentDoubleBuffered = False
     RowCollection = <
       item
@@ -189,9 +197,9 @@ inherited frmMeds: TfrmMeds
     TabOrder = 1
     object txtDateRangeOp: TVA508StaticText
       Name = 'txtDateRangeOp'
-      Left = 1
-      Top = 1
-      Width = 695
+      Left = 0
+      Top = 0
+      Width = 699
       Height = 15
       Margins.Left = 4
       Margins.Top = 4
@@ -210,11 +218,14 @@ inherited frmMeds: TfrmMeds
       ParentFont = False
       TabOrder = 0
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
     object hdrMedsOut: THeaderControl
-      Left = 1
-      Top = 21
-      Width = 695
+      Left = 0
+      Top = 20
+      Width = 699
       Height = 16
       Margins.Left = 4
       Margins.Top = 4
@@ -269,10 +280,10 @@ inherited frmMeds: TfrmMeds
     end
     object lstMedsOut: TCaptionListBox
       Tag = 1
-      Left = 1
-      Top = 41
-      Width = 695
-      Height = 158
+      Left = 0
+      Top = 40
+      Width = 699
+      Height = 162
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
@@ -311,6 +322,7 @@ inherited frmMeds: TfrmMeds
     Margins.Right = 4
     Margins.Bottom = 4
     Align = alClient
+    BevelOuter = bvNone
     BorderWidth = 1
     BorderStyle = bsSingle
     ColumnCollection = <
@@ -349,7 +361,9 @@ inherited frmMeds: TfrmMeds
         Column = 0
         Row = 3
       end>
+    Ctl3D = False
     ExpandStyle = emFixedSize
+    ParentCtl3D = False
     RowCollection = <
       item
         SizeStyle = ssAbsolute
@@ -365,9 +379,9 @@ inherited frmMeds: TfrmMeds
     TabOrder = 2
     object txtDateRangeNon: TVA508StaticText
       Name = 'txtDateRangeNon'
-      Left = 2
-      Top = 2
-      Width = 693
+      Left = 1
+      Top = 1
+      Width = 697
       Height = 15
       Margins.Left = 4
       Margins.Top = 4
@@ -384,11 +398,14 @@ inherited frmMeds: TfrmMeds
       ParentFont = False
       TabOrder = 0
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
     object hdrMedsNonVA: THeaderControl
-      Left = 2
-      Top = 22
-      Width = 693
+      Left = 1
+      Top = 21
+      Width = 697
       Height = 16
       Margins.Left = 4
       Margins.Top = 4
@@ -431,16 +448,17 @@ inherited frmMeds: TfrmMeds
     end
     object lstMedsNonVA: TCaptionListBox
       Tag = 3
-      Left = 2
-      Top = 42
-      Width = 693
-      Height = 84
+      Left = 1
+      Top = 41
+      Width = 697
+      Height = 88
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4
       Margins.Bottom = 4
       Style = lbOwnerDrawVariable
       Align = alClient
+      BevelInner = bvNone
       BorderStyle = bsNone
       Color = clCream
       Constraints.MinHeight = 40
@@ -472,6 +490,7 @@ inherited frmMeds: TfrmMeds
     Margins.Right = 4
     Margins.Bottom = 4
     Align = alBottom
+    BevelOuter = bvNone
     BorderStyle = bsSingle
     ColumnCollection = <
       item
@@ -509,7 +528,9 @@ inherited frmMeds: TfrmMeds
         Column = 0
         Row = 3
       end>
+    Ctl3D = False
     ExpandStyle = emFixedSize
+    ParentCtl3D = False
     RowCollection = <
       item
         SizeStyle = ssAbsolute
@@ -525,9 +546,9 @@ inherited frmMeds: TfrmMeds
     TabOrder = 3
     object txtDateRangeIp: TVA508StaticText
       Name = 'txtDateRangeIp'
-      Left = 1
-      Top = 1
-      Width = 695
+      Left = 0
+      Top = 0
+      Width = 699
       Height = 15
       Margins.Left = 4
       Margins.Top = 4
@@ -544,11 +565,14 @@ inherited frmMeds: TfrmMeds
       ParentFont = False
       TabOrder = 0
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
     object hdrMedsIn: THeaderControl
-      Left = 1
-      Top = 21
-      Width = 695
+      Left = 0
+      Top = 20
+      Width = 699
       Height = 16
       Margins.Left = 4
       Margins.Top = 4
@@ -597,10 +621,10 @@ inherited frmMeds: TfrmMeds
     end
     object lstMedsIn: TCaptionListBox
       Tag = 2
-      Left = 1
-      Top = 41
-      Width = 695
-      Height = 255
+      Left = 0
+      Top = 40
+      Width = 699
+      Height = 259
       Margins.Left = 4
       Margins.Top = 4
       Margins.Right = 4

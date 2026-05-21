@@ -8,7 +8,7 @@ inherited frmNotes: TfrmNotes
   Position = poDesigned
   ExplicitWidth = 1127
   ExplicitHeight = 769
-  PixelsPerInch = 120
+  ExplicitHeight = 627
   TextHeight = 13
   inherited shpPageBottom: TShape
     Top = 705
@@ -606,7 +606,9 @@ inherited frmNotes: TfrmNotes
         TabOrder = 0
         VerticalAlignment = taAlignBottom
         ShowAccelChar = True
-        ExplicitWidth = 124
+        WordWrap = False
+        LabelAlignment = taLeftJustify
+        LabelLayout = tlTop
       end
       object lvNotes: TCaptionListView
         Left = 0

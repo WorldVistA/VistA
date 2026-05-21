@@ -23,21 +23,6 @@ type
 
   PENLink = ^TENLink;
 
-  // Allow the enumerator to "look" ahead at the next entries text
-  {
-  TStringsEnumeratorHelper = class helper for TStringsEnumerator
-  Private
-    Function GetNext: String;
-  public
-    property Next: string read GetNext;
-  end;
-  }
-  // Add lookup by piece
-  TStringListHelper = class helper for TStringList
-  public
-    function IndexOfPiece(const PieceNum: Integer; const S: string): Integer;
-  end;
-
   // Add URL support to the TRichedit
   TRichEdit = class(ORExtensions.TRichEdit)
   private
@@ -111,7 +96,7 @@ type
 implementation
 
 uses
-  rOrders;
+  rOrders, VAShared.UTStringsHelper;
 
 {$REGION 'TRichEdit'}
 
@@ -265,36 +250,6 @@ begin
   FSelStart := RE.SelStart; // Store the previous selection start
   FSelLength := RE.SelLength; // Store the previous selection length
   RE.Lines.SaveToStream(FStream); // Store the previous text
-end;
-
-{$ENDREGION}
-{$REGION 'TStringsEnumeratorHelper'}
-{
-Function TStringsEnumeratorHelper.GetNext: String;
-begin
-  Result := '';
-  if Self.FIndex < Self.FStrings.Count - 1 then
-    Result := Self.FStrings[Self.FIndex + 1];
-end;
-}
-{$ENDREGION}
-{$REGION 'TStringListHelper'}
-
-function TStringListHelper.IndexOfPiece(const PieceNum: Integer;
-  const S: string): Integer;
-var
-  I: Integer;
-begin
-  Result := -1;
-  for I := 0 to Self.Count - 1 do
-  begin
-    if CompareStrings(Piece(Self.Strings[I], '^', PieceNum), S) = 0 then
-    begin
-      Result := I;
-      Break;
-    end;
-  end;
-
 end;
 
 {$ENDREGION}

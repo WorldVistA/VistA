@@ -1,4 +1,4 @@
-object fraEvntDelayList: TfraEvntDelayList
+Inherited fraEvntDelayList: TfraEvntDelayList
   Left = 0
   Top = 0
   Width = 366

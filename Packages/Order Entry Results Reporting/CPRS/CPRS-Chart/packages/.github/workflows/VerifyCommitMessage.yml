@@ -1,0 +1,26 @@
+name: Verify Smart TAG(s) exist
+'on': pull_request
+concurrency:
+  group: '${{ github.head_ref || github.run_id }}'
+  cancel-in-progress: true
+jobs:
+  check-for-Smart-Tags:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: '${{ github.event.pull_request.head.sha }}'
+          fetch-depth: '${{ github.event.pull_request.commits }}'
+      - run: git fetch
+      - name: Get Commits missing SMART tag
+        id: out
+        run: echo "CommitCNT=$(git log origin/${{github.event.pull_request.base.ref }}.. --grep='VISTAOR-[0-9]*' -i --invert-grep --oneline | wc -l)" >> $GITHUB_OUTPUT
+      - name: Check if commits are missing SMART tag(s)
+        if: steps.out.outputs.CommitCNT > 0
+        run: exit 1
+      - name: Get Commits with ONLY SMART tag
+        id: outtwo
+        run: echo "CommitCNT=$(git log origin/${{github.event.pull_request.base.ref }}.. --grep='^[#VISTAOR*-[0-9]*\]$' -i --no-merges --oneline | wc -l)" >> $GITHUB_OUTPUT
+      - name: Check if commits ONLY have SMART tag(s)
+        if: steps.out.outputs.CommitCNT > 0
+        run: exit 1

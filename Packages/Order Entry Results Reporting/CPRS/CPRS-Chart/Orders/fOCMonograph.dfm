@@ -68,6 +68,9 @@ inherited frmOCMonograph: TfrmOCMonograph
       Caption = 'Choose a Monograph to view'
       TabOrder = 1
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
   end
   object pnlCanvas: TPanel
@@ -90,6 +93,9 @@ inherited frmOCMonograph: TfrmOCMonograph
       Caption = 'Monograph Information'
       TabOrder = 0
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
     object monoMemo: TCaptionMemo
       AlignWithMargins = True

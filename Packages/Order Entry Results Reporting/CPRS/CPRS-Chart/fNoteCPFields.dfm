@@ -4,18 +4,11 @@ inherited frmNoteCPFields: TfrmNoteCPFields
   Caption = 'Enter Required Fields'
   ClientHeight = 210
   ClientWidth = 275
-  Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'MS Sans Serif'
-  Font.Style = []
-  OldCreateOrder = True
   Position = poScreenCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object Panel1: TPanel
+  object Panel1: TPanel [0]
     Left = 0
     Top = 0
     Width = 275
@@ -28,16 +21,15 @@ inherited frmNoteCPFields: TfrmNoteCPFields
       Left = 4
       Top = 4
       Width = 267
-      Height = 19
+      Height = 12
       Align = alTop
       AutoSize = False
       Caption = 'Author:'
-      ExplicitWidth = 228
     end
     object lblProcSummCode: TOROffsetLabel
       AlignWithMargins = True
       Left = 4
-      Top = 56
+      Top = 73
       Width = 267
       Height = 18
       Align = alTop
@@ -51,7 +43,7 @@ inherited frmNoteCPFields: TfrmNoteCPFields
     object lblProcDateTime: TOROffsetLabel
       AlignWithMargins = True
       Left = 4
-      Top = 107
+      Top = 124
       Width = 267
       Height = 18
       Align = alTop
@@ -60,14 +52,15 @@ inherited frmNoteCPFields: TfrmNoteCPFields
       Transparent = False
       VertOffset = 2
       WordWrap = False
+      ExplicitTop = 107
       ExplicitWidth = 134
     end
-    object cboAuthor: TORComboBox
+    object cboAuthor: TORCheckComboBox
       AlignWithMargins = True
       Left = 4
-      Top = 29
+      Top = 22
       Width = 267
-      Height = 21
+      Height = 45
       Style = orcsDropDown
       Align = alTop
       AutoSelect = True
@@ -90,11 +83,16 @@ inherited frmNoteCPFields: TfrmNoteCPFields
       Text = ''
       OnNeedData = cboAuthorNeedData
       CharsNeedMatch = 1
+      MainCheckBoxCaption = 'Include Non-VA Providers'
+      MainCheckBoxVisible = True
+      MainCheckBoxAlignment = calBottom
+      OnMainCheckboxClick = cboAuthorMainCheckboxClick
+      DropdownStyle = ddsControl
     end
     object cboProcSummCode: TORComboBox
       AlignWithMargins = True
       Left = 4
-      Top = 80
+      Top = 97
       Width = 267
       Height = 21
       Style = orcsDropDown
@@ -125,7 +123,7 @@ inherited frmNoteCPFields: TfrmNoteCPFields
     object calProcDateTime: TORDateBox
       AlignWithMargins = True
       Left = 4
-      Top = 131
+      Top = 148
       Width = 267
       Height = 21
       Align = alTop
@@ -135,7 +133,7 @@ inherited frmNoteCPFields: TfrmNoteCPFields
       Caption = 'Procedure Date/Time'
     end
   end
-  object Panel2: TPanel
+  object Panel2: TPanel [1]
     Left = 0
     Top = 179
     Width = 275
@@ -178,5 +176,32 @@ inherited frmNoteCPFields: TfrmNoteCPFields
       TabOrder = 1
       OnClick = cmdOKClick
     end
+  end
+  inherited amgrMain: TVA508AccessibilityManager
+    Data = (
+      (
+        'Component = Panel1'
+        'Status = stsDefault')
+      (
+        'Component = cboAuthor'
+        'Status = stsDefault')
+      (
+        'Component = cboProcSummCode'
+        'Status = stsDefault')
+      (
+        'Component = calProcDateTime'
+        'Status = stsDefault')
+      (
+        'Component = Panel2'
+        'Status = stsDefault')
+      (
+        'Component = cmdCancel'
+        'Status = stsDefault')
+      (
+        'Component = cmdOK'
+        'Status = stsDefault')
+      (
+        'Component = frmNoteCPFields'
+        'Status = stsDefault'))
   end
 end

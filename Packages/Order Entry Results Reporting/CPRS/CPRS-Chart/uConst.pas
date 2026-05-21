@@ -8,7 +8,9 @@ uses
   ORFn;
 
 const
-
+  VISTA_PACKAGE = 'ORDER ENTRY/RESULTS REPORTING';
+  PCE_PACKAGE = 'PCE PATIENT CARE ENCOUNTER';
+  PROBLEM_LIST_PACKAGE = 'PROBLEM LIST';
   { User defined messages used by CPRS }
 //  UM_SHOWPAGE     = (WM_USER + 100);  // originally in fFrame
 //  UM_NEWORDER     = (WM_USER + 101);  // originally in fODBase
@@ -39,6 +41,10 @@ const
   UM_NSSOTHER     = (WM_USER + 9250);  // used by NSS for auto-display schedule builder
   UM_MISC         = (WM_USER + 9251);  // used for misc stuff across forms
   UM_REMINDERS    = (WM_USER + 9252);  // in fReminderDialog
+  UM_OBJDESTROY   = (WM_USER + 9253);  // used in uOwnerWrapper & fFrame
+  UM_NOTELIMIT    = (WM_USER + 9254);  // used to redraw the richedit's editable rect
+  UM_NEWNOTE      = (WM_USER + 9255);  // used to refresh the notes tab when a new note is generated
+
   UM_508          = (WM_USER + 9508);  // used for 508 messages at 508 base form level
   UM_ENCUPD       = (WM_USER + 9509);  // encounter update (PaPI)
   UM_PaPI         = (WM_USER + 9510);  // PaPI Test
@@ -52,8 +58,6 @@ const
   UM_SELECT       = (WM_USER + 9800);  // test
 
   UM_UpdateRFN    = (WM_USER + 9900);  // resetting Required Fields Navigator (Template dialog)
-  UM_OBJDESTROY   = (WM_USER + 9253);  // used in uOwnerWrapper & fFrame
-  UM_NOTELIMIT    = (WM_USER + 9254);  // used to redraw the richedit's editable rect
 
   { Tab Indexes, moved from fFrame }
   CT_NOPAGE   = -1;                             // chart tab - none selected
@@ -272,6 +276,7 @@ const
   NF_PROSTHETICS_REQUEST_UPDATED   = 89;
   NF_RTC_CANCEL_ORDERS             = 91;
   NF_NO_FLAG_ACTION_ORDER          = 98;
+  NF_COMPACT_UPDATES               = 100;
   NF_DCSUMM_UNSIGNED_NOTE          = 901;
   NF_CONSULT_UNSIGNED_NOTE         = 902;
   NF_NOTES_UNSIGNED_NOTE           = 903;
@@ -433,6 +438,14 @@ const
    NONVAMEDGROUP = 'Non-VA Meds';
    NONVAMEDTXT =   'Non-VA';
 
+   // SYSTEM PARAMETERS JSON
+   SPJ_NVA_PROVIDERS = 'Non-VA Provider';
+   SPJ_NVA_FEATURESWITCH = 'featureSwitch';
+   SPJ_NVA_FORMS = 'forms';
+   SPJ_NVA_Orders = 'orders';
+   SPJ_NVA_TX_ACCEPT = 'Cannot Create An Order With Current Provider.' + CRLF + CRLF;
+   SPJ_NVA_TX_CHANGE_PROVIDERS = 'Information';
+
    DISCONTINUED_ORDER = '2';
 
    CaptionProperty = 'Caption';
@@ -554,6 +567,7 @@ begin
   TWinMsgNames.Name[UM_UpdateRFN] := 'UM_UpdateRFN';
   TWinMsgNames.Name[UM_OBJDESTROY] := 'UM_OBJDESTROY';
   TWinMsgNames.Name[UM_NOTELIMIT] := 'UM_NOTELIMIT';
+  TWinMsgNames.Name[UM_NEWNOTE] := 'UM_NEWNOTE';
 
   // Defined in uPCE
   TWinMsgNames.Name[UM_VALIDATE_MAG] := 'UM_VALIDATE_MAG';

@@ -9,13 +9,13 @@ interface
 
 uses Windows, Messages, SysUtils, Classes, Graphics, Forms, Controls,
   Dialogs, StdCtrls, Buttons, ORCtrls, ORfn, ExtCtrls, fAutoSz, ComCtrls, fBase508Form,
-  VA508AccessibilityManager;
+  VA508AccessibilityManager, ORCheckComboBox, uMisc, uORLists;
 
 type
   TfrmAlertForward = class(TfrmBase508Form)
     cmdOK: TButton;
     cmdCancel: TButton;
-    cboSrcList: TORComboBox;
+    cboSrcList: TORCheckComboBox;
     DstList: TORListBox;
     SrcLabel: TLabel;
     DstLabel: TLabel;
@@ -28,7 +28,7 @@ type
     btnRemoveAllAlertFwrd: TButton;
     procedure btnRemoveAlertFwrdClick(Sender: TObject);
     procedure btnAddAlertClick(Sender: TObject);
-    procedure cboSrcListNeedData(Sender: TObject; const StartFrom: String;
+    procedure NewPersonNeedData(Sender: TObject; const StartFrom: string;
       Direction, InsertAt: Integer);
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
@@ -38,6 +38,7 @@ type
     procedure cboSrcListChange(Sender: TObject);
     procedure DstListChange(Sender: TObject);
     procedure btnRemoveAllAlertFwrdClick(Sender: TObject);
+    procedure cboSrcListMainCheckboxClick(Sender: TObject);
   private
     RemovingAll: boolean;
   end;
@@ -82,24 +83,15 @@ begin
   if ScreenReaderSystemActive then
     memAlert.TabStop := TRUE;
   cboSrcList.InitLongList('');
+  // code for checkbox visibility
+  cboSrcList.MainCheckBoxVisible := IncludeNonVAProviders(cboSrcList);
 end;
 
-procedure TfrmAlertForward.cboSrcListNeedData(Sender: TObject;
-  const StartFrom: String; Direction, InsertAt: Integer);
-var
-  sl: TStrings;
-  cbo: TORComboBox;
-
+procedure TfrmAlertForward.NewPersonNeedData(Sender: TObject;
+  const StartFrom: string; Direction, InsertAt: Integer);
 begin
-  // (Sender as TORComboBox).ForDataUse(SubSetOfPersons(StartFrom, Direction));
-  sl := TStringList.Create;
-  try
-    cbo := (Sender as TORComboBox);
-    setSubSetOfPersons(cbo, sl, StartFrom, Direction);
-    cbo.ForDataUse(sl); // RTC Defect 732085
-  finally
-    sl.Free;
-  end;
+  // FH May 2023 - Using the New call
+  setPersonList(cboSrcList,StartFrom,Direction);
 end;
 
 procedure TfrmAlertForward.cmdCancelClick(Sender: TObject);
@@ -194,6 +186,15 @@ begin
   begin
      cboSrcListMouseClick(Self);
   end;
+end;
+
+procedure TfrmAlertForward.cboSrcListMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := cboSrcList.SelectedDataString;
+  cboSrcList.ReInitLongList;
+  if ALastData <> cboSrcList.SelectedDataString then
+    cboSrcListChange(cboSrcList);
 end;
 
 procedure TfrmAlertForward.cboSrcListMouseClick(Sender: TObject);

@@ -16,11 +16,12 @@ uses
   ORCtrls,
   fBase508Form,
   Vcl.ExtCtrls,
+  ORCheckComboBox,
   ORFn;
 
 type
   TpdmpCosigner = class(TfrmBase508Form)
-    cboCosigner: TORComboBox;
+    cboCosigner: TORCheckComboBox;
     lblCosigner: TLabel;
     pnlBottom: TPanel;
     btnCancel: TButton;
@@ -29,12 +30,14 @@ type
     btnDebug: TButton;
     procedure FormShow(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure FormCreate(Sender: TObject);
     procedure btnDebugClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure cboCosignerDblClick(Sender: TObject);
     procedure cboCosignerNeedData(Sender: TObject; const StartFrom: string;
       Direction, InsertAt: Integer);
     procedure cboCosignerExit(Sender: TObject);
+    procedure cboCosignerMainCheckboxClick(Sender: TObject);
   private
     fEncounterProvider: string;
     fDateTime: TFMDateTime;
@@ -62,7 +65,8 @@ uses
   uSimilarNames,
   uSizing,
   oPDMPData,
-  uPDMP;
+  uPDMP,
+  uMisc;
 
 {$R *.dfm}
 
@@ -145,6 +149,13 @@ begin
     end;
 end;
 
+procedure TpdmpCosigner.cboCosignerMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  cboCosigner.ReInitLongList;
+  cboCosignerExit(cboCosigner);
+end;
+
 procedure TpdmpCosigner.cboCosignerNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
 var
@@ -166,6 +177,12 @@ procedure TpdmpCosigner.cboCosignerDblClick(Sender: TObject);
 begin
   inherited;
   ModalResult := mrOK;
+end;
+
+procedure TpdmpCosigner.FormCreate(Sender: TObject);
+begin
+  inherited;
+  cboCosigner.MainCheckBoxVisible := IncludeNonVAProviders(cboCosigner);
 end;
 
 procedure TpdmpCosigner.FormCloseQuery(Sender: TObject; var CanClose: Boolean);

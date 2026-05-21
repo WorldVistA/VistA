@@ -7,10 +7,10 @@ inherited frmProblems: TfrmProblems
   ClientWidth = 631
   HelpFile = 'overvw'
   Menu = mnuProbs
+  StyleElements = [seFont, seClient, seBorder]
   OnMouseMove = FormMouseMove
   ExplicitWidth = 647
-  ExplicitHeight = 413
-  PixelsPerInch = 96
+  ExplicitHeight = 414
   TextHeight = 13
   inherited shpPageBottom: TShape
     Top = 350
@@ -44,6 +44,7 @@ inherited frmProblems: TfrmProblems
     Margins.Right = 4
     Margins.Bottom = 4
     Constraints.MinWidth = 37
+    StyleElements = [seFont, seClient, seBorder]
     ExplicitWidth = 159
     ExplicitHeight = 350
     object pnlButtons: TPanel
@@ -123,6 +124,7 @@ inherited frmProblems: TfrmProblems
         ItemTipColor = clWindow
         LongList = False
         Pieces = '2'
+        FlatCheckBoxes = False
       end
       object bbNewProb: TORAlignButton
         Tag = 100
@@ -223,6 +225,7 @@ inherited frmProblems: TfrmProblems
           ItemTipColor = clWindow
           LongList = False
           Pieces = '2'
+          FlatCheckBoxes = False
         end
       end
       object pnlProbs: TPanel
@@ -264,6 +267,7 @@ inherited frmProblems: TfrmProblems
           ItemTipColor = clWindow
           LongList = False
           Pieces = '2,3'
+          FlatCheckBoxes = False
         end
       end
     end
@@ -277,6 +281,7 @@ inherited frmProblems: TfrmProblems
     Margins.Right = 4
     Margins.Bottom = 4
     Constraints.MinWidth = 30
+    StyleElements = [seFont, seClient, seBorder]
     OnExit = pnlRightExit
     OnResize = pnlRightResize
     ExplicitLeft = 161

@@ -9,7 +9,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fODBase, StdCtrls, ORCtrls, ExtCtrls, ComCtrls, ORfn, uConst, Buttons,
-  Menus, ORDtTm, VA508AccessibilityManager;
+  Menus, ORDtTm, VA508AccessibilityManager, ORCheckComboBox, ORCtrls.ORRichEdit;
 
 type
 
@@ -27,7 +27,7 @@ type
     memReason: TCaptionRichEdit;
     cboUrgency: TORComboBox;
     cboPlace: TORComboBox;
-    cboAttn: TORComboBox;
+    cboAttn: TORCheckComboBox;
     cboProc: TORComboBox;
     cboCategory: TORComboBox;
     cboService: TORComboBox;
@@ -90,6 +90,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure cboAttnChange(Sender: TObject);
+    procedure cboAttnMainCheckboxClick(Sender: TObject);
   private
     FLastProcID: string;
     FEditCtrl: TCustomEdit;
@@ -123,10 +124,27 @@ implementation
 {$R *.DFM}
 
 uses
-    rODBase, rConsults, uCore, uConsults, rCore, fConsults, fPCELex, rPCE, ORClasses,
-    clipbrd, fPreReq, uTemplates, fFrame, uODBase, VA508AccessibilityRouter,
-    uVA508CPRSCompatibility, uORLists, uSimilarNames, uFormUtils, VAUtils;
-
+  uMisc,
+  rODBase,
+  rConsults,
+  uCore,
+  uConsults,
+  rCore,
+  fConsults,
+  fPCELex,
+  rPCE,
+  ORClasses,
+  clipbrd,
+  fPreReq,
+  uTemplates,
+  fFrame,
+  uODBase,
+  VA508AccessibilityRouter,
+  uVA508CPRSCompatibility,
+  uORLists,
+  uSimilarNames,
+  uFormUtils,
+  VAUtils;
 
 var
   ProvDx:  TProvisionalDiagnosis;
@@ -195,6 +213,8 @@ begin
 
   cmdQuit.Top := ClientHeight - cmdQuit.Height - Font.Size + 8;
   cmdAccept.Top := cmdQuit.Top - cmdAccept.Height - Font.Size + 8;
+
+  cboAttn.MainCheckBoxVisible := IncludeNonVAProviders(cboAttn);
 end;
 
 procedure TfrmODProc.InitDialog;
@@ -360,43 +380,23 @@ begin
 end;
 
 procedure TfrmODProc.cboAttnChange(Sender: TObject);
-var
-  x: string;
-  i: integer;
 begin
-  if cboProc.ItemIEN = 0 then Exit;
-
-  with cboProc do
-    begin
-      if ItemIEN > 0 then
-        begin
-          i := Pos('<', Text);
-          if i > 0 then
-            begin
-              x := Piece(Copy(Text, i + 1, 99), '>', 1);
-              x := UpperCase(Copy(x, 1, 1)) + Copy(x, 2, 99);
-            end
-          else
-            x := Text;
-          Responses.Update('ORDERABLE', 1, ItemID, x);
-        end
-      else Responses.Update('ORDERABLE', 1, '', '');
-    end;
-  updateService();
-  with memReason     do if GetTextLen   > 0 then Responses.Update('COMMENT',   1, TX_WPTYPE, Text);
-  with cboCategory   do if ItemID     <> '' then Responses.Update('CLASS',     1, ItemID, Text);
-  with cboUrgency    do if ItemIEN      > 0 then Responses.Update('URGENCY',   1, ItemID, Text);
-  with cboPlace      do if ItemID     <> '' then Responses.Update('PLACE',     1, ItemID, Text);
-  with cboAttn       do if ItemIEN      > 0 then Responses.Update('PROVIDER',  1, ItemID, Text);
-  with calClinicallyIndicated   do if Length(Text) > 0 then Responses.Update('CLINICALLY',  1, Text, Text);
-  if Length(ProvDx.Text)                > 0 then Responses.Update('MISC',      1, ProvDx.Text,   ProvDx.Text)
-   else Responses.Update('MISC',      1, '',   '');
-  if Length(ProvDx.Code)                > 0 then Responses.Update('CODE',      1, ProvDx.Code,   ProvDx.Code)
-   else Responses.Update('CODE',      1, '',   '');
-
-  memOrder.Text := Responses.OrderText;
+  inherited;
+  with cboAttn do
+    if ItemIEN >= 0 then Responses.Update('PROVIDER',  1, ItemID, Text);
+  {*Original logic from ControlChange checked ItemIEN > 0 which does not
+  pick up backspace, highlight delete, or removal via unchecking the NVA
+  provider checkbox. *}
 end;
 
+
+procedure TfrmODProc.cboAttnMainCheckboxClick(Sender: TObject);
+begin
+  var ALastData := cboAttn.SelectedDataString;
+  cboAttn.ReInitLongList;
+  if ALastData <> cboAttn.SelectedDataString then
+    cboAttnChange(cboAttn);
+end;
 
 procedure TfrmODProc.cboAttnNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
@@ -468,7 +468,7 @@ begin
   with cboCategory   do if ItemID     <> '' then Responses.Update('CLASS',     1, ItemID, Text);
   with cboUrgency    do if ItemIEN      > 0 then Responses.Update('URGENCY',   1, ItemID, Text);
   with cboPlace      do if ItemID     <> '' then Responses.Update('PLACE',     1, ItemID, Text);
-  with cboAttn       do if ItemIEN      > 0 then Responses.Update('PROVIDER',  1, ItemID, Text);
+  //cboAttn moved to TfrmODProc.cboAttnChange
   with calClinicallyIndicated   do if Length(Text) > 0 then Responses.Update('CLINICALLY',  1, Text, Text);
   if Length(ProvDx.Text)                > 0 then Responses.Update('MISC',      1, ProvDx.Text,   ProvDx.Text)
    else Responses.Update('MISC',      1, '',   '');

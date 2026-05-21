@@ -1,298 +1,295 @@
 inherited frmHealthFactors: TfrmHealthFactors
-  Left = 374
-  Top = 205
-  Caption = 'Health Factor page'
-  ClientHeight = 460
-  ClientWidth = 648
-  ExplicitWidth = 666
-  ExplicitHeight = 505
-  PixelsPerInch = 120
-  TextHeight = 16
-  object lblHealthLevel: TLabel [0]
-    Left = 9
-    Top = 340
-    Width = 88
-    Height = 16
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Caption = 'Level/Severity'
-  end
-  inherited lblSection: TLabel
-    Width = 128
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
-    Caption = 'Health Factor Section'
-    ExplicitWidth = 128
-  end
-  inherited lblList: TLabel
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
-  end
-  inherited lblComment: TLabel
-    Left = 8
-    Top = 379
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
-    Anchors = [akLeft, akBottom]
-    ExplicitLeft = 8
-    ExplicitTop = 379
-  end
-  inherited bvlMain: TBevel
-    Left = -3
-    Top = 223
-    Width = 641
-    Height = 205
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
-    ExplicitLeft = -3
-    ExplicitTop = 223
-    ExplicitWidth = 641
-    ExplicitHeight = 205
-  end
-  object lblMag: TLabel [5]
-    Left = 173
-    Top = 340
-    Width = 66
-    Height = 16
-    Anchors = [akRight, akBottom]
-    Caption = 'Magnitude:'
-    Visible = False
-  end
-  object lblUCUM: TLabel [6]
-    Left = 269
-    Top = 340
-    Width = 253
-    Height = 16
-    Anchors = [akRight, akBottom]
-    Caption = 'Unified Code for Units of Measure  (UCUM)'
-    Visible = False
-  end
-  object lblUCUM2: TLabel [7]
-    Left = 269
-    Top = 361
-    Width = 61
-    Height = 16
-    Caption = 'lblUCUM2'
-    Visible = False
-  end
-  inherited btnOK: TBitBtn
-    Left = 477
-    Top = 436
-    Margins.Left = 8
-    Margins.Top = 8
-    Margins.Right = 8
-    Margins.Bottom = 8
-    TabOrder = 7
-    ExplicitLeft = 477
-    ExplicitTop = 436
-  end
-  inherited btnCancel: TBitBtn
-    Left = 568
-    Top = 436
-    Margins.Left = 8
-    Margins.Top = 8
-    Margins.Right = 8
-    Margins.Bottom = 8
-    TabOrder = 8
-    ExplicitLeft = 568
-    ExplicitTop = 436
-  end
-  inherited pnlGrid: TPanel
-    Width = 627
-    Margins.Left = 6
-    Margins.Top = 6
-    Margins.Right = 6
-    Margins.Bottom = 6
-    TabOrder = 1
-    ExplicitWidth = 627
-    inherited lstCaptionList: TCaptionListView
-      Width = 627
-      Margins.Left = 16
-      Margins.Top = 6
-      Margins.Right = 16
-      Margins.Bottom = 6
-      Columns = <
-        item
-          Caption = 'Level/Severity'
-          Width = 150
+  Caption = 'Encounter Health Factors'
+  ClientHeight = 586
+  ClientWidth = 884
+  StyleElements = [seFont, seClient, seBorder]
+  ScaleMethod = smManual
+  ExplicitWidth = 900
+  ExplicitHeight = 625
+  TextHeight = 13
+  inherited pnlMainAncestor: TPanel
+    Width = 884
+    Height = 355
+    StyleElements = [seFont, seClient, seBorder]
+    ExplicitWidth = 884
+    ExplicitHeight = 355
+    inherited pnlGrid: TPanel
+      Width = 800
+      Height = 349
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitWidth = 800
+      ExplicitHeight = 349
+      inherited lstCaptionList: TCaptionListView
+        Width = 790
+        Height = 253
+        Columns = <
+          item
+            Caption = 'Level/Severity'
+          end
+          item
+            AutoSize = True
+            Caption = 'Selected Health Factors'
+            Tag = 1
+          end>
+        Caption = 'Selected Health Factors'
+        Pieces = '1,2'
+        ExplicitWidth = 790
+        ExplicitHeight = 253
+      end
+      inherited pnlComments: TPanel
+        Top = 302
+        Width = 796
+        Anchors = [akLeft]
+        TabOrder = 2
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitTop = 302
+        ExplicitWidth = 796
+        inherited lblComment: TLabel
+          Width = 790
+          StyleElements = [seFont, seClient, seBorder]
         end
-        item
-          Caption = 'Selected Health Factors'
-          Tag = 1
-          Width = 300
-        end>
-      Caption = 'Selected Health Factors'
-      Pieces = '1,2'
-      ExplicitWidth = 627
+        inherited edtComment: TCaptionEdit
+          Width = 790
+          MaxLength = 245
+          StyleElements = [seFont, seClient, seBorder]
+          ExplicitWidth = 790
+        end
+      end
+      object gridMagUCUMData: TGridPanel
+        Left = 0
+        Top = 259
+        Width = 796
+        Height = 43
+        Align = alBottom
+        BevelOuter = bvNone
+        ColumnCollection = <
+          item
+            Value = 20.000000000000000000
+          end
+          item
+            Value = 25.000000000000000000
+          end
+          item
+            Value = 55.000000000000000000
+          end>
+        ControlCollection = <
+          item
+            Column = 0
+            Control = pnlLevelSeverity
+            Row = 0
+          end
+          item
+            Column = 2
+            Control = pnlUCUM
+            Row = 0
+          end
+          item
+            Column = 1
+            Control = pnlMagnitude
+            Row = 0
+          end>
+        ParentBackground = False
+        RowCollection = <
+          item
+            Value = 100.000000000000000000
+          end>
+        TabOrder = 1
+        StyleElements = [seFont, seBorder]
+        object pnlLevelSeverity: TPanel
+          Left = 0
+          Top = 0
+          Width = 159
+          Height = 43
+          Align = alClient
+          AutoSize = True
+          BevelOuter = bvNone
+          TabOrder = 0
+          object lblHealthLevel: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 153
+            Height = 13
+            Align = alTop
+            Caption = 'Level/Severity'
+            ExplicitWidth = 69
+          end
+          object cboHealthLevel: TORComboBox
+            Tag = 50
+            AlignWithMargins = True
+            Left = 3
+            Top = 19
+            Width = 153
+            Height = 21
+            Margins.Top = 0
+            Style = orcsDropDown
+            Align = alTop
+            AutoSelect = True
+            Caption = 'Level/Severity'
+            Color = clWindow
+            DropDownCount = 8
+            Enabled = False
+            ItemHeight = 13
+            ItemTipColor = clWindow
+            ItemTipEnable = True
+            ListItemsOnly = False
+            LongList = False
+            LookupPiece = 0
+            MaxLength = 0
+            Pieces = '2'
+            Sorted = False
+            SynonymChars = '<>'
+            TabOrder = 0
+            Text = ''
+            FlatCheckBoxes = False
+            OnChange = cboHealthLevelChange
+            CharsNeedMatch = 1
+          end
+        end
+        object pnlUCUM: TPanel
+          Left = 358
+          Top = 0
+          Width = 438
+          Height = 43
+          Align = alClient
+          AutoSize = True
+          BevelOuter = bvNone
+          TabOrder = 2
+          object lblUCUM: TLabel
+            AlignWithMargins = True
+            Left = 0
+            Top = 3
+            Width = 435
+            Height = 13
+            Margins.Left = 0
+            Align = alTop
+            Caption = 'Unified Code for Units of Measure  (UCUM)'
+            Visible = False
+            ExplicitWidth = 203
+          end
+          object lblUCUM2: TLabel
+            AlignWithMargins = True
+            Left = 0
+            Top = 22
+            Width = 435
+            Height = 13
+            Margins.Left = 0
+            Align = alTop
+            Caption = 'lblUCUM2'
+            Layout = tlCenter
+            Visible = False
+            ExplicitWidth = 48
+          end
+        end
+        object pnlMagnitude: TPanel
+          Left = 159
+          Top = 0
+          Width = 199
+          Height = 43
+          Align = alClient
+          AutoSize = True
+          BevelOuter = bvNone
+          TabOrder = 1
+          object lblMag: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 193
+            Height = 13
+            Align = alTop
+            Caption = 'Magnitude:'
+            Visible = False
+            ExplicitWidth = 53
+          end
+          object edtMag: TCaptionEdit
+            AlignWithMargins = True
+            Left = 3
+            Top = 19
+            Width = 193
+            Height = 21
+            Margins.Top = 0
+            Align = alTop
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 0
+            Visible = False
+            OnChange = edtMagChange
+            OnExit = edtMagExit
+            OnKeyPress = edtMagKeyPress
+            Caption = '0'
+          end
+        end
+      end
+    end
+    inherited pnlGridRight: TPanel
+      Left = 806
+      Height = 355
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitLeft = 806
+      ExplicitHeight = 355
+      inherited btnSelectAll: TButton
+        TabStop = True
+      end
     end
   end
-  inherited edtComment: TCaptionEdit
-    Top = 398
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
-    Anchors = [akLeft, akBottom]
-    MaxLength = 245
-    TabOrder = 3
-    ExplicitTop = 398
-  end
-  object cboHealthLevel: TORComboBox [12]
-    Tag = 50
-    Left = 9
-    Top = 358
-    Width = 151
-    Height = 24
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    Style = orcsDropDown
-    AutoSelect = True
-    Caption = 'Level/Severity'
-    Color = clWindow
-    DropDownCount = 8
-    Enabled = False
-    ItemHeight = 16
-    ItemTipColor = clWindow
-    ItemTipEnable = True
-    ListItemsOnly = False
-    LongList = False
-    LookupPiece = 0
-    MaxLength = 0
-    Pieces = '2'
-    Sorted = False
-    SynonymChars = '<>'
-    TabOrder = 4
-    TabStop = True
-    Text = ''
-    OnChange = cboHealthLevelChange
-    CharsNeedMatch = 1
-  end
-  object edtMag: TCaptionEdit [13]
-    Left = 173
-    Top = 358
-    Width = 80
-    Height = 24
-    Anchors = [akRight, akBottom]
-    ParentShowHint = False
-    ShowHint = True
-    TabOrder = 5
-    Visible = False
-    OnChange = edtMagChange
-    OnExit = edtMagExit
-    OnKeyPress = edtMagKeyPress
-    Caption = '0'
-  end
-  inherited btnRemove: TButton
-    Top = 398
-    Height = 23
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
-    Anchors = [akLeft, akBottom]
-    TabOrder = 6
-    ExplicitTop = 398
-    ExplicitHeight = 23
-  end
-  inherited btnSelectAll: TButton
-    Left = 558
-    Top = 327
-    Height = 23
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
-    TabOrder = 2
-    TabStop = True
-    ExplicitLeft = 558
-    ExplicitTop = 327
-    ExplicitHeight = 23
+  inherited pnlBottomAncestor: TPanel
+    Top = 559
+    Width = 884
+    StyleElements = [seFont, seClient, seBorder]
+    ExplicitTop = 559
+    ExplicitWidth = 884
+    inherited btnOK: TBitBtn
+      Left = 725
+      ExplicitLeft = 725
+    end
+    inherited btnCancel: TBitBtn
+      Left = 806
+      ExplicitLeft = 806
+    end
   end
   inherited pnlMain: TPanel
-    Left = 0
-    Top = 0
-    Width = 648
-    Height = 213
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
-    Align = alTop
-    TabOrder = 0
-    ExplicitLeft = 0
-    ExplicitTop = 0
-    ExplicitWidth = 648
-    ExplicitHeight = 213
-    inherited splLeft: TSplitter
-      Height = 213
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      ExplicitHeight = 213
-    end
-    inherited lbxSection: TORListBox
-      Tag = 70
-      Width = 441
-      Height = 213
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      ExplicitWidth = 441
-      ExplicitHeight = 213
-    end
-    inherited pnlLeft: TPanel
-      Height = 213
-      Margins.Left = 5
-      Margins.Top = 5
-      Margins.Right = 5
-      Margins.Bottom = 5
-      ExplicitHeight = 213
-      inherited lbSection: TORListBox
-        Tag = 70
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        TabOrder = 0
+    Width = 884
+    StyleElements = [seFont, seClient, seBorder]
+    ExplicitWidth = 884
+    inherited grdMain: TGridPanel
+      Width = 884
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitWidth = 884
+      inherited lblSection: TLabel
+        Width = 439
         Caption = 'Health Factor Section'
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitWidth = 103
+      end
+      inherited lblList: TLabel
+        Left = 445
+        Width = 436
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitLeft = 445
+      end
+      inherited lbSection: TORListBox
+        Width = 436
+        StyleElements = [seFont, seClient, seBorder]
+        Caption = 'Health Factor Section'
+        ExplicitWidth = 436
+      end
+      inherited lbxSection: TORListBox
+        Left = 445
+        Width = 436
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitLeft = 445
+        ExplicitWidth = 436
       end
       inherited btnOther: TButton
         Tag = 23
-        Left = 58
-        Top = 184
-        Height = 23
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
+        Width = 436
         Caption = 'Other Health Factor...'
-        TabOrder = 1
-        ExplicitLeft = 58
-        ExplicitTop = 184
-        ExplicitHeight = 23
+        ExplicitWidth = 436
       end
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
-      (
-        'Component = cboHealthLevel'
-        'Label = lblHealthLevel'
-        'Status = stsOK')
       (
         'Component = edtComment'
         'Label = lblComment'
@@ -310,9 +307,6 @@ inherited frmHealthFactors: TfrmHealthFactors
         'Component = lbxSection'
         'Label = lblList'
         'Status = stsOK')
-      (
-        'Component = pnlLeft'
-        'Status = stsDefault')
       (
         'Component = lbSection'
         'Label = lblSection'
@@ -333,7 +327,37 @@ inherited frmHealthFactors: TfrmHealthFactors
         'Component = frmHealthFactors'
         'Status = stsDefault')
       (
+        'Component = gridMagUCUMData'
+        'Status = stsDefault')
+      (
+        'Component = pnlLevelSeverity'
+        'Status = stsDefault')
+      (
+        'Component = cboHealthLevel'
+        'Status = stsDefault')
+      (
+        'Component = pnlUCUM'
+        'Status = stsDefault')
+      (
+        'Component = pnlMagnitude'
+        'Status = stsDefault')
+      (
         'Component = edtMag'
+        'Status = stsDefault')
+      (
+        'Component = pnlMainAncestor'
+        'Status = stsDefault')
+      (
+        'Component = lstCaptionList'
+        'Status = stsDefault')
+      (
+        'Component = pnlComments'
+        'Status = stsDefault')
+      (
+        'Component = pnlGridRight'
+        'Status = stsDefault')
+      (
+        'Component = pnlBottomAncestor'
         'Status = stsDefault'))
   end
 end

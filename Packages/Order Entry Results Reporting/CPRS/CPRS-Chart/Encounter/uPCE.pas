@@ -3,7 +3,8 @@ unit uPCE;
 interface
 
 uses Windows, SysUtils, Classes, ORFn, uConst, ORCtrls, ORClasses,UBAGlobals,
-  ComCtrls, rVimm, StdCtrls, Messages, Forms, vcl.Controls, system.JSON;
+  ComCtrls, rVimm, StdCtrls, Messages, Forms, vcl.Controls, system.JSON,
+  uSpecialAuthorityEx;
 
 type
   TPCEProviderRec = record
@@ -359,16 +360,7 @@ type
     FEncSvcCat:    Char;                           //
 //    FEncInpatient: Boolean;                        //Inpatient flag
     FEncUseCurr:   Boolean;                        //
-    FSCChanged:    Boolean;                        //
-    FSCRelated:    Integer;                        //service con. related?
-    FAORelated:    Integer;                        //
-    FIRRelated:    Integer;                        //
-    FECRelated:    Integer;                        //
-    FMSTRelated:   Integer;                        //
-    FHNCRelated:   Integer;                        //
-    FCVRelated:    Integer;                        //
-    FSHADRelated:   Integer;                       //
-    FCLRelated:    Integer;                        //
+    FSpecialAuthorities: TSpecialAuthoritiesEx;
     FVisitType:    TPCEProc;                       //
     FProviders:    TPCEProviderList;
     FDiagnoses:    TList;                          // pointer list for diagnosis
@@ -399,15 +391,6 @@ type
     function MatchIMMItems(AList: TList; AnItem: TPCEIMM): Integer;
     function MatchSkinTestItems(AList: TList; AnItem: TPCESkin): Integer;
     procedure MarkDeletions(PreList: TList; PostList: TStrings);
-    procedure SetSCRelated(Value: Integer);
-    procedure SetAORelated(Value: Integer);
-    procedure SetIRRelated(Value: Integer);
-    procedure SetECRelated(Value: Integer);
-    procedure SetMSTRelated(Value: Integer);
-    procedure SetHNCRelated(Value: Integer);
-    procedure SetCVRelated(Value: Integer);
-    procedure SetSHADRelated(Value: Integer);
-    procedure SetCLRelated(Value: Integer);
     procedure SetEncUseCurr(Value: Boolean);
     function GetHasData: Boolean;
     procedure GetHasCPTList(AList: TStrings);
@@ -450,9 +433,7 @@ type
     function StrExams: string;
     function StrGenFindings: string;
     function StrStandardCodes: string;
-    function StrVisitType(const ASCRelated, AAORelated, AIRRelated, AECRelated,
-                                AMSTRelated, AHNCRelated, ACVRelated, ASHADRelated, ACLRelated: Integer): string; overload;
-    function StrVisitType: string; overload;
+    function StrVisitType: string;
     function StandAlone: boolean;
     procedure AddStrData(List: TStrings);
     procedure AddVitalData(Data, List: TStrings);
@@ -474,15 +455,7 @@ type
     property ProblemAdded: Boolean  read FProblemAdded;
     property Inpatient:    Boolean  read GetInpatient;
     property UseEncounter: Boolean  read FEncUseCurr  write SetEncUseCurr;
-    property SCRelated:    Integer  read FSCRelated   write SetSCRelated;
-    property AORelated:    Integer  read FAORelated   write SetAORelated;
-    property IRRelated:    Integer  read FIRRelated   write SetIRRelated;
-    property ECRelated:    Integer  read FECRelated   write SetECRelated;
-    property MSTRelated:   Integer  read FMSTRelated  write SetMSTRelated;
-    property HNCRelated:   Integer  read FHNCRelated  write SetHNCRelated;
-    property CVRelated:    Integer  read FCVRelated   write SetCVRelated;
-    property SHADRelated:   Integer read FSHADRelated write SetSHADRelated;
-    property CLRelated:    Integer  read FCLRelated   write SetCLRelated;
+    property SpecialAuthorities: TSpecialAuthoritiesEx read FSpecialAuthorities;
     property VisitType:    TPCEProc read FVisitType   write SetVisitType;
     property VisitString:  string   read GetVisitString;
     property VisitCategory:char     read FEncSvcCat   write FEncSvcCat;
@@ -679,7 +652,8 @@ implementation
 
 uses uCore, rPCE, rCore, rTIU, fEncounterFrame, uVitals, fFrame,
   fPCEProvider, rVitals, uReminders, rMisc, uGlobalVar, uDlgComponents,
-  fReminderDialog, uMisc, uWriteAccess;
+  fReminderDialog, uMisc, uWriteAccess, uSpecialAuthorityTypesEx,
+  rSpecialAuthority, VAShared.UTStringsHelper;
 
 const
   FN_NEW_PERSON = 200;
@@ -1172,6 +1146,13 @@ begin
            '.  Date GAF determined can not ' + CRLF +
            'be later than the date of death, and has been changed to ' + DateMsg + '.';
     GafDate := OKDate;
+  end
+  else if (GafDate > FMToday) then
+  begin
+    Result := 'GAF determined date may not be set in the future.  ' +
+              'Date Determined changed to today''s date. (' +
+              FormatFMDateTime('mmm dd, yyyy', FMToday) + ')';
+    GafDate := FMToday;
   end;
 end;
 
@@ -2251,6 +2232,8 @@ end;
 
 constructor TPCEData.Create;
 begin
+  FSpecialAuthorities:= TSpecialAuthoritiesEx.Create;
+  FSpecialAuthorities.PackageLink := PCE_PACKAGE;
   FDiagnoses   := TList.Create;
   FProcedures  := TList.Create;
   FImmunizations := TList.Create;
@@ -2262,16 +2245,6 @@ begin
   FGenFindings := TList.Create;
   FStandardCodes := TList.Create;
   FProviders := TPCEProviderList.Create;
-  FSCRelated   := SCC_NA;
-  FAORelated   := SCC_NA;
-  FIRRelated   := SCC_NA;
-  FECRelated   := SCC_NA;
-  FMSTRelated  := SCC_NA;
-  FHNCRelated  := SCC_NA;
-  FCVRelated   := SCC_NA;
-  FSHADRelated := SCC_NA;
-  FCLRelated   := SCC_NA;
-  FSCChanged   := False;
 end;
 
 destructor TPCEData.Destroy;
@@ -2298,6 +2271,7 @@ begin
   FProviders.Free;
   FGenFindings.Free;
   FStandardCodes.Free;
+  FreeAndNil(FSpecialAuthorities);
   inherited Destroy;
 end;
 
@@ -2327,15 +2301,7 @@ begin
   FStandAloneLoaded := FALSE;
   FParent       := '';
   FHistoricalLocation := '';
-  FSCRelated  := SCC_NA;
-  FAORelated  := SCC_NA;
-  FIRRelated  := SCC_NA;
-  FECRelated  := SCC_NA;
-  FMSTRelated := SCC_NA;
-  FHNCRelated := SCC_NA;
-  FCVRelated  := SCC_NA;
-  FSHADRelated := SCC_NA;
-  FCLRelated   := SCC_NA;
+  FSpecialAuthorities.Clear;
 
   ClearList(FDiagnoses);
   ClearList(FProcedures);
@@ -2349,7 +2315,6 @@ begin
 
   FVisitType.Clear;
   FProviders.Clear;
-  FSCChanged   := False;
   FNoteIEN := 0;
   FNoteTitle := 0;
   FEncounterLock := False;
@@ -2432,13 +2397,6 @@ var
   GetCat, DoRestore: boolean;
   FRestDate, HDREncDate, NoteDateTime: TFMDateTime;
 //  AProvider:     TPCEProvider;  {6/9/99}
-
-  function SCCValue(x: string): Integer;
-  begin
-    Result := SCC_NA;
-    if Piece(x, U, 3) = '1' then Result := SCC_YES;
-    if Piece(x, U, 3) = '0' then Result := SCC_NO;
-  end;
 
   function AppendComment(x: string): String;
   begin
@@ -2656,17 +2614,22 @@ begin
       end;
 //      if Copy(x, 1, 7) = 'VST^PS^' then FEncInpatient := CharAt(x, 8) = '1';
       {6/10/99}//if Copy(x, 1, 4) = 'PRV^'    then FEncProvider := StrToInt64Def(Piece(x, U, 2), 0);
-      if Copy(x, 1, 7) = 'VST^SC^'  then FSCRelated := SCCValue(x);
-      if Copy(x, 1, 7) = 'VST^AO^'  then FAORelated := SCCValue(x);
-      if Copy(x, 1, 7) = 'VST^IR^'  then FIRRelated := SCCValue(x);
-      if Copy(x, 1, 7) = 'VST^EC^'  then FECRelated := SCCValue(x);
-      if Copy(x, 1, 8) = 'VST^MST^' then FMSTRelated := SCCValue(x);
-//      if HNCOK and (Copy(x, 1, 8) = 'VST^HNC^') then
-      if Copy(x, 1, 8) = 'VST^HNC^' then FHNCRelated := SCCValue(x);
-      if Copy(x, 1, 7) = 'VST^CV^' then FCVRelated := SCCValue(x);
-      if Copy(x, 1, 9) = 'VST^SHAD^' then FSHADRelated := SCCValue(x);
-      if IsLejeuneActive then
-        if Copy(x, 1, 7) = 'VST^CL^' then FCLRelated := SCCValue(x);
+      if Piece(x, U, 1) = 'VST' then
+      begin
+        var TmpCode := Piece(x, U, 2);
+        for j := 0 to SpecialAuthorityTypesEx.Count - 1 do
+          if TmpCode = SpecialAuthorityTypesEx[j].code then
+          begin
+            var TF := FSpecialAuthorities[TmpCode];
+            TF.StringValue := Piece(x, u, 3);
+            if TF.Value = savYes then
+            begin
+              TF.Visible := True;
+              TF.Enabled := True;
+            end;
+            break;
+          end;
+      end;
 
       if (Copy(x, 1, 3) = 'PRV') and (CharAt(x, 4) <> '-') then
       {Providers---------------------------------------------------------------------}
@@ -2862,19 +2825,16 @@ begin
         Add('VST^OL^' + FHistoricalLocation);     // Outside Location
       FastAddStrings(FProviders, PCEList);
 
-      if FSCChanged then
+      if FSpecialAuthorities.Changed then
       begin
-        if FSCRelated   <> SCC_NA then Add('VST^SC^'  + IntToStr(FSCRelated));
-        if FAORelated   <> SCC_NA then Add('VST^AO^'  + IntToStr(FAORelated));
-        if FIRRelated   <> SCC_NA then Add('VST^IR^'  + IntToStr(FIRRelated));
-        if FECRelated   <> SCC_NA then Add('VST^EC^'  + IntToStr(FECRelated));
-        if FMSTRelated  <> SCC_NA then Add('VST^MST^' + IntToStr(FMSTRelated));
-        if FHNCRelated  <> SCC_NA then Add('VST^HNC^' + IntToStr(FHNCRelated));
-        if FCVRelated   <> SCC_NA then Add('VST^CV^'  + IntToStr(FCVRelated));
-        if FSHADRelated <> SCC_NA then Add('VST^SHD^' + IntToStr(FSHADRelated));
-        if IsLejeuneActive then
-          if FCLRelated <> SCC_NA then Add('VST^CL^'+ IntToStr(FCLRelated));
+        FSpecialAuthorities.ApplyValueChangeActions;
+        for i := 0 to FSpecialAuthorities.Count - 1 do
+          if FSpecialAuthorities[i].Visible and
+             FSpecialAuthorities[i].Enabled then
+            Add('VST' + U + FSpecialAuthorities[i].Code + U +
+              FSpecialAuthorities[i].StringValue);
       end;
+
       with FDiagnoses do for i := 0 to Count - 1 do
         if TObject(Items[i]) is TPCEDiag then with TPCEDiag(Items[i]) do
           if FSend then
@@ -3661,88 +3621,6 @@ begin
   end;
 end;
 
-procedure TPCEData.SetSCRelated(Value: Integer);
-begin
-  if Value <> FSCRelated then
-  begin
-    FSCRelated := Value;
-    FSCChanged := True;
-  end;
-end;
-
-procedure TPCEData.SetAORelated(Value: Integer);
-begin
-  if Value <> FAORelated then
-  begin
-    FAORelated := Value;
-    FSCChanged := True;
-  end;
-end;
-
-procedure TPCEData.SetIRRelated(Value: Integer);
-begin
-  if Value <> FIRRelated then
-  begin
-    FIRRelated := Value;
-    FSCChanged := True;
-  end;
-end;
-
-procedure TPCEData.SetECRelated(Value: Integer);
-begin
-  if Value <> FECRelated then
-  begin
-    FECRelated := Value;
-    FSCChanged := True;
-  end;
-end;
-
-procedure TPCEData.SetMSTRelated(Value: Integer);
-begin
-  if Value <> FMSTRelated then
-  begin
-    FMSTRelated := Value;
-    FSCChanged := True;
-  end;
-end;
-
-procedure TPCEData.SetHNCRelated(Value: Integer);
-begin
-//  if HNCOK and (Value <> FHNCRelated) then
-  if Value <> FHNCRelated then
-  begin
-    FHNCRelated := Value;
-    FSCChanged := True;
-  end;
-end;
-
-procedure TPCEData.SetCVRelated(Value: Integer);
-begin
-  if (Value <> FCVRelated) then
-  begin
-    FCVRelated := Value;
-    FSCChanged := True;
-  end;
-end;
-
-procedure TPCEData.SetSHADRelated(Value: Integer);
-begin
-  if (Value <> FSHADRelated) then
-  begin
-    FSHADRelated := Value;
-    FSCChanged   := True;
-  end;
-end;
-
-procedure TPCEData.SetCLRelated(Value: Integer);
-begin
-  if (Value <> FCLRelated) then
-  begin
-    FCLRelated := Value;
-    FSCChanged   := True;
-  end;
-end;
-
 procedure TPCEData.SetEncUseCurr(Value: Boolean);
 begin
   FEncUseCurr := Value;
@@ -3888,33 +3766,6 @@ begin
   Result := AddTitle(pdcGenFinding, Result);
 end;
 
-function TPCEData.StrVisitType(const ASCRelated, AAORelated, AIRRelated,
-  AECRelated, AMSTRelated, AHNCRelated, ACVRelated, ASHADRelated, ACLRelated: Integer): string;
-{ returns as a string the type of encounter (according to CPT) & related contitions treated }
-
-  procedure AddTxt(txt: string);
-  begin
-    if(Result <> '') then
-      Result := Result + ',';
-    Result := Result + ' ' + txt;
-  end;
-
-begin
-  Result := '';
-  if ASCRelated = SCC_YES  then AddTxt('Service Connected Condition');
-  if AAORelated = SCC_YES  then AddTxt('Agent Orange Exposure');
-  if AIRRelated = SCC_YES  then AddTxt('Ionizing Radiation Exposure');
-  if AECRelated = SCC_YES  then AddTxt('Environmental Contaminants');
-  if AMSTRelated = SCC_YES then AddTxt('MST');//'Military Sexual Trauma';
-//  if HNCOK and (AHNCRelated = SCC_YES) then AddTxt('Head and/or Neck Cancer');
-  if AHNCRelated = SCC_YES then AddTxt('Head and/or Neck Cancer');
-  if ACVRelated = SCC_YES  then AddTxt('Combat Veteran Related');
-  if ASHADRelated = SCC_YES  then AddTxt('Shipboard Hazard and Defense');
-  if ACLRelated = SCC_YES  then AddTxt('Camp Lejeune'); //Camp Lejeune
-  if Length(Result) > 0 then Result := ' Related to: ' + Result;
-//  Result := Trim(Result);
-end;
-
 function TPCEData.StrVisitType: string;
 { returns as a string the type of encounter (according to CPT) & related contitions treated }
 begin
@@ -3924,8 +3775,9 @@ begin
       Result := GetPCEDataText(pdcVisit, Code, Category, Narrative);
       if Length(ModText) > 0 then Result := Result + ModText + ', ';
     end;
-  Result := Trim(Result + StrVisitType(FSCRelated, FAORelated, FIRRelated,
-                                       FECRelated, FMSTRelated, FHNCRelated, FCVRelated, FSHADRelated, FCLRelated));
+  if Result <> '' then
+    Result := Result + ' ';
+  Result := Result + FSpecialAuthorities.VisitStringText;
 end;
 
 function TPCEData.validateMagnitudeValues: boolean;
@@ -4092,17 +3944,8 @@ begin
   Dest.FStandAlone   := FStandAlone;
   Dest.FStandAloneLoaded := FStandAloneLoaded;
   Dest.FEncUseCurr   := FEncUseCurr;
-  Dest.FSCChanged    := FSCChanged;
-  Dest.FSCRelated    := FSCRelated;
-  Dest.FAORelated    := FAORelated;
-  Dest.FIRRelated    := FIRRelated;
-  Dest.FECRelated    := FECRelated;
-  Dest.FMSTRelated   := FMSTRelated;
-  Dest.FHNCRelated   := FHNCRelated;
-  Dest.FCVRelated    := FCVRelated;
-  Dest.FSHADRelated  := FSHADRelated;
-  if IsLejeuneActive then
-   Dest.fCLRelated    := FCLRelated; //Camp Lejeune
+  Dest.FSpecialAuthorities.CopyFrom(FSpecialAuthorities, [ctCopyValues, ctCopyVisible,
+    ctCopyChanged]);
   FVisitType.CopyProc(Dest.VisitType);
   Dest.FProviders.Assign(FProviders);
 
@@ -4124,11 +3967,10 @@ end;
 
 function TPCEData.NeededPCEData: tRequiredPCEDataTypes;
 var
-  EC: TSCConditions;
-  NeedSC: boolean;
   TmpLst: TStringList;
   NeedDx: Boolean;
   I : Integer;
+  Error: string;
 begin
   Result := [];
   if FEncounterLock then Include(result, ndLock);
@@ -4163,21 +4005,10 @@ begin
       end;
       if(RequireExposures(FNoteIEN, FNoteTitle)) then
       begin
-        NeedSC := FALSE;
-        EC :=  EligbleConditions(Self);
-        if (EC.SCAllow and (SCRelated = SCC_NA)) then
-          NeedSC := TRUE
-        else   if(SCRelated <> SCC_YES) then  //if screlated = yes, the others are not asked.
-        begin
-               if(EC.AOAllow and (AORelated = SCC_NA)) then NeedSC := TRUE
-          else if(EC.IRAllow and (IRRelated = SCC_NA)) then NeedSC := TRUE
-          else if(EC.ECAllow and (ECRelated = SCC_NA)) then NeedSC := TRUE
-        end;
-        if(EC.MSTAllow and (MSTRelated = SCC_NA)) then NeedSC := TRUE;
-//        if HNCOK and (EC.HNCAllow and (HNCRelated = SCC_NA)) then NeedSC := TRUE;
-        if(EC.HNCAllow and (HNCRelated = SCC_NA)) then NeedSC := TRUE;
-        if(EC.CVAllow and (CVRelated = SCC_NA) and (SHADRelated = SCC_NA)) then NeedSC := TRUE;
-        if(NeedSC) then
+        UpdateSpecialAuthoritiesEx(Self, Error);
+        if Error <> '' then
+          raise EArgumentException.Create(Error);
+        if FSpecialAuthorities.HasUnanswered then
           Include(Result, ndSC);
       end;
 (*      if(Result = []) and (FNoteIEN > 0) then   //  **** block removed in v19.1  {RV} ****
@@ -4560,16 +4391,13 @@ end;
 function TPCEData.Empty: boolean;
 begin
   Result := (FProviders.Count = 0);
-  if(Result) then Result := (FSCRelated  = SCC_NA);
-  if(Result) then Result := (FAORelated  = SCC_NA);
-  if(Result) then Result := (FIRRelated  = SCC_NA);
-  if(Result) then Result := (FECRelated  = SCC_NA);
-  if(Result) then Result := (FMSTRelated = SCC_NA);
-//  if(Result) and HNCOK then Result := (FHNCRelated = SCC_NA);
-  if(Result) then Result := (FHNCRelated = SCC_NA);
-  if(Result) then Result := (FCVRelated = SCC_NA);
-  if(Result) then Result := (FSHADRelated = SCC_NA);
-  if(Result) then Result := (FCLRelated = SCC_NA); //Camp Lejeune
+  if Result then
+    for var i := 0 to FSpecialAuthorities.Count - 1 do
+       if FSpecialAuthorities[i].Value <> savUnanswered then
+       begin
+         Result := False;
+         break;
+       end;
   if(Result) then Result := (FDiagnoses.Count = 0);
   if(Result) then Result := (FProcedures.Count = 0);
   if(Result) then Result := (FImmunizations.Count = 0);

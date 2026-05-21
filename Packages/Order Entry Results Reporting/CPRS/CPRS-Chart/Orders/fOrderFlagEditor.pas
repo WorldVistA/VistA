@@ -9,11 +9,11 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  fAutoSz, StdCtrls, ComCtrls, ORFn, rOrders, ORCtrls,
+  fAutoSz, StdCtrls, ComCtrls, ORFn, rOrders, ORCtrls, ORCheckComboBox,
   VA508AccessibilityManager,
   ORDtTm, Vcl.ExtCtrls, uOrderFlag, uFormUtils, Vcl.Buttons,fBase508Form,
   Vcl.ActnList, iOrderFlagPropertiesEditorIntf, iResizableFormIntf, uConst,
-  System.Actions, fOrderFlagNotificationRecipients, u508button;
+  System.Actions, fOrderFlagNotificationRecipients, u508button, uMisc;
 
 type
 
@@ -50,7 +50,7 @@ type
     cmdCancel: u508button.TButton;
     mmOrder: TMemo;
     cboFlagReason: TORComboBox;
-    cboAlertRecipient: TORComboBox;
+    cboAlertRecipient: TORCheckComboBox;
     orSelectedRecipients: TORListBox;
     dtFlagExpire: TORDateBox;
     btnRemoveAllRecipients: u508button.TButton;
@@ -134,6 +134,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure mmOrderEnter(Sender: TObject);
     procedure orSelectedRecipientsKeyPress(Sender: TObject; var Key: Char);
+    procedure cboAlertRecipientMainCheckboxClick(Sender: TObject);
   private
     FNeedsToResizeToFontSize: Integer;
     fDebug: Boolean;
@@ -449,6 +450,8 @@ begin
   dtFlagExpire.FMDateTime := DateTimeToFMDateTime(dtFlagExpire.DateSelected);
 
   dtFlagExpire.DateRange.MinDate := FMDateTimeToDateTime(FMNow);
+
+  cboAlertRecipient.MainCheckBoxVisible := IncludeNonVAProviders(cboAlertRecipient);
 end;
 
 procedure TfrmOrderFlag.FormDestroy(Sender: TObject);
@@ -569,6 +572,15 @@ begin
   // If enter is pressed then try to add to the recipients
   if Key = VK_RETURN then
     cboAlertRecipientDblClick(Sender);
+end;
+
+procedure TfrmOrderFlag.cboAlertRecipientMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := cboAlertRecipient.SelectedDataString;
+  cboAlertRecipient.ReInitLongList;
+  if ALastData <> cboAlertRecipient.SelectedDataString then
+    cboAlertRecipientChange(cboAlertRecipient);
 end;
 
 procedure TfrmOrderFlag.cboAlertRecipientNeedData(Sender: TObject;

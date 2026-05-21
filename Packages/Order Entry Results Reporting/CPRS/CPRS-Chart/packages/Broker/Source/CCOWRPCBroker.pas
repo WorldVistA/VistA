@@ -5,10 +5,17 @@
   Developers: Danila Manapsal, Don Craven, Joel Ivey, Herlan Westra
   Description: Contains TRPCBroker and related components.
   Unit: CCOWRPCBroker Authenticates user using CCOW
-  Current Release: Version 1.1 Patch 72
+  Current Release: Version 1.1 Patch 74
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*74 (CLG 05/30/2024) XWB*1.1*74
+  1. Updated RPC Version to version 74.
+  2. Updated CURRENT_RPC_VERSION to version XWB*1.1*74
+
+  Changes in XWB*1.1*73 (RGG 07/19/2021) XWB*1.1*73
+  1. Updated RPC Version to version 73.
+
   Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
   1. Updated RPC Version to version 72.
 
@@ -59,7 +66,7 @@ uses
 const
   NoMore: boolean = False;
   MIN_RPCTIMELIMIT: integer = 30;
-  CURRENT_RPC_VERSION: String = 'XWB*1.1*65';
+  CURRENT_RPC_VERSION: String = 'XWB*1.1*74';
 
 type
   TCCOWRPCBroker = class(TRPCBroker)

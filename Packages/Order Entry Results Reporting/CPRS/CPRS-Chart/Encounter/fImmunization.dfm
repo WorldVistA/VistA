@@ -2,87 +2,159 @@ inherited frmImmunizations: TfrmImmunizations
   Left = 373
   Top = 169
   Caption = 'Encouner Immunization'
-  OnPaint = FormPaint
-  PixelsPerInch = 96
+  ClientHeight = 367
+  ClientWidth = 702
+  Constraints.MinHeight = 194
+  Constraints.MinWidth = 714
+  StyleElements = [seFont, seClient, seBorder]
+  ScaleMethod = smManual
+  ExplicitWidth = 718
+  ExplicitHeight = 406
   TextHeight = 13
-  inherited lblSection: TLabel
-    Width = 100
-    Caption = 'Immunization Section'
-    Visible = False
-    ExplicitWidth = 100
-  end
-  inherited lblList: TLabel
-    Visible = False
-  end
-  inherited lblComment: TLabel
-    Visible = False
-  end
-  inherited bvlMain: TBevel
-    Left = -3
-    ExplicitLeft = -3
-  end
-  inherited btnOK: TBitBtn
-    TabOrder = 5
-  end
-  inherited btnCancel: TBitBtn
-    TabOrder = 6
-  end
-  inherited pnlGrid: TPanel
-    TabOrder = 1
-    inherited lstCaptionList: TCaptionListView
-      Columns = <
-        item
-          Caption = 'Series'
-          Width = 80
+  inherited pnlMainAncestor: TPanel
+    Width = 702
+    Height = 136
+    StyleElements = [seFont, seClient, seBorder]
+    ExplicitWidth = 702
+    ExplicitHeight = 136
+    inherited pnlGrid: TPanel
+      AlignWithMargins = False
+      Left = 0
+      Top = 0
+      Width = 624
+      Height = 136
+      BevelKind = bkNone
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitWidth = 624
+      ExplicitHeight = 136
+      inherited lstCaptionList: TCaptionListView
+        Width = 618
+        Height = 87
+        Columns = <
+          item
+            Caption = 'Series'
+            Width = 80
+          end
+          item
+            Caption = 'Refused/Contra'
+            Tag = 1
+            Width = 120
+          end
+          item
+            AutoSize = True
+            Caption = 'Selected Immunizations'
+          end>
+        Caption = 'Selected Immunizations'
+        Pieces = '1,2,3,4'
+        ExplicitWidth = 618
+        ExplicitHeight = 87
+      end
+      inherited pnlComments: TPanel
+        Top = 93
+        Width = 624
+        Visible = False
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitTop = 93
+        ExplicitWidth = 624
+        inherited lblComment: TLabel
+          Width = 618
+          StyleElements = [seFont, seClient, seBorder]
         end
-        item
-          Caption = 'Refused/Contra'
-          Tag = 1
-          Width = 120
+        inherited edtComment: TCaptionEdit
+          Width = 618
+          StyleElements = [seFont, seClient, seBorder]
+          ExplicitWidth = 618
         end
-        item
-          Caption = 'Selected Immunizations'
-          Width = 150
-        end>
-      Caption = 'Selected Immunizations'
-      Pieces = '1,2,3,4'
+      end
+    end
+    inherited pnlGridRight: TPanel
+      Left = 624
+      Height = 136
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitLeft = 624
+      ExplicitHeight = 136
+      inherited btnRemove: TButton
+        Top = 68
+        TabOrder = 2
+        Visible = False
+        ExplicitTop = 68
+      end
+      inherited btnSelectAll: TButton
+        Top = 44
+        Margins.Top = 0
+        TabOrder = 1
+        ExplicitTop = 44
+      end
+      object btnAdd: TButton
+        AlignWithMargins = True
+        Left = 0
+        Top = 3
+        Width = 75
+        Height = 38
+        Margins.Left = 0
+        Align = alTop
+        Caption = 'Add / Edit / Delete Record'
+        TabOrder = 0
+        WordWrap = True
+        OnClick = btnAddClick
+      end
     end
   end
-  inherited edtComment: TCaptionEdit
-    TabOrder = 3
-    Visible = False
-  end
-  object btnAdd: TButton [8]
-    Left = 487
-    Top = 256
-    Width = 129
-    Height = 25
-    Caption = 'Add/Edit/Delete Record'
-    TabOrder = 8
-    OnClick = btnAddClick
-  end
-  inherited btnSelectAll: TButton
-    TabOrder = 2
-    TabStop = True
+  inherited pnlBottomAncestor: TPanel
+    Top = 340
+    Width = 702
+    StyleElements = [seFont, seClient, seBorder]
+    ExplicitTop = 340
+    ExplicitWidth = 702
+    inherited btnOK: TBitBtn
+      Left = 543
+      ExplicitLeft = 543
+    end
+    inherited btnCancel: TBitBtn
+      Left = 624
+      ExplicitLeft = 624
+    end
   end
   inherited pnlMain: TPanel
-    TabOrder = 0
-    inherited lbxSection: TORListBox
-      Tag = 40
-      Visible = False
-    end
-    inherited pnlLeft: TPanel
-      inherited lbSection: TORListBox
-        Tag = 40
-        TabOrder = 0
-        Visible = False
+    Width = 702
+    Visible = False
+    StyleElements = [seFont, seClient, seBorder]
+    ExplicitWidth = 702
+    inherited grdMain: TGridPanel
+      Width = 702
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitWidth = 702
+      inherited lblSection: TLabel
+        Width = 347
         Caption = 'Immunization Section'
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitWidth = 100
+      end
+      inherited lblList: TLabel
+        Left = 351
+        Width = 347
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitLeft = 351
+      end
+      inherited lbSection: TORListBox
+        Width = 347
+        StyleElements = [seFont, seClient, seBorder]
+        Caption = 'Immunization Section'
+        ExplicitWidth = 347
+      end
+      inherited lbxSection: TORListBox
+        Left = 351
+        Width = 347
+        StyleElements = [seFont, seClient, seBorder]
+        Caption = 'Section Name'
+        ExplicitLeft = 351
+        ExplicitWidth = 347
       end
       inherited btnOther: TButton
-        Tag = 20
-        Caption = 'Other Immunization...'
-        TabOrder = 1
-        Visible = False
+        Width = 347
+        ExplicitWidth = 347
       end
     end
   end
@@ -91,70 +163,41 @@ inherited frmImmunizations: TfrmImmunizations
       (
         'Component = edtComment'
         'Label = lblComment'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsOK')
       (
         'Component = btnRemove'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = btnSelectAll'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlMain'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = lbxSection'
         'Label = lblList'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsOK')
-      (
-        'Component = pnlLeft'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
-        'Status = stsDefault')
       (
         'Component = lbSection'
         'Label = lblSection'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsOK')
       (
         'Component = btnOther'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = pnlGrid'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = btnOK'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = btnCancel'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = frmImmunizations'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault')
       (
         'Component = btnAdd'
-        'WatchEnable = False'
-        'IgnoreWatchEnable = False'
         'Status = stsDefault'))
   end
 end

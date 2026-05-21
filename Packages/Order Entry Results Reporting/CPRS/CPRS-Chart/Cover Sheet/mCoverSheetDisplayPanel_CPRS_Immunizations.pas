@@ -3,7 +3,7 @@ unit mCoverSheetDisplayPanel_CPRS_Immunizations;
   ================================================================================
   *
   *       Application:  Demo
-  *       Developer:    dan.petit@domain.ext
+  *       Developer:    doma.user@domain.ext
   *       Site:         Salt Lake City ISC
   *       Date:         2015-12-21
   *
@@ -69,7 +69,8 @@ uses
   fVimm,
   rVimm,
   fNotes,
-  uPDMP, uConst, uWriteAccess;
+  uConst,
+  uWriteAccess;
 
 { TfraCoverSheetDisplayPanel_CPRS_Immunizations }
 
@@ -201,7 +202,7 @@ begin
     begin
       noteStr := resultList.Strings[0];
       Changes.Add(CH_DOC, Piece(noteStr, U, 1), Piece(noteStr, U, 2), '', CH_SIGN_YES);
-      PostMessage(Application.MainForm.Handle, UM_PDMP_NOTE_ID, 0, 0);
+      PostMessage(Application.MainForm.Handle, UM_NEWNOTE, 0, 0);
     end;
   finally
     FreeAndNil(resultList);

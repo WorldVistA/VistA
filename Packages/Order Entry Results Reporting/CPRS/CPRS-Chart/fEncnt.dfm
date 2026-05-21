@@ -48,10 +48,10 @@ inherited frmEncounter: TfrmEncounter
     Height = 13
     Caption = 'Encounter Provider'
   end
-  object cboPtProvider: TORComboBox [3]
+  object cboPtProvider: TORCheckComboBox [3]
     Left = 4
     Top = 20
-    Width = 357
+    Width = 353
     Height = 114
     Anchors = [akLeft, akTop, akRight, akBottom]
     Style = orcsSimple
@@ -75,10 +75,15 @@ inherited frmEncounter: TfrmEncounter
     OnNeedData = cboPtProviderNeedData
     CharsNeedMatch = 1
     UniqueAutoComplete = True
+    MainCheckBoxCaption = 'Include Non-VA Providers'
+    MainCheckBoxVisible = True
+    MainCheckBoxAlignment = calBottom
+    OnMainCheckboxClick = cboPtProviderMainCheckboxClick
+    DropdownStyle = ddsControl
   end
   object cmdDateRange: TButton [4]
     Tag = 9
-    Left = 367
+    Left = 363
     Top = 152
     Width = 100
     Height = 25
@@ -93,7 +98,7 @@ inherited frmEncounter: TfrmEncounter
     Tag = 9
     Left = 6
     Top = 154
-    Width = 355
+    Width = 351
     Height = 21
     Anchors = [akLeft, akRight, akBottom]
     AutoSize = False
@@ -105,7 +110,7 @@ inherited frmEncounter: TfrmEncounter
     Caption = 'Encounter Location'
   end
   object cmdCancel: TButton [6]
-    Left = 367
+    Left = 363
     Top = 45
     Width = 100
     Height = 23
@@ -119,7 +124,7 @@ inherited frmEncounter: TfrmEncounter
     OnClick = cmdCancelClick
   end
   object cmdOK: TButton [7]
-    Left = 367
+    Left = 363
     Top = 20
     Width = 100
     Height = 23
@@ -134,19 +139,19 @@ inherited frmEncounter: TfrmEncounter
   object Panel1: TPanel [8]
     Left = 4
     Top = 181
-    Width = 467
+    Width = 463
     Height = 243
     Anchors = [akLeft, akRight, akBottom]
     BevelOuter = bvNone
     TabOrder = 6
     DesignSize = (
-      467
+      463
       243)
     object pgeVisit: TPageControl
       Tag = 9
       Left = 4
       Top = 5
-      Width = 459
+      Width = 455
       Height = 232
       ActivePage = tabClinic
       Anchors = [akLeft, akTop, akRight, akBottom]
@@ -157,10 +162,6 @@ inherited frmEncounter: TfrmEncounter
       OnMouseDown = pgeVisitMouseDown
       object tabClinic: TTabSheet
         Caption = 'Clinic Appointments'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object lstClinic: TORListBox
           Left = 0
           Top = 20
@@ -184,7 +185,7 @@ inherited frmEncounter: TfrmEncounter
         object Panel2: TPanel
           Left = 0
           Top = 0
-          Width = 451
+          Width = 447
           Height = 20
           Align = alTop
           TabOrder = 2
@@ -206,14 +207,10 @@ inherited frmEncounter: TfrmEncounter
       end
       object tabAdmit: TTabSheet
         Caption = 'Hospital Admissions'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         object lstAdmit: TORListBox
           Left = 0
           Top = 17
-          Width = 451
+          Width = 447
           Height = 187
           Align = alClient
           ItemHeight = 13
@@ -231,7 +228,7 @@ inherited frmEncounter: TfrmEncounter
         object Panel3: TPanel
           Left = 0
           Top = 0
-          Width = 451
+          Width = 447
           Height = 17
           Align = alTop
           TabOrder = 2
@@ -246,12 +243,8 @@ inherited frmEncounter: TfrmEncounter
       end
       object tabNewVisit: TTabSheet
         Caption = 'New Visit'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 0
-        ExplicitHeight = 0
         DesignSize = (
-          451
+          447
           204)
         object lblVisitDate: TLabel
           Left = 220
@@ -283,7 +276,7 @@ inherited frmEncounter: TfrmEncounter
         object ckbHistorical: TORCheckBox
           Left = 220
           Top = 50
-          Width = 228
+          Width = 224
           Height = 151
           Anchors = [akLeft, akTop, akRight, akBottom]
           Caption = 

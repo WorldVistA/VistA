@@ -12,7 +12,7 @@ uses
   uTemplates, VA508ImageListLabeler, RichEdit, mDrawers, ORSplitter,
   System.Actions,
   Vcl.ActnList, ORextensions, U_CPTPasteDetails, Vcl.Grids, Vcl.ValEdit,
-  system.Generics.Defaults, UResponsiveGUI;
+  system.Generics.Defaults, UResponsiveGUI, fBase508Frame;
 
 type
   TProtectedWinControl = class(TWinControl);
@@ -955,6 +955,9 @@ begin
   // Make sure the screen reader stops and reads these controls
   stTitle.TabStop := ScreenReaderActive;
   stNotes.TabStop := ScreenReaderActive;
+
+  // Disable the use of control characters in note title for note view
+  stTitle.ShowAccelChar := False;
 
   Drawers.OnDrawerButtonClick := DrawerButtonClicked;
   Drawers.OnUpdateVisualsEvent := DrawerButtonClicked;
@@ -4425,6 +4428,7 @@ procedure TfrmNotes.popNoteMemoFindClick(Sender: TObject);
 // pData: ^ClipboardData; //CQ8300
 begin
   inherited;
+  memNote.SelStart := 0;
   SendMessage(TRichEdit(popNoteMemo.PopupComponent).Handle, WM_VSCROLL,
     SB_TOP, 0);
   with dlgFindText do
@@ -6006,10 +6010,71 @@ var
   Dest: TStrings; // Text Search CQ: HDS00002856
   KeepFlag: Boolean; // Text Search CQ: HDS00002856
   NoteCount, NoteMatches: Integer; // Text Search CQ: HDS00002856
-  sLastID, aTempLastID, SrchStr: String;
+  sLastID, aTempLastID: String;
   RefreshUnsigned: boolean;
   RetryCount: integer;
   Done: boolean;
+  procedure SearchDocListforString(SrchStr: String);
+  var
+    I, yy: Integer;
+  begin
+    NoteMatches := 0;
+    NoteCount := FDocList.Count - 1;
+    if FDocList.Count > 0 then
+    begin
+      for I := FDocList.Count - 1 downto 1 do
+      begin // Don't do 0, because it's informational
+        KeepFlag := False;
+        stNotes.Caption := 'Scanning ' + IntToStr(NoteCount - I + 1) +
+          ' of ' + IntToStr(NoteCount) + ', ' + IntToStr(NoteMatches);
+        if NoteMatches = 1 then
+          stNotes.Caption := stNotes.Caption + ' match'
+        else
+          stNotes.Caption := stNotes.Caption + ' matches';
+        frmSearchStop.lblSearchStatus.Caption := stNotes.Caption;
+        frmSearchStop.lblSearchStatus.Repaint;
+        stNotes.Repaint;
+        // Free up some ticks so they can click the "Stop" button
+        TResponsiveGUI.ProcessMessages(True);
+        TResponsiveGUI.ProcessMessages(True);
+        TResponsiveGUI.ProcessMessages(True);
+        if SearchTextStopFlag then
+          break
+        else
+        begin
+          noteId := StrToIntDef(Piece(FDocList.Strings[I], '^', 1), -1);
+          if (noteId = INVALID_ID) or (noteId = INFO_ID) then
+            Continue;
+          Dest := TStringList.Create;
+          try
+            CallVistA('TIU GET RECORD TEXT',
+              [Piece(FDocList.Strings[I], '^', 1)], Dest);
+            if Dest.Count > 0 then
+              for yy := 0 to Dest.Count - 1 do
+              begin
+                var line := upperCase(Dest[yy]);
+                if pos(upperCase(SrchStr), upperCase(Dest[yy])) > 0 then
+                begin
+                  KeepFlag := true;
+                  break;
+                end;
+              end;
+          finally
+            FreeAndNil(Dest);
+          end;
+          if KeepFlag = False then
+          begin;
+            if FDocList.Count >= I then
+              FDocList.Delete(I);
+            if (tmpList.Count >= I) and (I > 0) then
+              tmpList.Delete(I - 1);
+          end
+          else
+            Inc(NoteMatches);
+        end;
+      end;
+    end;
+  end;
 
 begin
   if not Assigned(Self) then
@@ -6060,6 +6125,12 @@ begin
                     FCurrentContext.GroupBy, FCurrentContext.TreeAscending,
                     CT_NOTES);
                   fAllUnSignedNotes.Assign(FDocList);
+                  // Text Search CQ: HDS00002856 ---------------------------------------
+                  if FCurrentContext.SearchString <> '' then
+                  // Text Search CQ: HDS00002856
+                  begin
+                    SearchDocListForString(FCurrentContext.SearchString);
+                  end;
                   UpdateTreeView(FDocList, tvNotes);
                 end;
                 tmpList.Clear;
@@ -6086,6 +6157,12 @@ begin
                     FCurrentContext.GroupBy, FCurrentContext.TreeAscending,
                     CT_NOTES);
                   fAllUnCoSignedNotes.Assign(FDocList);
+                  // Text Search CQ: HDS00002856 ---------------------------------------
+                  if FCurrentContext.SearchString <> '' then
+                  // Text Search CQ: HDS00002856
+                  begin
+                    SearchDocListForString(FCurrentContext.SearchString);
+                  end;
                   UpdateTreeView(FDocList, tvNotes);
                 end;
                 tmpList.Clear;
@@ -6118,60 +6195,7 @@ begin
             if FCurrentContext.SearchString <> '' then
             // Text Search CQ: HDS00002856
             begin
-              SrchStr := upperCase(FCurrentContext.SearchString);
-              NoteMatches := 0;
-              NoteCount := FDocList.Count - 1;
-              if FDocList.Count > 0 then
-                for X := FDocList.Count - 1 downto 1 do
-                begin // Don't do 0, because it's informational
-                  KeepFlag := False;
-                  stNotes.Caption := 'Scanning ' + IntToStr(NoteCount - X + 1) +
-                    ' of ' + IntToStr(NoteCount) + ', ' + IntToStr(NoteMatches);
-                  if NoteMatches = 1 then
-                    stNotes.Caption := stNotes.Caption + ' match'
-                  else
-                    stNotes.Caption := stNotes.Caption + ' matches';
-                  frmSearchStop.lblSearchStatus.Caption := stNotes.Caption;
-                  frmSearchStop.lblSearchStatus.Repaint;
-                  stNotes.Repaint;
-                  // Free up some ticks so they can click the "Stop" button
-                  TResponsiveGUI.ProcessMessages(True);
-                  TResponsiveGUI.ProcessMessages(True);
-                  TResponsiveGUI.ProcessMessages(True);
-                  if SearchTextStopFlag then
-                    break
-                  else
-                  begin
-                    noteId := StrToIntDef(Piece(FDocList.Strings[X], '^', 1), -1);
-                    if (noteId = INVALID_ID) or (noteId = INFO_ID) then
-                      Continue;
-                    Dest := TStringList.Create;
-                    try
-                      CallVistA('TIU GET RECORD TEXT',
-                        [Piece(FDocList.Strings[X], '^', 1)], Dest);
-                      if Dest.Count > 0 then
-                        for xx := 0 to Dest.Count - 1 do
-                        begin
-                          if pos(SrchStr, upperCase(Dest[xx])) > 0 then
-                          begin
-                            KeepFlag := true;
-                            break;
-                          end;
-                        end;
-                    finally
-                      FreeAndNil(Dest);
-                    end;
-                    if KeepFlag = False then
-                    begin;
-                      if FDocList.Count >= X then
-                        FDocList.Delete(X);
-                      if (tmpList.Count >= X) and (X > 0) then
-                        tmpList.Delete(X - 1);
-                    end
-                    else
-                      Inc(NoteMatches);
-                  end;
-                end;
+              SearchDocListForString(FCurrentContext.SearchString);
             end
             else
               // Reset the caption

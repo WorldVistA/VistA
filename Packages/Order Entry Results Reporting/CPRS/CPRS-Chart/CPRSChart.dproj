@@ -7,7 +7,7 @@
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Application</AppType>
         <FrameworkType>VCL</FrameworkType>
-        <ProjectVersion>20.1</ProjectVersion>
+        <ProjectVersion>20.2</ProjectVersion>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <ProjectName Condition="'$(ProjectName)'==''">CPRSChart</ProjectName>
     </PropertyGroup>
@@ -93,14 +93,14 @@
         <DCC_Description>Computerized Patient Record System</DCC_Description>
         <DCC_WriteableConstants>true</DCC_WriteableConstants>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Release>112</VerInfo_Release>
+        <VerInfo_Release>214</VerInfo_Release>
         <DCC_DcuOutput>.\dcu</DCC_DcuOutput>
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <DCC_ImageBase>00400000</DCC_ImageBase>
         <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;VCLTee;Vcl.Win;System.Win;VAShared;ORCtrls;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <DCC_F>false</DCC_F>
-        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=Computerized Patient Record System;FileVersion=1.33.112.1;InternalName=1.33.112.1 server required;LegalCopyright=Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.;LegalTrademarks=;OriginalFilename=Patch OR*3.0*629;ProductName=Computerized Patient Record System;ProductVersion=1.33.112.1;Comments=Version 1.33.112.1;CFBundleName=;CFBundleDisplayName=;CFBundleIdentifier=;CFBundleVersion=;CFBundlePackageType=;CFBundleSignature=;CFBundleAllowMixedLocalizations=;CFBundleExecutable=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=Department of Veterans Affairs;FileDescription=Computerized Patient Record System;FileVersion=1.33.214.1;InternalName=1.33.214.1 server required;LegalCopyright=Unauthorized access or misuse of this system and/or its data is a federal crime. Use of all data shall be in accordance with VA policy on security and privacy.;LegalTrademarks=;OriginalFilename=Patch OR*3.0*508;ProductName=Computerized Patient Record System;ProductVersion=1.33.214.1;Comments=Version 1.33.214.1;CFBundleName=;CFBundleDisplayName=;CFBundleIdentifier=;CFBundleVersion=;CFBundlePackageType=;CFBundleSignature=;CFBundleAllowMixedLocalizations=;CFBundleExecutable=</VerInfo_Keys>
         <DCC_S>false</DCC_S>
         <DCC_E>false</DCC_E>
         <DCC_K>false</DCC_K>
@@ -108,7 +108,7 @@
         <VerInfo_MinorVer>33</VerInfo_MinorVer>
         <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
-        <DCC_UnitSearchPath>$(Packages)\508\Source;$(Packages)\Borland\Source;$(Packages)\Broker\Source;$(Packages)\CopyPaste\Source;$(Packages)\ExceptionLogger\Source;$(Packages)\FilemanComponents\Source;$(Packages)\OR\Source;$(Packages)\PKI\Source;$(Packages)\VA\Source;$(Packages)\ResponsiveGUI\Source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>$(Packages)\508\Source;$(Packages)\Borland\Source;$(Packages)\Broker\Source;$(Packages)\CopyPaste\Source;$(Packages)\ExceptionLogger\Source;$(Packages)\FilemanComponents\Source;$(Packages)\OR\Source;$(Packages)\PKI\Source;$(Packages)\VA\Source;$(Packages)\ResponsiveGUI\Source;$(Packages)\CCOW\Source;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_DebugDCUs>true</DCC_DebugDCUs>
         <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
     </PropertyGroup>
@@ -120,9 +120,9 @@
         <DCC_E>false</DCC_E>
         <DCC_K>false</DCC_K>
         <DCC_N>false</DCC_N>
-        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <Icon_MainIcon>CPRSChart.ico</Icon_MainIcon>
-        <Debugger_RunParams>S=vac20devcrd803.crd.vaec.domain P=9011 CCOW=DISABLE  /RPCLOG </Debugger_RunParams>
+        <AppDPIAwarenessMode>none</AppDPIAwarenessMode>
+        <Debugger_RunParams>S=vac20devcrd803.crd.vaec.domain P=9026 CCOW=DISABLE</Debugger_RunParams>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <DCC_Namespace>Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
@@ -148,7 +148,6 @@
         <DCC_K>false</DCC_K>
         <DCC_N>false</DCC_N>
         <BT_BuildType>Debug</BT_BuildType>
-        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <Icon_MainIcon>CPRSChart.ico</Icon_MainIcon>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
@@ -175,11 +174,9 @@
         <DCC_E>false</DCC_E>
         <DCC_K>false</DCC_K>
         <DCC_N>false</DCC_N>
-        <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <BT_BuildType>Debug</BT_BuildType>
         <DCC_Define>blj;$(DCC_Define)</DCC_Define>
         <Icon_MainIcon>CPRSChart.ico</Icon_MainIcon>
-        <Debugger_RunParams>S=vac20devcrd802.crd.vaec.domain P=9011 CCOW=DISABLE  /RPCLOG SHOWCERTS</Debugger_RunParams>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
@@ -197,7 +194,7 @@
         <DCC_DebugInformation>2</DCC_DebugInformation>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_4_Win32)'!=''">
-        <DCC_Define>FASTMM;$(DCC_Define)</DCC_Define>
+        <DCC_Define>VAAPP;FASTMM;$(DCC_Define)</DCC_Define>
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
         <Icon_MainIcon>CPRSChart.ico</Icon_MainIcon>
     </PropertyGroup>
@@ -205,9 +202,6 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <RcCompile Include="Cover Sheet\mGridPanelFrame.rc">
-            <Form>mGridPanelFrame.res</Form>
-        </RcCompile>
         <DCCReference Include="fPage.pas">
             <Form>frmPage</Form>
         </DCCReference>
@@ -524,6 +518,7 @@
         </DCCReference>
         <DCCReference Include="Encounter\mVisitRelated.pas">
             <Form>fraVisitRelated</Form>
+            <FormType>dfm</FormType>
             <DesignClass>TFrame</DesignClass>
         </DCCReference>
         <DCCReference Include="fRemVisitInfo.pas">
@@ -1256,7 +1251,143 @@
         <DCCReference Include="uWriteAccess.pas"/>
         <DCCReference Include="Tools\UMemoTools.pas"/>
         <DCCReference Include="UMHDll.pas"/>
+        <DCCReference Include="ActivityLogDisplay.pas">
+            <Form>frmActivityLogDisplay</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TORForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="508\U508CheckBox.pas"/>
+        <DCCReference Include="508\U508CaptionEdit.pas"/>
+        <DCCReference Include="508\U508ORCheckComboBox.pas"/>
+        <DCCReference Include="508\U508ORComboBox.pas"/>
+        <DCCReference Include="InfoPanel\fPtInfoDetails.pas">
+            <Form>frmPtInfoDetails</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TORForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="InfoPanel\mPtInfoPanel.pas">
+            <Form>fraPtInfoPanel</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="InfoPanel\rPtInfo.pas"/>
+        <DCCReference Include="InfoPanel\uPtInfoCommon.pas"/>
+        <DCCReference Include="InfoPanel\uPtInfoSplitView.pas"/>
+        <DCCReference Include="infoPanel\uPtInfoData.pas"/>
+        <DCCReference Include="infoPanel\uPtInfoCore.pas"/>
+        <DCCReference Include="SpecialAuthority\rSpecialAuthority.pas"/>
+        <DCCReference Include="SpecialAuthority\uSpecialAuthority.pas"/>
+        <DCCReference Include="SpecialAuthority\uSpecialAuthorityEx.pas"/>
+        <DCCReference Include="SpecialAuthority\uSpecialAuthorityTypesEx.pas"/>
+        <DCCReference Include="SpecialAuthority\uSpecialAuthorityTypes.pas"/>
+        <DCCReference Include="fBase508Frame.pas">
+            <Form>Base508Frame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="HTML Dialogs\fHTMLDialog.pas">
+            <Form>frmHTMLDialog</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="HTML Dialogs\uMessageAdapterManager.pas"/>
+        <DCCReference Include="HTML Dialogs\uFMDateTimeMessageAdapter.pas"/>
+        <DCCReference Include="HTML Dialogs\uComboBoxMessageAdapter.pas"/>
+        <DCCReference Include="HTML Dialogs\rHTMLDialog.pas"/>
         <RidlCompile Include="CPRSChart.ridl"/>
+        <None Include="HTML Dialogs\JavaScriptBundle.zip"/>
+        <RcItem Include="HTML Dialogs\JavaScriptBundle\dist\bundle.zip">
+            <ContainerId>ResourceItem</ContainerId>
+            <ResourceType>RCDATA</ResourceType>
+            <ResourceId>JSONFormsJS</ResourceId>
+        </RcItem>
+        <None Include="HTML Dialogs\JavaScript.inc">
+            <ContainerId>WebFile</ContainerId>
+        </None>
+        <RcItem Include="Resources\BMP_CCOW_BROKEN.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>BMP_CCOW_BROKEN</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\BMP_CCOW_CHANGING.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>BMP_CCOW_CHANGING</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\BMP_CCOW_LINKED.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>BMP_CCOW_LINKED</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\BMP_HANDRIGHT.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>BMP_HANDRIGHT</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\BMP_IMAGEFLAG_1.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>BMP_IMAGEFLAG_1</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\BMP_IMAGEFLAG_2.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>BMP_IMAGEFLAG_2</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\BMP_IMAGEFLAG_3.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>BMP_IMAGEFLAG_3</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\BMP_LOCK.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>BMP_LOCK</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\BMP_QO_FAT.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>BMP_QO_FAT</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\BMP_QO_THIN.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>BMP_QO_THIN</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\BMP_REMINDERS_APPLICABLE.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>BMP_REMINDERS_APPLICABLE</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\BMP_REMINDERS_DUE.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>BMP_REMINDERS_DUE</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\BMP_REMINDERS_NONE.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>BMP_REMINDERS_NONE</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\BMP_REMINDERS_OTHER.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>BMP_REMINDERS_OTHER</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\BMP_REMINDERS_UNKNOWN.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>BMP_REMINDERS_UNKNOWN</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\BMP_UNLOCK.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>BMP_UNLOCK</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\MGRIDPANELFRAME_COLLAPSE.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>MGRIDPANELFRAME_COLLAPSE</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\MGRIDPANELFRAME_DELETE.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>MGRIDPANELFRAME_DELETE</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\MGRIDPANELFRAME_EXPAND.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>MGRIDPANELFRAME_EXPAND</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\MGRIDPANELFRAME_REFRESH.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>MGRIDPANELFRAME_REFRESH</ResourceId>
+        </RcItem>
+        <RcItem Include="Resources\REMSEARCHAVI.avi">
+            <ContainerId>ResourceItem</ContainerId>
+            <ResourceType>AVI</ResourceType>
+            <ResourceId>REMSEARCHAVI</ResourceId>
+        </RcItem>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -1320,7 +1451,10 @@
                     <VersionInfoKeys Name="CFBundleAllowMixedLocalizations"/>
                     <VersionInfoKeys Name="CFBundleExecutable"/>
                 </VersionInfoKeys>
-                <Excluded_Packages/>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k290.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp290.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
             </Delphi.Personality>
             <Platforms>
                 <Platform value="Win32">True</Platform>
@@ -1333,13 +1467,166 @@
             <Deployment Version="4">
                 <DeployFile LocalName="CPRSChart.exe" Configuration="508 Jaws" Class="ProjectOutput"/>
                 <DeployFile LocalName="CPRSChart.exe" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="CPRSChart.exe" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>CPRSChart.exe</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="CPRSChart.exe" Configuration="Release" Class="ProjectOutput"/>
                 <DeployFile LocalName="CPRSChart.ridl" Configuration="508 Jaws" Class="ProjectFile"/>
                 <DeployFile LocalName="CPRSChart.ridl" Configuration="Debug" Class="ProjectFile"/>
+                <DeployFile LocalName="CPRSChart.ridl" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="CPRSChart.ridl" Configuration="Release" Class="ProjectFile"/>
-                <DeployFile LocalName="CPRSChart.ridl" Configuration="Release" Class="ProjectFile"/>
-                <DeployFile LocalName="CPRSChart.rsm" Configuration="508 Jaws" Class="DebugSymbols"/>
-                <DeployFile LocalName="CPRSChart.rsm" Configuration="Debug" Class="DebugSymbols"/>
+                <DeployFile LocalName="HTML Dialogs\JavaScript.inc" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="HTML Dialogs\JavaScriptBundle.zip" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="HTML Dialogs\JavaScriptBundle\dist\bundle.zip" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\BMP_CCOW_BROKEN.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\BMP_CCOW_CHANGING.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\BMP_CCOW_LINKED.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\BMP_HANDRIGHT.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\BMP_IMAGEFLAG_1.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\BMP_IMAGEFLAG_2.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\BMP_IMAGEFLAG_3.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\BMP_LOCK.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\BMP_QO_FAT.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\BMP_QO_THIN.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\BMP_REMINDERS_APPLICABLE.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\BMP_REMINDERS_DUE.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\BMP_REMINDERS_NONE.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\BMP_REMINDERS_OTHER.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\BMP_REMINDERS_UNKNOWN.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\BMP_UNLOCK.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\MGRIDPANELFRAME_COLLAPSE.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\MGRIDPANELFRAME_DELETE.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\MGRIDPANELFRAME_EXPAND.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\MGRIDPANELFRAME_REFRESH.bmp" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
+                <DeployFile LocalName="Resources\REMSEARCHAVI.avi" Configuration="Debug" Class="ProjectFile">
+                    <Platform Name="Win32">
+                        <RemoteDir>.\</RemoteDir>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="iOSSimulator">
                         <Operation>1</Operation>

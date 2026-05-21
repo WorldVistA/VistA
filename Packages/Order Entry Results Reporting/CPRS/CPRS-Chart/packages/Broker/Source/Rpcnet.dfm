@@ -11,7 +11,5 @@ object RPCFRM1: TRPCFRM1
   Font.Height = -13
   Font.Name = 'System'
   Font.Style = []
-  OldCreateOrder = True
-  PixelsPerInch = 96
   TextHeight = 16
 end

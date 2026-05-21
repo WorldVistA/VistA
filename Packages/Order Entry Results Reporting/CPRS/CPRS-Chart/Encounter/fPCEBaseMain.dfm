@@ -2,175 +2,271 @@ inherited frmPCEBaseMain: TfrmPCEBaseMain
   Left = 302
   Top = 166
   Caption = 'frmPCEBaseMain'
-  PixelsPerInch = 96
-  TextHeight = 16
-  object lblSection: TLabel [0]
-    Left = 6
-    Top = 6
-    Width = 59
-    Height = 16
-    Caption = 'lblSection'
-  end
-  object lblList: TLabel [1]
-    Left = 213
-    Top = 6
-    Width = 85
-    Height = 16
-    Caption = 'Section Name'
-  end
-  object lblComment: TLabel [2]
-    Left = 6
-    Top = 328
-    Width = 64
-    Height = 16
-    Caption = 'Comments'
-  end
-  object bvlMain: TBevel [3]
-    Left = 0
-    Top = 230
-    Width = 619
-    Height = 140
-  end
-  inherited btnOK: TBitBtn
-    Left = 463
+  StyleElements = [seFont, seClient, seBorder]
+  TextHeight = 13
+  inherited pnlMainAncestor: TPanel [0]
+    Top = 204
+    Height = 168
     TabOrder = 1
-    ExplicitLeft = 463
-  end
-  inherited btnCancel: TBitBtn
-    Left = 544
-    ExplicitLeft = 544
-  end
-  inherited pnlGrid: TPanel
-    Width = 475
-    TabOrder = 0
-    ExplicitWidth = 475
-    inherited lstCaptionList: TCaptionListView
-      Width = 475
-      Columns = <
-        item
-          Width = 30
+    StyleElements = [seFont, seClient, seBorder]
+    ExplicitTop = 204
+    ExplicitHeight = 168
+    inherited pnlGrid: TPanel
+      AlignWithMargins = True
+      Left = 3
+      Top = 3
+      Width = 536
+      Height = 162
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitLeft = 3
+      ExplicitTop = 3
+      ExplicitWidth = 536
+      ExplicitHeight = 162
+      inherited lstCaptionList: TCaptionListView
+        Width = 530
+        Height = 130
+        Columns = <
+          item
+            Width = 30
+          end
+          item
+            Width = 120
+          end>
+        OnChange = lstCaptionListChange
+        OnClick = lstCaptionListClick
+        OnExit = lstCaptionListExit
+        OnInsert = lstCaptionListInsert
+        ExplicitWidth = 530
+        ExplicitHeight = 130
+      end
+      object pnlComments: TPanel
+        Left = 0
+        Top = 136
+        Width = 536
+        Height = 26
+        Align = alBottom
+        BevelOuter = bvNone
+        Caption = 'pnlComments'
+        ShowCaption = False
+        TabOrder = 1
+        object lblComment: TLabel
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 55
+          Height = 20
+          Align = alLeft
+          Caption = 'Comments: '
+          ExplicitHeight = 13
         end
-        item
-          Width = 120
-        end>
-      OnChange = lstCaptionListChange
-      OnClick = lstCaptionListClick
-      OnExit = lstCaptionListExit
-      OnInsert = lstCaptionListInsert
-      ExplicitWidth = 475
+        object edtComment: TCaptionEdit
+          AlignWithMargins = True
+          Left = 64
+          Top = 0
+          Width = 469
+          Height = 23
+          Margins.Top = 0
+          Align = alClient
+          TabOrder = 0
+          OnChange = edtCommentChange
+          OnExit = edtCommentExit
+          OnKeyPress = edtCommentKeyPress
+          Caption = ''
+          ExplicitHeight = 21
+        end
+      end
     end
-  end
-  object edtComment: TCaptionEdit [7]
-    Left = 6
-    Top = 343
-    Width = 523
-    Height = 24
-    TabOrder = 5
-    OnChange = edtCommentChange
-    OnExit = edtCommentExit
-    OnKeyPress = edtCommentKeyPress
-    Caption = 'Comments'
-  end
-  object btnRemove: TButton [8]
-    Left = 536
-    Top = 343
-    Width = 75
-    Height = 21
-    Caption = 'Remove'
-    TabOrder = 4
-    OnClick = btnRemoveClick
-  end
-  object btnSelectAll: TButton [9]
-    Left = 406
-    Top = 326
-    Width = 75
-    Height = 17
-    Caption = 'Select All'
-    TabOrder = 3
-    TabStop = False
-    OnClick = btnSelectAllClick
-  end
-  object pnlMain: TPanel [10]
-    Left = 6
-    Top = 20
-    Width = 612
-    Height = 204
-    Anchors = [akLeft, akTop, akRight, akBottom]
-    BevelOuter = bvNone
-    TabOrder = 6
-    object splLeft: TSplitter
-      Left = 204
+    object pnlGridRight: TPanel
+      Left = 542
       Top = 0
-      Height = 204
-      OnMoved = splLeftMoved
-    end
-    object lbxSection: TORListBox
-      Left = 207
-      Top = 0
-      Width = 405
-      Height = 204
-      Style = lbOwnerDrawFixed
-      Align = alClient
-      ExtendedSelect = False
-      ParentShowHint = False
-      ShowHint = True
+      Width = 78
+      Height = 168
+      Align = alRight
+      AutoSize = True
+      BevelOuter = bvNone
       TabOrder = 1
-      OnClick = clbListClick
-      OnExit = lbxSectionExit
-      OnMouseDown = clbListMouseDown
-      Caption = 'Section Name'
-      ItemTipColor = clWindow
-      LongList = False
-      Pieces = '2'
-      TabPosInPixels = True
-      CheckBoxes = True
-      CheckEntireLine = True
-      OnClickCheck = lbxSectionClickCheck
+      object btnRemove: TButton
+        AlignWithMargins = True
+        Left = 0
+        Top = 27
+        Width = 75
+        Height = 21
+        Margins.Left = 0
+        Margins.Top = 0
+        Align = alTop
+        Caption = 'Remove'
+        TabOrder = 1
+        OnClick = btnRemoveClick
+      end
+      object btnSelectAll: TButton
+        AlignWithMargins = True
+        Left = 0
+        Top = 3
+        Width = 75
+        Height = 21
+        Margins.Left = 0
+        Align = alTop
+        Caption = 'Select All'
+        TabOrder = 0
+        TabStop = False
+        OnClick = btnSelectAllClick
+      end
     end
-    object pnlLeft: TPanel
+  end
+  inherited pnlBottomAncestor: TPanel [1]
+    TabOrder = 2
+    StyleElements = [seFont, seClient, seBorder]
+  end
+  object pnlMain: TPanel [2]
+    Left = 0
+    Top = 0
+    Width = 620
+    Height = 204
+    Align = alTop
+    BevelOuter = bvNone
+    TabOrder = 0
+    object grdMain: TGridPanel
       Left = 0
       Top = 0
-      Width = 204
+      Width = 620
       Height = 204
-      Align = alLeft
+      Align = alClient
       BevelOuter = bvNone
+      ColumnCollection = <
+        item
+          Value = 50.000000000000000000
+        end
+        item
+          Value = 50.000000000000000000
+        end>
+      ControlCollection = <
+        item
+          Column = 0
+          Control = lblSection
+          Row = 0
+        end
+        item
+          Column = 1
+          Control = lblList
+          Row = 0
+        end
+        item
+          Column = 0
+          Control = lbSection
+          Row = 1
+        end
+        item
+          Column = 1
+          Control = lbxSection
+          Row = 1
+          RowSpan = 2
+        end
+        item
+          Column = 0
+          Control = btnOther
+          Row = 2
+        end>
+      RowCollection = <
+        item
+          SizeStyle = ssAuto
+          Value = 50.000000000000000000
+        end
+        item
+          Value = 100.000000000000000000
+        end
+        item
+          SizeStyle = ssAuto
+        end>
       TabOrder = 0
-      DesignSize = (
-        204
-        204)
-      object lbSection: TORListBox
-        Left = 0
-        Top = 0
-        Width = 204
-        Height = 174
+      object lblSection: TLabel
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 307
+        Height = 13
+        Margins.Right = 0
         Align = alTop
+        Anchors = []
+        Caption = 'lblSection'
+        ExplicitWidth = 46
+      end
+      object lblList: TLabel
+        AlignWithMargins = True
+        Left = 313
+        Top = 3
+        Width = 304
+        Height = 13
+        Align = alTop
+        Anchors = []
+        Caption = 'Section Name'
+        ExplicitWidth = 67
+      end
+      object lbSection: TORListBox
+        AlignWithMargins = True
+        Left = 3
+        Top = 19
+        Width = 304
+        Height = 158
+        Margins.Top = 0
+        Align = alClient
+        Anchors = []
+        ItemHeight = 13
         ParentShowHint = False
         ShowHint = True
-        TabOrder = 1
+        TabOrder = 0
         OnClick = lbSectionClick
         OnExit = lbSectionExit
         Caption = 'Section'
         ItemTipColor = clWindow
         LongList = False
         Pieces = '3'
+        FlatCheckBoxes = False
         CheckEntireLine = True
       end
+      object lbxSection: TORListBox
+        AlignWithMargins = True
+        Left = 313
+        Top = 19
+        Width = 304
+        Height = 182
+        Margins.Top = 0
+        Style = lbOwnerDrawFixed
+        Align = alClient
+        Anchors = []
+        ExtendedSelect = False
+        ParentShowHint = False
+        ShowHint = True
+        TabOrder = 1
+        OnExit = lbxSectionExit
+        Caption = 'Section'
+        ItemTipColor = clWindow
+        LongList = False
+        Pieces = '2'
+        TabPosInPixels = True
+        CheckBoxes = True
+        FlatCheckBoxes = False
+        CheckEntireLine = True
+        OnClickCheck = lbxSectionClickCheck
+      end
       object btnOther: TButton
-        Left = 65
-        Top = 178
-        Width = 139
+        AlignWithMargins = True
+        Left = 3
+        Top = 180
+        Width = 304
         Height = 21
-        Anchors = [akTop, akRight]
+        Margins.Top = 0
+        Align = alBottom
+        Anchors = []
         Caption = 'Other'
-        TabOrder = 0
+        TabOrder = 2
         OnClick = btnOtherClick
         OnExit = btnOtherExit
       end
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
-    Left = 24
-    Top = 24
+    Left = 32
+    Top = 40
     Data = (
       (
         'Component = edtComment'
@@ -190,9 +286,6 @@ inherited frmPCEBaseMain: TfrmPCEBaseMain
         'Label = lblList'
         'Status = stsOK')
       (
-        'Component = pnlLeft'
-        'Status = stsDefault')
-      (
         'Component = lbSection'
         'Label = lblSection'
         'Status = stsOK')
@@ -210,6 +303,24 @@ inherited frmPCEBaseMain: TfrmPCEBaseMain
         'Status = stsDefault')
       (
         'Component = frmPCEBaseMain'
+        'Status = stsDefault')
+      (
+        'Component = pnlGridRight'
+        'Status = stsDefault')
+      (
+        'Component = pnlMainAncestor'
+        'Status = stsDefault')
+      (
+        'Component = pnlBottomAncestor'
+        'Status = stsDefault')
+      (
+        'Component = grdMain'
+        'Status = stsDefault')
+      (
+        'Component = lstCaptionList'
+        'Status = stsDefault')
+      (
+        'Component = pnlComments'
         'Status = stsDefault'))
   end
 end

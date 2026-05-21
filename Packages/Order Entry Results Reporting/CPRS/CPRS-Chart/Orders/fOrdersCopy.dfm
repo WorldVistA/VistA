@@ -92,6 +92,9 @@ inherited frmCopyOrders: TfrmCopyOrders
       Constraints.MinHeight = 15
       TabOrder = 0
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
     object pnlInfo: TPanel
       Left = 0
@@ -135,6 +138,9 @@ inherited frmCopyOrders: TfrmCopyOrders
           'eam to another.'
         TabOrder = 1
         ShowAccelChar = True
+        WordWrap = False
+        LabelAlignment = taLeftJustify
+        LabelLayout = tlTop
       end
       object lblInstruction: TVA508StaticText
         Name = 'lblInstruction'
@@ -148,6 +154,9 @@ inherited frmCopyOrders: TfrmCopyOrders
           'ng home.'
         TabOrder = 0
         ShowAccelChar = True
+        WordWrap = False
+        LabelAlignment = taLeftJustify
+        LabelLayout = tlTop
       end
     end
   end

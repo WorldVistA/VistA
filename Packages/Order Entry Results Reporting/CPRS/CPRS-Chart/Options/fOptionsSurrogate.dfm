@@ -126,6 +126,9 @@ inherited frmOptionsSurrogate: TfrmOptionsSurrogate
       TabOrder = 2
       TabStop = True
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
   end
   object pnlSurrogateTools: TPanel [2]
@@ -166,6 +169,9 @@ inherited frmOptionsSurrogate: TfrmOptionsSurrogate
         TabStop = True
         Visible = False
         ShowAccelChar = True
+        WordWrap = False
+        LabelAlignment = taLeftJustify
+        LabelLayout = tlTop
       end
     end
     object pnlInfo: TPanel
@@ -205,6 +211,9 @@ inherited frmOptionsSurrogate: TfrmOptionsSurrogate
         TabOrder = 3
         TabStop = True
         ShowAccelChar = True
+        WordWrap = False
+        LabelAlignment = taLeftJustify
+        LabelLayout = tlTop
       end
       object txtSurrEdit: TVA508StaticText
         Name = 'txtSurrEdit'
@@ -217,6 +226,9 @@ inherited frmOptionsSurrogate: TfrmOptionsSurrogate
         TabOrder = 1
         TabStop = True
         ShowAccelChar = True
+        WordWrap = False
+        LabelAlignment = taLeftJustify
+        LabelLayout = tlTop
       end
       object btnRemove: TButton
         AlignWithMargins = True

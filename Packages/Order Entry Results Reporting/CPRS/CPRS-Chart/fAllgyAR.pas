@@ -189,7 +189,8 @@ implementation
 uses
   rODBase, uCore, rCore, rCover, iCoverSheetIntf, ORNet, fAllgyFind, fPtCWAD,
   fRptBox, VA508AccessibilityRouter, fNewAllergyCheck, uORLists,
-  VAUtils, rOrders, ORClasses, UResponsiveGUI, uWriteAccess;
+  VAUtils, rOrders, ORClasses, UResponsiveGUI, uWriteAccess,
+  VAShared.UTStringsHelper;
 
 const
   TX_NO_ALLERGY = 'A causative agent must be specified.';

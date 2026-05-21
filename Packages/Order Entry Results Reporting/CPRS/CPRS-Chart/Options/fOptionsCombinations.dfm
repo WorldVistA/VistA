@@ -64,7 +64,7 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
     TabOrder = 0
     OnClick = radAddByTypeClick
   end
-  object lstAddBy: TORComboBox [4]
+  object lstAddBy: TORCheckComboBox [4]
     Left = 7
     Top = 112
     Width = 170
@@ -95,6 +95,9 @@ inherited frmOptionsCombinations: TfrmOptionsCombinations
     OnKeyUp = lstAddByKeyUp
     OnNeedData = lstAddByNeedData
     CharsNeedMatch = 1
+    MainCheckBoxCaption = 'Include Non-VA Providers'
+    MainCheckBoxAlignment = calBottom
+    OnMainCheckboxClick = lstAddByMainCheckboxClick
   end
   object btnAdd: TButton [5]
     Left = 183

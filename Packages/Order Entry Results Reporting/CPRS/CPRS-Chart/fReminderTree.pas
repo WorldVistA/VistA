@@ -688,7 +688,24 @@ end;
 
 procedure TfrmReminderTree.memRefreshClick(Sender: TObject);
 begin
-  KillObj(@ReminderDialogInfo, TRUE);
+//  KillObj(@ReminderDialogInfo, TRUE);
+//  VISTAOR-41093: if TStringList owns associated objects,
+//  Delete will take care of them - no need to call KillObj
+  if assigned(ReminderDialogInfo) then
+    while ReminderDialogInfo.Count > 0 do
+      begin
+        if assigned(ReminderDialogInfo.Objects[0])
+        and not ReminderDialogInfo.OwnsObjects then
+          try
+            ReminderDialogInfo.Objects[0].Free;
+          except
+            on E: Exception do
+              ShowMessage(E.Message + #13#10#13#10 +
+                'Object of: ' + ReminderDialogInfo[0]);
+          end;
+        ReminderDialogInfo.Delete(0);
+      end;
+
   UpdateReminderDialogStatus;
   EnableActions;
 end;

@@ -4,11 +4,12 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
+  System.JSON,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, uEditObject, ORFn,
-  Vcl.StdCtrls, Vcl.ExtCtrls, rEditObject;
+  Vcl.StdCtrls, Vcl.ExtCtrls, rEditObject, fBase508Frame;
 
 type
-  TfraEditGridBase = class(TFrame)
+  TfraEditGridBase = class(TBase508Frame)
     pnlButtons: TPanel;
     grdEditPanel: TGridPanel;
     btnSave: TButton;
@@ -20,7 +21,11 @@ type
     procedure ScrollBox1MouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
   private
+    procedure InternalCreateLayout(inputList, defaultList: TStrings; layoutRequest: integer;
+      AInputJSON: TJSONObject; LayoutJSON: TJSONValue);
     { Private declarations }
+  protected
+    procedure AdjustGridForCheckComboBoxes;
   published
     layout: tLayout;
     procedure clearGrid;
@@ -30,6 +35,7 @@ type
   public
     procedure setAdditionalInputsParameter(inputs, defaultList: TStrings; layoutRequest: integer; isSaving: boolean); virtual;
     procedure createLayout(inputList, defaultList: TStrings; layoutRequest: integer); virtual;
+    procedure createLayoutFromJSON(InputJSON: TJSONObject; LayoutJSON: TJSONValue);
     procedure setInitialValues; virtual;
     { Public declarations }
   end;
@@ -37,6 +43,57 @@ type
 implementation
 
 {$R *.dfm}
+
+uses
+  System.Generics.Collections,
+  ORCheckComboBox,
+  ORExtensions,
+  UJSONValueHelper,
+  UJSONParameters,
+  uPtInfoCommon,
+  uPtInfoCore;
+
+procedure TfraEditGridBase.AdjustGridForCheckComboBoxes;
+var
+  i: Integer;
+  rowSize, rowSize2, baseRowSize: Double;
+  ExtendedRows: TList<Integer>;
+  layoutControl: tLayoutControl;
+  editObj: TEditObject;
+begin
+  ExtendedRows := nil;
+  grdEditPanel.BeginUpdate;
+  try
+    ExtendedRows := TList<Integer>.Create;
+    for i := 0 to self.layout.Controls.Count - 1 do
+    begin
+      layoutControl := tLayoutControl(self.layout.Controls.Objects[i]);
+      if layoutControl.uiControl is TEditObject then
+        editObj := layoutControl.uiControl as TEditObject
+      else
+        Continue;
+      if (editObj.editComponent is TORCheckComboBox) and
+        (editObj.editComponent as TORCheckComboBox).MainCheckBoxVisible and
+        (ExtendedRows.Indexof(layoutControl.rowNum) < 0) then
+        ExtendedRows.Add(layoutControl.rowNum);
+    end;
+    if ExtendedRows.Count > 0 then
+    begin
+      baseRowSize := 100 / (grdEditPanel.RowCollection.Count * 2 + ExtendedRows.Count);
+      rowSize := baseRowSize * 2;
+      rowSize2 := baseRowSize * 3;
+      for i := 0 to grdEditPanel.RowCollection.Count - 1 do
+        if ExtendedRows.IndexOf(i) < 0 then
+          grdEditPanel.RowCollection[i].Value := rowSize
+        else
+          grdEditPanel.RowCollection[i].Value := rowSize2;
+    end;
+  finally
+    FreeAndNil(ExtendedRows);
+    grdEditPanel.EndUpdate;
+  end;
+
+end;
 
 procedure TfraEditGridBase.btnCancelClick(Sender: TObject);
 begin
@@ -74,21 +131,52 @@ begin
 end;
 
 procedure TfraEditGridBase.createLayout(inputList, defaultList: TStrings; layoutRequest: integer);
+begin
+  InternalCreateLayout(inputList, defaultList, layoutRequest, nil, nil);
+end;
+
+procedure TfraEditGridBase.createLayoutFromJSON(InputJSON: TJSONObject; LayoutJSON: TJSONValue);
+begin
+  InternalCreateLayout(nil, nil, -1, InputJSON, LayoutJSON);
+end;
+
+destructor TfraEditGridBase.Destroy;
+begin
+  layout.clearLayoutControls;
+  FreeAndNil(layout);
+  inherited;
+end;
+
+procedure TfraEditGridBase.InternalCreateLayout(inputList, defaultList: TStrings;
+  layoutRequest: integer; AInputJSON: TJSONObject; LayoutJSON: TJSONValue);
 var
-colSize, i, rowSize: integer;
-edtObject: tEditObject;
-layoutControl: tLayoutControl;
-editList: TStrings;
+  i: integer;
+  colSize, rowSize: Double;
+  edtObject: tEditObject;
+  layoutControl: tLayoutControl;
+  editList: TStrings;
 begin
   clearGrid;
   editList := TStringList.Create;
-  Layout.layoutType := layoutRequest;
-//  if Layout.inputList = nil then
-//    layout.inputList := TStringList.Create
-//  else
-    if layout.inputList <> nil then
-      layout.inputList.Clear;
-  FastAssign(inputList, layout.inputList);
+
+  if Assigned(AInputJSON) then
+    Layout.InputJSON := TJSONParameters.Create(AInputJSON);
+
+  if Assigned(LayoutJSON) then
+  begin
+    Layout.layoutType := LayoutJSON.AsTypeDef<Integer>('editor.id', -1);
+    if Layout.layoutType > -1 then
+      Layout.layoutType := Layout.layoutType + TPtInfoDataTypes.EditorLayoutTypeOffset;
+  end
+  else
+    Layout.layoutType := layoutRequest;
+
+  if layout.inputList <> nil then
+    layout.inputList.Clear;
+
+  if not Assigned(LayoutJSON) then
+    FastAssign(inputList, layout.inputList);
+
   try
     if layout.layoutType = -1 then
       begin
@@ -100,61 +188,68 @@ begin
         self.btnSave.Enabled := true;
         self.btnCancel.Enabled := true;
       end;
-    layout.buildlayout(inputList, defaultList);
-    rowSize := 100 div self.layout.row;
-    colSize := 100 div self.layout.column;
+
+    if Assigned(LayoutJSON) then
+      layout.buildLayoutFromJSON(LayoutJSON)
+    else
+      layout.buildlayout(inputList, defaultList);
+
+    rowSize := 100 / self.layout.row;
+    colSize := 100 / self.layout.column;
+    // create row and size them
     grdEditPanel.RowCollection.BeginUpdate;
-  // create row and size them
-    for i := 0 to self.layout.row - 1 do
-      begin
-        grdEditPanel.RowCollection.Add;
-        grdEditPanel.RowCollection[i].SizeStyle := ssPercent;
-        grdEditPanel.RowCollection[i].Value := rowSize;
-      end;
-    grdEditPanel.RowCollection.EndUpdate;
+    try
+      for i := 0 to self.layout.row - 1 do
+        begin
+          grdEditPanel.RowCollection.Add;
+          grdEditPanel.RowCollection[i].SizeStyle := ssPercent;
+          grdEditPanel.RowCollection[i].Value := rowSize;
+        end;
+    finally
+      grdEditPanel.RowCollection.EndUpdate;
+    end;
   // create column and size them
     grdEditPanel.ColumnCollection.BeginUpdate;
-    for i := 0 to self.layout.column - 1 do
-      begin
-        grdEditPanel.ColumnCollection.Add;
-        grdEditPanel.ColumnCollection[i].SizeStyle := ssPercent;
-        grdEditPanel.ColumnCollection[i].Value := colSize;
-      end;
-    grdEditPanel.ColumnCollection.EndUpdate;
-
+    try
+      for i := 0 to self.layout.column - 1 do
+        begin
+          grdEditPanel.ColumnCollection.Add;
+          grdEditPanel.ColumnCollection[i].SizeStyle := ssPercent;
+          grdEditPanel.ColumnCollection[i].Value := colSize;
+        end;
+    finally
+      grdEditPanel.ColumnCollection.EndUpdate;
+    end;
     grdEditPanel.ControlCollection.BeginUpdate;
-    for i := 0 to self.layout.controls.Count - 1 do
-      begin
-        layoutControl := tLayoutControl(self.layout.controls.Objects[i]);
-        edtObject := tEditObject.create(layoutControl, self, grdEditPanel);
-        layoutControl.uiControl := edtObject;
-        grdEditPanel.ControlCollection.AddControl(edtObject.editPanel, layoutControl.colNum, layoutControl.rowNum);
-        grdEditPanel.ControlCollection[i].SetLocation(layoutControl.colNum, layoutControl.rowNum, false);
-        grdEditPanel.ControlCollection[i].ColumnSpan := layoutControl.ColSpan;
-      end;
-    grdEditPanel.ControlCollection.EndUpdate;
+    try
+      for i := 0 to self.layout.controls.Count - 1 do
+        begin
+          layoutControl := tLayoutControl(self.layout.controls.Objects[i]);
+          edtObject := tEditObject.create(Self.layout, layoutControl, self, grdEditPanel);
+          layoutControl.uiControl := edtObject;
+          grdEditPanel.ControlCollection.AddControl(edtObject.editPanel, layoutControl.colNum, layoutControl.rowNum);
+          grdEditPanel.ControlCollection[i].SetLocation(layoutControl.colNum, layoutControl.rowNum, false);
+          grdEditPanel.ControlCollection[i].ColumnSpan := layoutControl.ColSpan;
+          grdEditPanel.ControlCollection[i].RowSpan := layoutControl.RowSpan;
+        end;
+    finally
+      grdEditPanel.ControlCollection.EndUpdate;
+    end;
     btnSave.TabStop := true;
     btnCancel.TabStop := true;
 //    setInitialValues;
   finally
     FreeAndNil(editList);
   end;
+  AdjustGridForCheckComboBoxes;
 end;
-
-
-destructor TfraEditGridBase.Destroy;
-begin
-  layout.clearLayoutControls;
-  FreeAndNil(layout);
-  inherited;
-end;
-
 
 procedure TfraEditGridBase.ScrollBox1MouseWheel(Sender: TObject;
   Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
   var Handled: Boolean);
 begin
-  If RectContains(self.ScrollBox1.BoundsRect, self.ScrollBox1.ScreenToClient(MousePos)) then
+  If RectContains(self.ScrollBox1.BoundsRect, self.ScrollBox1.ScreenToClient(MousePos)) and
+    (not (FindVCLWindow(MousePos) is ORExtensions.TRichEdit)) then
   begin
     ScrollControl(self.ScrollBox1, (WheelDelta > 0));
     Handled := TRUE;
@@ -165,7 +260,6 @@ end;
 
 procedure TfraEditGridBase.setAdditionalInputsParameter(inputs, defaultList: TStrings; layoutRequest: integer; isSaving: boolean);
 begin
-
 end;
 
 procedure TfraEditGridBase.setInitialValues;
@@ -203,6 +297,5 @@ begin
     FreeAndNil(DataList);
   end;
 end;
-
 
 end.

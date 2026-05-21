@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, mVisitRelated, ORDtTm,fBase508Form, VA508AccessibilityManager;
+  StdCtrls, mVisitRelated, ORDtTm,fBase508Form, VA508AccessibilityManager,
+  Vcl.ExtCtrls;
 
 type
   TfrmRemVisitInfo = class(TfrmBase508Form)
@@ -14,6 +15,7 @@ type
     dteVitals: TORDateBox;
     lblVital: TLabel;
     btnNow: TButton;
+    pnlBottom: TPanel;
     procedure btnNowClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private

@@ -40,7 +40,7 @@ implementation
 
 {$R *.DFM}
 
-uses VAUtils, ORFn;
+uses VAUtils, ORFn, VA508AccessibilityRouter;
 
 type
   TCRCThread = class(TThread)
@@ -67,11 +67,28 @@ begin
 end;
 
 procedure TfrmSplash.FormCreate(Sender: TObject);
+const
+  Err508MSG = 'JAWS screen reader not %s.' + CRLF +
+              'Running with limited 508 compliance.';
 begin
   inherited;
   lblVersion.Caption := 'version ' + FileVersionValue(Application.ExeName,
     FILE_VER_FILEVERSION);
   lblSplash.Invalidate;
+
+  if ScreenReaderActive then
+  begin
+    mm.Lines.Insert(0, lblCRC.Caption);
+    mm.Lines.Insert(0, lblVersion.Caption);
+    mm.Lines.Insert(0, lblSplash.Caption);
+  end;
+
+  if ScreenReaderInstalled and (not ScreenReaderActive) then
+    mm.Lines.Insert(0, Format(Err508MSG, ['detected']));
+
+  if ScreenReaderActive and (not ScreenReaderSystemActive) then
+    mm.Lines.Insert(0, Format(Err508MSG, ['initalized']));
+
 //  TCRCThread.Create(Self);
 end;
 

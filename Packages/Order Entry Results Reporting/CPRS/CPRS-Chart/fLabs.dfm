@@ -763,6 +763,9 @@ inherited frmLabs: TfrmLabs
             Visible = False
             OnEnter = lblDateEnter
             ShowAccelChar = True
+            WordWrap = False
+            LabelAlignment = taCenter
+            LabelLayout = tlTop
           end
           object cmdNext: TButton
             Left = 191
@@ -1450,6 +1453,9 @@ inherited frmLabs: TfrmLabs
         TabStop = True
         Visible = False
         ShowAccelChar = True
+        WordWrap = False
+        LabelAlignment = taLeftJustify
+        LabelLayout = tlTop
       end
     end
   end

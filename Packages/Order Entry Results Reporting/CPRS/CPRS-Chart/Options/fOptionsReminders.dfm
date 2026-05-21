@@ -11,9 +11,9 @@ inherited frmOptionsReminders: TfrmOptionsReminders
   Position = poScreenCenter
   OnCreate = FormCreate
   ExplicitWidth = 480
-  ExplicitHeight = 312
+  ExplicitHeight = 316
   PixelsPerInch = 96
-  TextHeight = 16
+  TextHeight = 13
   object pnlBottom: TPanel [0]
     Left = 0
     Top = 255
@@ -24,7 +24,6 @@ inherited frmOptionsReminders: TfrmOptionsReminders
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 0
-    ExplicitTop = 303
     object bvlBottom: TBevel
       Left = 0
       Top = 0
@@ -68,8 +67,7 @@ inherited frmOptionsReminders: TfrmOptionsReminders
     Align = alClient
     BevelOuter = bvNone
     ShowCaption = False
-    TabOrder = 3
-    ExplicitTop = 344
+    TabOrder = 1
     object Panel2: TPanel
       Left = 0
       Top = 0
@@ -85,21 +83,20 @@ inherited frmOptionsReminders: TfrmOptionsReminders
         Left = 3
         Top = 3
         Width = 205
-        Height = 16
+        Height = 13
         Align = alTop
         Caption = 'Reminders not being displayed:'
-        ExplicitLeft = 8
-        ExplicitTop = 8
-        ExplicitWidth = 190
+        ExplicitWidth = 147
       end
       object lstNotDisplayed: TORListBox
         AlignWithMargins = True
         Left = 3
-        Top = 25
+        Top = 22
         Width = 205
-        Height = 227
+        Height = 230
         HelpContext = 9026
         Align = alClient
+        ItemHeight = 13
         MultiSelect = True
         ParentShowHint = False
         ShowHint = True
@@ -112,9 +109,6 @@ inherited frmOptionsReminders: TfrmOptionsReminders
         LongList = False
         Pieces = '3'
         OnChange = lstNotDisplayedChange
-        ExplicitLeft = 8
-        ExplicitWidth = 203
-        ExplicitHeight = 217
       end
     end
     object Panel3: TPanel
@@ -127,8 +121,6 @@ inherited frmOptionsReminders: TfrmOptionsReminders
       Caption = 'Panel1'
       ShowCaption = False
       TabOrder = 1
-      ExplicitLeft = 208
-      ExplicitTop = -6
       object btnAdd: TBitBtn
         AlignWithMargins = True
         Left = 3
@@ -153,9 +145,6 @@ inherited frmOptionsReminders: TfrmOptionsReminders
         NumGlyphs = 2
         TabOrder = 0
         OnClick = btnAddClick
-        ExplicitLeft = -8
-        ExplicitTop = 112
-        ExplicitWidth = 75
       end
       object btnDelete: TBitBtn
         AlignWithMargins = True
@@ -180,9 +169,6 @@ inherited frmOptionsReminders: TfrmOptionsReminders
         NumGlyphs = 2
         TabOrder = 1
         OnClick = btnDeleteClick
-        ExplicitLeft = -8
-        ExplicitTop = 112
-        ExplicitWidth = 75
       end
       object btnUp: TBitBtn
         AlignWithMargins = True
@@ -208,9 +194,6 @@ inherited frmOptionsReminders: TfrmOptionsReminders
         NumGlyphs = 2
         TabOrder = 2
         OnClick = btnUpClick
-        ExplicitLeft = -8
-        ExplicitTop = 112
-        ExplicitWidth = 75
       end
       object btnDown: TBitBtn
         AlignWithMargins = True
@@ -235,9 +218,6 @@ inherited frmOptionsReminders: TfrmOptionsReminders
         NumGlyphs = 2
         TabOrder = 3
         OnClick = btnDownClick
-        ExplicitLeft = -8
-        ExplicitTop = 112
-        ExplicitWidth = 75
       end
     end
     object Panel4: TPanel
@@ -250,28 +230,25 @@ inherited frmOptionsReminders: TfrmOptionsReminders
       Caption = 'Panel1'
       ShowCaption = False
       TabOrder = 2
-      ExplicitLeft = 8
-      ExplicitWidth = 211
       object lblDisplayed: TLabel
         AlignWithMargins = True
         Left = 3
         Top = 3
         Width = 207
-        Height = 16
+        Height = 13
         Align = alTop
         Caption = 'Reminders being displayed:'
-        ExplicitLeft = 44
-        ExplicitTop = 8
-        ExplicitWidth = 169
+        ExplicitWidth = 129
       end
       object lstDisplayed: TORListBox
         AlignWithMargins = True
         Left = 3
-        Top = 25
+        Top = 22
         Width = 207
-        Height = 170
+        Height = 173
         HelpContext = 9025
         Align = alClient
+        ItemHeight = 13
         MultiSelect = True
         ParentShowHint = False
         ShowHint = True
@@ -283,9 +260,6 @@ inherited frmOptionsReminders: TfrmOptionsReminders
         LongList = False
         Pieces = '3'
         OnChange = lstDisplayedChange
-        ExplicitLeft = 26
-        ExplicitWidth = 187
-        ExplicitHeight = 217
       end
       object radSort: TRadioGroup
         AlignWithMargins = True
@@ -308,9 +282,6 @@ inherited frmOptionsReminders: TfrmOptionsReminders
         ParentFont = False
         TabOrder = 1
         OnClick = radSortClick
-        ExplicitLeft = -6
-        ExplicitTop = 204
-        ExplicitWidth = 219
       end
     end
   end

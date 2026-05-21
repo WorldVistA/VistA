@@ -1,4 +1,4 @@
-object ColumnTreeFrame: TColumnTreeFrame
+inherited ColumnTreeFrame: TColumnTreeFrame
   Left = 0
   Top = 0
   Width = 250

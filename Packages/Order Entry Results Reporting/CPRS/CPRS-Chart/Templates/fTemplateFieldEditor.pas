@@ -177,6 +177,7 @@ type
     procedure acCopyExecute(Sender: TObject);
     procedure acDeleteExecute(Sender: TObject);
     procedure acCheckForErrorsExecute(Sender: TObject);
+    procedure pnlTopDblClick(Sender: TObject);
   private
     CopyFld, FFld: TTemplateField;
     FUpdating: boolean;
@@ -195,6 +196,8 @@ type
     procedure SetHideSynonyms(const Value: boolean);
     function GetPopupControl: TCustomEdit;
     function IsCommunityCare: boolean;
+
+    procedure doResize;
   public
     { Public declarations }
   end;
@@ -204,7 +207,8 @@ function EditDialogFields: boolean;
 implementation
 
 uses rTemplates, fTemplateDialog, Clipbrd, uSpell, uConst, System.UITypes,
-     fTemplateFields, VAUtils, dShared, FTemplateReport;
+     fTemplateFields, VAUtils, dShared, FTemplateReport,
+     VAShared.UTStringsHelper, uSizing;
 
 {$R *.DFM}
 
@@ -1065,6 +1069,14 @@ begin
     IsSynonym := TRUE;
 end;
 
+procedure TfrmTemplateFieldEditor.pnlTopDblClick(Sender: TObject);
+begin
+  inherited;
+{$IFDEF DEBUG}
+  doResize;
+{$ENDIF}
+end;
+
 procedure TfrmTemplateFieldEditor.popTextPopup(Sender: TObject);
 var
   HasText, CanEdit, isre: boolean;
@@ -1144,7 +1156,7 @@ end;
 procedure TfrmTemplateFieldEditor.mnuBPCutClick(Sender: TObject);
 var
   ce: TCustomEdit;
-  
+
 begin
   ce := GetPopupControl;
   if assigned(ce) then
@@ -1154,7 +1166,7 @@ end;
 procedure TfrmTemplateFieldEditor.mnuBPCopyClick(Sender: TObject);
 var
   ce: TCustomEdit;
-  
+
 begin
   ce := GetPopupControl;
   if assigned(ce) then
@@ -1164,7 +1176,7 @@ end;
 procedure TfrmTemplateFieldEditor.mnuBPPasteClick(Sender: TObject);
 var
   ce: TCustomEdit;
-  
+
 begin
   ce := GetPopupControl;
   if assigned(ce) then
@@ -1380,13 +1392,35 @@ procedure TfrmTemplateFieldEditor.FormResize(Sender: TObject);
 begin
   LimitEditWidth(reItems, 240);
   LimitEditWidth(reNotes, MAX_ENTRY_WIDTH);
+  doResize;
+end;
+
+procedure TfrmTemplateFieldEditor.doResize;
+var
+  iWidth: Integer;
+begin
+  DisableAlign;
+  try
+    adjustToolPanel(pnlTop);
+    adjustToolPanel(pnlBottom, iWidth);
+    Self.Constraints.MinWidth := iWidth + 64;
+
+    pnlObjs.Constraints.MinWidth := cbHide.Width + lblReq.Width + 32;
+    pnlObjs.Constraints.MaxWidth := Self.Width -
+      (btnApply.Left + (btnApply.Width) * 3 - btnPreview.Left);
+    pnlObjs.Constraints.MinHeight := 4 * pnlPreview.Height;
+  finally
+    EnableAlign;
+
+    lblCol.Top := lblLM.Top - lblCol.Height - 4;
+    lblLine.Top := lblCol.Top - lblLine.Height - 4;
+  end;
 end;
 
 procedure TfrmTemplateFieldEditor.reItemsResizeRequest(Sender: TObject;
   Rect: TRect);
 var
   R: TRect;
-
 begin
   R := TRichEdit(Sender).ClientRect;
   if (FLastRect.Right <> R.Right) or

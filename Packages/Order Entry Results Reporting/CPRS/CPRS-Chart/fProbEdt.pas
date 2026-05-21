@@ -3,18 +3,11 @@ unit fProbEdt;
 interface
 
 uses
-  uConst,
-  VA508AccessibilityManager,
-  ORCtrls,
-  fBase508Form,
-  Vcl.Forms,
-  Vcl.Controls,
-  Vcl.StdCtrls,
-  Vcl.ComCtrls,
-  Vcl.ExtCtrls,
-  Vcl.Buttons,
-  Winapi.Messages,
-  System.Classes;
+  SysUtils, windows, Messages, Classes, Graphics, Vcl.Controls,
+  Forms, Dialogs, StdCtrls, Buttons, ExtCtrls, Grids, uProbs,
+  ORCtrls, ORCheckComboBox, Vawrgrid, uCore, Menus, uConst, fBase508Form,
+  VA508AccessibilityManager, Vcl.ComCtrls, iCoverSheetIntf, uMisc, mVisitRelated,
+  fBase508Frame;
 
 const
   SOC_QUIT = 1;        { close single dialog }
@@ -28,58 +21,35 @@ type
   end;
 
   TfrmdlgProb = class(TfrmBase508Form)
-    Label1: TLabel;
-    Label5: TLabel;
     edResDate: TCaptionEdit;
-    Label7: TLabel;
     edUpdate: TCaptionEdit;
-    pnlBottom: TPanel;
     bbQuit: TBitBtn;
     bbFile: TBitBtn;
     pnlComments: TPanel;
-    Bevel1: TBevel;
     pnlTop: TPanel;
     lblAct: TLabel;
     rgStatus: TKeyClickRadioGroup;
     rgStage: TKeyClickRadioGroup;
     bbChangeProb: TBitBtn;
     edProb: TCaptionEdit;
-    gbTreatment: TGroupBox;
-    lblYN: TLabel;
-    ckYSC: TCheckBox;
-    ckYRad: TCheckBox;
-    ckYAO: TCheckBox;
-    ckYENV: TCheckBox;
-    ckYHNC: TCheckBox;
-    ckYMST: TCheckBox;
-    ckYSHAD: TCheckBox;
-    ckNSC: TCheckBox;
-    ckNRad: TCheckBox;
-    ckNAO: TCheckBox;
-    ckNENV: TCheckBox;
-    ckNHNC: TCheckBox;
-    ckNMST: TCheckBox;
-    ckNSHAD: TCheckBox;
     ckVerify: TCheckBox;
     edRecDate: TCaptionEdit;
     cbServ: TORComboBox;
     cbLoc: TORComboBox;
     lblLoc: TLabel;
-    cbProv: TORComboBox;
-    Label3: TLabel;
+    cbProv: TORCheckComboBox;
+    lblRespProv: TLabel;
     edOnsetdate: TCaptionEdit;
-    Label6: TLabel;
+    lblOnsetDate: TLabel;
     lstComments: TCaptionListView;
-    Panel1: TPanel;
     bbAdd: TBitBtn;
     bbEdit: TBitBtn;
     bbRemove: TBitBtn;
-    Panel2: TPanel;
-    Panel3: TPanel;
-    ScrollBox1: TScrollBox;
-    Panel4: TPanel;
-    ckNCL: TCheckBox;
-    ckYCL: TCheckBox;
+    pnlDetails: TPanel;
+    fraSpecialAuthorities: TfraVisitRelated;
+    gpMain: TGridPanel;
+    bvlTop: TBevel;
+    pnlButtons: TPanel;
     procedure bbQuitClick(Sender: TObject);
     procedure bbAddComClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -105,12 +75,10 @@ type
     procedure cbServNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure bbEditClick(Sender: TObject);
-    procedure ckTreatments(value: String; ckBox: Integer);
-    function  TreatmentsCked(ckBox: Integer):String;
-    procedure ckNSCClick(Sender: TObject);
     procedure rgStatusEnter(Sender: TObject);
     procedure lstCommentsChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
+    procedure cbProvMainCheckboxClick(Sender: TObject);
   private
     FEditing: Boolean;
     FInitialShow: Boolean;
@@ -127,14 +95,16 @@ type
     FCanQuit: boolean;
     FSearchString: String;
     VA508Captions: Array of tVA508Captions;
+    FReason: TProblemActionReason;
     procedure UMTakeFocus(var Message: TMessage); message UM_TAKEFOCUS;
     procedure ShowComments;
     procedure GetEditedComments;
-    procedure GetNewComments(Reason:char);
+    procedure GetNewComments(AReason: TProblemActionReason);
     function  OkToQuit:boolean;
     procedure ShowServiceCombo;
     procedure ShowClinicLocationCombo;
     procedure HandleVA508Caption();
+    procedure UMMisc(var Message: TMessage); message UM_MISC;
   protected
     procedure CreateParams(var Params: TCreateParams); override;
     procedure DoShow; override;
@@ -145,7 +115,7 @@ type
     property  InitialFocus: TWinControl read FInitialFocus write FInitialFocus;
     procedure DoSetFontSize(FontSize: Integer); override;
   public
-    Reason:Char;
+    { Public declarations }
     problemIFN:String;
     subjProb:string; {parameters for problem being added}
     constructor Create(AOwner: TComponent); override ;
@@ -157,36 +127,18 @@ type
     property LocationID: Longint read FLocationID write FLocationID;
     property SourceOfClose: Integer read FSourceOfClose write FSourceOfClose;
     property OnInitiate: TNotifyEvent read FOnInitiate write FOnInitiate;
-    procedure SetFontSize(NewFontSize: Integer);
+    procedure ResetSizes;
     property CanQuit: boolean read FCanQuit write FCanQuit;
-  end;
+    property Reason: TProblemActionReason read FReason write FReason;
+  end ;
 
 implementation
 
 {$R *.DFM}
 
-uses
-  System.SysUtils,
-  Winapi.Windows,
-  Vcl.Dialogs,
-  iCoverSheetIntf,
-  uCore,
-  ORFn,
-  uProbs,
-  fProbs,
-  rProbs,
-  rCore,
-  rOrders,
-  fProbCmt,
-  fProbLex,
-  rPCE,
-  uInit,
-  VA508AccessibilityRouter,
-  VAUtils,
-  rMisc,
-  uGlobalVar,
-  uORLists,
-  uSimilarNames;
+uses ORFn, fProbs, rProbs, rCover, rCore, rOrders, fProbCmt, fProbLex, rPCE, uInit  ,
+     VA508AccessibilityRouter, VAUtils, rMisc, uGlobalVar, uORLists, uSimilarNames,
+     uSpecialAuthorityEx, System.Generics.Collections;
 
 type
   TDialogItem = class { for loading edits & quick orders }
@@ -258,227 +210,26 @@ begin
     end ;
 end;
 
-procedure TfrmdlgProb.ckNSCClick(Sender: TObject);
-var
-  ChkBoxName :string;
-begin
-  inherited;
-  fChanged:=true;
-  ChkBoxName := AnsiUpperCase(TCheckBox(Sender).Name);
-  if (ChkBoxName = 'CKYSC') and TCheckBox(Sender).Checked then ckNSC.Checked := not ckYSC.Checked;
-  if (ChkBoxName = 'CKNSC') and TCheckBox(Sender).Checked then ckYSC.Checked := not ckNSC.Checked;
-  if (ChkBoxName = 'CKYAO') then ckNAO.Checked := not ckYAO.Checked;
-  if (ChkBoxName = 'CKNAO') then ckYAO.Checked := not ckNAO.Checked;
-  if (ChkBoxName = 'CKYRAD') then ckNRAD.Checked := not ckYRAD.Checked;
-  if (ChkBoxName = 'CKNRAD') then ckYRAD.Checked := not ckNRAD.Checked;
-  if (ChkBoxName = 'CKYENV') then ckNENV.Checked := not ckYENV.Checked;
-  if (ChkBoxName = 'CKNENV') then ckYENV.Checked := not ckNENV.Checked;
-  if (ChkBoxName = 'CKYSHAD') then ckNSHAD.Checked := not ckYSHAD.Checked;
-  if (ChkBoxName = 'CKNSHAD') then ckYSHAD.Checked := not ckNSHAD.Checked;
-  if (ChkBoxName = 'CKYMST') then ckNMST.Checked := not ckYMST.Checked;
-  if (ChkBoxName = 'CKNMST') then ckYMST.Checked := not ckNMST.Checked;
-  if (ChkBoxName = 'CKYHNC') then ckNHNC.Checked := not ckYHNC.Checked;
-  if (ChkBoxName = 'CKNHNC') then ckYHNC.Checked := not ckNHNC.Checked;
-  if (ChkBoxName = 'CKYCL') then ckNCL.Checked := not ckYCL.Checked;
-  if (ChkBoxName = 'CKNCL') then ckYCL.Checked := not ckNCL.Checked;
-end;
-
-procedure TfrmdlgProb.ckTreatments(value: String; ckBox: Integer);
-{ Used to set the checkboxes in order to properly set yes and no boxes
-   Send How ckbox should be set and which box
-   Value -> 1 Set to Yes, 2 Set to No, 0 Set Unknown
-   ckBox:
-     0 -> Service Connected
-     1 -> Agent Orange
-     2 -> Radiation
-     3 -> Southwest Asia Conditions
-     4 -> Shipboard Hazard and Defense
-     5 -> MST
-     6 -> Head and/or Neck Cancer
-     7 -> Camp Lejeune
-
-}
-Var
- yptr,nptr :^TCheckBox;
-begin
-  case ckBox of
-    0 : begin
-          //Sevice Connected
-          yptr := @ckYSC;
-          nptr := @ckNSC;
-        end;
-    1 : begin
-          //Agent Orange
-          yptr := @ckYAO;
-          nptr := @ckNAO;
-        end;
-    2 : begin
-          //Radiation
-          yptr := @ckYRAD;
-          nptr := @ckNRAD;
-        end;
-    3 : begin
-          //Southwest Asia Conditions
-          yptr := @ckYENV;
-          nptr := @ckNENV;
-        end;
-    4 : begin
-          //Shipboard Hazard and Defense
-          yptr := @ckYSHAD;
-          nptr := @ckNSHAD;
-        end;
-    5 : begin
-          //MST
-          yptr := @ckYMST;
-          nptr := @ckNMST;
-        end;
-    6 : begin
-          //Head and/or Neck Cancer
-          yptr := @ckYHNC;
-          nptr := @ckNHNC;
-        end;
-    7 : begin
-          //Camp Lejeune
-          yptr := @ckYCL;
-          nptr := @ckNCL;
-        end;
-
-    else begin
-           Exit;
-         end;
-  end;
-
-  if Value = '1' then  // Yes is selected
-  begin
-     TCheckBox(yptr^).Checked := True;
-     TCheckBox(nptr^).Checked := False;
-  end
-  else if value = '0' then  // No is selected
-  begin
-     TCheckBox(yptr^).Checked := False;
-     TCheckBox(nptr^).Checked := True;
-  end
-  else  //Unknown
-  begin
-     TCheckBox(yptr^).Checked := False;
-     TCheckBox(nptr^).Checked := False;
-  end;
-
-end;
-
-function TfrmdlgProb.TreatmentsCked(ckBox: Integer):String;
-{ Return 1 for checked 0 for not checked, and '' for unknown
-  ckBox:
-     0 -> Service Connected
-     1 -> Agent Orange
-     2 -> Radiation
-     3 -> Southwest Asia Conditions
-     4 -> Shipboard Hazard and Defense
-     5 -> MST
-     6 -> Head and/or Neck Cancer
-     7 -> Camp Lejeune
-
-}
-Var
- yptr,nptr :^TCheckBox;
-begin
-  case ckBox of
-    0 : begin
-          //Sevice Connected
-          yptr := @ckYSC;
-          nptr := @ckNSC;
-        end;
-    1 : begin
-          //Agent Orange
-          yptr := @ckYAO;
-          nptr := @ckNAO;
-        end;
-    2 : begin
-          //Radiation
-          yptr := @ckYRAD;
-          nptr := @ckNRAD;
-        end;
-    3 : begin
-          //Southwest Asia Conditions
-          yptr := @ckYENV;
-          nptr := @ckNENV;
-        end;
-    4 : begin
-          //Shipboard Hazard and Defense
-          yptr := @ckYSHAD;
-          nptr := @ckNSHAD;
-        end;
-    5 : begin
-          //MST
-          yptr := @ckYMST;
-          nptr := @ckNMST;
-        end;
-    6 : begin
-          //Head and/or Neck Cancer
-          yptr := @ckYHNC;
-          nptr := @ckNHNC;
-        end;
-    7 : begin
-          //Camp Lejeune - Veterans
-          yptr := @ckYCL;
-          nptr := @ckNCL;
-        end;
-
-    else begin
-           Result := '';
-           Exit;
-         end;
-
-  end;
-    if TCheckBox(yptr^).Checked then Result := '1'
-    else if TCheckBox(nptr^).Checked then Result := '0'
-    else Result := '';
-end;
-
-
 procedure TfrmdlgProb.FormShow(Sender: TObject);
 var
-  AList: TStringList;
-  AnchorsArray: array of TAnchors;
-  I: Integer;
+  alist: TstringList;
 begin
-  if ProbRec <> nil then Exit;
-
-  // Font resizing
-  if (ResizeWidth(Font, MainFont, Width) >= Parent.ClientWidth) and
-    (ResizeHeight(Font, MainFont, Height) >= Parent.ClientHeight) then
-  begin  //This form won't fit when it resizes, so we have to take Drastic Measures
-    SetLength(AnchorsArray, ControlCount);
-    for I := 0 to ControlCount - 1 do
-      AnchorsArray[I] := Controls[I].Anchors;
-    try
-      for I := 0 to ControlCount - 1 do
-        Controls[I].Anchors := [akLeft, akTop];
-      SetFontSize(MainFontSize);
-      RequestAlign;
-    finally
-      for I := 0 to ControlCount - 1 do
-        Controls[I].Anchors := AnchorsArray[I];
-    end;
-  end else begin
-    SetFontSize(MainFontSize);
-    RequestAlign;
-  end;
-
+  PostMessage(Handle, UM_MISC, 0, 0);
+  if ProbRec <> nil then exit;
   frmProblems.mnuView.Enabled := False;
   frmProblems.mnuAct.Enabled := False ;
   frmProblems.lstView.Enabled := False;
   frmProblems.bbNewProb.Enabled := False ;
   AList := TStringList.Create;
   try
-    if Reason = 'E' then
+    if Reason = parEdit then
       lblact.caption := 'Editing:'
-    else if Reason = 'A' then
+    else if Reason = parAdd then
       lblact.caption := 'Adding'
     else {display, comment edit or remove problem}
       begin
-        case reason of 'C','c': lblact.caption := 'Comment Edit';
-                       'R','r': lblact.caption := 'Remove Problem:';
+        case reason of parComment: lblact.caption := 'Comment Edit';
+                       parRemove: lblact.caption := 'Remove Problem:';
         end; {case}
         {ckVerify.Enabled:=false;}
         cbProv.Enabled       := false;
@@ -489,24 +240,7 @@ begin
         edRecdate.enabled    := false;
         edResdate.enabled    := false;
         edOnsetDate.enabled  := false;
-        ckYSC.enabled         := false;
-        ckYRAD.enabled        := false;
-        ckYAO.enabled         := false;
-        ckYENV.enabled        := false;
-        ckYHNC.enabled        := false;
-        ckYMST.enabled        := false;
-        ckYSHAD.enabled       := false;
-        ckNSC.enabled         := false;
-        ckNRAD.enabled        := false;
-        ckNAO.enabled         := false;
-        ckNENV.enabled        := false;
-        ckNHNC.enabled        := false;
-        ckNMST.enabled        := false;
-        ckNSHAD.enabled       := false;
-        ckNCL.enabled         := false;
-        ckYCL.enabled         := false;
-
-        if Reason = 'R' then bbFile.caption := 'Remove';
+        if Reason = parRemove then bbFile.caption := 'Remove';
       end;
     edProb.Caption := lblact.Caption;
     edProb.Text := Piece(subjProb, u, 2);
@@ -517,7 +251,7 @@ begin
     {line up problem action and title}
     {edProb.Left:=lblAct.left+lblAct.width+2;}
     {get problem}
-    if Reason <> 'A' then
+    if Reason <> parAdd then
       begin {edit,remove or display existing problem}
         problemIFN := Piece(subjProb, u, 1);
         EditLoad(AList, ProblemIFN);   //V17.5   RV
@@ -553,105 +287,18 @@ begin
     edUpdate.text := Probrec.DateModStr;
     edResDate.text := ProbRec.DateResStr;
     edUpdate.enabled := false;
-    if pos(Reason,'CR') = 0 then
-      with PLPt do
-        begin
-          if PtServiceConnected then
-          begin
-            ckYSC.Enabled := True;
-            ckNSC.Enabled := True;
-            ckTreatments(ProbRec.SCProblem,0);
-          end
-          else
-          begin
-            ckYSC.Enabled := False;
-            ckNSC.Enabled := False;
-          end;
-
-          if PtAgentOrange then
-          begin
-            ckYAO.Enabled := True;
-            ckNAO.Enabled := True;
-            ckTreatments(ProbRec.AOProblem,1);
-          end
-          else
-          begin
-            ckYAO.Enabled := False;
-            ckNAO.Enabled := False;
-          end;
-
-          if PtRadiation then
-          begin
-            ckYRad.Enabled := True;
-            ckNRad.Enabled := True;
-            ckTreatments(Probrec.RADProblem,2);
-          end
-          else
-          begin
-            ckYRad.Enabled := False;
-            ckNRad.Enabled := False;
-          end;
-
-          if PtEnvironmental then
-          begin
-            ckYENV.Enabled := True;
-            ckNENV.Enabled := True;
-            ckTreatments(ProbRec.ENVProblem,3);
-          end
-          else
-          begin
-            ckYENV.Enabled := False;
-            ckNENV.Enabled := False;
-          end;
-
-          if PtSHAD then
-          begin
-            ckYSHAD.Enabled := True;
-            ckNSHAD.Enabled := True;
-            ckTreatments(ProbRec.SHADProblem,4);
-          end
-          else
-          begin
-            ckYSHAD.Enabled := False;
-            ckNSHAD.Enabled := False;
-          end;
-
-          if PtMST then
-          begin
-            ckYMST.Enabled := True;
-            ckNMST.Enabled := True;
-            ckTreatments(ProbRec.MSTProblem,5);
-          end
-          else
-          begin
-            ckYMST.Enabled := False;
-            ckNMST.Enabled := False;
-          end;
-
-          if PtHNC then
-          begin
-            ckYHNC.Enabled := True;
-            ckNHNC.Enabled := True;
-            ckTreatments(ProbRec.HNCProblem,6);
-          end
-          else
-          begin
-            ckYHNC.Enabled := False;
-            ckNHNC.Enabled := False;
-          end;
-          if PtCL then
-          begin
-            ckYCL.Enabled := True;
-            ckNCL.Enabled := True;
-            ckTreatments(ProbRec.CLProblem,7);
-          end
-          else
-          begin
-            ckYCL.Enabled := False;
-            ckNCL.Enabled := False;
-          end;
-
-        end ;
+    If SystemParameters.AsType<Boolean>('saOnProblems') then
+    begin
+      fraSpecialAuthorities.Visible := true;
+      if not (Reason in [parComment, parRemove]) then
+      begin
+        ProbRec.SpecialAuthorities.CopyFrom(PLPtQualifiers, [ctCopyVisible]);
+        fraSpecialAuthorities.InitAllow(ProbRec.SpecialAuthorities);
+      end;
+    end
+    else begin
+      fraSpecialAuthorities.Visible := false;
+    end;
 
     {cbProv.InitLongList(ProbRec.RespProvider.extern) ;
     if (ProbRec.RespProvider.intern <> '') and (StrToInt64Def(ProbRec.RespProvider.intern, 0) > 0) then
@@ -665,7 +312,7 @@ begin
     else cbProv.InitLongList('');
     TSimilarNames.RegORComboBox(cbProv);
 
-    if UpperCase(Reason) = 'A' then
+    if Reason = parAdd then
       begin
         if Encounter.Inpatient then
           begin
@@ -730,7 +377,7 @@ begin
       end ;
    // ===================  changed code - REV 7/30/98  =========================
    // PlUser.usVerifyTranscribed is a SITE requirement, not a user ability
-    if Reason = 'A' then
+    if Reason = parAdd then
       begin
         if PlUser.usVerifyTranscribed and not PlUser.usPrimeUser then
           ckVerify.Checked := False
@@ -749,7 +396,7 @@ begin
         {ckVerify.visible:=true; }
         ckVerify.checked:=(Probrec.condition='P');
       end;  *)
-    if Reason <> 'A' then fChanged := False else fChanged := True; {initialize form for changes}
+    if Reason <> parAdd then fChanged := False else fChanged := True; {initialize form for changes}
     if rgStatus.ItemIndex = -1 then
       InitialFocus := rgStatus
     else
@@ -757,6 +404,8 @@ begin
 
     if ScreenReaderActive then
      HandleVA508Caption();
+
+    ResetSizes;
   finally
     AList.Free;
   end;
@@ -830,13 +479,13 @@ begin
     exit;
   end;
 
-  if (Reason <> 'R') and (Reason <> 'r') then
+  if Reason <> parRemove then
     if (rgStatus.itemindex=-1) or (cbProv.itemindex=-1) then
     begin
       InfoBox('Status and Responsible Provider are required.', 'Information', MB_OK or MB_ICONINFORMATION);
       exit;
     end;
-  if CharInSet(Reason, ['C','c','E','e']) then
+  if Reason in [parComment, parEdit] then
   begin
     if not IsActiveICDCode(ProbRec.Diagnosis.extern, DateOfInterest) then
     begin
@@ -875,14 +524,7 @@ begin
       ProbRec.DateModStr := InttoStr(trunc(FMNow))
     else
       ProbRec.DateModStr := edUpdate.text; {last update}
-    (*if ckSC.enabled then *)Probrec.SCProblem  := TreatmentsCked(0);
-    if ckYAO.enabled then ProbRec.AOProblem     := TreatmentsCked(1);
-    if ckYRAD.enabled then Probrec.RadProblem   := TreatmentsCked(2);
-    if ckYENV.enabled then ProbRec.ENVProblem   := TreatmentsCked(3);
-    if ckYSHAD.Enabled then ProbRec.SHADProblem := TreatmentsCked(4);
-    if ckYMST.enabled then ProbRec.MSTProblem   := TreatmentsCked(5);
-    if ckYHNC.enabled then ProbRec.HNCProblem   := TreatmentsCked(6);
-    if ckYCL.enabled then ProbRec.CLProblem     := TreatmentsCked(7);
+    fraSpecialAuthorities.GetRelated(ProbRec.SpecialAuthorities);
 
     if cbProv.itemindex = -1 then {Get provider}
       begin
@@ -920,26 +562,27 @@ begin
     if ProbRec.Commentcount > 0 then GetEditedComments;
     GetNewComments(Reason);
     case Reason of
-      'E','e','C','c': {edits or comments}
+      parEdit, parComment: {edits or comments}
         begin
           ut := '';
           if PLUser.usPrimeUser then ut := '1';
-          EditSave(aList,ProblemIFN, User.DUZ, PLPt.ptVAMC, ut, ProbRec.FilerObject, FSearchString);    //V17.5  RV
+          EditSave(aList,ProblemIFN, User.DUZ, PLPtQualifiers.Facility,
+            ut, ProbRec.FilerObject, FSearchString);    //V17.5  RV
           PLUpdateDateTime := Now;
         end;
-      'A','a':  {new problem}
+      parAdd:  {new problem}
         begin
-          AddSave(aList,PLPt.GetGMPDFN(Patient.DFN, Patient.Name),
-           pProviderID, PLPt.ptVAMC, ProbRec.FilerObject, FSearchString);  //*DFN*
+          AddSave(aList,PLPtQualifiers.GetGMPDFN(Patient.DFN, Patient.Name),
+           pProviderID, PLPtQualifiers.Facility, ProbRec.FilerObject, FSearchString);  //*DFN*
           PLUpdateDateTime := Now;
         end;
-      'R','r': {remove problem}
+      parRemove: {remove problem}
         begin
           remcom := '';
           if Probrec.commentcount > 0 then
             if TComment(Probrec.comments[pred(probrec.commentcount)]).IsNew then
               remcom := TComment(Probrec.comments[pred(probrec.commentcount)]).Narrative;
-          ProblemDelete(aList, ProbRec.PIFN, User.DUZ, PLPt.ptVAMC, remcom);    //changed in v14
+          ProblemDelete(aList, ProbRec.PIFN, User.DUZ, PLPtQualifiers.Facility, remcom);    //changed in v14
           PLUpdateDateTime := Now;
         end
     else exit;
@@ -990,12 +633,12 @@ begin
       end;
 end;
 
-procedure TfrmdlgProb.GetNewComments(Reason: char);
+procedure TfrmdlgProb.GetNewComments(AReason: TProblemActionReason);
 var
   i, start: integer;
 begin
   {don't display previous comments for add comment or remove problem functions}
-  if (Reason <> 'R') then
+  if (AReason <> parRemove) then
     start := ProbRec.CommentCount
   else
     start := 0;
@@ -1022,6 +665,15 @@ begin
     SendMessage(cbProv.Handle, CB_SHOWDROPDOWN, 1, 0) {Opens list}
   else
     SendMessage(cbProv.Handle, CB_SHOWDROPDOWN, 0, 0) {Closes list}
+end;
+
+procedure TfrmdlgProb.cbProvMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := cbProv.SelectedDataString;
+  cbProv.ReInitLongList;
+  if ALastData <> cbProv.SelectedDataString then
+    ControlChange(cbProv);
 end;
 
 procedure TfrmdlgProb.rgStatusClick(Sender: TObject);
@@ -1086,7 +738,7 @@ var
   end;
 
 begin  {BODY }
-  Today := PLPt.Today;
+  Today := PLPtQualifiers.Today;
   EncounterDate := Trunc(Encounter.DateTime);
   if (Pos('ICD-9-CM',Piece(prob, u, 3)) > 0) or (Pos('ICD-10-CM',Piece(prob, u, 3)) > 0) then
     ICDCode := Piece(Piece(Piece(prob, u, 3),' ',2),')',1)
@@ -1098,7 +750,7 @@ begin  {BODY }
     alist.add('NEW' + v + '.01' + v + u); {no icd code}
   {Leave ien of .05 undefined - let host save routine compute it}
   alist.add('NEW' + v + '.05' + v + u + Piece(prob,u,2));{actual text}
-  alist.add('NEW' + v + '.06' + v + PLPt.PtVAMC);
+  alist.add('NEW' + v + '.06' + v + PLPtQualifiers.Facility);
   alist.add('NEW' + v + '.08' + v + Today);
   alist.add('NEW' + v + '.12' + v + 'A' + u + 'ACTIVE');
   alist.add('NEW' + v + '.13' + v + '');
@@ -1111,17 +763,7 @@ begin  {BODY }
   alist.add('NEW' + v + '1.07' + v + '');
   alist.add('NEW' + v + '1.08' + v + '') ;{IntToStr(Encounter.Location));}
   alist.add('NEW' + v + '1.09' + v + Today);
-  alist.add('NEW' + v + '1.1' +  v + '0' + u + 'NO'); {SC}
-  alist.add('NEW' + v + '1.11' + v + '0' + u + 'NO'); {AO}
-  alist.add('NEW' + v + '1.12' + v + '0' + u + 'NO'); {RAD}
-  alist.add('NEW' + v + '1.13' + v + '0' + u + 'NO'); {ENV}
   alist.add('NEW' + v + '1.14' + v + ''); {Priority: 'A', 'C', or ''}
-  alist.add('NEW' + v + '1.15' + v + '0' + u + 'NO'); {HNC}
-  alist.add('NEW' + v + '1.16' + v + '0' + u + 'NO'); {MST}
-  alist.add('NEW' + v + '1.17' + v + '0' + u + 'NO'); {CV}
-  alist.add('NEW' + v + '1.18' + v + '0' + u + 'NO'); {SHAD}
-  if IsLejeuneActive then alist.add('NEW' + v + '1.19' + v + '0' + u + 'NO'); {CL}
-
   if Piece(prob, u, 6) <> '' then
     alist.Add('NEW' + v + '80001' + v + Piece(prob, u, 6) + u + Piece(prob, u, 6)); {SCT Concept}
   if Piece(prob, u, 7) <> '' then
@@ -1256,8 +898,7 @@ end;
 procedure TfrmdlgProb.FormCreate(Sender: TObject);
 begin
   FSilent := False;
-  ckNCL.Visible := IsLejeuneActive;
-  ckYCL.Visible := IsLejeuneActive;
+  cbProv.MainCheckBoxVisible := IncludeNonVAProviders(cbProv);
 end;
 
 { old TPLDlgForm Methods }
@@ -1322,14 +963,122 @@ begin
   inherited DoShow;
 end;
 
-procedure TfrmdlgProb.SetFontSize(NewFontSize: Integer);
+procedure TfrmdlgProb.ResetSizes;
+
+  procedure UpdateRowHeights;
+  const
+    SimpleRows: TArray<Integer> = [0,1,2,5];
+    ComplexRow = 3;
+  var
+    i, H, Min, Temp: Integer;
+  begin
+    H := MainFontTextHeight + 19;
+    for i := 0 to Length(SimpleRows) - 1 do  
+      gpMain.RowCollection[SimpleRows[i]].Value := H;
+    pnlButtons.Height := H;
+    Min := fraSpecialAuthorities.gbVisitRelatedTo.Height +
+      fraSpecialAuthorities.gbVisitRelatedTo.Margins.Top +
+      fraSpecialAuthorities.gbVisitRelatedTo.Margins.Bottom;
+    for i := 0 to pnlDetails.ControlCount - 1 do
+      if pnlDetails.Controls[i].Visible then
+      begin
+        Temp := pnlDetails.Controls[i].Top + pnlDetails.Controls[i].Height;
+        if pnlDetails.Controls[i].AlignWithMargins then
+          inc(Temp, pnlDetails.Controls[i].Margins.Bottom);
+        if Min < Temp then
+          Min := Temp;
+      end;
+    inc(Min, pnlTop.Margins.Top + pnlTop.Margins.Bottom + 4);
+    gpMain.RowCollection[ComplexRow].Value := Min;
+  end;
+
+  procedure UpdateColumnWidths;
+  const
+    Padding = 24;
+    RadioButtonSize = 16;
+  var
+    i, j, ColumnMin, Min, Temp: Integer;
+    RadioGroup: TKeyClickRadioGroup;
+    Columns: TList<Integer>;
+  begin
+    Columns := TList<Integer>.Create;
+    try
+      ColumnMin := 0;
+      for i := 0 to gpMain.ControlCollection.Count - 1 do
+        if gpMain.ControlCollection[i].Control is TKeyClickRadioGroup then
+        begin
+          RadioGroup := gpMain.ControlCollection[i].Control as TKeyClickRadioGroup;
+          if Columns.IndexOf(gpMain.ControlCollection[i].Column) < 0 then
+            Columns.Add(gpMain.ControlCollection[i].Column);
+          Min := TextWidthByFont(MainFont.Handle, RadioGroup.Caption) + 24;
+          for j := 0 to RadioGroup.Items.Count - 1 do
+          begin
+            Temp := TextWidthByFont(MainFont.Handle, RadioGroup.Items[j]) + 
+              Padding + Application.MainForm.ScaleValue(RadioButtonSize);
+            if Min < Temp then
+              Min := Temp;
+          end;
+          if ColumnMin < Min then
+            ColumnMin := Min;
+        end;    
+      for i := 0 to Columns.Count - 1 do
+        gpMain.ColumnCollection[Columns[i]].Value := ColumnMin;        
+    finally
+      FreeAndNil(Columns);
+    end;
+  end;
+
+  procedure UpdateButtonWidths;
+  const
+    Padding = 20;
+    ButtonColumns: TArray<Integer> = [3, 4];
+  var
+    i, Min, MinMargins, Temp: Integer;
+    Buttons: TObjectList<TBitBtn>;
+  begin
+    Buttons := TObjectList<TBitBtn>.Create(False);
+    try
+      for i := 0 to ComponentCount - 1 do
+        if Components[i] is TBitBtn then
+          Buttons.Add(Components[i] as TBitBtn);
+      Min := 0;
+      MinMargins := 0;
+      for i := 0 to Buttons.Count - 1 do
+      begin
+        Temp := TextWidthByFont(MainFont.Handle, Buttons[i].Caption) + Padding;
+        if Min < Temp then
+          Min := Temp;
+        Temp := 0;
+        if Buttons[i].AlignWithMargins and (Buttons[i].Parent = gpMain) then
+          Temp := Buttons[i].Margins.Left + Buttons[i].Margins.Right;
+        if MinMargins < Temp then
+          MinMargins := Temp;
+      end;
+      for i := 0 to Buttons.Count - 1 do
+        Buttons[i].Width := Min;
+      for i := 0 to Length(ButtonColumns) - 1 do
+        gpMain.ColumnCollection[ButtonColumns[i]].Value := Min + MinMargins;
+    finally
+      FreeAndNil(Buttons);
+    end;
+  end;
+
 begin
-  ResizeAnchoredFormToFont(Self);
+  fraSpecialAuthorities.ResizeToFit;
+  gpMain.BeginUpdate;
+  try
+    UpdateRowHeights;
+    UpdateColumnWidths;
+    UpdateButtonWidths;
+  finally
+    gpMain.EndUpdate;
+  end;
 end;
 
 procedure TfrmdlgProb.ShowClinicLocationCombo;
 begin
   cbLoc.visible := true;
+  cbLoc.Top := 9999;
   cbServ.Visible := false;
   lblLoc.caption := 'Clinic:';
 end;
@@ -1338,6 +1087,7 @@ procedure TfrmdlgProb.ShowServiceCombo;
 begin
   cbLoc.visible := false;
   cbServ.Visible := true;
+  cbServ.Top := 9999;
   lblLoc.caption := 'Service:';
 end;
 
@@ -1368,6 +1118,17 @@ begin
   Result := False;  { should override to check for additional required fields }
 end;
 
+
+procedure TfrmdlgProb.UMMisc(var Message: TMessage);
+begin
+  // Not sure why, but this code is needed or edOnsetdate initially draws without a border
+  edOnsetdate.LockDrawing;
+  try
+    edOnsetdate.Repaint;
+  finally
+    edOnsetdate.UnlockDrawing;
+  end;
+end;
 
 procedure TfrmdlgProb.UMTakeFocus(var Message: TMessage);
 begin

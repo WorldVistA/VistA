@@ -13,14 +13,12 @@ object ORfrmDtTm: TORfrmDtTm
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   KeyPreview = True
-  OldCreateOrder = True
   Position = poScreenCenter
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   DesignSize = (
     398
     235)
-  PixelsPerInch = 96
   TextHeight = 13
   object TxtDateSelected: TLabel
     Left = 110

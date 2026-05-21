@@ -2,26 +2,28 @@ inherited frmHFSearch: TfrmHFSearch
   Left = 286
   Top = 248
   Caption = 'Other Health Factors'
-  ClientHeight = 390
-  ClientWidth = 355
+  ClientHeight = 441
+  ClientWidth = 304
+  Constraints.MinHeight = 480
+  Constraints.MinWidth = 320
   Position = poScreenCenter
-  OnCreate = FormCreate
-  ExplicitWidth = 363
-  ExplicitHeight = 417
-  PixelsPerInch = 96
+  StyleElements = [seFont, seClient, seBorder]
+  ExplicitWidth = 320
+  ExplicitHeight = 480
   TextHeight = 13
   object splMain: TSplitter [0]
     Left = 0
     Top = 131
-    Width = 355
+    Width = 304
     Height = 3
     Cursor = crVSplit
     Align = alTop
+    ExplicitWidth = 355
   end
   object lblCat: TLabel [1]
     Left = 0
     Top = 0
-    Width = 355
+    Width = 304
     Height = 13
     Align = alTop
     Caption = 'Category:'
@@ -30,7 +32,7 @@ inherited frmHFSearch: TfrmHFSearch
   object cbxSearch: TORComboBox [2]
     Left = 0
     Top = 13
-    Width = 355
+    Width = 304
     Height = 118
     Style = orcsSimple
     Align = alTop
@@ -50,15 +52,18 @@ inherited frmHFSearch: TfrmHFSearch
     SynonymChars = '<>'
     TabOrder = 0
     TabStop = True
+    Text = ''
+    FlatCheckBoxes = False
     OnChange = cbxSearchChange
     OnDblClick = tvSearchDblClick
     CharsNeedMatch = 1
+    ExplicitWidth = 355
   end
   object tvSearch: TORTreeView [3]
     Left = 0
     Top = 134
-    Width = 355
-    Height = 229
+    Width = 304
+    Height = 280
     Align = alClient
     HideSelection = False
     Images = dmodShared.imgTemplates
@@ -73,21 +78,24 @@ inherited frmHFSearch: TfrmHFSearch
     OnGetSelectedIndex = tvSearchGetImageIndex
     Caption = 'Health Factors Category'
     NodePiece = 2
-    ExplicitTop = 137
+    ExplicitWidth = 355
+    ExplicitHeight = 229
   end
   object pnlBottom: TPanel [4]
     Left = 0
-    Top = 363
-    Width = 355
+    Top = 414
+    Width = 304
     Height = 27
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 2
+    ExplicitTop = 363
+    ExplicitWidth = 355
     DesignSize = (
-      355
+      304
       27)
     object btnOK: TButton
-      Left = 196
+      Left = 145
       Top = 4
       Width = 75
       Height = 21
@@ -97,9 +105,10 @@ inherited frmHFSearch: TfrmHFSearch
       Enabled = False
       TabOrder = 0
       OnClick = btnOKClick
+      ExplicitLeft = 196
     end
     object btnCancel: TButton
-      Left = 276
+      Left = 225
       Top = 4
       Width = 75
       Height = 21
@@ -108,6 +117,7 @@ inherited frmHFSearch: TfrmHFSearch
       Caption = '&Cancel'
       ModalResult = 2
       TabOrder = 1
+      ExplicitLeft = 276
     end
   end
   inherited amgrMain: TVA508AccessibilityManager

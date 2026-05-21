@@ -10,7 +10,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  fAutoSz, StdCtrls, ORFn, ORCtrls, VA508AccessibilityManager;
+  fAutoSz, StdCtrls, ORFn, ORCtrls, VA508AccessibilityManager, ORCheckComboBox,
+  uMisc;
 
 type
 
@@ -20,11 +21,13 @@ type
     cmdOK: TButton;
     cmdCancel: TButton;
     lblAlertRecipient: TLabel;
-    cboAlertRecipient: TORComboBox;
+    cboAlertRecipient: TORCheckComboBox;
     procedure cboAlertRecipientNeedData(Sender: TObject;
       const StartFrom: String; Direction, InsertAt: Integer);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure cboAlertRecipientMainCheckboxClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     procedure SetUp(aList: TList);
   end;
@@ -82,12 +85,24 @@ begin
   end;
 end;
 
+procedure TfrmAlertOrders.FormCreate(Sender: TObject);
+begin
+  inherited;
+  cboAlertRecipient.MainCheckBoxVisible := IncludeNonVAProviders(cboAlertRecipient);
+end;
+
 procedure TfrmAlertOrders.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   inherited;
   if Key = VK_ESCAPE then
     ModalResult := mrCancel;
+end;
+
+procedure TfrmAlertOrders.cboAlertRecipientMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  cboAlertRecipient.ReInitLongList;
 end;
 
 procedure TfrmAlertOrders.cboAlertRecipientNeedData(Sender: TObject;

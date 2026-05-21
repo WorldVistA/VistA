@@ -2484,6 +2484,7 @@ end;
 procedure TfrmDCSumm.popSummMemoFindClick(Sender: TObject);
 begin
   inherited;
+  memSumm.SelStart := 0;
   SendMessage(TRichEdit(popSummMemo.PopupComponent).Handle, WM_VSCROLL,
     SB_TOP, 0);
   with dlgFindText do

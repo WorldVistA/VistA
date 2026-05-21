@@ -2,22 +2,24 @@ inherited frmTemplateEditor: TfrmTemplateEditor
   Left = 321
   Top = 119
   HelpContext = 10000
-  ActiveControl = tvPersonal
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Template Editor'
-  ClientHeight = 639
-  ClientWidth = 909
+  ClientHeight = 761
+  ClientWidth = 1008
+  Constraints.MinHeight = 800
+  Constraints.MinWidth = 1024
   Position = poScreenCenter
   Scaled = False
+  StyleElements = [seFont, seClient, seBorder]
   OnCloseQuery = FormCloseQuery
-  ExplicitWidth = 925
-  ExplicitHeight = 678
-  PixelsPerInch = 96
+  ExplicitLeft = -251
+  ExplicitWidth = 1024
+  ExplicitHeight = 800
   TextHeight = 13
   object splMain: TSplitter [0]
     Left = 0
     Top = 300
-    Width = 909
+    Width = 1008
     Height = 3
     Cursor = crVSplit
     Align = alTop
@@ -25,198 +27,627 @@ inherited frmTemplateEditor: TfrmTemplateEditor
     Beveled = True
     MinSize = 40
     OnCanResize = splMainCanResize
-    OnMoved = splMainMoved
     ExplicitTop = 239
     ExplicitWidth = 740
   end
   object pnlTop: TPanel [1]
     Left = 0
     Top = 0
-    Width = 909
+    Width = 1008
     Height = 300
     Align = alTop
     BevelOuter = bvNone
     Constraints.MinHeight = 223
     TabOrder = 0
-    object splMiddle: TSplitter
-      Left = 260
-      Top = 26
-      Height = 274
-      Align = alRight
-      AutoSnap = False
-      Beveled = True
-      ExplicitLeft = 297
-      ExplicitTop = 24
-      ExplicitHeight = 215
-    end
-    object Bevel1: TBevel
+    ExplicitWidth = 951
+    object grdTop: TGridPanel
       Left = 0
-      Top = 22
-      Width = 909
-      Height = 4
-      Align = alTop
-      Shape = bsTopLine
-      ExplicitWidth = 959
-    end
-    object pnlRightTop: TPanel
-      Left = 263
-      Top = 26
-      Width = 646
-      Height = 274
-      Align = alRight
+      Top = 0
+      Width = 1008
+      Height = 300
+      Align = alClient
       BevelOuter = bvNone
-      TabOrder = 2
-      object splProperties: TSplitter
-        Left = 338
-        Top = 0
-        Height = 274
-        Align = alRight
-        AutoSnap = False
-        Beveled = True
-        ExplicitLeft = 402
-        ExplicitHeight = 276
-      end
-      object pnlCopyBtns: TPanel
+      ColumnCollection = <
+        item
+          Value = 60.000000000000000000
+        end
+        item
+          Value = 39.999999999999990000
+        end>
+      ControlCollection = <
+        item
+          Column = 0
+          Control = pnlToolBar
+          Row = 0
+        end
+        item
+          Column = 1
+          Control = pnlToolbarRight
+          Row = 0
+        end
+        item
+          Column = 0
+          Control = grdTopLeft
+          Row = 1
+        end
+        item
+          Column = 1
+          Control = pnlProperties
+          Row = 1
+        end>
+      RowCollection = <
+        item
+          Value = 10.000000000000000000
+        end
+        item
+          Value = 90.000000000000000000
+        end>
+      TabOrder = 0
+      ExplicitWidth = 951
+      object pnlToolBar: TPanel
         Left = 0
         Top = 0
-        Width = 28
-        Height = 274
-        Align = alLeft
+        Width = 605
+        Height = 30
+        Align = alClient
+        BevelEdges = [beBottom]
+        BevelKind = bkTile
         BevelOuter = bvNone
         TabOrder = 0
-        DesignSize = (
-          28
-          274)
-        object lblCopy: TLabel
-          Left = -3
-          Top = 76
-          Width = 31
-          Height = 19
-          Alignment = taCenter
-          Anchors = [akLeft, akTop, akRight]
-          AutoSize = False
-          Caption = 'Copy'
-          Enabled = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          ParentFont = False
-          Layout = tlCenter
-        end
-        object sbCopyRight: TBitBtn
-          Left = 1
-          Top = 125
-          Width = 23
-          Height = 23
-          Hint = 'Copy Shared Template into Personal Template List'
-          Enabled = False
-          Glyph.Data = {
-            76010000424D7601000000000000760000002800000020000000100000000100
-            0400000000000001000000000000000000001000000010000000000000000000
-            8000008000000080800080000000800080008080000080808000C0C0C0000000
-            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00111111111111
-            1111111111111111111111111111111111111111111F11111111111111011111
-            11111111117FF1111111111111001111111111111177FF111111111111000111
-            1111111111777FF11111111111000011111111FFFF7777FF1111100000000001
-            111117777777777FF1111000000000001111177777777777FF11100000000000
-            01111777777777777F1110000000000001111777777777777111100000000000
-            1111177777777777111110000000000111111777777777711111111111000011
-            1111111111777711111111111100011111111111117771111111111111001111
-            1111111111771111111111111101111111111111117111111111}
-          NumGlyphs = 2
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
-          OnClick = sbCopyRightClick
-        end
-        object sbCopyLeft: TBitBtn
-          Tag = 1
-          Left = 1
-          Top = 100
-          Width = 23
-          Height = 23
-          Hint = 'Copy Personal Template into Shared Template List'
-          Enabled = False
-          Glyph.Data = {
-            76010000424D7601000000000000760000002800000020000000100000000100
-            0400000000000001000000000000000000001000000010000000000000000000
-            8000008000000080800080000000800080008080000080808000C0C0C0000000
-            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00111111111111
-            11111111111111111111111111111111111111111111F1111111111111101111
-            111111111117F1111111111111001111111111111177F1111111111110001111
-            111111111777F1111111111100001111111111117777FFFFFF11111000000000
-            01111117777777777F1111000000000001111177777777777F11100000000000
-            01111777777777777F1110000000000001111777777777777F11110000000000
-            01111177777777777F1111100000000001111117777777777111111100001111
-            111111117777F1111111111110001111111111111777F1111111111111001111
-            111111111177F111111111111110111111111111111711111111}
-          NumGlyphs = 2
-          ParentShowHint = False
-          ShowHint = True
+        ExplicitWidth = 571
+        object tbMain: TToolBar
+          Left = 0
+          Top = 0
+          Width = 111
+          Height = 28
+          Align = alLeft
+          AutoSize = True
+          ButtonHeight = 21
+          ButtonWidth = 37
+          Caption = 'tbMain'
+          Flat = False
+          GradientStartColor = clSkyBlue
+          HotTrackColor = clGray
+          GradientDirection = gdHorizontal
+          ShowCaptions = True
           TabOrder = 0
-          OnClick = sbCopyLeftClick
+          Transparent = False
+          object tbMnuEdit: TToolButton
+            Left = 0
+            Top = 0
+            Action = acMnuEdit
+            PopupMenu = popEdit
+          end
+          object tbMnuAction: TToolButton
+            Left = 37
+            Top = 0
+            Action = acMnuAction
+          end
+          object tbMnuTools: TToolButton
+            Left = 74
+            Top = 0
+            Action = acMnuTools
+          end
         end
       end
-      object pnlPersonal: TPanel
-        Left = 28
+      object pnlToolbarRight: TPanel
+        Left = 605
         Top = 0
-        Width = 310
-        Height = 274
+        Width = 403
+        Height = 30
+        Align = alClient
+        BevelEdges = [beBottom]
+        BevelKind = bkTile
+        BevelOuter = bvNone
+        TabOrder = 1
+        ExplicitLeft = 571
+        ExplicitWidth = 380
+        object btnNew: TORAlignButton
+          AlignWithMargins = True
+          Left = 307
+          Top = 3
+          Width = 93
+          Height = 22
+          Action = acActionNewTemplate
+          Align = alRight
+          TabOrder = 0
+          ExplicitLeft = 284
+        end
+      end
+      object grdTopLeft: TGridPanel
+        Left = 0
+        Top = 30
+        Width = 605
+        Height = 270
         Align = alClient
         BevelOuter = bvNone
-        Constraints.MinWidth = 100
-        TabOrder = 1
-        object tvPersonal: TORTreeView
-          Tag = 1
+        ColumnCollection = <
+          item
+            Value = 45.884547529499680000
+          end
+          item
+            Value = 8.194817133962880000
+          end
+          item
+            Value = 45.920635336537440000
+          end>
+        ControlCollection = <
+          item
+            Column = 0
+            Control = pnlSharedtop
+            Row = 0
+          end
+          item
+            Column = 1
+            Control = pnlGap1
+            Row = 0
+          end
+          item
+            Column = 2
+            Control = pnlPersonalTop
+            Row = 0
+          end
+          item
+            Column = 0
+            Control = pnlSharedMiddle
+            Row = 1
+          end
+          item
+            Column = 1
+            Control = pnlCopyBtns
+            Row = 1
+          end
+          item
+            Column = 2
+            Control = pnlPerSearchMain
+            Row = 1
+          end
+          item
+            Column = 0
+            Control = pnlSharedBottom
+            Row = 2
+          end
+          item
+            Column = 1
+            Control = pnlGap2
+            Row = 2
+          end
+          item
+            Column = 2
+            Control = pnlPersonalBottom
+            Row = 2
+          end>
+        RowCollection = <
+          item
+            Value = 17.650688646467430000
+          end
+          item
+            Value = 71.391075265711590000
+          end
+          item
+            Value = 10.958236087820980000
+          end>
+        TabOrder = 2
+        ExplicitWidth = 571
+        object pnlSharedtop: TPanel
           Left = 0
-          Top = 57
-          Width = 310
-          Height = 193
+          Top = 0
+          Width = 278
+          Height = 48
           Align = alClient
-          DragMode = dmAutomatic
-          Images = dmodShared.imgTemplates
-          Indent = 19
-          PopupMenu = popTemplatesPlus
-          RightClickSelect = True
-          TabOrder = 3
-          OnChange = tvTreeChange
-          OnDragDrop = tvTreeDragDrop
-          OnDragOver = tvTreeDragOver
-          OnEdited = tvTreeNodeEdited
-          OnEndDrag = tvTreeEndDrag
-          OnEnter = tvTreeEnter
-          OnExpanding = tvPersonalExpanding
-          OnGetImageIndex = tvTreeGetImageIndex
-          OnGetSelectedIndex = tvTreeGetSelectedIndex
-          OnKeyDown = tvTreeKeyDown
-          OnStartDrag = tvTreeStartDrag
-          Caption = 'Personal Templates'
-          NodePiece = 0
-          OnDragging = tvTreeDragging
-        end
-        object pnlPersonalBottom: TPanel
-          Left = 0
-          Top = 250
-          Width = 310
-          Height = 24
-          Align = alBottom
           BevelOuter = bvNone
-          TabOrder = 4
-          object sbPerUp: TBitBtn
+          TabOrder = 0
+          ExplicitWidth = 262
+          object lblShared: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 272
+            Height = 13
+            Align = alTop
+            Caption = '&Shared Templates'
+            FocusControl = tvShared
+            ExplicitWidth = 86
+          end
+          object pnlMiddleTopSearch: TPanel
+            Left = 0
+            Top = 19
+            Width = 278
+            Height = 29
+            Align = alClient
+            BevelOuter = bvNone
+            TabOrder = 0
+            ExplicitLeft = -6
+            ExplicitTop = 41
+            ExplicitWidth = 262
+            object btnShFind: TORAlignButton
+              AlignWithMargins = True
+              Left = 220
+              Top = 3
+              Width = 55
+              Height = 23
+              Hint = 'Find Template'
+              Align = alRight
+              Caption = 'Find'
+              ParentShowHint = False
+              ShowHint = True
+              TabOrder = 1
+              OnClick = btnFindClick
+              ExplicitLeft = 204
+            end
+            object edtShSearch: TCaptionEdit
+              AlignWithMargins = True
+              Left = 3
+              Top = 3
+              Width = 211
+              Height = 23
+              Align = alClient
+              TabOrder = 0
+              OnChange = edtSearchChange
+              OnEnter = edtShSearchEnter
+              OnExit = edtShSearchExit
+              Caption = 'Shared Templates'
+              ExplicitWidth = 195
+              ExplicitHeight = 21
+            end
+          end
+        end
+        object pnlGap1: TPanel
+          Left = 278
+          Top = 0
+          Width = 49
+          Height = 48
+          Align = alClient
+          BevelOuter = bvNone
+          TabOrder = 3
+          ExplicitLeft = 262
+          ExplicitWidth = 47
+        end
+        object pnlPersonalTop: TPanel
+          Left = 327
+          Top = 0
+          Width = 278
+          Height = 48
+          Align = alClient
+          BevelOuter = bvNone
+          TabOrder = 5
+          ExplicitLeft = 309
+          ExplicitWidth = 262
+          object lblPersonal: TLabel
             Tag = 1
             AlignWithMargins = True
-            Left = 218
+            Left = 3
+            Top = 3
+            Width = 272
+            Height = 13
+            Align = alTop
+            Caption = '&Personal Templates'
+            FocusControl = tvPersonal
+            ExplicitWidth = 93
+          end
+          object pnlPersonalTopSearch: TPanel
+            Left = 0
+            Top = 19
+            Width = 278
+            Height = 29
+            Align = alClient
+            BevelOuter = bvNone
+            TabOrder = 0
+            ExplicitWidth = 262
+            object btnPerFind: TORAlignButton
+              Tag = 1
+              AlignWithMargins = True
+              Left = 220
+              Top = 3
+              Width = 55
+              Height = 23
+              Hint = 'Find Template'
+              Align = alRight
+              Caption = 'Find'
+              ParentShowHint = False
+              ShowHint = True
+              TabOrder = 1
+              OnClick = btnFindClick
+              ExplicitLeft = 204
+            end
+            object edtPerSearch: TCaptionEdit
+              Tag = 1
+              AlignWithMargins = True
+              Left = 3
+              Top = 3
+              Width = 211
+              Height = 23
+              Align = alClient
+              TabOrder = 0
+              OnChange = edtSearchChange
+              OnEnter = edtPerSearchEnter
+              OnExit = edtPerSearchExit
+              Caption = #45924#31759
+              ExplicitWidth = 195
+              ExplicitHeight = 21
+            end
+          end
+        end
+        object pnlSharedMiddle: TPanel
+          Left = 0
+          Top = 48
+          Width = 278
+          Height = 192
+          Align = alClient
+          BevelOuter = bvNone
+          TabOrder = 1
+          ExplicitWidth = 262
+          object pnlShSearch: TPanel
+            Left = 0
+            Top = 0
+            Width = 278
+            Height = 25
+            Align = alTop
+            AutoSize = True
+            BevelOuter = bvNone
+            TabOrder = 0
+            ExplicitWidth = 262
+            object cbShMatchCase: TCheckBox
+              AlignWithMargins = True
+              Left = 3
+              Top = 3
+              Width = 99
+              Height = 19
+              Align = alLeft
+              Caption = 'Match Case'
+              TabOrder = 1
+              OnClick = cbShFindOptionClick
+            end
+            object cbShWholeWords: TCheckBox
+              AlignWithMargins = True
+              Left = 108
+              Top = 3
+              Width = 167
+              Height = 19
+              Align = alClient
+              Caption = 'Whole Words Only'
+              TabOrder = 0
+              OnClick = cbShFindOptionClick
+              ExplicitWidth = 151
+            end
+          end
+          object tvShared: TORTreeView
+            AlignWithMargins = True
+            Left = 3
+            Top = 28
+            Width = 272
+            Height = 161
+            Align = alClient
+            DragMode = dmAutomatic
+            Images = dmodShared.imgTemplates
+            Indent = 19
+            PopupMenu = popTemplatesPlus
+            RightClickSelect = True
+            TabOrder = 1
+            OnChange = tvTreeChange
+            OnDragDrop = tvTreeDragDrop
+            OnDragOver = tvTreeDragOver
+            OnEdited = tvTreeNodeEdited
+            OnEndDrag = tvTreeEndDrag
+            OnEnter = tvTreeEnter
+            OnExpanding = tvSharedExpanding
+            OnGetImageIndex = tvTreeGetImageIndex
+            OnGetSelectedIndex = tvTreeGetSelectedIndex
+            OnKeyDown = tvTreeKeyDown
+            OnStartDrag = tvTreeStartDrag
+            Caption = 'Shared Templates'
+            NodePiece = 0
+            OnDragging = tvTreeDragging
+            ExplicitWidth = 256
+          end
+        end
+        object pnlCopyBtns: TPanel
+          Left = 278
+          Top = 48
+          Width = 49
+          Height = 192
+          Align = alClient
+          BevelOuter = bvNone
+          TabOrder = 4
+          ExplicitLeft = 262
+          ExplicitWidth = 47
+          object lblCopy: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 70
+            Width = 43
+            Height = 19
+            Margins.Top = 70
+            Align = alTop
+            Alignment = taCenter
+            AutoSize = False
+            Caption = 'Copy'
+            Enabled = False
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = []
+            ParentFont = False
+            Layout = tlCenter
+            ExplicitLeft = -9
+            ExplicitTop = 76
+            ExplicitWidth = 31
+          end
+          object sbCopyLeft: TBitBtn
+            Tag = 1
+            AlignWithMargins = True
+            Left = 3
+            Top = 95
+            Width = 43
+            Height = 23
+            Hint = 'Copy Personal Template into Shared Template List'
+            Align = alTop
+            Enabled = False
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              0400000000000001000000000000000000001000000010000000000000000000
+              8000008000000080800080000000800080008080000080808000C0C0C0000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00111111111111
+              11111111111111111111111111111111111111111111F1111111111111101111
+              111111111117F1111111111111001111111111111177F1111111111110001111
+              111111111777F1111111111100001111111111117777FFFFFF11111000000000
+              01111117777777777F1111000000000001111177777777777F11100000000000
+              01111777777777777F1110000000000001111777777777777F11110000000000
+              01111177777777777F1111100000000001111117777777777111111100001111
+              111111117777F1111111111110001111111111111777F1111111111111001111
+              111111111177F111111111111110111111111111111711111111}
+            NumGlyphs = 2
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 0
+            OnClick = sbCopyLeftClick
+            ExplicitWidth = 41
+          end
+          object sbCopyRight: TBitBtn
+            AlignWithMargins = True
+            Left = 3
+            Top = 124
+            Width = 43
+            Height = 23
+            Hint = 'Copy Shared Template into Personal Template List'
+            Align = alTop
+            Enabled = False
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              0400000000000001000000000000000000001000000010000000000000000000
+              8000008000000080800080000000800080008080000080808000C0C0C0000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00111111111111
+              1111111111111111111111111111111111111111111F11111111111111011111
+              11111111117FF1111111111111001111111111111177FF111111111111000111
+              1111111111777FF11111111111000011111111FFFF7777FF1111100000000001
+              111117777777777FF1111000000000001111177777777777FF11100000000000
+              01111777777777777F1110000000000001111777777777777111100000000000
+              1111177777777777111110000000000111111777777777711111111111000011
+              1111111111777711111111111100011111111111117771111111111111001111
+              1111111111771111111111111101111111111111117111111111}
+            NumGlyphs = 2
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 1
+            OnClick = sbCopyRightClick
+            ExplicitWidth = 41
+          end
+        end
+        object pnlPerSearchMain: TPanel
+          Left = 327
+          Top = 48
+          Width = 278
+          Height = 192
+          Align = alClient
+          BevelOuter = bvNone
+          TabOrder = 6
+          ExplicitLeft = 309
+          ExplicitWidth = 262
+          object tvPersonal: TORTreeView
+            Tag = 1
+            AlignWithMargins = True
+            Left = 3
+            Top = 28
+            Width = 272
+            Height = 161
+            Align = alClient
+            DragMode = dmAutomatic
+            Images = dmodShared.imgTemplates
+            Indent = 19
+            PopupMenu = popTemplatesPlus
+            RightClickSelect = True
+            TabOrder = 0
+            OnChange = tvTreeChange
+            OnDragDrop = tvTreeDragDrop
+            OnDragOver = tvTreeDragOver
+            OnEdited = tvTreeNodeEdited
+            OnEndDrag = tvTreeEndDrag
+            OnEnter = tvTreeEnter
+            OnExpanding = tvPersonalExpanding
+            OnGetImageIndex = tvTreeGetImageIndex
+            OnGetSelectedIndex = tvTreeGetSelectedIndex
+            OnKeyDown = tvTreeKeyDown
+            OnStartDrag = tvTreeStartDrag
+            Caption = 'Personal Templates'
+            NodePiece = 0
+            OnDragging = tvTreeDragging
+            ExplicitWidth = 256
+          end
+          object pnlPerSearch: TPanel
+            Left = 0
+            Top = 0
+            Width = 278
+            Height = 25
+            Align = alTop
+            AutoSize = True
+            BevelOuter = bvNone
+            TabOrder = 1
+            ExplicitWidth = 262
+            object cbPerMatchCase: TCheckBox
+              Tag = 1
+              AlignWithMargins = True
+              Left = 3
+              Top = 3
+              Width = 99
+              Height = 19
+              Align = alLeft
+              Caption = 'Match Case'
+              TabOrder = 0
+              OnClick = cbPerFindOptionClick
+            end
+            object cbPerWholeWords: TCheckBox
+              Tag = 1
+              AlignWithMargins = True
+              Left = 108
+              Top = 3
+              Width = 167
+              Height = 19
+              Align = alClient
+              Caption = 'Whole Words Only'
+              TabOrder = 1
+              OnClick = cbPerFindOptionClick
+              ExplicitWidth = 151
+            end
+          end
+        end
+        object pnlSharedBottom: TPanel
+          Left = 0
+          Top = 240
+          Width = 278
+          Height = 30
+          Align = alClient
+          BevelOuter = bvNone
+          TabOrder = 2
+          ExplicitWidth = 262
+          object cbShHide: TCheckBox
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 153
+            Height = 24
+            Hint = 'Hide Inactive Shared Templates'
+            Align = alClient
+            Caption = '&Hide Inactive'
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 0
+            OnClick = cbShHideClick
+            ExplicitWidth = 137
+          end
+          object sbShDelete: TBitBtn
+            AlignWithMargins = True
+            Left = 209
             Top = 2
-            Width = 21
-            Height = 20
-            Hint = 'Move Personal Template Up'
-            Margins.Left = 0
+            Width = 67
+            Height = 26
+            Hint = 'Delete Shared Template'
+            Margins.Left = 2
             Margins.Top = 2
-            Margins.Right = 0
+            Margins.Right = 2
             Margins.Bottom = 2
             Align = alRight
+            Caption = 'Delete'
             Enabled = False
             Glyph.Data = {
               76010000424D7601000000000000760000002800000020000000100000000100
@@ -224,31 +655,31 @@ inherited frmTemplateEditor: TfrmTemplateEditor
               8000008000000080800080000000800080008080000080808000C0C0C0000000
               FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00111111111111
               1111111111111111111111111111111111111111111111111111111111111111
-              111111111FFFFFF1111111110000001111111111777777F11111111100000011
-              11111111777777F1111111110000001111111111777777F11111111100000011
-              11111111777777F1111111110000001111111FFF777777FFFFF1000000000000
-              0011777777777777771110000000000001111777777777777111110000000000
-              1111117777777777111111100000000111111117777777711111111100000011
-              1111111177777711111111111000011111111111177771111111111111001111
-              1111111111771111111111111111111111111111111111111111}
+              111111FF11111111FF111001111111100111177FF11111177F11100011111100
+              01111777FF1111777111110001111000111111777FF117771111111000110001
+              1111111777FF7771111111110000001111111111777777111111111110000111
+              1111111117777F1111111111100001111111111117777FF11111111100000011
+              11111111777777FF1111111000110001111111177711777FF111110001111000
+              1111117771111777FF1110001111110001111777111111777111100111111110
+              0111177111111117711111111111111111111111111111111111}
+            Layout = blGlyphRight
             NumGlyphs = 2
             ParentShowHint = False
             ShowHint = True
-            TabOrder = 0
-            OnClick = sbMoveUpClick
-            ExplicitLeft = 216
+            TabOrder = 3
+            OnClick = sbDeleteClick
+            ExplicitLeft = 193
           end
-          object sbPerDown: TBitBtn
-            Tag = 1
+          object sbShDown: TBitBtn
             AlignWithMargins = True
-            Left = 195
+            Left = 159
             Top = 2
-            Width = 21
-            Height = 20
-            Hint = 'Move Personal Template Down'
-            Margins.Left = 2
+            Width = 22
+            Height = 26
+            Hint = 'Move Shared Template Down'
+            Margins.Left = 0
             Margins.Top = 2
-            Margins.Right = 2
+            Margins.Right = 0
             Margins.Bottom = 2
             Align = alRight
             Enabled = False
@@ -270,15 +701,85 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             ShowHint = True
             TabOrder = 1
             OnClick = sbMoveDownClick
-            ExplicitLeft = 191
+            ExplicitLeft = 143
+          end
+          object sbShUp: TBitBtn
+            AlignWithMargins = True
+            Left = 183
+            Top = 2
+            Width = 22
+            Height = 26
+            Hint = 'Move Shared Template Up'
+            Margins.Left = 2
+            Margins.Top = 2
+            Margins.Right = 2
+            Margins.Bottom = 2
+            Align = alRight
+            Enabled = False
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              0400000000000001000000000000000000001000000010000000000000000000
+              8000008000000080800080000000800080008080000080808000C0C0C0000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00111111111111
+              1111111111111111111111111111111111111111111111111111111111111111
+              111111111FFFFFF1111111110000001111111111777777F11111111100000011
+              11111111777777F1111111110000001111111111777777F11111111100000011
+              11111111777777F1111111110000001111111FFF777777FFFFF1000000000000
+              0011777777777777771110000000000001111777777777777111110000000000
+              1111117777777777111111100000000111111117777777711111111100000011
+              1111111177777711111111111000011111111111177771111111111111001111
+              1111111111771111111111111111111111111111111111111111}
+            NumGlyphs = 2
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 2
+            OnClick = sbMoveUpClick
+            ExplicitLeft = 167
+          end
+        end
+        object pnlGap2: TPanel
+          Left = 278
+          Top = 240
+          Width = 49
+          Height = 30
+          Align = alClient
+          BevelOuter = bvNone
+          TabOrder = 8
+          ExplicitLeft = 262
+          ExplicitWidth = 47
+        end
+        object pnlPersonalBottom: TPanel
+          Left = 327
+          Top = 240
+          Width = 278
+          Height = 30
+          Align = alClient
+          BevelOuter = bvNone
+          TabOrder = 7
+          ExplicitLeft = 309
+          ExplicitWidth = 262
+          object cbPerHide: TCheckBox
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 161
+            Height = 24
+            Hint = 'Hide Inactive Personal Templates'
+            Align = alClient
+            Caption = 'Hide &Inactive'
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 0
+            OnClick = cbPerHideClick
+            ExplicitWidth = 145
           end
           object sbPerDelete: TBitBtn
             Tag = 1
             AlignWithMargins = True
-            Left = 241
+            Left = 215
             Top = 2
-            Width = 67
-            Height = 20
+            Width = 61
+            Height = 26
             Hint = 'Delete Personal Template'
             Margins.Left = 2
             Margins.Top = 2
@@ -304,696 +805,500 @@ inherited frmTemplateEditor: TfrmTemplateEditor
             NumGlyphs = 2
             ParentShowHint = False
             ShowHint = True
-            TabOrder = 2
+            TabOrder = 3
             OnClick = sbDeleteClick
+            ExplicitLeft = 199
           end
-          object cbPerHide: TCheckBox
+          object sbPerDown: TBitBtn
+            Tag = 1
             AlignWithMargins = True
-            Left = 3
-            Top = 3
-            Width = 187
-            Height = 18
-            Hint = 'Hide Inactive Personal Templates'
-            Align = alClient
-            Caption = 'Hide &Inactive'
+            Left = 169
+            Top = 2
+            Width = 21
+            Height = 26
+            Hint = 'Move Personal Template Down'
+            Margins.Left = 2
+            Margins.Top = 2
+            Margins.Right = 2
+            Margins.Bottom = 2
+            Align = alRight
+            Enabled = False
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              0400000000000001000000000000000000001000000010000000000000000000
+              8000008000000080800080000000800080008080000080808000C0C0C0000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00111111111111
+              1111111111111111111111111111111111111111111111111111111111111111
+              11111111111FF1111111111111001111111111111177FF111111111110000111
+              1111111117777FF1111111110000001111111111777777FF1111111000000001
+              111111177777777FF1111100000000001111117777777777FF11100000000000
+              01111777777777777FF100000000000000117777777777777711111100000011
+              11111111777777F1111111110000001111111111777777F11111111100000011
+              11111111777777F1111111110000001111111111777777F11111111100000011
+              1111111177777711111111111111111111111111111111111111}
+            NumGlyphs = 2
             ParentShowHint = False
             ShowHint = True
-            TabOrder = 3
-            OnClick = cbPerHideClick
-            ExplicitWidth = 183
+            TabOrder = 1
+            OnClick = sbMoveDownClick
+            ExplicitLeft = 153
           end
-        end
-        object pnlPersonalGap: TPanel
-          Tag = 1
-          Left = 0
-          Top = 17
-          Width = 310
-          Height = 2
-          Align = alTop
-          BevelOuter = bvNone
-          TabOrder = 0
-        end
-        object pnlPerSearch: TPanel
-          Left = 0
-          Top = 19
-          Width = 310
-          Height = 38
-          Align = alTop
-          BevelOuter = bvNone
-          TabOrder = 1
-          OnResize = pnlPerSearchResize
-          DesignSize = (
-            310
-            38)
-          object btnPerFind: TORAlignButton
+          object sbPerUp: TBitBtn
             Tag = 1
-            Left = 255
-            Top = 0
-            Width = 55
-            Height = 21
-            Hint = 'Find Template'
-            Anchors = [akTop, akRight]
-            Caption = 'Find'
+            AlignWithMargins = True
+            Left = 192
+            Top = 2
+            Width = 21
+            Height = 26
+            Hint = 'Move Personal Template Up'
+            Margins.Left = 0
+            Margins.Top = 2
+            Margins.Right = 0
+            Margins.Bottom = 2
+            Align = alRight
+            Enabled = False
+            Glyph.Data = {
+              76010000424D7601000000000000760000002800000020000000100000000100
+              0400000000000001000000000000000000001000000010000000000000000000
+              8000008000000080800080000000800080008080000080808000C0C0C0000000
+              FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00111111111111
+              1111111111111111111111111111111111111111111111111111111111111111
+              111111111FFFFFF1111111110000001111111111777777F11111111100000011
+              11111111777777F1111111110000001111111111777777F11111111100000011
+              11111111777777F1111111110000001111111FFF777777FFFFF1000000000000
+              0011777777777777771110000000000001111777777777777111110000000000
+              1111117777777777111111100000000111111117777777711111111100000011
+              1111111177777711111111111000011111111111177771111111111111001111
+              1111111111771111111111111111111111111111111111111111}
+            NumGlyphs = 2
             ParentShowHint = False
             ShowHint = True
             TabOrder = 2
-            OnClick = btnFindClick
-          end
-          object edtPerSearch: TCaptionEdit
-            Tag = 1
-            Left = 0
-            Top = 0
-            Width = 255
-            Height = 21
-            Anchors = [akLeft, akTop, akRight]
-            TabOrder = 0
-            OnChange = edtSearchChange
-            OnEnter = edtPerSearchEnter
-            OnExit = edtPerSearchExit
-            Caption = 'Personal Templates'
-          end
-          object cbPerMatchCase: TCheckBox
-            Tag = 1
-            Left = 0
-            Top = 21
-            Width = 99
-            Height = 17
-            Caption = 'Match Case'
-            TabOrder = 3
-            OnClick = cbPerFindOptionClick
-          end
-          object cbPerWholeWords: TCheckBox
-            Tag = 1
-            Left = 105
-            Top = 21
-            Width = 137
-            Height = 17
-            Caption = 'Whole Words Only'
-            TabOrder = 4
-            OnClick = cbPerFindOptionClick
-          end
-        end
-        object Panel3: TPanel
-          Left = 0
-          Top = 0
-          Width = 310
-          Height = 17
-          Align = alTop
-          BevelOuter = bvNone
-          Caption = 'Panel2'
-          ShowCaption = False
-          TabOrder = 5
-          object lblPersonal: TLabel
-            Tag = 1
-            Left = 0
-            Top = 0
-            Width = 93
-            Height = 17
-            Align = alLeft
-            Caption = '&Personal Templates'
-            FocusControl = tvPersonal
-            ExplicitHeight = 13
+            OnClick = sbMoveUpClick
+            ExplicitLeft = 176
           end
         end
       end
       object pnlProperties: TPanel
-        Left = 341
-        Top = 0
-        Width = 305
-        Height = 274
-        Align = alRight
+        Left = 605
+        Top = 30
+        Width = 403
+        Height = 270
+        Align = alClient
         BevelOuter = bvNone
-        TabOrder = 2
+        TabOrder = 3
         OnResize = pnlPropertiesResize
+        ExplicitLeft = 571
+        ExplicitWidth = 380
         object gbProperties: TGroupBox
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 299
-          Height = 268
+          Width = 397
+          Height = 264
           Align = alClient
           Caption = 'Template Properties'
           Constraints.MinWidth = 100
           TabOrder = 0
-          DesignSize = (
-            299
-            268)
-          object lblName: TLabel
-            Left = 5
-            Top = 20
-            Width = 31
-            Height = 13
-            Caption = 'Na&me:'
-            FocusControl = edtName
-          end
-          object lblLines: TLabel
-            Left = 46
-            Top = 226
-            Width = 133
-            Height = 32
-            Hint = 
-              'Indicates the number of blank lines to insert, in the group boil' +
-              'erplate, between each item'#39's boilerplate.'
-            Anchors = [akLeft, akTop, akRight]
-            AutoSize = False
-            Caption = 'Number of Blank &Lines to insert between items'
-            FocusControl = edtGap
-            ParentShowHint = False
-            ShowHint = True
-            WordWrap = True
-          end
-          object lblType: TLabel
-            Left = 5
-            Top = 50
-            Width = 74
-            Height = 13
-            Caption = 'Template T&ype:'
-            FocusControl = cbxType
-          end
-          object lblRemDlg: TLabel
-            Left = 5
-            Top = 74
-            Width = 81
-            Height = 13
-            Caption = 'Reminder &Dialog:'
-            FocusControl = cbxRemDlgs
-          end
-          object cbExclude: TORCheckBox
-            Left = 5
-            Top = 169
-            Width = 101
-            Height = 56
-            Hint = 
-              'Removes this template'#39's boilerplate from the group'#39's boilerplate' +
-              '.'
-            Caption = 'E&xclude from Group Boilerplate'
-            ParentShowHint = False
-            ShowHint = True
-            TabOrder = 6
-            WordWrap = True
-            OnClick = cbExcludeClick
-            AutoSize = True
-          end
-          object cbActive: TCheckBox
-            Left = 5
-            Top = 95
-            Width = 61
-            Height = 17
-            Hint = 'Makes a template or folder active or inactive.'
-            Caption = 'A&ctive'
-            Checked = True
-            ParentShowHint = False
-            ShowHint = True
-            State = cbChecked
-            TabOrder = 3
-            OnClick = cbActiveClick
-          end
-          object edtGap: TCaptionEdit
-            Left = 5
-            Top = 230
-            Width = 20
-            Height = 21
-            Hint = 
-              'Indicates the number of blank lines to insert, in the group boil' +
-              'erplate, between each item'#39's boilerplate.'
-            MaxLength = 1
-            ParentShowHint = False
-            ShowHint = True
-            TabOrder = 8
-            Text = '0'
-            OnChange = edtGapChange
-            OnKeyPress = edtGapKeyPress
-            Caption = 'Number of Blank Lines to insert between items'
-          end
-          object udGap: TUpDown
-            Left = 25
-            Top = 230
-            Width = 15
-            Height = 21
-            Hint = 
-              'Indicates the number of blank lines to insert, in the group boil' +
-              'erplate, between each item'#39's boilerplate.'
-            Associate = edtGap
-            Max = 3
-            ParentShowHint = False
-            ShowHint = True
-            TabOrder = 11
-          end
-          object edtName: TCaptionEdit
-            Left = 64
-            Top = 17
-            Width = 229
-            Height = 21
-            Anchors = [akLeft, akTop, akRight]
-            MaxLength = 60
+          ExplicitWidth = 374
+          object GridPanel3: TGridPanel
+            Left = 2
+            Top = 15
+            Width = 393
+            Height = 222
+            Align = alClient
+            BevelOuter = bvNone
+            ColumnCollection = <
+              item
+                Value = 39.846005774783440000
+              end
+              item
+                Value = 60.153994225216560000
+              end>
+            ControlCollection = <
+              item
+                Column = 0
+                Control = lblName
+                Row = 0
+              end
+              item
+                Column = 1
+                Control = edtName
+                Row = 0
+              end
+              item
+                Column = 0
+                Control = lblType
+                Row = 1
+              end
+              item
+                Column = 1
+                Control = cbxType
+                Row = 1
+              end
+              item
+                Column = 0
+                Control = lblRemDlg
+                Row = 2
+              end
+              item
+                Column = 1
+                Control = cbxRemDlgs
+                Row = 2
+              end
+              item
+                Column = 0
+                Control = Panel4
+                Row = 3
+              end
+              item
+                Column = 1
+                Control = gbDialogProps
+                Row = 3
+              end>
+            RowCollection = <
+              item
+                Value = 13.683031065307800000
+              end
+              item
+                Value = 13.683031065307800000
+              end
+              item
+                Value = 13.683031065307800000
+              end
+              item
+                Value = 58.950906804076600000
+              end>
             TabOrder = 0
-            OnChange = edtNameOldChange
-            OnExit = edtNameExit
-            Caption = 'Name'
-          end
-          object gbDialogProps: TGroupBox
-            Left = 136
-            Top = 115
-            Width = 157
-            Height = 98
-            Anchors = [akLeft, akTop, akRight]
-            Caption = 'Dialog Properties'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWindowText
-            Font.Height = -11
-            Font.Name = 'MS Sans Serif'
-            Font.Style = []
-            ParentFont = False
-            TabOrder = 4
-            object cbDisplayOnly: TCheckBox
-              Left = 6
-              Top = 15
-              Width = 131
-              Height = 17
-              Hint = 
-                'Template boilerplate is for dialog display only, and can not be ' +
-                'added to the note.'
-              Caption = 'Display Only'
-              ParentShowHint = False
-              ShowHint = True
+            ExplicitWidth = 370
+            object lblName: TLabel
+              AlignWithMargins = True
+              Left = 3
+              Top = 8
+              Width = 151
+              Height = 13
+              Margins.Top = 8
+              Align = alTop
+              Anchors = []
+              Caption = 'Na&me:'
+              FocusControl = edtName
+              ExplicitWidth = 31
+            end
+            object edtName: TCaptionEdit
+              AlignWithMargins = True
+              Left = 160
+              Top = 3
+              Width = 230
+              Height = 21
+              Align = alTop
+              Anchors = []
+              MaxLength = 60
               TabOrder = 0
-              OnClick = cbDisplayOnlyClick
+              OnChange = edtNameOldChange
+              OnExit = edtNameExit
+              Caption = 'Name'
+              ExplicitLeft = 126
+              ExplicitWidth = 241
             end
-            object cbOneItemOnly: TCheckBox
-              Left = 6
-              Top = 60
-              Width = 113
-              Height = 17
-              Hint = 'Allow only one child item to be selected at a time'
-              Caption = 'One Item Only'
-              ParentShowHint = False
-              ShowHint = True
-              TabOrder = 3
-              OnClick = cbOneItemOnlyClick
+            object lblType: TLabel
+              AlignWithMargins = True
+              Left = 3
+              Top = 38
+              Width = 151
+              Height = 13
+              Margins.Top = 8
+              Align = alTop
+              Anchors = []
+              Caption = 'Template T&ype:'
+              FocusControl = cbxType
+              ExplicitWidth = 74
             end
-            object cbFirstLine: TCheckBox
-              Left = 6
-              Top = 30
-              Width = 144
-              Height = 17
-              Hint = 
-                'Only show the first line of text in the dialog, but include the ' +
-                'entire template in the note'
-              Caption = 'Only Show First Line'
+            object cbxType: TCaptionComboBox
+              AlignWithMargins = True
+              Left = 160
+              Top = 33
+              Width = 230
+              Height = 24
+              Align = alTop
+              Style = csOwnerDrawFixed
+              Anchors = []
+              ItemHeight = 18
               ParentShowHint = False
               ShowHint = True
               TabOrder = 1
-              OnClick = cbFirstLineClick
+              OnChange = cbxTypeChange
+              OnDrawItem = cbxTypeDrawItem
+              Caption = 'Template Type'
+              ExplicitLeft = 126
+              ExplicitWidth = 241
             end
-            object cbHideDlgItems: TCheckBox
-              Left = 6
-              Top = 75
-              Width = 147
-              Height = 17
-              Hint = 'Hide child items when parent template is not selected'
-              Caption = 'Hide Dialog Items'
-              ParentShowHint = False
-              ShowHint = True
-              TabOrder = 4
-              OnClick = cbHideDlgItemsClick
+            object lblRemDlg: TLabel
+              AlignWithMargins = True
+              Left = 3
+              Top = 69
+              Width = 151
+              Height = 13
+              Margins.Top = 8
+              Align = alTop
+              Anchors = []
+              Caption = 'Reminder &Dialog:'
+              FocusControl = cbxRemDlgs
+              ExplicitWidth = 81
             end
-            object cbIndent: TCheckBox
-              Left = 6
-              Top = 45
-              Width = 147
-              Height = 17
-              Hint = 
-                'Indent child items in the dialog.  Text insertion remains unchan' +
-                'ged'
-              Caption = 'Indent Dialog Items'
-              ParentShowHint = False
-              ShowHint = True
+            object cbxRemDlgs: TORComboBox
+              AlignWithMargins = True
+              Left = 160
+              Top = 64
+              Width = 230
+              Height = 21
+              Style = orcsDropDown
+              Align = alTop
+              AutoSelect = True
+              Caption = 'Reminder Dialog'
+              Color = clWindow
+              DropDownCount = 12
+              ItemHeight = 13
+              ItemTipColor = clWindow
+              ItemTipEnable = True
+              ListItemsOnly = True
+              LongList = False
+              LookupPiece = 0
+              MaxLength = 0
+              Pieces = '2'
+              Sorted = False
+              SynonymChars = '<>'
               TabOrder = 2
-              OnClick = cbIndentClick
+              Text = ''
+              FlatCheckBoxes = False
+              OnChange = cbxRemDlgsChange
+              CharsNeedMatch = 1
+              ExplicitLeft = 126
+              ExplicitWidth = 241
+            end
+            object Panel4: TPanel
+              Left = 0
+              Top = 91
+              Width = 157
+              Height = 131
+              Align = alClient
+              Anchors = []
+              BevelOuter = bvNone
+              TabOrder = 3
+              ExplicitWidth = 123
+              object cbActive: TCheckBox
+                AlignWithMargins = True
+                Left = 3
+                Top = 3
+                Width = 151
+                Height = 17
+                Hint = 'Makes a template or folder active or inactive.'
+                Align = alTop
+                Caption = 'A&ctive'
+                Checked = True
+                ParentShowHint = False
+                ShowHint = True
+                State = cbChecked
+                TabOrder = 0
+                OnClick = cbActiveClick
+                ExplicitWidth = 117
+              end
+              object cbExclude: TORCheckBox
+                AlignWithMargins = True
+                Left = 3
+                Top = 61
+                Width = 151
+                Height = 29
+                Hint = 
+                  'Removes this template'#39's boilerplate from the group'#39's boilerplate' +
+                  '.'
+                Align = alTop
+                Caption = 'Hide Items in Templates Dra&wer'
+                ParentShowHint = False
+                ShowHint = True
+                TabOrder = 2
+                WordWrap = True
+                OnClick = cbExcludeClick
+                AutoSize = True
+                ExplicitWidth = 117
+              end
+              object cbHideItems: TORCheckBox
+                AlignWithMargins = True
+                Left = 3
+                Top = 26
+                Width = 151
+                Height = 29
+                Hint = 'Hide child items from template drawer view'
+                Align = alTop
+                Caption = 'E&xclude from Group Boilerplate'
+                ParentShowHint = False
+                ShowHint = True
+                TabOrder = 1
+                WordWrap = True
+                OnClick = cbHideItemsClick
+                AutoSize = True
+                ExplicitWidth = 117
+              end
+              object cbLock: TORCheckBox
+                AlignWithMargins = True
+                Left = 3
+                Top = 96
+                Width = 151
+                Height = 16
+                Align = alTop
+                Caption = 'Lock'
+                TabOrder = 3
+                OnClick = cbLockClick
+                AutoSize = True
+                ExplicitWidth = 117
+              end
+            end
+            object gbDialogProps: TGroupBox
+              AlignWithMargins = True
+              Left = 160
+              Top = 94
+              Width = 230
+              Height = 125
+              Align = alClient
+              Anchors = []
+              Caption = 'Dialog Properties'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clWindowText
+              Font.Height = -11
+              Font.Name = 'MS Sans Serif'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 4
+              ExplicitLeft = 126
+              ExplicitWidth = 241
+              object cbDisplayOnly: TCheckBox
+                Left = 6
+                Top = 15
+                Width = 131
+                Height = 17
+                Hint = 
+                  'Template boilerplate is for dialog display only, and can not be ' +
+                  'added to the note.'
+                Caption = 'Display Only'
+                ParentShowHint = False
+                ShowHint = True
+                TabOrder = 0
+                OnClick = cbDisplayOnlyClick
+              end
+              object cbOneItemOnly: TCheckBox
+                Left = 6
+                Top = 60
+                Width = 113
+                Height = 17
+                Hint = 'Allow only one child item to be selected at a time'
+                Caption = 'One Item Only'
+                ParentShowHint = False
+                ShowHint = True
+                TabOrder = 3
+                OnClick = cbOneItemOnlyClick
+              end
+              object cbFirstLine: TCheckBox
+                Left = 6
+                Top = 30
+                Width = 144
+                Height = 17
+                Hint = 
+                  'Only show the first line of text in the dialog, but include the ' +
+                  'entire template in the note'
+                Caption = 'Only Show First Line'
+                ParentShowHint = False
+                ShowHint = True
+                TabOrder = 1
+                OnClick = cbFirstLineClick
+              end
+              object cbHideDlgItems: TCheckBox
+                Left = 6
+                Top = 75
+                Width = 147
+                Height = 17
+                Hint = 'Hide child items when parent template is not selected'
+                Caption = 'Hide Dialog Items'
+                ParentShowHint = False
+                ShowHint = True
+                TabOrder = 4
+                OnClick = cbHideDlgItemsClick
+              end
+              object cbIndent: TCheckBox
+                Left = 6
+                Top = 45
+                Width = 147
+                Height = 17
+                Hint = 
+                  'Indent child items in the dialog.  Text insertion remains unchan' +
+                  'ged'
+                Caption = 'Indent Dialog Items'
+                ParentShowHint = False
+                ShowHint = True
+                TabOrder = 2
+                OnClick = cbIndentClick
+              end
             end
           end
-          object cbHideItems: TORCheckBox
+          object Panel2: TPanel
+            AlignWithMargins = True
             Left = 5
-            Top = 115
-            Width = 101
-            Height = 54
-            Hint = 'Hide child items from template drawer view'
-            Caption = 'Hide Items in Templates Dra&wer'
-            ParentShowHint = False
-            ShowHint = True
-            TabOrder = 5
-            WordWrap = True
-            OnClick = cbHideItemsClick
-            AutoSize = True
-          end
-          object cbxType: TCaptionComboBox
-            Left = 120
-            Top = 44
-            Width = 173
-            Height = 24
-            Style = csOwnerDrawFixed
-            Anchors = [akLeft, akTop, akRight]
-            ItemHeight = 18
-            ParentShowHint = False
-            ShowHint = True
+            Top = 240
+            Width = 387
+            Height = 19
+            Align = alBottom
+            BevelOuter = bvNone
             TabOrder = 1
-            OnChange = cbxTypeChange
-            OnDrawItem = cbxTypeDrawItem
-            Caption = 'Template Type'
+            ExplicitWidth = 364
+            object lblLines: TLabel
+              AlignWithMargins = True
+              Left = 50
+              Top = 3
+              Width = 334
+              Height = 13
+              Hint = 
+                'Indicates the number of blank lines to insert, in the group boil' +
+                'erplate, between each item'#39's boilerplate.'
+              Margins.Left = 30
+              Align = alClient
+              Caption = 'Number of Blank &Lines to insert between items'
+              FocusControl = edtGap
+              ParentShowHint = False
+              ShowHint = True
+              WordWrap = True
+              ExplicitWidth = 218
+            end
+            object edtGap: TCaptionEdit
+              Left = 0
+              Top = 0
+              Width = 20
+              Height = 19
+              Hint = 
+                'Indicates the number of blank lines to insert, in the group boil' +
+                'erplate, between each item'#39's boilerplate.'
+              Align = alLeft
+              MaxLength = 1
+              ParentShowHint = False
+              ShowHint = True
+              TabOrder = 0
+              Text = '0'
+              OnChange = edtGapChange
+              OnKeyPress = edtGapKeyPress
+              Caption = 'Number of Blank Lines to insert between items'
+            end
+            object udGap: TUpDown
+              Left = 20
+              Top = 0
+              Width = 15
+              Height = 19
+              Hint = 
+                'Indicates the number of blank lines to insert, in the group boil' +
+                'erplate, between each item'#39's boilerplate.'
+              Associate = edtGap
+              Max = 3
+              ParentShowHint = False
+              ShowHint = True
+              TabOrder = 1
+            end
           end
-          object cbxRemDlgs: TORComboBox
-            Left = 118
-            Top = 71
-            Width = 176
-            Height = 21
-            Anchors = [akLeft, akTop, akRight]
-            Style = orcsDropDown
-            AutoSelect = True
-            Caption = 'Reminder Dialog'
-            Color = clWindow
-            DropDownCount = 12
-            ItemHeight = 13
-            ItemTipColor = clWindow
-            ItemTipEnable = True
-            ListItemsOnly = True
-            LongList = False
-            LookupPiece = 0
-            MaxLength = 0
-            Pieces = '2'
-            Sorted = False
-            SynonymChars = '<>'
-            TabOrder = 2
-            Text = ''
-            OnChange = cbxRemDlgsChange
-            CharsNeedMatch = 1
-          end
-          object cbLock: TORCheckBox
-            Left = 212
-            Top = 234
-            Width = 47
-            Height = 16
-            Caption = 'Lock'
-            TabOrder = 12
-            OnClick = cbLockClick
-          end
-        end
-      end
-    end
-    object pnlShared: TPanel
-      Left = 0
-      Top = 26
-      Width = 260
-      Height = 274
-      Align = alClient
-      BevelOuter = bvNone
-      TabOrder = 1
-      object tvShared: TORTreeView
-        Left = 0
-        Top = 57
-        Width = 260
-        Height = 193
-        Align = alClient
-        DragMode = dmAutomatic
-        Images = dmodShared.imgTemplates
-        Indent = 19
-        PopupMenu = popTemplatesPlus
-        RightClickSelect = True
-        TabOrder = 3
-        OnChange = tvTreeChange
-        OnDragDrop = tvTreeDragDrop
-        OnDragOver = tvTreeDragOver
-        OnEdited = tvTreeNodeEdited
-        OnEndDrag = tvTreeEndDrag
-        OnEnter = tvTreeEnter
-        OnExpanding = tvSharedExpanding
-        OnGetImageIndex = tvTreeGetImageIndex
-        OnGetSelectedIndex = tvTreeGetSelectedIndex
-        OnKeyDown = tvTreeKeyDown
-        OnStartDrag = tvTreeStartDrag
-        Caption = 'Shared Templates'
-        NodePiece = 0
-        OnDragging = tvTreeDragging
-      end
-      object pnlSharedBottom: TPanel
-        Left = 0
-        Top = 250
-        Width = 260
-        Height = 24
-        Align = alBottom
-        BevelOuter = bvNone
-        TabOrder = 4
-        object sbShUp: TBitBtn
-          AlignWithMargins = True
-          Left = 143
-          Top = 2
-          Width = 22
-          Height = 20
-          Hint = 'Move Shared Template Up'
-          Margins.Left = 2
-          Margins.Top = 2
-          Margins.Right = 2
-          Margins.Bottom = 2
-          Align = alRight
-          Enabled = False
-          Glyph.Data = {
-            76010000424D7601000000000000760000002800000020000000100000000100
-            0400000000000001000000000000000000001000000010000000000000000000
-            8000008000000080800080000000800080008080000080808000C0C0C0000000
-            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00111111111111
-            1111111111111111111111111111111111111111111111111111111111111111
-            111111111FFFFFF1111111110000001111111111777777F11111111100000011
-            11111111777777F1111111110000001111111111777777F11111111100000011
-            11111111777777F1111111110000001111111FFF777777FFFFF1000000000000
-            0011777777777777771110000000000001111777777777777111110000000000
-            1111117777777777111111100000000111111117777777711111111100000011
-            1111111177777711111111111000011111111111177771111111111111001111
-            1111111111771111111111111111111111111111111111111111}
-          NumGlyphs = 2
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 0
-          OnClick = sbMoveUpClick
-          ExplicitLeft = 139
-        end
-        object sbShDown: TBitBtn
-          AlignWithMargins = True
-          Left = 167
-          Top = 2
-          Width = 22
-          Height = 20
-          Hint = 'Move Shared Template Down'
-          Margins.Left = 0
-          Margins.Top = 2
-          Margins.Right = 0
-          Margins.Bottom = 2
-          Align = alRight
-          Enabled = False
-          Glyph.Data = {
-            76010000424D7601000000000000760000002800000020000000100000000100
-            0400000000000001000000000000000000001000000010000000000000000000
-            8000008000000080800080000000800080008080000080808000C0C0C0000000
-            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00111111111111
-            1111111111111111111111111111111111111111111111111111111111111111
-            11111111111FF1111111111111001111111111111177FF111111111110000111
-            1111111117777FF1111111110000001111111111777777FF1111111000000001
-            111111177777777FF1111100000000001111117777777777FF11100000000000
-            01111777777777777FF100000000000000117777777777777711111100000011
-            11111111777777F1111111110000001111111111777777F11111111100000011
-            11111111777777F1111111110000001111111111777777F11111111100000011
-            1111111177777711111111111111111111111111111111111111}
-          NumGlyphs = 2
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 1
-          OnClick = sbMoveDownClick
-          ExplicitLeft = 165
-        end
-        object sbShDelete: TBitBtn
-          AlignWithMargins = True
-          Left = 191
-          Top = 2
-          Width = 67
-          Height = 20
-          Hint = 'Delete Shared Template'
-          Margins.Left = 2
-          Margins.Top = 2
-          Margins.Right = 2
-          Margins.Bottom = 2
-          Align = alRight
-          Caption = 'Delete'
-          Enabled = False
-          Glyph.Data = {
-            76010000424D7601000000000000760000002800000020000000100000000100
-            0400000000000001000000000000000000001000000010000000000000000000
-            8000008000000080800080000000800080008080000080808000C0C0C0000000
-            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00111111111111
-            1111111111111111111111111111111111111111111111111111111111111111
-            111111FF11111111FF111001111111100111177FF11111177F11100011111100
-            01111777FF1111777111110001111000111111777FF117771111111000110001
-            1111111777FF7771111111110000001111111111777777111111111110000111
-            1111111117777F1111111111100001111111111117777FF11111111100000011
-            11111111777777FF1111111000110001111111177711777FF111110001111000
-            1111117771111777FF1110001111110001111777111111777111100111111110
-            0111177111111117711111111111111111111111111111111111}
-          Layout = blGlyphRight
-          NumGlyphs = 2
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 2
-          OnClick = sbDeleteClick
-        end
-        object cbShHide: TCheckBox
-          AlignWithMargins = True
-          Left = 3
-          Top = 3
-          Width = 135
-          Height = 18
-          Hint = 'Hide Inactive Shared Templates'
-          Align = alClient
-          Caption = '&Hide Inactive'
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 3
-          OnClick = cbShHideClick
-          ExplicitWidth = 131
-        end
-      end
-      object pnlSharedGap: TPanel
-        Left = 0
-        Top = 17
-        Width = 260
-        Height = 2
-        Align = alTop
-        BevelOuter = bvNone
-        TabOrder = 0
-      end
-      object pnlShSearch: TPanel
-        Left = 0
-        Top = 19
-        Width = 260
-        Height = 38
-        Align = alTop
-        BevelOuter = bvNone
-        TabOrder = 1
-        OnResize = pnlShSearchResize
-        DesignSize = (
-          260
-          38)
-        object btnShFind: TORAlignButton
-          Left = 205
-          Top = 0
-          Width = 55
-          Height = 21
-          Hint = 'Find Template'
-          Anchors = [akTop, akRight]
-          Caption = 'Find'
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 2
-          OnClick = btnFindClick
-        end
-        object edtShSearch: TCaptionEdit
-          Left = 0
-          Top = 0
-          Width = 205
-          Height = 21
-          Anchors = [akLeft, akTop, akRight]
-          TabOrder = 0
-          OnChange = edtSearchChange
-          OnEnter = edtShSearchEnter
-          OnExit = edtShSearchExit
-          Caption = 'Shared Templates'
-        end
-        object cbShMatchCase: TCheckBox
-          Left = 0
-          Top = 21
-          Width = 99
-          Height = 17
-          Caption = 'Match Case'
-          TabOrder = 3
-          OnClick = cbShFindOptionClick
-        end
-        object cbShWholeWords: TCheckBox
-          Left = 111
-          Top = 21
-          Width = 143
-          Height = 17
-          Caption = 'Whole Words Only'
-          TabOrder = 4
-          OnClick = cbShFindOptionClick
-        end
-      end
-      object Panel2: TPanel
-        Left = 0
-        Top = 0
-        Width = 260
-        Height = 17
-        Align = alTop
-        BevelOuter = bvNone
-        Caption = 'Panel2'
-        ShowCaption = False
-        TabOrder = 5
-        object lblShared: TLabel
-          Left = 0
-          Top = 0
-          Width = 86
-          Height = 17
-          Align = alLeft
-          Caption = '&Shared Templates'
-          FocusControl = tvShared
-          ExplicitHeight = 13
-        end
-      end
-    end
-    object pnlToolBar: TPanel
-      Left = 0
-      Top = 0
-      Width = 909
-      Height = 22
-      Align = alTop
-      BevelOuter = bvNone
-      TabOrder = 0
-      object btnNew: TORAlignButton
-        Left = 816
-        Top = 0
-        Width = 93
-        Height = 22
-        Action = acActionNewTemplate
-        Align = alRight
-        TabOrder = 0
-      end
-      object tbMain: TToolBar
-        Left = 0
-        Top = 0
-        Width = 111
-        Height = 22
-        Align = alLeft
-        AutoSize = True
-        ButtonHeight = 21
-        ButtonWidth = 37
-        Caption = 'tbMain'
-        Flat = False
-        GradientStartColor = clSkyBlue
-        HotTrackColor = clGray
-        GradientDirection = gdHorizontal
-        ShowCaptions = True
-        TabOrder = 1
-        Transparent = False
-        object tbMnuEdit: TToolButton
-          Left = 0
-          Top = 0
-          Action = acMnuEdit
-          PopupMenu = popEdit
-        end
-        object tbMnuAction: TToolButton
-          Left = 37
-          Top = 0
-          Action = acMnuAction
-        end
-        object tbMnuTools: TToolButton
-          Left = 74
-          Top = 0
-          Action = acMnuTools
         end
       end
     end
@@ -1001,12 +1306,13 @@ inherited frmTemplateEditor: TfrmTemplateEditor
   object pnlCOM: TPanel [2]
     Left = 0
     Top = 345
-    Width = 909
+    Width = 1008
     Height = 21
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 2
     Visible = False
+    ExplicitWidth = 951
     object lblCOMParam: TLabel
       Left = 283
       Top = 0
@@ -1030,12 +1336,14 @@ inherited frmTemplateEditor: TfrmTemplateEditor
     object edtCOMParam: TCaptionEdit
       Left = 360
       Top = 0
-      Width = 549
+      Width = 648
       Height = 21
       Align = alClient
+      BevelInner = bvNone
       TabOrder = 2
       OnChange = edtCOMParamChange
       Caption = 'Passed Value'
+      ExplicitWidth = 591
     end
     object cbxCOMObj: TORComboBox
       Left = 67
@@ -1060,6 +1368,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       SynonymChars = '<>'
       TabOrder = 0
       Text = ''
+      FlatCheckBoxes = False
       OnChange = cbxCOMObjChange
       CharsNeedMatch = 1
     end
@@ -1067,12 +1376,13 @@ inherited frmTemplateEditor: TfrmTemplateEditor
   object pnlLink: TPanel [3]
     Left = 0
     Top = 303
-    Width = 909
+    Width = 1008
     Height = 21
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 1
     Visible = False
+    ExplicitWidth = 951
     object lblLink: TLabel
       Left = 0
       Top = 0
@@ -1086,7 +1396,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
     object cbxLink: TORComboBox
       Left = 138
       Top = 0
-      Width = 771
+      Width = 870
       Height = 21
       Style = orcsDropDown
       Align = alClient
@@ -1109,34 +1419,40 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       TabOrder = 0
       TabStop = True
       Text = ''
+      FlatCheckBoxes = False
       OnChange = cbxLinkChange
       OnEnter = cbxLinkEnter
       OnExit = cbxLinkExit
       OnNeedData = cbxLinkNeedData
       CharsNeedMatch = 1
+      ExplicitWidth = 813
     end
   end
   object Panel1: TPanel [4]
     Left = 0
     Top = 366
-    Width = 909
-    Height = 246
+    Width = 1008
+    Height = 368
     Align = alClient
     TabOrder = 3
+    ExplicitWidth = 951
+    ExplicitHeight = 246
     object pnlBoilerplate: TPanel
       Left = 1
       Top = 1
-      Width = 907
-      Height = 244
+      Width = 1006
+      Height = 366
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
       OnCanResize = pnlBoilerplateCanResize
       OnResize = pnlBoilerplateResize
+      ExplicitWidth = 949
+      ExplicitHeight = 244
       object splBoil: TSplitter
         Left = 0
         Top = 21
-        Width = 907
+        Width = 1006
         Height = 3
         Cursor = crVSplit
         Align = alTop
@@ -1149,8 +1465,8 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       end
       object splNotes: TSplitter
         Left = 0
-        Top = 198
-        Width = 907
+        Top = 320
+        Width = 1006
         Height = 3
         Cursor = crVSplit
         Align = alBottom
@@ -1164,8 +1480,8 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       object reBoil: TRichEdit
         Left = 0
         Top = 24
-        Width = 907
-        Height = 128
+        Width = 1006
+        Height = 250
         Align = alClient
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -1179,28 +1495,31 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         ScrollBars = ssVertical
         TabOrder = 1
         WantTabs = True
-        Zoom = 100
         OnChange = reBoilChange
         OnKeyDown = reBoilKeyDown
         OnKeyPress = reBoilKeyPress
         OnKeyUp = reBoilKeyUp
         OnResizeRequest = reResizeRequest
         OnSelectionChange = reBoilSelectionChange
+        ExplicitWidth = 949
+        ExplicitHeight = 128
       end
       object pnlGroupBP: TPanel
         Left = 0
-        Top = 152
-        Width = 907
+        Top = 274
+        Width = 1006
         Height = 46
         Align = alBottom
         BevelOuter = bvNone
         Constraints.MinHeight = 30
         TabOrder = 2
         Visible = False
+        ExplicitTop = 152
+        ExplicitWidth = 949
         object lblGroupBP: TLabel
           Left = 0
           Top = 0
-          Width = 907
+          Width = 1006
           Height = 13
           Align = alTop
           Caption = 'Group Boilerplate'
@@ -1223,7 +1542,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         object reGroupBP: TRichEdit
           Left = 0
           Top = 16
-          Width = 907
+          Width = 1006
           Height = 30
           Align = alClient
           Color = clCream
@@ -1240,27 +1559,29 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           ScrollBars = ssBoth
           TabOrder = 1
           WantReturns = False
-          Zoom = 100
           OnSelectionChange = reGroupBPSelectionChange
+          ExplicitWidth = 949
         end
         object pnlGroupBPGap: TPanel
           Left = 0
           Top = 13
-          Width = 907
+          Width = 1006
           Height = 3
           Align = alTop
           BevelOuter = bvNone
           TabOrder = 0
+          ExplicitWidth = 949
         end
       end
       object pnlBP: TPanel
         Left = 0
         Top = 0
-        Width = 907
+        Width = 1006
         Height = 21
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
+        ExplicitWidth = 949
         object lblBoilerplate: TLabel
           Left = 0
           Top = 1
@@ -1297,18 +1618,20 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       end
       object pnlNotes: TPanel
         Left = 0
-        Top = 201
-        Width = 907
+        Top = 323
+        Width = 1006
         Height = 43
         Align = alBottom
         BevelOuter = bvNone
         Constraints.MinHeight = 30
         TabOrder = 3
         Visible = False
+        ExplicitTop = 201
+        ExplicitWidth = 949
         object lblNotes: TLabel
           Left = 0
           Top = 0
-          Width = 907
+          Width = 1006
           Height = 13
           Align = alTop
           Caption = 'Template Notes:'
@@ -1317,7 +1640,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         object reNotes: TRichEdit
           Left = 0
           Top = 13
-          Width = 907
+          Width = 1006
           Height = 30
           Align = alClient
           Font.Charset = ANSI_CHARSET
@@ -1332,45 +1655,47 @@ inherited frmTemplateEditor: TfrmTemplateEditor
           ScrollBars = ssVertical
           TabOrder = 0
           WantTabs = True
-          Zoom = 100
           OnChange = reNotesChange
           OnKeyDown = reBoilKeyDown
           OnKeyPress = reBoilKeyPress
           OnKeyUp = reBoilKeyUp
           OnResizeRequest = reResizeRequest
+          ExplicitWidth = 949
         end
       end
     end
   end
   object pnlBottom: TPanel [5]
     Left = 0
-    Top = 612
-    Width = 909
+    Top = 734
+    Width = 1008
     Height = 27
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 4
-    DesignSize = (
-      909
-      27)
+    ExplicitTop = 612
+    ExplicitWidth = 951
     object btnApply: TButton
-      Left = 834
-      Top = 4
+      AlignWithMargins = True
+      Left = 930
+      Top = 3
       Width = 75
-      Height = 22
-      Anchors = [akTop, akRight]
+      Height = 21
+      Align = alRight
       Caption = 'Apply'
       ParentShowHint = False
       ShowHint = False
       TabOrder = 2
       OnClick = btnApplyClick
+      ExplicitLeft = 873
     end
     object btnCancel: TButton
-      Left = 753
-      Top = 4
+      AlignWithMargins = True
+      Left = 849
+      Top = 3
       Width = 75
-      Height = 22
-      Anchors = [akTop, akRight]
+      Height = 21
+      Align = alRight
       Cancel = True
       Caption = 'Cancel'
       ModalResult = 2
@@ -1378,24 +1703,27 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       ShowHint = False
       TabOrder = 1
       OnClick = btnCancelClick
+      ExplicitLeft = 792
     end
     object btnOK: TButton
-      Left = 673
-      Top = 4
+      AlignWithMargins = True
+      Left = 768
+      Top = 3
       Width = 75
-      Height = 22
-      Anchors = [akTop, akRight]
+      Height = 21
+      Align = alRight
       Caption = 'OK'
       ParentShowHint = False
       ShowHint = False
       TabOrder = 0
       OnClick = btnOKClick
+      ExplicitLeft = 711
     end
     object cbEditShared: TCheckBox
       AlignWithMargins = True
       Left = 3
       Top = 3
-      Width = 156
+      Width = 135
       Height = 21
       Align = alLeft
       Caption = 'E&dit Shared Templates'
@@ -1404,9 +1732,9 @@ inherited frmTemplateEditor: TfrmTemplateEditor
     end
     object cbEditUser: TCheckBox
       AlignWithMargins = True
-      Left = 165
+      Left = 144
       Top = 3
-      Width = 155
+      Width = 133
       Height = 21
       Align = alLeft
       Caption = 'E&dit User'#39's Templates'
@@ -1416,9 +1744,9 @@ inherited frmTemplateEditor: TfrmTemplateEditor
     end
     object cbNotes: TCheckBox
       AlignWithMargins = True
-      Left = 326
+      Left = 283
       Top = 3
-      Width = 125
+      Width = 126
       Height = 21
       Hint = 
         'Keep notes about a template that can be seen from the templates ' +
@@ -1434,16 +1762,17 @@ inherited frmTemplateEditor: TfrmTemplateEditor
   object pnlComCare: TPanel [6]
     Left = 0
     Top = 324
-    Width = 909
+    Width = 1008
     Height = 21
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 5
     Visible = False
+    ExplicitWidth = 951
     object lblComCare: TLabel
       Left = 0
       Top = 0
-      Width = 909
+      Width = 1008
       Height = 21
       Align = alClient
       Caption = 'This template has been locked and may not be edited.'
@@ -1452,8 +1781,8 @@ inherited frmTemplateEditor: TfrmTemplateEditor
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
-    Left = 208
-    Top = 144
+    Left = 472
+    Top = 424
     Data = (
       (
         'Component = pnlBottom'
@@ -1471,25 +1800,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         'Component = pnlTop'
         'Status = stsDefault')
       (
-        'Component = pnlRightTop'
-        'Status = stsDefault')
-      (
-        'Component = pnlCopyBtns'
-        'Status = stsDefault')
-      (
-        'Component = sbCopyRight'
-        'Status = stsDefault')
-      (
-        'Component = sbCopyLeft'
-        'Status = stsDefault')
-      (
-        'Component = pnlPersonal'
-        'Status = stsDefault')
-      (
         'Component = tvPersonal'
-        'Status = stsDefault')
-      (
-        'Component = pnlPersonalBottom'
         'Status = stsDefault')
       (
         'Component = sbPerUp'
@@ -1502,12 +1813,6 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         'Status = stsDefault')
       (
         'Component = cbPerHide'
-        'Status = stsDefault')
-      (
-        'Component = pnlPersonalGap'
-        'Status = stsDefault')
-      (
-        'Component = pnlPerSearch'
         'Status = stsDefault')
       (
         'Component = btnPerFind'
@@ -1574,13 +1879,7 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         'Component = cbLock'
         'Status = stsDefault')
       (
-        'Component = pnlShared'
-        'Status = stsDefault')
-      (
         'Component = tvShared'
-        'Status = stsDefault')
-      (
-        'Component = pnlSharedBottom'
         'Status = stsDefault')
       (
         'Component = sbShUp'
@@ -1593,9 +1892,6 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         'Status = stsDefault')
       (
         'Component = cbShHide'
-        'Status = stsDefault')
-      (
-        'Component = pnlSharedGap'
         'Status = stsDefault')
       (
         'Component = pnlShSearch'
@@ -1676,12 +1972,6 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         'Component = tbMain'
         'Status = stsDefault')
       (
-        'Component = Panel2'
-        'Status = stsDefault')
-      (
-        'Component = Panel3'
-        'Status = stsDefault')
-      (
         'Component = cbEditShared'
         'Status = stsDefault')
       (
@@ -1689,28 +1979,88 @@ inherited frmTemplateEditor: TfrmTemplateEditor
         'Status = stsDefault')
       (
         'Component = cbNotes'
+        'Status = stsDefault')
+      (
+        'Component = grdTop'
+        'Status = stsDefault')
+      (
+        'Component = pnlToolbarRight'
+        'Status = stsDefault')
+      (
+        'Component = grdTopLeft'
+        'Status = stsDefault')
+      (
+        'Component = pnlSharedtop'
+        'Status = stsDefault')
+      (
+        'Component = pnlGap1'
+        'Status = stsDefault')
+      (
+        'Component = pnlPersonalTop'
+        'Status = stsDefault')
+      (
+        'Component = pnlSharedMiddle'
+        'Status = stsDefault')
+      (
+        'Component = pnlCopyBtns'
+        'Status = stsDefault')
+      (
+        'Component = pnlPerSearchMain'
+        'Status = stsDefault')
+      (
+        'Component = pnlSharedBottom'
+        'Status = stsDefault')
+      (
+        'Component = pnlGap2'
+        'Status = stsDefault')
+      (
+        'Component = pnlPersonalBottom'
+        'Status = stsDefault')
+      (
+        'Component = sbCopyLeft'
+        'Status = stsDefault')
+      (
+        'Component = sbCopyRight'
+        'Status = stsDefault')
+      (
+        'Component = pnlPersonalTopSearch'
+        'Status = stsDefault')
+      (
+        'Component = pnlMiddleTopSearch'
+        'Status = stsDefault')
+      (
+        'Component = pnlPerSearch'
+        'Status = stsDefault')
+      (
+        'Component = GridPanel3'
+        'Status = stsDefault')
+      (
+        'Component = Panel2'
+        'Status = stsDefault')
+      (
+        'Component = Panel4'
         'Status = stsDefault'))
   end
   object tmrAutoScroll: TTimer
     Enabled = False
     Interval = 200
     OnTimer = tmrAutoScrollTimer
-    Left = 120
-    Top = 96
+    Left = 40
+    Top = 200
   end
   object dlgImport: TOpenDialog
     DefaultExt = 'txml'
     Filter = 'Template Files|*.txml|XML Files|*.xml|All Files|*.*'
     Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofEnableSizing]
-    Left = 16
-    Top = 152
+    Left = 40
+    Top = 128
   end
   object dlgExport: TSaveDialog
     DefaultExt = 'txml'
     Filter = 'Template Files|*.txml|XML Files|*.xml|All Files|*.*'
     Options = [ofOverwritePrompt, ofHideReadOnly, ofEnableSizing]
-    Left = 71
-    Top = 152
+    Left = 143
+    Top = 128
   end
   object imgLblTemplates: TVA508ImageListLabeler
     Components = <
@@ -1722,12 +2072,12 @@ inherited frmTemplateEditor: TfrmTemplateEditor
       end>
     Labels = <>
     RemoteLabeler = dmodShared.imgLblHealthFactorLabels
-    Left = 208
-    Top = 96
+    Left = 560
+    Top = 424
   end
   object alMain: TActionList
-    Left = 312
-    Top = 96
+    Left = 416
+    Top = 192
     object acEditRedo: TAction
       Category = 'Standard'
       Caption = '&Redo'
@@ -2053,8 +2403,8 @@ inherited frmTemplateEditor: TfrmTemplateEditor
   end
   object popTemplatesPlus: TPopupMenu
     OnPopup = popTemplatesPlusPopup
-    Left = 184
-    Top = 218
+    Left = 144
+    Top = 201
     object NewTemplate2: TMenuItem
       Action = acActionNewTemplate
     end
@@ -2088,8 +2438,8 @@ inherited frmTemplateEditor: TfrmTemplateEditor
   end
   object popNotesPlus: TPopupMenu
     OnPopup = popNotesPlusPopup
-    Left = 162
-    Top = 429
+    Left = 282
+    Top = 421
     object MenuItem26: TMenuItem
       Action = acEditUndo
     end
@@ -2126,8 +2476,8 @@ inherited frmTemplateEditor: TfrmTemplateEditor
   end
   object popGroupPlus: TPopupMenu
     OnPopup = popGroupPlusPopup
-    Left = 104
-    Top = 413
+    Left = 176
+    Top = 421
     object MenuItem36: TMenuItem
       Action = acEditCopy
     end
@@ -2149,8 +2499,8 @@ inherited frmTemplateEditor: TfrmTemplateEditor
   end
   object popBoilerplatePlus: TPopupMenu
     OnPopup = popBoilerplatePlusPopup
-    Left = 40
-    Top = 396
+    Left = 56
+    Top = 420
     object MenuItem39: TMenuItem
       Action = acEditUndo
     end

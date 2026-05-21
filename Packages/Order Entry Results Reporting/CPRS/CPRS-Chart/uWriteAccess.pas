@@ -180,7 +180,8 @@ uses
   rODBase,
   rMisc,
   rODRad,
-  VAInfoDialog;
+  VAInfoDialog,
+  VAShared.UTStringsHelper;
 
 { TWriteAccess }
 
@@ -669,8 +670,8 @@ var
   Features: TVAInfoDialog.TFeatures;
   plural, warError, genError: Boolean;
   dgObj: TDGWriteAccess;
-  btnCaptions: TVAInfoDialog.TStringArray;
-  OnClicks: TVAInfoDialog.TEventArray;
+  btnCaptions: TArray<string>;
+  OnClicks: TArray<TNotifyEvent>;
 begin
   if (FErrorProcessingCount > 0) or (not Assigned(FErrors)) or
     (FErrors.Count = 0) then

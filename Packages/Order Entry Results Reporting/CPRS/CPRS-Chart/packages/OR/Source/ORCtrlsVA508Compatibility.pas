@@ -97,10 +97,18 @@ type
 //    function Redirect(Component: TWinControl; var ManagedType: TManagedType): TWinControl; override;
 //  end;
 
+//  TORComboCheckBoxMain508Manager = class(TVA508ManagedComponentClass)
+//  public
+//    constructor Create; override;
+//    function GetComponentName(Component: TWinControl): string; override;
+//   function Redirect(Component: TWinControl; var ManagedType: TManagedType): TWinControl; override;
+//  end;
+
+
 implementation
 
 uses VA508DelphiCompatibility, ORCtrls, ORDtTm, VA508AccessibilityRouter,
-  VA508AccessibilityConst, ORDtTmRng, UResponsiveGUI;
+  VA508AccessibilityConst, ORDtTmRng, UResponsiveGUI, ORCheckComboBox;
 
 function GetEditBox(ComboBox: TORComboBox): TORComboEdit;
 var
@@ -148,6 +156,7 @@ begin
   RegisterManagedComponentClass(TORYearEdit508Manager.Create);
   RegisterManagedComponentClass(TORDateButton508Manager.Create);
 //  RegisterManagedComponentClass(TORComboEdit508Manager.Create);
+//  RegisterManagedComponentClass(TORComboCheckBoxMain508Manager.Create);
 
   RegisterComplexComponentManager(TVA508TORDateComboComplexManager.Create);
 //  RegisterComplexComponentManager(TVA508TORComboBoxComplexManager.Create);
@@ -590,6 +599,35 @@ end;
 //begin
 //  ManagedType := mtCaption;
 //  Result := TWinControl(Component.Owner);
+//end;
+
+//constructor TORComboCheckBoxMain508Manager.Create;
+//begin
+//  inherited Create(TORComboCheckBoxMain, [mtComponentRedirect, mtComponentName, mtInstructions, mtState, mtStateChange]);
+//end;
+//
+//function TORComboCheckBoxMain508Manager.Redirect(Component: TWinControl;
+//  var ManagedType: TManagedType): TWinControl;
+//begin
+//  ManagedType := mtCaption;
+//  Result := (Component.Owner as TWinControl);
+//end;
+//
+//function TORComboCheckBoxMain508Manager.GetComponentName
+//  (Component: TWinControl): string;
+//begin
+//  Result := '';
+//  if Assigned(Component) then
+//  begin
+//    with (Component as TORCheckBox) do
+//    begin
+//      if RadioStyle then
+//        Result := 'radio button'
+//      else
+//        Result := VA508DelphiCompatibility.GetCheckBoxComponentName
+//          (AllowGrayed);
+//    end;
+//  end;
 //end;
 
 { TVA508TORComboBoxComplexManager }

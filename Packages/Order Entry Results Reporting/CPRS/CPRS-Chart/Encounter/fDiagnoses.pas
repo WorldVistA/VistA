@@ -6,12 +6,12 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fPCEBase, StdCtrls, CheckLst, ORNet, ExtCtrls, Buttons, uPCE, ORFn,
   ComCtrls, fPCEBaseMain, UBAGlobals, UBAConst, UCore, VA508AccessibilityManager,
-  ORCtrls, StrUtils;
+  ORCtrls, StrUtils, U508Button, U508CheckBox;
 
 type
   TfrmDiagnoses = class(TfrmPCEBaseMain)
-    cmdDiagPrimary: TButton;
-    ckbDiagProb: TCheckBox;
+    cmdDiagPrimary: U508Button.TButton;
+    ckbDiagProb: U508CheckBox.TCheckBox;
     procedure cmdDiagPrimaryClick(Sender: TObject);
     procedure ckbDiagProbClicked(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -35,6 +35,7 @@ type
   protected
     procedure UpdateNewItemStr(var x: string); override;
     procedure UpdateControls; override;
+    procedure Loaded; override;
   public
     procedure addToList(str: string);
     procedure deleteFromList(str: string);
@@ -66,7 +67,6 @@ const
   TC_INV_ICD10_DX          = 'Invalid Selection';
 
 var
-  frmDiagnoses: TfrmDiagnoses;
   dxList : TStringList;
   PLUpdated: boolean = False;
 
@@ -75,52 +75,12 @@ implementation
 {$R *.DFM}
 
 uses
-  fEncounterFrame, uConst, UBACore, VA508AccessibilityRouter, fPCELex, rPCE, uProbs, rProbs, rCore, VAUtils;
-
-type
-  TORCBImgIdx = (iiUnchecked, iiChecked, iiGrayed, iiQMark, iiBlueQMark,
-    iiDisUnchecked, iiDisChecked, iiDisGrayed, iiDisQMark,
-    iiFlatUnChecked, iiFlatChecked, iiFlatGrayed,
-    iiRadioUnchecked, iiRadioChecked, iiRadioDisUnchecked, iiRadioDisChecked);
+  fEncounterFrame, uConst, UBACore, VA508AccessibilityRouter, fPCELex, rPCE,
+  uProbs, rProbs, rCore, VAUtils, rSpecialAuthority, fVisitType;
 
 const
-  CheckBoxImageResNames: array[TORCBImgIdx] of PChar = (
-    'ORCB_UNCHECKED', 'ORCB_CHECKED', 'ORCB_GRAYED', 'ORCB_QUESTIONMARK',
-    'ORCB_BLUEQUESTIONMARK', 'ORCB_DISABLED_UNCHECKED', 'ORCB_DISABLED_CHECKED',
-    'ORCB_DISABLED_GRAYED', 'ORCB_DISABLED_QUESTIONMARK',
-    'ORLB_FLAT_UNCHECKED', 'ORLB_FLAT_CHECKED', 'ORLB_FLAT_GRAYED',
-    'ORCB_RADIO_UNCHECKED', 'ORCB_RADIO_CHECKED',
-    'ORCB_RADIO_DISABLED_UNCHECKED', 'ORCB_RADIO_DISABLED_CHECKED');
-
-  BlackCheckBoxImageResNames: array[TORCBImgIdx] of PChar = (
-    'BLACK_ORLB_FLAT_UNCHECKED', 'BLACK_ORLB_FLAT_CHECKED', 'BLACK_ORLB_FLAT_GRAYED',
-    'BLACK_ORCB_QUESTIONMARK', 'BLACK_ORCB_BLUEQUESTIONMARK',
-    'BLACK_ORCB_DISABLED_UNCHECKED', 'BLACK_ORCB_DISABLED_CHECKED',
-    'BLACK_ORCB_DISABLED_GRAYED', 'BLACK_ORCB_DISABLED_QUESTIONMARK',
-    'BLACK_ORLB_FLAT_UNCHECKED', 'BLACK_ORLB_FLAT_CHECKED', 'BLACK_ORLB_FLAT_GRAYED',
-    'BLACK_ORCB_RADIO_UNCHECKED', 'BLACK_ORCB_RADIO_CHECKED',
-    'BLACK_ORCB_RADIO_DISABLED_UNCHECKED', 'BLACK_ORCB_RADIO_DISABLED_CHECKED');
-
   PL_ITEMS = 'Problem List Items';
-
-var
-  ORCBImages: array[TORCBImgIdx, Boolean] of TBitMap;
-
-function GetORCBBitmap(Idx: TORCBImgIdx; BlackMode: boolean): TBitmap;
-var
-  ResName: string;
-begin
-  if (not assigned(ORCBImages[Idx, BlackMode])) then
-  begin
-    ORCBImages[Idx, BlackMode] := TBitMap.Create;
-    if BlackMode then
-      ResName := BlackCheckBoxImageResNames[Idx]
-    else
-      ResName := CheckBoxImageResNames[Idx];
-    ORCBImages[Idx, BlackMode].LoadFromResourceName(HInstance, ResName);
-  end;
-  Result := ORCBImages[Idx, BlackMode];
-end;
+  LBCheckWidthSpace = 18;
 
 procedure TfrmDiagnoses.EnsurePrimaryDiag;
 var
@@ -223,7 +183,7 @@ var
 //  Match: boolean;
 begin
   ClearGrid;
-  SrchCode := (Sender as TButton).Tag;
+  SrchCode := (Sender as StdCtrls.TButton).Tag;
   if(SrchCode <= LX_Threshold) then LexiconLookup(Code, SrchCode, 0, False, '');
   btnOther.SetFocus;
   if Code <> '' then
@@ -287,6 +247,7 @@ var
 
 begin
   // Update problem list entry with new ICD (& SCT) code(s) (& narrative).
+  ProbRec := nil;
   AList := TStringList.create;
   try
     EditLoad(aList,AplIEN);
@@ -323,6 +284,7 @@ begin
     AList.Clear;
     EditSave(aList,ProbRec.PIFN, User.DUZ, User.StationNumber, '1', ProbRec.FilerObject, '');
   finally
+    FreeAndNil(ProbRec);
     AList.clear;
   end;
 end;
@@ -344,20 +306,18 @@ begin
       sct := '';
     narr := TrimRight(piece(narr, '(',1));
     if pos(diagnosis.Code, code) > 0 then
-    begin
-      result := true;
-      break;
-    end
+      result := true
     else if (sct <> '') and (pos(sct, diagnosis.Narrative) > 0) then
-    begin
-      result := true;
-      break;
-    end
+      result := true
     else if pos(narr, diagnosis.Narrative) > 0 then
     begin
-      result := true;
-      break;
+      if (diagnosis.Code <> '') and (code <> '') then
+        Result := Pos(diagnosis.Code, code) > 0
+      else
+        result := true;
     end;
+    if Result then
+      break;
   end;
 end;
 
@@ -469,9 +429,10 @@ end;
 procedure TfrmDiagnoses.FormResize(Sender: TObject);
 begin
   inherited;
-  FSectionTabs[0] := -(lbxSection.width - LBCheckWidthSpace - (10 * MainFontWidth) - ScrollBarWidth);
-  FSectionTabs[1] := -FSectionTabs[0]+2;
-  FSectionTabs[2] := -FSectionTabs[0]+4;
+  FSectionTabs[0] := -(lbxSection.Width - LBCheckWidthSpace -
+    2 * MainFontWidth - ScrollBarWidth);
+  FSectionTabs[1] := -FSectionTabs[0] + 2;
+  FSectionTabs[2] := -FSectionTabs[0] + 4;
   UpdateTabPos;
 end;
 
@@ -479,13 +440,21 @@ procedure TfrmDiagnoses.lbxSectionClickCheck(Sender: TObject; Index: Integer);
 var
   ICDSys, ICDCode, ICDPar, SCTCode, SCTPar, plIEN, msg, SecItem, InputStr, OrigProbStr, I10Description, TmpNarr: String;
 
-function GetSearchString(AString: String): String;
-begin
-  if (Pos('#', AString) > 0) then
-    Result := TrimLeft(Piece(AString, '#', 2))
-  else
-    Result := AString;
-end;
+  procedure AddProblemListSpecialAuthorityToVisit;
+  begin
+    if Piece(lbSection.Items[lbSection.ItemIndex], u, 2) = PL_ITEMS then
+      AddProblemSAToVisit(Piece(lbxSection.Items[Index], u, 5),
+        (frmEncounterFrame.PageIDToForm(CT_VISITTYPE) as TfrmVisitType)
+        .fraVisitRelated.SpecialAuthorities);
+  end;
+
+  function GetSearchString(AString: String): String;
+  begin
+    if (Pos('#', AString) > 0) then
+      Result := TrimLeft(Piece(AString, '#', 2))
+    else
+      Result := AString;
+  end;
 
 begin
   if (not FUpdatingGrid) and (lbxSection.Checked[Index]) then
@@ -699,6 +668,8 @@ begin
       lbxSection.Checked[Index] := False;
       exit;
     end;
+
+    AddProblemListSpecialAuthorityToVisit;
   end;
   inherited;
   EnsurePrimaryDiag;
@@ -725,23 +696,23 @@ begin
       case CheckedState[Index] of
         cbUnchecked:
         begin
-          if (FlatCheckBoxes) then
-            BMap := GetORCBBitmap(iiFlatUnChecked, False)
-          else
+//          if (FlatCheckBoxes) then
+//            BMap := GetORCBBitmap(iiFlatUnChecked, False)
+//          else
             BMap := GetORCBBitmap(iiUnchecked, False);
         end;
         cbChecked:
         begin
-          if (FlatCheckBoxes) then
-            BMap := GetORCBBitmap(iiFlatChecked, False)
-          else
+//          if (FlatCheckBoxes) then
+//            BMap := GetORCBBitmap(iiFlatChecked, False)
+//          else
             BMap := GetORCBBitmap(iiChecked, False);
         end;
       else // cbGrayed:
       begin
-        if (FlatCheckBoxes) then
-          BMap := GetORCBBitmap(iiFlatGrayed, False)
-        else
+//        if (FlatCheckBoxes) then
+//          BMap := GetORCBBitmap(iiFlatGrayed, False)
+//        else
           BMap := GetORCBBitmap(iiGrayed, False);
         end;
       end;
@@ -769,9 +740,9 @@ end;
 
 procedure TfrmDiagnoses.addToList(str: string);
 var
-j: integer;
-APCEItem: TPCEItem;
-found: boolean;
+  j: integer;
+  APCEItem: TPCEItem;
+  found: boolean;
 begin
   found := false;
   for j := lstCaptionList.Items.Count - 1 downto 0 do
@@ -871,6 +842,12 @@ begin
 
   (Control as TListBox).Canvas.TextOut(Rect.Left+2, Rect.Top+1, (Control as
               TListBox).Items[Index]); {display the text }
+end;
+
+procedure TfrmDiagnoses.Loaded;
+begin
+  AutoSizeDisabled := True;
+  inherited;
 end;
 
 initialization

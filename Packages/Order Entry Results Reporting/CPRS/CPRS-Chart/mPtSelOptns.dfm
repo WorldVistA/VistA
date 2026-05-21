@@ -1,4 +1,4 @@
-object fraPtSelOptns: TfraPtSelOptns
+inherited fraPtSelOptns: TfraPtSelOptns
   Left = 0
   Top = 0
   Width = 228
@@ -284,7 +284,7 @@ object fraPtSelOptns: TfraPtSelOptns
         end
       end
     end
-    object cboList: TORComboBox
+    object cboList: TORCheckComboBox
       AlignWithMargins = True
       Left = 3
       Top = 129
@@ -296,7 +296,7 @@ object fraPtSelOptns: TfraPtSelOptns
       Caption = 'Patient List'
       Color = clWindow
       DropDownCount = 8
-      ItemHeight = 13
+      ItemHeight = 15
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = False
@@ -319,6 +319,10 @@ object fraPtSelOptns: TfraPtSelOptns
       OnNeedData = cboListNeedData
       CharsNeedMatch = 1
       UniqueAutoComplete = True
+      MainCheckBoxCaption = 'Include Non-VA Providers'
+      MainCheckBoxAlignment = calBottom
+      OnMainCheckboxClick = cboListMainCheckboxClick
+      DropdownStyle = ddsControl
     end
     object lblDateRange: TLabel
       AlignWithMargins = True

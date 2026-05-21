@@ -50,7 +50,7 @@ procedure loadProcessedAlertsInfo;
 implementation
 
 uses
-  rOptions, uOptions, rCore, VAUtils, System.UITypes;
+  rOptions, uOptions, rCore, VAUtils, System.UITypes, VA508AccessibilityRouter;
 
 {$R *.DFM}
 const

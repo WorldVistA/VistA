@@ -8,7 +8,7 @@ uses
   ExtCtrls, ORFn, StdCtrls, ComCtrls, Buttons, ORCtrls, uReminders, uConst,
   ORClasses, fRptBox, Menus, rPCE, uTemplates, fBase508Form, System.Generics.Collections,
   VA508AccessibilityManager, fMHTest, fFrame, System.UITypes, rvimm, uPCE,
-  fBaseDynamicControlsForm;
+  fBaseDynamicControlsForm, uSpecialAuthorityEx;
 
 type
   TfrmRemDlg = class(TfrmBaseDynamicControlsForm)
@@ -49,18 +49,8 @@ type
       Shift: TShiftState; X, Y: Integer);
     // AGP Change 24.8
   private
-    FSCCond: TSCConditions;
-    FSCPrompt: Boolean;
+    FSpecialAuthorities: TSpecialAuthoritiesEx;
     FVitalsDate: TFMDateTime;
-    FSCRelated: Integer;
-    FAORelated: Integer;
-    FIRRelated: Integer;
-    FECRelated: Integer;
-    FMSTRelated: Integer;
-    FHNCRelated: Integer;
-    FCVRelated: Integer;
-    FSHDRelated: Integer;
-    FCLRelated: Integer;
     FLastWidth: Integer;
     FUseBox2: Boolean;
     FExitOK: Boolean;
@@ -78,7 +68,7 @@ type
     procedure UMMessageBox(var Message: TMessage); message UM_MESSAGEBOX;
     procedure UMResyncRem(var Message: TMessage); message UM_RESYNCREM;
     procedure UMValidateMag(var Message: TMessage); message UM_VALIDATE_MAG;
-    procedure KillDlg(ptr: Pointer; ID: string; KillObjects: Boolean = FALSE);
+    procedure KillDlg(List: TStringList; ID: string; KillObjects: Boolean = FALSE);
     procedure getProcedureCodes(var codesList: TStrings);
     procedure getDiagnosisCodes(var codesList: TStrings);
     function inCodesList(codeSys, code: string; codesList: TStrings): boolean;
@@ -145,7 +135,7 @@ uses
   fReminderTree, uVitals, rVitals, RichEdit, fConsults, fTemplateDialog,
   uTemplateFields, fRemVisitInfo, rCore, uVA508CPRSCompatibility,
   VA508AccessibilityRouter, VAUtils, uGlobalVar, uDlgComponents, uPDMP,
-  UResponsiveGUI;
+  UResponsiveGUI, rSpecialAuthority, VAShared.UTStringsHelper;
 
 {$R *.DFM}
 
@@ -270,18 +260,8 @@ begin
     if (assigned(frmRemDlg)) then
     begin
       if Update then
-      begin
-        frmRemDlg.FSCRelated := RemForm.PCEObj.SCRelated;
-        frmRemDlg.FAORelated := RemForm.PCEObj.AORelated;
-        frmRemDlg.FIRRelated := RemForm.PCEObj.IRRelated;
-        frmRemDlg.FECRelated := RemForm.PCEObj.ECRelated;
-        frmRemDlg.FMSTRelated := RemForm.PCEObj.MSTRelated;
-        frmRemDlg.FHNCRelated := RemForm.PCEObj.HNCRelated;
-        frmRemDlg.FCVRelated := RemForm.PCEObj.CVRelated;
-        frmRemDlg.FSHDRelated := RemForm.PCEObj.SHADRelated;
-        if IsLejeuneActive then
-          frmRemDlg.FCLRelated := RemForm.PCEObj.CLRelated; // Camp Lejeune
-      end;
+        frmRemDlg.FSpecialAuthorities.CopyFrom(RemForm.PCEObj.SpecialAuthorities,
+          [ctCopyValues, ctClearChanged]);
       UpdateReminderFinish;
       if IsTemplate then
         frmRemDlg.ProcessTemplate(Template)
@@ -458,19 +438,14 @@ begin
 end;
 
 procedure TfrmRemDlg.FormCreate(Sender: TObject);
+var
+  Error: string;
 begin
   // reData.Color := ReadOnlyColor;
   // reText.Color := ReadOnlyColor;
-  FSCCond := EligbleConditions(RemForm.PCEObj);
-  (* FSCRelated  := SCC_NA;
-    FAORelated  := SCC_NA;
-    FIRRelated  := SCC_NA;       AGP Change 25.2
-    FECRelated  := SCC_NA;
-    FMSTRelated := SCC_NA;
-    FHNCRelated := SCC_NA;
-    FCVRelated  := SCC_NA;
-    with FSCCond do
-    FSCPrompt := (SCAllow or AOAllow or IRAllow or ECAllow or MSTAllow or HNCAllow or CVAllow); *)
+  FSpecialAuthorities := CreateSpecialAuthoritiesEx(RemForm.PCEObj, Error);
+  if Error <> '' then
+    raise EArgumentException.Create(Error);
   NotifyWhenRemindersChange(RemindersChanged);
   RemForm.DrawerReminderTreeChange(RemindersChanged);
   // RemForm.Drawers.NotifyWhenRemTreeChanges(RemindersChanged);
@@ -512,11 +487,11 @@ begin
   RemoveNotifyRemindersChange(RemindersChanged);
   KillReminderDialogProc := nil;
   ClearControls(TRUE);
+  FreeAndNil(FSpecialAuthorities);
   frmRemDlg := nil;
   if (assigned(frmReminderTree)) then
     frmReminderTree.EnableActions;
   RemForm.Form := nil;
-
   if assigned(frmFrame) then
     frmFrame.pdmpCloseReport;
 end;
@@ -976,7 +951,7 @@ var
   Cat, LastCat: TPCEDataCat;
   Rem: TReminderDialog;
   TmpData: TORStringList;
-  Bold: Boolean;
+  Bold, LastBold, HasText: Boolean;
   tmp: string;
   AStringList: TStringList;
 begin
@@ -1034,9 +1009,7 @@ begin
   try
     reData.Clear;
     LastCat := BadType;
-    tmp := RemForm.PCEObj.StrVisitType(FSCRelated, FAORelated, FIRRelated,
-      FECRelated, FMSTRelated, FHNCRelated, FCVRelated, FSHDRelated,
-      FCLRelated);
+    tmp := FSpecialAuthorities.VisitStringText;
     if FProcessingTemplate then
     begin
       if assigned(FReminder) then
@@ -1054,7 +1027,40 @@ begin
       TopIdx := SendMessage(reData.Handle, EM_GETFIRSTVISIBLELINE, 0, 0);
       reData.SelAttributes.Style := reData.SelAttributes.Style - [fsBold];
       if tmp <> '' then
-        reData.SelText := tmp + CRLF;
+      begin
+        if tmp <> RemForm.PCEObj.SpecialAuthorities.VisitStringText then
+        begin
+          LastBold := FALSE;
+          HasText := FALSE;
+          reData.SelText := TSpecialAuthoritiesEx.RelatedTo;
+          for var j := 0 to FSpecialAuthorities.Count - 1 do
+            if FSpecialAuthorities[j].Yes then
+            begin
+              if HasText then
+                reData.SelText := ', ';
+              HasText := TRUE;
+              Bold := FSpecialAuthorities.BoldText[FSpecialAuthorities[j].code,
+                RemForm.PCEObj.SpecialAuthorities];
+              if Bold <> LastBold then
+              begin
+                if Bold then
+                  reData.SelAttributes.Style := reData.SelAttributes.Style
+                    + [fsBold]
+                else
+                  reData.SelAttributes.Style := reData.SelAttributes.Style
+                    - [fsBold];
+              end;
+              LastBold := Bold;
+              reData.SelText := FSpecialAuthorities[j].SpecialAuthorityTypeEx.
+                DisplayText;
+            end;
+          if LastBold then
+            reData.SelAttributes.Style := reData.SelAttributes.Style - [fsBold];
+        end
+        else
+          reData.SelText := tmp;
+        reData.SelText := CRLF;
+      end;
       i := 0;
       while i < TmpData.Count do
       begin
@@ -1113,6 +1119,7 @@ begin
     if (assigned(FReminder)) then
     begin
       try
+        RemindersInProcess.BeginUpdate;
         Self.btnClear.Enabled := FALSE;
         i := RemindersInProcess.IndexOf(FReminder.IEN);
         if (i >= 0) then
@@ -1125,18 +1132,21 @@ begin
             OK := TRUE;
           if (OK) then
           begin
-  //          immProcedureCnt := 0;
             ClearMHTest(FReminder.IEN);
             FReminder.closeReportView;
-            RemindersInProcess.Delete(i);
             tmp := (FReminder as TReminder).RemData;
             // clear should never be active if template
             TmpNode := (FReminder as TReminder).CurrentNodeID;
-            KillObj(@FReminder);
+            RemindersInProcess.Delete(i);
+            if RemindersInProcess.OwnsObjects then
+              FReminder := nil
+            else
+              FreeAndNil(FReminder);
             ProcessReminder(tmp, TmpNode);
           end;
         end;
       finally
+        RemindersInProcess.EndUpdate;
         clearResults;
         clearInputs;
         Self.btnClear.Enabled := TRUE;
@@ -1866,14 +1876,8 @@ begin
             PCEObj := RemForm.PCEObj;
             (* AGP CHANGE 23.2 Remove this section base on the Clinical Workgroup decision
               if FSCPrompt and (ndSC in PCEObj.NeededPCEData) then
-              btnVisitClick(nil);
-              PCEObj.SCRelated  := FSCRelated;
-              PCEObj.AORelated  := FAORelated;
-              PCEObj.IRRelated  := FIRRelated;
-              PCEObj.ECRelated  := FECRelated;
-              PCEObj.MSTRelated := FMSTRelated;
-              PCEObj.HNCRelated := FHNCRelated;
-              PCEObj.CVRelated  := FCVRelated; *)
+              btnVisitClick(nil); *)
+            PCEObj.SpecialAuthorities.CopyFrom(FSpecialAuthorities, [ctCopyValues, ctCopyChanged]);
             if not FProcessingTemplate then
             begin
               for i := 0 to RemindersInProcess.Count - 1 do
@@ -1919,7 +1923,7 @@ begin
                             GetReminderData(TmpData, TRUE, Hist);
                             if assigned(Reminder) then RemId := Piece(Reminder.RemData, U, 1);
                           end;
-                          if (TmpData.Count > 0) then
+                          if (TmpData.Count > 0) or FSpecialAuthorities.Changed then
                           begin
   //                          if Hist then
   //                            TmpData.SortByPieces([pnumVisitDate, pnumVisitLoc])
@@ -2455,7 +2459,6 @@ begin
     begin
       RemindersInProcess.Notifier.BeginUpdate;
       try
-        RemindersInProcess.KillObjects;
         RemindersInProcess.Clear;
       finally
         FReminder := nil;
@@ -2490,7 +2493,7 @@ begin
       if assigned(RemWipeArray) then
       begin
         for i := 0 to RemWipeArray.Count - 1 do
-          KillDlg(@ReminderDialogInfo, RemWipeArray.Strings[i], TRUE);
+          KillDlg(ReminderDialogInfo, RemWipeArray.Strings[i], TRUE);
       end;
     finally
       if (assigned(RemWipeArray)) then
@@ -2558,10 +2561,7 @@ begin
     VitalsDate := FVitalsDate;
   frmRemVisitInfo := TfrmRemVisitInfo.Create(Self);
   try
-    frmRemVisitInfo.fraVisitRelated.InitAllow(FSCCond);
-    frmRemVisitInfo.fraVisitRelated.InitRelated(FSCRelated, FAORelated,
-      FIRRelated, FECRelated, FMSTRelated, FHNCRelated, FCVRelated, FSHDRelated,
-      FCLRelated);
+    frmRemVisitInfo.fraVisitRelated.InitAllow(FSpecialAuthorities);
     frmRemVisitInfo.dteVitals.FMDateTime := VitalsDate;
     frmRemVisitInfo.ShowModal;
     if frmRemVisitInfo.ModalResult = mrOK then
@@ -2569,10 +2569,7 @@ begin
       VitalsDate := frmRemVisitInfo.dteVitals.FMDateTime;
       if VitalsDate <= FMNow then
         FVitalsDate := VitalsDate;
-      frmRemVisitInfo.fraVisitRelated.GetRelated(FSCRelated, FAORelated,
-        FIRRelated, FECRelated, FMSTRelated, FHNCRelated, FCVRelated,
-        FSHDRelated, FCLRelated);
-      FSCPrompt := FALSE;
+      frmRemVisitInfo.fraVisitRelated.GetRelated(FSpecialAuthorities);
       UpdateText(nil);
     end;
   finally
@@ -2619,44 +2616,16 @@ begin
   BuildControls(False);
 end;
 
-{ AGP Change 24.8 You MUST pass an address to an object variable to get KillObj to work }
-procedure TfrmRemDlg.KillDlg(ptr: Pointer; ID: string;
+procedure TfrmRemDlg.KillDlg(List: TStringList; ID: string;
   KillObjects: Boolean = FALSE);
 var
-  Obj: TObject;
-//  Lst: TList;
-  SLst: TStringList;
   i: Integer;
-
 begin
-  Obj := TObject(ptr^);
-  if (assigned(Obj)) then
-  begin
-    if (KillObjects) then
-    begin
-      {if (Obj is TList) then
-      begin
-        Lst := TList(Obj);
-        for i := Lst.Count - 1 downto 0 do
-          if assigned(Lst[i]) then
-            TObject(Lst[i]).Free;
-      end
-      else}
-      if (Obj is TStringList) then
-      begin
-        SLst := TStringList(Obj);
-        // Check to see if the Reminder IEN is in the of IEN to be wipe out
-        for i := SLst.Count - 1 downto 0 do
-          if assigned(SLst.Objects[i]) and (SLst.Strings[i] = ID) then
-          begin
-            SLst.Objects[i].Free;
-            SLst.Delete(i);
-          end;
-      end;
-    end;
-//    Obj.Free;
-//    TObject(ptr^) := nil;
-  end;
+  if assigned(List) and KillObjects then
+    // Check to see if the Reminder IEN is in the of IEN to be wiped out
+    for i := List.Count - 1 downto 0 do
+      if assigned(List.Objects[i]) and (List.Strings[i] = ID) then
+        List.Delete(i);
 end;
 
 procedure TfrmRemDlg.Lock;

@@ -7,10 +7,16 @@
   Unit: Rpcconf1 server selection dialog. Reads from registry entries
   HKEY_LOCAL_MACHINE and HKEY_CURRENT_USER, and saves new entries to
   HKEY_CURRENT_USER.
-  Current Release: Version 1.1 Patch 72
+  Current Release: Version 1.1 Patch 74
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*74 (CLG 05/30/2024) XWB*1.1*74
+  1. Updated RPC Version to version 74.
+
+  Changes in XWB*1.1*73 (RGG 07/19/2021) XWB*1.1*73
+  1. Updated RPC Version to version 73.
+
   Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
   1. Updated RPC Version to version 72.
 
@@ -210,7 +216,7 @@ begin
   // For Windows 7:
   // HKEY_LOCAL_MACHINE\Software\Wow6432Node\Vista\Broker\Servers
   // HKEY_CURRENT_USER\Software\Vista\Broker\Servers
-  // server.site.domain.ext,19300 REG_SZ xxxvista
+  // server.site.med.domain,19300 REG_SZ xxxvista
   with rpcConfig do
   begin
     tmpServerPairs := TStringList.Create;
@@ -306,7 +312,7 @@ end;
 
 // On Windows 7, btnNewClick writes to:
 // HKEY_CURRENT_USER\Software\Vista\Broker\Servers
-// server.site.domain.ext,19300 REG_SZ xxxvista
+// server.site.med.domain,19300 REG_SZ xxxvista
 procedure TrpcConfig.btnNewClick(Sender: TObject);
 var
   I: integer;

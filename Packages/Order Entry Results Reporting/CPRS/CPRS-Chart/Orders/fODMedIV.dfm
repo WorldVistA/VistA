@@ -935,7 +935,9 @@ inherited frmODMedIV: TfrmODMedIV
       TabStop = True
       Visible = False
       ShowAccelChar = True
-      ExplicitWidth = 86
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
     object lblAdminTime: TVA508StaticText
       Name = 'lblAdminTime'
@@ -953,7 +955,9 @@ inherited frmODMedIV: TfrmODMedIV
       TabStop = True
       Visible = False
       ShowAccelChar = True
-      ExplicitWidth = 105
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
     object chkDoseNow: TCheckBox
       AlignWithMargins = True
@@ -983,7 +987,9 @@ inherited frmODMedIV: TfrmODMedIV
       Caption = ' * Indicates a Required Field'
       TabOrder = 18
       ShowAccelChar = True
-      ExplicitWidth = 238
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
     object Label1: TLabel
       AlignWithMargins = True

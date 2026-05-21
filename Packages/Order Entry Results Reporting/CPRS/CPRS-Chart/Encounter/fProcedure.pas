@@ -7,18 +7,21 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fPCEBase, StdCtrls, ComCtrls, CheckLst, ORCtrls, ExtCtrls, Buttons, uPCE, rPCE, ORFn,
-  fPCELex, fPCEOther, fPCEBaseGrid, fPCEBaseMain, VA508AccessibilityManager;
+  fPCELex, fPCEOther, fPCEBaseGrid, fPCEBaseMain, VA508AccessibilityManager,
+  ORCheckComboBox, uMisc, U508CaptionEdit, U508ORCheckComboBox;
 
 type
   TfrmProcedures = class(TfrmPCEBaseMain)
+    cboProvider: U508ORCheckComboBox.TORCheckComboBox;
     lblProcQty: TLabel;
-    spnProcQty: TUpDown;
-    txtProcQty: TCaptionEdit;
-    lbMods: TORListBox;
-    splRight: TSplitter;
-    lblMod: TLabel;
-    cboProvider: TORComboBox;
     lblProvider: TLabel;
+    spnProcQty: TUpDown;
+    txtProcQty: U508CaptionEdit.TCaptionEdit;
+    gridProvider: TGridPanel;
+    pnlProvider: TPanel;
+    pnlQuantity: TPanel;
+    lblMod: TLabel;
+    lbMods: TORListBox;
     procedure txtProcQtyChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject); override;
@@ -41,6 +44,9 @@ type
       Change: TItemChange);
     procedure lstCaptionListInsert(Sender: TObject; Item: TListItem);
     procedure cboProviderExit(Sender: TObject);
+    procedure cboProviderMainCheckboxClick(Sender: TObject);
+    procedure pnlQuantityResize(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     FCheckingSimilarNames: boolean;
     FCheckingCode: boolean;
@@ -55,6 +61,7 @@ type
     procedure UpdateControls; override;
     procedure ShowModifiers;
     procedure CheckModifiers;
+    procedure Loaded; override;
   public
     function OK2SaveProcedures: boolean;
     procedure InitTab(ACopyProc: TCopyItemsMethod; AListProc: TListSectionsProc);
@@ -63,9 +70,6 @@ type
     procedure addToList(str: string);
     procedure deleteFromList(str: string);
   end;
-
-var
-  frmProcedures: TfrmProcedures;
 
 implementation
 
@@ -80,8 +84,7 @@ const
 
 procedure TfrmProcedures.txtProcQtyChange(Sender: TObject);
 var
-  i: integer;
-
+  I: integer;
 begin
   if(NotUpdating) then
   begin
@@ -102,7 +105,7 @@ begin
     for i := 0 to lstCaptionList.Items.Count-1 do
       if(lstCaptionList.Items[i].Selected) and (lstCaptionList.Objects[i] is TPCEProc) then
         TPCEProc(lstCaptionList.Objects[i]).Provider := cboProvider.ItemIEN;
-    FProviderChanging := TRUE; // CQ 11707
+    FProviderChanging := True; // CQ 11707
     try
       GridChanged;
     finally
@@ -118,11 +121,19 @@ begin
   CheckSimilarNameOK;
 end;
 
+procedure TfrmProcedures.cboProviderMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := cboProvider.SelectedDataString;
+  cboProvider.ReInitLongList;
+  if ALastData <> cboProvider.SelectedDataString then
+    cboProviderChange(cboProvider);
+end;
+
 procedure TfrmProcedures.FormCreate(Sender: TObject);
 var
-  i, count: integer;
-  child: TControl;
-
+  I, Count: Integer;
+  Child: TControl;
 begin
   inherited;
   FTabName := CT_ProcNm;
@@ -132,33 +143,32 @@ begin
   FPCECode := 'CPT';
   FSectionTabCount := 1;
   FormResize(Self);
-  lbMods.HideSelection := TRUE;
+  lbMods.HideSelection := True;
 
-  count := 0;
-  for i := 0 to cboProvider.ControlCount - 1 do
+  Count := 0;
+  for I := 0 to cboProvider.ControlCount - 1 do
   begin
-    child := cboProvider.Controls[i];
-    if child is TORListBox then
+    Child := cboProvider.Controls[I];
+    if Child is TORListBox then
     begin
-      TORListBox(child).OnExit := cboProviderExit;
-      inc(count);
-      if count > 1 then
-        break;
+      TORListBox(Child).OnExit := cboProviderExit;
+      Inc(Count);
+      if Count > 1 then Break;
     end;
-    if child is TORComboEdit then
+    if Child is TORComboEdit then
     begin
-      TORComboEdit(child).OnExit := cboProviderExit;
-      inc(count);
-      if count > 1 then
-        break;
+      TORComboEdit(Child).OnExit := cboProviderExit;
+      Inc(Count);
+      if Count > 1 then Break;
     end;
   end;
+
+  cboProvider.MainCheckBoxVisible := IncludeNonVAProviders(cboProvider);
 end;
 
 procedure TfrmProcedures.UpdateNewItemStr(var x: string);
 var
   qty: integer;
-
 begin
   qty := StrToIntDef(Piece(x, U, pnumProcQty), 1);
   if qty < spnProcQty.Min then
@@ -251,26 +261,35 @@ begin
 end;
 
 procedure TfrmProcedures.FormResize(Sender: TObject);
+const
+  LBCheckWidthSpace = 18;
 var
-  v, i: integer;
-  s: string;
-
+  V: Integer;
 begin
   inherited;
-  FSectionTabs[0] := -(lbxSection.width - LBCheckWidthSpace - MainFontWidth - ScrollBarWidth);
+  FSectionTabs[0] :=
+   -(lbxSection.Width - LBCheckWidthSpace - MainFontWidth - ScrollBarWidth);
   UpdateTabPos;
-  v := (lbMods.width - LBCheckWidthSpace - (4*MainFontWidth) - ScrollBarWidth);
-  s := '';
-  for i := 1 to 20 do
+  V := lbMods.Width - LBCheckWidthSpace - 4 * MainFontWidth - ScrollBarWidth;
+  var
+  S := '';
+  for var I := 1 to 20 do
   begin
-    if s <> '' then s := s + ',';
-    s := s + inttostr(v);
-    if(v<0) then
-      dec(v,32)
+    if S <> '' then
+      S := S + ',';
+    S := S + IntToStr(V);
+    if (V < 0) then
+      Dec(V, 32)
     else
-      inc(v,32);
+      Inc(V, 32);
   end;
-  lbMods.TabPositions := s;
+  lbMods.TabPositions := S;
+end;
+
+procedure TfrmProcedures.FormShow(Sender: TObject);
+begin
+  inherited;
+  lblProvider.Width := lblComment.Width;
 end;
 
 procedure TfrmProcedures.splRightMoved(Sender: TObject);
@@ -291,8 +310,8 @@ end;
 
 procedure TfrmProcedures.deleteFromList(str: string);
 var
-j: integer;
-APCEItem: TPCEItem;
+  j: integer;
+  APCEItem: TPCEItem;
 begin
   lstCaptionList.ClearSelection;
   for j := lstCaptionList.Items.Count - 1 downto 0 do
@@ -558,6 +577,12 @@ begin
       lbSection.SetFocus;
 end;
 
+procedure TfrmProcedures.Loaded;
+begin
+  AutoSizeDisabled := True;
+  inherited;
+end;
+
 procedure TfrmProcedures.lstCaptionListChange(Sender: TObject; Item: TListItem;
   Change: TItemChange);
 begin
@@ -638,6 +663,14 @@ begin
     Result := CheckSimilarNameOK;
 end;
 
+procedure TfrmProcedures.pnlQuantityResize(Sender: TObject);
+begin
+  inherited;
+  txtProcQty.Top := cboProvider.Top;
+  txtProcQty.Width := pnlQuantity.ClientWidth - txtProcQty.Left -
+    spnProcQty.Width;
+end;
+
 function TfrmProcedures.MissingProvider: boolean;
 var
   i: integer;
@@ -696,7 +729,7 @@ begin
     // Displaying the dialog to pick from similar names can stop on click events
     // from firing for buttone
     if TSimilarNames.WasWindowShown and assigned(ctrl) and
-      ((ctrl is TButton) or (ctrl is TBitBtn)) then
+      ((ctrl is StdCtrls.TButton) or (ctrl is Buttons.TBitBtn)) then
       TMyWinControl(ctrl).Click;
   finally
     FCheckingSimilarNames := False;
@@ -715,9 +748,9 @@ end;
 
 procedure TfrmProcedures.addToList(str: string);
 var
-j: integer;
-APCEItem: TPCEItem;
-found: boolean;
+  j: integer;
+  APCEItem: TPCEItem;
+  found: boolean;
 begin
   found := false;
   UpdateNewItemStr(str); // ensure Qty correct

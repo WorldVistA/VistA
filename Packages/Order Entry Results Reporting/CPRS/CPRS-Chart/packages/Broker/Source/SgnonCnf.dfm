@@ -15,10 +15,8 @@ object frmSignonConfig: TfrmSignonConfig
   Font.Name = 'Courier New'
   Font.Style = [fsBold]
   FormStyle = fsStayOnTop
-  OldCreateOrder = True
   Position = poScreenCenter
   OnShow = FormShow
-  PixelsPerInch = 96
   TextHeight = 14
   object Bevel1: TBevel
     Left = 7

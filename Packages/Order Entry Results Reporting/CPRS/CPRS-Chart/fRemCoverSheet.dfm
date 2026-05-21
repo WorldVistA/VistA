@@ -429,7 +429,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
     Left = 0
     Top = 0
     Width = 774
-    Height = 235
+    Height = 201
     Align = alClient
     BevelOuter = bvNone
     Constraints.MinHeight = 124
@@ -960,23 +960,26 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       TabOrder = 2
       OnExit = lblCACExit
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taCenter
+      LabelLayout = tlTop
     end
   end
   object pnlCAC: TORAutoPanel [3]
     Left = 0
-    Top = 261
+    Top = 227
     Width = 774
-    Height = 68
+    Height = 102
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 2
     DesignSize = (
       774
-      68)
+      102)
     object cbSystem: TORCheckBox
       Tag = 1
       Left = 8
-      Top = 4
+      Top = 8
       Width = 73
       Height = 16
       Anchors = [akLeft, akBottom]
@@ -991,7 +994,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
     object cbDivision: TORCheckBox
       Tag = 2
       Left = 8
-      Top = 26
+      Top = 30
       Width = 82
       Height = 16
       Anchors = [akLeft, akBottom]
@@ -1005,7 +1008,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
     object cbService: TORCheckBox
       Tag = 3
       Left = 8
-      Top = 48
+      Top = 52
       Width = 82
       Height = 16
       Anchors = [akLeft, akBottom]
@@ -1019,7 +1022,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
     object cbxService: TORComboBox
       Tag = 3
       Left = 96
-      Top = 46
+      Top = 50
       Width = 233
       Height = 21
       Anchors = [akLeft, akBottom]
@@ -1049,7 +1052,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
     object cbxDivision: TORComboBox
       Tag = 2
       Left = 96
-      Top = 24
+      Top = 28
       Width = 233
       Height = 21
       Anchors = [akLeft, akBottom]
@@ -1078,7 +1081,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
     object cbLocation: TORCheckBox
       Tag = 4
       Left = 353
-      Top = 4
+      Top = 8
       Width = 88
       Height = 16
       Anchors = [akLeft, akBottom]
@@ -1092,7 +1095,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
     object cbUserClass: TORCheckBox
       Tag = 5
       Left = 353
-      Top = 26
+      Top = 30
       Width = 97
       Height = 16
       Anchors = [akLeft, akBottom]
@@ -1106,7 +1109,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
     object cbUser: TORCheckBox
       Tag = 6
       Left = 353
-      Top = 48
+      Top = 52
       Width = 88
       Height = 14
       Anchors = [akLeft, akBottom]
@@ -1117,10 +1120,10 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       GroupIndex = 1
       RadioStyle = True
     end
-    object cbxUser: TORComboBox
+    object cbxUser: TORCheckComboBox
       Tag = 6
       Left = 456
-      Top = 46
+      Top = 50
       Width = 209
       Height = 21
       Anchors = [akLeft, akBottom]
@@ -1149,11 +1152,16 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
       OnMouseClick = cbxUserMouseClick
       OnNeedData = cbxUserNeedData
       CharsNeedMatch = 1
+      MainCheckBoxCaption = 'Include Non-VA Providers'
+      MainCheckBoxVisible = True
+      MainCheckBoxAlignment = calBottom
+      OnMainCheckboxClick = cbxUserMainCheckboxClick
+      DropdownStyle = ddsControl
     end
     object cbxClass: TORComboBox
       Tag = 5
       Left = 456
-      Top = 24
+      Top = 28
       Width = 209
       Height = 21
       Anchors = [akLeft, akBottom]
@@ -1183,7 +1191,7 @@ inherited frmRemCoverSheet: TfrmRemCoverSheet
     object cbxLocation: TORComboBox
       Tag = 4
       Left = 456
-      Top = 2
+      Top = 6
       Width = 209
       Height = 21
       Anchors = [akLeft, akBottom]

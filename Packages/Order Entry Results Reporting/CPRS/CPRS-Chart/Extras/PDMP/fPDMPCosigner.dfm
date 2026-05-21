@@ -2,8 +2,8 @@ object pdmpCosigner: TpdmpCosigner
   Left = 0
   Top = 0
   Caption = 'Select PDMP Note Cosigner'
-  ClientHeight = 327
-  ClientWidth = 393
+  ClientHeight = 326
+  ClientWidth = 372
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,8 +20,8 @@ object pdmpCosigner: TpdmpCosigner
   TextHeight = 13
   object pnlBottom: TPanel
     Left = 0
-    Top = 288
-    Width = 393
+    Top = 287
+    Width = 372
     Height = 39
     Align = alBottom
     BevelOuter = bvNone
@@ -29,7 +29,7 @@ object pdmpCosigner: TpdmpCosigner
     TabOrder = 1
     object btnCancel: TButton
       AlignWithMargins = True
-      Left = 234
+      Left = 213
       Top = 3
       Width = 75
       Height = 33
@@ -40,7 +40,7 @@ object pdmpCosigner: TpdmpCosigner
     end
     object btnAccept: TButton
       AlignWithMargins = True
-      Left = 315
+      Left = 294
       Top = 3
       Width = 75
       Height = 33
@@ -67,8 +67,8 @@ object pdmpCosigner: TpdmpCosigner
   object pnlMain: TPanel
     Left = 0
     Top = 0
-    Width = 393
-    Height = 288
+    Width = 372
+    Height = 287
     Align = alClient
     BevelOuter = bvNone
     ShowCaption = False
@@ -77,19 +77,19 @@ object pdmpCosigner: TpdmpCosigner
       AlignWithMargins = True
       Left = 3
       Top = 3
-      Width = 387
+      Width = 366
       Height = 13
       Align = alTop
       Caption = '&Select Cosigner:'
       FocusControl = cboCosigner
       ExplicitWidth = 78
     end
-    object cboCosigner: TORComboBox
+    object cboCosigner: TORCheckComboBox
       AlignWithMargins = True
       Left = 3
       Top = 22
-      Width = 387
-      Height = 263
+      Width = 366
+      Height = 262
       Style = orcsSimple
       Align = alClient
       AutoSelect = True
@@ -113,6 +113,11 @@ object pdmpCosigner: TpdmpCosigner
       OnExit = cboCosignerExit
       OnNeedData = cboCosignerNeedData
       CharsNeedMatch = 1
+      MainCheckBoxCaption = 'Include Non-VA Providers'
+      MainCheckBoxVisible = True
+      MainCheckBoxAlignment = calBottom
+      OnMainCheckboxClick = cboCosignerMainCheckboxClick
+      DropdownStyle = ddsControl
     end
   end
 end

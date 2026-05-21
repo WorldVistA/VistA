@@ -6,12 +6,11 @@ inherited frmPCELex: TfrmPCELex
   ClientWidth = 624
   Constraints.MinHeight = 480
   Constraints.MinWidth = 640
-  Font.Name = 'Tahoma'
+  StyleElements = [seFont, seClient, seBorder]
   OnKeyDown = nil
   OnResize = FormResize
-  ExplicitWidth = 642
-  ExplicitHeight = 487
-  PixelsPerInch = 96
+  ExplicitWidth = 640
+  ExplicitHeight = 481
   TextHeight = 13
   object pnlDialog: TPanel [0]
     Left = 0
@@ -161,7 +160,6 @@ inherited frmPCELex: TfrmPCELex
         624
         334)
       object lblSelect: TVA508StaticText
-        Name = 'lblSelect'
         Left = 11
         Top = 3
         Width = 602
@@ -172,6 +170,9 @@ inherited frmPCELex: TfrmPCELex
         TabOrder = 0
         Visible = False
         ShowAccelChar = True
+        WordWrap = False
+        LabelAlignment = taLeftJustify
+        LabelLayout = tlTop
       end
       inline tgfLex: TTreeGridFrame
         Left = 11
@@ -190,7 +191,6 @@ inherited frmPCELex: TfrmPCELex
         Font.Style = []
         ParentFont = False
         TabOrder = 1
-        TabStop = True
         ExplicitLeft = 11
         ExplicitTop = 18
         ExplicitWidth = 602
@@ -210,62 +210,74 @@ inherited frmPCELex: TfrmPCELex
         end
         inherited pnlTop: TPanel
           Width = 602
+          StyleElements = [seFont, seClient, seBorder]
           ExplicitWidth = 602
           inherited stTitle: TStaticText
-            Width = 36
+            Width = 28
             Caption = 'Term'
-            ExplicitWidth = 36
+            ExplicitWidth = 28
           end
         end
         inherited pnlSpace: TPanel
           Top = 233
           Width = 602
+          StyleElements = [seFont, seClient, seBorder]
           ExplicitTop = 233
           ExplicitWidth = 602
         end
         inherited pnlHint: TPanel
           Top = 241
           Width = 602
+          StyleElements = [seFont, seClient, seBorder]
           ExplicitTop = 241
           ExplicitWidth = 602
           inherited pnlTarget: TPanel
             Top = 241
             Width = 602
+            StyleElements = [seFont, seClient, seBorder]
             ExplicitTop = 241
             ExplicitWidth = 602
             inherited mmoTargetCode: TMemo
               Width = 537
+              StyleElements = [seFont, seClient, seBorder]
               ExplicitWidth = 537
             end
             inherited pnlTargetCodeSys: TPanel
               Alignment = taRightJustify
               Caption = 'ICD-10-CM:  '
+              StyleElements = [seFont, seClient, seBorder]
             end
           end
           inherited pnlCode: TPanel
             Top = 265
             Width = 602
+            StyleElements = [seFont, seClient, seBorder]
             ExplicitTop = 265
             ExplicitWidth = 602
             inherited mmoCode: TMemo
               Width = 537
+              StyleElements = [seFont, seClient, seBorder]
               ExplicitWidth = 537
             end
             inherited pnlCodeSys: TPanel
               Alignment = taRightJustify
               Caption = 'SNOMED CT:  '
+              StyleElements = [seFont, seClient, seBorder]
             end
           end
           inherited pnlDesc: TPanel
             Width = 602
+            StyleElements = [seFont, seClient, seBorder]
             ExplicitWidth = 602
             inherited mmoDesc: TMemo
               Width = 537
+              StyleElements = [seFont, seClient, seBorder]
               ExplicitWidth = 537
             end
             inherited pnlDescText: TPanel
               Alignment = taRightJustify
               Caption = 'Description:  '
+              StyleElements = [seFont, seClient, seBorder]
             end
           end
         end
@@ -275,10 +287,11 @@ inherited frmPCELex: TfrmPCELex
         Top = 42
         Width = 185
         Height = 183
-        OnClickCheck = clbFilterClickCheck
         Anchors = [akLeft, akTop, akRight, akBottom]
+        ItemHeight = 17
         TabOrder = 2
         Visible = False
+        OnClickCheck = clbFilterClickCheck
         Caption = ''
       end
       object btnFilter: TButton
@@ -304,7 +317,6 @@ inherited frmPCELex: TfrmPCELex
     BevelOuter = bvNone
     TabOrder = 1
     object lblStatus: TVA508StaticText
-      Name = 'lblStatus'
       Left = 0
       Top = 0
       Width = 624
@@ -317,6 +329,9 @@ inherited frmPCELex: TfrmPCELex
       Caption = ''
       TabOrder = 0
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -325,7 +340,8 @@ inherited frmPCELex: TfrmPCELex
     Data = (
       (
         'Component = txtSearch'
-        'Status = stsDefault')
+        'Label = lblSearch'
+        'Status = stsOK')
       (
         'Component = cmdSearch'
         'Status = stsDefault')
@@ -344,7 +360,8 @@ inherited frmPCELex: TfrmPCELex
         'Status = stsDefault')
       (
         'Component = lblStatus'
-        'Status = stsDefault')
+        'Text = Search Status'
+        'Status = stsOK')
       (
         'Component = lblSelect'
         'Status = stsDefault')

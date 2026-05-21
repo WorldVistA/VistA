@@ -2465,6 +2465,8 @@ begin
       end;
     end; // assigned(self.parent)
   end;
+  if Visible then
+    mnuOptimizeFieldsClick(Sender);
 end;
 
 { TChildOD }

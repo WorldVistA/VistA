@@ -13,12 +13,12 @@ inherited frmODProc: TfrmODProc
   Position = poDesigned
   ExplicitWidth = 640
   ExplicitHeight = 521
-  PixelsPerInch = 120
-  TextHeight = 16
+  PixelsPerInch = 96
+  TextHeight = 13
   object pnlCombatVet: TPanel [0]
     Left = 0
     Top = 0
-    Width = 622
+    Width = 624
     Height = 25
     Align = alTop
     AutoSize = True
@@ -34,7 +34,7 @@ inherited frmODProc: TfrmODProc
       Name = 'txtCombatVet'
       Left = 0
       Top = 0
-      Width = 622
+      Width = 624
       Height = 25
       Align = alClient
       Alignment = taCenter
@@ -44,12 +44,16 @@ inherited frmODProc: TfrmODProc
       Enabled = False
       TabOrder = 0
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taCenter
+      LabelLayout = tlTop
     end
   end
   inherited memOrder: TCaptionMemo
     AlignWithMargins = True
-    Top = 367
-    Width = 486
+    Left = 6
+    Top = 373
+    Width = 488
     Height = 50
     Margins.Left = 6
     Margins.Right = 130
@@ -63,23 +67,24 @@ inherited frmODProc: TfrmODProc
       'An order message may be displayed here.')
     ParentFont = False
     TabOrder = 2
-    ExplicitTop = 367
-    ExplicitWidth = 486
+    ExplicitLeft = 6
+    ExplicitTop = 373
+    ExplicitWidth = 488
     ExplicitHeight = 50
   end
   object pnlMain: TPanel [2]
     Left = 0
     Top = 25
-    Width = 622
-    Height = 339
+    Width = 624
+    Height = 345
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
     object pnlReason: TPanel
       Left = 0
-      Top = 206
-      Width = 622
-      Height = 133
+      Top = 241
+      Width = 624
+      Height = 104
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
@@ -87,18 +92,18 @@ inherited frmODProc: TfrmODProc
         AlignWithMargins = True
         Left = 3
         Top = 3
-        Width = 616
-        Height = 16
+        Width = 618
+        Height = 13
         Align = alTop
         Caption = 'Reason for Request'
-        ExplicitWidth = 120
+        ExplicitWidth = 95
       end
       object memReason: TCaptionRichEdit
         AlignWithMargins = True
         Left = 3
-        Top = 25
-        Width = 616
-        Height = 105
+        Top = 22
+        Width = 618
+        Height = 79
         Align = alClient
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -123,8 +128,8 @@ inherited frmODProc: TfrmODProc
       AlignWithMargins = True
       Left = 3
       Top = 3
-      Width = 616
-      Height = 200
+      Width = 618
+      Height = 235
       Align = alTop
       BevelOuter = bvNone
       Caption = 'gpMain'
@@ -188,24 +193,24 @@ inherited frmODProc: TfrmODProc
         end>
       RowCollection = <
         item
-          Value = 25.077118045960510000
+          Value = 34.386840558438980000
         end
         item
-          Value = 24.954780075211350000
+          Value = 20.869443595494270000
         end
         item
-          Value = 24.958019562453050000
+          Value = 22.348548241656040000
         end
         item
-          Value = 25.010082316375080000
+          Value = 22.395167604410720000
         end>
       ShowCaption = False
       TabOrder = 1
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 206
-        Height = 148
+        Width = 207
+        Height = 182
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -215,25 +220,25 @@ inherited frmODProc: TfrmODProc
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 200
-          Height = 16
+          Width = 201
+          Height = 13
           Align = alTop
           Caption = 'Procedure'
-          ExplicitWidth = 63
+          ExplicitWidth = 49
         end
         object cboProc: TORComboBox
           AlignWithMargins = True
           Left = 3
-          Top = 25
-          Width = 200
-          Height = 120
+          Top = 22
+          Width = 201
+          Height = 157
           Style = orcsSimple
           Align = alClient
           AutoSelect = True
           Caption = 'Procedure'
           Color = clWindow
           DropDownCount = 8
-          ItemHeight = 16
+          ItemHeight = 13
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = True
@@ -251,10 +256,10 @@ inherited frmODProc: TfrmODProc
         end
       end
       object Panel2: TPanel
-        Left = 206
+        Left = 207
         Top = 0
-        Width = 205
-        Height = 50
+        Width = 206
+        Height = 81
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -264,8 +269,8 @@ inherited frmODProc: TfrmODProc
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 199
-          Height = 20
+          Width = 200
+          Height = 17
           Align = alTop
           Caption = 'Urgency'
           TabOrder = 0
@@ -273,16 +278,16 @@ inherited frmODProc: TfrmODProc
         object cboUrgency: TORComboBox
           AlignWithMargins = True
           Left = 3
-          Top = 29
-          Width = 199
-          Height = 24
+          Top = 26
+          Width = 200
+          Height = 21
           Style = orcsDropDown
           Align = alClient
           AutoSelect = True
           Caption = 'Urgency'
           Color = clWindow
           DropDownCount = 8
-          ItemHeight = 16
+          ItemHeight = 13
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = True
@@ -299,10 +304,10 @@ inherited frmODProc: TfrmODProc
         end
       end
       object Panel3: TPanel
-        Left = 411
+        Left = 413
         Top = 0
         Width = 205
-        Height = 50
+        Height = 81
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -313,24 +318,24 @@ inherited frmODProc: TfrmODProc
           Left = 3
           Top = 3
           Width = 199
-          Height = 20
+          Height = 17
           Align = alTop
           Caption = 'Attention'
           TabOrder = 0
         end
-        object cboAttn: TORComboBox
+        object cboAttn: TORCheckComboBox
           AlignWithMargins = True
           Left = 3
-          Top = 29
+          Top = 26
           Width = 199
-          Height = 24
+          Height = 52
           Style = orcsDropDown
           Align = alClient
           AutoSelect = True
           Caption = 'Attention'
           Color = clWindow
           DropDownCount = 8
-          ItemHeight = 16
+          ItemHeight = 13
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = True
@@ -345,12 +350,16 @@ inherited frmODProc: TfrmODProc
           OnChange = cboAttnChange
           OnNeedData = cboAttnNeedData
           CharsNeedMatch = 1
+          MainCheckBoxCaption = ' Include Non-VA Providers'
+          MainCheckBoxVisible = True
+          MainCheckBoxAlignment = calBottom
+          OnMainCheckboxClick = cboAttnMainCheckboxClick
         end
       end
       object Panel4: TPanel
-        Left = 206
-        Top = 50
-        Width = 205
+        Left = 207
+        Top = 81
+        Width = 206
         Height = 49
         Align = alClient
         BevelOuter = bvNone
@@ -361,8 +370,8 @@ inherited frmODProc: TfrmODProc
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 199
-          Height = 20
+          Width = 200
+          Height = 17
           Align = alTop
           Caption = 'Clinically indicated date:'
           TabOrder = 0
@@ -370,21 +379,21 @@ inherited frmODProc: TfrmODProc
         object calClinicallyIndicated: TORDateBox
           AlignWithMargins = True
           Left = 3
-          Top = 29
-          Width = 199
-          Height = 17
+          Top = 26
+          Width = 200
+          Height = 20
           Align = alClient
           TabOrder = 1
           OnChange = ControlChange
           DateOnly = True
           RequireTime = False
           Caption = ''
-          ExplicitHeight = 24
+          ExplicitHeight = 21
         end
       end
       object Panel5: TPanel
-        Left = 411
-        Top = 50
+        Left = 413
+        Top = 81
         Width = 205
         Height = 49
         Align = alClient
@@ -397,7 +406,7 @@ inherited frmODProc: TfrmODProc
           Left = 3
           Top = 3
           Width = 199
-          Height = 20
+          Height = 17
           Align = alTop
           Caption = 'Latest appropriate date:'
           TabOrder = 0
@@ -406,9 +415,9 @@ inherited frmODProc: TfrmODProc
         object calLatest: TORDateBox
           AlignWithMargins = True
           Left = 3
-          Top = 29
+          Top = 26
           Width = 199
-          Height = 17
+          Height = 20
           Align = alClient
           TabOrder = 1
           Visible = False
@@ -416,14 +425,14 @@ inherited frmODProc: TfrmODProc
           DateOnly = True
           RequireTime = False
           Caption = ''
-          ExplicitHeight = 24
+          ExplicitHeight = 21
         end
       end
       object Panel6: TPanel
-        Left = 206
-        Top = 99
-        Width = 205
-        Height = 49
+        Left = 207
+        Top = 130
+        Width = 206
+        Height = 52
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -433,8 +442,8 @@ inherited frmODProc: TfrmODProc
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 199
-          Height = 43
+          Width = 200
+          Height = 46
           Align = alClient
           Caption = 'Patient will be seen as an:'
           TabOrder = 0
@@ -459,10 +468,10 @@ inherited frmODProc: TfrmODProc
         end
       end
       object Panel7: TPanel
-        Left = 411
-        Top = 99
+        Left = 413
+        Top = 130
         Width = 205
-        Height = 49
+        Height = 52
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -473,7 +482,7 @@ inherited frmODProc: TfrmODProc
           Left = 3
           Top = 3
           Width = 199
-          Height = 20
+          Height = 17
           Align = alTop
           Caption = 'Place of Consultation'
           TabOrder = 0
@@ -481,16 +490,16 @@ inherited frmODProc: TfrmODProc
         object cboPlace: TORComboBox
           AlignWithMargins = True
           Left = 3
-          Top = 29
+          Top = 26
           Width = 199
-          Height = 24
+          Height = 21
           Style = orcsDropDown
           Align = alClient
           AutoSelect = True
           Caption = 'Place of Consultation'
           Color = clWindow
           DropDownCount = 8
-          ItemHeight = 16
+          ItemHeight = 13
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = True
@@ -508,16 +517,16 @@ inherited frmODProc: TfrmODProc
         object cboCategory: TORComboBox
           AlignWithMargins = True
           Left = 3
-          Top = 29
+          Top = 26
           Width = 199
-          Height = 24
+          Height = 21
           Style = orcsDropDown
           Align = alClient
           AutoSelect = True
           Caption = ''
           Color = clWindow
           DropDownCount = 8
-          ItemHeight = 16
+          ItemHeight = 13
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = False
@@ -535,9 +544,9 @@ inherited frmODProc: TfrmODProc
       end
       object Panel8: TPanel
         Left = 0
-        Top = 148
-        Width = 206
-        Height = 52
+        Top = 182
+        Width = 207
+        Height = 53
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -547,7 +556,7 @@ inherited frmODProc: TfrmODProc
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 200
+          Width = 201
           Height = 15
           Align = alTop
           Caption = 'Service to perform this procedure'
@@ -563,8 +572,8 @@ inherited frmODProc: TfrmODProc
           Name = 'servicelbl508'
           Left = 0
           Top = 21
-          Width = 206
-          Height = 32
+          Width = 207
+          Height = 37
           Align = alClient
           Alignment = taLeftJustify
           Caption = 'service (for screen R.)'
@@ -572,14 +581,17 @@ inherited frmODProc: TfrmODProc
           TabOrder = 1
           Visible = False
           ShowAccelChar = True
-          ExplicitHeight = 31
+          WordWrap = False
+          LabelAlignment = taLeftJustify
+          LabelLayout = tlTop
+          ExplicitHeight = 32
         end
         object cboService: TORComboBox
           AlignWithMargins = True
           Left = 3
           Top = 24
-          Width = 200
-          Height = 24
+          Width = 201
+          Height = 21
           Style = orcsDropDown
           Align = alClient
           AutoSelect = True
@@ -587,7 +599,7 @@ inherited frmODProc: TfrmODProc
           Color = clWindow
           DropDownCount = 8
           Enabled = False
-          ItemHeight = 16
+          ItemHeight = 13
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = False
@@ -604,10 +616,10 @@ inherited frmODProc: TfrmODProc
         end
       end
       object Panel9: TPanel
-        Left = 206
-        Top = 148
-        Width = 410
-        Height = 52
+        Left = 207
+        Top = 182
+        Width = 411
+        Height = 53
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -616,17 +628,17 @@ inherited frmODProc: TfrmODProc
         object lblProvDiag: TStaticText
           Left = 0
           Top = 0
-          Width = 410
-          Height = 20
+          Width = 411
+          Height = 17
           Align = alTop
           Caption = 'Provisional Diagnosis'
           TabOrder = 0
         end
         object Panel10: TPanel
           Left = 0
-          Top = 20
-          Width = 410
-          Height = 32
+          Top = 17
+          Width = 411
+          Height = 36
           Align = alClient
           BevelOuter = bvNone
           Caption = 'Panel1'
@@ -634,10 +646,10 @@ inherited frmODProc: TfrmODProc
           TabOrder = 1
           object cmdLexSearch: TButton
             AlignWithMargins = True
-            Left = 351
+            Left = 352
             Top = 3
             Width = 56
-            Height = 26
+            Height = 30
             Align = alRight
             Caption = 'Lexicon'
             TabOrder = 0
@@ -647,8 +659,8 @@ inherited frmODProc: TfrmODProc
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 342
-            Height = 26
+            Width = 343
+            Height = 30
             Align = alClient
             MaxLength = 180
             ParentShowHint = False
@@ -657,7 +669,7 @@ inherited frmODProc: TfrmODProc
             TabOrder = 1
             OnChange = txtProvDiagChange
             Caption = 'Provisional Diagnosis'
-            ExplicitHeight = 24
+            ExplicitHeight = 21
           end
         end
       end
@@ -690,14 +702,14 @@ inherited frmODProc: TfrmODProc
   inherited pnlMessage: TPanel
     AlignWithMargins = True
     Left = 3
-    Top = 423
-    Width = 489
+    Top = 429
+    Width = 491
     Height = 50
     Margins.Right = 130
     Align = alBottom
     ExplicitLeft = 3
-    ExplicitTop = 423
-    ExplicitWidth = 489
+    ExplicitTop = 429
+    ExplicitWidth = 491
     ExplicitHeight = 50
     inherited imgMessage: TImage
       Left = 2
@@ -711,12 +723,12 @@ inherited frmODProc: TfrmODProc
     inherited memMessage: TRichEdit
       Left = 34
       Top = 2
-      Width = 449
+      Width = 451
       Height = 42
       Align = alClient
       ExplicitLeft = 34
       ExplicitTop = 2
-      ExplicitWidth = 449
+      ExplicitWidth = 451
       ExplicitHeight = 42
     end
   end

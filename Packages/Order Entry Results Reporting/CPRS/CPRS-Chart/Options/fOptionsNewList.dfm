@@ -60,7 +60,7 @@ inherited frmOptionsNewList: TfrmOptionsNewList
     Height = 120
     Align = alClient
     ShowCaption = False
-    TabOrder = 2
+    TabOrder = 1
     ExplicitLeft = 72
     ExplicitTop = 80
     ExplicitWidth = 185

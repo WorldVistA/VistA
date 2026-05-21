@@ -3,17 +3,21 @@ unit fImmunization;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  fPCEBase, StdCtrls, ORCtrls, CheckLst, ExtCtrls, Buttons, uPCE, rPCE, ORFn,
-  fPCELex, fPCEOther, ComCtrls, fPCEBaseMain, VA508AccessibilityManager, fVimm, rvimm;
+  System.Classes,
+  Vcl.Controls,
+  Vcl.StdCtrls,
+  Vcl.ExtCtrls,
+  Vcl.Buttons,
+  Vcl.ComCtrls,
+  VA508AccessibilityManager,
+  ORCtrls,
+  fPCEBaseMain,
+  U508Button;
 
 type
   TfrmImmunizations = class(TfrmPCEBaseMain)
-    btnAdd: TButton;
+    btnAdd: U508Button.TButton;
     procedure FormCreate(Sender: TObject);
-    procedure FormPaint(Sender: TObject);
-    procedure btnOtherClick(Sender: TObject);
-    procedure btnOtherExit(Sender: TObject);
     procedure btnAddClick(Sender: TObject);
     procedure btnOKClick(Sender: TObject); override;
     procedure btnCancelClick(Sender: TObject);
@@ -23,34 +27,39 @@ type
   protected
     procedure UpdateNewItemStr(var x: string); override;
     procedure UpdateControls; override;
+    procedure Loaded; override;
   public
-//    procedure FormatVimmInputs(Grid: boolean);
     procedure processVimm;
-//    procedure ChangeProvider;
   end;
-
-var
-  frmImmunizations: TfrmImmunizations;
 
 implementation
 
 {$R *.DFM}
 
 uses
-  fEncounterFrame, VA508AccessibilityRouter, uCore, uConst, uMisc;
-
+  System.SysUtils,
+  uPCE,
+  rPCE,
+  ORFn,
+  fVimm,
+  rvimm,
+  fEncounterFrame,
+  VA508AccessibilityRouter,
+  uConst,
+  uMisc;
 
 procedure TfrmImmunizations.btnAddClick(Sender: TObject);
 var
-i: integer;
-APCEItem: TPCEImm;
-vimmData: TVimmResult;
+  i: integer;
+  APCEItem: TPCEImm;
+  vimmData: TVimmResult;
 begin
   inherited;
   FormatVimmInputs(false, false);
   uvimmInputs.DataList := TStringList.Create;
   try
     for i := 0 to lstCaptionList.Items.Count-1 do
+    begin
       if lstCaptionList.Objects[i] is TPCEImm then
       begin
         APCEItem := TPCEImm(lstCaptionList.Objects[i]);
@@ -58,17 +67,18 @@ begin
         vimmData := findVimmResultsByDelimitedStr(APCEItem.delimitedStrTxt, APCEItem.delimitedStr1Txt,
                     APCEItem.delimitedStr2Txt);
         if vimmData.documType = '' then
-          begin
-            if uEncPCEData.VisitCategory = 'E' then vimmData.documType := 'Historical'
-            else vimmData.documType := 'Administered';
-          end;
+        begin
+          if uEncPCEData.VisitCategory = 'E' then vimmData.documType := 'Historical'
+          else vimmData.documType := 'Administered';
+        end;
         uVimmInputs.DataList.AddObject('DATA' + U + vimmData.id, vimmData);
       end;
+    end;
     uVimmInputs.fromCover := false;
     processVimm;
   finally
-     clearResults;
-     clearInputs;
+    clearResults;
+    clearInputs;
   end;
 end;
 
@@ -86,16 +96,6 @@ begin
   clearInputs;
 end;
 
-procedure TfrmImmunizations.btnOtherClick(Sender: TObject);
-begin
-//  inherited;
-end;
-
-procedure TfrmImmunizations.btnOtherExit(Sender: TObject);
-begin
-////  inherited;
-end;
-
 procedure TfrmImmunizations.FormCreate(Sender: TObject);
 begin
   inherited;
@@ -107,19 +107,10 @@ begin
   self.btnSelectAll.Visible := false;
 end;
 
-procedure TfrmImmunizations.FormPaint(Sender: TObject);
+procedure TfrmImmunizations.Loaded;
 begin
-inherited;
-//  if ckbContra.Focused = True then
-//  begin
-//    frmImmunizations.Canvas.Pen.Width := 1;
-//    frmImmunizations.Canvas.Pen.Style := psDot;
-//    frmImmunizations.Canvas.MoveTo(lblContra.Left - 2,lblContra.Top - 1);
-//    frmImmunizations.Canvas.LineTo(lblContra.Left + lblContra.Width + 2,lblContra.Top - 1);
-//    frmImmunizations.Canvas.LineTo(lblContra.Left + lblContra.Width + 2,lblContra.Top + lblContra.Height);
-//    frmImmunizations.Canvas.LineTo(lblContra.Left - 2,lblContra.Top + lblContra.Height);
-//    frmImmunizations.Canvas.LineTo(lblContra.Left - 2,lblContra.Top - 1);
-//  end;
+  AutoSizeDisabled := True;
+  inherited;
 end;
 
 procedure TfrmImmunizations.processVimm;
@@ -145,18 +136,18 @@ var
   begin
     result := -1;
     for i := 0 to lstCaptionList.Items.count -1 do
+    begin
+      if lstCaptionList.Objects[i] is TPCEImm then
       begin
-        if lstCaptionList.Objects[i] is TPCEImm then
+        APCEItem := TPCEImm(lstCaptionList.Objects[i]);
+        if APCEItem.Narrative <> data.name then continue;
+        if Pieces(APCEItem.delimitedStrTxt, U, 1, 2) = Pieces(data.DelimitedStr, u, 1, 2) then
         begin
-          APCEItem := TPCEImm(lstCaptionList.Objects[i]);
-          if APCEItem.Narrative <> data.name then continue;
-          if Pieces(APCEItem.delimitedStrTxt, U, 1, 2) = Pieces(data.DelimitedStr, u, 1, 2) then
-            begin
-              result := i;
-              break;
-            end;
+          result := i;
+          break;
         end;
       end;
+    end;
   end;
 
   function removeOld(resultList: TStringList; var immList: TStrings; var cptList: TStringList; var povList: TStringList): boolean;
@@ -171,6 +162,7 @@ var
     tmpList := TStringList.Create;
     try
       for c := 0 to lstCaptionList.Items.Count-1 do
+      begin
         if lstCaptionList.Objects[c] is TPCEImm then
         begin
           APCEItem := TPCEImm(lstCaptionList.Objects[c]);
@@ -181,42 +173,43 @@ var
             begin
               data := TVimmResult(resultList.Objects[r]);
               if Pieces(APCEItem.delimitedStrTxt, U, 1, 2) = Pieces(data.DelimitedStr, u, 1, 2) then
+              begin
+                if pos('ICR', Piece(data.DelimitedStr, U, 1)) > 0  then
                 begin
-                  if pos('ICR', Piece(data.DelimitedStr, U, 1)) > 0  then
-                  begin
-                    if CompareText(Piece(APCEItem.delimitedStrTxt, U, 5), Piece(data.DelimitedStr, u, 5)) = 0 then
-                    begin
-                      found := true;
-                      break;
-                    end;
-                  end
-                  else
+                  if CompareText(Piece(APCEItem.delimitedStrTxt, U, 5), Piece(data.DelimitedStr, u, 5)) = 0 then
                   begin
                     found := true;
                     break;
                   end;
+                end
+                else
+                begin
+                  found := true;
+                  break;
                 end;
+              end;
             end;
             if not found then tmpList.Add(IntToStr(c));
           end;
         end;
+      end;
       Result := (tmpList.Count > 0);
       if Result then
       begin
         lstCaptionList.ClearSelection;
         for r := 0 to tmpList.Count - 1 do
+        begin
+          c := StrToInt(tmpList.Strings[r]);
+          if lstCaptionList.Objects[c] is TPCEImm then
           begin
-            c := StrToInt(tmpList.Strings[r]);
-            if lstCaptionList.Objects[c] is TPCEImm then
-            begin
-              delStr := TPCEImm(lstCaptionList.Objects[c]).delimitedStrTxt;
-              code := Piece(delStr, U, 1);
-              code := StripAllExcept(code, UpperCaseLetters) + '-';
-              setPiece(delStr, U, 1, code);
-              immList.Add(delStr);
-            end;
-            lstCaptionList.Items[c].Selected  := true;
+            delStr := TPCEImm(lstCaptionList.Objects[c]).delimitedStrTxt;
+            code := Piece(delStr, U, 1);
+            code := StripAllExcept(code, UpperCaseLetters) + '-';
+            setPiece(delStr, U, 1, code);
+            immList.Add(delStr);
           end;
+          lstCaptionList.Items[c].Selected  := true;
+        end;
         btnRemoveClick(lstCaptionList);
       end;
     finally
@@ -243,7 +236,8 @@ begin
       if lstCaptionList.Items.Count > 0 then
       begin
         for idx := 0 to lstCaptionList.Items.Count - 1 do
-          if lstCaptionList.Objects[idx] is TPCEImm then          
+        begin
+          if lstCaptionList.Objects[idx] is TPCEImm then
           begin
             str := TPCEImm(lstCaptionList.Objects[idx]).delimitedStrTxt;
             code := Piece(str, U, 1);
@@ -251,6 +245,7 @@ begin
             setPiece(str, U, 1, code);
             codesList.Add(str);
           end;
+        end;
         removeAll;
         ShowMessage('Please review the diagnosis and procedure tabs for accuracy');
       end;
@@ -281,15 +276,15 @@ begin
           codesList.Add(imm.delimitedStrTxt);
           lstCaptionList.AddObject(imm.Narrative, imm);
           if data.diagnosisDelimitedStr <> '' then
-            begin
-              setDiagnosisList(data.diagnosisDelimitedStr, povList);
-              codesList.Add(data.diagnosisDelimitedStr);
-            end;
+          begin
+            setDiagnosisList(data.diagnosisDelimitedStr, povList);
+            codesList.Add(data.diagnosisDelimitedStr);
+          end;
           if data.procedureDelimitedStr <> '' then
-            begin
-              setProcedureList(data.procedureDelimitedStr, cptList);
-              codesList.Add(data.procedureDelimitedStr);
-            end;
+          begin
+            setProcedureList(data.procedureDelimitedStr, cptList);
+            codesList.Add(data.procedureDelimitedStr);
+          end;
         end;
       end;
     end;
@@ -305,19 +300,19 @@ begin
       begin
         str := tempList[idx];
         if pos('CPT',Piece(str, U, 1)) > 0 then
-          begin
-            if piece(str, U, 1) = 'CPT-' then
-              cptList.Add(str)
-            else
-              setProcedureList(str, cptList);
-          end;
+        begin
+          if piece(str, U, 1) = 'CPT-' then
+            cptList.Add(str)
+          else
+            setProcedureList(str, cptList);
+        end;
         if pos('POV',Piece(str, U, 1)) > 0 then
-          begin
-            if piece(str, U, 1) = 'POV-' then
-              povList.Add(str)
-            else
-              setDiagnosisList(str, povList);
-          end;
+        begin
+          if piece(str, U, 1) = 'POV-' then
+            povList.Add(str)
+          else
+            setDiagnosisList(str, povList);
+        end;
       end;
     end;
 
@@ -329,8 +324,10 @@ begin
     FreeAndNil(tempList);
     FreeAndNil(resultList);
     FreeAndNil(codesList);
-    KillObj(@povList, True);
-    KillObj(@cptList, True);
+    povList.OwnsObjects := True;
+    FreeAndNil(povList);
+    cptList.OwnsObjects := True;
+    FreeAndNil(cptList);
   end;
 end;
 
@@ -372,15 +369,14 @@ var
   i: integer;
   Ser, React: string;
   Obj: TPCEImm;
-
 begin
   inherited;
-  if(NotUpdating) then
+  if NotUpdating then
   begin
     BeginUpdate;
     try
       ok := (lstCaptionList.SelCount > 0);
-      if(ok) then
+      if ok then
       begin
         First := TRUE;
         SameS := TRUE;
@@ -421,5 +417,4 @@ end;
 
 initialization
   SpecifyFormIsNotADialog(TfrmImmunizations);
-
 end.

@@ -35,11 +35,11 @@ inherited frmConsultAlertsTo: TfrmConsultAlertsTo
       Height = 13
       Caption = 'Currently selected recipients'
     end
-    object cboSrcList: TORComboBox
+    object cboSrcList: TORCheckComboBox
       Left = 0
-      Top = 30
+      Top = 32
       Width = 178
-      Height = 236
+      Height = 233
       Anchors = [akLeft, akTop, akBottom]
       Style = orcsSimple
       AutoSelect = True
@@ -63,10 +63,15 @@ inherited frmConsultAlertsTo: TfrmConsultAlertsTo
       OnNeedData = cboSrcListNeedData
       CharsNeedMatch = 1
       UniqueAutoComplete = True
+      MainCheckBoxCaption = 'Include Non-VA Providers'
+      MainCheckBoxVisible = True
+      MainCheckBoxAlignment = calBottom
+      OnMainCheckboxClick = cboSrcListMainCheckboxClick
+      DropdownStyle = ddsControl
     end
     object DstList: TORListBox
       Left = 263
-      Top = 35
+      Top = 32
       Width = 178
       Height = 231
       Anchors = [akLeft, akTop, akBottom]

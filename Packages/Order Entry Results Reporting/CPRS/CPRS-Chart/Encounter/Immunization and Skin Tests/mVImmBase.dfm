@@ -1,4 +1,4 @@
-object fraParent: TfraParent
+inherited fraParent: TfraParent
   Left = 0
   Top = 0
   Width = 809

@@ -19,36 +19,22 @@ type
     btnCancel: TButton;
     btnOK: TButton;
     pnlTop: TPanel;
-    pnlRightTop: TPanel;
-    splProperties: TSplitter;
-    pnlCopyBtns: TPanel;
-    sbCopyLeft: TBitBtn;
-    sbCopyRight: TBitBtn;
-    lblCopy: TLabel;
-    splMiddle: TSplitter;
-    pnlShared: TPanel;
     lblShared: TLabel;
     tvShared: TORTreeView;
-    pnlSharedBottom: TPanel;
     sbShUp: TBitBtn;
     sbShDown: TBitBtn;
     sbShDelete: TBitBtn;
     cbShHide: TCheckBox;
-    pnlSharedGap: TPanel;
-    pnlPersonal: TPanel;
     lblPersonal: TLabel;
     tvPersonal: TORTreeView;
-    pnlPersonalBottom: TPanel;
     sbPerUp: TBitBtn;
     sbPerDown: TBitBtn;
     sbPerDelete: TBitBtn;
     cbPerHide: TCheckBox;
-    pnlPersonalGap: TPanel;
     tmrAutoScroll: TTimer;
     cbEditShared: TCheckBox;
     pnlProperties: TPanel;
     gbProperties: TGroupBox;
-    lblName: TLabel;
     lblLines: TLabel;
     cbExclude: TORCheckBox;
     cbActive: TCheckBox;
@@ -60,14 +46,12 @@ type
     edtShSearch: ORExtensions.TCaptionEdit;
     cbShMatchCase: TCheckBox;
     cbShWholeWords: TCheckBox;
-    pnlPerSearch: TPanel;
     btnPerFind: TORAlignButton;
     edtPerSearch: ORExtensions.TCaptionEdit;
     cbPerMatchCase: TCheckBox;
     cbPerWholeWords: TCheckBox;
     pnlToolBar: TPanel;
     btnNew: TORAlignButton;
-    Bevel1: TBevel;
     cbNotes: TCheckBox;
     gbDialogProps: TGroupBox;
     cbDisplayOnly: TCheckBox;
@@ -80,9 +64,7 @@ type
     dlgImport: TOpenDialog;
     dlgExport: TSaveDialog;
     cbxType: TCaptionComboBox;
-    lblType: TLabel;
     cbxRemDlgs: TORComboBox;
-    lblRemDlg: TLabel;
     cbLock: TORCheckBox;
     pnlCOM: TPanel;
     lblCOMParam: TLabel;
@@ -156,8 +138,6 @@ type
     N20: TMenuItem;
     ErrorCheckAllSharedTemplates1: TMenuItem;
     ErrorCheckAllTemplateFields1: TMenuItem;
-    Panel2: TPanel;
-    Panel3: TPanel;
     tbMnuEdit: TToolButton;
     acMnuEdit: TAction;
     acMnuAction: TAction;
@@ -244,6 +224,30 @@ type
     N2: TMenuItem;
     N3: TMenuItem;
     N4: TMenuItem;
+    grdTop: TGridPanel;
+    pnlToolbarRight: TPanel;
+    grdTopLeft: TGridPanel;
+    pnlSharedtop: TPanel;
+    pnlGap1: TPanel;
+    pnlPersonalTop: TPanel;
+    pnlSharedMiddle: TPanel;
+    pnlCopyBtns: TPanel;
+    pnlPerSearchMain: TPanel;
+    pnlSharedBottom: TPanel;
+    pnlGap2: TPanel;
+    pnlPersonalBottom: TPanel;
+    lblCopy: TLabel;
+    sbCopyLeft: TBitBtn;
+    sbCopyRight: TBitBtn;
+    pnlPersonalTopSearch: TPanel;
+    pnlMiddleTopSearch: TPanel;
+    pnlPerSearch: TPanel;
+    lblName: TLabel;
+    lblType: TLabel;
+    lblRemDlg: TLabel;
+    GridPanel3: TGridPanel;
+    Panel2: TPanel;
+    Panel4: TPanel;
     procedure btnApplyClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure cboOwnerNeedData(Sender: TObject; const StartFrom: string;
@@ -255,7 +259,6 @@ type
     procedure tvTreeGetImageIndex(Sender: TObject; Node: TTreeNode);
     procedure tvTreeGetSelectedIndex(Sender: TObject; Node: TTreeNode);
     procedure tvTreeChange(Sender: TObject; Node: TTreeNode);
-    procedure splMainMoved(Sender: TObject);
     procedure pnlBoilerplateResize(Sender: TObject);
     procedure edtNameOldChange(Sender: TObject);
     procedure cbActiveClick(Sender: TObject);
@@ -300,8 +303,6 @@ type
       Shift: TShiftState);
     procedure cbShFindOptionClick(Sender: TObject);
     procedure cbPerFindOptionClick(Sender: TObject);
-    procedure pnlShSearchResize(Sender: TObject);
-    procedure pnlPerSearchResize(Sender: TObject);
     procedure pnlPropertiesResize(Sender: TObject);
     procedure mbMainResize(Sender: TObject);
     procedure pnlBoilerplateCanResize(Sender: TObject; var NewWidth,
@@ -436,7 +437,6 @@ type
     procedure HideControls;
     procedure EnableControls(ok, Root: boolean);
     procedure EnableNavControls;
-    procedure MoveCopyButtons;
     procedure ShowInfo(Node: TTreeNode);
     function ChangeTree(NewTree: TTreeView): boolean;
     procedure Resync(const Templates: array of TTemplate);
@@ -456,7 +456,6 @@ type
     procedure UpdateApply(Template: TTemplate);
     procedure TemplateLocked(Sender: TObject);
     procedure InitTrees;
-    procedure AdjustControls4FontChange;
     procedure ShowGroupBoilerplate(Visible: boolean);
     procedure ShowBoilerPlate(Hide: Boolean);
     function GetLinkType(const ANode: TTreeNode): TTemplateLinkType;
@@ -494,7 +493,7 @@ uses dShared, uCore, rTemplates, fTemplateObjects, uSpell, fTemplateView,
   fTemplateAutoGen, fDrawers, mDrawers, fTemplateFieldEditor, fTemplateFields, XMLUtils,
   fIconLegend, uReminders, uConst, rCore, rEventHooks, rConsults, VAUtils,
   rMisc, fFindingTemplates, System.UITypes, FTemplateReport, Winapi.RichEdit,
-  UResponsiveGUI;
+  UResponsiveGUI, uSizing;
 
 const
   PropText = ' Template Properties ';
@@ -738,13 +737,11 @@ var
 begin
   SetFormPosition(Self);
   ResizeAnchoredFormToFont(self);
-  //Now fix everything the resize messed up
-  lblLines.Width := cbLock.Left - lblLines.Left - 15;
-  sbPerDelete.Left := pnlPersonalBottom.ClientWidth - sbPerDelete.Width - 1;
-  sbPerDown.Left := sbPerDelete.Left - sbPerDown.Width - 2;
-  sbPerUp.Left := sbPerDown.Left - sbPerUp.Width - 2;
-  cbPerHide.Width := sbPerUp.Left - 3;
-  btnPerFind.Left := pnlPerSearch.ClientWidth - btnPerFind.Width;
+
+//  var i := getMainFormTextWidth(' Copy ');
+//  Constraints.MinWidth := 22 * i;
+  Constraints.MinWidth := 1200;
+  Constraints.MinHeight := grdTop.Height * 3 div 2;
 
   FSavePause := Application.HintHidePause;
   Application.HintHidePause := FSavePause * 2;
@@ -809,14 +806,14 @@ begin
 
   lblCopy.AutoSize := TRUE;
   lblCopy.AutoSize := FALSE; // resets height based on font
-  lblCopy.Width := pnlCopyBtns.Width + splMiddle.Width;
-  MoveCopyButtons;
+ // lblCopy.Width := pnlCopyBtns.Width + splMiddle.Width;
 
   cbShHide.Checked := TRUE;
   cbPerHide.Checked := TRUE;
 
   BtnApply.Enabled := BackupDiffers;
   //SetFormPosition(Self);
+
 end;
 
 procedure TfrmTemplateEditor.HideControls;
@@ -829,7 +826,6 @@ begin
   sbPerUp.Visible := FCanEditPersonal;
   sbPerDown.Visible := FCanEditPersonal;
   tvPersonal.ReadOnly := not FCanEditPersonal;
-  MoveCopyButtons;
 end;
 
 procedure TfrmTemplateEditor.cboOwnerNeedData(Sender: TObject;
@@ -1001,29 +997,6 @@ begin
   EnableNavControls;
 end;
 
-procedure TfrmTemplateEditor.MoveCopyButtons;
-var
-  tmpHeight: integer;
-
-begin
-  tmpHeight := tvShared.Height;
-  dec(tmpHeight, lblCopy.Height);
-  if (sbCopyLeft.Visible) then
-    dec(tmpHeight, sbCopyLeft.Height + 5);
-  if (sbCopyRight.Visible) then
-    dec(tmpHeight, sbCopyRight.Height + 5);
-  tmpHeight := (tmpHeight div 2) + tvShared.Top;
-  lblCopy.Top := tmpHeight;
-  inc(tmpHeight, lblCopy.height + 5);
-  if (sbCopyLeft.Visible) then
-  begin
-    sbCopyLeft.Top := tmpHeight;
-    inc(tmpHeight, sbCopyLeft.Height + 5);
-  end;
-  if (sbCopyRight.Visible) then
-    sbCopyRight.Top := tmpHeight;
-end;
-
 procedure TfrmTemplateEditor.splMainCanResize(Sender: TObject;
   var NewSize: Integer; var Accept: Boolean);
 begin
@@ -1033,11 +1006,6 @@ begin
     Accept := False;
     NewSize := splMain.Top;
   end else Accept := True; //Moving Up
-end;
-
-procedure TfrmTemplateEditor.splMainMoved(Sender: TObject);
-begin
-  MoveCopyButtons;
 end;
 
 procedure TfrmTemplateEditor.ShowGroupBoilerplate(Visible: boolean);
@@ -1135,7 +1103,7 @@ begin
           PnlComCare.Visible := False;
 
         edtName.Text := PrintName;
-        reNotes.Lines.Text := Description;
+        reNotes.Text := Description;
         if (PersonalOwner = 0) and (FCurTree = tvShared) and (cbEditShared.Checked) then
         begin
           cbLock.Checked := IsLocked;
@@ -2230,34 +2198,6 @@ begin
   end;
 end;
 
-procedure TfrmTemplateEditor.AdjustControls4FontChange;
-var
-  x: integer;
-
-  procedure Adjust(Control: TWinControl);
-  begin
-    x := x - Control.Width - 2;
-    Control.Left := x;
-  end;
-
-begin
-  if FCanEditShared then
-  begin
-    x := pnlSharedBottom.Width;
-    Adjust(sbSHDelete);
-    Adjust(sbSHDown);
-    Adjust(sbSHUp);
-    cbSHHide.Width := x;
-  end;
-  x := pnlBottom.Width;
-  Adjust(btnApply);
-  Adjust(btnCancel);
-  Adjust(btnOK);
-  cbEditShared.Width := TextWidthByFont(cbEditShared.Font.Handle, cbEditShared.Caption) + 25;
-  cbNotes.Left := cbEditShared.Left + cbEditShared.Width + 60;
-  cbNotes.Width := TextWidthByFont(cbNotes.Font.Handle, cbNotes.Caption) + 25;
-end;
-
 function TfrmTemplateEditor.AllowMove(ADropNode, ADragNode: TTreeNode): boolean;
 var
   i: integer;
@@ -2414,10 +2354,7 @@ begin
   sbShUp.Visible := FCanEditShared;
   sbShDown.Visible := FCanEditShared;
   tvShared.ReadOnly := not FCanEditShared;
-  MoveCopyButtons;
   tvTreeChange(FCurTree, FCurTree.Selected);
-  if FCanEditShared then
-    AdjustControls4FontChange;
 end;
 
 procedure TfrmTemplateEditor.cbEditSharedClick(Sender: TObject);
@@ -2700,8 +2637,6 @@ begin
       edtName.SelectAll;
     end;
     pnlBoilerplateResize(Self);
-    AdjustControls4FontChange;
-    MoveCopyButtons;
   end;
 end;
 
@@ -3324,22 +3259,6 @@ begin
   inherited;
   FMainMenuTree := tvPersonal;
   doTemplateCollapse(tvPersonal);
-end;
-
-procedure TfrmTemplateEditor.pnlShSearchResize(Sender: TObject);
-begin
-  if ((cbShMatchCase.Width + cbShWholeWords.Width) > pnlShSearch.Width) then
-    cbShWholeWords.Left := cbShMatchCase.Width
-  else
-    cbShWholeWords.Left := pnlShSearch.Width - cbShWholeWords.Width;
-end;
-
-procedure TfrmTemplateEditor.pnlPerSearchResize(Sender: TObject);
-begin
-  if ((cbPerMatchCase.Width + cbPerWholeWords.Width) > pnlPerSearch.Width) then
-    cbPerWholeWords.Left := cbPerMatchCase.Width
-  else
-    cbPerWholeWords.Left := pnlPerSearch.Width - cbPerWholeWords.Width;
 end;
 
 procedure TfrmTemplateEditor.pnlPropertiesResize(Sender: TObject);

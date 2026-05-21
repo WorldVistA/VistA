@@ -7,18 +7,24 @@ Vcl.Forms, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Controls, Vcl.graphics,  Vcl.Dialogs,
 Vcl.CheckLst,
 Winapi.Windows, Winapi.Messages,
 System.Classes, System.SysUtils,
-VA508AccessibilityManager, rvimm, rCore, ORCtrls, ORDtTm, ORFn, uEditObject, VAUtils;
+VA508AccessibilityManager, rvimm, rCore, ORCtrls, ORDtTm, ORFn, uEditObject, VAUtils,
+ORCheckComboBox, uMisc;
 
 type
 
 vEditObject = class(tEditObject)
 private
 //  fOnChangeOver: TNotifyEvent;
-  procedure loadUsers(control: TControl; const StartFrom: string; Direction, InsertAt: Integer; providerOnly: boolean);
+  procedure loadUsers(AORComboBox: TORComboBox;
+    const StartFrom: string; Direction, InsertAt: Integer;
+    providerOnly: boolean);
+  procedure ORCheckComboBoxMainCheckboxClick(Sender: TObject);
 protected
   procedure onNeedData(sender: TObject; const StartFrom: string; Direction, InsertAt: integer); override;
   procedure promptChange(Sender: TObject); override;
   procedure setComboBoxDefault(editIntVal, editExtVal: string); override;
+  procedure CreateControl(layoutControl: TLayoutControl;
+    AOwner, AParent: TWinControl; AClass: TWinControlClass = nil); override;
 public
   layout: tLayout;
   procedure populateComponent;
@@ -37,7 +43,9 @@ procedure clearValues;
 implementation
 
 uses
- uSimilarNames;
+  uSimilarNames,
+  uCore,
+  VA508AccessibilityRouter;
 
  var
  oldFMDate: TFMDateTime;
@@ -46,23 +54,57 @@ uses
 
 { editObject }
 
-procedure vEditObject.loadUsers(control: TControl; const StartFrom: string;
-  Direction, InsertAt: Integer; providerOnly: boolean);
+procedure vEditObject.ORCheckComboBoxMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  if (editComponent is TORCheckComboBox) then
+  begin
+    TORCheckComboBox(editComponent).ReInitLongList;
+    promptChange(editComponent);
+  end;
+end;
+
+procedure vEditObject.CreateControl(layoutControl: TLayoutControl; AOwner,
+  AParent: TWinControl; AClass: TWinControlClass = nil);
+var
+  IncludeNVAP: Boolean;
+begin
+  if not (SameText(name, 'ENCOUNTER PROVIDER') or SameText(name, 'ORDERING PROVIDER')) then
+  begin
+    inherited CreateControl(layoutControl, AOwner, AParent, AClass);
+  end else begin
+    inherited CreateControl(layoutControl, AOwner, AParent, TORCheckComboBox);
+
+    if SameText(name, 'ENCOUNTER PROVIDER') then
+      TORCheckComboBox(editComponent).Name := 'ORDERING_PROVIDER';
+    if SameText(name, 'ORDERING PROVIDER') then
+      TORCheckComboBox(editComponent).Name := 'ORDERED_BY';
+
+    IncludeNVAP := IncludeNonVAProviders(TORCheckComboBox(editComponent));
+
+    TORCheckComboBox(editComponent).MainCheckBoxCaption := 'Include Non-VA Providers';
+    TORCheckComboBox(editComponent).MainCheckBoxVisible := IncludeNVAP;
+    TORCheckComboBox(editComponent).MainCheckBoxChecked := False;
+    TORCheckComboBox(editComponent).MainCheckBoxAlignment := calBottom;
+    TORCheckComboBox(editComponent).OnMainCheckboxClick := ORCheckComboBoxMainCheckboxClick;
+  end;
+end;
+
+procedure vEditObject.loadUsers(AORComboBox: TORComboBox;
+  const StartFrom: string; Direction, InsertAt: Integer; providerOnly: boolean);
 var
   Dest: TStrings;
-  cbo: TORComboBox;
-
 begin
-  Dest := TSTringList.Create;
+  Dest := TStringList.Create;
   try
-    cbo := (control as TORComboBox);
-    cbo.Pieces := '2,3';
-    cbo.UniqueAutoComplete := true;
-    if not providerOnly then
-      setSubSetOfPersons(cbo, Dest,StartFrom, Direction)
-    else
-      setSubSetOfProviders(cbo, Dest,StartFrom, Direction);
-    cbo.ForDataUse(Dest);
+    AORComboBox.Pieces := '2,3';
+    AORComboBox.UniqueAutoComplete := True;
+    if not providerOnly then begin
+      setSubSetOfPersons(AORComboBox, Dest, StartFrom, Direction, False);
+    end else begin
+      setSubSetOfProviders(AORComboBox, Dest, StartFrom, Direction);
+    end;
+    AORComboBox.ForDataUse(Dest);
   finally
     Dest.Free;
   end;
@@ -71,7 +113,7 @@ end;
 procedure vEditObject.onNeedData(sender: TObject; const StartFrom: string;
   Direction, InsertAt: integer);
 var
-provider: boolean;
+  provider: boolean;
 begin
  if name = 'ORDERING PROVIDER' then provider := true
  else provider := false;
@@ -202,10 +244,10 @@ begin
       temp := intVal + U + extVal;
       updateOrderingProvider(temp, layout);
     end
-  else if (Sender is TORComboBox) and (self.controlType = 'ptCBOLongList') then
+  else if (Sender is TORComboBox) and (self.promptType = ptCBOLongList) then
     begin
       cbo := (Sender as TORComboBox);
-      SimRtn :=  CheckForSimilarName(cbo, ErrMsg, sPr);
+      SimRtn := CheckForSimilarName(cbo, ErrMsg, sPr);
       if not SimRtn then
       begin
         ShowMsgOn(ErrMsg <> '', ErrMsg, 'Provider Selection');
@@ -254,10 +296,10 @@ procedure vEditObject.setDefaultValue;
 begin
  inherited;
  oldFMDate := 0;
- if (self.name = 'LOT NUMBER') and (self.controlType = 'ptCBO') and
+ if (self.name = 'LOT NUMBER') and (self.promptType = ptCBO) and
     (self.dataList.Count = 1) then
       updateExpAndManuf(dataList.Strings[0], layout);
- if (self.name = 'SERIES') and (self.controlType = 'ptCBO') and
+ if (self.name = 'SERIES') and (self.promptType = ptCBO) and
     (uVimmInputs.defaultSeries <> '')
       then
         begin
@@ -557,14 +599,14 @@ var
 idx: integer;
 layoutControl: tLayoutControl;
 editObject: vEditObject;
-dataLbl: TStaticText;
+dataLbl: TVA508StaticText;
 begin
   idx := Layout.controls.IndexOf('EXPIRATION DATE');
   if idx > -1 then
   begin
     layoutControl := tLayoutControl(Layout.controls.Objects[idx]);
     editObject := vEditObject(layoutControl.uiControl);
-    dataLbl := (editObject.editComponent as TStaticText);
+    dataLbl := (editObject.editComponent as TVA508StaticText);
     dataLbl.caption := Piece(data, U, 4);
     editObject.intVal := dataLbl.Caption;
     editObject.extVal := dataLbl.Caption;
@@ -575,7 +617,7 @@ begin
   begin
     layoutControl := tLayoutControl(Layout.controls.Objects[idx]);
     editObject := vEditObject(layoutControl.uiControl);
-    dataLbl := (editObject.editComponent as TStaticText);
+    dataLbl := (editObject.editComponent as TVA508StaticText);
     dataLbl.caption := Piece(data, U, 3);
     editObject.intVal := dataLbl.Caption;
     editObject.extVal := dataLbl.Caption;

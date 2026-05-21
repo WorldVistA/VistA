@@ -6,10 +6,16 @@
   Description: Contains TRPCBroker and related components.
   Unit: RequestSecurityTokenSVC.pas, this unit is the result
   of importing the IAM WSDL.
-  Current Release: Version 1.1 Patch 72
+  Current Release: Version 1.1 Patch 74
   *************************************************************** }
 
-{ *************************************************************
+{ **************************************************
+  Changes in XWB*1.1*74 (CLG 05/30/2024) XWB*1.1*74
+  1. Updated RPC Version to version 74.
+
+  Changes in XWB*1.1*73 (RGG 07/19/2021) XWB*1.1*73
+  1. Updated RPC Version to version 73.
+
   Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
   1. Updated RPC Version to version 72.
 
@@ -22,8 +28,8 @@
 // ************************************************************************ //
 // The types declared in this file were generated from data read from the
 // WSDL File described below:
-// WSDL     : https://domain.aaaaa.aaaa.ext:9301/STS/RequestSecurityToken?wsdl
-// >Import : https://domain.aaaaa.aaaa.ext:9301/STS/RequestSecurityToken?wsdl>0
+// WSDL     : https://aaaaa.aaaa.domain.ext:port/STS/RequestSecurityToken?wsdl
+// >Import : https://aaaaa.aaaa.domain.ext:port/STS/RequestSecurityToken?wsdl>0
 // Encoding : UTF-8
 // Version  : 1.0
 // (1/28/2019 10:49:03 AM - - $Rev: 86412 $)
@@ -120,7 +126,7 @@ type
   // binding   : RequestSecurityTokenPortBinding
   // service   : SecurityTokenService
   // port      : RequestSecurityToken
-  // URL       : https://domain.aaaaaa.aaaaaaa.ext:9301/STS/RequestSecurityToken
+  // URL       : https://int.aaaaa.aaaa.domain.ext:port/STS/RequestSecurityToken
   // ************************************************************************ //
   SecurityTokenService = interface(IInvokable)
     ['{1A87D2AC-73FC-BBCF-B7F7-2AF8B4086479}']
@@ -137,8 +143,8 @@ uses System.SysUtils;
 function GetSecurityTokenService(UseWSDL: Boolean; Addr: string;
   HTTPRIO: THTTPRIO): SecurityTokenService;
 const
-  defWSDL = 'https://domain.aaaaa.aaaa.ext:9301/STS/RequestSecurityToken?wsdl';
-  defURL = 'https://domain.aaaaaa.aaaaaaa.ext:9301/STS/RequestSecurityToken';
+  defWSDL = 'https://aaaaa.aaaa.domain.ext:port/STS/RequestSecurityToken?wsdl';
+  defURL = 'https://int.aaaaa.aaaa.domain.ext:port/STS/RequestSecurityToken';
   defSvc = 'SecurityTokenService';
   defPrt = 'RequestSecurityToken';
 var

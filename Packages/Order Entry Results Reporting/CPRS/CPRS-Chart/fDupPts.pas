@@ -1,18 +1,29 @@
 unit fDupPts;
 {------------------------------------------------------------------------------
-Update History
+ Update History
 
-    2016-02-25: NSR#20110606 (Similar Provider/Cosigner names)
--------------------------------------------------------------------------------}
-
+ 2016-02-25: NSR#20110606 (Similar Provider/Cosigner names)
+ -------------------------------------------------------------------------------}
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics,
-  Controls, Forms, Dialogs, StdCtrls, ORCtrls, ExtCtrls, OrFn, OrNet, fBase508Form,
-  VA508AccessibilityManager, Vcl.ComCtrls
-  , uSimilarNames
-  ;
+  Messages,
+  SysUtils,
+  Variants,
+  Classes,
+  Graphics,
+  Controls,
+  Forms,
+  Dialogs,
+  StdCtrls,
+  ORCtrls,
+  ExtCtrls,
+  OrFn,
+  OrNet,
+  fBase508Form,
+  VA508AccessibilityManager,
+  Vcl.ComCtrls,
+  uSimilarNames;
 
 type
   TfrmDupPts = class(TfrmBase508Form)
@@ -32,22 +43,27 @@ type
       State: TCustomDrawState; var DefaultDraw: Boolean);
   private
     { Private declarations }
-    fItemName: String;
-    fExceptions: TStrings;
-    function ValidateExceptions:Boolean;
+    FItemName: string;
+    FExceptions: TStrings;
+    function ValidateExceptions: Boolean;
   public
     { Public declarations }
-    Constructor CreateSelector(ASelector:TSelector; aList:TStrings; anExceptions:TStrings = nil);
-end;
+    constructor CreateSelector(ASelector: TSelector; AList: TStrings;
+      AExceptions: TStrings = nil);
+  end;
 
 implementation
 
 {$R *.dfm}
 
 uses
-  rCore, uCore, System.UITypes;
+  WinApi.Windows,
+  rCore,
+  uCore,
+  System.UITypes;
 
-constructor TfrmDupPts.CreateSelector(ASelector:TSelector; aList:TStrings; anExceptions:TStrings = nil);
+constructor TfrmDupPts.CreateSelector(ASelector: TSelector; AList: TStrings;
+  AExceptions: TStrings = nil);
 const
   fmtCaptionWindow = 'Similar %ss';
   fmtCaptionList = '  Please select the correct %s:';
@@ -57,17 +73,21 @@ var
   ANeedLocation: Boolean;
 begin
   inherited Create(Application);
-  fExceptions := anExceptions;
+  FExceptions := AExceptions;
 
   case ASelector of
-    sPr : fItemName := 'provider';
-    sCo : fItemName := 'cosigner';
-    sPt : fItemName := 'patient';
+    sPr:
+      FItemName := 'provider';
+    sCo:
+      FItemName := 'cosigner';
+    sPt:
+      FItemName := 'patient';
   end;
-  pnlHeader.Caption := Format(fmtCaptionList,[fItemName]);
-  lboSelPt.Caption := Format('Please select the correct %s', [fItemName]);
-  fItemName := uppercase(copy(fItemName,1,1))+copy(fItemName,2,Length(fItemName));
-  Caption := Format(fmtCaptionWindow,[fItemName]);
+  pnlHeader.Caption := Format(fmtCaptionList, [FItemName]);
+  lboSelPt.Caption := Format('Please select the correct %s', [FItemName]);
+  FItemName := UpperCase(Copy(FItemName, 1, 1)) +
+    Copy(FItemName, 2, Length(FItemName));
+  Caption := Format(fmtCaptionWindow, [FItemName]);
 
   if ASelector <> sPt then
   begin
@@ -87,6 +107,10 @@ begin
     if ANeedLocation then
     begin
       lboSelPt.Pieces := '2,3,4,5,6,7,8';
+      lboSelPt.Columns[lboSelPt.Columns.Count - 2].Width :=
+        lboSelPt.Columns[lboSelPt.Columns.Count - 2].Width + lboSelPt.Columns
+        [lboSelPt.Columns.Count - 1].Width;
+      lboSelPt.Columns.Delete(lboSelPt.Columns.Count - 1);
     end else begin
       lboSelPt.Columns[4].Width := lboSelPt.Columns[3].Width +
         lboSelPt.Columns[4].Width;
@@ -95,8 +119,8 @@ begin
     end;
   end;
 
-  if Assigned(aList) then
-    FastAssign(aList, lboSelPt.ItemsStrings);
+  if Assigned(AList) then
+    FastAssign(AList, lboSelPt.ItemsStrings);
 
   ResizeAnchoredFormToFont(self);
 end;
@@ -108,7 +132,8 @@ begin
   begin
     CanClose := Length(lboSelPt.ItemID) > 0;
     if not CanClose then
-      InfoBox(' A ' + fItemName + ' has not been selected', 'No '+fItemName + ' Selected', MB_OK or MB_ICONWARNING);
+      InfoBox(' A ' + FItemName + ' has not been selected',
+        'No ' + FItemName + ' Selected', MB_OK or MB_ICONWARNING);
     if CanClose then
       CanClose := ValidateExceptions;
   end;
@@ -118,25 +143,25 @@ procedure TfrmDupPts.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   inherited;
-  if (key = VK_ESCAPE) then
+  if (Key = VK_ESCAPE) then
     ModalResult := mrCancel;
 end;
 
 procedure TfrmDupPts.lboSelPtCustomDrawItem(Sender: TCustomListView;
   Item: TListItem; State: TCustomDrawState; var DefaultDraw: Boolean);
 var
-  sID:String;
+  AID: string;
 begin
   inherited;
-  if assigned(Item) then
-    begin
-      sID := lboSelPt.ItemsStrings[Item.Index];
-      sID := Piece(sID,U,1)+ U;
-      if assigned(fExceptions) and (pos(sID,fExceptions.Text)> 0) then
-        lboSelPt.Canvas.Font.Color := clHighlight
-      else
-        lboSelPt.Canvas.Font.Color := clWindowText;
-    end
+  if Assigned(Item) then
+  begin
+    AID := lboSelPt.ItemsStrings[Item.Index];
+    AID := Piece(AID, U, 1) + U;
+    if Assigned(FExceptions) and (Pos(AID, FExceptions.Text) > 0) then
+      lboSelPt.Canvas.Font.Color := clHighlight
+    else
+      lboSelPt.Canvas.Font.Color := clWindowText;
+  end
 end;
 
 procedure TfrmDupPts.lboSelPtDblClick(Sender: TObject);
@@ -146,21 +171,22 @@ end;
 
 function TfrmDupPts.ValidateExceptions: Boolean;
 var
-  i: Integer;
+  I: Integer;
 const
-  msgRecordAlreadyAdded = 'This Record is already added to the Selection List'+CRLF+
-          'Please select another Record or Cancel the selection';
+  MsgRecordAlreadyAdded = 'This Record is already added to the Selection List' +
+    CRLF + 'Please select another Record or Cancel the selection';
 begin
   Result := True;
-  if not assigned(fExceptions) then
+  if not assigned(FExceptions) then
     exit;
-  for i := 0 to fExceptions.Count -1 do
-    if (Piece(fExceptions[i],U,1) = lboSelPt.ItemID) then
-      begin
-        Result := False;
-        InfoBox(msgRecordAlreadyAdded,'Duplicate item detected', MB_OK or MB_ICONWARNING);
-        break;
-      end;
+  for I := 0 to FExceptions.Count - 1 do
+    if (Piece(FExceptions[I], U, 1) = lboSelPt.ItemID) then
+    begin
+      Result := False;
+      InfoBox(MsgRecordAlreadyAdded, 'Duplicate item detected',
+        MB_OK or MB_ICONWARNING);
+      Break;
+    end;
 end;
 
 end.

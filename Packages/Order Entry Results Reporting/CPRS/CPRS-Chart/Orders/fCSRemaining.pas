@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ORCtrls, ExtCtrls, VA508AccessibilityManager, StrUtils,
-  ORFn, uCore, rOrders, fBase508Form;
+  ORFn, uCore, rOrders, fBase508Form, VAShared.UTStringsHelper;
 
 type
   TfrmCSRemaining = class(TfrmBase508Form)
@@ -21,7 +21,7 @@ type
     { Public declarations }
   end;
 
-  tStringsHelper = class helper for TStrings
+  tStringsHelper = class helper (TVAStringsHelper) for TStrings
     function OrderExists(aOrderID: String): boolean;
   end;
 

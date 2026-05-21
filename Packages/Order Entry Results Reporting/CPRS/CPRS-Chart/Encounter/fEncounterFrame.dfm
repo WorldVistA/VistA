@@ -2,35 +2,39 @@ inherited frmEncounterFrame: TfrmEncounterFrame
   Left = 290
   Top = 108
   Caption = 'Encounter Frame'
-  ClientHeight = 424
-  ClientWidth = 632
+  ClientHeight = 561
+  ClientWidth = 784
+  Constraints.MinHeight = 600
+  Constraints.MinWidth = 800
   FormStyle = fsMDIForm
   Position = poMainFormCenter
   OnCanResize = FormCanResize
   OnCloseQuery = FormCloseQuery
   OnResize = FormResize
-  ExplicitWidth = 650
-  ExplicitHeight = 469
+  OldCreateOrder = True
+  ExplicitWidth = 800
+  ExplicitHeight = 600
   TextHeight = 13
   object Bevel1: TBevel [0]
     Left = 0
     Top = 0
-    Width = 632
+    Width = 784
     Height = 2
     Align = alTop
+    ExplicitWidth = 632
   end
   object StatusBar1: TStatusBar [1]
     Left = 0
-    Top = 424
-    Width = 632
+    Top = 561
+    Width = 784
     Height = 0
     Panels = <>
   end
   object pnlPage: TPanel [2]
     Left = 0
     Top = 24
-    Width = 632
-    Height = 400
+    Width = 784
+    Height = 537
     Align = alClient
     BevelOuter = bvNone
     Font.Charset = DEFAULT_CHARSET
@@ -44,7 +48,7 @@ inherited frmEncounterFrame: TfrmEncounterFrame
   object TabControl: TTabControl [3]
     Left = 0
     Top = 2
-    Width = 632
+    Width = 784
     Height = 22
     Align = alTop
     TabOrder = 2

@@ -53,6 +53,7 @@ type
     procedure Clear; override;
     procedure Delete(index: integer); override;
     procedure Insert(Index: Integer; const S: string); override;
+    function RealIndexOf(const S: string): Integer;
     function IndexOf(const S: string): Integer; override;
     property PlainText: TStrings read FPlainText;
     property Translator: TTranslator read FTranslator;
@@ -82,6 +83,8 @@ type
   end;
 
   TORListBox = class(TListBox, IVADynamicProperty, IORBlackColorModeCompatible)
+  strict private
+    FInForDataUse: Boolean;
   private
     FNonSelectedIndex: Integer; // Index of non selected focused index
     FFocusIndex: Integer; // item with focus when using navigation keys
@@ -158,12 +161,13 @@ type
     function GetReference(Index: Integer): Variant;
     function GetTabPositions: string;
     function GetStyle: TListBoxStyle;
-    procedure NeedData(Direction: Integer; StartFrom: string);
-    function PositionThumb: Integer;
+    procedure NeedData(Direction: Integer; StartFrom: string; ScrollPos: Integer = -1);
+    function PositionThumb(AScrollCode: TScrollCode; AScrollPos: Integer = -1): Integer;
     procedure ResetItems;
     procedure ScrollBarScroll(Sender: TObject; ScrollCode: TScrollCode; var ScrollPos: Integer);
     procedure ScrollTo(Sender: TObject; ScrollCode: TScrollCode; var ScrollPos: Integer);
     function GetStringIndex(const AString: string): Integer;
+    function SelectString(const AString: string): Integer;
     procedure SetCheckBoxes(const Value: boolean);
     procedure SetDelimiter(Value: Char);
     procedure SetFlatCheckBoxes(const Value: boolean);
@@ -214,7 +218,15 @@ type
     procedure SetMItems(Value: TStrings);
     procedure SetCaption(const Value: string);
     function GetCaption: string;
+    function VisibleLines: Integer;
+    function GetCheckBoxWidth: Integer;
+  protected type
+    TAlphaArray = array[0..100] of string;
   protected
+    function GetSelectedDataString: string;
+    procedure SetSelectedDataString(const Value: string);
+    function GetLookupString(AIndex: Integer): string;
+    function GetSelectedLookupString: string;
     procedure SetMultiSelect(Value: boolean); override;
     procedure CreateParams(var Params: TCreateParams); override;
     procedure CreateWnd; override;
@@ -233,6 +245,7 @@ type
     procedure DrawItem(Index: Integer; Rect: TRect; State: TOwnerDrawState); override;
     function GetIndexFromY(YPos: integer): integer;
     procedure LoadRecreateItems(RecreateItems: TStrings); override;
+    function AlphaDist: TAlphaArray;
     property isPartOfComboBox: boolean read FIsPartOfComboBox write FIsPartOfComboBox default False;
     property HideSynonyms: boolean read FHideSynonyms write SetHideSynonyms default FALSE;
     property SynonymChars: string read FSynonymChars write SetSynonymChars;
@@ -246,11 +259,13 @@ type
     procedure InsertSeparator;
     procedure ForDataUse(Strings: TStrings);
     procedure InitLongList(S: string);
+    procedure ReInitLongList;
     function GetIEN(AnIndex: Integer): Int64;
     function SelectByIEN(AnIEN: Int64): Integer;
     function SelectByID(const AnID: string): Integer;
     function SetExactByIEN(AnIEN: Int64; const AnItem: string): Integer;
     procedure Clear; override;
+    property CheckBoxWidth: Integer read GetCheckBoxWidth;
     property ItemID: Variant read GetItemID;
     property ItemIEN: Int64 read GetItemIEN;
     property FocusIndex: Integer read FFocusIndex write SetFocusIndex;
@@ -267,7 +282,11 @@ type
     function SupportsDynamicProperty(PropertyID: integer): boolean;
     function GetDynamicProperty(PropertyID: integer): string;
     property HideSelection: boolean read FHideSelection write FHideSelection;
-    function SelectString(const AString: string): Integer;
+    property SelectedDataString: string read GetSelectedDataString write SetSelectedDataString;
+    property LookupString[AIndex: Integer]: string read GetLookupString;
+    property SelectedLookupString: string read GetSelectedLookupString;
+    procedure SuspendRedraw; deprecated 'Use LockDrawing';
+    procedure ResumeRedraw; deprecated 'Use UnlockDrawing';
   published
     property AllowGrayed: boolean read FAllowGrayed write FAllowGrayed default FALSE;
     property Caption: string read GetCaption write SetCaption;
@@ -327,6 +346,9 @@ type
     procedure WMKillFocus(var Message: TWMKillFocus); message WM_KILLFOCUS;
   protected
     procedure CreateParams(var Params: TCreateParams); override;
+  public
+    procedure SuspendRedraw; deprecated 'Use LockDrawing';
+    procedure ResumeRedraw; deprecated 'Use UnlockDrawing';
   end;
 
   TORComboBox = class(TWinControl, IVADynamicProperty, IORBlackColorModeCompatible)
@@ -345,10 +367,10 @@ type
     FFromDropBtn: Boolean; // determines when to capture mouse on drop
     FKeyTimerActive: Boolean; // true when timer running for OnKeyPause
     FKeyIsDown: Boolean; // true between KeyDown & KeyUp events
+    FPrevEditBoxText: string; // Contents of FEditBox.Text when FKeyIsDown
     FChangePending: Boolean;
     FListItemsOnly: Boolean;
     FLastFound: string;
-    FLastInput: string; // last thing the user typed into the edit box
     FOnChange: TNotifyEvent; // maps to editbox change event
     FOnClick: TNotifyEvent; // maps to listbox click event
     FOnDblClick: TNotifyEvent; // maps to listbox double click event
@@ -379,8 +401,6 @@ type
     procedure EditOnExit(Sender: TObject);
     procedure DropDownStatusChanged(opened: boolean);
     procedure ClearDropDownStatus;
-    function EditControl: TWinControl;
-    procedure AdjustSizeOfSelf;
     procedure DropButtonDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState;
       X, Y: Integer);
     procedure DropButtonUp(Sender: TObject; Button: TMouseButton; Shift: TShiftState;
@@ -423,8 +443,9 @@ type
     procedure SetColor(Value: TColor);
     procedure SetDelimiter(Value: Char);
     procedure SetDropDownCount(Value: Integer);
-    procedure SetDroppedDown(Value: Boolean);
-    procedure SetEditRect;
+    procedure SetDroppedDown(Value: Boolean); overload;
+    procedure SetDroppedDown(Value: Boolean; Top: Integer); overload;
+    procedure SetEditRect; overload;
     procedure SetEditText(const Value: string);
     procedure SetItemIndex(Value: Integer);
     procedure SetItemHeight(Value: Integer);
@@ -440,7 +461,6 @@ type
     procedure SetSorted(Value: Boolean);
     procedure SetHideSynonyms(Value: boolean);
     procedure SetSynonymChars(Value: string);
-    procedure SetStyle(Value: TORComboStyle);
     procedure SetTabPositions(const Value: string);
     procedure SetTabPosInPixels(const Value: boolean);
     procedure SetText(const Value: string);
@@ -460,7 +480,6 @@ type
     procedure SetCheckBoxes(const Value: boolean);
     procedure SetChecked(Index: Integer; const Value: Boolean);
     procedure SetCheckEntireLine(const Value: boolean);
-    procedure SetFlatCheckBoxes(const Value: boolean);
     function GetCheckedString: string;
     procedure SetCheckedString(const Value: string);
     procedure SetCheckBoxEditColor(const Value: TColor);
@@ -470,7 +489,6 @@ type
     function GetOnSynonymCheck: TORSynonymCheckEvent;
     procedure SetOnSynonymCheck(const Value: TORSynonymCheckEvent);
     function GetMItems: TStrings;
-    procedure SetCaption(const Value: string);
     function GetCaption: string;
     function GetCaseChanged: boolean;
     procedure SetCaseChanged(const Value: boolean);
@@ -480,6 +498,23 @@ type
     procedure LoadComboBoxImage;
     function GetTabStop: Boolean;
     procedure SetTabStop(const Value: Boolean);
+  strict protected
+    function CalcDropDownRect(ADropDownCount, AItemHeight, ATop: Integer)
+      : TRect; virtual;
+    procedure AdjustSizeOfSelf; virtual;
+    function AlphaDist: TORListBox.TAlphaArray;
+    procedure SetStyle(Value: TORComboStyle); virtual;
+    procedure SetFlatCheckBoxes(const Value: boolean); virtual;
+    function EditControl: TWinControl;
+    procedure SetEditRect(ARect: TRect); overload;
+    function GetSelectedDataString: string;
+    function GetLookupString(AIndex: Integer): string;
+    function GetSelectedLookupString: string;
+    procedure NeedData(Direction: Integer; StartFrom: string; ScrollPos: Integer = -1);
+    property EditBox: TORComboEdit read FEditBox;
+    property EditPanel: TORComboPanelEdit read FEditPanel;
+    property DropBtn: TBitBtn read FDropBtn;
+    property ListBox: TORListBox read FListBox; // listbox control for the combobox
   protected
     // RDD: The following two procedures have been made protected and virtual
     // so they can be overwritten in TIndicationsCombobox. These changes
@@ -490,11 +525,9 @@ type
     // it needs;
     property FromSelf: Boolean read FFromSelf write FFromSelf;
     property ChangePending: Boolean read FChangePending write FChangePending;
-    property ListBox: TORListBox read FListBox;
     property KeyIsDown: Boolean read FKeyIsDown;
-    property EditBox: TORComboEdit read FEditBox;
-    property LastInput: string read FLastInput write FLastInput;
     property LastFound: string read FLastFound write FLastFound;
+    procedure SetCaption(const Value: string); virtual;
   protected
     procedure DropPanelBtnPressed(OKBtn, AutoClose: boolean);
     function GetEditBoxText(Index: Integer): string;
@@ -513,6 +546,7 @@ type
     procedure ClearTop;
     procedure ForDataUse(Strings: TStrings);
     procedure InitLongList(S: string);
+    procedure ReInitLongList; virtual;
     procedure InsertSeparator;
     procedure Invalidate; override;
     procedure SetTextAutoComplete(TextToMatch: string);
@@ -543,6 +577,13 @@ type
     property TimerInterval: integer read FTimerInterval write FTimerInterval;
     property Data: TObject read FData write FData;
     property OwnsData: boolean read FOwnsData write FOwnsData;
+    property SelectedDataString: string read GetSelectedDataString;
+    property LookupString[AIndex: Integer]: string read GetLookupString;
+    property SelectedLookupString: string read GetSelectedLookupString;
+    procedure LockDrawing;
+    procedure UnlockDrawing;
+    procedure SuspendRedraw; deprecated 'Use LockDrawing';
+    procedure ResumeRedraw; deprecated 'Use UnlockDrawing';
   published
     Property RpcCall :String read fRpcCall write fRpcCall;
     property Anchors;
@@ -713,28 +754,22 @@ type
 
   TORDraggingEvent = procedure(Sender: TObject; Node: TTreeNode; var CanDrag: boolean) of object;
 
-
+{$RTTI EXPLICIT FIELDS([vcPrivate, vcProtected, vcPublic, vcPublished])}
   TCaptionTreeView = class(TTreeView, IVADynamicProperty)
-  private
-    const
-      CaptionTreeViewRecreateWndEvents: array of string = ['OnAddition',
-        'OnChange', 'OnChanging', 'OnCollapsed', 'OnCollapsing', 'OnDeletion',
-        'OnExpanded', 'OnExpanding'];
   private
     FEventCache: TOREventCache;
     procedure SetCaption(const Value: string);
     function GetCaption: string;
     procedure TVMDeleteItem(var Message: TMessage); message TVM_DELETEITEM;
     procedure TVMSelectItem(var Message: TMessage); message TVM_SELECTITEM;
-    function GetEventCache: TOREventCache;
   protected
     FCaptionComponent: TStaticText;
-    property EventCache: TOREventCache read GetEventCache;
     procedure CMSysColorChange(var Message: TMessage); message CM_SYSCOLORCHANGE;
     procedure CreateWnd; override;
     procedure DestroyWnd; override;
   public
-    destructor Destroy; Override;
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
     function SupportsDynamicProperty(PropertyID: integer): boolean;
     function GetDynamicProperty(PropertyID: integer): string;
   published
@@ -777,10 +812,8 @@ type
 
   TNodeCaptioningEvent = procedure(Sender: TObject; var Caption: string) of object;
 
+{$RTTI INHERIT}
   TORTreeView = class(TCaptionTreeView)
-  private
-    const
-      ORTreeViewRecreateWndEvents: array of string = ['OnNodeCaptioning'];
   private
     FRecreateStream: TMemoryStream;
     FOnDragging: TORDraggingEvent;
@@ -865,6 +898,7 @@ type
 
   TORCheckBox = class(TCheckBox, IORBlackColorModeCompatible)
   private
+    FFlat: Boolean;
     FStringData: string;
     FCanvas: TCanvas;
     FGrayedToChecked: boolean;
@@ -884,13 +918,13 @@ type
     procedure SetFocusOnBox(value: boolean);
     procedure CNMeasureItem(var Message: TWMMeasureItem); message CN_MEASUREITEM;
     procedure CNDrawItem(var Message: TWMDrawItem); message CN_DRAWITEM;
-    procedure CMFontChanged(var Message: TMessage); message CM_FONTCHANGED;
     procedure CMEnabledChanged(var Message: TMessage); message CM_ENABLEDCHANGED;
     procedure WMLButtonDblClk(var Message: TWMLButtonDblClk); message WM_LBUTTONDBLCLK;
     procedure WMSize(var Message: TWMSize); message WM_SIZE;
     procedure BMSetCheck(var Message: TMessage); message BM_SETCHECK;
     procedure BMGetCheck(var Message: TMessage); message BM_GETCHECK;
     procedure BMGetState(var Message: TMessage); message BM_GETSTATE;
+    function GetCheckBoxWidth: Integer;
     function GetImageList: TCustomImageList;
     function GetImageIndexes: string;
     procedure SetImageIndexes(const Value: string);
@@ -900,13 +934,20 @@ type
     procedure SetCaption(const Value: TCaption);
     procedure SyncAllowAllUnchecked;
     procedure SetAllowAllUnchecked(const Value: boolean);
+    procedure SetAssociate(const Value: TControl);
     procedure SetGroupIndex(const Value: integer);
     procedure SetRadioStyle(const Value: boolean);
-    procedure SetAssociate(const Value: TControl);
+  strict protected
+    procedure CMFontChanged(var Message: TMessage); message CM_FONTCHANGED;
+  protected const
+    CheckBoxPadX = 2;
+    CheckBoxPadY = 1;
   protected
+    FFocusOnBoxRect: TRect;
+    procedure SetFlat(const Value: boolean);
     procedure SetAutoSize(Value: boolean); override;
     procedure GetDrawData(CanvasHandle: HDC; var Bitmap: TBitmap;
-      var FocRect, Rect: TRect;
+      var AFocusRect, Rect, BitmapRect: TRect;
       var DrawOptions: UINT;
       var TempBitMap: boolean);
     procedure DrawItem(const DrawItemStruct: TDrawItemStruct); dynamic;
@@ -924,9 +965,11 @@ type
     destructor Destroy; override;
     procedure AutoAdjustSize;
     procedure SetBlackColorMode(Value: boolean);
+    property CheckBoxWidth: Integer read GetCheckBoxWidth;
     property SingleLine: boolean read FSingleLine;
     property StringData: string read FStringData write FStringData;
   published
+    property Flat: boolean read FFlat write SetFlat default False;
     property FocusOnBox: boolean read FFocusOnBox write SetFocusOnBox default false;
     property GrayedStyle: TGrayedStyle read FGrayedStyle write SetGrayedStyle default gsNormal;
     property GrayedToChecked: boolean read FGrayedToChecked write FGrayedToChecked default TRUE;
@@ -1038,14 +1081,15 @@ type
   private
     procedure SetCaption(const Value: string);
     function GetCaption: string;
+    function GetCheckBoxWidth: Integer;
   protected
     FCaptionComponent: TStaticText;
   public
     function SupportsDynamicProperty(PropertyID: integer): boolean;
     function GetDynamicProperty(PropertyID: integer): string;
+    property CheckBoxWidth: Integer read GetCheckBoxWidth;
   published
     property Caption: string read GetCaption write SetCaption;
-    Property CheckWidth: integer Read GetCheckWidth;
   end;
 
   TCaptionMemo = class(TMemo, IVADynamicProperty)
@@ -1070,10 +1114,10 @@ type
 
   TCaptionEdit = class(TDataEdit, IVADynamicProperty)
   private
-    procedure SetCaption(const Value: string);
     function GetCaption: string;
   protected
     FCaptionComponent: TStaticText;
+    procedure SetCaption(const Value: string); virtual;
   public
     function SupportsDynamicProperty(PropertyID: integer): boolean;
     function GetDynamicProperty(PropertyID: integer): string;
@@ -1219,14 +1263,27 @@ function CalcShortName(LongName: string; PrevLongName: string): string;
 {Returns True if any one of 3 mouse buttons are down left, right, or middle}
 function IsAMouseButtonDown: boolean;
 
-implementation // ---------------------------------------------------------------------------
+const
+  CBO_CYMARGIN = 8; // vertical whitespace in the edit portion of combobox
+  CBO_CXFRAME = 5; // offset to account for frame around the edit part of combobox
 
-{$R ORCTRLS}
+type
+  TORCBImgIdx = (iiUnchecked, iiChecked, iiGrayed, iiQMark, iiBlueQMark,
+    iiDisUnchecked, iiDisChecked, iiDisGrayed, iiDisQMark,
+    iiRadioUnchecked, iiRadioChecked, iiRadioDisUnchecked, iiRadioDisChecked);
+
+function GetORCBBitmap(Idx: TORCBImgIdx; BlackMode: boolean): TBitmap;
+
+implementation // ---------------------------------------------------------------------------
 
 uses
   System.Generics.Defaults,
   System.Generics.Collections,
-  System.Types, Vcl.ComStrs, VAUtils;
+  System.Types, Vcl.ComStrs, VAUtils,
+  ORFn,
+  WinApi.UxTheme;
+
+{$R *.dres}
 
 const
   ALPHA_DISTRIBUTION: array[0..100] of string = ('', ' ', 'ACE', 'ADG', 'ALA', 'AMI', 'ANA', 'ANT',
@@ -1238,9 +1295,7 @@ const
     'SCL', 'SFL', 'SMO', 'SPO', 'STR', 'SUL', 'TAG', 'TET', 'THI', 'TOL', 'TRI', 'TRY', 'UNC', 'VAR', 'VIT',
     'WRO', 'ZYM', #127#127#127);
 
-  CBO_CYMARGIN = 8; // vertical whitespace in the edit portion of combobox
   CBO_CXBTN = 13; // width of drop down button in combobox
-  CBO_CXFRAME = 5; // offset to account for frame around the edit part of combobox
 
   NOREDRAW = 0; // suspend screen updates
   DOREDRAW = 1; // allow screen updates
@@ -1254,7 +1309,7 @@ const
   SFI_TOP = -2147483646; // top of listbox (hex value: $80000001)
   SFI_END = -1879048192; // end of listbox (hex value: $90000000)
 
-  CheckWidth = 15; // CheckBox Width space to reserve for TORListBox
+  CheckBoxWidthConst = 15; // CheckBox Width space to reserve for TORListBox
   CheckComboBtnHeight = 21;
   MaxNeedDataLen = 64;
 
@@ -1613,8 +1668,8 @@ begin
   X := FPoint.X;
   if (FListBox.FCheckBoxes) then
   begin
-    dec(ListClientWidth, CheckWidth);
-    inc(X, CheckWidth);
+    dec(ListClientWidth, FListBox.CheckBoxWidth);
+    inc(X, FListBox.CheckBoxWidth);
   end;
   if AWidth > ListClientWidth then
     Inc(AWidth, 4)
@@ -1662,29 +1717,24 @@ begin
   UpdateText(CatchMouse);
 end;
 
-type
-  TORCBImgIdx = (iiUnchecked, iiChecked, iiGrayed, iiQMark, iiBlueQMark,
-    iiDisUnchecked, iiDisChecked, iiDisGrayed, iiDisQMark,
-    iiFlatUnChecked, iiFlatChecked, iiFlatGrayed,
-    iiRadioUnchecked, iiRadioChecked, iiRadioDisUnchecked, iiRadioDisChecked);
-
 const
   CheckBoxImageResNames: array[TORCBImgIdx] of PChar = (
-    'ORCB_UNCHECKED', 'ORCB_CHECKED', 'ORCB_GRAYED', 'ORCB_QUESTIONMARK',
-    'ORCB_BLUEQUESTIONMARK', 'ORCB_DISABLED_UNCHECKED', 'ORCB_DISABLED_CHECKED',
-    'ORCB_DISABLED_GRAYED', 'ORCB_DISABLED_QUESTIONMARK',
-    'ORLB_FLAT_UNCHECKED', 'ORLB_FLAT_CHECKED', 'ORLB_FLAT_GRAYED',
-    'ORCB_RADIO_UNCHECKED', 'ORCB_RADIO_CHECKED',
-    'ORCB_RADIO_DISABLED_UNCHECKED', 'ORCB_RADIO_DISABLED_CHECKED');
+    'ORCHECKBOX_UNCHECKED', 'ORCHECKBOX_CHECKED', 'ORCHECKBOX_GRAYED',
+    'ORCHECKBOX_QUESTIONMARK', 'ORCHECKBOX_BLUEQUESTIONMARK',
+    'ORCHECKBOX_DISABLED_UNCHECKED', 'ORCHECKBOX_DISABLED_CHECKED',
+    'ORCHECKBOX_DISABLED_GRAYED', 'ORCHECKBOX_DISABLED_QUESTIONMARK',
+    'ORCHECKBOX_RADIO_UNCHECKED', 'ORCHECKBOX_RADIO_CHECKED',
+    'ORCHECKBOX_RADIO_DISABLED_UNCHECKED', 'ORCHECKBOX_RADIO_DISABLED_CHECKED');
 
   BlackCheckBoxImageResNames: array[TORCBImgIdx] of PChar = (
-    'BLACK_ORLB_FLAT_UNCHECKED', 'BLACK_ORLB_FLAT_CHECKED', 'BLACK_ORLB_FLAT_GRAYED',
-    'BLACK_ORCB_QUESTIONMARK', 'BLACK_ORCB_BLUEQUESTIONMARK',
-    'BLACK_ORCB_DISABLED_UNCHECKED', 'BLACK_ORCB_DISABLED_CHECKED',
-    'BLACK_ORCB_DISABLED_GRAYED', 'BLACK_ORCB_DISABLED_QUESTIONMARK',
-    'BLACK_ORLB_FLAT_UNCHECKED', 'BLACK_ORLB_FLAT_CHECKED', 'BLACK_ORLB_FLAT_GRAYED',
-    'BLACK_ORCB_RADIO_UNCHECKED', 'BLACK_ORCB_RADIO_CHECKED',
-    'BLACK_ORCB_RADIO_DISABLED_UNCHECKED', 'BLACK_ORCB_RADIO_DISABLED_CHECKED');
+    'ORCHECKBOX_BLACK_UNCHECKED', 'ORCHECKBOX_BLACK_CHECKED',
+    'ORCHECKBOX_BLACK_GRAYED', 'ORCHECKBOX_BLACK_QUESTIONMARK',
+    'ORCHECKBOX_BLACK_BLUEQUESTIONMARK', 'ORCHECKBOX_BLACK_DISABLED_UNCHECKED',
+    'ORCHECKBOX_BLACK_DISABLED_CHECKED', 'ORCHECKBOX_BLACK_DISABLED_GRAYED',
+    'ORCHECKBOX_BLACK_DISABLED_QUESTIONMARK',
+    'ORCHECKBOX_BLACK_RADIO_UNCHECKED', 'ORCHECKBOX_BLACK_RADIO_CHECKED',
+    'ORCHECKBOX_BLACK_RADIO_DISABLED_UNCHECKED',
+    'ORCHECKBOX_BLACK_RADIO_DISABLED_CHECKED');
 
 var
   ORCBImages: array[TORCBImgIdx, Boolean] of TBitMap;
@@ -1789,6 +1839,11 @@ function TORStrings.GetObject(index: integer): TObject;
 begin
   Verify;
   result := FPlainText.Objects[index];
+end;
+
+function TORStrings.RealIndexOf(const S: string): Integer;
+begin
+  Result := inherited IndexOf(S);
 end;
 
 function TORStrings.IndexOf(const S: string): Integer;
@@ -1914,7 +1969,7 @@ begin
   FTabPosInPixels := False;
   FRightClickSelect := FALSE;
   FCheckBoxes := FALSE;
-  FFlatCheckBoxes := TRUE;
+//  FFlatCheckBoxes := TRUE;
   FCaseChanged := TRUE;
   FLookupPiece := 0;
   FIsPartOfComboBox := False;
@@ -2570,6 +2625,8 @@ begin
     try
       for idx := 1 to max do
         ScrollTo(Self, ScrollCode, temp);
+      if Assigned(FScrollBar) then
+        FScrollBar.Position := PositionThumb(ScrollCode, temp);
     finally
       FDetectLastEmpty := False;
     end;
@@ -2742,7 +2799,7 @@ begin
       if (FCheckEntireLine) then
         ToggleCheckBox(idx)
       else
-        if (X < CheckWidth) then ToggleCheckBox(idx);
+        if (X < CheckBoxWidth) then ToggleCheckBox(idx);
     end;
   end;
 end;
@@ -2924,7 +2981,7 @@ procedure TORListBox.CNDrawItem(var Message: TWMDrawItem);
 begin
   if (FCheckBoxes) then
     with Message.DrawItemStruct^ do
-      inc(rcItem.Left, CheckWidth);
+      inc(rcItem.Left, CheckBoxWidth);
   inherited;
 end;
 
@@ -2933,9 +2990,9 @@ var
   Flags: Longint;
   ItemRec: PItemRec;
   OldFromSelf: boolean;
-  BMap: TBitMap;
+  Bitmap: TBitMap;
   i, DY: integer;
-  TmpR: TRect;
+  TmpR, BitmapRect: TRect;
   Neg: boolean;
   ShowText: string;
 begin
@@ -2976,39 +3033,44 @@ begin
           case ItemRec^.CheckedState of
             cbUnchecked:
               begin
-                if (FFlatCheckBoxes) then
-                  BMap := GetORCBBitmap(iiFlatUnChecked, FBlackColorMode)
-                else
-                  BMap := GetORCBBitmap(iiUnchecked, FBlackColorMode);
+//                if (FFlatCheckBoxes) then
+//                  BMap := GetORCBBitmap(iiFlatUnChecked, FBlackColorMode)
+//                else
+                  Bitmap := GetORCBBitmap(iiUnchecked, FBlackColorMode);
               end;
             cbChecked:
               begin
-                if (FFlatCheckBoxes) then
-                  BMap := GetORCBBitmap(iiFlatChecked, FBlackColorMode)
-                else
-                  BMap := GetORCBBitmap(iiChecked, FBlackColorMode);
+//                if (FFlatCheckBoxes) then
+//                  BMap := GetORCBBitmap(iiFlatChecked, FBlackColorMode)
+//                else
+                  Bitmap := GetORCBBitmap(iiChecked, FBlackColorMode);
               end;
           else // cbGrayed:
             begin
-              if (FFlatCheckBoxes) then
-                BMap := GetORCBBitmap(iiFlatGrayed, FBlackColorMode)
-              else
-                BMap := GetORCBBitmap(iiGrayed, FBlackColorMode);
+//              if (FFlatCheckBoxes) then
+//                BMap := GetORCBBitmap(iiFlatGrayed, FBlackColorMode)
+//              else
+                Bitmap := GetORCBBitmap(iiGrayed, FBlackColorMode);
             end;
           end;
         end
         else
         begin
-          if (FFlatCheckBoxes) then
-            BMap := GetORCBBitmap(iiFlatGrayed, FBlackColorMode)
-          else
-            BMap := GetORCBBitmap(iiGrayed, FBlackColorMode);
+//          if (FFlatCheckBoxes) then
+//            BMap := GetORCBBitmap(iiFlatGrayed, FBlackColorMode)
+//          else
+            Bitmap := GetORCBBitmap(iiGrayed, FBlackColorMode);
         end;
+        BitmapRect := TRect.Create(0, 0, BitMap.Width, Bitmap.Height);
+        BitmapRect := ScaleRectSize(BitmapRect);
         TmpR := Rect;
         TmpR.Right := TmpR.Left;
-        dec(TmpR.Left, CheckWidth + 1);
-        DY := ((TmpR.Bottom - TmpR.Top) - BMap.Height) div 2;
-        Canvas.Draw(TmpR.Left, TmpR.Top + DY, BMap);
+        dec(TmpR.Left, BitmapRect.Width + 1);
+        DY := ((TmpR.Bottom - TmpR.Top) - BitmapRect.Height) div 2;
+        TmpR.Top := TmpR.Top + DY;
+        TmpR.Height := BitmapRect.Height;
+        TmpR.Width := BitmapRect.Width;
+        Canvas.StretchDraw(TmpR, Bitmap);
       end;
 
       if (FTabPos[0] > 0) then
@@ -3199,6 +3261,47 @@ function TORListBox.GetItemIEN: Int64;
 { return as an integer the first piece of the currently selected item }
 begin
   Result := StrToInt64Def(GetItemID, 0);
+end;
+
+function TORListBox.GetSelectedDataString: string;
+var
+  AIndex: Integer;
+begin
+  AIndex := ItemIndex;
+  if AIndex >= 0 then Exit(Items.Strings[AIndex]);
+  if Trim(FLastItemID) = '' then Exit('');
+  Result := FLastItemID;
+end;
+
+procedure TORListBox.SetSelectedDataString(const Value: string);
+var
+  AIndex: Integer;
+begin
+  FLastItemID := Value;
+  if MItems is TORStrings then
+      AIndex := TORStrings(MItems).RealIndexOf(FLastItemID)
+  else AIndex := MItems.IndexOf(FLastItemID);
+  if AIndex >= 0 then ItemIndex := AIndex;
+end;
+
+function TORListBox.GetSelectedLookupString: string;
+begin
+  if LookupPiece = 0 then
+  begin
+    Result := SelectedDataString;
+  end else begin
+    Result := Piece(SelectedDataString, Delimiter, LookupPiece);
+  end;
+end;
+
+function TORListBox.GetLookupString(AIndex: Integer): string;
+begin
+  if LookupPiece = 0 then
+  begin
+    Result := Items.Strings[AIndex];
+  end else begin
+    Result := Piece(Items.Strings[AIndex], Delimiter, LookupPiece);
+  end;
 end;
 
 function TORListBox.SelectByIEN(AnIEN: Int64): Integer;
@@ -3624,6 +3727,11 @@ begin
   FScrollBar.Invalidate;
 end;
 
+function TORListBox.AlphaDist: TAlphaArray;
+begin
+  Result := TAlphaArray(ALPHA_DISTRIBUTION);
+end;
+
 procedure TORListBox.CreateScrollBar;
 { a long list uses it's own scrollbar (mapped to APLHA_DISTRIBUTION, rather than the listbox's }
 begin
@@ -3653,52 +3761,88 @@ end;
 procedure TORListBox.ForDataUse(Strings: TStrings);
 { adds or inserts items into a list box after determining the proper collating sequence }
 var
+  APrevInForDataUse: Boolean;
   Ascend: Boolean;
   FirstItem, LastItem: string;
   i: Integer;
-begin
-  FLastEmpty := (Strings.Count = 0);
-  if FLastEmpty then
-  begin
-    FLastEmptyStartFrom := FLastStartFrom;
-    FLastEmptyDirection := FLastDirection;
-    FLastEmptyInsertAt := FLastInsertAt;
-    Exit;
-  end;
-  { To prevent the problem where the initial list item(s) are returned repeatedly because the
-    DisplayText is longer than the subscript in a cross-reference, compare the last item
-    returned with the first item in the long list.   If they are the same, assume the long
-    list is already scrolled to the first item. }
-  if (FDirection = LL_REVERSE) and (FWaterMark < Items.Count) and
-    (CompareText(Strings[Strings.Count - 1], Items[FWaterMark]) = 0) then Exit;
 
-  FirstItem := TextToShow(Strings[0]);
-  LastItem := TextToShow(Strings[Strings.Count - 1]);
-  Ascend := True;
-  case FDirection of
-    LL_REVERSE: if CompareText(FirstItem, LastItem) < 0 then Ascend := False;
-    LL_FORWARD: if CompareText(FirstItem, LastItem) > 0 then Ascend := False;
-  end;
-  case Ascend of // should call AddObject & InsertObject instead?
-    False: case FDirection of
-        LL_REVERSE: for i := Strings.Count - 1 downto 0 do Items.Insert(FInsertAt, Strings[i]);
-        LL_FORWARD: for i := Strings.Count - 1 downto 0 do Items.Add(Strings[i]);
+  ALastStartFrom: string;
+  ALastDirection, ALastInsertAt: Integer;
+begin
+  APrevInForDataUse := FInForDataUse;
+  FInForDataUse := True;
+  try
+    // The below code re-queries the server for NeedData when the user scrolled
+    // to the beginning or end and got an incomplete set of data
+    if (not APrevInForDataUse) and (Strings.Count < VisibleLines) then
+    begin
+      ALastStartFrom := FLastStartFrom;
+      ALastDirection := FLastDirection;
+      ALastInsertAt := FLastInsertAt;
+      try
+        case FDirection of
+          LL_REVERSE: NeedData(LL_POSITION, '', -1);
+          LL_FORWARD: NeedData(LL_POSITION, #127#127#127);
+        end;
+      finally
+        FLastInsertAt := ALastInsertAt;
+        FLastDirection := ALastDirection;
+        FLastStartFrom := ALastStartFrom;
       end;
-    True: case FDirection of
-        LL_REVERSE: for i := 0 to Strings.Count - 1 do Items.Insert(FInsertAt, Strings[i]);
-        LL_FORWARD: for i := 0 to Strings.Count - 1 do Items.Add(Strings[i]);
-      end;
-  end;
-  if FLongList and (ItemIndex < 0) and (FLastItemID <> '') then
-  begin
-    for i := 0 to Items.Count - 1 do
-      if CompareText(Items[i], FLastItemID) = 0 then
+      Exit;
+    end;
+
+    FLastEmpty := (Strings.Count = 0);
+    if FLastEmpty then
+    begin
+      FLastEmptyStartFrom := FLastStartFrom;
+      FLastEmptyDirection := FLastDirection;
+      FLastEmptyInsertAt := FLastInsertAt;
+      Exit;
+    end;
+
+    { To prevent the problem where the initial list item(s) are returned repeatedly because the
+      DisplayText is longer than the subscript in a cross-reference, compare the last item
+      returned with the first item in the long list.   If they are the same, assume the long
+    list is already scrolled to the first item. }
+    if (FDirection = LL_REVERSE) and (FWaterMark < Items.Count) and
+      (CompareText(Strings[Strings.Count - 1], Items[FWaterMark]) = 0) then
+      Exit;
+
+    FirstItem := TextToShow(Strings[0]);
+    LastItem := TextToShow(Strings[Strings.Count - 1]);
+    Ascend := True;
+    case FDirection of
+      LL_REVERSE: if CompareText(FirstItem, LastItem) < 0 then Ascend := False;
+      LL_FORWARD: if CompareText(FirstItem, LastItem) > 0 then Ascend := False;
+    end;
+    case Ascend of // should call AddObject & InsertObject instead?
+      False:
+        case FDirection of
+          LL_REVERSE: for i := Strings.Count - 1 downto 0 do Items.Insert(FInsertAt, Strings[i]);
+          LL_FORWARD: for i := Strings.Count - 1 downto 0 do Items.Add(Strings[i]);
+        end;
+      True:
+        case FDirection of
+          LL_REVERSE: for i := 0 to Strings.Count - 1 do Items.Insert(FInsertAt, Strings[i]);
+          LL_FORWARD: for i := 0 to Strings.Count - 1 do Items.Add(Strings[i]);
+        end;
+    end;
+    if FLongList and (ItemIndex < 0) and (FLastItemID <> '') then
+    begin
+      for i := 0 to Items.Count - 1 do
       begin
-        ItemIndex := i;
-        break;
+        if CompareText(Items[i], FLastItemID) = 0 then
+        begin
+          ItemIndex := i;
+          break;
+        end;
       end;
-    if ItemIndex = -1 then
-      FLastItemID := '';
+      if ItemIndex = -1 then
+        FLastItemID := '';
+    end;
+  finally
+    FInForDataUse := APrevInForDataUse;
   end;
 end;
 
@@ -3720,10 +3864,60 @@ begin
       S := UpperCase(S);
     // decrement last char & concat '~' for $ORDER
     if Length(S) > 0 then S := Copy(S, 1, Length(S) - 1) + Pred(S[Length(S)]) + '~';
-    NeedData(LL_POSITION, S);
+    NeedData(LL_POSITION, S, 0);
     if S = '' then TopIndex := 0 else TopIndex := FWaterMark;
-    FScrollBar.Position := PositionThumb;
+    FScrollBar.Position := 0;
   end;
+end;
+
+procedure TORListBox.SuspendRedraw;
+begin
+  LockDrawing;
+end;
+
+procedure TORListBox.ResumeRedraw;
+begin
+  UnlockDrawing;
+end;
+
+procedure TORListBox.ReInitLongList;
+// Reload the long list and try to reposition on the same record as before, and
+// try not to scroll. Call this when the list has changed, or the parameters
+// used to build the list have changed, such as changing whether to include or
+// exclude non-VA providers
+
+  function ExtractLookupString(const ADataString: string): string;
+  begin
+    if LookupPiece = 0 then
+    begin
+      Result := ADataString;
+    end else begin
+      Result := Piece(ADataString, Delimiter, LookupPiece);
+    end;
+  end;
+
+var
+  ALookupString, AData: string;
+begin
+  if not FLongList then Exit;
+
+  AData := SelectedDataString;
+
+  if (AData = '') and (TopIndex >= 0) and (Items.Count > 0) then
+    ALookupString := LookupString[TopIndex]
+  else
+    ALookupString := ExtractLookupString(AData);
+
+  LockDrawing;
+  try
+    Clear;
+    InitLongList(ALookupString);
+  finally
+    UnlockDrawing;
+  end;
+
+  SelectedDataString := AData;
+  if ItemIndex < 0 then SelectedDataString := '';
 end;
 
 procedure TORListBox.InsertSeparator;
@@ -3746,7 +3940,7 @@ begin
   Invalidate;
 end;
 
-procedure TORListBox.NeedData(Direction: Integer; StartFrom: string);
+procedure TORListBox.NeedData(Direction: Integer; StartFrom: string; ScrollPos: Integer);
 { called whenever the longlist needs more data inserted at a certain point into the listbox }
 var
   CtrlPos, CharPos, index: Integer;
@@ -3769,9 +3963,12 @@ var
     end;
   end;
 
-begin {NeedData}
+var
+  AWasCleared: Boolean;
+begin
   if not FLongList then
     exit;
+  AWasCleared := False;
   FFromNeedData := True;
   FKeepItemID := True;
   try
@@ -3779,20 +3976,32 @@ begin {NeedData}
     FDataAdded := False;
     FDirection := Direction;
     LockDrawing;
-    if Items.Count > 1000 then ClearLong;
+    if Items.Count > 1000 then
+    begin
+      Clearlong;
+      AWasCleared := True;
+    end;
     case FDirection of
-      LL_REVERSE: if FWaterMark < Items.Count then StartFrom := DisplayText[FWaterMark];
-      LL_POSITION: begin
+      LL_REVERSE: if FWaterMark < Items.Count then
+          StartFrom := DisplayText[FWaterMark];
+      LL_POSITION:
+        begin
           ClearLong;
+          AWasCleared := TRUE;
           if StartFrom = #127#127#127 then
           begin
             FDirection := LL_REVERSE;
             StartFrom := '';
-          end
-          else FDirection := LL_FORWARD;
+          end else begin
+            if (ScrollPos <= Max(0, FWaterMark)) or
+              (ScrollPos >= FScrollBar.Position) then
+              FDirection := LL_FORWARD
+            else
+              FDirection := LL_REVERSE;
+          end;
         end;
-      LL_FORWARD: if (FWaterMark < Items.Count) and (Items.Count > 0)
-        then StartFrom := DisplayText[Items.Count - 1];
+      LL_FORWARD: if (FWaterMark < Items.Count) and (Items.Count > 0) then
+          StartFrom := DisplayText[Items.Count - 1];
     end;
     if LookupPiece <> 0 then
     begin
@@ -3804,7 +4013,8 @@ begin {NeedData}
       StartFrom := Uppercase(StartFrom);
     StartFrom := Copy(StartFrom, 1, 128); // limit length to 128 characters
     CtrlPos := 0; // make sure no ctrl characters
-    for CharPos := 1 to Length(StartFrom) do if CharInSet(StartFrom[CharPos], [#0..#31]) then
+    for CharPos := 1 to Length(StartFrom) do
+      if CharInSet(StartFrom[CharPos], [#0..#31]) then
       begin
         CtrlPos := CharPos;
         break;
@@ -3817,10 +4027,14 @@ begin {NeedData}
       (FLastEmptyStartFrom = StrtFrom) and (FLastEmptyDirection = FDirection) and
       (FLastEmptyInsertAt = FInsertAt) then
       DoCall := False;
+    if DoCall and (not AWasCleared) then
+      DoCall := (FLastStartFrom <> StrtFrom) or
+        (FLastDirection <> FDirection) or
+        (FLastInsertAt <> FInsertAt);
     if DoCall then
     begin
       FLastEmpty := False;
-      FLastStartFrom :=  StrtFrom;
+      FLastStartFrom := StrtFrom;
       FLastDirection := FDirection;
       FLastInsertAt := FInsertAt;
       FOnNeedData(Self, FLastStartFrom, FLastDirection, FLastInsertAt);
@@ -3833,17 +4047,52 @@ begin {NeedData}
   Invalidate;
 end;
 
-function TORListBox.PositionThumb: Integer;
+function TORListBox.VisibleLines: Integer;
+begin
+  Result := Height div (Abs(Font.Height) + 2);
+end;
+
+function TORListBox.PositionThumb(AScrollCode: TScrollCode; AScrollPos: Integer = -1): Integer;
 { returns the proper thumb position for the TopIndex item relative to ALPHA_DISTRIBUTION }
 var
-  x: string;
+  ATop, ABottom: Integer;
+  ATopStr, ABottomStr: string;
 begin
-  Result := 1;
-  x := DisplayText[TopIndex];
-  if (FWaterMark > 0) and (TopIndex < FWaterMark)
-    then Result := 0 // short list visible
-  else while (CompareText(ALPHA_DISTRIBUTION[Result], x) < 0) and (Result < 100) do
-      Inc(Result); // only long list visible
+  case AScrollCode of
+    scTrack: Exit(FScrollbar.Position);
+    scPosition, scEndScroll: Exit(AScrollPos);
+    scTop: Exit(0);
+    scBottom: Exit(100);
+  end;
+
+  Result := AScrollPos;
+  if Result in [0, 100] then Exit(Result);
+
+  ATop := TopIndex;
+  if (FWaterMark > 0) and (ATop < FWaterMark) then
+    Result := 0 // short list visible
+  else
+  begin
+    case AScrollCode of
+      scLineDown, scPageDown:
+        begin
+          Result := 1;
+          ATopStr := DisplayText[ATop];
+          while (CompareText(ALPHA_DISTRIBUTION[Result], ATopStr) < 0) and
+            (Result < 100) do
+            Inc(Result); // only long list visible
+        end;
+      scLineUp, scPageUp:
+        begin
+          Result := 99;
+          ABottom := ATop + VisibleLines - 1;
+          ABottomStr := DisplayText[ABottom];
+          while (CompareText(ALPHA_DISTRIBUTION[Result], ABottomStr) > 0) and
+            (Result > 1) do
+            Dec(Result);
+        end;
+    end;
+  end;
 end;
 
 procedure TORListBox.ScrollBarScroll(Sender: TObject; ScrollCode: TScrollCode;
@@ -3895,10 +4144,14 @@ begin
   if (ScrollCode = scPosition) then
   begin
     if FLongList then
-      NeedData(LL_POSITION, ALPHA_DISTRIBUTION[ScrollPos]);
+      NeedData(LL_POSITION, ALPHA_DISTRIBUTION[ScrollPos], ScrollPos);
     case ScrollPos of
       0: TopIndex := 0;
-      1..99: TopIndex := FWaterMark;
+      1..99:
+         case FDirection of
+           LL_REVERSE: TopIndex := Max(Items.Count - VisibleLines, FWaterMark);
+           else TopIndex := FWaterMark;
+         end;
       100: TopIndex := HigherOf(Items.Count - FLargeChange, 0);
     end;
     FFocusIndex := TopIndex;
@@ -3974,7 +4227,8 @@ begin
           end;
       end;
     end;
-  if (ScrollPos > 0) and (ScrollPos < 100) then ScrollPos := PositionThumb;
+
+  ScrollPos := PositionThumb(ScrollCode, ScrollPos);
 end;
 
 function TORListBox.GetStringIndex(const AString: string): Integer;
@@ -4047,7 +4301,7 @@ begin
           x := UpperCase(x);
         // decrement last char & concat '~' for $ORDER
         if Length(x) > 0 then x := Copy(x, 1, Length(x) - 1) + Pred(x[Length(x)]) + '~';
-        NeedData(LL_POSITION, x);
+        NeedData(LL_POSITION, x, PositionThumb(scPosition));
       end;
       if Result < 0 then
       begin
@@ -4061,7 +4315,7 @@ begin
   ItemIndex := Result;
   FFocusIndex := Result;
   if Result > -1 then TopIndex := Result; // will scroll item into view
-  if FLongList then FScrollBar.Position := PositionThumb; // done after topindex set
+  if FLongList then FScrollBar.Position := PositionThumb(scPosition); // done after topindex set
 end;
 
 procedure TORListBox.SetCheckBoxes(const Value: boolean);
@@ -4183,6 +4437,11 @@ begin
     for i := 0 to Items.Count - 1 do
       Result := Result + Char(ord('0') + Ord(GetCheckedState(i)));
   end;
+end;
+
+function TORListBox.GetCheckBoxWidth: Integer;
+begin
+  Result := ScaleValue(CheckBoxWidthConst);
 end;
 
 procedure TORListBox.SetCheckedString(const Value: string);
@@ -4405,6 +4664,16 @@ begin
 
 end;
 
+procedure TORComboEdit.SuspendRedraw;
+begin
+  LockDrawing;
+end;
+
+procedure TORComboEdit.ResumeRedraw;
+begin
+  UnlockDrawing;
+end;
+
 procedure TORComboEdit.WMKillFocus(var Message: TWMKillFocus);
 begin
   inherited;
@@ -4442,13 +4711,12 @@ begin
   inherited Create(AOwner);
   Width := 121;
   Height := 97;
-  FLastInput := '';
   FDropDownCount := 8;
   FStyle := orcsSimple;
   FCheckBoxEditColor := clBtnFace;
   FListBox := TORListBox.Create(Self);
   FListBox.isPartOfComboBox := True;
-  FListBox.Parent := Self;
+  FListBox.Parent := self;
   FListBox.TabStop := False;
   FListBox.OnClick := FwdClick;
   FListBox.OnDblClick := FwdDblClick;
@@ -4561,6 +4829,11 @@ begin
   SetEditRect;
 end;
 
+function TORComboBox.AlphaDist: TORListBox.TAlphaArray;
+begin
+  Result := ListBox.AlphaDist;
+end;
+
 procedure TORComboBox.DropButtonDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState;
   X, Y: Integer);
 { display the listbox for a DropDown style combobox whenever the drop down button is pressed }
@@ -4597,6 +4870,7 @@ end;
 
 destructor TORComboBox.Destroy;
 begin
+
   ClearDropDownStatus;
   if FOwnsData then
     FreeAndNil(FData);
@@ -4604,21 +4878,7 @@ begin
 end;
 
 procedure TORComboBox.DoEnter;
-{var
-  key : word;}
-{ select all the text in the editbox when recieve focus - done first so OnEnter can deselect }
 begin
-  //FEditBox.SelectAll;
-  //Fix For ClearQuest: HDS00001576
-  //This fix has been commented out, becuase it causes problems
-{  with FListBox do
-  if (Items.Count > 0) and (Not IsAMouseButtonDown()) and (ItemIndex = -1) then
-  begin
-    key := VK_UP;
-    FwdKeyDown(Self,key,[]);
-    //Calling keyUp after key down creates a better mimic of a Keystroke.
-    FwdKeyUp(Self,key,[]);   //fixes clearquest: HDS00001418
-  end;              }
   inherited DoEnter;
   PostMessage(Handle, UM_GOTFOCUS, 0, 0)
 end;
@@ -4626,10 +4886,8 @@ end;
 procedure TORComboBox.UMGotFocus(var Message: TMessage);
 begin
   if ShouldFocus(FEditBox) then
-  begin
     FEditBox.SetFocus;
-    if AutoSelect then FEditBox.SelectAll;
-  end;
+  if AutoSelect then FEditBox.SelectAll;
 end;
 
 procedure TORComboBox.DoExit;
@@ -4665,91 +4923,100 @@ begin
   FListBox.Loaded;
 end;
 
+procedure TORComboBox.NeedData(Direction: Integer; StartFrom: string;
+  ScrollPos: Integer);
+begin
+  FListBox.NeedData(Direction, StartFrom, ScrollPos);
+end;
+
 procedure TORComboBox.FwdChange(Sender: TObject);
 { allow timer to call FwdChangeDelayed if long list, otherwise call directly }
+var
+  IsChangeDeleteOnly: Boolean;
 begin
   if FFromSelf then Exit;
-  FChangePending := True;
+  IsChangeDeleteOnly := Copy(FPrevEditBoxText, 1, Length(FEditBox.Text)) = FEditBox.Text;
+  FPrevEditBoxText := FEditBox.Text;
+  if not IsChangeDeleteOnly then FListBox.SelectedDataString := '';
+  if (not IsChangeDeleteOnly) or ListItemsOnly then FChangePending := True;
   if FListBox.LongList and FKeyIsDown then Exit;
-  FwdChangeDelayed;
+  if (not IsChangeDeleteOnly) or ListItemsOnly then FwdChangeDelayed;
 end;
 
 procedure TORComboBox.FwdChangeDelayed;
 { when user types in the editbox, find a partial match in the listbox & set into editbox }
 var
-  SelectIndex: Integer;
-  x: string;
+  aSelectIndex, ASelStart: integer;
+  X: string;
+
+  procedure NoCheckBoxesSelection(aLen: Integer);
+  begin
+    if (not FListBox.FCheckBoxes) then
+      SendMessage(FEditBox.Handle, EM_SETSEL, Length(FEditBox.Text), aLen);
+  end;
+
 begin
   FChangePending := False;
-  if (not FListItemsOnly) and (Length(FEditBox.Text) > 0) and (FEditBox.SelStart = 0) then Exit; // **KCM** test this!
-  with FEditBox do x := Copy(Text, 1, SelStart);
-  FLastInput := x;
-  SelectIndex := -1;
-  if Length(x) >= CharsNeedMatch then
-    SelectIndex := FListBox.SelectString(x);
-  if (Length(x) < CharsNeedMatch) and (FListBox.ItemIndex > -1) then
-    SelectIndex := FListBox.SelectString(x);
-  if UniqueAutoComplete then
-    SelectIndex := FListBox.VerifyUnique(SelectIndex, x);
-  if FListItemsOnly and (SelectIndex < 0) and (x <> '') then
+
+  if FListItemsOnly or (FEditBox.Text = '') or (FEditBox.SelStart <> 0) then
   begin
-    FFromSelf := True;
-    x := FLastFound;
-    SelectIndex := FListBox.SelectString(x);
-    FEditBox.Text := GetEditBoxText(SelectIndex);
-    if (not FListBox.FCheckBoxes) then
-      SendMessage(FEditBox.Handle, EM_SETSEL, Length(FEditBox.Text), Length(x));
-    FFromSelf := False;
-    Exit; // OnChange not called in this case
-  end;
-  FFromSelf := True;
-  if SelectIndex > -1 then
-  begin
-    FEditBox.Text := GetEditBoxText(SelectIndex);
-    FLastFound := x;
-    if (not FListBox.FCheckBoxes) then
-      SendMessage(FEditBox.Handle, EM_SETSEL, Length(FEditBox.Text), Length(x));
-  end else
-  begin
-    if (FListBox.CheckBoxes) then
-      FEditBox.Text := GetEditBoxText(SelectIndex)
+    if SelLength > 0 then
+    begin
+      X := Copy(FEditBox.Text, 1, SelStart);
+      ASelStart := -1;
+    end
     else
-      FEditBox.Text := x; // no match, so don't set FLastFound
-    FEditBox.SelStart := Length(x);
-  end;
-  FFromSelf := False;
-  if (not FListBox.FCheckBoxes) then
-    if Assigned(FOnChange) then FOnChange(Self);
-end;
+    begin
+      X := FEditBox.Text;
+      ASelStart := SelStart;
+    end;
 
-(*
-procedure TORComboBox.FwdChangeDelayed;
-{ when user types in the editbox, find a partial match in the listbox & set into editbox }
-var
-  SelectIndex: Integer;
-  x: string;
-begin
-  FChangePending := False;
-  with FEditBox do x := Copy(Text, 1, SelStart);
-  if x = FLastInput then Exit;  // this change event is just removing the selected text
-  FLastInput := x;
-  SelectIndex := FListBox.SelectString(x);
-  FFromSelf := True;
-  if SelectIndex > -1 then
-  begin
-    FEditBox.Text := GetEditBoxText(SelectIndex);
-    if(not FListBox.FCheckBoxes) then
-      SendMessage(FEditBox.Handle, EM_SETSEL, Length(FEditBox.Text), Length(x));
-  end else
-  begin
-    FEditBox.Text := x;
-    FEditBox.SelStart := Length(x);
+    aSelectIndex := -1;
+    if (Length(X) >= CharsNeedMatch) or
+      ((Length(X) < CharsNeedMatch) and (FListBox.ItemIndex > -1)) then
+      aSelectIndex := FListBox.SelectString(X);
+    if UniqueAutoComplete then
+      aSelectIndex := FListBox.VerifyUnique(aSelectIndex, X);
+
+    if FListItemsOnly and (aSelectIndex < 0) and (X <> '') then
+    begin
+      FFromSelf := TRUE;
+//       x := FLastFound;                    // VISTAOR-41035 ------------ begin
+      X := Copy(FEditBox.Text, 1, SelStart); // SelStart has changed after click
+      aSelectIndex := FListBox.SelectString(X);
+
+      if aSelectIndex < 0 then               //
+        FEditBox.Text := X                   //
+      else                                   // VISTAOR-41035 -------------- end
+        FEditBox.Text := GetEditBoxText(aSelectIndex);
+
+      NoCheckBoxesSelection(Length(X));
+      FFromSelf := False;
+    end
+    else
+    begin
+      FFromSelf := TRUE;
+      if aSelectIndex > -1 then
+      begin
+        FEditBox.Text := GetEditBoxText(aSelectIndex);
+        FLastFound := X;
+        NoCheckBoxesSelection(Length(X));
+      end
+      else
+      begin
+        if (FListBox.CheckBoxes) then
+          FEditBox.Text := GetEditBoxText(aSelectIndex)
+        else
+          FEditBox.Text := X; // no match, so don't set FLastFound
+
+        FEditBox.SelStart := IfThen(ASelStart < 0, Length(X), ASelStart);
+      end;
+      FFromSelf := False;
+      if (not FListBox.FCheckBoxes) and assigned(FOnChange) then
+          FOnChange(Self);
+    end;
   end;
-  FFromSelf := False;
-  if(not FListBox.FCheckBoxes) then
-    if Assigned(FOnChange) then FOnChange(Self);
 end;
-*)
 
 procedure TORComboBox.FwdClick(Sender: TObject);
 { places the text of the item that was selected from the listbox into the editbox }
@@ -4785,71 +5052,75 @@ var
   i, iPos: Integer;
   x, AString: string;
 begin
-  // special case: when default action taken (RETURN) make sure FwdChangeDelayed is called first
-  if (Key = VK_RETURN) and FListBox.LongList and FChangePending then FwdChangeDelayed;
-  StopKeyTimer; // stop timer after control keys so in case an exit event is triggered
-  if Assigned(FOnKeyDown) then FOnKeyDown(Self, Key, Shift);
-  if Key in [VK_PRIOR, VK_NEXT, VK_UP, VK_DOWN] then // navigation
-  begin
-    if (FStyle = orcsDropDown) and not DroppedDown then DroppedDown := True;
-    // handle special case of FocusIndex, WM_KEYDOWN will increment from -1 to 0
-    if FListBox.ItemIndex = -1 then
+  try
+    // special case: when default action taken (RETURN) make sure FwdChangeDelayed is called first
+    if (Key = VK_RETURN) and FListBox.LongList and FChangePending then
+      FwdChangeDelayed;
+    StopKeyTimer; // stop timer after control keys so in case an exit event is triggered
+    if Assigned(FOnKeyDown) then FOnKeyDown(Self, Key, Shift);
+    if Key in [VK_PRIOR, VK_NEXT, VK_UP, VK_DOWN] then // navigation
     begin
-      FListBox.FFocusIndex := -1;
-      //Move to correct position when Unique AutoComplete is on.
-      if UniqueAutoComplete then
+      if (FStyle = orcsDropDown) and not DroppedDown then DroppedDown := True;
+      // handle special case of FocusIndex, WM_KEYDOWN will increment from -1 to 0
+      if FListBox.ItemIndex = -1 then
       begin
-        AString := Copy(FEditBox.Text, 1, SelStart);
-        iPos := SendMessage(FListBox.Handle, FListBox.SearchMsg, -1, Longint(PChar(AString)));
-        if iPos = LB_ERR then iPos := -1;
-        if iPos > -1 then
+        FListBox.FFocusIndex := -1;
+        //Move to correct position when Unique AutoComplete is on.
+        if UniqueAutoComplete then
         begin
-          FListBox.FFocusIndex := iPos - 1;
-          FListBox.ItemIndex := FListBox.FFocusIndex;
+          AString := Copy(FEditBox.Text, 1, SelStart);
+          iPos := SendMessage(FListBox.Handle, FListBox.SearchMsg, -1, Longint(PChar(AString)));
+          if iPos = LB_ERR then iPos := -1;
+          if iPos > -1 then
+          begin
+            FListBox.FFocusIndex := iPos - 1;
+            FListBox.ItemIndex := FListBox.FFocusIndex;
+          end;
         end;
       end;
+      FListBox.Perform(WM_KEYDOWN, Key, 1);
     end;
-    FListBox.Perform(WM_KEYDOWN, Key, 1);
-  end;
-  if Key in [VK_LBUTTON, VK_RETURN, VK_PRIOR, VK_NEXT, VK_UP, VK_DOWN] then // select item
-  begin
-    FListBox.Perform(WM_KEYDOWN, VK_LBUTTON, 1);
-    FFromSelf := True;
-    if FListBox.ItemIndex > -1 then
+    if Key in [VK_LBUTTON, VK_RETURN, VK_PRIOR, VK_NEXT, VK_UP, VK_DOWN] then // select item
     begin
-      FEditBox.Text := GetEditBoxText(FListBox.ItemIndex);
-      FLastFound := FEditBox.Text; //kcm
+      FListBox.Perform(WM_KEYDOWN, VK_LBUTTON, 1);
+      FFromSelf := True;
+      if FListBox.ItemIndex > -1 then
+      begin
+        FEditBox.Text := GetEditBoxText(FListBox.ItemIndex);
+        FLastFound := FEditBox.Text; //kcm
+      end;
+      FFromSelf := False;
     end;
-    FFromSelf := False;
-  end;
-  // tell parent about RETURN, ESCAPE so that the default action is taken
-  if Key in [VK_RETURN, VK_ESCAPE, VK_TAB] then SendMessage(Parent.Handle, CN_KEYDOWN, Key, 0);
-  if Key = VK_BACK then // backspace
-  begin
-    FFromSelf := True;
-    x := FEditBox.Text;
-    i := FEditBox.SelStart;
-    Delete(x, i + 1, Length(x));
-    if (FListBox.FCheckBoxes) then
-      FEditBox.Text := GetEditBoxText(ItemIndex)
-    else
-      FEditBox.Text := x;
-    FLastFound := x;
-    FEditBox.SelStart := i;
-    FFromSelf := False;
-  end;
-  if (FStyle = orcsDropDown) and (Key = VK_F4) then DroppedDown := not DroppedDown; // drop
+    // tell parent about RETURN, ESCAPE so that the default action is taken
+    if Key in [VK_RETURN, VK_ESCAPE, VK_TAB] then SendMessage(Parent.Handle, CN_KEYDOWN, Key, 0);
+    if Key = VK_BACK then // backspace
+    begin
+      FFromSelf := True;
+      x := FEditBox.Text;
+      i := FEditBox.SelStart;
+      Delete(x, i + 1, Length(x));
+      if (FListBox.FCheckBoxes) then
+        FEditBox.Text := GetEditBoxText(ItemIndex)
+      else
+        FEditBox.Text := x;
+      FLastFound := x;
+      FEditBox.SelStart := i;
+      FFromSelf := False;
+    end;
+    if (FStyle = orcsDropDown) and (Key = VK_F4) then DroppedDown := not DroppedDown; // drop
 
-  if (Key = VK_SPACE) and (FListBox.FCheckBoxes) and (FListBox.ItemIndex > -1) then
-    FListBox.ToggleCheckBox(FListBox.ItemIndex);
+    if (Key = VK_SPACE) and (FListBox.FCheckBoxes) and (FListBox.ItemIndex > -1) then
+      FListBox.ToggleCheckBox(FListBox.ItemIndex);
 
-  if (FStyle = orcsDropDown) and (FListBox.FCheckBoxes) then
-  begin
-    if Key = VK_RETURN then DropPanelBtnPressed(TRUE, TRUE);
-    if Key = VK_ESCAPE then DropPanelBtnPressed(FALSE, TRUE);
+    if (FStyle = orcsDropDown) and (FListBox.FCheckBoxes) then
+    begin
+      if Key = VK_RETURN then DropPanelBtnPressed(TRUE, TRUE);
+      if Key = VK_ESCAPE then DropPanelBtnPressed(FALSE, TRUE);
+    end;
+  finally
+    FKeyIsDown := True;
+    FPrevEditBoxText := FEditBox.Text;
   end;
-
-  FKeyIsDown := True;
 end;
 
 procedure TORComboBox.FwdKeyPress(Sender: TObject; var Key: Char);
@@ -4879,6 +5150,8 @@ procedure TORComboBox.FwdKeyUp(Sender: TObject; var Key: Word; Shift: TShiftStat
 { surfaces the key up event from the editbox so it is available as a combobox property }
 begin
   FKeyIsDown := False;
+  FPrevEditBoxText := '';
+
   // tell parent about RETURN, ESCAPE so that the default action is taken
   if Key in [VK_RETURN, VK_ESCAPE, VK_TAB] then SendMessage(Parent.Handle, CN_KEYUP, Key, 0);
   if Assigned(FOnKeyUp) then FOnKeyUp(Self, Key, Shift);
@@ -4905,11 +5178,23 @@ begin
   if Value > 0 then FDropDownCount := Value;
 end;
 
-procedure TORComboBox.SetDroppedDown(Value: Boolean);
+function TORComboBox.CalcDropDownRect(ADropDownCount,
+  AItemHeight, ATop: Integer): TRect;
+begin
+  // Use of ATop makes no sense, but it's the code that was there
+  Result.Left := ATop;
+  Result.Top := EditControl.Height;
+  Result.TopLeft := ClientToScreen(Result.TopLeft);
+  Result.Width := Width;
+  Result.Height := (AItemHeight * ADropDownCount) + CBO_CXFRAME;
+end;
+
+procedure TORComboBox.SetDroppedDown(Value: Boolean; Top: Integer);
 { for DropDown combo, display the listbox at the appropriate full screen coordinates }
 const
   MIN_ITEMS = 3; // minimum visible items for long list
 var
+  ADropDownRect: TRect;
   ScreenPoint: TPoint;
   DropDownCnt: Integer;
   PnlHeight: integer;
@@ -4923,14 +5208,15 @@ begin
     if FListBox.LongList
       then DropDownCnt := HigherOf(FDropDownCount, MIN_ITEMS)
     else DropDownCnt := LowerOf(FDropDownCount, FListBox.Items.Count);
-    FListBox.SetBounds(0, 0, Width, (FListBox.ItemHeight * DropDownCnt) + CBO_CXFRAME);
-    // need to make this smart enough to drop the list UP when necessary ***
-    ScreenPoint := Self.ClientToScreen(Point(0, EditControl.Height));
+
+    ADropDownRect := CalcDropDownRect(DropDownCnt, FListBox.ItemHeight, Top);
+    FListBox.SetBounds(0, 0, ADropDownRect.Width, ADropDownRect.Height);
+    ScreenPoint := ADropDownRect.TopLeft;
 
     PnlHeight := FListBox.Height;
     if (FListBox.FCheckBoxes) then
       inc(PnlHeight, CheckComboBtnHeight);
-    FDropPanel.SetBounds(ScreenPoint.X, ScreenPoint.Y, FListBox.Width, PnlHeight);
+    FDropPanel.SetBounds(ScreenPoint.X, ScreenPoint.Y, ADropDownRect.Width, PnlHeight);
     if (FListBox.FCheckBoxes) then
     begin
       FDropPanel.ResetButtons;
@@ -4953,7 +5239,12 @@ begin
   end;
 end;
 
-procedure TORComboBox.SetEditRect;
+procedure TORComboBox.SetDroppedDown(Value: Boolean);
+begin
+  SetDroppedDown(Value, 0);
+end;
+
+procedure TORComboBox.SetEditRect(ARect: TRect);
 { change the edit rectangle to not hide the dropdown button - taken from SPIN.PAS sample }
 var
   Loc: TRect;
@@ -4962,18 +5253,23 @@ begin
 //  Loc.Bottom := ClientHeight + 1; // +1 is workaround for windows paint bug
   if FStyle = orcsDropDown then
   begin
-    Loc.Right := ClientWidth - FDropBtn.Width - CBO_CXFRAME; // edit up to button
+    Loc.Right := ARect.Width - FDropBtn.Width - CBO_CXFRAME; // edit up to button
     if (FTemplateField) then
       inc(Loc.Right, 3);
   end
   else
-    Loc.Right := ClientWidth - CBO_CXFRAME; // edit in full edit box
+    Loc.Right := ARect.Left + ARect.Width - CBO_CXFRAME; // edit in full edit box
   Loc.Top := 1;//0
   if (FTemplateField) then
     Loc.Left := 4 //2
   else
     Loc.Left := 4; //0;
   SendMessage(FEditBox.Handle, EM_SETRECTNP, 0, LongInt(@Loc));
+end;
+
+procedure TORComboBox.SetEditRect;
+begin
+  SetEditRect(ClientRect);
 end;
 
 procedure TORComboBox.SetEditText(const Value: string);
@@ -5042,21 +5338,14 @@ begin
     FStyle := Value;
     if FStyle = orcsSimple then
     begin
-      if FDropBtn <> nil then FDropBtn.Free;
-      if FDropPanel <> nil then
-      begin
-        ClearDropDownStatus;
-        FDropPanel.Free;
-      end;
-      FDropBtn := nil;
-      FDropPanel := nil;
+      FreeAndNil(FDropBtn);
       FListBox.FParentCombo := nil;
       FListBox.Parent := Self;
-      if FListBox.FScrollBar <> nil then FListBox.FScrollBar.Parent := Self; // if long
+      FreeAndNil(FDropPanel); // FListBox may be on FDropPanel when getting in this procedure, so don't Free it until FListBox has a new parent.
+      if Assigned(FListBox.FScrollBar) then FListBox.FScrollBar.Parent := Self;
       FListBox.Visible := True;
-    end else
-    begin
-      FDropBtn := TBitBtn.Create(Self);
+    end else begin
+      if not Assigned(FDropBtn) then FDropBtn := TBitBtn.Create(Self);
       if (assigned(FEditPanel) and (csDesigning in ComponentState)) then
         FEditPanel.ControlStyle := FEditPanel.ControlStyle + [csAcceptsControls];
       FDropBtn.Parent := FEditBox;
@@ -5073,15 +5362,17 @@ begin
       FDropBtn.BringToFront;
       if not (csDesigning in ComponentState) then
       begin
-        FDropPanel := TORDropPanel.Create(Self);
-        FDropPanel.Parent := Self; // parent is really the desktop - see CreateParams
+        if not Assigned(FDropPanel) then FDropPanel := TORDropPanel.Create(Self);
+        FDropPanel.Parent := self; // parent is really the desktop - see CreateParams
         FListBox.FParentCombo := Self;
         FListBox.Parent := FDropPanel;
         ClearDropDownStatus;
-        if FListBox.FScrollBar <> nil then FListBox.FScrollBar.Parent := FDropPanel; // if long
-      end else
-      begin
+        if Assigned(FListBox.FScrollBar) then
+          FListBox.FScrollBar.Parent := FDropPanel;
+      end else begin
         FListBox.Visible := False;
+        FListBox.SendToBack;
+        FListBox.Height := 0;
       end;
       Height := EditControl.Height;
     end;
@@ -5144,9 +5435,83 @@ begin
   FListBox.ForDataUse(Strings);
 end;
 
+function TORComboBox.GetSelectedDataString: string;
+begin
+  Result := FListBox.SelectedDataString;
+end;
+
+function TORComboBox.GetLookupString(AIndex: Integer): string;
+begin
+  Result := FListBox.LookupString[AIndex];
+end;
+
+function TORComboBox.GetSelectedLookupString: string;
+begin
+  Result := FListBox.SelectedLookupString;
+end;
+
 procedure TORComboBox.InitLongList(S: string);
 begin
   FListBox.InitLongList(S);
+end;
+
+procedure TORComboBox.LockDrawing;
+begin
+  if not IsDrawingLocked then
+  begin
+    if Assigned(FEditBox) then FEditBox.LockDrawing;
+    if Assigned(FListBox) then FListBox.LockDrawing;
+  end;
+  inherited LockDrawing;
+end;
+
+procedure TORComboBox.UnlockDrawing;
+begin
+  inherited UnlockDrawing;
+  if not IsDrawingLocked then
+  begin
+    if Assigned(FListBox) then FListBox.UnlockDrawing;
+    if Assigned(FEditBox) then FEditBox.UnlockDrawing;
+  end;
+end;
+
+procedure TORComboBox.SuspendRedraw;
+begin
+  LockDrawing;
+end;
+
+procedure TORComboBox.ResumeRedraw;
+begin
+  UnlockDrawing;
+end;
+
+procedure TORComboBox.ReInitLongList;
+var
+  ASelStart, ASelLength: Integer;
+  S: string;
+begin
+  if not LongList then Exit;
+
+  LockDrawing;
+  try
+    if not Assigned(FEditBox) then
+    begin
+      FListBox.ReInitLongList;
+    end else begin
+      ASelStart := FEditBox.SelStart;
+      ASelLength := FEditBox.SelLength;
+      S := FEditBox.Text;
+      FListBox.ReInitLongList;
+      if FListBox.ItemIndex < 0 then
+        SetEditText('');
+
+      if ShouldFocus(FEditBox) then FEditBox.SetFocus;
+      FEditBox.SelStart := ASelStart;
+      FEditBox.SelLength := ASelLength;
+    end;
+  finally
+    UnlockDrawing;
+  end;
 end;
 
 function TORComboBox.IndexOfReference(AReference: Variant): Integer;
@@ -5481,8 +5846,9 @@ begin
         FEditBox.BorderStyle := bsNone;
         FEditBox.align := alClient;
 
-        FEditPanel := TORComboPanelEdit.Create(Self);
-        FEditPanel.Parent := Self;
+        if not Assigned(FEditPanel) then
+          FEditPanel := TORComboPanelEdit.Create(Self);
+        FEditPanel.Parent := self;
         FEditPanel.BevelOuter := bvNone;// bvRaised
         FEditPanel.BevelInner := bvNone;
         FEditPanel.BorderStyle := bsSingle;
@@ -5496,12 +5862,10 @@ begin
       end
       else
       begin
-        FEditBox.Parent := Self;
+        FEditBox.Parent := self;
         FEditBox.Color := FListBox.Color;
         FEditBox.BorderStyle := bsSingle;
-
-        FEditPanel.Free;
-        FEditPanel := nil;
+        FreeAndNil(FEditPanel);
       end;
     finally
       FEditBox.Visible := TRUE;
@@ -5625,6 +5989,8 @@ begin
     if assigned(FDropBtn) then
       LoadComboBoxImage;
 //      FDropBtn.Glyph.LoadFromResourceName(hInstance, ComboBoxImages[Value]);
+    FListBox.Enabled := Value;
+    FEditBox.Enabled := Value;
   end;
 end;
 
@@ -6245,35 +6611,30 @@ var
   node: TTreeNode;
   savedCount, nodeIndex: integer;
 begin
-  EventCache.SaveAndNilEvents(ORTreeViewRecreateWndEvents);
-  try
-    inherited;
-    if FRecreateStream <> nil then
-    begin
-      Items.BeginUpdate;
+  inherited;
+  if FRecreateStream <> nil then
+  begin
+    Items.BeginUpdate;
+    try
       try
-        try
-          FRecreateStream.ReadBuffer(savedCount, SizeOf(savedCount));
-          if (savedCount = Items.Count) then
+        FRecreateStream.ReadBuffer(savedCount, SizeOf(savedCount));
+        if (savedCount = Items.Count) then
+        begin
+          nodeIndex := 0;
+          node := Items.GetFirstNode;
+          while (nodeIndex < savedCount) and (node <> nil) do
           begin
-            nodeIndex := 0;
-            node := Items.GetFirstNode;
-            while (nodeIndex < savedCount) and (node <> nil) do
-            begin
-              TORTreeNode(node).ReadORNodeData(FRecreateStream);
-              Inc(nodeIndex);
-              node := node.GetNext;
-            end;
+            TORTreeNode(node).ReadORNodeData(FRecreateStream);
+            Inc(nodeIndex);
+            node := node.GetNext;
           end;
-        finally
-          FreeAndNil(FRecreateStream);
         end;
       finally
-        Items.EndUpdate;
+        FreeAndNil(FRecreateStream);
       end;
+    finally
+      Items.EndUpdate;
     end;
-  finally
-    EventCache.RestoreEvents;
   end;
 end;
 
@@ -6282,30 +6643,25 @@ var
   node: TTreeNode;
   savedCount: integer;
 begin
-  EventCache.SaveAndNilEvents(ORTreeViewRecreateWndEvents);
-  try
-    if CreateWndRestores and (Items.Count > 0) and (csRecreating in ControlState) then
-    begin
-      FRecreateStream := TMemoryStream.Create;
-      try
-        savedCount := Items.Count;
-        FRecreateStream.WriteBuffer(savedCount, SizeOf(savedCount));
-        node := Items.GetFirstNode;
-        while node <> nil do
-        begin
-          TORTreeNode(node).WriteORNodeData(FRecreateStream);
-          node := node.GetNext;
-        end;
-        FRecreateStream.Position := 0;
-      except
-        FreeAndNil(FRecreateStream);
-        raise;
+  if CreateWndRestores and (Items.Count > 0) and (csRecreating in ControlState) then
+  begin
+    FRecreateStream := TMemoryStream.Create;
+    try
+      savedCount := Items.Count;
+      FRecreateStream.WriteBuffer(savedCount, SizeOf(savedCount));
+      node := Items.GetFirstNode;
+      while node <> nil do
+      begin
+        TORTreeNode(node).WriteORNodeData(FRecreateStream);
+        node := node.GetNext;
       end;
+      FRecreateStream.Position := 0;
+    except
+      FreeAndNil(FRecreateStream);
+      raise;
     end;
-    inherited;
-  finally
-    EventCache.RestoreEvents;
   end;
+  inherited;
 end;
 
 function TORTreeView.CreateNode: TTreeNode;
@@ -6645,6 +7001,7 @@ begin
   FCustomImages := TORCBImageIndexes.Create(Self);
   FCustomImagesOwned := TRUE;
   FAllowAllUnchecked := TRUE;
+  FFocusOnBoxRect := TRect.Create(1, 0, 3, 2);
 end;
 
 constructor TORCheckBox.ListViewCreate(AOwner: TComponent; ACustomImages: TORCBImageIndexes);
@@ -6743,7 +7100,7 @@ begin
 end;
 
 procedure TORCheckBox.GetDrawData(CanvasHandle: HDC; var Bitmap: TBitmap;
-  var FocRect, Rect: TRect;
+  var AFocusRect, Rect, BitmapRect: TRect;
   var DrawOptions: UINT;
   var TempBitMap: boolean);
 var
@@ -6769,7 +7126,7 @@ begin
           CustomImgIdx := -1;
           if (assigned(FImages)) then
           begin
-            if (Enabled or (csDesigning in ComponentState)) then
+            if Enabled then
             begin
               case State of
                 cbChecked: CustomImgIdx := FCheckedEnabledIndex;
@@ -6790,8 +7147,9 @@ begin
           end;
           if (CustomImgIdx < 0) then
           begin
+//           if Flat then ImgIdx := iiFlatChecked else
             ImgIdx := iiChecked;
-            if (Enabled or (csDesigning in ComponentState)) then
+            if Enabled then
             begin
               if (FRadioStyle) then
               begin
@@ -6803,14 +7161,28 @@ begin
               else
               begin
                 case State of
-                  cbChecked: ImgIdx := iiChecked;
-                  cbUnChecked: ImgIdx := iiUnchecked;
+                  cbChecked: // if Flat then ImgIdx := iiFlatChecked else
+                    ImgIdx := iiChecked;
+                  cbUnChecked: // if Flat then ImgIdx := iiFlatUnChecked else
+                    ImgIdx := iiUnChecked;
                   cbGrayed:
                     begin
                       case FGrayedStyle of
-                        gsNormal: ImgIdx := iiGrayed;
-                        gsQuestionMark: ImgIdx := iiQMark;
-                        gsBlueQuestionMark: ImgIdx := iiBlueQMark;
+                        gsNormal:
+//                          if Flat then
+//                            ImgIdx := iiFlatGrayed
+//                          else
+                            ImgIdx := iiGrayed;
+                        gsQuestionMark:
+//                          if Flat then
+//                            ImgIdx := iiFlatQMark
+//                          else
+                            ImgIdx := iiQMark;
+                        gsBlueQuestionMark:
+//                          if Flat then
+//                            ImgIdx := iiFlatBlueQMark
+//                          else
+                            ImgIdx := iiBlueQMark;
                       end;
                     end;
                 end;
@@ -6848,13 +7220,15 @@ begin
             FImages.GetBitmap(CustomImgIdx, Bitmap);
             TempBitMap := TRUE;
           end;
+          BitmapRect := TRect.Create(0, 0, Bitmap.Width, Bitmap.Height);
+          BitmapRect := ScaleRectSize(BitmapRect);
           Brush.Style := bsClear;
           Font := Self.Font;
 
           if Alignment = taLeftJustify then
             Rect.Left := 2
           else
-            Rect.Left := Bitmap.Width + 5;
+            Rect.Left := BitmapRect.Width + 5;
 
           if (FWordWrap) then
             DrawOptions := DrawOptions or DT_WORDBREAK
@@ -6864,19 +7238,19 @@ begin
           if (FWordWrap) then
           begin
             if Alignment = taLeftJustify then
-              Rect.Right := Width - Bitmap.Width - 3
+              Rect.Right := Width - BitmapRect.Width - 3
             else
               Rect.Right := Width;
             Rect.Top := 1;
             Rect.Bottom := Height + 1;
             dec(Rect.Right);
-            FocRect := Rect;
-            TxtHeight := DrawText(Handle, PChar(Caption), Length(Caption), FocRect,
+            AFocusRect := Rect;
+            TxtHeight := DrawText(Handle, PChar(Caption), Length(Caption), AFocusRect,
               DrawOptions or DT_CALCRECT);
             if (TxtHeight = 1) then TxtHeight := TextHeight(Caption);
             FSingleLine := (TxtHeight = TextHeight(Caption));
             Rect.Bottom := Rect.Top + TxtHeight + 1;
-            FocRect := Rect;
+            AFocusRect := Rect;
           end
           else
           begin
@@ -6895,11 +7269,11 @@ begin
             end;
             Rect.Right := Rect.Left + TxtWidth;
             TxtHeight := TextHeight(Caption);
-            if (TxtHeight < Bitmap.Height) then
-              TxtHeight := Bitmap.Height;
+            if (TxtHeight < BitmapRect.Height) then
+              TxtHeight := BitmapRect.Height;
             Rect.Top := ((((ClientHeight - TxtHeight) * 5) - 5) div 10);
             Rect.Bottom := Rect.Top + TxtHeight + 1;
-            IntersectRect(FocRect, Rect, ClientRect);
+            IntersectRect(AFocusRect, Rect, ClientRect);
           end;
         end;
       finally
@@ -6911,7 +7285,7 @@ end;
 
 procedure TORCheckBox.DrawItem(const DrawItemStruct: TDrawItemStruct);
 var
-  R, FocusRect, TempRect: TRect;
+  R, FocusRect, TempRect, BitmapRect: TRect;
   Bitmap: TBitmap;
   OldColor: TColor;
   DrawOptions: UINT;
@@ -6921,7 +7295,7 @@ var
 begin
   if (not (csDestroying in ComponentState)) then
   begin
-    GetDrawData(DrawItemStruct.hDC, Bitmap, FocusRect, R, DrawOptions, TempBitMap);
+    GetDrawData(DrawItemStruct.hDC, Bitmap, FocusRect, R, BitmapRect, DrawOptions, TempBitMap);
     try
       FCanvas.Handle := DrawItemStruct.hDC;
       try
@@ -6935,7 +7309,7 @@ begin
         Brush.Style := bsClear;
         FCanvas.Font := Self.Font;
 
-        if (Enabled or (csDesigning in ComponentState)) then
+        if Enabled then
         begin
           WorkStr := Caption;
 //          FCanvas.TextRect(FocusRect, WorkStr);
@@ -6959,32 +7333,35 @@ begin
           FCanvas.Brush.Style := bsSolid;
         end;
 
-        if ((DrawItemStruct.itemState and ODS_FOCUS) <> 0) then begin
-          InflateRect(FocusRect, 1, 1);
+        if Alignment = taLeftJustify then
+          R.Left := ClientWidth - BitmapRect.Width - CheckBoxPadX
+        else
+          R.Left := CheckBoxPadX;
+        if (FWordWrap) then
+          R.Top := FocusRect.Top + CheckBoxPadY
+        else begin
+          R.Top := ((ClientHeight - BitmapRect.Height + 1) div 2) - 1;
+          if R.Top < 0 then R.Top := 0;
+          inc(R.Top, CheckBoxPadY);
+        end;
+        R.Height := BitmapRect.Height;
+        R.Width := BitmapRect.Width;
+        FCanvas.StretchDraw(R, Bitmap);
+
+        if ((DrawItemStruct.itemState and ODS_FOCUS) <> 0) then
+        begin
           if (FFocusOnBox) then
-            //TempRect := Rect(0, 0, CheckWidth - 1, CheckWidth - 1)
-            TempRect := Rect(0, 0, CheckWidth + 2, CheckWidth + 5)
+            TempRect := Rect(R.Left - CheckBoxPadX + FFocusOnBoxRect.Left,
+                             R.Top - CheckBoxPadY + FFocusOnBoxRect.Top,
+                             R.Right - CheckBoxPadX + FFocusOnBoxRect.Right,
+                             R.Bottom - CheckBoxPadY + FFocusOnBoxRect.Bottom)
           else
             TempRect := FocusRect;
-          //UnionRect(Temp2Rect,ClipRect,TempRect);
-          //ClipRect := Temp2Rect;
+          InflateRect(TempRect, 1, 1);
           FCanvas.Pen.Color := clWindowFrame;
           FCanvas.Brush.Color := clBtnFace;
           FCanvas.DrawFocusRect(TempRect);
-          InflateRect(FocusRect, -1, -1);
         end;
-
-        if Alignment = taLeftJustify then
-          R.Left := ClientWidth - Bitmap.Width
-        else
-          R.Left := 0;
-        if (FWordWrap) then
-          R.Top := FocusRect.Top
-        else begin
-          R.Top := ((ClientHeight - Bitmap.Height + 1) div 2) - 1;
-          if R.Top < 0 then R.Top := 0
-        end;
-        FCanvas.Draw(R.Left, R.Top, Bitmap);
       finally
         FCanvas.Handle := 0;
       end;
@@ -7087,7 +7464,7 @@ end;
 
 procedure TORCheckBox.AutoAdjustSize;
 var
-  R, FocusRect: TRect;
+  R, FocusRect, BitmapRect: TRect;
   Bitmap: TBitmap;
   DrawOptions: UINT;
   TempBitMap: boolean;
@@ -7102,7 +7479,7 @@ begin
     try
       SaveFont := SelectObject(DC, Font.Handle);
       try
-        GetDrawData(DC, Bitmap, FocusRect, R, DrawOptions, TempBitMap);
+        GetDrawData(DC, Bitmap, FocusRect, R, BitmapRect, DrawOptions, TempBitMap);
       finally
         SelectObject(DC, SaveFont);
       end;
@@ -7120,10 +7497,10 @@ begin
       if Alignment = taLeftJustify then
       begin
         dec(R.Left, 2);
-        inc(R.Right, Bitmap.Width + 3);
+        inc(R.Right, BitmapRect.Width + 3);
       end
       else
-        dec(R.Left, Bitmap.Width + 5);
+        dec(R.Left, BitmapRect.Width + 5);
       Width := R.Right - R.Left + 1;
       Height := R.Bottom - R.Top + 2;
     end;
@@ -7133,6 +7510,11 @@ end;
 function TORCheckBox.GetCaption: TCaption;
 begin
   Result := inherited Caption;
+end;
+
+function TORCheckBox.GetCheckBoxWidth: Integer;
+begin
+  Result := ScaleValue(CheckBoxWidthConst);
 end;
 
 procedure TORCheckBox.SetCaption(const Value: TCaption);
@@ -7252,6 +7634,12 @@ begin
   inherited;
   if (AComponent = FAssociate) and (Operation = opRemove) then
     FAssociate := nil;
+end;
+
+procedure TORCheckBox.SetFlat(const Value: boolean);
+begin
+  FFlat := Value;
+  Invalidate;
 end;
 
 procedure TORCheckBox.SetFocusOnBox(value: boolean);
@@ -7665,6 +8053,11 @@ begin
     result := FCaptionComponent.Caption;
 end;
 
+function TCaptionCheckListBox.GetCheckBoxWidth: Integer;
+begin
+  Result := ScaleValue(CheckBoxWidthConst);
+end;
+
 function TCaptionCheckListBox.GetDynamicProperty(PropertyID: integer): string;
 begin
   if PropertyID = DynaPropAccesibilityCaption then
@@ -7785,6 +8178,18 @@ end;
 
 { TCaptionTreeView}
 
+constructor TCaptionTreeView.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+  FEventCache := TOREventCache.Create(Self, TCustomTreeView);
+end;
+
+destructor TCaptionTreeView.Destroy;
+begin
+  FreeAndNil(FEventCache);
+  inherited;
+end;
+
 procedure TCaptionTreeView.CMSysColorChange(var Message: TMessage);
 begin
   // Change colors here. "inherited" will cause a RecreateWnd.
@@ -7795,27 +8200,21 @@ end;
 
 procedure TCaptionTreeView.CreateWnd;
 begin
-  EventCache.SaveAndNilEvents(CaptionTreeViewRecreateWndEvents);
+  FEventCache.SaveEvents;
   try
     inherited;
   finally
-    EventCache.RestoreEvents;
+    FEventCache.RestoreEvents;
   end;
-end;
-
-destructor TCaptionTreeView.Destroy;
-begin
-  FreeAndNil(FEventCache);
-  inherited;
 end;
 
 procedure TCaptionTreeView.DestroyWnd;
 begin
-  EventCache.SaveAndNilEvents(CaptionTreeViewRecreateWndEvents);
+  FEventCache.SaveEvents;
   try
     inherited;
   finally
-    EventCache.RestoreEvents;
+    FEventCache.RestoreEvents;
   end;
 end;
 
@@ -7830,13 +8229,6 @@ begin
     Result := GetCaption
   else
     Result := '';
-end;
-
-function TCaptionTreeView.GetEventCache: TOREventCache;
-begin
-  if not Assigned(FEventCache) then
-    FEventCache := TOREventCache.Create(Self);
-  Result := FEventCache;
 end;
 
 procedure TCaptionTreeView.SetCaption(const Value: string);

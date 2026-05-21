@@ -1,4 +1,4 @@
-object frDSTMgr: TfrDSTMgr
+inherited frDSTMgr: TfrDSTMgr
   Left = 0
   Top = 0
   Width = 199

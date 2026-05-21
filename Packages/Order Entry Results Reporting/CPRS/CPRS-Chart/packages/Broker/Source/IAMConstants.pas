@@ -6,9 +6,19 @@ interface
 	Site Name: Oakland, OI Field Office, Dept of Veteran Affairs
 	Developers: Herlan Westra, Roy Gaber
 	Description: Contains Identity and Access Management Properties.
-	Current Release: Version 1.1 Patch 72
-*************************************************************** }
+  Current Release: Version 1.1 Patch 74
+  *************************************************************** }
+
 { **************************************************
+  Changes in XWB*1.1*74 (CLG 05/30/2024) XWB*1.1*74
+  1. Updated RPC Version to version 74.
+
+  Changes in XWB*1.1*73 (RGG 07/19/2021) XWB*1.1*73
+  1. Updated RPC Version to version 73.
+  2. Added IAM URL for Active Directory login for when a PIV
+  exemption is issued for a user, they will be authenticated
+  via IAM's Active Directory service.
+
   Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
   1. Updated RPC Version to version 72.
 
@@ -24,9 +34,9 @@ const
   PasswordProvider_WIN7 = '{6f45dc1e-5384-457a-bc13-2cd81b0d28ed}';  //added in p71
   PasswordProvider_WIN10 = '{60b78e88-ead8-445c-9cfd-0b87f74ea6cd}';  //added in p71
   LastLoggedOnProvider = 'LastLoggedOnProvider';
-  IAM_Server_URL = 'https://domain.aaaaa.aaaa.ext:9301/STS/RequestSecurityToken';
+  IAM_Server_URL = 'https://aaaaa.aaaa.domain.ext:port/STS/RequestSecurityToken';
   //p71 - Added following line to address Active Directory fall-back endpoint
-  IAM_Server_AD_URL = 'https://domain.aaaaa.aaaa.ext:9201/STS/RequestSecurityToken';
+  IAM_Server_AD_URL = 'https://aaaaa.aaaa.domain.ext:port/STS/RequestSecurityToken';
   //RIOSERVICE_VALUE and RIOPORT_VALUE added in p71
   RIOSERVICE_VALUE = 'SecurityTokenService';
   RIOPORT_VALUE = 'RequestSecurityToken';
@@ -47,7 +57,7 @@ const
     +       '</wsa:EndpointReference>'
     +     '</wsp:AppliesTo>'
     +       '<ns:Issuer>'
-    +         '<wsa:Address xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing">https://domain.aaaa.ext/Issuer/smtoken/SAML2</wsa:Address>'
+    +         '<wsa:Address xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing">https://aaaaadomain.ext/Issuer/smtoken/SAML2</wsa:Address>'
     +       '</ns:Issuer>'
     +         '<ns:RequestType>http://schemas.xmlsoap.org/ws/2005/02/trust/Validate</ns:RequestType> '
     +   '</ns:RequestSecurityToken>'
@@ -57,7 +67,7 @@ const
 
   //Parts of SOAP message sent to IAM for Active Directory login
   iamMessageADPart1 = '<soapenv:Envelope xmlns:add="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:ns="http://docs.oasis-open.org/ws-sx/ws-trust/200512" '
-    +'xmlns:pol="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:ser="http://domain.aaaaa.aaaaa.ext/" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '
+    +'xmlns:pol="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:ser="http://a.aaaa.aaaa.domain.ext/" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" '
     + 'xmlns:stspapp="http://sts.iam.gov.va/" xmlns:u="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">'
     +	'<soapenv:Header>'
     +		'<wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">';
@@ -81,7 +91,7 @@ const
 	+			'</add:EndpointReference>'
 	+		'</pol:AppliesTo>'
 	+		'<ns:Issuer>'
-	+			'<add:Address xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing">https://domain.aaaa.ext/Issuer/smtoken/SAML2</add:Address>'
+	+			'<add:Address xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing">https://aaaaadomain.ext/Issuer/smtoken/SAML2</add:Address>'
 	+		'</ns:Issuer>'
 	+		'<KeyType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/Bearer</KeyType>'
 	+		'<RequestType>http://docs.oasis-open.org/ws-sx/ws-trust/200512/Issue</RequestType>'

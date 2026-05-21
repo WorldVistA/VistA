@@ -42,7 +42,8 @@ uses
   System.Generics.Collections,
   dShared,
   mPtSelDemog,
-  mPtSelOptns;
+  mPtSelOptns,
+  ORCheckComboBox, fBase508Frame;
 
 type
   TPageControl = class(Vcl.ComCtrls.TPageControl)
@@ -90,7 +91,7 @@ type
     adtSurrogateFor);
 
   TfrmPtSel = class(TfrmBase508Form)
-    cboPatient: TORComboBox;
+    cboPatient: TORCheckComboBox;
     lblPatient: TLabel;
     pnlNotifications: TORAutoPanel;
     cmdProcessInfo: TButton;
@@ -188,6 +189,8 @@ type
     procedure sptVertMoved(Sender: TObject);
     procedure sptVertCanResize(Sender: TObject; var NewSize: Integer;
       var Accept: Boolean);
+    procedure ORFormCanResize(Sender: TObject; var NewWidth, NewHeight: Integer;
+      var Resize: Boolean);
   private
     FGridRowHeight: integer;
     FsortCol: Integer;
@@ -257,7 +260,8 @@ uses
   uSimilarNames,
   uSizing,
   UResponsiveGUI,
-  uMisc;
+  uMisc,
+  CCOW.CCOWManager;
 
 type
   TAlertColumnInfo = record
@@ -768,7 +772,20 @@ begin
 end;
 
 procedure TfrmPtSel.SelectPtByDFN(aDFN:String);
+var
+  CCOWResponse: TCCOWResponse;
 begin
+  if not frmFrame.UseOldCCOW then
+  begin
+    if CCOWManager.Enabled and CCOWManager.IsParticipating then
+    begin
+      if (not frmFrame.CPRS_CCOW.AllowCCOWContextChange(CCOWResponse, aDFN)) and (CCOWResponse = UrCancel) then
+      begin
+        FUserCancelled := True;
+        Exit;
+      end;
+    end;
+  end;
   // 9/23/2002: Code used to check for changed pt. DFN here, but since same patient could be
   // selected twice in diff. Encounter locations, check was removed and following code runs
   // no matter; in fFrame code then updates Encounter display if Encounter.Location has changed.
@@ -1463,6 +1480,7 @@ begin
   FAlertData := TStringList.Create;
   FTempSubItems := TStringList.Create;
   FBeforeDisabledColor := ColorToRGB(lstvAlerts.Color);
+  fraPtSelOptns.IncludeNVAProviders := IncludeNonVAProviders(fraPtSelOptns.cboList);
 end;
 
 procedure TfrmPtSel.cboPatientKeyDown(Sender: TObject; var Key: Word;
@@ -1832,6 +1850,15 @@ begin
   // SelCount is not accurate in this event because lstvAlerts is now OwnerData
   FAlertsNotReady := True;
   PostMessage(Handle, UM_MISC, 0, 0);
+end;
+
+procedure TfrmPtSel.ORFormCanResize(Sender: TObject; var NewWidth,
+  NewHeight: Integer; var Resize: Boolean);
+begin
+  inherited;
+  // Prevent notifications from getting cut off on resize if a min height is set
+  Resize := (pcProcNoti.Constraints.MinHeight = 0) or
+    (NewHeight >= pcProcNoti.Top + pcProcNoti.Constraints.MinHeight);
 end;
 
 function TfrmPtSel.CanForwardAlerts(AItemIndices: TArray<Integer>): Boolean;

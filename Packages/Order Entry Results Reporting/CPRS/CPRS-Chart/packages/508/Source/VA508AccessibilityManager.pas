@@ -278,8 +278,6 @@ type
     procedure SetNextLabel(const Value: TVA508ChainedLabel);
     function GetLabelCaption: string;
     procedure SetLabelCaption(const Value: string);
-    function GetRootName: string;
-    procedure SetRootName(const Value: string);
     function GetShowAccelChar: boolean;
     procedure SetShowAccelChar(const Value: boolean);
     procedure UpdateSize;
@@ -301,6 +299,7 @@ type
     procedure Resize; override;
     procedure SetParent(AParent: TWinControl); override;
     property StaticLabel: TLabel read FLabel;
+    procedure SetName(const Value: TComponentName); override;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -311,7 +310,6 @@ type
     property OnEnter: TNotifyEvent read FOnEnter write FOnEnter;
     property OnExit: TNotifyEvent read FOnExit write FOnExit;
     property Caption: string read GetLabelCaption write SetLabelCaption;
-    property Name: string read GetRootName write SetRootName;
     property ShowAccelChar: boolean read GetShowAccelChar write SetShowAccelChar;
     property Alignment: TAlignment read GetAlignment write SetAlignment;
     Property WordWrap: Boolean read GetWordWrap write SetWordWrap;
@@ -3465,11 +3463,6 @@ begin
   Result := FLabel.Layout;
 end;
 
-function TVA508StaticText.GetRootName: string;
-begin
-  result := inherited Name;
-end;
-
 function TVA508StaticText.GetShowAccelChar: boolean;
 begin
   Result := FLabel.ShowAccelChar;
@@ -3639,9 +3632,9 @@ begin
   FLabel.Layout := Value;
 end;
 
-procedure TVA508StaticText.SetRootName(const Value: string);
+procedure TVA508StaticText.SetName(const Value: TComponentName);
 var
-  OldName: String;
+  OldName: TComponentName;
 begin
   OldName := Name;
   inherited;

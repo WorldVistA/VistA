@@ -1,41 +1,54 @@
-unit fPatientEd;
+﻿unit fPatientEd;
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  fPCEBase, StdCtrls, ORCtrls, CheckLst, ExtCtrls, Buttons, uPCE, rPCE, ORFn,
-  fPCELex, fPCEOther, ComCtrls, fPCEBaseMain, VA508AccessibilityManager;
+  System.Classes,
+  Vcl.Controls,
+  Vcl.StdCtrls,
+  Vcl.ComCtrls,
+  Vcl.ExtCtrls,
+  Vcl.Buttons,
+  ORCtrls,
+  fPCEBaseMain,
+  VA508AccessibilityManager,
+  U508CaptionEdit,
+  U508ORComboBox;
 
 type
   TfrmPatientEd = class(TfrmPCEBaseMain)
-    lblUnderstanding: TLabel;
-    cboPatUnderstanding: TORComboBox;
-    edtMag: TCaptionEdit;
-    lblUCUM2: TLabel;
+    gridMagUCUMData: TGridPanel;
+    pnlLevelSeverity: TPanel;
+    pnlUCUM: TPanel;
     lblUCUM: TLabel;
+    lblUCUM2: TLabel;
+    pnlMagnitude: TPanel;
     lblMag: TLabel;
+    edtMag: U508CaptionEdit.TCaptionEdit;
+    lblUnderstanding: TLabel;
+    cboPatUnderstanding: U508ORComboBox.TORComboBox;
     procedure cboPatUnderstandingChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure edtMagChange(Sender: TObject);
     procedure edtMagExit(Sender: TObject);
     procedure edtMagKeyPress(Sender: TObject; var Key: Char);
-  private
+    procedure FormShow(Sender: TObject);
   protected
     procedure UpdateNewItemStr(var x: string); override;
     procedure UpdateControls; override;
-  public
+    procedure Loaded; override;
   end;
-
-var
-  frmPatientEd: TfrmPatientEd;
 
 implementation
 
 {$R *.DFM}
 
 uses
-  fEncounterFrame, VA508AccessibilityRouter, uMisc;
+  fEncounterFrame,
+  VA508AccessibilityRouter,
+  uPCE,
+  rPCE,
+  ORFn;
 
 {///////////////////////////////////////////////////////////////////////////////
 //Name:procedure tfrmPatientEd.cboPatUnderstandingChange(Sender: TObject);
@@ -46,27 +59,25 @@ uses
 ///////////////////////////////////////////////////////////////////////////////}
 procedure tfrmPatientEd.cboPatUnderstandingChange(Sender: TObject);
 var
-  i: integer;
-
+  CaptionIndex: Integer;
 begin
-  if(NotUpdating) and (cboPatUnderstanding.Text <> '') then
+  if NotUpdating and (cboPatUnderstanding.Text <> '') then
   begin
-     for i := 0 to lstCaptionList.Items.Count-1 do
-      if(lstCaptionList.Items[i].Selected) and (lstCaptionList.Objects[i] is TPCEPat) then
-        TPCEPat(lstCaptionList.Objects[i]).Level := cboPatUnderstanding.ItemID;
+    for CaptionIndex := 0 to lstCaptionList.Items.Count - 1 do
+      if lstCaptionList.Items[CaptionIndex].Selected and (lstCaptionList.Objects[CaptionIndex] is TPCEPat) then
+        TPCEPat(lstCaptionList.Objects[CaptionIndex]).Level := cboPatUnderstanding.ItemID;
     GridChanged;
   end;
 end;
 
 procedure TfrmPatientEd.edtMagChange(Sender: TObject);
 var
- item: TPCEPat;
-
+  APCEPat: TPCEPat;
 begin
   inherited;
-  if (GridIndex<0) or (lstCaptionList.SelCount <> 1) then exit;
-  item := lstCaptionList.Objects[GridIndex] as TPCEPat;
-  item.Magnitude := edtMag.Text;
+  if (GridIndex < 0) or (lstCaptionList.SelCount <> 1) then Exit;
+  APCEPat := lstCaptionList.Objects[GridIndex] as TPCEPat;
+  APCEPat.Magnitude := edtMag.Text;
 end;
 
 procedure TfrmPatientEd.edtMagExit(Sender: TObject);
@@ -91,6 +102,18 @@ begin
   PCELoadORCombo(cboPatUnderstanding);
 end;
 
+procedure TfrmPatientEd.FormShow(Sender: TObject);
+begin
+  grdMain.Realign; // Fixes an issue with the columns not initially adjusting
+  inherited;
+end;
+
+procedure TfrmPatientEd.Loaded;
+begin
+  AutoSizeDisabled := True;
+  inherited;
+end;
+
 procedure TfrmPatientEd.UpdateNewItemStr(var x: string);
 begin
   SetPiece(x, U, pnumPEDLevel, NoPCEValue);
@@ -98,47 +121,48 @@ end;
 
 procedure TfrmPatientEd.UpdateControls;
 var
-  ok, First: boolean;
-  SameLOU: boolean;
-  i: integer;
-  LOU: string;
-  Obj: TPCEPat;
-
+  HaveEducationItems: Boolean;
+  First: Boolean;
+  SameLevelOfUnderstanding: Boolean;
+  CaptionIndex: Integer;
+  LevelOfUnderstanding: string;
+  PCEPat: TPCEPat;
 begin
   inherited;
-  if(NotUpdating) then
+  if NotUpdating then
   begin
     BeginUpdate;
     try
-      ok := (lstCaptionList.SelCount > 0);
-      lblUnderstanding.Enabled := ok;
-      cboPatUnderstanding.Enabled := ok;
-      if(ok) then
-      begin
-        First := TRUE;
-        SameLOU := TRUE;
-        LOU := NoPCEValue;
+      HaveEducationItems :=  lstCaptionList.SelCount > 0;
+      lblUnderstanding.Enabled := HaveEducationItems;
+      cboPatUnderstanding.Enabled := HaveEducationItems;
 
-       for i := 0 to lstCaptionList.Items.Count-1 do
+      if HaveEducationItems then
+      begin
+        First := True;
+        SameLevelOfUnderstanding := True;
+        LevelOfUnderstanding := NoPCEValue;
+
+        for CaptionIndex := 0 to lstCaptionList.Items.Count - 1 do
         begin
-          if lstCaptionList.Items[i].Selected and (lstCaptionList.Objects[i] is TPCEPat) then
+          if lstCaptionList.Items[CaptionIndex].Selected and (lstCaptionList.Objects[CaptionIndex] is TPCEPat) then
           begin
-            Obj := TPCEPat(lstCaptionList.Objects[i]);
-            if(First) then
+            PCEPat := TPCEPat(lstCaptionList.Objects[CaptionIndex]);
+            if First then
             begin
-              First := FALSE;
-              LOU := Obj.Level;
+              First := False;
+              LevelOfUnderstanding := PCEPat.Level;
             end
             else
             begin
-              if(SameLOU) then
-                SameLOU := (LOU = Obj.Level);
+              if SameLevelOfUnderstanding then
+                SameLevelOfUnderstanding := LevelOfUnderstanding = PCEPat.Level;
             end;
           end;
         end;
-      
-        if(SameLOU) then
-          cboPatUnderstanding.SelectByID(LOU)
+
+        if SameLevelOfUnderstanding then
+          cboPatUnderstanding.SelectByID(LevelOfUnderstanding)
         else
           cboPatUnderstanding.Text := '';
       end
@@ -147,13 +171,19 @@ begin
         cboPatUnderstanding.Text := '';
       end;
 
-      ok := (lstCaptionList.SelCount = 1);
-      if(ok) then
+      HaveEducationItems := lstCaptionList.SelCount = 1;
+      lblUCUM.Caption := 'Unified Code for Units of Measure  (UCUM)';
+      if HaveEducationItems then
       begin
-        Obj := TPCEPat(lstCaptionList.Objects[GridIndex]);
-        ParseMagUCUMData(Obj.UCUMInfo, lblMag, edtMag, lblUCUM, lblUCUM2);
+        PCEPat := TPCEPat(lstCaptionList.Objects[GridIndex]);
+        ParseMagUCUMData(PCEPat.UCUMInfo, lblMag, edtMag, lblUCUM, lblUCUM2);
         if edtMag.Visible then
-          edtMag.Text := Obj.Magnitude;
+        begin
+          edtMag.Text := PCEPat.Magnitude;
+          amgrMain.AccessText[edtMag] := lblMag.Caption +
+            ' Units are ' + lblUCUM2.Caption +
+            ' Values are ' + edtMag.Hint;
+        end;
       end
       else
       begin
@@ -162,6 +192,15 @@ begin
         lblUCUM.Visible := False;
         lblUCUM2.Visible := False;
       end;
+
+      if lblMag.Visible then lblMag.Top := 0; // Reposition to Top. Messed up when set to invisible;
+      if not lblUCum.Visible then
+      begin
+        // We need the label as a spacer
+        lblUCUM.Caption := ' ';
+        lblUCum.Visible := True;
+      end;
+      lblUCum.Top := 0; // Reposition to Top. Messed up when set to invisible;
 
     finally
       EndUpdate;

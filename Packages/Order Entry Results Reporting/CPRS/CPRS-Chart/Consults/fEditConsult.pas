@@ -11,7 +11,8 @@ uses
   ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ORCtrls, ExtCtrls, ComCtrls, ORfn, uConst, uConsults, Buttons,
-  Menus, fAutoSz, ORDtTm, VA508AccessibilityManager, fBase508Form, oDST;
+  Menus, fAutoSz, ORDtTm, VA508AccessibilityManager, fBase508Form, oDST,
+  ORCheckComboBox;
 
 type
 
@@ -38,7 +39,7 @@ type
     radOutpatient: TRadioButton;
     cboPlace: TORComboBox;
     txtProvDiag: TCaptionEdit;
-    cboAttn: TORComboBox;
+    cboAttn: TORCheckComboBox;
     cboCategory: TORComboBox;
     memComment: ORExtensions.TRichEdit;
     cmdLexSearch: TButton;
@@ -104,6 +105,7 @@ type
     procedure btnLaunchToolboxClick(Sender: TObject);
     procedure cboAttnNeedData(Sender: TObject; const StartFrom: string;
       Direction, InsertAt: Integer);
+    procedure cboAttnMainCheckboxClick(Sender: TObject);
   private
     FLastServiceID: string;
     FChanged: boolean;
@@ -139,7 +141,7 @@ implementation
 uses
     rODBase, rConsults, uCore, rCore, fConsults, fRptBox, fPCELex, rPCE,
     ORClasses, clipbrd, UBAGlobals, rOrders, uORLists, uSimilarNames, VAUtils,
-    uMisc, uSizing, fFrame, uDstConst, DateUtils;
+    uMisc, uSizing, fFrame, uDstConst, DateUtils, VA508AccessibilityRouter;
 
 var
   SvcList: TStrings ;
@@ -359,6 +361,15 @@ begin
       SetError(TX_PAST_DATE);
     // if (cboUrgency.Text = 'SPECIAL INSTRUCTIONS') and (calLatest.FMDateTime = 0) then SetError(TX_NLTD_SI_URG);
   end;
+end;
+
+procedure TfrmEditCslt.cboAttnMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := cboAttn.SelectedDataString;
+  cboAttn.ReInitLongList;
+  if ALastData <> cboAttn.SelectedDataString then
+    ControlChange(cboAttn);
 end;
 
 procedure TfrmEditCslt.cboAttnNeedData(Sender: TObject;
@@ -626,6 +637,7 @@ procedure TfrmEditCslt.FormCreate(Sender: TObject);
 begin
   inherited;
   getDSTMgr(DST_CASE_CONSULT_EDIT);
+  cboAttn.MainCheckBoxVisible := IncludeNonVAProviders(cboAttn);
 end;
 
 procedure TfrmEditCslt.FormResize(Sender: TObject);

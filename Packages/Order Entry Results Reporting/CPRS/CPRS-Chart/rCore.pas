@@ -140,7 +140,8 @@ function setSubsetOfDevices(var aDest: TStrings; const StartFrom: string;
   Direction: Integer): Integer;
 
 function setSubSetOfPersons(AORComboBox: TORComboBox; var aDest: TStrings;
-  const StartFrom: string; Direction: Integer; ExcludeClass: Boolean = False): Integer;
+  const StartFrom: string; Direction: Integer;
+  ExcludeClass: Boolean = False): Integer;
 
 function setSubSetOfActiveAndInactivePersons(AORComboBox: TORComboBox;
   var aDest: TStrings; const StartFrom: string; Direction: Integer): Integer;
@@ -199,7 +200,7 @@ procedure ListTeamAll(Dest: TStrings);
 procedure ListPcmmAll(Dest: TStrings);
 procedure ListWardAll(Dest: TStrings);
 
-function setSubSetOfProviders(aComponent: TORComboBox; aDest: TStrings;
+function setSubSetOfProviders(AORComboBox: TORComboBox; aDest: TStrings;
   const StartFrom: string; Direction: Integer): Integer;
 
 function setSubSetOfCosigners(AORComboBox: TORComboBox; aDest: TStrings;
@@ -296,7 +297,9 @@ uses
   ShlObj,
   Windows,
   VAUtils,
-  uSimilarNames;
+  UNewPersonParams,
+  uSimilarNames,
+  VAShared.UTStringsHelper;
 
 var
   uPtListDfltSort: string = '';
@@ -467,11 +470,22 @@ begin
 end;
 
 function setSubSetOfPersons(AORComboBox: TORComboBox; var aDest: TStrings;
-  const StartFrom: string; Direction: Integer; ExcludeClass: Boolean = False): Integer;
+  const StartFrom: string; Direction: Integer;
+  ExcludeClass: Boolean = False): Integer;
+var
+  ANewPersonParams: TNewPersonParams;
 begin
-  SNCallVistA(AORComboBox, SN_ORWU_NEWPERS,
-    [StartFrom, Direction,'','','','','','',ExcludeClass], aDest);
-  Result := aDest.Count;
+  ANewPersonParams := TNewPersonParams.Create(AORComboBox);
+  try
+    ANewPersonParams.From := StartFrom;
+    ANewPersonParams.Direction := Direction;
+    ANewPersonParams.ExcludeClass := ExcludeClass.ToInteger;
+    TSimilarNames.CallVistA(AORComboBox,
+      [ANewPersonParams.CreateORNetMult], aDest);
+    Result := aDest.Count;
+  finally
+    ANewPersonParams.Free;
+  end;
 end;
 
 function GetUserInfo: TUserInfo;
@@ -772,38 +786,81 @@ procedure ListProviderTop(Dest: TStrings);
 begin
 end;
 
-function setSubSetOfProviders(aComponent: TORComboBox; aDest: TStrings;
+function setSubSetOfProviders(AORComboBox: TORComboBox; aDest: TStrings;
   const StartFrom: string; Direction: Integer): Integer;
+var
+  ANewPersonParams: TNewPersonParams;
 begin
-  SNCallVistA(aComponent, SN_ORWU_NEWPERS, [StartFrom, Direction, 'PROVIDER'], aDest);
-  Result := aDest.Count;
+  ANewPersonParams := TNewPersonParams.Create(AORComboBox);
+  try
+    ANewPersonParams.From := StartFrom;
+    ANewPersonParams.Direction := Direction;
+    ANewPersonParams.Key := 'PROVIDER';
+    TSimilarNames.CallVistA(AORComboBox,
+      [ANewPersonParams.CreateORNetMult], aDest);
+    Result := aDest.Count;
+  finally
+    FreeAndNil(ANewPersonParams);
+  end;
 end;
 
 function setSubSetOfCosigners(AORComboBox: TORComboBox; aDest: TStrings;
   const StartFrom: string; Direction: Integer; Date: TFMDateTime;
   ATitle: Integer; ADocType: Integer): Integer;
+var
+  ANewPersonParams: TNewPersonParams;
 begin
-  if ATitle > 0 then
-    ADocType := 0;
-  SNCallVistA(AORComboBox, SN_ORWU2_COSIGNER, [StartFrom, Direction, Date,
-    ADocType, ATitle], aDest);
-  Result := aDest.Count;
+  ANewPersonParams := TNewPersonParams.Create(AORComboBox);
+  try
+    if ATitle > 0 then ADocType := 0;
+    ANewPersonParams.From := StartFrom;
+    ANewPersonParams.Direction := Direction;
+    ANewPersonParams.Date := Date.ToString;
+    ANewPersonParams.TIUDA := ATitle;
+    ANewPersonParams.DOCIEN := ADocType;
+    TSimilarNames.CallVistA(AORComboBox,
+      [ANewPersonParams.CreateORNetMult], aDest);
+    Result := aDest.Count;
+  finally
+    FreeAndNil(ANewPersonParams);
+  end;
 end;
 
 function setSubSetOfUsersWithClass(AORComboBox: TORComboBox; aDest: TStrings;
   const StartFrom: string; Direction: Integer; DateTime: string): Integer;
+var
+  ANewPersonParams: TNewPersonParams;
 begin
-  SNCallVistA(AORComboBox, SN_ORWU_NEWPERS, [StartFrom, Direction, '', DateTime], aDest);
-  Result := aDest.Count;
+  ANewPersonParams := TNewPersonParams.Create(AORComboBox);
+  try
+    ANewPersonParams.From := StartFrom;
+    ANewPersonParams.Direction := Direction;
+    ANewPersonParams.Date := DateTime;
+    TSimilarNames.CallVistA(AORComboBox,
+      [ANewPersonParams.CreateORNetMult], aDest);
+    Result := aDest.Count;
+  finally
+    FreeAndNil(ANewPersonParams);
+  end;
 end;
 
 function setSubSetOfActiveAndInactivePersons(AORComboBox: TORComboBox;
   var aDest: TStrings; const StartFrom: string; Direction: Integer): Integer;
+var
+  ANewPersonParams: TNewPersonParams;
 begin
-  SNCallVistA(AORComboBox, SN_ORWU_NEWPERS, [StartFrom, Direction, '', '', '', True], aDest);
-  // TRUE = return all active and inactive users
-  MixedCaseList(aDest);
-  Result := aDest.Count;
+  ANewPersonParams := TNewPersonParams.Create(AORComboBox);
+  try
+    ANewPersonParams.From := StartFrom;
+    ANewPersonParams.Direction := Direction;
+    ANewPersonParams.ALL := 1;
+    TSimilarNames.CallVistA(AORComboBox,
+      [ANewPersonParams.CreateORNetMult], aDest);
+    MixedCaseList(aDest);
+    Result := aDest.Count;
+  finally
+    FreeAndNil(ANewPersonParams);
+  end;
 end;
 
 //function SubsetOfPatientsWithSimilarSSNs(aDFN: Int64): TStrings;
@@ -1604,10 +1661,16 @@ end;
 
 function CreateSysUserParameters(DUZ: Int64): TORJSONParameters;
 var
-  AReturn: string;
+  AReturn: TStringList;
 begin
-  CallVistA('ORWU SYSPARAM', [DUZ], AReturn);
-  Result := TORJSONParameters.Create(AReturn);
+  AReturn := TStringList.Create;
+  try
+    AReturn.LineBreak := '';
+    CallVistA('ORWU SYSPARAM', [DUZ], AReturn);
+    Result := TORJSONParameters.Create(AReturn.Text);
+  finally
+    FreeAndNil(AReturn);
+  end;
 end;
 
 end.

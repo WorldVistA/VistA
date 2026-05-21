@@ -295,7 +295,6 @@ inherited frmOCSession: TfrmOCSession
             Margins.Left = 9
             Margins.Top = 5
             Margins.Right = 0
-            Align = alTop
             Caption = 'N'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clRed
@@ -312,9 +311,10 @@ inherited frmOCSession: TfrmOCSession
             Top = 5
             Width = 222
             Height = 15
-            Margins.Top = 4
+            Margins.Left = 27
+            Margins.Top = 5
+            Align = alTop
             Alignment = taLeftJustify
-            AutoSize = True
             Caption = 'Remaining Critical High Order Check Overrides'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clWindowText
@@ -324,6 +324,9 @@ inherited frmOCSession: TfrmOCSession
             ParentFont = False
             TabOrder = 0
             ShowAccelChar = True
+            WordWrap = True
+            LabelAlignment = taLeftJustify
+            LabelLayout = tlTop
           end
         end
         object lvOrders: TListView

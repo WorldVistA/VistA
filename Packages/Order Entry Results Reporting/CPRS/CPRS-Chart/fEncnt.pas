@@ -17,11 +17,11 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Vcl.Controls, Forms, Dialogs,
   StdCtrls, ORCtrls, ORDtTm, ORFn, ExtCtrls, ComCtrls, ORDtTmRng, fAutoSz, rOptions, fBase508Form,
-  VA508AccessibilityManager, fFrame;
+  VA508AccessibilityManager, fFrame, ORCheckComboBox, uMisc;
 
 type
   TfrmEncounter = class(TfrmBase508Form)
-    cboPtProvider: TORComboBox;
+    cboPtProvider: TORCheckComboBox;
     lblProvider: TLabel;
     cmdOK: TButton;
     cmdCancel: TButton;
@@ -70,6 +70,7 @@ type
     procedure lstAdmitDblClick(Sender: TObject);
     procedure cboNewVisitDblClick(Sender: TObject);
     procedure cboPtProviderDblClick(Sender: TObject);
+    procedure cboPtProviderMainCheckboxClick(Sender: TObject);
   private
     CLINIC_TXT : String;
     FFilter: Int64;
@@ -284,6 +285,9 @@ begin
   CLINIC_TXT := lblClinic.Caption+'  ';
   lblClinic.Caption := CLINIC_TXT + lblDateRange.Caption;
   lblDateRange.Hide;
+  // Non-Va Providers call
+  cboPtProvider.MainCheckBoxVisible :=
+    IncludeNonVAProviders(cboPtProvider);
 end;
 
 procedure TfrmEncounter.cboPtProviderDblClick(Sender: TObject);
@@ -294,13 +298,18 @@ begin
   ModalResult := mrOK;
 end;
 
+procedure TfrmEncounter.cboPtProviderMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  cboPtProvider.ReInitLongList;
+end;
+
 procedure TfrmEncounter.cboPtProviderNeedData(Sender: TObject; const StartFrom: string;
   Direction, InsertAt: Integer);
 begin
   inherited;
   case FFilter of
-    NPF_PROVIDER:  setProviderList(cboPtProvider, StartFrom, Direction);
-//    NPF_ENCOUNTER: cboPtProvider.ForDataUse(SubSetOfUsersWithClass(StartFrom, Direction, FloatToStr(FPCDate)));
+    NPF_PROVIDER: setProviderList(cboPtProvider, StartFrom, Direction);
     else setPersonList(cboPtProvider, StartFrom, Direction);
   end;
 end;

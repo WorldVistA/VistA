@@ -94,7 +94,7 @@ var
 
 implementation
 
-uses ORFn, ORNet, rOrders;
+uses ORFn, ORNet, rOrders, VA508AccessibilityRouter;
 {$R *.dfm}
 
 function ShowOtherSchedule(var ASchedule: string): boolean;

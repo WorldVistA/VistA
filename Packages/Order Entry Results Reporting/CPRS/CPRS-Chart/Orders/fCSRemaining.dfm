@@ -28,7 +28,9 @@ inherited frmCSRemaining: TfrmCSRemaining
     Caption = 'These controlled substance order(s) will not be processed:'
     TabOrder = 0
     ShowAccelChar = True
-    ExplicitLeft = 3
+    WordWrap = False
+    LabelAlignment = taLeftJustify
+    LabelLayout = tlTop
   end
   object lstCSRemaining: TCaptionListBox [1]
     AlignWithMargins = True

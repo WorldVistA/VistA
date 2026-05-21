@@ -7,7 +7,9 @@ uses
   System.SysUtils,
   Vcl.StdCtrls,
   System.Generics.Collections,
-  Vcl.ComCtrls;
+  VCL.Menus,
+  Vcl.ComCtrls,
+  VCL.Forms;
 
 type
   TVACustomListBoxHelper = class helper for TCustomListBox
@@ -16,58 +18,16 @@ type
     procedure ForceItemHeightRecalc;
   end;
 
-  TVAComponentHelper = class helper for TComponent
-  private type
-    TComponentVar = class(TObject)
-    private
-      FName: string;
-      FValue: Variant;
-    public
-      property Name: string read FName write FName;
-      property Value: Variant read FValue write FValue;
-    end;
-
-    TComponentVars = class(TObject)
-    private
-      FComponent: TComponent;
-      FCVars: TObjectList<TComponentVar>;
-      function IndexOf(AName: string): integer;
-      function GetCVar(AName: string): Variant;
-      procedure SetCVar(AName: string; const AValue: Variant);
-    public
-      constructor Create(AComponent: TComponent);
-      destructor Destroy; override;
-      property Component: TComponent read FComponent;
-      property CVar[AName: string]: Variant read GetCVar write SetCVar;
-    end;
-
-    TComponentNotifier = class(TComponent)
-    protected
-      procedure Notification(AComponent: TComponent;
-        Operation: TOperation); override;
-    end;
-
-  class var
-    FCVarList: TObjectList<TComponentVars>;
-    FNotifier: TComponentNotifier;
+  TMenuHelper = class helper for VCL.Menus.TMenu
   private
-    class constructor Create;
-    class destructor Destroy;
-    class function IndexOfComponentVars(AComponent: TComponent): integer;
-    function GetCVar(AName: string): Variant;
-    procedure SetCVar(AName: string; const AValue: Variant);
+   procedure UpdateMenuItems(aMenuItem: TMenuItem);
   public
-    /// <summary>Allows storing component variables dynamically</summary>
-    /// <param name="AName">Case insensitive name of the component variable</param>
-    property CVar[AName: string]: Variant read GetCVar write SetCVar;
-    /// <summary>Deletes a specific component variables</summary>
-    /// <param name="AName">Case insensitive name of the component variable</param>
-    procedure CVarDelete(AName: string);
-    /// <summary>Deletes all component variables</summary>
-    procedure CVarDeleteAll;
-    /// <summary>Returns true if the component variable has been assigned</summary>
-    /// <param name="AName">Case insensitive name of the component variable</param>
-    function CVarExists(AName: string): boolean;
+   procedure UpdateFont(aFontSize: Integer);
+  end;
+
+  TScrollingWinControlHelper = class helper for VCL.Forms.TScrollingWinControl
+  public
+    procedure UpdateMenuFonts(aForm: TScrollingWinControl; aFontSize: Integer);
   end;
 
   TListViewHelper = class helper for TListView
@@ -89,183 +49,54 @@ uses
 procedure TVACustomListBoxHelper.ForceItemHeightRecalc;
 var
   I: integer;
-
 begin
-  for I := 0 to Items.Count - 1 do
-    Items[I] := Items[I];
-end;
-
-{ TVAComponentHelper }
-
-class constructor TVAComponentHelper.Create;
-begin
-  inherited;
-  FCVarList := TObjectList<TComponentVars>.Create(True);
-  FNotifier := TComponentNotifier.Create(nil);
-end;
-
-procedure TVAComponentHelper.CVarDelete(AName: string);
-var
-  idx, vidx: integer;
-
-begin
-  if assigned(Self) then
-  begin
-    idx := IndexOfComponentVars(Self);
-    if idx >= 0 then
-    begin
-      vidx  := FCVarList[idx].IndexOf(AName);
-      if vidx >= 0 then
-        FCVarList[idx].FCVars.Delete(vidx);
-    end;
+  LockDrawing;
+  try
+    for I := 0 to Items.Count - 1 do
+      Items[I] := Items[I];
+  finally
+    UnlockDrawing;
   end;
 end;
 
-procedure TVAComponentHelper.CVarDeleteAll;
-var
-  idx: integer;
+{ TMenuHelper }
 
+type
+  THackMenuItem = class(vcl.menus.TMenuItem);
+
+procedure TMenuHelper.UpdateFont(aFontSize: Integer);
 begin
-  if assigned(Self) then
+ If Screen.MenuFont.Size <> aFontSize then
+  Screen.MenuFont.Size := aFontSize;
+
+ OwnerDraw := True;
+
+ for var i: Integer := 0 to Items.Count - 1 do
+    UpdateMenuItems(Items[i]);
+end;
+
+procedure TMenuHelper.UpdateMenuItems(aMenuItem: TMenuItem);
+begin
+  THackMenuItem(aMenuItem).MenuChanged(true);
+  for var I: Integer := 0 to aMenuItem.Count - 1 do
+    UpdateMenuItems(aMenuItem[i]);
+end;
+
+{ TScrollingWinControlHelper }
+
+procedure TScrollingWinControlHelper.UpdateMenuFonts(
+  aForm: TScrollingWinControl; aFontSize: Integer);
+var
+  I: Integer;
+begin
+
+  // Update all menus (menus on first level)
+  For I := 0 to aForm.ComponentCount - 1 do
   begin
-    idx := IndexOfComponentVars(Self);
-    if idx >= 0 then
-      FCVarList.Delete(idx);
+    If aForm.Components[I] is TMenu then
+      (aForm.Components[I] as TMenu).UpdateFont(aFontSize);
   end;
-end;
 
-function TVAComponentHelper.CVarExists(AName: string): boolean;
-var
-  idx: integer;
-
-begin
-  Result := False;
-  if assigned(Self) then
-  begin
-    idx := IndexOfComponentVars(Self);
-    if idx >= 0 then
-      Result := (FCVarList[idx].IndexOf(AName) >= 0);
-  end;
-end;
-
-class destructor TVAComponentHelper.Destroy;
-begin
-  FNotifier.Free;
-  FCVarList.Free;
-  inherited;
-end;
-
-class function TVAComponentHelper.IndexOfComponentVars
-  (AComponent: TComponent): integer;
-begin
-  for Result := 0 to FCVarList.Count - 1 do
-    if FCVarList[Result].Component = AComponent then
-      Exit;
-  Result := -1;
-end;
-
-function TVAComponentHelper.GetCVar(AName: string): Variant;
-var
-  idx: integer;
-
-begin
-  if assigned(Self) then
-  begin
-    idx := IndexOfComponentVars(Self);
-    if idx >= 0 then
-     Exit(FCVarList[idx].CVar[AName]);
-  end;
-  raise EVariantError.Create(AName + ' not found.');
-end;
-
-procedure TVAComponentHelper.SetCVar(AName: string; const AValue: Variant);
-var
-  idx: integer;
-  cVars: TComponentVars;
-
-begin
-  idx := IndexOfComponentVars(Self);
-  if idx < 0 then
-    cVars := TComponentVars.Create(Self)
-  else
-    cVars := FCVarList[idx];
-  cVars.CVar[AName] := AValue;
-end;
-
-{ TVAComponentHelper.TComponentVars }
-
-constructor TVAComponentHelper.TComponentVars.Create(AComponent: TComponent);
-begin
-  if not assigned(AComponent) then
-    raise EComponentError.Create
-      ('TVAComponentHelper.TComponentVars.Create requires a TComponent');
-  inherited Create;
-  FCVars := TObjectList<TComponentVar>.Create(True);
-  FComponent := AComponent;
-  FCVarList.Add(Self);
-  FComponent.FreeNotification(FNotifier);
-end;
-
-destructor TVAComponentHelper.TComponentVars.Destroy;
-begin
-  FComponent.RemoveFreeNotification(FNotifier);
-  FCVars.Free;
-  inherited;
-end;
-
-function TVAComponentHelper.TComponentVars.GetCVar(AName: string): Variant;
-var
-  idx: integer;
-
-begin
-  idx := IndexOf(AName);
-  if idx < 0 then
-    raise EVariantError.Create(AName + ' not found.');
-  Result := FCVars[idx].Value;
-end;
-
-function TVAComponentHelper.TComponentVars.IndexOf(AName: string): integer;
-begin
-  for Result := 0 to FCVars.Count - 1 do
-    if CompareText(AName, FCVars[Result].Name) = 0 then
-      Exit;
-  Result := -1;
-end;
-
-procedure TVAComponentHelper.TComponentVars.SetCVar(AName: string;
-  const AValue: Variant);
-var
-  idx: integer;
-  CVar: TComponentVar;
-
-begin
-  idx := IndexOf(AName);
-  if idx < 0 then
-  begin
-    CVar := TComponentVar.Create;
-    CVar.Name := AName;
-    FCVars.Add(CVar);
-  end
-  else
-    CVar := FCVars[idx];
-  CVar.Value := AValue;
-end;
-
-{ TVAComponentHelper.TComponentNotifier }
-
-procedure TVAComponentHelper.TComponentNotifier.Notification
-  (AComponent: TComponent; Operation: TOperation);
-var
-  idx: integer;
-
-begin
-  inherited;
-  if Operation = opRemove then
-  begin
-    idx := IndexOfComponentVars(AComponent);
-    if idx >= 0 then
-      FCVarList.Delete(idx);
-  end;
 end;
 
 { TListViewHelper }

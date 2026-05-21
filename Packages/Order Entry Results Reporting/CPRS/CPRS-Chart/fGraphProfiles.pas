@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ComCtrls, StdCtrls, ExtCtrls, CheckLst, ORCtrls, ORFn, uGraphs, rCore, uCore,
-  fBase508Form, VA508AccessibilityManager;
+  fBase508Form, VA508AccessibilityManager, ORCheckComboBox, uMisc;
 
 type
   TfrmGraphProfiles = class(TfrmBase508Form)
@@ -53,7 +53,7 @@ type
     pnlOtherSources: TPanel;
     pnlOtherSourcesUser: TPanel;
     lblOtherPersons: TLabel;
-    cboUser: TORComboBox;
+    cboUser: TORCheckComboBox;
     pnlOtherSourcesBottom: TPanel;
     lstOtherSources: TORListBox;
     btnViews: TButton;
@@ -125,6 +125,7 @@ type
       Shift: TShiftState);
     procedure cboUserMouseClick(Sender: TObject);
     procedure cboUserClick(Sender: TObject);
+    procedure cboUserMainCheckboxClick(Sender: TObject);
   private
     FHintPauseTime: integer;
     FPublicEditor: boolean;
@@ -157,7 +158,8 @@ implementation
 {$R *.DFM}
 
 uses
-  UITypes, rGraphs, fGraphData, fGraphOthers, fRptBox, VAUtils, uORLists, uSimilarNames;
+  UITypes, rGraphs, fGraphData, fGraphOthers, fRptBox, VAUtils, uORLists,
+  uSimilarNames, VA508AccessibilityRouter;
 
 procedure DialogOptionsGraphProfiles(var actiontype: boolean);
 // create the form and make it modal, return an action
@@ -288,6 +290,7 @@ begin
     lbl508Apply.TabStop := True;
     lbl508SelectOthers.TabStop := True;
   end;
+  cboUser.MainCheckBoxVisible := IncludeNonVAProviders(cboUser);
 end;
 
 procedure TfrmGraphProfiles.FormShow(Sender: TObject);
@@ -525,6 +528,15 @@ begin
     Key := VK_DOWN;
   if Key = VK_RETURN then
     FChanging := False;
+end;
+
+procedure TfrmGraphProfiles.cboUserMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := cboUser.SelectedDataString;
+  cboUser.ReInitLongList;
+  if ALastData <> cboUser.SelectedDataString then
+    cboUserChange(cboUser);
 end;
 
 procedure TfrmGraphProfiles.cboUserMouseClick(Sender: TObject);

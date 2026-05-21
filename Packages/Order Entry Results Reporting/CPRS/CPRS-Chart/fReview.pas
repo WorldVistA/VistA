@@ -33,7 +33,9 @@ uses
   rODMeds,
   uConst,
   uCore,
-  VA508AccessibilityManager, u508Button;
+  VA508AccessibilityManager,
+  u508Button,
+  uSignItems;
 
 type
   TfrmReview = class(TfrmBase508Form)
@@ -58,11 +60,11 @@ type
     cmdOK: u508Button.TButton;
     cmdCancel: u508Button.TButton;
     pnlReview: TPanel;
-    lstReview: TCaptionCheckListBox;
+    lstReview: uSignItems.TCaptionCheckListBox;
     lblSig: TStaticText;
     pnlCSReview: TPanel;
     lblCSReview: TLabel;
-    lstCSReview: TCaptionCheckListBox;
+    lstCSReview: uSignItems.TCaptionCheckListBox;
     lblSmartCardNeeded: TStaticText;
     pnlTop: TPanel;
     pnlBottomCanvas: TPanel;
@@ -72,6 +74,7 @@ type
     gpOrderActions: TGridPanel;
     gpRelease: TGridPanel;
     lblGap: TLabel;
+    pnlNCSTop: TPanel;
 
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
@@ -102,6 +105,7 @@ type
     procedure fraCoPayLabel24MouseMove(Sender: TObject; Shift: TShiftState;
       X, Y: Integer);
     procedure pnlCSReviewResize(Sender: TObject);
+    procedure ORFormResize(Sender: TObject);
   private const
     DontSign = 'Don''t Sign';
   private
@@ -115,15 +119,16 @@ type
     FIsEvtChange: Boolean;
     FCurrentlySelectedItem: Integer;
     FFormID: string;
-    function AddItem(aCaptionCheckListBox: TCaptionCheckListBox;
+    FInternalResize: Integer;
+    function AddItem(aCaptionCheckListBox: uSignItems.TCaptionCheckListBox;
       ChangeItem: TChangeItem): Integer;
-    function ItemsAreChecked(aListView: TCaptionCheckListBox): Boolean;
+    function ItemsAreChecked(aListView: uSignItems.TCaptionCheckListBox): Boolean;
     function nonDCCSItemsAreChecked: Boolean;
     function AnyItemsAreChecked: Boolean;
     function SignRequiredForAny(FullList: Boolean): Boolean;
     function IsSignatureRequired: Boolean;
-
-    procedure AddHeader(aCaptionCheckListBox: TCaptionCheckListBox; s: string);
+    procedure AddHeader(aCaptionCheckListBox: uSignItems.TCaptionCheckListBox; s: string);
+    procedure AdjustDEAPanel;
     procedure BuildList(FullList: Boolean);
     procedure BuildFullList;
     procedure BuildSignList;
@@ -162,7 +167,6 @@ uses
   fOrdersPrint,
   fLkUpLocation,
   fFrame,
-  uSignItems,
   fSurgery,
   fClinicWardMeds,
   rODLab,
@@ -172,7 +176,8 @@ uses
   UResponsiveGUI,
   rMisc,
   VAHelpers,
-  uWriteAccess;
+  uWriteAccess,
+  VA508AccessibilityRouter;
 
 const
   SP_NONE = 0;
@@ -205,7 +210,6 @@ function ReviewChanges(TimedOut: Boolean; IsEvtChange: Boolean = False)
 var
   i: Integer;
   aLst: TStringList;
-  aStr: string;
 begin
   Result := True;
   if Changes.Count = 0 then
@@ -217,11 +221,8 @@ begin
 
   aLst := TStringList.Create;
   try
-    CallVistA('ORDEA DEATEXT', [], aLst);
-    frmReview.lblDEAText.Caption := '';
-    for aStr in aLst do
-      frmReview.lblDEAText.Caption := frmReview.lblDEAText.Caption + ' ' + aStr;
-
+    frmReview.lblDEAText.Caption := GetDEAText;
+    frmReview.AdjustDEAPanel;
     CallVistA('ORDEA SIGINFO', [Patient.DFN, User.DUZ], aLst);
     frmReview.lblProvInfo.Caption := aLst.Text;
     frmReview.pnlProvInfo.Width := frmReview.lblProvInfo.Width + 8;
@@ -320,6 +321,7 @@ begin
   ResizeFormToFont(Self);
   lblSmartCardNeeded.Font.Size := MainFontSize;
   pnlCSTop.Height := MainFontTextHeight + TSigItems.btnMargin;
+  pnlNCSTop.Height := MainFontTextHeight + TSigItems.btnMargin;
 
   gap := TSigItems.btnMargin * 8;
   gpBottom.ColumnCollection.BeginUpdate;
@@ -361,14 +363,14 @@ begin
   end;
 end;
 
-procedure TfrmReview.AddHeader(aCaptionCheckListBox: TCaptionCheckListBox;
+procedure TfrmReview.AddHeader(aCaptionCheckListBox: uSignItems.TCaptionCheckListBox;
   s: string);
 { add header to review list, object is left nil }
 begin
   aCaptionCheckListBox.Items.AddObject(s, nil);
 end;
 
-function TfrmReview.AddItem(aCaptionCheckListBox: TCaptionCheckListBox;
+function TfrmReview.AddItem(aCaptionCheckListBox: uSignItems.TCaptionCheckListBox;
   ChangeItem: TChangeItem): Integer;
 { add a single review item to the list with its associated TChangeItem object }
 begin
@@ -390,6 +392,21 @@ begin
       aCaptionCheckListBox.State[Result] := cbGrayed;
   end;
   // hds00006047
+end;
+
+procedure TfrmReview.AdjustDEAPanel;
+var
+  AHeight: Integer;
+  ARect: TRect;
+begin
+  inc(FInternalResize);
+  try
+    ARect := pnlDEAText.ClientRect;
+    AHeight := WrappedTextHeightByFont(Canvas, Font, lblDEAText.Caption, ARect);
+    pnlDEAText.ClientHeight := AHeight;
+  finally
+    dec(FInternalResize);
+  end;
 end;
 
 function TfrmReview.IsSignatureRequired: Boolean;
@@ -539,7 +556,7 @@ begin
                     displaySpacer := True;
                   end;
                   lbIdx := AddItem(lstReview, ChangeItem);
-                  SigItems.Add(CH_ORD, ChangeItem.ID, lbIdx);
+                  SigItems.Add(lstReview, CH_ORD, ChangeItem.ID, lbIdx);
                 end
                 else
                 begin
@@ -556,7 +573,7 @@ begin
                     displayCSSpacer := True;
                   end;
                   lbIdx := AddItem(lstCSReview, ChangeItem);
-                  SigItemsCS.Add(CH_ORD, ChangeItem.ID, lbIdx);
+                  SigItemsCS.Add(lstCSReview, CH_ORD, ChangeItem.ID, lbIdx);
                 end;
 
               end
@@ -596,7 +613,7 @@ begin
                       'Others'' Unsigned Orders Orders - All Sessions');
                   end;
                   lbIdx := AddItem(lstReview, ChangeItem);
-                  SigItems.Add(CH_ORD, ChangeItem.ID, lbIdx);
+                  SigItems.Add(lstReview, CH_ORD, ChangeItem.ID, lbIdx);
                 end
                 else
                 begin
@@ -614,7 +631,7 @@ begin
                       'Others'' Unsigned Orders - All Sessions');
                   end;
                   lbIdx := AddItem(lstCSReview, ChangeItem);
-                  SigItemsCS.Add(CH_ORD, ChangeItem.ID, lbIdx);
+                  SigItemsCS.Add(lstCSReview, CH_ORD, ChangeItem.ID, lbIdx);
                 end;
               end;
             end;
@@ -700,16 +717,16 @@ begin
     end;
   end;
 
-  SigItems.ClearDrawItems;
-  SigItems.ClearFCtrls;
-  SigItemsCS.ClearDrawItems;
-  SigItemsCS.ClearFCtrls;
-  t1 := SigItems.UpdateListBox(lstReview);
-  t2 := SigItemsCS.UpdateListBox(lstCSReview);
+  SigItems.ClearCBSettings;
+  SigItemsCS.ClearCBSettings;
+  t1 := SigItems.UpdateListBox(lstReview, pnlNCSTop);
+  t2 := SigItemsCS.UpdateListBox(lstCSReview, pnlCSTop);
 
   if (FullList and (t1 or t2)) then
   begin
     fraCoPay.Visible := True;
+    fraCoPay.Init(SigItems.CombinedSpecialAuthorities,
+      SigItemsCS.CombinedSpecialAuthorities);
     pnlTop.Visible := True;
   end
   else
@@ -760,7 +777,7 @@ var
 
 begin
   pnlDEAText.Visible := True;
-
+  AdjustDEAPanel;
   if ((lstReview.Count = 0) and (lstCSReview.Count = 0)) then
     Exit;
 
@@ -845,7 +862,8 @@ begin
   Height := newHeight;
 
   { Check for CS Items checked for signature }
-  pnlDEAText.Visible := nonDCCSItemsAreChecked;
+  lblDEAText.Visible := nonDCCSItemsAreChecked;
+  AdjustDEAPanel;
 
   lblSmartCardNeeded.Visible := lblDEAText.Visible;
 
@@ -872,7 +890,7 @@ end;
 
 // defect 355810 - form ignores Main Form font size  ----------------------- end
 
-function TfrmReview.ItemsAreChecked(aListView: TCaptionCheckListBox): Boolean;
+function TfrmReview.ItemsAreChecked(aListView: uSignItems.TCaptionCheckListBox): Boolean;
 { return true if any items in the Review List are checked for applying signature }
 var
   i: Integer;
@@ -903,6 +921,24 @@ begin
           Break;
         end;
       end;
+end;
+
+procedure TfrmReview.ORFormResize(Sender: TObject);
+begin
+  LockDrawing;
+  try
+    inherited;
+    if FInternalResize > 0 then
+      Exit;
+    inc(FInternalResize);
+    try
+      AdjustDEAPanel;
+    finally
+      dec(FInternalResize);
+    end;
+  finally
+    UnlockDrawing;
+  end;
 end;
 
 function TfrmReview.AnyItemsAreChecked: Boolean;
@@ -1860,7 +1896,7 @@ end;
 procedure TfrmReview.lstReviewClickCheck(Sender: TObject);
 { prevent grayed checkboxes from being changed to anything else }
 var
-  aListView: TCaptionCheckListBox;
+  aListView: uSignItems.TCaptionCheckListBox;
   ChangeItem: TChangeItem;
 
   procedure updateAllChilds(CheckedStatus: Boolean; ParentOrderId: string);
@@ -1877,9 +1913,9 @@ var
           aListView.Checked[idx] := CheckedStatus;
           if Sender = lstReview
           then { IMPORTANT: Check for Sender/TSigItems match }
-            SigItems.EnableSettings(idx, aListView.Checked[idx])
+            SigItems.EnableSettings(AChangeItem.ID, aListView.Checked[idx])
           else if Sender = lstCSReview then
-            SigItemsCS.EnableSettings(idx, aListView.Checked[idx]);
+            SigItemsCS.EnableSettings(AChangeItem.ID, aListView.Checked[idx]);
         end;
     end;
   end;
@@ -1890,9 +1926,10 @@ begin
   if Sender = lstCSReview then
     with lstCSReview do
       try
-        CallVistA(
-          'ORDEA AUINTENT',
-          [TOrder(Items.Objects[ItemIndex]).ID, BOOLCHAR[Checked[ItemIndex]]]);
+        if Assigned(Items.Objects[ItemIndex]) then
+          CallVistA(
+            'ORDEA AUINTENT',
+            [TOrder(Items.Objects[ItemIndex]).ID, BOOLCHAR[Checked[ItemIndex]]]);
       except
         on E: Exception do
           MessageDlg(
@@ -1911,7 +1948,7 @@ begin
           State[ItemIndex] := cbGrayed
         else
         begin
-          SigItems.EnableSettings(ItemIndex, Checked[ItemIndex]);
+          aListView.SigItems.EnableSettings(ChangeItem.ID, Checked[ItemIndex]);
           if Length(ChangeItem.ParentID) > 0 then
             updateAllChilds(Checked[ItemIndex], ChangeItem.ParentID);
         end;
@@ -1919,7 +1956,8 @@ begin
     end;
 
     { Manage the PIV Card component visibility if actual CS order being placed }
-    pnlDEAText.Visible := nonDCCSItemsAreChecked;
+    lblDEAText.Visible := nonDCCSItemsAreChecked;
+    AdjustDEAPanel;
     lblSmartCardNeeded.Visible := lblDEAText.Visible;
 
     pnlSignature.Visible := IsSignatureRequired;
@@ -1942,7 +1980,7 @@ procedure TfrmReview.lstReviewDrawItem(Control: TWinControl; Index: Integer;
   end;
 
 var
-  AListView: TCaptionCheckListBox;
+  AListView: uSignItems.TCaptionCheckListBox;
   ATextRecordRect: TRect;
   S: string;
   DY: Integer;
@@ -1982,32 +2020,35 @@ end;
 procedure TfrmReview.lstReviewMeasureItem(Control: TWinControl; Index: Integer;
   var AHeight: Integer);
 var
-  AListView: TCaptionCheckListBox;
-  S: string;
+  aListView: uSignItems.TCaptionCheckListBox;
+  X: string;
   ARect: TRect;
 begin
   AListView := Control as TCaptionCheckListBox;
   AHeight := SigItemHeight;
-  if (Index >= 0) and (Index < AListView.Count) then
-  begin
-    ARect := AListView.ItemRect(Index);
-    if CVarExists(TSigItems.RectWidth) then
-      ARect.Right := CVar[TSigItems.RectWidth];
-    ARect.Left := AListView.CheckWidth;
-    AListView.Canvas.FillRect(ARect);
-    S := FilteredString(AListView.Items[Index]);
-    AHeight := WrappedTextHeightByFont(AListView.Canvas, Font, S, ARect) +
-      SIG_ITEM_VERTICAL_PAD;
-  end;
-  if AHeight > 255 then AHeight := 255;
-  if AHeight < 13 then AHeight := 15;
+  with aListView do
+    if Index < Items.Count then
+    begin
+      ARect := ItemRect(Index);
+      if RectWidth > 0 then
+        ARect.Right := RectWidth;
+      ARect.Left := aListView.CheckBoxWidth;
+      Canvas.FillRect(ARect);
+      X := FilteredString(Items[Index]);
+      AHeight := WrappedTextHeightByFont(aListView.Canvas, Font, X, ARect) +
+        SIG_ITEM_VERTICAL_PAD;
+      if AHeight > 255 then
+        AHeight := 255;
+      if AHeight < aListView.MinItemHeight then
+        AHeight := aListView.MinItemHeight;
+    end;
 end;
 
 procedure TfrmReview.lstReviewMouseMove(Sender: TObject; Shift: TShiftState;
   X, Y: Integer);
 var
   aItem: Integer;
-  aListView: TCaptionCheckListBox;
+  aListView: uSignItems.TCaptionCheckListBox;
 begin
   aListView := Sender as TCaptionCheckListBox;
 
@@ -2118,25 +2159,12 @@ begin
   begin
     FRVTFHintWindow.ReleaseHandle;
     FRVTFHintWindowActive := False;
-
-    with fraCoPay do
-    begin
-      // Long captions
-      lblSC.ShowHint := False;
-      lblCV.ShowHint := False;
-      lblAO.ShowHint := False;
-      lblIR.ShowHint := False;
-      lblSWAC.ShowHint := False;
-      lblHNC.ShowHint := False;
-      lblHNC2.ShowHint := False;
-      lblSHAD2.ShowHint := False;
-    end;
   end;
 end;
 
 procedure TfrmReview.FormatListForScreenReader(Sender: TObject);
 var
-  aListView: TCaptionCheckListBox;
+  aListView: uSignItems.TCaptionCheckListBox;
   i: Integer;
 begin
   if ScreenReaderActive then

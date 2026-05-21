@@ -4,7 +4,8 @@ unit rPCE;
 
 interface
 
-uses SysUtils, Classes, ORNet, ORFn, uPCE, UBACore, ORClasses, windows;
+uses SysUtils, Classes, ORNet, ORFn, uPCE, UBACore, ORClasses, windows,
+  uSpecialAuthorityEx;
 
 const
   LX_SC   = 4;  //Standard Codes
@@ -30,32 +31,12 @@ var
 //  uEncDateTime: TFMDateTime;
 
 type
-  TSCConditions = record
-    SCAllow:  Boolean;        // prompt for service connected
-    SCDflt:   Boolean;        // default if prompting service connected
-    AOAllow:  Boolean;        // prompt for agent orange exposure
-    AODflt:   Boolean;        // default if prompting agent orange exposure
-    IRAllow:  Boolean;        // prompt for ionizing radiation exposure
-    IRDflt:   Boolean;        // default if prompting ionizing radiation
-    ECAllow:  Boolean;        // prompt for environmental conditions
-    ECDflt:   Boolean;        // default if prompting environmental cond.
-    MSTAllow: Boolean;        // prompt for military sexual trauma
-    MSTDflt:  Boolean;        // default if prompting military sexual trauma
-    HNCAllow: Boolean;        // prompt for Head or Neck Cancer
-    HNCDflt:  Boolean;        // default if prompting Head or Neck Cancer
-    CVAllow:  Boolean;        // prompt for Combat Veteran Related
-    CVDflt:   Boolean;        // default if prompting Comabt Veteran
-    SHDAllow: Boolean;        // prompt for Shipboard Hazard and Defense
-    SHDDflt:  Boolean;        // default if prompting Shipboard Hazard and Defense
-    CLAllow:  Boolean;        // prompt for camp lejeune
-    CLDflt:   Boolean;        // default if propmpting camp lejeune
-  end;
-
   TPCEListCodesProc = procedure(Dest: TStrings; SectionIndex: Integer);
 
   TAskPCE = (apPrimaryNeeded, apPrimaryOutpatient, apPrimaryAlways,
              apNeeded, apOutpatient, apAlways, apNever, apDisable);
 
+procedure AddProblemSAToVisit(ProblemID: string; ASpecialAuthorities: TSpecialAuthoritiesEx);
 function GetVisitCat(InitialCat: char; Location: integer; Inpatient: boolean): char;
 function GetDiagnosisText(Narrative: String; Code: String): String;
 function GetFreqOfText(SearchStr: String): integer;
@@ -94,7 +75,6 @@ function  GetICDVersion(ADate: TFMDateTime = 0): String;
 
 { Encounter Form Elements }
 procedure DeletePCE(const AVisitStr: string; visit: integer);
-function EligbleConditions(PCEData: TPCEData): TSCConditions;
 
 procedure ListVisitTypeSections(Dest: TStrings);
 procedure ListVisitTypeCodes(Dest: TStrings; SectionIndex: Integer);
@@ -184,7 +164,10 @@ procedure UpdateMagUCUMData(DataType, Code, Value: string);
 
 implementation
 
-uses uGlobalVar, TRPCB, rCore, uCore, uConst, fEncounterFrame, UBAGlobals, UBAConst, rMisc, fDiagnoses, ORNetIntf;
+uses uGlobalVar, TRPCB, rCore, uCore, uConst, fEncounterFrame, UBAGlobals,
+  UBAConst, rMisc, fDiagnoses, ORNetIntf, VAShared.UTStringsHelper, uMisc,
+  rSpecialAuthority, uSpecialAuthorityTypesEx, VAUtils, Vcl.Dialogs,
+  System.UITypes;
 
 var
   uLastLocation:  Integer;
@@ -203,6 +186,7 @@ var
   uVisitTypes:    TStringList;
   uVTypeForLoc:   TStringList;
   uProblems:      TStringList;
+  uProblemsSA:    TSpecialAuthoritiesStringList;
   uModifiers:     TORStringList = nil;
   uGAFOK:         boolean;
   uGAFOKCalled:   boolean = FALSE;
@@ -229,6 +213,132 @@ var
   uLastIsClinic: boolean = FALSE;
   uDiagnosesTextList: TStringList;
 //  uHNCOK:         integer = -1;
+
+type
+  TAddProblemListSAToVisit = (aplUnknown, aplYes, aplNo, aplAsk);
+
+var
+  uAddProblemListSAToVisit: TAddProblemListSAToVisit = aplUnknown;
+
+function AddProblemListSAToVisit: TAddProblemListSAToVisit;
+begin
+  if uAddProblemListSAToVisit = aplUnknown then
+    uAddProblemListSAToVisit := TMisc.GetEnumValueFromString
+      <TAddProblemListSAToVisit>(SystemParameters.AsTypeDef<string>
+      ('specialAuthority.addProbToVisit', 'yes'), 'apl');
+  Result := uAddProblemListSAToVisit;
+end;
+
+procedure AddProblemSAToVisit(ProblemID: string;
+  ASpecialAuthorities: TSpecialAuthoritiesEx);
+var
+  idx, Count: integer;
+  Text, Changes: string;
+  PLSA, DiffSA: TSpecialAuthoritiesEx;
+  SA: TSpecialAuthorityEx;
+  AddProblem: TAddProblemListSAToVisit;
+
+  function GenerateSAText(SAList: TSpecialAuthoritiesEx;
+    CompareDefault: boolean): string;
+  type
+    TProcess = reference to procedure(var msg: string;
+      const SpecAuth: TSpecialAuthorityEx);
+
+    procedure ProcessSAList(var msg: string; Process: TProcess);
+    var
+      Add: boolean;
+    begin
+      for var i := 0 to SAList.Count - 1 do
+      begin
+        if CompareDefault then
+          Add := SAList[i].Visible and (SAList[i].DefaultValue = savYes)
+        else
+          Add := SAList[i].Yes;
+        if Add then
+          Process(msg, SAList[i]);
+      end;
+    end;
+
+  var
+    ACount, AIndex: integer;
+  begin
+    Result := '';
+    ACount := 0;
+    ProcessSAList(Result,
+      procedure(var msg: string; const SpecAuth: TSpecialAuthorityEx)
+      begin
+        inc(ACount);
+      end);
+    AIndex := 0;
+    ProcessSAList(Result,
+      procedure(var msg: string; const SpecAuth: TSpecialAuthorityEx)
+      begin
+        inc(AIndex);
+        if msg <> '' then
+        begin
+          if AIndex < ACount then
+            msg := msg + ', '
+          else
+            msg := msg + ' and '
+        end;
+        if SpecAuth.Valid then
+          msg := msg + SpecAuth.SpecialAuthorityTypeEx.DisplayText;
+      end);
+  end;
+
+begin
+  AddProblem := AddProblemListSAToVisit;
+  if AddProblem in [aplUnknown, aplNo] then
+    Exit;
+  idx := uProblemsSA.IndexOf(ProblemID);
+  if idx < 0 then
+    Exit;
+  PLSA := uProblemsSA.Objects[idx];
+  DiffSA := TSpecialAuthoritiesEx.Create;
+  try
+    Count := 0;
+    for var i := 0 to PLSA.Count - 1 do
+    begin
+      if PLSA[i].Visible and (PLSA[i].DefaultValue = savYes) then
+      begin
+        SA := ASpecialAuthorities[PLSA[i].Code];
+        if SA.Visible and SA.Enabled and (SA.Value <> savYes) then
+        begin
+          inc(Count);
+          SA := DiffSA[PLSA[i].Code];
+          SA.Visible := True;
+          SA.Enabled := True;
+          SA.Value := savYes;
+        end;
+      end;
+    end;
+    if Count = 0 then
+      Exit;
+    if AddProblem = aplAsk then
+    begin
+      Changes := GenerateSAText(DiffSA, False);
+      Text := 'This problem is related to ' + Changes +
+        '.  Do you want to mark this visit as related to ';
+      if Count = 1 then
+        Text := Text + 'this special authority?'
+      else
+        Text := Text + 'these special authorities?';
+      if InfoDlg(Text, 'Add Special Authorities', mtConfirmation,
+        [mbYes, mbNo], mbYes) = mrYes then
+        AddProblem := aplYes;
+    end;
+    if AddProblem = aplYes then
+      for var i := 0 to DiffSA.Count - 1 do
+        if DiffSA[i].Yes then
+        begin
+          SA := ASpecialAuthorities[DiffSA[i].Code];
+          if Assigned(SA) then
+            SA.Value := savYes;
+        end;
+  finally
+    FreeAndNil(DiffSA);
+  end;
+end;
 
 function GetEncounterDateTime: TFMDateTime;
 begin
@@ -521,7 +631,7 @@ begin {ListVisitTypeCodes}
   while (i < uVisitTypes.Count) and (CharAt(uVisitTypes[i], 1) <> U) do
   begin
     s := Pieces(uVisitTypes[i], U, 1, 2) + U + InsertTab(Piece(uVisitTypes[i], U, 2)) + U + Piece(uVisitTypes[i], U, 1) +
-         U + IntToStr(i);
+         U + '';
     Dest.Add(s);
     Inc(i);
   end;
@@ -624,12 +734,13 @@ procedure AddProbsToDiagnoses;
 var
   i: integer;                 //loop index
   EncDT: TFMDateTime;
-  ICDVersion: String;
+  ICDVersion, Error: String;
 begin
   //get problem list
   EncDT := Trunc(GetEncounterDateTime);
   uLastDFN := patient.DFN;
   ICDVersion := piece(GetEncounterICDVersion, U, 1);
+  uProblemsSA.Clear;
   CallVistA('ORWPCE ACTPROB', [Patient.DFN, EncDT],uProblems);
   if uProblems.count > 0 then
   begin
@@ -640,9 +751,17 @@ begin
       //filter out 799.9 and inactive codes when ICD-9 is active
        if (ICDVersion = 'ICD') and ((piece(uProblems.Strings[i],U,3) = '799.9') or (piece(uProblems.Strings[i],U,13) = '#')) then continue;
       // otherwise add all active problems (including 799.9, R69, and inactive codes) to udiagnosis
+      uProblemsSA.Add(Piece(uProblems.Strings[i], U, 1));
       uDiagnoses.add(piece(uProblems.Strings[i], U, 3) + U + piece(uProblems.Strings[i], U, 2) + U +
                        piece(uProblems.Strings[i], U, 13) + U + piece(uProblems.Strings[i], U, 1) + U +
                        piece(uProblems.Strings[i], U, 14));
+    end;
+
+    if (uProblemsSA.Count > 0) and (SystemParameters.AsType<Boolean>('saOnProblems')) then
+    begin
+      CreateProblemListSpecialAuthorities(uProblemsSA, Error);
+      if Error <> '' then
+        uProblemsSA.Clear;
     end;
 
     //1.3.10
@@ -776,7 +895,7 @@ begin
   begin
     Dest.Add(Pieces(uProcedures[i], U, 1, 2) + U + Piece(uProcedures[i], U, 1) + U +
              Piece(uProcedures[i], U, 12) + U + Piece(uProcedures[i], U, 13) + U +
-             IntToStr(i) + U + Piece(uProcedures[i], U, 3));
+             '' + U + Piece(uProcedures[i], U, 3));
     Inc(i);
   end;
 end;
@@ -1229,57 +1348,6 @@ begin
 end;
 
 {------------------------------------------------------------------------------}
-function EligbleConditions(PCEData: TPCEData): TSCConditions;
-{ return a record listing the conditions for which a patient is eligible }
-var
-  x: string;
-  dt: TFMDateTime;
-  loc, visit: Integer;
-
-begin
-  dt := Encounter.DateTime;
-  visit := 0;
-  loc := uEncLocation;
-  if assigned(PCEData) then
-  begin
-    visit := PCEData.VisitIEN;
-    if PCEData.Location > 0 then
-      loc := PCEData.Location;
-    if PCEData.VisitCategory = 'E' then
-      dt := FMNow
-    else
-      dt := PCEData.VisitDateTime;
-  end;
-  if visit > 0 then
-    CallVistA('ORWPCE SCSEL', [Patient.DFN, dt, loc, visit], x)
-  else
-    CallVistA('ORWPCE SCSEL', [Patient.DFN, dt, loc], x);
-  with Result do
-  begin
-    SCAllow  := Piece(Piece(x, ';', 1), U, 1) = '1';
-    SCDflt   := Piece(Piece(x, ';', 1), U, 2) = '1';
-    AOAllow  := Piece(Piece(x, ';', 2), U, 1) = '1';
-    AODflt   := Piece(Piece(x, ';', 2), U, 2) = '1';
-    IRAllow  := Piece(Piece(x, ';', 3), U, 1) = '1';
-    IRDflt   := Piece(Piece(x, ';', 3), U, 2) = '1';
-    ECAllow  := Piece(Piece(x, ';', 4), U, 1) = '1';
-    ECDflt   := Piece(Piece(x, ';', 4), U, 2) = '1';
-    MSTAllow := Piece(Piece(x, ';', 5), U, 1) = '1';
-    MSTDflt  := Piece(Piece(x, ';', 5), U, 2) = '1';
-    HNCAllow := Piece(Piece(x, ';', 6), U, 1) = '1';
-    HNCDflt  := Piece(Piece(x, ';', 6), U, 2) = '1';
-    CVAllow  := Piece(Piece(x, ';', 7), U, 1) = '1';
-    CVDflt   := Piece(Piece(x, ';', 7), U, 2) = '1';
-    SHDAllow := Piece(Piece(x, ';', 8), U, 1) = '1';
-    SHDDflt  := Piece(Piece(x, ';', 8), U, 2) = '1';
-    // Camp Lejeune
-    if IsLejeuneActive then
-    begin
-     CLAllow := Piece(Piece(x, ';', 9), U, 1) = '1';
-     CLDflt  := Piece(Piece(x, ';', 9), U, 2) = '1';
-    end;
-  end;
-end;
 
 procedure ListSCDisabilities(Dest: TStrings);
 { return text listing a patient's rated disabilities and % service connected }
@@ -1878,6 +1946,7 @@ initialization
   uVisitTypes    := TStringList.Create;
   uVTypeForLoc   := TStringList.Create;
   uProblems      := TStringList.Create;
+  uProblemsSA    := TSpecialAuthoritiesStringList.Create;
   uDiagnosesTextList := TStringList.Create;
 
 finalization
@@ -1891,6 +1960,7 @@ finalization
   uSkinTests.free;
   uVisitTypes.Free;
   uVTypeForLoc.Free;
+  FreeAndNil(uProblemsSA);
   uProblems.Free;
   uDiagnosesTextList.Free;
   KillObj(@uModifiers);

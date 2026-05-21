@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ExtCtrls, ORCtrls, ORFn, ComCtrls, fBase508Form,
-  VA508AccessibilityManager;
+  VA508AccessibilityManager, ORCheckComboBox, uMisc;
 
 type
   TfrmOptionsNotes = class(TfrmBase508Form)
@@ -15,7 +15,7 @@ type
     spnAutoSave: TUpDown;
     chkVerifyNote: TCheckBox;
     chkAskSubject: TCheckBox;
-    cboCosigner: TORComboBox;
+    cboCosigner: TORCheckComboBox;
     pnlBottom: TPanel;
     bvlBottom: TBevel;
     btnOK: TButton;
@@ -31,6 +31,8 @@ type
     procedure cboCosignerNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure cboCosignerExit(Sender: TObject);
+    procedure cboCosignerMainCheckboxClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     FStartingCosigner: Int64;
     { Private declarations }
@@ -41,7 +43,7 @@ type
 var
   frmOptionsNotes: TfrmOptionsNotes;
 
-procedure DialogOptionsNotes(topvalue, leftvalue, fontsize: integer; var actiontype: Integer);
+procedure DialogOptionsNotes(topvalue, leftvalue: integer; var actiontype: Integer);
 
 implementation
 
@@ -50,7 +52,7 @@ implementation
 uses
   rOptions, uOptions, rCore, rTIU, rDCSumm, VAUtils, uSimilarNames;
 
-procedure DialogOptionsNotes(topvalue, leftvalue, fontsize: integer; var actiontype: Integer);
+procedure DialogOptionsNotes(topvalue, leftvalue: integer; var actiontype: Integer);
 // create the form and make it modal, return an action
 var
   frmOptionsNotes: TfrmOptionsNotes;
@@ -68,13 +70,19 @@ begin
         Top := topvalue;
         Left := leftvalue;
       end;
-      ResizeAnchoredFormToFont(frmOptionsNotes);
+    //  ResizeAnchoredFormToFont(frmOptionsNotes);
       ShowModal;
       actiontype := btnOK.Tag;
     end;
   finally
     frmOptionsNotes.Release;
   end;
+end;
+
+procedure TfrmOptionsNotes.FormCreate(Sender: TObject);
+begin
+  inherited;
+  cboCosigner.MainCheckBoxVisible := IncludeNonVAProviders(cboCosigner);
 end;
 
 procedure TfrmOptionsNotes.FormShow(Sender: TObject);
@@ -221,6 +229,13 @@ begin
     ItemIndex := 0;
     Text := DisplayText[0];
   end;
+end;
+
+procedure TfrmOptionsNotes.cboCosignerMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  cboCosigner.ReInitLongList;
+  cboCosignerExit(cboCosigner);
 end;
 
 end.

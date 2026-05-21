@@ -3,7 +3,7 @@ unit iGridPanelIntf;
   ================================================================================
   *
   *       Application:  CPRS - Utiliies
-  *       Developer:    dan.petit@domain.ext
+  *       Developer:    doma.user@domain.ext
   *       Site:         Salt Lake City ISC
   *       Date:         2015-12-04
   *

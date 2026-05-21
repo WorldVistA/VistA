@@ -24,6 +24,9 @@ function AskForAccessibleTab(DlgParent: TComponent; Msg: string;
 
 implementation
 
+uses
+  VA508AccessibilityRouter;
+
 {$R *.dfm}
 
 type

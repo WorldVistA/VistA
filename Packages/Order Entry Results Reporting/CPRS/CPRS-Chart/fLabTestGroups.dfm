@@ -87,6 +87,9 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       Caption = 'Define Test Groups'
       TabOrder = 12
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
     object pnlUpButton: TKeyClickPanel
       Left = 235
@@ -349,6 +352,9 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       TabOrder = 3
       Visible = False
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
     object lbl508Order: TVA508StaticText
       Name = 'lbl508Order'
@@ -362,6 +368,9 @@ inherited frmLabTestGroups: TfrmLabTestGroups
       TabOrder = 6
       Visible = False
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
   end
   inherited amgrMain: TVA508AccessibilityManager

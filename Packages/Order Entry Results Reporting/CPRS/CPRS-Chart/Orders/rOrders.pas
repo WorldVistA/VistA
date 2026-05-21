@@ -323,6 +323,7 @@ function GetDrugSchedule(const ID: string;Default:String = ''): string;
 //function SetExternalText(const ID: string; ADrugSch: string;
 //  AUser: Int64): string;
 function GetDEA(const ID: string): string;
+function GetDEAText: string;
 function GetDigitalSignature(const ID: string): string;
 function GetPKIUse: Boolean;
 function GetPKISite: Boolean;
@@ -2842,6 +2843,31 @@ begin
   finally
     sl.Free;
   end;
+end;
+
+var
+  DEAText: string;
+
+function GetDEAText: string;
+var
+  sl: TStringList;
+begin
+  if DEAText = '' then
+  begin
+    sl := TStringList.Create;
+    try
+      CallVistA('ORDEA DEATEXT', [], sl);
+      for var i := 0 to sl.Count - 1 do
+      begin
+        if DEAText <> '' then
+          DEAText := DEAText + ' ';
+        DEAText := DEAText + sl[i];
+      end;
+    finally
+      FreeAndNil(sl);
+    end;
+  end;
+  Result := DEAText;
 end;
 
 function GetPKISite: Boolean;

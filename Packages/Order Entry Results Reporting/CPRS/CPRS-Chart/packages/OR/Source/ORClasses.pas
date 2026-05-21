@@ -62,6 +62,7 @@ type
     property OnNotify: TCanNotifyEvent read GetOnNotify Write SetOnNotify;
   end;
 
+  // Most functionality moved to VAShared.UTStringsHelper
   TORStringList = class(TStringList)
   private
     FNotifier: TORNotifier;
@@ -70,33 +71,6 @@ type
     procedure Changed; override;
   public
     destructor Destroy; override;
-    procedure KillObjects;
-// IndexOfPiece starts looking at StartIdx+1
-    function CaseInsensitiveIndexOfPiece(Value: string; Delim: Char = '^';
-                                         PieceNum: integer = 1;
-                                         StartIdx: integer = -1): integer;
-    function IndexOfPiece(Value: string; Delim: Char = '^';
-                                         PieceNum: integer = 1;
-                                         StartIdx: integer = -1): integer;
-    function IndexOfPieces(const Values: array of string; const Delim: Char;
-                                                  const Pieces: array of integer;
-                                                  StartIdx: integer = -1): integer; overload;
-    function IndexOfPieces(const Values: array of string): integer; overload;
-    function IndexOfPieces(const Values: array of string; StartIdx: integer): integer; overload;
-    function PiecesEqual(const Index: integer;
-                         const Values: array of string): boolean; overload;
-    function PiecesEqual(const Index: integer;
-                         const Values: array of string;
-                         const Pieces: array of integer): boolean; overload;
-    function PiecesEqual(const Index: integer;
-                         const Values: array of string;
-                         const Pieces: array of integer;
-                         const Delim: Char): boolean; overload;
-    procedure SetStrPiece(Index, PieceNum: integer; Delim: Char; const NewValue: string); overload;
-    procedure SetStrPiece(Index, PieceNum: integer; const NewValue: string); overload; 
-    procedure SortByPiece(PieceNum: integer; Delim: Char = '^');
-    procedure SortByPieces(Pieces: array of integer; Delim: Char = '^');
-    procedure RemoveDuplicates(CaseSensitive: boolean = TRUE);
     property Notifier: TORNotifier read GetNotifier;
   end;
 
@@ -194,7 +168,7 @@ begin
       NotifyList := (NotifyLists.Objects[idx] as TORNotifyList);
       NotifyLists.Delete(idx);
       if(NotifyLists.Count <= 0) then
-        KillObj(@NotifyLists);
+        FreeAndNil(NotifyLists);
     end;
   end;
 end;
@@ -210,8 +184,8 @@ end;
 
 destructor TORNotifyList.Destroy;
 begin
-  KillObj(@FCode);
-  KillObj(@FData);
+  FreeAndNil(FCode);
+  FreeAndNil(FData);
   inherited
 end;
 
@@ -376,7 +350,7 @@ end;
 
 destructor TORNotifier.Destroy;
 begin
-  KillObj(@FNotifyList);
+  FreeAndNil(FNotifyList);
   inherited;
 end;
 
@@ -485,196 +459,11 @@ begin
   inherited; // Conditionally Calls the old OnChange event handler
 end;
 
-function TORStringList.IndexOfPiece(Value: string; Delim: Char;
-                                                   PieceNum: integer;
-                                                   StartIdx: integer): integer;
-begin
-  Result := StartIdx;
-  inc(Result);
-  while((Result >= 0) and (Result < Count) and
-        (Piece(Strings[Result], Delim, PieceNum) <> Value)) do
-    inc(Result);
-  if(Result < 0) or (Result >= Count) then Result := -1;
-end;
-
-function TORStringList.IndexOfPieces(const Values: array of string; const Delim: Char;
-                                           const Pieces: array of integer;
-                                           StartIdx: integer = -1): integer;
-var
-  Done: boolean;
-
-begin
-  Result := StartIdx;
-  repeat
-    inc(Result);
-    if(Result >= 0) and (Result < Count) then
-      Done := PiecesEqual(Result, Values, Pieces, Delim)
-    else
-      Done := TRUE;
-  until(Done);
-  if(Result < 0) or (Result >= Count) then Result := -1;
-end;
-
-function TORStringList.IndexOfPieces(const Values: array of string): integer;
-begin
-  Result := IndexOfPieces(Values, U, [], -1);
-end;
-
-function TORStringList.IndexOfPieces(const Values: array of string;
-  StartIdx: integer): integer;
-begin
-  Result := IndexOfPieces(Values, U, [], StartIdx);
-end;
-
 function TORStringList.GetNotifier: TORNotifier;
 begin
   if(not assigned(FNotifier)) then
     FNotifier := TORNotifier.Create(Self);
   Result := FNotifier;
-end;
-
-procedure TORStringList.KillObjects;
-var
-  i: integer;
-
-begin
-  for i := 0 to Count-1 do
-  begin
-    if(assigned(Objects[i])) then
-    begin
-      Objects[i].Free;
-      Objects[i] := nil;
-    end;
-  end;
-end;
-
-function TORStringList.PiecesEqual(const Index: integer;
-                                   const Values: array of string): boolean;
-begin
-  Result := PiecesEqual(Index, Values, [], U);
-end;
-
-function TORStringList.PiecesEqual(const Index: integer;
-                                   const Values: array of string;
-                                   const Pieces: array of integer): boolean;
-begin
-  Result := PiecesEqual(Index, Values, Pieces, U);
-end;
-
-function TORStringList.PiecesEqual(const Index: integer;
-                                   const Values: array of string;
-                                   const Pieces: array of integer;
-                                   const Delim: Char): boolean;
-var
-  i, cnt, p: integer;
-
-begin
-  cnt := 0;
-  Result := TRUE;
-  for i := low(Values) to high(Values) do
-  begin
-    inc(cnt);
-    if(i >= low(Pieces)) and (i <= high(Pieces)) then
-      p := Pieces[i]
-    else
-      p := cnt;
-    if(Piece(Strings[Index], Delim, p) <> Values[i]) then
-    begin
-      Result := FALSE;
-      break;
-    end;
-  end;
-end;
-
-procedure TORStringList.SortByPiece(PieceNum: integer; Delim: Char = '^');
-begin
-  SortByPieces([PieceNum], Delim);
-end;
-
-procedure TORStringList.RemoveDuplicates(CaseSensitive: boolean = TRUE);
-var
-  i: integer;
-  Kill: boolean;
-
-begin
-  i := 1;
-  while (i < Count) do
-  begin
-    if(CaseSensitive) then
-      Kill := (Strings[i] = Strings[i-1])
-    else
-      Kill := (CompareText(Strings[i],Strings[i-1]) = 0);
-    if(Kill) then
-      Delete(i)
-    else
-      inc(i);
-  end;
-end;
-
-function TORStringList.CaseInsensitiveIndexOfPiece(Value: string; Delim: Char = '^';
-                            PieceNum: integer = 1; StartIdx: integer = -1): integer;
-begin
-  Result := StartIdx;
-  inc(Result);
-  while((Result >= 0) and (Result < Count) and
-        (CompareText(Piece(Strings[Result], Delim, PieceNum), Value) <> 0)) do
-    inc(Result);
-  if(Result < 0) or (Result >= Count) then Result := -1;
-end;
-
-procedure TORStringList.SortByPieces(Pieces: array of integer;
-  Delim: Char = '^');
-
-  procedure QSort(L, R: Integer);
-  var
-    I, J: Integer;
-    P: string;
-
-  begin
-    repeat
-      I := L;
-      J := R;
-      P := Strings[(L + R) shr 1];
-      repeat
-        while ComparePieces(Strings[I], P, Pieces, Delim, TRUE) < 0 do Inc(I);
-        while ComparePieces(Strings[J], P, Pieces, Delim, TRUE) > 0 do Dec(J);
-        if I <= J then
-        begin
-          Exchange(I, J);
-          Inc(I);
-          Dec(J);
-        end;
-      until I > J;
-      if L < J then QSort(L, J);
-      L := I;
-    until I >= R;
-  end;
-
-begin
-  if not Sorted and (Count > 1) then
-  begin
-    Changing;
-    QSort(0, Count - 1);
-    Changed;
-  end;
-end;
-
-
-procedure TORStringList.SetStrPiece(Index, PieceNum: integer; Delim: Char;
-  const NewValue: string);
-var
-  tmp: string;
-
-begin
-  tmp := Strings[Index];
-  ORFn.SetPiece(tmp,Delim,PieceNum,NewValue);
-  Strings[Index] := tmp;
-end;
-
-procedure TORStringList.SetStrPiece(Index, PieceNum: integer;
-  const NewValue: string);
-begin
-  SetStrPiece(Index, PieceNum, '^', NewValue);
 end;
 
 { TORInterfaceList }

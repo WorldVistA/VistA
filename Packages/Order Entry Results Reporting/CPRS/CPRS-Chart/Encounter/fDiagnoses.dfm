@@ -3,143 +3,123 @@ inherited frmDiagnoses: TfrmDiagnoses
   Top = 169
   AutoScroll = True
   Caption = 'Encounter Diagnoses'
-  ExplicitWidth = 640
-  ExplicitHeight = 438
-  PixelsPerInch = 96
-  TextHeight = 16
-  inherited lblSection: TLabel
-    Width = 114
-    Caption = 'Diagnoses Section'
-    ExplicitWidth = 114
-  end
-  inherited btnOK: TBitBtn
-    Margins.Left = 6
-    Margins.Top = 6
-    Margins.Right = 6
-    Margins.Bottom = 6
-    TabOrder = 7
-  end
-  inherited btnCancel: TBitBtn
-    Left = 539
-    Margins.Left = 6
-    Margins.Top = 6
-    Margins.Right = 6
-    Margins.Bottom = 6
-    TabOrder = 8
-    ExplicitLeft = 539
-  end
-  inherited pnlGrid: TPanel
-    Width = 523
-    Margins.Left = 5
-    Margins.Top = 5
-    Margins.Right = 5
-    Margins.Bottom = 5
-    TabOrder = 1
-    ExplicitWidth = 523
-    inherited lstCaptionList: TCaptionListView
-      Width = 523
-      Columns = <
-        item
-          Caption = 'Add to PL'
-          Width = 80
+  StyleElements = [seFont, seClient, seBorder]
+  ScaleMethod = smManual
+  TextHeight = 13
+  inherited pnlMainAncestor: TPanel
+    StyleElements = [seFont, seClient, seBorder]
+    ExplicitTop = 210
+    ExplicitHeight = 162
+    inherited pnlGrid: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitHeight = 156
+      inherited lstCaptionList: TCaptionListView
+        Columns = <
+          item
+            Caption = 'Add to PL'
+            Width = 80
+          end
+          item
+            Caption = 'Primary'
+            Width = 120
+          end
+          item
+            AutoSize = True
+            Caption = 'Selected Diagnoses'
+          end>
+        Caption = 'Selected Diagnoses'
+        Pieces = '1,2,3'
+        ExplicitHeight = 124
+      end
+      inherited pnlComments: TPanel
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitTop = 130
+        inherited lblComment: TLabel
+          StyleElements = [seFont, seClient, seBorder]
         end
-        item
-          Caption = 'Primary'
-          Width = 120
+        inherited edtComment: TCaptionEdit
+          StyleElements = [seFont, seClient, seBorder]
         end
-        item
-          Caption = 'Selected Diagnoses'
-          Width = 150
-        end>
-      Pieces = '1,2,3'
-      ExplicitWidth = 523
+      end
+    end
+    inherited pnlGridRight: TPanel
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitHeight = 162
+      inherited btnRemove: TButton
+        Top = 97
+        TabOrder = 3
+        ExplicitTop = 97
+      end
+      inherited btnSelectAll: TButton
+        Top = 73
+        Margins.Top = 0
+        TabOrder = 2
+        TabStop = True
+        ExplicitTop = 73
+      end
+      object ckbDiagProb: TCheckBox
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 72
+        Height = 43
+        Align = alTop
+        Caption = 'Add to Problem list'
+        TabOrder = 0
+        WordWrap = True
+        OnClick = ckbDiagProbClicked
+      end
+      object cmdDiagPrimary: TButton
+        AlignWithMargins = True
+        Left = 0
+        Top = 49
+        Width = 75
+        Height = 21
+        Margins.Left = 0
+        Margins.Top = 0
+        Align = alTop
+        Caption = 'Primary'
+        Enabled = False
+        TabOrder = 1
+        OnClick = cmdDiagPrimaryClick
+      end
     end
   end
-  inherited edtComment: TCaptionEdit
-    Top = 345
-    Height = 24
-    TabOrder = 3
-    ExplicitTop = 345
-    ExplicitHeight = 24
-  end
-  object cmdDiagPrimary: TButton [8]
-    Left = 541
-    Top = 306
-    Width = 75
-    Height = 21
-    Caption = 'Primary'
-    Enabled = False
-    TabOrder = 5
-    OnClick = cmdDiagPrimaryClick
-  end
-  object ckbDiagProb: TCheckBox [9]
-    Left = 537
-    Top = 238
-    Width = 76
-    Height = 62
-    Caption = 'Add to Problem list'
-    TabOrder = 4
-    WordWrap = True
-    OnClick = ckbDiagProbClicked
-  end
-  inherited btnRemove: TButton
-    Left = 540
-    Top = 345
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    TabOrder = 6
-    ExplicitLeft = 540
-    ExplicitTop = 345
-  end
-  inherited btnSelectAll: TButton
-    Left = 454
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    TabOrder = 2
-    TabStop = True
-    ExplicitLeft = 454
+  inherited pnlBottomAncestor: TPanel
+    StyleElements = [seFont, seClient, seBorder]
   end
   inherited pnlMain: TPanel
-    Margins.Left = 4
-    Margins.Top = 4
-    Margins.Right = 4
-    Margins.Bottom = 4
-    TabOrder = 0
-    inherited splLeft: TSplitter
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-    end
-    inherited lbxSection: TORListBox
-      Tag = 20
-      Height = 196
-      IntegralHeight = True
-      OnDrawItem = lbxSectionDrawItem
-      Pieces = '2,3'
-      ExplicitHeight = 196
-    end
-    inherited pnlLeft: TPanel
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
+    StyleElements = [seFont, seClient, seBorder]
+    ExplicitLeft = 3
+    ExplicitTop = 3
+    ExplicitWidth = 614
+    inherited grdMain: TGridPanel
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitWidth = 614
+      inherited lblSection: TLabel
+        Caption = 'Diagnoses Section'
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitWidth = 89
+      end
+      inherited lblList: TLabel
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitLeft = 310
+      end
       inherited lbSection: TORListBox
-        Tag = 20
-        TabOrder = 0
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitWidth = 301
+      end
+      inherited lbxSection: TORListBox
+        StyleElements = [seFont, seClient, seBorder]
+        Caption = 'Section Name'
+        Pieces = '2,3'
+        ExplicitLeft = 310
+        ExplicitWidth = 301
       end
       inherited btnOther: TButton
         Tag = 12
-        Margins.Left = 4
-        Margins.Top = 4
-        Margins.Right = 4
-        Margins.Bottom = 4
         Caption = 'Other Diagnosis...'
-        TabOrder = 1
+        ExplicitWidth = 301
       end
     end
   end
@@ -147,9 +127,6 @@ inherited frmDiagnoses: TfrmDiagnoses
     Data = (
       (
         'Component = cmdDiagPrimary'
-        'Status = stsDefault')
-      (
-        'Component = ckbDiagProb'
         'Status = stsDefault')
       (
         'Component = edtComment'
@@ -169,9 +146,6 @@ inherited frmDiagnoses: TfrmDiagnoses
         'Label = lblList'
         'Status = stsOK')
       (
-        'Component = pnlLeft'
-        'Status = stsDefault')
-      (
         'Component = lbSection'
         'Label = lblSection'
         'Status = stsOK')
@@ -189,6 +163,24 @@ inherited frmDiagnoses: TfrmDiagnoses
         'Status = stsDefault')
       (
         'Component = frmDiagnoses'
+        'Status = stsDefault')
+      (
+        'Component = pnlMainAncestor'
+        'Status = stsDefault')
+      (
+        'Component = lstCaptionList'
+        'Status = stsDefault')
+      (
+        'Component = pnlComments'
+        'Status = stsDefault')
+      (
+        'Component = pnlGridRight'
+        'Status = stsDefault')
+      (
+        'Component = ckbDiagProb'
+        'Status = stsDefault')
+      (
+        'Component = pnlBottomAncestor'
         'Status = stsDefault'))
   end
 end

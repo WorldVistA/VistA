@@ -5,16 +5,17 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
-  ORDtTmRng, ORCtrls, ORFn;
+  ORDtTmRng, ORCtrls, ORFn, fBase508Form, ORCheckComboBox,
+  VA508AccessibilityManager, uMisc, fBase508Frame;
 
 type
   TSetCaptionTopProc = procedure of object;
   TSetPtListTopProc = procedure(IEN: Int64) of object;
 
-  TfraPtSelOptns = class(TFrame)
+  TfraPtSelOptns = class(TBase508Frame)
     lblPtList: TLabel;
     lblDateRange: TLabel;
-    cboList: TORComboBox;
+    cboList: TORCheckComboBox;
     cboDateRange: TORComboBox;
     calApptRng: TORDateRangeDlg;
     radDflt: TRadioButton;
@@ -48,6 +49,7 @@ type
     procedure cboListEnter(Sender: TObject);
     procedure cboListKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure cboListMainCheckboxClick(Sender: TObject);
   private
     FRowHeight: integer;
     FRadRows: integer;
@@ -58,6 +60,7 @@ type
     FSetCaptionTop: TSetCaptionTopProc;
     FSetPtListTop: TSetPtListTopProc;
     FChanging: Boolean;
+    FIncludeNVAProviders: boolean;
     procedure HideDateRange;
     procedure ShowDateRange;
     Procedure UpdatePtSelection;
@@ -75,6 +78,7 @@ type
     property SrcType: Integer read FSrcType write FSrcType;
     property SetCaptionTopProc: TSetCaptionTopProc read FSetCaptionTop write FSetCaptionTop;
     property SetPtListTopProc: TSetPtListTopProc   read FSetPtListTop  write FSetPtListTop;
+    property IncludeNVAProviders: boolean read FIncludeNVAProviders write FIncludeNVAProviders;
   end;
 
 const
@@ -263,11 +267,14 @@ begin
     Sorted := False;
     LongList := True;
     Clear;
+    MainCheckBoxVisible := False;
     case FSrcType of
     TAG_SRC_PROV: begin
                     cboList.Pieces := '2,3';
                     HideDateRange;
 //                    ListProviderTop(Items); -- blank procedure
+                    if FIncludeNVAProviders then
+                      MainCheckBoxVisible := FIncludeNVAProviders;
                   end;
     TAG_SRC_CLIN: begin
                     ShowDateRange;
@@ -324,6 +331,15 @@ begin
   UpdatePtSelection;
 end;
 
+procedure TfraPtSelOptns.cboListMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := cboList.SelectedDataString;
+  cboList.ReInitLongList;
+  if ALastData <> cboList.SelectedDataString then
+    cboListChange(cboList);
+end;
+
 procedure TfraPtSelOptns.cboListMouseClick(Sender: TObject);
 begin
   if FChanging and radProviders.Checked then
@@ -340,8 +356,8 @@ begin
   Dest := TStringList.Create;
   try
     case SrcType of
-      TAG_SRC_PROV: setSubSetOfProviders(cboList, Dest, StartFrom, Direction);
-      TAG_SRC_CLIN: setSubSetOfClinics(Dest, StartFrom, Direction);
+      TAG_SRC_PROV: setSubSetOfProviders(cboList, Dest,StartFrom, Direction);
+      TAG_SRC_CLIN: setSubSetOfClinics(Dest,StartFrom, Direction);
     end;
     cboList.ForDataUse(Dest);
   finally

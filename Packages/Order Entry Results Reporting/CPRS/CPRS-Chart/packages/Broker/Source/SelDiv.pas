@@ -5,10 +5,19 @@
   Developers: Danila Manapsal, Don Craven, Joel Ivey
   Description: Contains TRPCBroker and related components.
   Unit: SelDiv handles Division selection for multidivision users.
-  Current Release: Version 1.1 Patch 71
+  Current Release: Version 1.1 Patch 74
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*74 (CLG 05/30/2024) XWB*1.1*74
+  1. Updated RPC Version to version 74.
+
+  Changes in XWB*1.1*73 (RGG 07/19/2021) XWB*1.1*73
+  1. Updated RPC Version to version 73.
+  2. Patch XWB*1.1*72 corrected the issue of user division checking
+  however, the data being returned to the caller was not in the
+  correct format, this patch adjusts the format.
+
   Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
   1. Updated RPC Version to version 72.
   2. Changed ChooseDiv function - if a user is not multi-divisional the
@@ -133,8 +142,8 @@ begin
   begin
     DivArray := TStringlist.Create; // Put Results in DivArray
     DivArray.Assign(MDivBroker.Results);
-    SelDivForm := TSelDivForm.Create(Application); // create division form.
     try
+      SelDivForm := TSelDivForm.Create(Application); // create division form.
       ShowApplicationAndFocusOK(Application);
       SetForegroundWindow(SelDivForm.Handle);
       SelDivForm.Enter;

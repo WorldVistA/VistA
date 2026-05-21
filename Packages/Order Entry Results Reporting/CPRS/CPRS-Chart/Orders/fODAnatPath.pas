@@ -9,7 +9,7 @@ uses
   Vcl.Samples.Spin, Vcl.Graphics, Vcl.Forms, Vcl.Dialogs, Vcl.Buttons, uConst,
   ORfn, ORNet, ORCtrls, ORDtTm, VAUtils, VA508AccessibilityManager, fODBase,
   mODAnatPathBuilder, mODAnatPathSpecimen, oODAnatPath, u508Extensions,
-  ORExtensions;
+  ORExtensions, ORCheckComboBox, uMisc;
 
 type
   TOrderPrompt = (opURG,opCDT,opSSB,opCTY,opHOF,opSPH,opODC);
@@ -31,7 +31,7 @@ type
     lblOften: TLabel;
     cbxFrequency: TORComboBox;
     lblSurgeon: TLabel;
-    cbxPtProvider: TORComboBox;
+    cbxPtProvider: TORCheckComboBox;
     pnlTotal: TPanel;
     pnlDoseDraw: TPanel;
     lblDose: TLabel;
@@ -144,6 +144,7 @@ type
     procedure VA508cbxSpecimenSelectInstructionsQuery(Sender: TObject;
       var Text: string);
     procedure lblAvailTestClick(Sender: TObject);
+    procedure cbxPtProviderMainCheckboxClick(Sender: TObject);
   private
     FlblHeight: integer;
     FReqCommentIdx: integer;
@@ -656,6 +657,8 @@ begin
   end
   else
     FormMonitorBringToFrontEvent(Self, DropDownSpecimens, 1);
+
+  cbxPtProvider.MainCheckBoxVisible := IncludeNonVAProviders(cbxPtProvider);
 end;
 
 procedure TfrmODAnatPath.FormShow(Sender: TObject);
@@ -1044,6 +1047,15 @@ begin
   UpdateAllLegacyResponses(True);
 end;
 
+procedure TfrmODAnatPath.cbxPtProviderMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := cbxPtProvider.SelectedDataString;
+  cbxPtProvider.ReInitLongList;
+  if ALastData <> cbxPtProvider.SelectedDataString then
+    cbxPtProviderChange(cbxPtProvider);
+end;
+
 procedure TfrmODAnatPath.cbxPtProviderNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
 begin
@@ -1419,6 +1431,7 @@ procedure TfrmODAnatPath.FormResize(Sender: TObject);
 begin
   inherited;
   cbxSpecimenSelect.Width := pnlTabs.Width;
+  cbxSpecimenSelect.Height := pnlTabs.Height-1; // force a resize
   cbxSpecimenSelect.Height := pnlTabs.Height;
   pnlAddSingleSpecimen.Left := pnlTabs.Width - pnlAddSingleSpecimen.Width;
   pnlAddSingleSpecimen.Height := pnlTabs.Height;
@@ -2882,8 +2895,8 @@ begin
       SetRow(0, FlblHeight + 4);
     edt := FlblHeight + EDIT_BUMP;
     btn := edt + EDIT_BUMP;
-    for i := 1 to 4 do
-      SetRow(i, edt);
+    for i := 1 to 3 do SetRow(i, edt);
+    SetRow(4, cbxPtProvider.Height + EDIT_BUMP);
     for i := 5 to 9 do
       if i = FReqCommentIdx then
         SetRow(i, btn)

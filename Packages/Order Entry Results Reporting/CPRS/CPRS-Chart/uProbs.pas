@@ -3,8 +3,9 @@ unit uProbs;
 interface
 
 uses
-    SysUtils, Windows, Messages, Controls, Classes, StdCtrls, ORfn,
-    ORCtrls, Dialogs, Forms, Grids, graphics, ORNet, uConst, Vawrgrid;
+  SysUtils, Windows, Messages, Controls, Classes, StdCtrls, ORfn,
+  ORCtrls, Dialogs, Forms, Grids, graphics, ORNet, uConst, Vawrgrid,
+  uSpecialAuthorityEx;
 
 const
   fComStart=4;
@@ -20,267 +21,234 @@ const
   REMOVED_LIST_CAP='Removed Problems';
 
 type
+  TProblemActionReason = (parAdd, parEdit, parComment, parDisplay, parRemove);
 
-{Key/value -internal/external pairs}
- TKeyVal=class(TObject)
- public
-   Id:string;
-   name:string; {may want to use instead of id sometime}
-   intern:string;
-   extern:string;
-   internOrig:string;
-   externOrig:string;
-   function GetDHCPField:string;
-   procedure DHCPtoKeyVal(DHCPFld:String);
-   property DHCPField:string read GetDHCPField;
- end;
+  {Key/value -internal/external pairs}
+  TKeyVal=class(TObject)
+  public
+    Id:string;
+    name:string; {may want to use instead of id sometime}
+    intern:string;
+    extern:string;
+    internOrig:string;
+    externOrig:string;
+    function GetDHCPField:string;
+    procedure DHCPtoKeyVal(DHCPFld:String);
+    property DHCPField:string read GetDHCPField;
+  end;
 
- TComment=class(TObject)
- public
-   IFN:string;
-   Facility:string;
-   Narrative:string;
-   Status:String;
-   DateAdd:string;
-   AuthorID:string;
-   AuthorName:String;
-   StatusFlag:string; {used for processing adds/deletes}
-   function GetExtDateAdd:string;
-   function GetAge:boolean;
-   constructor Create(dhcpcom:string);
-   destructor Destroy; override;
-   function TComtoDHCPCom:string;
-   property ExtDateAdd:string read GetExtDateAdd;
-   property IsNew:boolean read GetAge;
- end;
+  TComment=class(TObject)
+  public
+    IFN:string;
+    Facility:string;
+    Narrative:string;
+    Status:String;
+    DateAdd:string;
+    AuthorID:string;
+    AuthorName:String;
+    StatusFlag:string; {used for processing adds/deletes}
+    function GetExtDateAdd:string;
+    function GetAge:boolean;
+    constructor Create(dhcpcom:string);
+    destructor Destroy; override;
+    function TComtoDHCPCom:string;
+    property ExtDateAdd:string read GetExtDateAdd;
+    property IsNew:boolean read GetAge;
+  end;
 
- TCoordExpr = class(TObject)
- public
-   IFN:                   String;
-   icdId:                 String;
-   icdCode:               String;
-   snomedConcept:         String;
-   snomedDesignation:     String;
-   snomedConceptVUID:     String;
-   snomedDesignationVUID: String;
-   constructor Create(dhcpCoordExpr: String);
-   destructor Destroy; override;
-   function TCoordExprtoDHCPCoordExpr: String;
- end;
+  TCoordExpr = class(TObject)
+  public
+    IFN:                   String;
+    icdId:                 String;
+    icdCode:               String;
+    snomedConcept:         String;
+    snomedDesignation:     String;
+    snomedConceptVUID:     String;
+    snomedDesignationVUID: String;
+    constructor Create(dhcpCoordExpr: String);
+    destructor Destroy; override;
+    function TCoordExprtoDHCPCoordExpr: String;
+  end;
 
-  {patient qualifiers}
- TPLPt=class(TObject)
- public
-   PtVAMC:string;
-   PtDead:string;
-   PtBid:string;
-   PtServiceConnected:boolean;
-   PtAgentOrange:boolean;
-   PtRadiation:boolean;
-   PtEnvironmental:boolean;
-   PtHNC:boolean;
-   PtMST:boolean;
-   PtSHAD:boolean;
-   PtCL: Boolean;
-   constructor Create(Alist:TStringList);
-   function GetGMPDFN(dfn:string;name:String):string;
-   function Today:string;
- end;
+  TProblemListPatientQualifiers = class(TSpecialAuthoritiesEx)
+  private
+    FDeathIndicator: string;
+    FFacility: string;
+    FSSN4: string;
+  public
+    function GetGMPDFN(ADFN: string; AName: String): string;
+    function Today: string;
+    property DeathIndicator: string read FDeathIndicator write FDeathIndicator;
+    property Facility: string read FFacility write FFacility;
+    property SSN4: string read FSSN4 write FSSN4;
+  end;
 
  { User params}
- TPLUserParams=class(TObject)
- public
-   usPrimeUser:Boolean; {GMPLUSER true if clinical entry, false if clerical}
-   usDefaultView:String;
-   usCurrentView:String; {what view does user currently have? (OP,IP,Preferred,Unfilterred)}
-   usVerifyTranscribed:Boolean; {authority to verify transcribed problems}
-   usPromptforCopy:boolean;
-   usUseLexicon:boolean; {user will be using Lexicon}
-   usReverseChronDisplay:Boolean;
-   usViewAct:String; {viewing A)ctive, I)nactive, B)oth, R)emoved problems}
-   usViewProv:String; {prov (ptr #200) of  displayed list or 0 for all}
-   usService:String; {user's service/section}
-   {I can't see where either of the ViewClin or ViewServ vals are setup in the
-    M application. They are documented in the PL V2.0 tech manual though}
-   usViewServ:string; {should be a list of ptr to file 49, format ptr/ptr/...}
-   usViewClin:string; {should be a list of ptr to file 44, format ptr/ptr/...}
-   usViewComments: string;
-   usDefaultContext: string;
-   usTesting:boolean; {used for test purposes only}
-   usClinList:TstringList;
-   usServList:TstringList;
-   usSuppressCodes: Boolean; {Suppress presentation of codes during Lexicon Look-up}
-   constructor Create(alist:TstringList);
-   destructor Destroy; override;
- end;
+  TPLUserParams=class(TObject)
+  public
+    usPrimeUser:Boolean; {GMPLUSER true if clinical entry, false if clerical}
+    usDefaultView:String;
+    usCurrentView:String; {what view does user currently have? (OP,IP,Preferred,Unfilterred)}
+    usVerifyTranscribed:Boolean; {authority to verify transcribed problems}
+    usPromptforCopy:boolean;
+    usUseLexicon:boolean; {user will be using Lexicon}
+    usReverseChronDisplay:Boolean;
+    usViewAct:String; {viewing A)ctive, I)nactive, B)oth, R)emoved problems}
+    usViewProv:String; {prov (ptr #200) of  displayed list or 0 for all}
+    usService:String; {user's service/section}
+    {I can't see where either of the ViewClin or ViewServ vals are setup in the
+     M application. They are documented in the PL V2.0 tech manual though}
+    usViewServ:string; {should be a list of ptr to file 49, format ptr/ptr/...}
+    usViewClin:string; {should be a list of ptr to file 44, format ptr/ptr/...}
+    usViewComments: string;
+    usDefaultContext: string;
+    usTesting:boolean; {used for test purposes only}
+    usClinList:TstringList;
+    usServList:TstringList;
+    usSuppressCodes: Boolean; {Suppress presentation of codes during Lexicon Look-up}
+    constructor Create(alist:TstringList);
+    destructor Destroy; override;
+  end;
 
- {filter lists}
- TPLFilters = class(TObject)
- public
-   ProviderList:TstringList;
-   ClinicList:TstringList;
-   ServiceList:TStringList;
-   constructor create;
-   destructor Destroy; override;
- end;
+  {filter lists}
+  TPLFilters = class(TObject)
+  public
+    ProviderList:TstringList;
+    ClinicList:TstringList;
+    ServiceList:TStringList;
+    constructor create;
+    destructor Destroy; override;
+  end;
 
-{problem record}
- TProbRec = class(TObject)
- private
-   fNewrec:Tstringlist;
-   fOrigRec:TStringList;
-   fPIFN:String;
-   fDiagnosis:Tkeyval;        {.01}
-   fModDate:TKeyVal;          {.03}
-   fNarrative:TKeyVal;        {.05}
-   fEntDate:TKeyVal;          {.08}
-   fStatus:TKeyVal;           {.12}
-   fOnsetDate:TKeyVal;        {.13}
-   fProblem:TKeyVal;          {1.01}
-   fCondition:TKeyVal;        {1.02}
-   fEntBy:TKeyVal;            {1.03}
-   fRecBy:TKeyVal;            {1.04}
-   fRespProv:TKeyVal;         {1.05}
-   fService:TKeyVal;          {1.06}
-   fResolveDate:TKeyVal;      {1.07}
-   fClinic:TKeyVal;           {1.08}
-   fRecordDate:TKeyVal;       {1.09}
-   fServCon:TKeyVal;          {1.1}
-   fAOExposure:TKeyVal;       {1.11}
-   fRadExposure:TKeyVal;      {1.12}
-   fGulfExposure:TKeyVal;     {1.13}
-   fPriority:TKeyVal;         {1.14}
-   fHNC:TKeyVal;              {1.15}
-   fMST:TKeyVal;              {1.16}
-   fCV:TKeyVal;               {1.17}  // this is not used  value is always NULL
-   fSHAD:TKeyVal;             {1.18}
-   fCL:TKeyVal;               {1.19}
-   fSCTConcept:TKeyval;       {80001}
-   fSCTDesignation:TKeyVal;   {80002}
-   fNTRTRequested: TKeyVal;   {80101}
-   fNTRTComment: TKeyVal;     {80102}
-   fCodeDate: TKeyVal;        {80201}
-   fCodeSystem: TKeyVal;      {80202}
-   fFieldList:TstringList; {list of fields by name and class (TKeyVal or TComment)}
-   fFilerObj:TstringList;
-   fCmtIsXHTML: boolean;
-   fCmtNoEditReason: string;
-   Procedure LoadField(Fldrec:TKeyVal;Id:String;name:string);
-   Procedure CreateFields;
-   procedure LoadComments;
-   procedure SetDate(datefld:TKeyVal;dt:TDateTime);
-   function GetModDate:TDateTime;
-   procedure SetModDate(value:TDateTime);
-   function GetEntDate:TDateTime;
-   procedure SetEntDate(value:TDateTime);
-   procedure SetOnsetDate(value:TDateTime);
-   function GetOnsetDate:TDateTime;
-   Function GetSCProblem:String;
-   Procedure SetSCProblem(value:String);
-   Function GetAOProblem:String;
-   Procedure SetAOProblem(value:String);
-   Function GetRADProblem:String;
-   Procedure SetRADProblem(value:String);
-   Function GetENVProblem:String;
-   Procedure SetENVProblem(value:String);
-   Function GetHNCProblem:String;
-   Procedure SetHNCProblem(value:String);
-   Function GetMSTProblem:String;
-   Procedure SetMSTProblem(value:String);
-   Function GetSHADProblem:String;
-   Procedure SetSHADProblem(value:String);
-   Function GetCLProblem:String;
-   Procedure SetCLProblem(value:String);
-   function GetStatus:String;
-   procedure SetStatus(value:String);
-   function GetPriority:String;
-   procedure SetPriority(value:String);
-   function GetRESDate:TDateTime;
-   procedure SetRESDate(value:TDateTime);
-   function GetRECDate:TDateTime;
-   procedure SetRECDate(value:TDateTime);
-   procedure SetNarrative(value:TKeyVal);
-   function GetTDateTime(dt:string):TDateTime;
-   function GetFilerObject:TstringList;
-   function GetAltFilerObject:TstringList;
-   function GetCommentCount:integer;
-   Procedure EraseComments(clist:TList);
-   function GetModDatstr:string;
-   procedure SetModDatStr(value:string);
-   function GetEntDatstr:string;
-   procedure SetEntDatStr(value:string);
-   function GetOnsetDatstr:string;
-   procedure SetOnsetDatStr(value:string);
-   function GetResDatstr:string;
-   procedure SetResDatStr(value:string);
-   function GetRecDatstr:string;
-   procedure SetRecDatStr(value:string);
-   procedure SetDateString(df:TKeyVal;value:string);
-   function GetCondition:string;
-   procedure SetCondition(value:String);
-   function GetCodeDate: TDateTime;
-   procedure SetCodeDate(value: TDateTime);
-   function GetCodeDateStr: String;
-   procedure SetCodeDateStr(value: String);
- public
-   fComments:TList; {comments}
-   fCoordExprs:TList; {coordinate expressions}
-   procedure AddNewComment(Txt:string);
-   procedure AddNewCoordExpr(Txt:string);
-   function FieldChanged(fldName:string):Boolean;
-   constructor Create(AList:TstringList);
-   destructor Destroy;override;
-   property RawNewRec:TstringList read fNewRec;
-   property RawOrigRec:TStringList read fOrigRec;
-   property DateModified:TDateTime read GetModDate write SetModDate;
-   property DateModStr:string read GetModDatStr write SetModDatStr;
-   property DateEntered:TDateTime read GetEntDate write SetEntDate;
-   property DateEntStr:string read GetEntDatStr write SetEntDatStr;
-   property DateOnset:TDateTime read GetOnsetDate write SetOnsetDate;
-   property DateOnsetStr:string read GetOnsetDatStr write SetOnsetDatStr;
-   property SCProblem:String read GetSCProblem write SetSCProblem;
-   property AOProblem:String read GetAOProblem write SetAOProblem;
-   property RADProblem:String read GetRadProblem write SetRADProblem;
-   property ENVProblem:String read GetENVProblem write SetENVProblem;
-   property HNCProblem:String read GetHNCProblem write SetHNCProblem;
-   property MSTProblem:String read GetMSTProblem write SetMSTProblem;
-   property SHADProblem:String read GetSHADProblem write SetSHADProblem;
-   property CLProblem:String read GetCLProblem write SetCLProblem;
-   property Status:String read GetStatus write SetStatus;
-   property Narrative:TKeyVal read fNarrative write SetNarrative;
-   property Diagnosis:TKeyVal read fDiagnosis write fDiagnosis;
-   property SCTConcept:TKeyVal read fSCTConcept write fSCTConcept;
-   property SCTDesignation:TKeyVal read fSCTDesignation write fSCTDesignation;
-   property NTRTRequested:TKeyVal read fNTRTRequested write fNTRTRequested;
-   property NTRTComment:TKeyVal read fNTRTComment write fNTRTComment;
-   property CodeDate: TDateTime read GetCodeDate write SetCodeDate;
-   property CodeDateStr: String read GetCodeDateStr write SetCodeDateStr;
-   property CodeSystem: TKeyVal read fCodeSystem write fCodeSystem;
-   property Problem:TKeyVal read fProblem write fProblem;
-   property RespProvider:TKeyVal read fRespProv write fRespProv;
-   property EnteredBy:TKeyVal read fEntBy write fEntBy;
-   property RecordedBy:TKeyVal read fRecBy write fRecBy;
-   property Service:TKeyVal read fService write fService;
-   property Clinic:TKeyVal read fClinic write fClinic;
-   property DateResolved:TDateTime read GetResDate write SetResdate;
-   property DateResStr:string read GetResDatStr write SetResDatStr;
-   property DateRecorded:TDateTime read GetRecDate write SetRecdate;
-   property DateRecStr:string read GetRecDatStr write SetRecDatStr;
-   property Priority:string read GetPriority write SetPriority;
-   property Comments:TList read fComments write fComments;
-   property CoordExprs: TList read fCoordExprs write fCoordExprs;
-   property Condition:string read GetCondition write SetCondition;
-   property CommentCount:integer read GetCommentCount;
-   property FilerObject:TstringList read GetFilerObject;
-   property AltFilerObject:TstringList read GetAltFilerObject;
-   property PIFN:string read fPIFN write fPIFN;
-   property CmtIsXHTML: boolean read fCmtIsXHTML;
-   property CmtNoEditReason: string read fCmtNoEditReason;
- end;
+  {problem record}
+  TProbRec = class(TObject)
+  private
+    fNewrec:Tstringlist;
+    fOrigRec:TStringList;
+    fPIFN:String;
+    fDiagnosis:Tkeyval;        {.01}
+    fModDate:TKeyVal;          {.03}
+    fNarrative:TKeyVal;        {.05}
+    fEntDate:TKeyVal;          {.08}
+    fStatus:TKeyVal;           {.12}
+    fOnsetDate:TKeyVal;        {.13}
+    fProblem:TKeyVal;          {1.01}
+    fCondition:TKeyVal;        {1.02}
+    fEntBy:TKeyVal;            {1.03}
+    fRecBy:TKeyVal;            {1.04}
+    fRespProv:TKeyVal;         {1.05}
+    fService:TKeyVal;          {1.06}
+    fResolveDate:TKeyVal;      {1.07}
+    fClinic:TKeyVal;           {1.08}
+    fRecordDate:TKeyVal;       {1.09}
+    fPriority:TKeyVal;         {1.14}
+    fSCTConcept:TKeyval;       {80001}
+    fSCTDesignation:TKeyVal;   {80002}
+    fNTRTRequested: TKeyVal;   {80101}
+    fNTRTComment: TKeyVal;     {80102}
+    fCodeDate: TKeyVal;        {80201}
+    fCodeSystem: TKeyVal;      {80202}
+    fFieldList:TstringList; {list of fields by name and class (TKeyVal or TComment)}
+    fFilerObj:TstringList;
+    fCmtIsXHTML: boolean;
+    fCmtNoEditReason: string;
+    FSpecialAuthorities: TSpecialAuthoritiesEx;
+    Procedure LoadField(Fldrec:TKeyVal;Id:String;name:string);
+    Procedure CreateFields;
+    procedure LoadComments;
+    procedure LoadSpecialAuthorities(AList: TStringList);
+    procedure SetDate(datefld:TKeyVal;dt:TDateTime);
+    function GetModDate:TDateTime;
+    procedure SetModDate(value:TDateTime);
+    function GetEntDate:TDateTime;
+    procedure SetEntDate(value:TDateTime);
+    procedure SetOnsetDate(value:TDateTime);
+    function GetOnsetDate:TDateTime;
+    function GetStatus:String;
+    procedure SetStatus(value:String);
+    function GetPriority:String;
+    procedure SetPriority(value:String);
+    function GetRESDate:TDateTime;
+    procedure SetRESDate(value:TDateTime);
+    function GetRECDate:TDateTime;
+    procedure SetRECDate(value:TDateTime);
+    procedure SetNarrative(value:TKeyVal);
+    function GetTDateTime(dt:string):TDateTime;
+    procedure UpdateFilerObject(ArrayName: string);
+    function GetFilerObject:TstringList;
+    function GetAltFilerObject:TstringList;
+    function GetCommentCount:integer;
+    Procedure EraseComments(clist:TList);
+    function GetModDatstr:string;
+    procedure SetModDatStr(value:string);
+    function GetEntDatstr:string;
+    procedure SetEntDatStr(value:string);
+    function GetOnsetDatstr:string;
+    procedure SetOnsetDatStr(value:string);
+    function GetResDatstr:string;
+    procedure SetResDatStr(value:string);
+    function GetRecDatstr:string;
+    procedure SetRecDatStr(value:string);
+    procedure SetDateString(df:TKeyVal;value:string);
+    function GetCondition:string;
+    procedure SetCondition(value:String);
+    function GetCodeDate: TDateTime;
+    procedure SetCodeDate(value: TDateTime);
+    function GetCodeDateStr: String;
+    procedure SetCodeDateStr(value: String);
+    function GetSpecialAuthorities: TSpecialAuthoritiesEx;
+  public
+    fComments:TList; {comments}
+    fCoordExprs:TList; {coordinate expressions}
+    procedure AddNewComment(Txt:string);
+    procedure AddNewCoordExpr(Txt:string);
+    function FieldChanged(fldName:string):Boolean;
+    constructor Create(AList:TstringList);
+    destructor Destroy;override;
+    property RawNewRec:TstringList read fNewRec;
+    property RawOrigRec:TStringList read fOrigRec;
+    property DateModified:TDateTime read GetModDate write SetModDate;
+    property DateModStr:string read GetModDatStr write SetModDatStr;
+    property DateEntered:TDateTime read GetEntDate write SetEntDate;
+    property DateEntStr:string read GetEntDatStr write SetEntDatStr;
+    property DateOnset:TDateTime read GetOnsetDate write SetOnsetDate;
+    property DateOnsetStr:string read GetOnsetDatStr write SetOnsetDatStr;
+    property Status:String read GetStatus write SetStatus;
+    property Narrative:TKeyVal read fNarrative write SetNarrative;
+    property Diagnosis:TKeyVal read fDiagnosis write fDiagnosis;
+    property SCTConcept:TKeyVal read fSCTConcept write fSCTConcept;
+    property SCTDesignation:TKeyVal read fSCTDesignation write fSCTDesignation;
+    property NTRTRequested:TKeyVal read fNTRTRequested write fNTRTRequested;
+    property NTRTComment:TKeyVal read fNTRTComment write fNTRTComment;
+    property CodeDate: TDateTime read GetCodeDate write SetCodeDate;
+    property CodeDateStr: String read GetCodeDateStr write SetCodeDateStr;
+    property CodeSystem: TKeyVal read fCodeSystem write fCodeSystem;
+    property Problem:TKeyVal read fProblem write fProblem;
+    property RespProvider:TKeyVal read fRespProv write fRespProv;
+    property EnteredBy:TKeyVal read fEntBy write fEntBy;
+    property RecordedBy:TKeyVal read fRecBy write fRecBy;
+    property Service:TKeyVal read fService write fService;
+    property Clinic:TKeyVal read fClinic write fClinic;
+    property DateResolved:TDateTime read GetResDate write SetResdate;
+    property DateResStr:string read GetResDatStr write SetResDatStr;
+    property DateRecorded:TDateTime read GetRecDate write SetRecdate;
+    property DateRecStr:string read GetRecDatStr write SetRecDatStr;
+    property Priority:string read GetPriority write SetPriority;
+    property Comments:TList read fComments write fComments;
+    property CoordExprs: TList read fCoordExprs write fCoordExprs;
+    property Condition:string read GetCondition write SetCondition;
+    property CommentCount:integer read GetCommentCount;
+    property FilerObject:TstringList read GetFilerObject;
+    property AltFilerObject:TstringList read GetAltFilerObject;
+    property PIFN:string read fPIFN write fPIFN;
+    property CmtIsXHTML: boolean read fCmtIsXHTML;
+    property CmtNoEditReason: string read fCmtNoEditReason;
+    property SpecialAuthorities: TSpecialAuthoritiesEx read GetSpecialAuthorities;
+  end;
 
 var
   ProbRec         :TProbRec;
-  PLPt            :TPLPt;
+  PLPtQualifiers  :TProblemListPatientQualifiers;
   PLUser          :TPLUserParams;
   pProviderID     :int64; {this is provider reviewing record, not resp provider}
   pProviderName   :string; {ditto}
@@ -308,10 +276,14 @@ function FixQuotes(Instring: string): string;
 implementation
 
 uses
-  uGlobalVar, rCore, uCore, System.Types, rMisc, UResponsiveGUI;
+  uGlobalVar, rCore, uCore, System.Types, rMisc, UResponsiveGUI,
+  VAShared.UTStringsHelper;
 
 const
   Months: array[1..12] of string[3] = ('JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC');
+  OldFieldMap: array [0 .. 7, 0 .. 1] of string = (('1.1', 'SC'),
+    ('1.11', 'AO'), ('1.12', 'IR'), ('1.13', 'EC'), ('1.15', 'HNC'),
+    ('1.16', 'MST'), ('1.17', 'CV'), ('1.18', 'SHAD'));
 
 {------------------- TKeyVal Class -----------------}
 function TKeyVal.GetDHCPField:string;
@@ -356,7 +328,7 @@ end;
 
 function TComment.GetExtDateAdd:String;
 begin
-  result := FormatFMDateTime('mmm dd yyyy',StrToFloat(DateAdd)) ;
+  result := FormatFMDateTime('mmm dd yyyy',StrToFloatDef(DateAdd,0)) ;
 end;
 
 function TComment.Getage:boolean;
@@ -388,37 +360,20 @@ begin
           snomedDesignation + u + snomedConceptVUID + u + snomedDesignationVUID;
 end;
 
-{-------------------------- TPLPt Class ----------------------}
-constructor TPLPt.Create(Alist:TStringList);
+{ TProblemListPatientQualifiers }
+
+function TProblemListPatientQualifiers.GetGMPDFN(ADFN, AName: String): string;
+begin
+  Result := ADFN + U + AName + U + SSN4 + U + DeathIndicator;
+end;
+
+function TProblemListPatientQualifiers.Today: string;
 var
-  i: integer;
+  AToday: TFMDateTime;
 begin
-  for i := 0 to AList.Count - 1 do
-    case i of
-      0: PtVAMC             := copy(Alist[i],1,999);
-      1: PtDead             := AList[i];
-      2: PtServiceConnected := (AList[i] = '1');
-      3: PtAgentOrange      := (AList[i] = '1');
-      4: PtRadiation        := (AList[i] = '1');
-      5: PtEnvironmental    := (AList[i] = '1');
-      6: PtBID              := Alist[i];
-      7: PtHNC              := (AList[i] = '1');
-      8: PtMST              := (AList[i] = '1');
-     //9:CombatVet   Not tracked in Problem list
-      10: PtSHAD             := (AList[i] = '1');
-      11: PtCL               := (AList[i] = '1');
-    end;
-end;
-
-function TPLPt.GetGMPDFN(dfn:string;name:string):string;
-begin
-  result := dfn + u + name + u + PtBID + u + PtDead
-end;
-
-function TPLPt.Today:string;
-{returns string in DHCP^mmm dd yyyy format}
-begin
-  result := Piece(FloatToStr(FMToday),'.',1) + u + FormatFMDateTime('mmm dd yyyy',FMToday) ;
+  AToday := FMToday;
+  result := Piece(FloatToStr(AToday), '.', 1) + U +
+    FormatFMDateTime('mmm dd yyyy', AToday);
 end;
 
 {-------------------- TUserParams -------------------------------}
@@ -541,16 +496,7 @@ begin
   LoadField(fResolveDate,'1.07','RESOLVED');
   LoadField(fClinic,'1.08','LOCATION');
   LoadField(fRecordDate,'1.09','RECORDED');
-  LoadField(fServCon,'1.1','SC');
-  LoadField(fAOExposure,'1.11','AO');
-  LoadField(fRadExposure,'1.12','IR');
-  LoadField(fGulfExposure,'1.13','EC');
   LoadField(fPriority,'1.14','PRIORITY');
-  LoadField(fHNC,'1.15','HNC');
-  LoadField(fMST,'1.16','MST');
-  LoadField(fCV,'1.17','CV');   // not used at this time
-  LoadField(fSHAD,'1.18','SHD');
-  LoadField(fCL, '1.19', 'CL');
   LoadField(fSCTConcept,'80001','SCTC');
   LoadField(fSCTDesignation,'80002','SCTD');
   LoadField(fNTRTRequested, '80101', 'NTRT');
@@ -558,10 +504,12 @@ begin
   LoadField(fCodeDate, '80201', 'CODEDT');
   LoadField(fCodeSystem, '80202', 'CODESYS');
   LoadComments;
+  LoadSpecialAuthorities(AList);
 end;
 
 destructor TProbRec.destroy;
 begin
+  FreeAndNil(FSpecialAuthorities);
   fOrigRec.free;
   fNewrec.free;
   fDiagnosis.free;
@@ -579,16 +527,7 @@ begin
   fResolveDate.free;
   fClinic.free;
   fRecordDate.free;
-  fServCon.free;
-  fAOExposure.free;
-  fRadExposure.free;
-  fGulfExposure.free;
   fPriority.free;
-  fHNC.free;
-  fMST.free;
-  fSHAD.Free;
-  fCV.Free;
-  fCL.Free;
   fSCTConcept.free;
   fSCTDesignation.free;
   fNTRTRequested.Free;
@@ -630,16 +569,7 @@ begin
   fResolveDate:=TKeyVal.create;
   fClinic:=TKeyVal.create;
   fRecordDate:=TKeyVal.create;
-  fServCon:=TKeyVal.create;
-  fAOExposure:=TKeyVal.create;
-  fRadExposure:=TKeyVal.create;
-  fGulfExposure:=TKeyVal.create;
   fPriority:=TKeyVal.create;
-  fHNC:=TKeyVal.create;
-  fMST:=TKeyVal.create;
-  fCV := TKeyVal.create;
-  fSHAD:=TKeyVal.Create;
-  fCL := TKeyVal.Create;
   fSCTConcept:=TKeyVal.Create;
   fSCTDesignation:=TKeyVal.Create;
   fNTRTRequested := TKeyVal.Create;
@@ -723,6 +653,59 @@ begin
         fComments.add(co); {put object in list}
         fFieldList.addObject('10,' + inttostr(j),co);
         inc(j);
+      end;
+    end;
+  end;
+end;
+
+procedure TProbRec.LoadSpecialAuthorities(AList: TStringList);
+var
+  i, j, idx: integer;
+  Found, first: boolean;
+  Data, Code, StrValue: string;
+begin
+  first := True;
+  Found := false;
+  for i := 0 to Pred(fNewrec.count) do
+  begin
+    if Piece(Piece(fNewrec[i], v, 2), ',', 1) = '2' then
+    begin
+      if first then
+        first := false
+      else
+      begin
+        Data := Piece(fNewrec[i], v, 3);
+        Code := Piece(Data, u, 2);
+        StrValue := Piece(Data, u, 3);
+        if Assigned(SpecialAuthorities[Code]) then
+        begin
+          SpecialAuthorities[Code].StringValue := StrValue;
+          if not Found then
+            Found := (StrValue <> '');
+        end;
+      end;
+    end
+    else if (not first) or Found then
+      break;
+  end;
+  if not Found then
+  begin
+    for i := 0 to High(OldFieldMap) do
+    begin
+      idx := -1;
+      StrValue := '';
+      for j := 0 to alist.count - 1 do
+        if Piece(alist[j], v, 2) = OldFieldMap[i, 0] then
+        begin
+          idx := j;
+          break;
+        end;
+      if idx >= 0 then
+      begin
+        Code := OldFieldMap[i, 1];
+        if Assigned(SpecialAuthorities[Code]) then
+          SpecialAuthorities[Code].StringValue :=
+            Piece(Piece(alist[idx], v, 3), u, 1);
       end;
     end;
   end;
@@ -867,11 +850,6 @@ begin
   datefld.intern := FloatToStr(DateTimetoFMDateTime(dt));
 end;
 
-function TProbrec.GetSCProblem:String;
-begin
-  result := fServCon.Intern;
-end;
-
 function TProbRec.GetCondition:string;
 begin
   result := fCondition.Intern;
@@ -906,194 +884,12 @@ begin
     end;
 end;
 
-procedure TProbRec.SetSCProblem(value:String);
+function TProbRec.GetSpecialAuthorities: TSpecialAuthoritiesEx;
 begin
-  if value = '1' then
-  begin
-    fServCon.intern := '1';
-    fServCon.Extern := 'YES';
-  end
-  else if value = '0' then
-  begin
-    fServCon.intern := '0';
-    fServCon.Extern := 'NO';
-  end
-  else
-  begin
-    fServCon.intern :='';
-    fServCon.extern := 'Unknown';
-  end;
+  if not Assigned(FSpecialAuthorities) then
+    FSpecialAuthorities := TSpecialAuthoritiesEx.Create;
+  Result := FSpecialAuthorities;
 end;
-
-function  TProbrec.GetAOProblem:String;
-begin
-  result := fAOExposure.Intern;
-end;
-
-procedure TProbRec.SetAOProblem(value:String);
-begin
-  if value = '1' then
-  begin
-    fAOExposure.intern := '1';
-    fAOExposure.extern := 'Yes';
-  end
-  else if value = '0' then
-  begin
-    fAOExposure.intern := '0';
-    fAOExposure.extern := 'No';
-  end
-  else
-  begin
-    fAOExposure.intern := '';
-    fAOExposure.extern := 'Unknown';
-  end;
-end;
-
-function  TProbrec.GetRADProblem:String;
-begin
-  result := fRADExposure.Intern;
-end;
-
-procedure TProbRec.SetRADProblem(value:String);
-begin
-  if value = '1' then
-  begin
-    fRADExposure.intern := '1';
-    fRADExposure.extern := 'Yes';
-  end
-  else if value  = '0' then
-  begin
-    fRADExposure.intern := '0';
-    fRADExposure.extern := 'No';
-  end
-  else
-  begin
-    fRADExposure.intern := '';
-    fRADExposure.extern := 'Unknown';
-  end;
- end;
-
-function TProbrec.GetENVProblem:String;
-begin
-  result := fGulfExposure.Intern;
-end;
-
-procedure TProbRec.SetENVProblem(value:String);
-begin
-  if value = '1' then
-  begin
-    fGulfExposure.intern := '1';
-    fGulfExposure.extern := 'Yes';
-  end
-  else if value = '0' then
-  begin
-    fGulfExposure.intern := '0';
-    fGulfExposure.extern := 'No';
-  end
-  else
-  begin
-    fGulfExposure.intern := '';
-    fGulfExposure.extern := 'Unknown';
-  end;
- end;
-
-function TProbrec.GetHNCProblem:String;
-begin
-  result := fHNC.Intern;
-end;
-
-procedure TProbRec.SetHNCProblem(value:String);
-begin
-  if value = '1' then
-  begin
-    fHNC.intern := '1';
-    fHNC.extern := 'Yes';
-  end
-  else if value = '0' then
-  begin 
-    fHNC.intern := '0';
-    fHNC.extern := 'No';
-  end
-  else
-  begin
-    fHNC.intern := '';
-    fHNC.extern := 'Unknown';
-  end;
-
- end;
-
-function TProbrec.GetMSTProblem:String;
-begin
-  result := fMST.Intern;
-end;
-
-procedure TProbRec.SetMSTProblem(value:String);
-begin
-  if value = '1' then
-  begin
-    fMST.intern := '1';
-    fMST.extern := 'Yes';
-  end
-  else if value = '0' then
-  begin
-    fMST.intern := '0';
-    fMST.extern := 'No';
-  end
-  else
-  begin
-    fMST.intern := '';
-    fMST.extern := 'Unknown';
-  end;
- end;
-
-function TProbrec.GetSHADProblem:String;
-begin
-    result := fSHAD.intern;
-end;
-
-procedure TProbRec.SetSHADProblem(value:String);
-begin
-    if value = '1' then
-    begin
-      fSHAD.intern := '1';
-      fSHAD.extern := 'Yes';
-    end
-    else if value = '0' then
-    begin
-      fSHAD.intern := '0';
-      fSHAD.extern := 'No';
-    end
-    else
-    begin
-        fSHAD.intern := '';
-        fSHAD.extern := 'Unknown';
-    end;
-end;
-
-function TProbrec.GetCLProblem:String;
-begin
-    result := fCL.intern;
-end;
-
-procedure TProbRec.SetCLProblem(value:String);
-begin
-    if value = '1' then
-    begin
-      fCL.intern := '1';
-      fCL.extern := 'Yes';
-    end
-    else if value = '0' then
-    begin
-      fCL.intern := '0';
-      fCL.extern := 'No';
-    end
-    else
-    begin
-        fCL.intern := '';
-        fCL.extern := 'Unknown';
-    end;
-end;
-
 
 function TProbRec.GetStatus:String;
 begin
@@ -1133,7 +929,10 @@ begin
   end
   else
   begin
-    fPriority.intern := '@';
+    if fPriority.internOrig = '' then
+      fPriority.intern := ''
+    else
+      fPriority.intern := '@';
     fPriority.extern := '';
   end;
 end;
@@ -1206,6 +1005,86 @@ end;
 
 {--------------------------------- Filer Objects -------------------------}
 
+function SortByFieldNumber(List: TStringList; Index1, Index2: Integer): Integer;
+var
+  V1, V2: Double;
+
+  function Value(Index: Integer): Double;
+  var
+    p1, p2: Integer;
+    Fld: string;
+  begin
+    p1 := pos('(', List[Index]);
+    p2 := pos(')', List[Index]);
+    if (p1 > 0) and (p2 > p1) then
+    begin
+      Fld := copy(List[Index], p1+1, p2 - p1 - 1);
+      p1 := pos(',', Fld);
+      if p1 > 0 then
+        Fld[p1] := '.';
+      Result := StrToFloatDef(Fld, 0);
+    end
+    else
+      Result := 0;
+  end;
+
+begin
+  V1 := Value(Index1);
+  V2 := Value(Index2);
+  if V1 < V2 then
+    Result := -1
+  else if V1 > V2 then
+    Result := 1
+  else
+    Result := 0;
+end;
+
+procedure TProbRec.UpdateFilerObject(ArrayName: string);
+var
+  idx, OldIdx: integer;
+  FieldValue: string;
+  SA: TSpecialAuthorityEx;
+begin
+  if Assigned(FSpecialAuthorities) then
+  begin
+    idx := 0;
+    for var i := 0 to FSpecialAuthorities.count - 1 do
+    begin
+      SA := FSpecialAuthorities[i];
+      OldIdx := -1;
+      for var j := 0 to High(OldFieldMap) do
+        if SA.Code = OldFieldMap[j, 1] then
+        begin
+          OldIdx := j;
+          break;
+        end;
+      if SA.Visible then
+      begin
+        inc(idx);
+        if SA.Enabled then
+          FieldValue := SA.StringValue
+        else
+          FieldValue := '';
+        if FieldValue = '0' then
+          FieldValue := '0^No'
+        else if FieldValue = '1' then
+          FieldValue := '1^Yes'
+        else
+          FieldValue := '^Unanswered';
+        fFilerObj.Add(ArrayName + '(2,' + idx.ToString + ')="' +
+          SA.SpecialAuthorityTypeEx.Id.ToString + u + SA.Code + u +
+          FieldValue + '"');
+        if OldIdx >= 0 then
+          fFilerObj.Add(ArrayName + '(' + OldFieldMap[OldIdx, 0] + ')="' + FieldValue + '"');
+      end
+      else if OldIdx >= 0 then
+        fFilerObj.Add(ArrayName + '(' + OldFieldMap[OldIdx, 0] + ')=""');
+    end;
+    fFilerObj.Add(ArrayName + '(2,0)="' + idx.ToString + '"');
+  end;
+  fFilerObj.CustomSort(SortByFieldNumber);
+end;
+
 function TProbRec.GetFilerObject:TstringList;
 {return array for filing in dhcp}
 var
@@ -1213,29 +1092,30 @@ var
   fldID,fldVal: string;
 begin
   fFilerObj.clear;
-  for i := 0 to pred(fFieldList.count) do
+  for i := 0 to Pred(fFieldList.count) do
+  begin
+    fldID := fFieldList[i];
+    if pos(',', fldID) > 0 then { is a comment field }
+      fldval := TComment(fFieldList.objects[i]).TComtoDHCPCom
+    else { is a regular field }
     begin
-      fldID := fFieldList[i];
-      if pos(',',fldID)>0 then {is a comment field}
-        fldVal := TComment(fFieldList.objects[i]).TComtoDHCPCom
-      else {is a regular field}
-        begin
-          if fldID = '1.02' then {have to make exception for CONDITION field}
-            fldVal := TKeyVal(fFieldList.objects[i]).intern
-          else
-            fldVal := FixQuotes(TKeyVal(fFieldList.objects[i]).DHCPField);
-        end;
-      fFilerObj.add('GMPFLD(' + fldID + ')="' + fldVal + '"');
+      if fldID = '1.02' then { have to make exception for CONDITION field }
+        fldval := TKeyVal(fFieldList.objects[i]).intern
+      else
+        fldval := FixQuotes(TKeyVal(fFieldList.objects[i]).DHCPField);
     end;
+    fFilerObj.add('GMPFLD(' + fldID + ')="' + fldval + '"');
+  end;
   fFilerObj.add('GMPFLD(10,0)="' + inttostr(fComments.count) + '"');
-   {now get original fields}
-  for i := 0 to pred(fOrigRec.count) do
-    begin
-      fldVal  := fOrigRec[i];
-      fldID   := Piece(fldVal,v,2);
-      fldVal  := FixQuotes(Piece(fldVal,v,3));
-      fFilerObj.add('GMPORIG(' + fldID + ')="' + fldVal + '"');
-    end;
+  UpdateFilerObject('GMPFLD');
+  { now get original fields }
+  for i := 0 to Pred(fOrigRec.count) do
+  begin
+    fldval := fOrigRec[i];
+    fldID := Piece(fldval, v, 2);
+    fldval := FixQuotes(Piece(fldval, v, 3));
+    fFilerObj.add('GMPORIG(' + fldID + ')="' + fldval + '"');
+  end;
   result := fFilerObj;
 end;
 
@@ -1249,10 +1129,7 @@ var
   fldID,fldVal, Fields: string;
 begin
   fFilerObj.Clear;
-  if IsLejeuneActive then
-   Fields := '^.01^.12^.13^1.01^1.05^1.07^1.08^1.1^1.11^1.12^1.13^1.15^1.16^1.18^1.19^80001^80002^80201^80202^'
-  else
-   Fields := '^.01^.12^.13^1.01^1.05^1.07^1.08^1.1^1.11^1.12^1.13^1.15^1.16^1.18^80001^80002^80201^80202^';
+  Fields := '^.01^.12^.13^1.01^1.05^1.07^1.08^80001^80002^80201^80202^';
   for i := 0 to pred(fFieldList.count) do
     begin
       fldID := fFieldList[i];
@@ -1264,6 +1141,7 @@ begin
         end;
     end;
   fFilerObj.add('ORARRAY("PROBLEM")="' + fPIFN + '"');
+  UpdateFilerObject('ORARRAY');
   result := fFilerObj;
 end;
 
@@ -1289,6 +1167,11 @@ function DateStringOK(ds: string): string;
 var
   fmresult: double ;
 begin
+  if ds = '' then //comment date is null from VistA
+    begin
+      result := 'ERROR';
+      exit;
+    end;
   ds := StripSpace(ds);
   result := ds;
   if ds = '' then exit;
@@ -1548,7 +1431,8 @@ end;
 initialization
 
 finalization
-  KillObj(@PLFilters);
-  KillObj(@PLUser);
-  KillObj(@PLPt);
+  FreeAndNil(PLFilters);
+  FreeAndNil(PLUser);
+  FreeAndNil(PLPtQualifiers);
+
 end.

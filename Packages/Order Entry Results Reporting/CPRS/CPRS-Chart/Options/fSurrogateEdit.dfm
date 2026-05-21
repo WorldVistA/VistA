@@ -1,17 +1,16 @@
 inherited frmSurrogateEdit: TfrmSurrogateEdit
   BorderStyle = bsDialog
   Caption = 'Surrogate Management'
-  ClientHeight = 211
+  ClientHeight = 163
   ClientWidth = 311
   OnCloseQuery = FormCloseQuery
-  ExplicitWidth = 317
-  ExplicitHeight = 240
-  PixelsPerInch = 96
+  ExplicitWidth = 327
+  ExplicitHeight = 202
   TextHeight = 13
   object pnlBottom: TPanel [0]
     AlignWithMargins = True
     Left = 3
-    Top = 176
+    Top = 128
     Width = 305
     Height = 32
     HelpContext = 9100
@@ -19,6 +18,7 @@ inherited frmSurrogateEdit: TfrmSurrogateEdit
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 1
+    ExplicitTop = 176
     object bvlBottom: TBevel
       Left = 0
       Top = 0
@@ -104,21 +104,25 @@ inherited frmSurrogateEdit: TfrmSurrogateEdit
     Left = 0
     Top = 0
     Width = 311
-    Height = 173
+    Height = 125
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitLeft = -3
+    ExplicitTop = -1
+    ExplicitHeight = 137
     DesignSize = (
       311
-      173)
+      125)
     object stxtAllowedRange: TLabel
       AlignWithMargins = True
       Left = 3
-      Top = 157
+      Top = 109
       Width = 305
       Height = 13
       Align = alBottom
       Caption = 'Start and stop times must be within this range...'
+      ExplicitTop = 157
       ExplicitWidth = 221
     end
     object cboSurrogate: TORComboBox
@@ -148,13 +152,14 @@ inherited frmSurrogateEdit: TfrmSurrogateEdit
       TabOrder = 1
       TabStop = True
       Text = ''
+      FlatCheckBoxes = False
       OnChange = cboSurrogateChange
       OnNeedData = cboSurrogateNeedData
       CharsNeedMatch = 1
     end
     object ordtbStart: TORDateBox
       Left = 4
-      Top = 65
+      Top = 66
       Width = 142
       Height = 21
       Hint = 'Surrogate Start Date and Time'
@@ -166,7 +171,7 @@ inherited frmSurrogateEdit: TfrmSurrogateEdit
     end
     object ordtbStop: TORDateBox
       Left = 152
-      Top = 65
+      Top = 66
       Width = 153
       Height = 21
       Hint = 'Surrogate End Date and Time'
@@ -179,7 +184,7 @@ inherited frmSurrogateEdit: TfrmSurrogateEdit
     end
     object VA508StaticText1: TStaticText
       Left = 4
-      Top = 48
+      Top = 49
       Width = 26
       Height = 17
       Caption = 'Start'
@@ -187,7 +192,7 @@ inherited frmSurrogateEdit: TfrmSurrogateEdit
     end
     object VA508StaticText2: TStaticText
       Left = 152
-      Top = 48
+      Top = 49
       Width = 26
       Height = 17
       Caption = 'Stop'

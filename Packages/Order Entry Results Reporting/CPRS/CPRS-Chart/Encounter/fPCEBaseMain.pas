@@ -1,13 +1,36 @@
 unit fPCEBaseMain;
-{Warning: The tab order has been changed in the OnExit event of several controls.
- To change the tab order of lbSection, lbxSection, and btnOther you must do it programatically.}
+// Warning: The tab order has been changed in the OnExit event of several
+//   controls. To change the tab order of lbSection, lbxSection, and btnOther
+//   you must do it programatically.
+
+// When adding a splitter and a panel to the top section, set
+//  Panel.Parent = pnlSplitter
+//  Panel.Align = alRight
+//  Panel.Constraints.Width = 100
+//  Splitter.Parent = pnlSplitter
+//  Splitter.Align = alRight
+//  Splitter.MinWidth = 102
+//  Splitter.Width = 6
+// Components aligned with margins on the panel should have their left margin
+//  set to 0.
+// These values play nice with each other and with the stuff on this form.
 
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  fPCEBaseGrid, ComCtrls, StdCtrls, ORCtrls, ExtCtrls, Buttons, rPCE, uPCE,
-  CheckLst, ORFn, VA508AccessibilityManager;
+  System.Classes,
+  Vcl.Controls,
+  Vcl.StdCtrls,
+  Vcl.ExtCtrls,
+  Vcl.ComCtrls,
+  Vcl.Buttons,
+  ORCtrls,
+  fPCEBaseGrid,
+  rPCE,
+  uPCE,
+  VA508AccessibilityManager,
+  U508Button,
+  U508CaptionEdit;
 
 type
   TCopyItemsMethod = procedure(Dest: TCaptionListView) of object;
@@ -15,29 +38,26 @@ type
 
   TfrmPCEBaseMain = class(TfrmPCEBaseGrid)
     lbSection: TORListBox;
-    edtComment: TCaptionEdit;
+    edtComment: U508CaptionEdit.TCaptionEdit;
     lblSection: TLabel;
     lblList: TLabel;
     lblComment: TLabel;
-    btnRemove: TButton;
-    btnOther: TButton;
-    bvlMain: TBevel;
-    btnSelectAll: TButton;
+    btnRemove: U508Button.TButton;
+    btnOther: U508Button.TButton;
+    btnSelectAll: U508Button.TButton;
     lbxSection: TORListBox;
     pnlMain: TPanel;
-    pnlLeft: TPanel;
-    splLeft: TSplitter;
+    pnlGridRight: TPanel;
+    grdMain: TGridPanel;
+    pnlComments: TPanel;
     procedure lbSectionClick(Sender: TObject);
     procedure btnOtherClick(Sender: TObject);
     procedure edtCommentExit(Sender: TObject);
     procedure edtCommentChange(Sender: TObject);
     procedure btnRemoveClick(Sender: TObject);
-    procedure clbListClick(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnSelectAllClick(Sender: TObject);
     procedure FormResize(Sender: TObject); virtual;
-    procedure clbListMouseDown(Sender: TObject; Button: TMouseButton;
-      Shift: TShiftState; X, Y: Integer);
     procedure lbxSectionClickCheck(Sender: TObject; Index: Integer);
     procedure splLeftMoved(Sender: TObject);
     procedure edtCommentKeyPress(Sender: TObject; var Key: Char);
@@ -50,12 +70,12 @@ type
     procedure lstCaptionListClick(Sender: TObject);
     procedure lstCaptionListExit(Sender: TObject);
     procedure lstCaptionListInsert(Sender: TObject; Item: TListItem);
+    procedure FormShow(Sender: TObject);
   private
     FCommentItem: integer;
     FCommentChanged: boolean;
     FUpdateCount: integer;
     FSectionPopulated: boolean;
-    //FUpdatingGrid: boolean;  moved to 'protected' so frmDiagnoses can see it  (RV)
   protected
     FUpdatingGrid: boolean;
     FPCEListCodesProc: TPCEListCodesProc;
@@ -64,42 +84,52 @@ type
     FSplitterMove: Boolean;
     FProblems: TStringList;
     function GetCat: string;
-    procedure UpdateNewItemStr(var x: string); virtual;
-//    procedure UpdateNewItem(APCEItem: TPCEItem); virtual;
+    procedure UpdateNewItemStr(var x: string); virtual; abstract;
     procedure GridChanged; virtual;
     procedure UpdateControls; override;
     procedure BeginUpdate;
     procedure EndUpdate;
-    function NotUpdating: boolean;
+    function NotUpdating: Boolean;
     procedure CheckOffEntries;
     procedure UpdateTabPos;
     procedure Sync2Grid;
     procedure Sync2Section;
-    procedure FormatVimmInputs(Grid, isSkinTest: boolean);
+    procedure FormatVimmInputs(Grid, IsSkinTest: Boolean);
   public
     procedure AllowTabChange(var AllowChange: boolean); override;
     procedure InitTab(ACopyProc: TCopyItemsMethod; AListProc: TListSectionsProc);
-    procedure removeAll;
+    procedure RemoveAll;
   end;
 
 var
   frmPCEBaseMain: TfrmPCEBaseMain;
 
-const
-  LBCheckWidthSpace = 18;
-
 implementation
 
-uses fPCELex, fPCEOther, fEncounterFrame, fHFSearch, VA508AccessibilityRouter,
-  ORCtrlsVA508Compatibility, fBase508Form, UBAConst, rvimm, uCore, VAUtils;
+uses
+  Winapi.Windows,
+  System.SysUtils,
+  ORFn,
+  fPCELex,
+  fPCEOther,
+  fEncounterFrame,
+  fHFSearch,
+  VA508AccessibilityRouter,
+  ORCtrlsVA508Compatibility,
+  UBAConst,
+  rvimm,
+  uCore;
 
 {$R *.DFM}
+
+var
+  part: Integer = 3;
 
 type
   TLBSectionManager = class(TORListBox508Manager)
   public
     function GetItemInstructions(Component: TWinControl): string; override;
-    function GetState(Component: TWinControl): string; override;    
+    function GetState(Component: TWinControl): string; override;
   end;
 
 procedure TfrmPCEBaseMain.lbSectionClick(Sender: TObject);
@@ -110,7 +140,7 @@ begin
   ClearGrid;
   FPCEListCodesProc(lbxSection.Items, lbSection.ItemIEN);
   CheckOffEntries;
-  FSectionPopulated := TRUE;
+  FSectionPopulated := True;
   if (lbSection.Items.Count > 0) then
     lblList.Caption := StringReplace(lbSection.DisplayText[lbSection.ItemIndex],
       '&', '&&', [rfReplaceAll] );
@@ -121,56 +151,41 @@ begin
   end;
 end;
 
-procedure TfrmPCEBaseMain.lbSectionExit(Sender: TObject);
-begin
-  inherited;
-  if TabIsPressed then
-    if lbxSection.CanFocus then
-      lbxSection.SetFocus;
-end;
-
-procedure TfrmPCEBaseMain.UpdateNewItemStr(var x: string);
-begin
-end;
-
 procedure TfrmPCEBaseMain.GridChanged;
 var
-  i: integer;
-  tmpList: TStringList;
+  I: Integer;
+  TmpList: TStringList;
 begin
-  tmpList := TStringList.Create;
-  BeginUpdate;
+  TmpList := TStringList.Create;
   try
-    SaveGridSelected;
-    FastAssign(lstCaptionList.ItemsStrings, tmpList);
-    for i := lstCaptionList.Items.Count - 1 downto 0 do
-    begin
-      if lstCaptionList.Objects[i] is TPCEItem then
+    BeginUpdate;
+    try
+      SaveGridSelected;
+      FastAssign(lstCaptionList.ItemsStrings, TmpList);
+      for I := lstCaptionList.Items.Count - 1 downto 0 do
       begin
-        tmpList[i] := TPCEItem(lstCaptionList.Objects[i]).ItemStr;
-        tmpList.Objects[i] := lstCaptionList.Objects[i];
-      end
-      else
-      begin
-        lstCaptionList.Objects[i].Free;
-        lstCaptionList.Items[i].Delete;
-        tmpList.Delete(i);
-        RemoveGridSelected(i);
+        if lstCaptionList.Objects[I] is TPCEItem then
+        begin
+          TmpList[I] := TPCEItem(lstCaptionList.Objects[I]).ItemStr;
+          TmpList.Objects[I] := lstCaptionList.Objects[I];
+        end else begin
+          lstCaptionList.Objects[I].Free;
+          lstCaptionList.Items[I].Delete;
+          TmpList.Delete(I);
+          RemoveGridSelected(I);
+        end;
       end;
-    end;
 
-    lstCaptionList.ItemsStrings.Assign(tmpList);    //cq: 13228
-    RestoreGridSelected;
+      lstCaptionList.ItemsStrings.Assign(TmpList); //cq: 13228
+      RestoreGridSelected;
+    finally
+      EndUpdate;
+    end;
   finally
-    EndUpdate;
-    tmpList.Free;
+    FreeAndNil(TmpList);
   end;
   UpdateControls;
 end;
-
-//procedure TfrmPCEBaseMain.UpdateNewItem(APCEItem: TPCEItem);
-//begin
-//end;
 
 procedure TfrmPCEBaseMain.btnOtherClick(Sender: TObject);
 var
@@ -180,7 +195,7 @@ var
 begin
   inherited;
   ClearGrid;
-  SrchCode := (Sender as TButton).Tag;
+  SrchCode := (Sender as Vcl.StdCtrls.TButton).Tag;
   if(SrchCode <= LX_Threshold) then
     LexiconLookup(Code, SrchCode, 0, False, '')
   else
@@ -197,33 +212,21 @@ begin
     UpdateNewItemStr(x);
     APCEItem := FPCEItemClass.Create;
     APCEItem.SetFromString(x);
-//    UpdateNewItem(APCEItem);
     GridIndex := lstCaptionList.Add(APCEItem.ItemStr, APCEItem);
   end;
   UpdateControls;
 end;
 
-procedure TfrmPCEBaseMain.btnOtherExit(Sender: TObject);
-begin
-  inherited;
-  if TabIsPressed then begin
-    if lstCaptionList.CanFocus then
-      lstCaptionList.SetFocus
-  end
-  else if ShiftTabIsPressed then
-    if lbxSection.CanFocus then
-      lbxSection.SetFocus;
-end;
-
 procedure TfrmPCEBaseMain.edtCommentExit(Sender: TObject);
 begin
   inherited;
-  if(FCommentChanged) then
+  if (FCommentChanged) then
   begin
-    FCommentChanged := FALSE;
-    if(FCommentItem >= 0) and (FCommentItem < lstCaptionList.Items.Count) and
+    FCommentChanged := False;
+    if (FCommentItem >= 0) and (FCommentItem < lstCaptionList.Items.Count) and
       (lstCaptionList.Objects[FCommentItem] is TPCEItem) then
-      TPCEItem(lstCaptionList.Objects[FCommentItem]).Comment := edtComment.text;
+        TPCEItem(lstCaptionList.Objects[FCommentItem]).Comment :=
+        edtComment.text;
   end;
 end;
 
@@ -241,45 +244,45 @@ end;
 
 procedure TfrmPCEBaseMain.btnRemoveClick(Sender: TObject);
 var
-  i, j: Integer;
+  I, J: Integer;
   APCEItem: TPCEItem;
   CurCategory, SCode, SNarr: String;
 begin
   inherited;
-  FUpdatingGrid := TRUE;
+  FUpdatingGrid := True;
   try
     CurCategory := GetCat;
-    for i := lstCaptionList.Items.Count-1 downto 0 do if(lstCaptionList.Items[i].Selected) then
-    begin
-      if lstCaptionList.Objects[i] is TPCEItem then
+    for I := lstCaptionList.Items.Count - 1 downto 0 do
+      if (lstCaptionList.Items[I].Selected) then
       begin
-        APCEItem := TPCEItem(lstCaptionList.Objects[i]);
+      if lstCaptionList.Objects[I] is TPCEItem then
+      begin
+        APCEItem := TPCEItem(lstCaptionList.Objects[I]);
         if APCEItem.Category = CurCategory then
         begin
-          for j := 0 to lbxSection.Items.Count - 1 do
+          for J := 0 to lbxSection.Items.Count - 1 do
           begin
-            SCode := Piece(lbxSection.Items[j], U, 1);
-            SNarr := Piece(lbxSection.Items[j], U, 2);
-            if (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) > 0) then
-  //          if (Pos(APCEItem.Code, SCode) > 0) then
-              lbxSection.Checked[j] := False;
-          end;
+            SCode := Piece(lbxSection.Items[J], U, 1);
+            SNarr := Piece(lbxSection.Items[J], U, 2);
+              if (Pos(APCEItem.Code, SCode) > 0) and
+                (Pos(SNarr, APCEItem.Narrative) > 0) then
+                  lbxSection.Checked[J] := False;
+            end;
         end;
       end;
-      lstCaptionList.Objects[i].Free;
-      lstCaptionList.Items[i].Delete
+      lstCaptionList.Objects[I].Free;
+      lstCaptionList.Items[I].Delete
     end;
 
     ClearGrid;
   finally
-    FUpdatingGrid := FALSE;
+    FUpdatingGrid := False;
   end;
 end;
 
 procedure TfrmPCEBaseMain.UpdateControls;
 var
-  CommentOK: boolean;
-
+  CommentOK: Boolean;
 begin
   btnSelectAll.Enabled := (lstCaptionList.Items.Count > 0);
   btnRemove.Enabled := (lstCaptionList.Items.Count > 0);
@@ -301,36 +304,28 @@ begin
   end;
 end;
 
-procedure TfrmPCEBaseMain.clbListClick(Sender: TObject);
+procedure TfrmPCEBaseMain.FormatVimmInputs(Grid, IsSkinTest: Boolean);
 begin
-  inherited;
-//  with clbList do
-//  if(ItemIndex >= 0) and (not(Checked[ItemIndex])) then
-//    ClearGrid;
-end;
-
-procedure TfrmPCEBaseMain.FormatVimmInputs(Grid, isSkinTest: boolean);
-begin
-    uvimmInputs.noGrid := grid;
-    uvimmInputs.makeNote := false;
-    uvimmInputs.collapseICE := true;
-    uvimmInputs.canSaveData := false;
-    uvimmInputs.patientName := patient.Name;
-    uvimmInputs.patientIEN := patient.DFN;
-    uvimmInputs.userName := user.Name;
-    uvimmInputs.userIEN := user.DUZ;
-    uvimmInputs.isSkinTest := isSkinTest;
-    uVimmInputs.startInEditMode := false;
-    uvimmInputs.encounterProviderName := uEncPCEData.Providers.PCEProviderName;
-    uvimmInputs.encounterProviderIEN := uEncPCEData.Providers.PCEProvider;
-    uvimmInputs.encounterLocation := uEncPCEData.Location;
-    uvimmInputs.encounterCategory := uEncPCEData.VisitCategory;
-    uvimmInputs.dateEncounterDateTime := uEncPCEData.VisitDateTime;
-    uvimmInputs.visitString := uEncPCEData.VisitString;
-    if uEncPCEData.VisitCategory = 'E' then
-      uVimmInputs.selectionType := 'historical'
-    else uVimmInputs.selectionType := 'current';
-    uVimmInputs.immunizationReading := false;
+  uvimmInputs.noGrid := Grid;
+  uvimmInputs.makeNote := False;
+  uvimmInputs.collapseICE := True;
+  uvimmInputs.canSaveData := False;
+  uvimmInputs.patientName := Patient.Name;
+  uvimmInputs.patientIEN := Patient.DFN;
+  uvimmInputs.userName := User.Name;
+  uvimmInputs.userIEN := User.DUZ;
+  uvimmInputs.isSkinTest := IsSkinTest;
+  uVimmInputs.startInEditMode := False;
+  uvimmInputs.encounterProviderName := uEncPCEData.Providers.PCEProviderName;
+  uvimmInputs.encounterProviderIEN := uEncPCEData.Providers.PCEProvider;
+  uvimmInputs.encounterLocation := uEncPCEData.Location;
+  uvimmInputs.encounterCategory := uEncPCEData.VisitCategory;
+  uvimmInputs.dateEncounterDateTime := uEncPCEData.VisitDateTime;
+  uvimmInputs.visitString := uEncPCEData.VisitString;
+  if uEncPCEData.VisitCategory = 'E' then
+    uVimmInputs.selectionType := 'historical'
+  else uVimmInputs.selectionType := 'current';
+  uVimmInputs.immunizationReading := False;
 end;
 
 procedure TfrmPCEBaseMain.FormCreate(Sender: TObject);
@@ -355,29 +350,29 @@ begin
   lbSectionClick(lbSection);
   ClearGrid;
   GridChanged;
-//  CheckOffEntries;
 end;
 
 procedure TfrmPCEBaseMain.BeginUpdate;
 begin
-  inc(FUpdateCount);
+  if FUpdateCount <= 0 then FUpdateCount := 0;
+  Inc(FUpdateCount);
 end;
 
 procedure TfrmPCEBaseMain.EndUpdate;
 begin
-  if(FUpdateCount > 0) then
-    dec(FUpdateCount);
+  Dec(FUpdateCount);
+  if FUpdateCount <= 0 then FUpdateCount := 0;
 end;
 
-function TfrmPCEBaseMain.NotUpdating: boolean;
+function TfrmPCEBaseMain.NotUpdating: Boolean;
 begin
-  Result := (FUpdateCount = 0);
+  Result := FUpdateCount <= 0;
 end;
 
-procedure TfrmPCEBaseMain.removeAll;
+procedure TfrmPCEBaseMain.RemoveAll;
 begin
-  self.btnSelectAll.Click;
-  self.btnRemove.Click;
+  Self.btnSelectAll.Click;
+  Self.btnRemove.Click;
 end;
 
 procedure TfrmPCEBaseMain.CheckOffEntries;
@@ -405,7 +400,6 @@ begin
       APCEItem := TPCEItem(lstCaptionList.Objects[i]);
       if APCEItem.Category = CurCategory then
       begin
-//        CodeNarr := APCEItem.Code + U + APCEItem.Narrative;
         for j := 0 to lbxSection.Items.Count - 1 do
         begin
           SCode := Piece(lbxSection.Items[j], U, 1);
@@ -438,14 +432,13 @@ end;
 
 procedure TfrmPCEBaseMain.btnSelectAllClick(Sender: TObject);
 var
-  i: integer;
-
+  I: Integer;
 begin
   inherited;
   BeginUpdate;
   try
-    for i := 0 to lstCaptionList.Items.Count-1 do
-      lstCaptionList.Items[i].Selected := TRUE;
+    for I := 0 to lstCaptionList.Items.Count - 1 do
+      lstCaptionList.Items[I].Selected := True;
   finally
     EndUpdate;
   end;
@@ -455,17 +448,16 @@ end;
 procedure TfrmPCEBaseMain.FormResize(Sender: TObject);
 begin
   if FSplitterMove then
-    FSplitterMove := FALSE
+    FSplitterMove := False
   else
     inherited;
 end;
 
-procedure TfrmPCEBaseMain.clbListMouseDown(Sender: TObject;
-  Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+procedure TfrmPCEBaseMain.FormShow(Sender: TObject);
 begin
+  pnlMain.Height := (self.ClientHeight - pnlBottomAncestor.Height) div part;
+  pnlComments.Align := alBottom;
   inherited;
-//  if(Button <> mbLeft) then
-//    clbList.Itemindex := clbList.itemAtPos(Point(X,Y), TRUE);
 end;
 
 function TfrmPCEBaseMain.GetCat: string;
@@ -533,18 +525,6 @@ begin
   UpdateControls;
 end;
 
-procedure TfrmPCEBaseMain.lbxSectionExit(Sender: TObject);
-begin
-  inherited;
-  if TabIsPressed then begin
-    if btnOther.CanFocus then
-      btnOther.SetFocus
-  end
-  else if ShiftTabIsPressed then
-    if lbSection.CanFocus then
-      lbSection.SetFocus;
-end;
-
 procedure TfrmPCEBaseMain.lstCaptionListChange(Sender: TObject; Item: TListItem;
   Change: TItemChange);
 begin
@@ -556,14 +536,6 @@ procedure TfrmPCEBaseMain.lstCaptionListClick(Sender: TObject);
 begin
   inherited;
   UpdateControls;
-end;
-
-procedure TfrmPCEBaseMain.lstCaptionListExit(Sender: TObject);
-begin
-  inherited;
-    if ShiftTabIsPressed then
-    if btnOther.CanFocus then
-      btnOther.SetFocus;
 end;
 
 procedure TfrmPCEBaseMain.lstCaptionListInsert(Sender: TObject; Item: TListItem);
@@ -578,10 +550,10 @@ begin
 end;
 
 procedure TfrmPCEBaseMain.splLeftMoved(Sender: TObject);
+// RDD: Can I remove all of this?
 begin
   inherited;
-  lblList.Left := lbxSection.Left + pnlMain.Left;
-  FSplitterMove := TRUE;
+  FSplitterMove := True;
   FormResize(Sender);
 end;
 
@@ -615,8 +587,8 @@ begin
         begin
           SCode := Piece(lbxSection.Items[i], U, 1);
           SNarr := Piece(lbxSection.Items[i], U, 2);
-          if (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) > 0)then
-//          if (Pos(APCEItem.Code, SCode) > 0) then
+          if (Pos(APCEItem.Code, SCode) > 0) and
+            (Pos(SNarr, APCEItem.Narrative) > 0) then
           begin
             NewIdx := i;
             break;
@@ -652,17 +624,14 @@ begin
       SCode := '~@';
       SNarr := '~@';
     end;
-//    if(idx >= 0) then
-//      ACode := GetCat + U + Pieces(lbxSection.Items[idx], U, 1, 2)
-//    else
-//      ACode := '~@^~@^@~';
     for i := 0 to lstCaptionList.Items.Count - 1 do
     begin
       if not (lstCaptionList.Objects[i] is TPCEItem) then
         continue;
       APCEItem := TPCEItem(lstCaptionList.Objects[i]);
-      lstCaptionList.Items[i].Selected := ((SCat = APCEItem.Category) and (Pos(APCEItem.Code, SCode) > 0) and (Pos(SNarr, APCEItem.Narrative) >= 0)); //(ACode = (Category + U + Code + U + Narrative));
-//      lbGrid.Selected[i] := ((SCat = APCEItem.Category) and (Pos(APCEItem.Code, SCode) > 0)) //(ACode = (Category + U + Code + U + Narrative));
+      lstCaptionList.Items[I].Selected :=
+        ((SCat = APCEItem.Category) and (Pos(APCEItem.Code, SCode) > 0) and
+        (Pos(SNarr, APCEItem.Narrative) >= 0));
     end;
   finally
     FUpdatingGrid := FALSE;
@@ -704,11 +673,44 @@ begin
   begin
     frm.FSectionPopulated := FALSE;
     Result := frm.FTabName + ' section populated with ' +
-        inttostr(frm.lbxSection.Count) + ' items';
+      IntToStr(frm.lbxSection.Count) + ' items';
   end;
+end;
+
+procedure TfrmPCEBaseMain.lbSectionExit(Sender: TObject);
+begin
+  inherited;
+  if TabIsPressed and lbxSection.CanFocus then lbxSection.SetFocus;
+end;
+
+procedure TfrmPCEBaseMain.lbxSectionExit(Sender: TObject);
+begin
+  inherited;
+  if TabIsPressed then
+  begin
+    if btnOther.CanFocus then btnOther.SetFocus;
+  end else begin
+    if ShiftTabIsPressed and lbSection.CanFocus then lbSection.SetFocus;
+  end;
+end;
+
+procedure TfrmPCEBaseMain.btnOtherExit(Sender: TObject);
+begin
+  inherited;
+  if TabIsPressed then
+  begin
+    if lstCaptionList.CanFocus then lstCaptionList.SetFocus;
+  end else begin
+    if ShiftTabIsPressed and lbxSection.CanFocus then lbxSection.SetFocus;
+  end;
+end;
+
+procedure TfrmPCEBaseMain.lstCaptionListExit(Sender: TObject);
+begin
+  inherited;
+  if ShiftTabIsPressed and btnOther.CanFocus then btnOther.SetFocus;
 end;
 
 initialization
   SpecifyFormIsNotADialog(TfrmPCEBaseMain);
-
 end.

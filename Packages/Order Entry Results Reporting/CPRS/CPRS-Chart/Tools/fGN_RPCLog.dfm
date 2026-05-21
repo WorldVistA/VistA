@@ -4,29 +4,20 @@ inherited frmRPCLog: TfrmRPCLog
   Caption = 'RPC Log'
   ClientHeight = 558
   ClientWidth = 879
-  Color = clBtnFace
   Constraints.MinHeight = 400
   Constraints.MinWidth = 640
-  Font.Charset = DEFAULT_CHARSET
-  Font.Color = clWindowText
-  Font.Height = -11
-  Font.Name = 'MS Sans Serif'
-  Font.Style = []
-  KeyPreview = True
   Menu = MainMenu
-  OldCreateOrder = True
   Position = poDefault
+  StyleElements = [seFont, seClient, seBorder]
   OnClick = cmdNextClick
-  OnClose = FormClose
-  OnCreate = FormCreate
-  OnDestroy = FormDestroy
   OnKeyUp = FormKeyUp
   OnResize = FormResize
-  OnShow = FormShow
   OnStartDock = FormStartDock
-  PixelsPerInch = 96
+  OldCreateOrder = True
+  ExplicitWidth = 895
+  ExplicitHeight = 617
   TextHeight = 13
-  object bvlTop: TBevel
+  object bvlTop: TBevel [0]
     Left = 0
     Top = 0
     Width = 879
@@ -37,7 +28,7 @@ inherited frmRPCLog: TfrmRPCLog
     ExplicitLeft = -186
     ExplicitWidth = 792
   end
-  object splDebug: TSplitter
+  object splDebug: TSplitter [1]
     Left = 178
     Top = 2
     Height = 535
@@ -45,7 +36,7 @@ inherited frmRPCLog: TfrmRPCLog
     ExplicitTop = 256
     ExplicitHeight = 100
   end
-  object Panel3: TPanel
+  object Panel3: TPanel [2]
     Left = 0
     Top = 2
     Width = 178
@@ -63,7 +54,6 @@ inherited frmRPCLog: TfrmRPCLog
       Height = 32
       Align = alTop
       BevelOuter = bvNone
-      Caption = 'Panel1'
       Color = clSilver
       ParentBackground = False
       ShowCaption = False
@@ -132,7 +122,6 @@ inherited frmRPCLog: TfrmRPCLog
       Align = alTop
       BevelKind = bkFlat
       BevelOuter = bvNone
-      Caption = 'Panel2'
       ParentBackground = False
       ShowCaption = False
       TabOrder = 0
@@ -178,10 +167,6 @@ inherited frmRPCLog: TfrmRPCLog
       BorderStyle = bsNone
       Columns = <
         item
-          Caption = 'Flag'
-          Width = 0
-        end
-        item
           Caption = 'RPC Name'
           Width = 165
         end
@@ -192,29 +177,28 @@ inherited frmRPCLog: TfrmRPCLog
         item
           Caption = 'Start'
           Width = 96
-        end
-        item
-          Caption = 'W/S time'
         end>
       Ctl3D = False
+      DoubleBuffered = True
       FlatScrollBars = True
+      OwnerData = True
       ReadOnly = True
       RowSelect = True
       ParentColor = True
+      ParentDoubleBuffered = False
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2
       ViewStyle = vsReport
       OnAdvancedCustomDrawItem = LiveListAdvancedCustomDrawItem
       OnChange = lvRPCLogChange
-      OnColumnClick = lvRPCLogColumnClick
-      OnCompare = lvRPCLogCompare
+      OnData = lvRPCLogData
       OnDblClick = lvRPCLogDblClick
       OnResize = lvRPCLogResize
       OnSelectItem = lvRPCLogSelectItem
     end
   end
-  object pnlMain: TPanel
+  object pnlMain: TPanel [3]
     Left = 181
     Top = 2
     Width = 698
@@ -222,7 +206,7 @@ inherited frmRPCLog: TfrmRPCLog
     Margins.Left = 0
     Align = alClient
     BevelOuter = bvNone
-    Constraints.MinWidth = 400
+    Constraints.MinWidth = 200
     TabOrder = 1
     object memData: TRichEdit
       Left = 0
@@ -244,9 +228,8 @@ inherited frmRPCLog: TfrmRPCLog
       ScrollBars = ssBoth
       TabOrder = 2
       WantReturns = False
-      Zoom = 100
     end
-    object Panel2: TPanel
+    object pnlTools: TPanel
       Left = 0
       Top = 32
       Width = 698
@@ -254,27 +237,27 @@ inherited frmRPCLog: TfrmRPCLog
       Align = alTop
       BevelKind = bkFlat
       BevelOuter = bvNone
-      Caption = 'Panel2'
       ShowCaption = False
       TabOrder = 1
-      OnDblClick = Panel2DblClick
+      OnDblClick = pnlToolsDblClick
       object lblCallID: TStaticText
         AlignWithMargins = True
         Left = 3
         Top = 8
-        Width = 591
+        Width = 511
         Height = 19
         Margins.Top = 8
         Margins.Bottom = 0
         Align = alClient
         Caption = 'Last Record'
         TabOrder = 0
+        ExplicitWidth = 455
       end
       object ckbWrap: TCheckBox
         AlignWithMargins = True
-        Left = 600
+        Left = 616
         Top = 8
-        Width = 93
+        Width = 77
         Height = 19
         Margins.Top = 8
         Margins.Right = 1
@@ -284,6 +267,21 @@ inherited frmRPCLog: TfrmRPCLog
         Alignment = taLeftJustify
         TabOrder = 1
       end
+      object ckbJSON: TCheckBox
+        AlignWithMargins = True
+        Left = 520
+        Top = 8
+        Width = 85
+        Height = 19
+        Margins.Top = 8
+        Margins.Right = 8
+        Margins.Bottom = 0
+        Action = acFormatJSON
+        Align = alRight
+        Alignment = taLeftJustify
+        State = cbChecked
+        TabOrder = 2
+      end
     end
     object pnlMainToolbar: TPanel
       Left = 0
@@ -292,22 +290,21 @@ inherited frmRPCLog: TfrmRPCLog
       Height = 32
       Align = alTop
       BevelOuter = bvNone
-      Caption = 'pnlMainToolbar'
       Color = clSilver
       ParentBackground = False
       ShowCaption = False
       TabOrder = 0
       object Label1: TLabel
         AlignWithMargins = True
-        Left = 561
+        Left = 531
         Top = 10
-        Width = 66
+        Width = 96
         Height = 22
         Margins.Top = 10
         Margins.Right = 6
         Margins.Bottom = 0
         Align = alRight
-        Caption = '&Max Retained'
+        Caption = '&Max RPCs Retained'
         FocusControl = cmbMaxCalls
         Transparent = False
         ExplicitHeight = 13
@@ -358,7 +355,7 @@ inherited frmRPCLog: TfrmRPCLog
         object ToolButton1: TToolButton
           Left = 100
           Top = 0
-          Action = FileSaveAs1
+          Action = FileSave
         end
         object ToolButton8: TToolButton
           Left = 123
@@ -400,7 +397,7 @@ inherited frmRPCLog: TfrmRPCLog
       end
       object ToolBar1: TToolBar
         AlignWithMargins = True
-        Left = 478
+        Left = 448
         Top = 6
         Width = 77
         Height = 23
@@ -441,7 +438,7 @@ inherited frmRPCLog: TfrmRPCLog
       end
     end
   end
-  object sb: TStatusBar
+  object sb: TStatusBar [4]
     Left = 0
     Top = 537
     Width = 879
@@ -450,6 +447,65 @@ inherited frmRPCLog: TfrmRPCLog
     ParentFont = True
     SimplePanel = True
     UseSystemFont = False
+  end
+  inherited amgrMain: TVA508AccessibilityManager
+    Left = 8
+    Top = 8
+    Data = (
+      (
+        'Component = Panel3'
+        'Status = stsDefault')
+      (
+        'Component = Panel4'
+        'Status = stsDefault')
+      (
+        'Component = ToolBar5'
+        'Status = stsDefault')
+      (
+        'Component = ToolBar6'
+        'Status = stsDefault')
+      (
+        'Component = Panel1'
+        'Status = stsDefault')
+      (
+        'Component = edTarget'
+        'Status = stsDefault')
+      (
+        'Component = lvRPCLog'
+        'Status = stsDefault')
+      (
+        'Component = pnlMain'
+        'Status = stsDefault')
+      (
+        'Component = memData'
+        'Status = stsDefault')
+      (
+        'Component = pnlTools'
+        'Status = stsDefault')
+      (
+        'Component = lblCallID'
+        'Status = stsDefault')
+      (
+        'Component = ckbWrap'
+        'Status = stsDefault')
+      (
+        'Component = pnlMainToolbar'
+        'Status = stsDefault')
+      (
+        'Component = ToolBar4'
+        'Status = stsDefault')
+      (
+        'Component = cmbMaxCalls'
+        'Status = stsDefault')
+      (
+        'Component = ToolBar1'
+        'Status = stsDefault')
+      (
+        'Component = sb'
+        'Status = stsDefault')
+      (
+        'Component = frmRPCLog'
+        'Status = stsDefault'))
   end
   object c: TImageList
     ColorDepth = cd32Bit
@@ -1178,14 +1234,15 @@ inherited frmRPCLog: TfrmRPCLog
       ShortCut = 16449
       OnExecute = acSelectAllExecute
     end
-    object FileSaveAs1: TFileSaveAs
+    object FileSave: TFileSaveAs
       Category = 'File'
       Caption = 'Save &As...'
       Dialog.DefaultExt = 'txt'
+      Dialog.Filter = 'JSON|*.json'
       Hint = 'Save As|Saves selected items in the file with a new name'
       ImageIndex = 14
-      BeforeExecute = FileSaveAs1BeforeExecute
-      OnAccept = FileSaveAs1Accept
+      BeforeExecute = FileSaveBeforeExecute
+      OnAccept = FileSaveAccept
     end
     object acSymbolTable: TAction
       Caption = 'Symbol Table'
@@ -1202,6 +1259,7 @@ inherited frmRPCLog: TfrmRPCLog
     object FileOpen1: TFileOpen
       Category = 'File'
       Caption = '&Open...'
+      Dialog.Filter = 'JSON|*.json'
       Hint = 'Open|Opens an existing file'
       ImageIndex = 15
       OnAccept = FileOpen1Accept
@@ -1212,12 +1270,14 @@ inherited frmRPCLog: TfrmRPCLog
       Hint = 'Exit|Quits the application'
       ImageIndex = 43
     end
-    object FileSaveAs2: TFileSaveAs
+    object FileSaveAll: TFileSaveAs
       Category = 'File'
       Caption = 'Save All As...'
+      Dialog.Filter = 'JSON|*.json'
       Hint = 'Save As|Saves the active file with a new name'
       ImageIndex = 30
-      OnAccept = FileSaveAs2Accept
+      BeforeExecute = FileSaveAllBeforeExecute
+      OnAccept = FileSaveAllAccept
     end
     object acTrackForms: TAction
       Caption = 'Track Forms Activation'
@@ -1254,6 +1314,12 @@ inherited frmRPCLog: TfrmRPCLog
     object acWordWrap: TAction
       Caption = '&Word Wrap'
       OnExecute = acWordWrapExecute
+    end
+    object acFormatJSON: TAction
+      Caption = 'Format JSON'
+      Checked = True
+      Hint = 'Format JSON result'
+      OnExecute = acFormatJSONExecute
     end
   end
   object ilWindow: TImageList
@@ -2375,7 +2441,7 @@ inherited frmRPCLog: TfrmRPCLog
         Action = FileOpen1
       end
       object SaveAllAs1: TMenuItem
-        Action = FileSaveAs2
+        Action = FileSaveAll
       end
       object N1: TMenuItem
         Caption = '-'

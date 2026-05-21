@@ -11,8 +11,6 @@ object frmVCEdit: TfrmVCEdit
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = True
-  PixelsPerInch = 96
   TextHeight = 13
   object lblOldVC: TLabel
     Left = 8

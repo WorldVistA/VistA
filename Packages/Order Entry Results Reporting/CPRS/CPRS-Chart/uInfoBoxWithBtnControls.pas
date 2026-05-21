@@ -12,6 +12,8 @@ function DefMessageDlg(const Msg: string; DlgType: TMsgDlgType; list: TStringLis
 
 implementation
 
+uses
+  VA508AccessibilityRouter;
 
 function DefMessageDlg(const Msg: string; DlgType: TMsgDlgType; list: TStringList;
           const aCaption: string = ''; NoDefault: Boolean = false): Integer;

@@ -76,10 +76,13 @@ procedure ForceCloseAllDLLs;
 function DllVersionCheck(DllName: string; DLLVersion: string): string;
 function GetMOBDLLName(): string;
 
-procedure SaveUserBounds(AControl: TControl; ID: string = '');
+procedure SaveUserBounds(AControl: TControl; ControlName, ID: string); overload;
+procedure SaveUserBounds(AControl: TControl; ID: string = ''); overload;
 procedure SaveUserSizes(SizingList: TStringList);
+procedure SetFormPosition(AForm: TForm; FormName, FormID: string;
+  NoShrinkAllowed: Boolean = False); overload;
 procedure SetFormPosition(AForm: TForm; FormID: string = '';
-  NoShrinkAllowed: Boolean = False);
+  NoShrinkAllowed: Boolean = False); overload;
 procedure SetUserBounds(var AControl: TControl);
 procedure SetUserBounds2(AName: string; var v1, v2, v3, v4: integer);
 //procedure SetUserBoundsArray(AName: string; var SettingArray: SettingSizeArray);
@@ -559,12 +562,12 @@ begin
   Str := uColumns.Values[StrName];
 end;
 
-procedure SaveUserBounds(AControl: TControl; ID: string = '');
+procedure SaveUserBounds(AControl: TControl; ControlName, ID: string);
 var
   x, n: string;
   NewHeight: integer;
 begin
-  n := GetControlName(AControl);
+  n := ControlName;
   if n = '' then
     exit;
   n := n + ID;
@@ -582,6 +585,11 @@ begin
   SizeHolder.SetSize(n, x);
 end;
 
+procedure SaveUserBounds(AControl: TControl; ID: string = '');
+begin
+  SaveUserBounds(AControl, GetControlName(AControl), ID);
+end;
+
 procedure SaveUserSizes(SizingList: TStringList);
 begin
   CallVistA('ORWCH SAVEALL', [SizingList]);
@@ -592,14 +600,13 @@ begin
   CallVistA('ORWCH SAVFONT', [IntToStr(FontSize)]);
 end;
 
-procedure SetFormPosition(AForm: TForm; FormID: string = '';
+procedure SetFormPosition(AForm: TForm; FormName, FormID: string;
   NoShrinkAllowed: Boolean = False);
 var
   x: string;
   kb: IORKeepBounds;
-
 begin
-  x := SizeHolder.GetSize(AForm.Name + FormID);
+  x := SizeHolder.GetSize(FormName + FormID);
   if x = '' then Exit; // allow default bounds to be passed in, else screen center?
   if (x = '0,0,0,0') then
     AForm.WindowState := wsMaximized
@@ -621,6 +628,12 @@ begin
   end;
   if AForm.GetInterface(IORKeepBounds, kb) and assigned(kb) then
     kb.KeepBounds := True;
+end;
+
+procedure SetFormPosition(AForm: TForm; FormID: string = '';
+  NoShrinkAllowed: Boolean = False);
+begin
+  SetFormPosition(AForm, AForm.Name, FormID, NoShrinkAllowed);
 end;
 
 function StrUserBounds(AControl: TControl): string;

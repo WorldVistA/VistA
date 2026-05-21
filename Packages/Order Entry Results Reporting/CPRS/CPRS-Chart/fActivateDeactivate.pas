@@ -37,6 +37,9 @@ var
 
 implementation
 
+uses
+  VAShared.UTStringsHelper;
+
 {$R *.dfm}
 
 { TfrmActivateDeactive }

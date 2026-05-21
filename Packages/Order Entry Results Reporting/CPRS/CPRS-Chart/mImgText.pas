@@ -4,10 +4,10 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls{, VA2006Utils};
+  StdCtrls, ExtCtrls{, VA2006Utils}, fBase508Frame;
 
 type
-  TfraImgText = class(TFrame)
+  TfraImgText = class(TBase508Frame)
     gp: TGridPanel;
     img: TImage;
     lblText: TStaticText;

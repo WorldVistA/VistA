@@ -3,8 +3,17 @@ unit VA508AccessibilityRouter;
 interface
 
 uses
-  SysUtils, Windows, Registry, StrUtils, Classes, Controls, Dialogs,
-  Contnrs, DateUtils, Forms, ExtCtrls;
+  SysUtils,
+  Windows,
+  Registry,
+  StrUtils,
+  Classes,
+  Controls,
+  Dialogs,
+  Contnrs,
+  DateUtils,
+  Forms,
+  ExtCtrls;
 
 type
   TComponentDataNeededEvent = procedure(const WindowHandle: HWND; var DataStatus: LongInt;
@@ -28,11 +37,13 @@ type
 
 function GetScreenReader: TVA508ScreenReader;
 
-{ TODO -oJeremy Merrill -c508 :
-if ScreenReaderSystemActive is false, but there are valid DLLs, add a recheck every 30 seconds
-to see if the screen reader is running.  in the timer event, see if DLL.IsRunning is running is true.
-if it is then pop up a message to the user (only once) and inform them that if they restart the app
-with the screen reader running it will work better.  After the popup disable the timer event. }
+// Is the screen reader installed
+function ScreenReaderInstalled: boolean;
+
+// Is the screen reader currently running
+function ScreenReaderActive: boolean;
+
+// Is the VA 508 Framework active
 function ScreenReaderSystemActive: boolean;
 
 // Only guaranteed to be valid if called in an initialization section
@@ -68,12 +79,23 @@ type
     FDataHasBeenRegistered: boolean;
     FTrying2Register: boolean;
     FKeyProc: TList;
+    class var fCheckedInstalled: Boolean;
+    class var fCheckedActive: Boolean;
+    class var fCheckedSystemActive: Boolean;
+    class var fIsInstalled: Boolean;
+    class var fIsActive: Boolean;
+    class var fIsSupportEnabled: Boolean;
+    class var fPostActivationTimer: TTimer;
+    class function GetIsActive: Boolean; static;
+    class function GetIsInstalled: Boolean; static;
+    class function GetIsSystemActive: boolean; static;
   private
     function EncodeBehavior(Before, After: string; Action: integer): string;
     procedure DecodeBehavior(code: string; var Before, After: string;
       var Action: integer);
     function RegistrationAllowed: boolean;
     procedure RegisterCustomData;
+    class procedure DoTimer(Sender: TObject);
   protected
     procedure RegisterCustomBehavior(Str1, Str2: String; Action: integer; CheckIR: boolean = FALSE);
     procedure ProcessCustomKeyCommand(DataRequest: integer);
@@ -81,6 +103,15 @@ type
   public
     constructor Create;
     destructor Destroy; override;
+    class function OnIsActive: boolean;
+    // Returns true is a screen reader is installed
+    class property IsInstalled: Boolean read GetIsInstalled;
+    // Returns true if a screen reader programm is running
+    class property IsActive: boolean read GetIsActive;
+    // returns true is the screen reader framework was loaded
+    class property IsSystemActive: Boolean
+      read GetIsSystemActive;
+    class property PostActivationTimer: TTimer read fPostActivationTimer write fPostActivationTimer;
     procedure HandleSRException(E: Exception);
     procedure Speak(Text: string); override;
     procedure RegisterDictionaryChange(Before, After: string); override;
@@ -99,12 +130,12 @@ var
   SaveInitProc: Pointer = nil;
   Need2RegisterData: boolean = FALSE;
   OK2RegisterData: boolean = FALSE;
-  CheckScreenReaderSystemActive: boolean = TRUE;
-  uScreenReaderSystemActive: boolean = FALSE;
-  uPostScreenReaderActivationTimer: TTimer = nil;
 
 const
-// number of seconds between checks for a screen reader
+  JAWS_EXENAME = 'jfw.exe';
+  JAWS_FORCED = 'FORCEJAWS';
+  JAWS_CL_EXE_SW = 'SCREADER';
+  // number of seconds between checks for a screen reader
   POST_SCREEN_READER_ACTIVATION_CHECK_SECONDS = 30;
 
   POST_SCREEN_READER_INFO_MESSAGE = ERROR_INTRO +
@@ -143,67 +174,19 @@ begin
   Result := ActiveScreenReader;
 end;
 
-procedure PostScreenReaderCheckEvent(Self: TObject; Sender: TObject);
-var
-  AppName, ext, error: string;
+function ScreenReaderInstalled: boolean;
 begin
-  if ScreenReaderActive then
-  begin
-    FreeAndNil(uPostScreenReaderActivationTimer);
-    if IsScreenReaderSupported(TRUE) then
-    begin
-      AppName := ExtractFileName(ParamStr(0));
-      ext := ExtractFileExt(AppName);
-      AppName := LeftStr(AppName, length(AppName) - Length(ext));
-      error := Format(POST_SCREEN_READER_INFO_MESSAGE, [AppName]);
-      MessageBox(0, PChar(error), 'Accessibility Component Information',
-        MB_OK or MB_ICONINFORMATION or MB_TASKMODAL or MB_TOPMOST);
-    end;
-  end;
+  result := TMasterScreenReader.IsInstalled;
 end;
 
-function ScreenReaderSystemActive: boolean;
-
-  procedure CreateTimer;
-  var
-    ptr: TMethod;
-  begin
-    uPostScreenReaderActivationTimer := TTimer.Create(nil);
-    with uPostScreenReaderActivationTimer do
-    begin
-      Enabled := FALSE;
-      Interval := 1000 * POST_SCREEN_READER_ACTIVATION_CHECK_SECONDS;
-      ptr.Code := @PostScreenReaderCheckEvent;
-      ptr.Data := @ptr;
-      OnTimer := TNotifyEvent(ptr);
-      Enabled := TRUE;
-    end;
-  end;
-
+function ScreenReaderActive: Boolean;
 begin
-  if CheckScreenReaderSystemActive then
-  begin
-    CheckScreenReaderSystemActive := FALSE;
-    // prevent Delphi IDE from running DLL
-    if LowerCase(ExtractFileName(ParamStr(0))) <> 'bds.exe' then
-      uScreenReaderSystemActive := ScreenReaderDLLsExist;
-    if uScreenReaderSystemActive then
-    begin
-      if CheckForJaws and ScreenReaderSupportEnabled then
-      begin
-        if IsScreenReaderSupported(FALSE) then
-          uScreenReaderSystemActive := InitializeScreenReaderLink
-        else
-          uScreenReaderSystemActive := FALSE;
-      end
-      else
-      begin
-        uScreenReaderSystemActive := FALSE;
-        CreateTimer;
-      end;
-    end;
-  end;
-  Result := uScreenReaderSystemActive;
+  result := TMasterScreenReader.IsActive;
+end;
+
+function ScreenReaderSystemActive: Boolean;
+begin
+ result := TMasterScreenReader.IsSystemActive;
 end;
 
 procedure SpecifyFormIsNotADialog(FormClass: TClass);
@@ -598,16 +581,144 @@ procedure TNullScreenReader.Speak(Text: string);
 begin
 end;
 
+class procedure TMasterScreenReader.DoTimer(Sender: TObject);
+var
+  AppName, ext, error: string;
+begin
+  if IsActive then
+  begin
+    FreeAndNil(TMasterScreenReader.PostActivationTimer);
+    if IsScreenReaderSupported(TRUE) then
+    begin
+      AppName := ExtractFileName(ParamStr(0));
+      ext := ExtractFileExt(AppName);
+      AppName := LeftStr(AppName, length(AppName) - Length(ext));
+      error := Format(POST_SCREEN_READER_INFO_MESSAGE, [AppName]);
+      MessageBox(0, PChar(error), 'Accessibility Component Information',
+        MB_OK or MB_ICONINFORMATION or MB_TASKMODAL or MB_TOPMOST);
+    end;
+  end;
+end;
+
+class function TMasterScreenReader.GetIsActive: boolean;
+var
+  JawsParam: String;
+begin
+  if not fCheckedActive then
+  begin
+    fCheckedActive := TRUE; // we only want to do this check once.
+
+    fIsActive := FindCmdLineSwitch(JAWS_FORCED, TRUE);
+    if not fIsActive then
+    begin
+      fIsActive := VAUTILS.ProcessExists(JAWS_EXENAME);
+      if not fIsActive then
+      begin
+        FindCmdLineSwitch(JAWS_CL_EXE_SW, JawsParam, TRUE, [clstValueAppended]);
+        JawsParam := trim(JawsParam);
+
+        if JawsParam <> '' then
+          fIsActive := ProcessExists(JawsParam);
+      end;
+    end;
+  end;
+  Result := fIsActive;
+end;
+
+class function TMasterScreenReader.GetIsInstalled: Boolean;
+const
+  JAWS_REGROOT = 'SOFTWARE\Freedom Scientific\JAWS';
+var
+  reg: TRegistry;
+begin
+  if not fCheckedInstalled then
+  begin
+    fCheckedInstalled := True; // we only want to do this check once.
+
+    // check if JAWS has been installed by looking at the registry
+    reg := TRegistry.Create(KEY_READ or KEY_WOW64_64KEY);
+    try
+      reg.RootKey := HKEY_LOCAL_MACHINE;
+      fIsInstalled := reg.KeyExists(JAWS_REGROOT);
+    finally
+      reg.Free;
+    end;
+  end;
+  Result := fIsInstalled;
+end;
+
+class function TMasterScreenReader.GetIsSystemActive: boolean;
+{ TODO -oJeremy Merrill -c508 :
+if ScreenReaderSystemActive is false, but there are valid DLLs, add a recheck every 30 seconds
+to see if the screen reader is running.  in the timer event, see if DLL.IsRunning is running is true.
+if it is then pop up a message to the user (only once) and inform them that if they restart the app
+with the screen reader running it will work better.  After the popup disable the timer event. }
+const
+  JAWS_FRAMEWORK_MISSING = ERROR_INTRO +
+    ' The application was unable to locate and load the Accessibility Framework.'
+    + CRLF + 'This application will not be fully 508 compliant and may not read correctly.'
+    + CRLF + 'Please contact your local help desk for assistance.';
+
+  procedure CreateTimer;
+  begin
+    fPostActivationTimer := TTimer.Create(nil);
+    fPostActivationTimer.OnTimer := dotimer;
+    with fPostActivationTimer do
+    begin
+      Enabled := FALSE;
+      Interval := 1000 * POST_SCREEN_READER_ACTIVATION_CHECK_SECONDS;
+      OnTimer := DoTimer;
+      Enabled := TRUE;
+    end;
+  end;
+
+  Function OpeningIDE: boolean;
+  begin
+    Result := LowerCase(ExtractFileName(ParamStr(0))) = 'bds.exe';
+  end;
+
+begin
+  if not fCheckedSystemActive then
+  begin
+    fCheckedSystemActive := TRUE;
+    // prevent Delphi IDE from running DLL
+    if (not OpeningIDE) and ScreenReaderDLLsExist then
+    begin
+      if CheckForJaws and ScreenReaderActive then
+      begin
+        if IsScreenReaderSupported(FALSE) then
+          fIsSupportEnabled := InitializeScreenReaderLink
+        else
+          fIsSupportEnabled := FALSE;
+      end
+      else
+      begin
+        fIsSupportEnabled := FALSE;
+        CreateTimer;
+      end;
+    end
+    else if (not OpeningIDE) and IsActive then
+      ShowMessage(JAWS_FRAMEWORK_MISSING);
+  end;
+  Result := fIsSupportEnabled;
+end;
+
+class function TMasterScreenReader.OnIsActive: boolean;
+begin
+ Result := IsActive;
+end;
+
 initialization
   SaveInitProc := InitProc;
   InitProc := @VA508RouterInitProc;
+  VaUtils.TScreenReaderCallback.OnIsActive := TMasterScreenReader.OnIsActive;
 
 finalization
   if assigned(ActiveScreenReader) then
     FreeAndNil(ActiveScreenReader);
   if assigned(uNonDialogClassNames) then
     FreeAndNil(uNonDialogClassNames);
-  if assigned(uPostScreenReaderActivationTimer) then
-    FreeAndNil(uPostScreenReaderActivationTimer);
+  if assigned(TMasterScreenReader.PostActivationTimer) then
+    FreeAndNil(TMasterScreenReader.PostActivationTimer);
 
 end.

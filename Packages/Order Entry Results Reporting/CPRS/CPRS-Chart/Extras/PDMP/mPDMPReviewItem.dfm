@@ -1,4 +1,4 @@
-object frPDMPReviewItem: TfrPDMPReviewItem
+inherited frPDMPReviewItem: TfrPDMPReviewItem
   Left = 0
   Top = 0
   Width = 461

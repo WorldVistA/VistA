@@ -6,10 +6,10 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
-  Vcl.ExtCtrls;
+  Vcl.ExtCtrls, fBase508Frame;
 
 type
-  TfrPDMPReviewOptions = class(TFrame)
+  TfrPDMPReviewOptions = class(TBase508Frame)
     sbPDMP: TScrollBox;
     gbPDMP: TGroupBox;
     procedure FrameResize(Sender: TObject);

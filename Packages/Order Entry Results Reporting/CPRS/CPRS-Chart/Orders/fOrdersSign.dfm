@@ -5,13 +5,13 @@ inherited frmSignOrders: TfrmSignOrders
   ClientHeight = 515
   ClientWidth = 672
   Constraints.MinWidth = 500
-  OldCreateOrder = True
   Position = poScreenCenter
+  StyleElements = [seFont, seClient, seBorder]
   OnHelp = nil
-  OnMouseMove = FormMouseMove
+  OnResize = ORFormResize
+  OldCreateOrder = True
   ExplicitWidth = 688
   ExplicitHeight = 554
-  PixelsPerInch = 96
   TextHeight = 13
   object pnlDEAText: TPanel [0]
     AlignWithMargins = True
@@ -180,27 +180,11 @@ inherited frmSignOrders: TfrmSignOrders
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        object lblOrderList: TStaticText
-          AlignWithMargins = True
-          Left = 0
-          Top = 0
-          Width = 664
-          Height = 17
-          Margins.Left = 0
-          Margins.Top = 0
-          Margins.Right = 0
-          Align = alTop
-          Caption = 'All Orders Except Controlled Substance EPCS Orders'
-          DoubleBuffered = True
-          ParentDoubleBuffered = False
-          TabOrder = 0
-        end
         object clstOrders: TCaptionCheckListBox
           Left = 0
-          Top = 20
+          Top = 17
           Width = 664
-          Height = 65
-          OnClickCheck = clstOrdersClickCheck
+          Height = 68
           Align = alClient
           DoubleBuffered = True
           ParentDoubleBuffered = False
@@ -208,11 +192,37 @@ inherited frmSignOrders: TfrmSignOrders
           ShowHint = True
           Style = lbOwnerDrawVariable
           TabOrder = 1
+          OnClickCheck = clstOrdersClickCheck
           OnDrawItem = clstOrdersDrawItem
           OnKeyUp = clstOrdersKeyUp
           OnMeasureItem = clstOrdersMeasureItem
-          OnMouseMove = clstOrdersMouseMove
           Caption = 'The following orders will be signed -'
+        end
+        object pnlNCSTop: TPanel
+          Left = 0
+          Top = 0
+          Width = 664
+          Height = 17
+          Align = alTop
+          BevelOuter = bvNone
+          Caption = 'pnlNCSTop'
+          ShowCaption = False
+          TabOrder = 0
+          object lblOrderList: TStaticText
+            AlignWithMargins = True
+            Left = 0
+            Top = 0
+            Width = 254
+            Height = 14
+            Margins.Left = 0
+            Margins.Top = 0
+            Margins.Right = 0
+            Align = alLeft
+            Caption = 'All Orders Except Controlled Substance EPCS Orders'
+            DoubleBuffered = True
+            ParentDoubleBuffered = False
+            TabOrder = 0
+          end
         end
       end
       object pnlCSOrderList: TPanel
@@ -238,16 +248,15 @@ inherited frmSignOrders: TfrmSignOrders
           Margins.Top = 4
           Margins.Right = 4
           Margins.Bottom = 4
-          OnClickCheck = clstOrdersClickCheck
           Align = alClient
           DoubleBuffered = True
           ParentDoubleBuffered = False
           Style = lbOwnerDrawVariable
-          TabOrder = 0
+          TabOrder = 1
+          OnClickCheck = clstOrdersClickCheck
           OnDrawItem = clstOrdersDrawItem
           OnKeyUp = clstOrdersKeyUp
           OnMeasureItem = clstOrdersMeasureItem
-          OnMouseMove = clstOrdersMouseMove
           Caption = 'The following orders will be signed -'
         end
         object pnlCSTop: TPanel
@@ -257,7 +266,7 @@ inherited frmSignOrders: TfrmSignOrders
           Height = 17
           Align = alTop
           BevelOuter = bvNone
-          TabOrder = 2
+          TabOrder = 0
           object lblCSOrderList: TStaticText
             Left = 0
             Top = 0
@@ -293,8 +302,6 @@ inherited frmSignOrders: TfrmSignOrders
             ParentFont = False
             TabOrder = 1
             Transparent = False
-            ExplicitLeft = 179
-            ExplicitTop = -4
           end
         end
       end
@@ -313,6 +320,8 @@ inherited frmSignOrders: TfrmSignOrders
     BevelOuter = bvNone
     DoubleBuffered = True
     ParentDoubleBuffered = False
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 3
     object pnlProvInfo: TPanel
       Left = 0
@@ -372,25 +381,30 @@ inherited frmSignOrders: TfrmSignOrders
             Control = fraCoPay.pnlRight
             Row = 0
           end>
+        StyleElements = [seFont, seClient, seBorder]
         ExplicitWidth = 479
         ExplicitHeight = 209
         inherited pnlSCandRD: TPanel
           Width = 240
           Height = 209
+          StyleElements = [seFont, seClient, seBorder]
           ExplicitWidth = 240
           ExplicitHeight = 209
           inherited lblSCDisplay: TLabel
             Width = 234
-            ExplicitWidth = 412
+            StyleElements = [seFont, seClient, seBorder]
+            ExplicitWidth = 234
           end
           inherited pnlBorderLeft: TPanel
             Width = 240
             Height = 187
+            StyleElements = [seFont, seClient, seBorder]
             ExplicitWidth = 240
             ExplicitHeight = 187
             inherited memSCDisplay: TCaptionMemo
               Width = 234
               Height = 181
+              StyleElements = [seFont, seClient, seBorder]
               ExplicitWidth = 234
               ExplicitHeight = 181
             end
@@ -400,6 +414,7 @@ inherited frmSignOrders: TfrmSignOrders
           Left = 240
           Width = 239
           Height = 209
+          StyleElements = [seFont, seClient, seBorder]
           ExplicitLeft = 240
           ExplicitWidth = 239
           ExplicitHeight = 209
@@ -410,187 +425,20 @@ inherited frmSignOrders: TfrmSignOrders
           inherited pnlBorderRight: TPanel
             Width = 239
             Height = 186
+            StyleElements = [seFont, seClient, seBorder]
             ExplicitWidth = 239
             ExplicitHeight = 186
-            inherited gpRight: TGridPanel
+            inherited sbRight: TScrollBox
               Width = 233
               Height = 180
-              ControlCollection = <
-                item
-                  Column = 0
-                  Control = fraCoPay.lblAO
-                  Row = 0
-                end
-                item
-                  Column = 1
-                  Control = fraCoPay.lblAO2
-                  Row = 0
-                end
-                item
-                  Column = 0
-                  Control = fraCoPay.lblSC
-                  Row = 1
-                end
-                item
-                  Column = 1
-                  Control = fraCoPay.lblSC2
-                  Row = 1
-                end
-                item
-                  Column = 0
-                  Control = fraCoPay.lblCV
-                  Row = 2
-                end
-                item
-                  Column = 1
-                  Control = fraCoPay.lblCV2
-                  Row = 2
-                end
-                item
-                  Column = 0
-                  Control = fraCoPay.lblIR
-                  Row = 3
-                end
-                item
-                  Column = 1
-                  Control = fraCoPay.lblIR2
-                  Row = 3
-                end
-                item
-                  Column = 0
-                  Control = fraCoPay.lblSWAC
-                  Row = 4
-                end
-                item
-                  Column = 1
-                  Control = fraCoPay.lblSWAC2
-                  Row = 4
-                end
-                item
-                  Column = 0
-                  Control = fraCoPay.lblSHAD
-                  Row = 5
-                end
-                item
-                  Column = 1
-                  Control = fraCoPay.lblSHAD2
-                  Row = 5
-                end
-                item
-                  Column = 0
-                  Control = fraCoPay.lblMST
-                  Row = 6
-                end
-                item
-                  Column = 1
-                  Control = fraCoPay.lblMST2
-                  Row = 6
-                end
-                item
-                  Column = 0
-                  Control = fraCoPay.lblHNC
-                  Row = 7
-                end
-                item
-                  Column = 1
-                  Control = fraCoPay.lblHNC2
-                  Row = 7
-                end
-                item
-                  Column = 0
-                  Control = fraCoPay.lblCL
-                  Row = 8
-                end
-                item
-                  Column = 1
-                  Control = fraCoPay.lblCL2
-                  Row = 8
-                end>
               ExplicitWidth = 233
               ExplicitHeight = 180
-              inherited lblAO: TVA508StaticText
-                Left = 27
-                Width = 23
-                ExplicitWidth = 23
-                ExplicitHeight = 19
-              end
-              inherited lblAO2: TVA508StaticText
-                Width = 118
-                ExplicitWidth = 118
-                ExplicitHeight = 19
-              end
-              inherited lblSC: TVA508StaticText
-                ExplicitHeight = 19
-              end
-              inherited lblSC2: TVA508StaticText
-                ExplicitHeight = 19
-              end
-              inherited lblCV: TVA508StaticText
-                ExplicitHeight = 19
-              end
-              inherited lblCV2: TVA508StaticText
-                Width = 145
-                ExplicitWidth = 145
-                ExplicitHeight = 19
-              end
-              inherited lblIR: TVA508StaticText
-                Left = 31
-                Width = 19
-                ExplicitWidth = 19
-                ExplicitHeight = 19
-              end
-              inherited lblIR2: TVA508StaticText
-                Width = 136
-                ExplicitWidth = 136
-                ExplicitHeight = 19
-              end
-              inherited lblSWAC: TVA508StaticText
-                Left = 10
-                Width = 40
-                ExplicitWidth = 40
-                ExplicitHeight = 19
-              end
-              inherited lblSWAC2: TVA508StaticText
-                Width = 130
-                ExplicitWidth = 130
-                ExplicitHeight = 19
-              end
-              inherited lblSHAD: TVA508StaticText
-                Left = 19
-                Width = 31
-                ExplicitWidth = 31
-                ExplicitHeight = 19
-              end
-              inherited lblSHAD2: TVA508StaticText
-                ExplicitHeight = 19
-              end
-              inherited lblMST: TVA508StaticText
-                Left = 19
-                Width = 31
-                ExplicitWidth = 31
-                ExplicitHeight = 19
-              end
-              inherited lblMST2: TVA508StaticText
-                Width = 28
-                ExplicitWidth = 28
-                ExplicitHeight = 19
-              end
-              inherited lblHNC: TVA508StaticText
-                Left = 19
-                Width = 31
-                ExplicitWidth = 31
-                ExplicitHeight = 19
-              end
-              inherited lblHNC2: TVA508StaticText
-                Width = 132
-                ExplicitWidth = 132
-                ExplicitHeight = 19
-              end
-              inherited lblCL: TVA508StaticText
-                ExplicitHeight = 19
-              end
-              inherited lblCL2: TVA508StaticText
-                ExplicitHeight = 19
+              inherited gpRight: TGridPanel
+                Width = 229
+                StyleElements = [seFont, seClient, seBorder]
+                ExplicitLeft = 0
+                ExplicitTop = 0
+                ExplicitWidth = 229
               end
             end
           end
@@ -684,61 +532,10 @@ inherited frmSignOrders: TfrmSignOrders
         'Component = fraCoPay.gpRight'
         'Status = stsDefault')
       (
-        'Component = fraCoPay.lblAO'
-        'Status = stsDefault')
-      (
-        'Component = fraCoPay.lblAO2'
-        'Status = stsDefault')
-      (
-        'Component = fraCoPay.lblSC'
-        'Status = stsDefault')
-      (
-        'Component = fraCoPay.lblSC2'
-        'Status = stsDefault')
-      (
-        'Component = fraCoPay.lblCV'
-        'Status = stsDefault')
-      (
-        'Component = fraCoPay.lblCV2'
-        'Status = stsDefault')
-      (
-        'Component = fraCoPay.lblIR'
-        'Status = stsDefault')
-      (
-        'Component = fraCoPay.lblIR2'
-        'Status = stsDefault')
-      (
-        'Component = fraCoPay.lblSWAC'
-        'Status = stsDefault')
-      (
-        'Component = fraCoPay.lblSWAC2'
-        'Status = stsDefault')
-      (
-        'Component = fraCoPay.lblSHAD'
-        'Status = stsDefault')
-      (
-        'Component = fraCoPay.lblSHAD2'
-        'Status = stsDefault')
-      (
-        'Component = fraCoPay.lblMST'
-        'Status = stsDefault')
-      (
-        'Component = fraCoPay.lblMST2'
-        'Status = stsDefault')
-      (
-        'Component = fraCoPay.lblHNC'
-        'Status = stsDefault')
-      (
-        'Component = fraCoPay.lblHNC2'
-        'Status = stsDefault')
-      (
-        'Component = fraCoPay.lblCL'
-        'Status = stsDefault')
-      (
-        'Component = fraCoPay.lblCL2'
-        'Status = stsDefault')
-      (
         'Component = pnlCSTop'
+        'Status = stsDefault')
+      (
+        'Component = pnlNCSTop'
         'Status = stsDefault'))
   end
 end

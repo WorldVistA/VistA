@@ -13,7 +13,6 @@ uses
 
 type
   TIDItem = class(TCollectionItem)
-  private
   public
     IDString: String;
     Caption, PublicName: String;
@@ -93,6 +92,8 @@ type
     Procedure CheckSurrogateUpdated;
     procedure Init508;
     procedure Update508;
+  protected
+    procedure SetParent(AParent: TWinControl); override;
   public
     property OnChange: TNotifyEvent read FOnChange write FOnChange;
     property SurrogateUpdated: Boolean read fSurrogateUpdated
@@ -115,7 +116,8 @@ implementation
 uses rOptions, uOptions, rCore, fSurrogateEdit, System.UITypes, fOptions,
   uConst, ORDtTm, System.Math,
   VAUtils, UCaptionListView508Manager,
-  System.DateUtils;
+  System.DateUtils, VA508AccessibilityRouter,
+  uMisc, Generics.Collections;
 
 {$R *.DFM}
 
@@ -546,7 +548,7 @@ var
   i: Integer;
   IDItem, IDPrev: TIDItem;
 begin
-  if clvSurrogates.Items.Count < 1 then
+  if clvSurrogates.Items.Count <= 1 then
     exit;
   i := 1;
   IDPrev := TIDItem(clvSurrogates.Items[0].Data);
@@ -874,7 +876,7 @@ begin
   begin
     btnSurrEdit.Enabled := True;
     IDItem := TIDItem(clvSurrogates.Items[clvSurrogates.ItemIndex].Data);
-    if assigned(IDItem) then
+    if Assigned(IDItem) then
     begin
       btnRemove.Enabled := not IDItem.IsOpen;
       if btnRemove.Enabled then
@@ -892,6 +894,35 @@ begin
       ShowMessage('Item should be assigned!...');
   end;
   Update508;
+end;
+
+procedure TfrmOptionsSurrogate.SetParent(AParent: TWinControl);
+var
+  I: Integer;
+  AList: TList<TCustomData>;
+begin
+  if (not Assigned(clvSurrogates)) or (clvSurrogates.Items.Count <= 0) then
+  begin
+    inherited
+  end else begin
+    AList := TList<TCustomData>.Create;
+    try
+      for I := 0 to clvSurrogates.Items.Count - 1 do
+          AList.Add(clvSurrogates.Items[I].Data);
+      inherited;
+      for I := 0 to AList.Count - 1 do
+      begin
+        if IsObject(AList[I]) and (TObject(AList[I]) is TIDItem) then
+        begin
+          TIDItem(AList[I]).setListItem(clvSurrogates.Items[I]);
+        end else begin
+          clvSurrogates.Items[I].Data := AList[I];
+        end;
+      end;
+    finally
+      FreeAndNil(AList);
+    end;
+  end;
 end;
 
 function TfrmOptionsSurrogate.ListViewToRaw: String;

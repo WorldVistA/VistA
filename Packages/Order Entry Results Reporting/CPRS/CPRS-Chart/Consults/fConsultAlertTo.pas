@@ -3,13 +3,14 @@ unit fConsultAlertTo;
 interface
 
 uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls, 
-  Buttons, ORCtrls, ORfn, ExtCtrls, fBase508Form, VA508AccessibilityManager;
+  Buttons, ORCtrls, ORfn, ExtCtrls, fBase508Form, VA508AccessibilityManager,
+  ORCheckComboBox;
 
 type
   TfrmConsultAlertsTo = class(TfrmBase508Form)
     cmdOK: TButton;
     cmdCancel: TButton;
-    cboSrcList: TORComboBox;
+    cboSrcList: TORCheckComboBox;
     DstList: TORListBox;
     SrcLabel: TLabel;
     DstLabel: TLabel;
@@ -25,6 +26,8 @@ type
     procedure cboSrcListKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure DstListClick(Sender: TObject);
     procedure cboSrcListMouseClick(Sender: TObject);
+    procedure cboSrcListMainCheckboxClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     FActionType: integer;
     FRecipients: string ;
@@ -42,7 +45,8 @@ implementation
 
 {$R *.DFM}
 
-uses rConsults, rCore, uCore, uConsults, fConsults, uORLists, uSimilarNames;
+uses rConsults, rCore, uCore, uConsults, fConsults, uORLists, uSimilarNames,
+  uMisc;
 
 const
   TX_RCPT_TEXT = 'Select recipients or press Cancel.';
@@ -124,10 +128,25 @@ begin
      DstList.Items.Delete(DstList.ItemIndex) ;
 end;
 
+procedure TfrmConsultAlertsTo.FormCreate(Sender: TObject);
+begin
+  inherited;
+  cboSrcList.MainCheckBoxVisible := IncludeNonVAProviders(cboSrcList);
+end;
+
 procedure TfrmConsultAlertsTo.cboSrcListKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key = VK_RETURN then cboSrcListMouseClick(Self);
+end;
+
+procedure TfrmConsultAlertsTo.cboSrcListMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := cboSrcList.SelectedDataString;
+  cboSrcList.ReInitLongList;
+  if ALastData <> cboSrcList.SelectedDataString then
+    cboSrcListMouseClick(cboSrcList);
 end;
 
 procedure TfrmConsultAlertsTo.cboSrcListMouseClick(Sender: TObject);

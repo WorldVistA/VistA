@@ -5,19 +5,14 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ExtCtrls, System.Actions, Vcl.ActnList, ComCtrls,
-  ORFN, ORCtrls, ORDtTm, fBase508Form, VA508AccessibilityManager, oDST;
+  ORFN, ORCtrls, ORDtTm, fBase508Form, VA508AccessibilityManager, oDST,
+  ORCheckComboBox;
 
 type
   TfrmConsultAction = class(TfrmBase508Form)
-    lblActionBy: TOROffsetLabel;
-    calDateofAction: TORDateBox;
-    lblDateofAction: TOROffsetLabel;
-    cboPerson: TORComboBox;
     memComments: TCaptionMemo;
     lblComments: TOROffsetLabel;
     lblToService: TOROffsetLabel;
-    cboAttentionOf: TORComboBox;
-    lblAttentionOf: TOROffsetLabel;
     lblUrgency: TOROffsetLabel;
     cmdOK: TORAlignButton;
     cmdCancel: TORAlignButton;
@@ -27,7 +22,6 @@ type
     pnlOther: TPanel;
     treService: TORTreeView;
     pnlComments: TPanel;
-    pnlAllActions: TPanel;
     grpSigFindings: TRadioGroup;
     pnlSigFind: TPanel;
     cboService: TORComboBox;
@@ -36,15 +30,16 @@ type
     Label1: TMemo;
     lblAutoAlerts: TStaticText;
     pnlButtons: TPanel;
-    pnlActionDate: TPanel;
-    pnlActionBy: TPanel;
     btnLaunchToolbox: TButton;
+    pnlAll: TGridPanel;
+    lblAttentionOf: TOROffsetLabel;
+    lblDateofAction: TOROffsetLabel;
+    lblActionBy: TOROffsetLabel;
+    cboAttentionOf: TORCheckComboBox;
+    calDateofAction: TORDateBox;
+    cboPerson: TORCheckComboBox;
     procedure cmdCancelClick(Sender: TObject);
     procedure cmdOKClick(Sender: TObject);
-    procedure NewPersonNeedData(Sender: TObject; const StartFrom: string;
-      Direction, InsertAt: Integer);
-    procedure ProviderNeedData(Sender: TObject; const StartFrom: string;
-      Direction, InsertAt: Integer);
     procedure ckAlertClick(Sender: TObject);
     procedure treServiceChange(Sender: TObject; Node: TTreeNode);
     procedure cboServiceSelect(Sender: TObject);
@@ -55,6 +50,12 @@ type
     procedure ControlChange(Sender: TObject);
     procedure btnLaunchToolboxClick(Sender: TObject);
     procedure ORFormResize(Sender: TObject);
+    procedure cboAttentionOfMainCheckboxClick(Sender: TObject);
+    procedure cboPersonMainCheckboxClick(Sender: TObject);
+    procedure cboAttentionOfNeedData(Sender: TObject; const StartFrom: string;
+      Direction, InsertAt: Integer);
+    procedure cboPersonNeedData(Sender: TObject; const StartFrom: string;
+      Direction, InsertAt: Integer);
   private
     FActionType: Integer;
     FChanged: boolean;
@@ -127,7 +128,7 @@ implementation
 
 uses
   VAUtils, fConsultAlertTo, rCore, rConsults, uConsults, fConsults, rOrders,
-  uCore, uORLists, uSimilarNames, uDstConst;
+  uCore, uORLists, uSimilarNames, uDstConst, uMisc, VA508AccessibilityRouter;
 
 var
   uChanging: boolean;
@@ -207,7 +208,6 @@ var
   SvcList: TStrings;
   i: Integer;
   OrdItmIEN: Integer;
-  attention: string; // wat cq 15561
   AList: TStringList; { WAT cq 19626 }
 begin
   AList := TStringList.Create;
@@ -281,23 +281,18 @@ begin
          end;
        end;
      pnlForward.Visible := True ;
-   end ;
- if cboService.Items.Count = 1 then cboService.ItemIndex := 0;
- FToService := cboService.ItemIEN;
- //wat cq 15561
- //cboAttentionOf.InitLongList('') ;
- FAttentionOf := ConsultRec.Attention;
- attention := ExternalName(FAttentionOf,200);
- cboAttentionOf.InitLongList(attention);
- cboAttentionOf.SelectByIEN(FAttentionOf);
- TSimilarNames.RegORComboBox(cboAttentionOf);
- //end cq 15561
- with cboUrgency do
-  begin
-    setSubsetofUrgencies(cboUrgency.Items, ConsultRec.IEN);
-    MixedCaseList(Items) ;
-    SelectByIEN(ConsultRec.Urgency);
-    if ItemIndex = -1 then
+    end ;
+    if cboService.Items.Count = 1 then cboService.ItemIndex := 0;
+    FToService := cboService.ItemIEN;
+    //wat cq 15561
+    FAttentionOf := ConsultRec.Attention;
+    //end cq 15561
+    with cboUrgency do
+    begin
+      setSubsetofUrgencies(cboUrgency.Items, ConsultRec.IEN);
+      MixedCaseList(Items) ;
+      SelectByIEN(ConsultRec.Urgency);
+      if ItemIndex = -1 then
       begin
         for i := 0 to Items.Count - 1 do
           if DisplayText[i] = 'Routine' then
@@ -306,17 +301,7 @@ begin
       end;
     end;
     FUrgency := cboUrgency.ItemIEN;
-{    if cboUrgency.Text = 'Special Instructions' then
-      cboUrgency.Enabled := False
-    else
-    begin
-      cboUrgency.Items.BeginUpdate;
-      for i := cboUrgency.Items.Count - 1 downto 0 do
-        if cboUrgency.DisplayText[i] = 'Special Instructions' then
-          cboUrgency.Items.Delete(i);
-      cboUrgency.Items.EndUpdate;
-    end;
-}
+
     setSigFindings(False); // pnlSigFind.Visible := False;
     setAutoAlerts(False);
     setActions(True, 'Responsible Person');
@@ -409,24 +394,6 @@ end;
 
 // ============================= Control events ================================
 
-procedure TfrmConsultAction.NewPersonNeedData(Sender: TObject;
-  const StartFrom: string; Direction, InsertAt: Integer);
-var
-  sl: TStrings;
-  cbo: TORComboBox;
-
-begin
-  inherited;
-  sl := TStringList.Create;
-  try
-    cbo := (Sender as TORComboBox);
-    setSubSetOfPersons(cbo, sl, StartFrom, Direction);
-    cbo.ForDataUse(sl);
-  finally
-    sl.Free;
-  end;
-end;
-
 procedure TfrmConsultAction.ORFormResize(Sender: TObject);
 var
   ARect: TRect;
@@ -437,23 +404,12 @@ begin
     lblAutoAlerts.Height := aRect.Height;
   end;
   inherited;
-end;
-
-procedure TfrmConsultAction.ProviderNeedData(Sender: TObject;
-  const StartFrom: string; Direction, InsertAt: Integer);
-var
-  sl: TStrings;
-  cbo: TORComboBox;
-
-begin
-  inherited;
-  sl := TStringList.Create;
-  try
-    cbo := (Sender as TORComboBox);
-    setSubSetOfProviders(cbo, sl, StartFrom, Direction);
-    cbo.ForDataUse(sl);
-  finally
-    sl.Free;
+  if pnlForward.Visible then
+  begin
+    pnlAll.ColumnCollection.BeginUpdate;
+    pnlAll.ColumnCollection[0].Value := pnlForward.Width +
+       pnlForward.Margins.Left + pnlForward.Margins.Right;
+    pnlAll.ColumnCollection.EndUpdate;
   end;
 end;
 
@@ -595,6 +551,9 @@ procedure TfrmConsultAction.FormCreate(Sender: TObject);
 begin
   inherited;
   GetDstMgr(DST_CASE_CONSULT_ACT); // init DST manager with the case name
+  // adjust height in runtime, design time is resetting
+  cboAttentionOf.MainCheckBoxVisible := IncludeNonVAProviders(cboAttentionOf);
+  cboPerson.MainCheckBoxVisible := IncludeNonVAProviders(cboPerson);
 end;
 
 procedure TfrmConsultAction.FormDestroy(Sender: TObject);
@@ -743,6 +702,32 @@ begin
   end;
 end;
 
+procedure TfrmConsultAction.cboAttentionOfMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  cboAttentionOf.ReInitLongList;
+end;
+
+procedure TfrmConsultAction.cboAttentionOfNeedData(Sender: TObject;
+  const StartFrom: string; Direction, InsertAt: Integer);
+begin
+  inherited;
+  setProviderList(cboAttentionOf, StartFrom, Direction);
+end;
+
+procedure TfrmConsultAction.cboPersonMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  cboPerson.ReInitLongList;
+end;
+
+procedure TfrmConsultAction.cboPersonNeedData(Sender: TObject;
+  const StartFrom: string; Direction, InsertAt: Integer);
+begin
+  inherited;
+  setPersonList(cboPerson, StartFrom, Direction);
+end;
+
 procedure TfrmConsultAction.cboServiceSelect(Sender: TObject);
 var
   i: Integer;
@@ -884,19 +869,31 @@ end;
 
 procedure TfrmConsultAction.setActions(bVisible: boolean; aTitle: String = '');
 begin
-  pnlAllActions.Visible := bVisible;
+  // pnlAllActions.Visible := bVisible;
+  lblActionBy.Visible := bVisible;
+  cboPerson.Visible := bVisible;
+  // pnlAllActions
   if bVisible then
   begin
     if aTitle <> '' then
       lblActionBy.Caption := aTitle;
 
     cboPerson.Caption := lblActionBy.Caption;
-    cboPerson.OnNeedData := NewPersonNeedData; //
     cboPerson.InitLongList(User.Name);
     cboPerson.SelectByIEN(User.DUZ);
     TSimilarNames.RegORComboBox(cboPerson);
+
+    cboAttentionOf.InitLongList(ExternalName(ConsultRec.Attention, 200));
+    cboAttentionOf.SelectByIEN(ConsultRec.Attention);
+    TSimilarNames.RegORComboBox(cboAttentionOf);
+
     if FActionType in [CN_ACT_ADD_CMT, CN_ACT_SIGFIND] then
-      pnlActionBy.Visible := False;
+    begin
+      // pnlAllActions.Visible := bVisible;
+      lblActionBy.Visible := False;
+      cboPerson.Visible := False;
+      // pnlAllActions
+    end;
   end;
 end;
 

@@ -41,7 +41,7 @@ inherited frmPCEProvider: TfrmPCEProvider
     ReadOnly = True
     TabOrder = 4
   end
-  object cboPrimary: TORComboBox [2]
+  object cboPrimary: TORCheckComboBox [2]
     Left = 6
     Top = 69
     Width = 307
@@ -69,6 +69,11 @@ inherited frmPCEProvider: TfrmPCEProvider
     OnNeedData = cboPrimaryNeedData
     CharsNeedMatch = 1
     UniqueAutoComplete = True
+    MainCheckBoxCaption = 'Include Non-VA Providers'
+    MainCheckBoxVisible = True
+    MainCheckBoxAlignment = calBottom
+    OnMainCheckboxClick = cboPrimaryMainCheckboxClick
+    DropdownStyle = ddsControl
   end
   object btnYes: TButton [3]
     Left = 158

@@ -508,10 +508,13 @@ begin
   aColSpecs := TStringList.Create;
 
   try
-    clvNotifications.Columns.Clear;
-
     aColSpecs.StrictDelimiter := True;
     aColSpecs.DelimitedText := TSMARTAlert.GetListViewColumns(clvNotifications.ClientWidth);
+
+    {VISTAOR-40811 When referencing TListView ClientWidth, the list of columns
+    may get rebuilt which also resets the column count, so clear the column
+    count afterwards. }
+    clvNotifications.Columns.Clear;
 
     for aColSpec in aColSpecs do
     begin

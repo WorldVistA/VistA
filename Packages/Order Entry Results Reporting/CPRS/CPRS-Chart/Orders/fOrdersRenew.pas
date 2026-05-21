@@ -141,8 +141,7 @@ begin
 
   PassDeaList := TList.Create;
   OrchkList := TStringList.Create;
-  frmRenewOrders := TfrmRenewOrders.Create(Application);
-
+  frmRenewOrders := TfrmRenewOrders.Create(nil);
   try
     frmRenewOrders.OrderList := SelectedList;
     //IsInpt := OrderForInpatient;
@@ -319,16 +318,19 @@ begin
         for i := 0 to Count - 1 do
            UnlockOrder(TOrder(Items[i]).ID);
   finally
-    // free all the TOrderRenewFields that were created
-    SelectedList := frmRenewOrders.OrderList;
+    try
+      // free all the TOrderRenewFields that were created
+      SelectedList := frmRenewOrders.OrderList;
 
-    with frmRenewOrders.OrderList do for i := 0 to Count - 1 do
+      for i := 0 to frmRenewOrders.OrderList.Count - 1 do
        begin
-         AnOrder := TOrder(Items[i]);
+         AnOrder := TOrder(frmRenewOrders.OrderList.Items[i]);
          FreeAndNil(AnOrder.LinkObject);
        end;
-    ClearAllergyOrderCheckCache;
-    frmRenewOrders.Release;
+      ClearAllergyOrderCheckCache;
+    finally
+      frmRenewOrders.Release;
+    end;
   end;
 end;
 

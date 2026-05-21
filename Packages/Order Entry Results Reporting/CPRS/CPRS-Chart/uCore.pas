@@ -19,7 +19,8 @@ uses
   uCombatVet,
   UORJSONParameters,
   uWriteAccess,
-  Controls;
+  Controls,
+  VAShared.UDataTracker;
 
 type
   TWinControlHack = Class(Controls.TWinControl);
@@ -471,6 +472,7 @@ var
   SavedEncounterReason: string; //used to store why it will be reverted to the saved value
   uAllergyCacheCreated: Boolean = False;
   uAllergiesChanged: Boolean = false;
+  DataTracker: TDataTracker;
 
 procedure NotifyOtherApps(const AppEvent, AppData: string);
 procedure FlushNotifierBuffer;
@@ -1983,9 +1985,11 @@ begin
 end;
 
 initialization
+  DataTracker := TDataTracker.Create;
   uVistaMsg := 0;
 
 finalization
   ReleaseAppNotification;
   ClearSystemParameters;
+  FreeAndNil(DataTracker);
 end.

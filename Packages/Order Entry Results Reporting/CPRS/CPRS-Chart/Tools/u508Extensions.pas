@@ -32,6 +32,7 @@ type
     constructor Create(AOwner: TComponent); reintroduce;
     procedure UpdateSize;
     procedure UpdateCaption(const aCaption: string);
+    property VA508Manager: TVA508AccessibilityManager read F508Manager;
   end;
 
   tIntArray = Array of Integer;

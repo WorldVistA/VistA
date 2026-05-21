@@ -5,10 +5,17 @@
   Developers: Danila Manapsal, Don Craven, Joel Ivey
   Description: Property Editors for TRPCBroker component.
   Unit: RpcbEdtr
-  Current Release: Version 1.1 Patch 72
+  Current Release: Version 1.1 Patch 74
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*74 (CLG 05/30/2024) XWB*1.1*74
+  1. Updated RPC Version to version 74.
+  2. Removed component egistration code from this unit.
+
+  Changes in XWB*1.1*73 (RGG 07/19/2021) XWB*1.1*73
+  1. Updated RPC Version to version 73.
+
   Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
   1. Updated RPC Version to version 72.
 
@@ -88,7 +95,7 @@ type
     procedure SetValue(const Value: string); override;
   end;
 
-procedure Register;
+//procedure Register;
 
 implementation
 
@@ -150,9 +157,10 @@ var
   I: integer;
 begin
   ServerList := TStringList.Create;
-  GetHostList(ServerList);
+  //GetHostList(ServerList);  p74 - Remove old VISTA.INI call and use Registry
+  ReadRegValueNames(HKCU,REG_SERVERS,ServerList);
   for I := 0 to ServerList.Count - 1 do
-    Proc(ServerList[I]);
+    Proc(Piece(ServerList[I],',',1));
   ServerList.Free;
 end;
 
@@ -181,14 +189,6 @@ begin
     ShowMessage('RPCVersion cannot be empty.  Default is 0 (zero).');
     SetStrValue('0');
   end;
-end;
-
-procedure Register;
-begin
-  RegisterPropertyEditor(TypeInfo(TRemoteProc), TRPCBroker, 'RemoteProcedure', TRemoteProcProperty);
-  RegisterPropertyEditor(TypeInfo(TServer), TRPCBroker, 'Server', TServerProperty);
-  RegisterPropertyEditor(TypeInfo(TRpcVersion), TRPCBroker, 'RpcVersion', TRpcVersionProperty);
-
 end;
 
 end.

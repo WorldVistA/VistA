@@ -13,7 +13,7 @@ inherited frmEditProc: TfrmEditProc
   ExplicitWidth = 580
   ExplicitHeight = 480
   PixelsPerInch = 96
-  TextHeight = 16
+  TextHeight = 13
   object pnlCombatVet: TPanel [0]
     AlignWithMargins = True
     Left = 3
@@ -42,12 +42,15 @@ inherited frmEditProc: TfrmEditProc
       Enabled = False
       TabOrder = 0
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taCenter
+      LabelLayout = tlTop
     end
   end
   object pnlMessage: TPanel [1]
     AlignWithMargins = True
     Left = 3
-    Top = 362
+    Top = 361
     Width = 558
     Height = 44
     Align = alBottom
@@ -91,36 +94,36 @@ inherited frmEditProc: TfrmEditProc
     Left = 3
     Top = 34
     Width = 558
-    Height = 322
+    Height = 321
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
     object lblReason: TLabel
       AlignWithMargins = True
       Left = 3
-      Top = 270
+      Top = 299
       Width = 552
-      Height = 16
+      Height = 13
       Align = alTop
       Caption = 'Reason for Request'
-      ExplicitWidth = 120
+      ExplicitWidth = 95
     end
     object lblComment: TLabel
       AlignWithMargins = True
       Left = 3
-      Top = 204
+      Top = 236
       Width = 552
-      Height = 16
+      Height = 13
       Align = alTop
       Caption = 'New Comments'
-      ExplicitWidth = 94
+      ExplicitWidth = 74
     end
     object memReason: TRichEdit
       AlignWithMargins = True
       Left = 3
-      Top = 292
+      Top = 318
       Width = 552
-      Height = 27
+      Height = 39
       Align = alClient
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
@@ -142,7 +145,7 @@ inherited frmEditProc: TfrmEditProc
     object memComment: TRichEdit
       AlignWithMargins = True
       Left = 3
-      Top = 226
+      Top = 255
       Width = 552
       Height = 38
       Align = alTop
@@ -164,7 +167,7 @@ inherited frmEditProc: TfrmEditProc
       Left = 0
       Top = 0
       Width = 558
-      Height = 201
+      Height = 233
       Align = alTop
       Caption = 'GridPanel1'
       ColumnCollection = <
@@ -229,18 +232,19 @@ inherited frmEditProc: TfrmEditProc
           Control = Panel12
           Row = 3
         end>
+      Locked = True
       RowCollection = <
         item
-          Value = 25.008005101709600000
+          Value = 29.896907216494850000
         end
         item
-          Value = 24.989503157089210000
+          Value = 23.950996566525480000
         end
         item
-          Value = 24.998331248786980000
+          Value = 21.476384478178170000
         end
         item
-          Value = 25.004160492414210000
+          Value = 24.675711738801510000
         end>
       ShowCaption = False
       TabOrder = 2
@@ -248,7 +252,7 @@ inherited frmEditProc: TfrmEditProc
         Left = 1
         Top = 1
         Width = 185
-        Height = 49
+        Height = 69
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -259,17 +263,17 @@ inherited frmEditProc: TfrmEditProc
           Left = 3
           Top = 3
           Width = 179
-          Height = 16
+          Height = 17
           Align = alTop
+          AutoSize = False
           Caption = 'Procedure'
-          ExplicitWidth = 63
         end
         object cboProc: TORComboBox
           AlignWithMargins = True
           Left = 3
-          Top = 25
+          Top = 26
           Width = 179
-          Height = 24
+          Height = 21
           Style = orcsDropDown
           Align = alClient
           AutoSelect = True
@@ -282,7 +286,7 @@ inherited frmEditProc: TfrmEditProc
           Font.Height = -11
           Font.Name = 'MS Sans Serif'
           Font.Style = []
-          ItemHeight = 16
+          ItemHeight = 13
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = True
@@ -304,7 +308,7 @@ inherited frmEditProc: TfrmEditProc
         Left = 186
         Top = 1
         Width = 189
-        Height = 49
+        Height = 69
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -315,24 +319,25 @@ inherited frmEditProc: TfrmEditProc
           Left = 3
           Top = 3
           Width = 183
-          Height = 20
+          Height = 17
           Align = alTop
+          AutoSize = False
           Caption = 'Urgency'
           TabOrder = 0
         end
         object cboUrgency: TORComboBox
           AlignWithMargins = True
           Left = 3
-          Top = 29
+          Top = 26
           Width = 183
-          Height = 24
+          Height = 21
           Style = orcsDropDown
           Align = alClient
           AutoSelect = True
           Caption = 'Urgency'
           Color = clWindow
           DropDownCount = 8
-          ItemHeight = 16
+          ItemHeight = 13
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = True
@@ -352,7 +357,7 @@ inherited frmEditProc: TfrmEditProc
         Left = 375
         Top = 1
         Width = 182
-        Height = 49
+        Height = 69
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -363,24 +368,25 @@ inherited frmEditProc: TfrmEditProc
           Left = 3
           Top = 3
           Width = 176
-          Height = 20
+          Height = 17
           Align = alTop
+          AutoSize = False
           Caption = 'Attention'
           TabOrder = 0
         end
-        object txtAttn: TORComboBox
+        object txtAttn: TORCheckComboBox
           AlignWithMargins = True
           Left = 3
-          Top = 29
+          Top = 26
           Width = 176
-          Height = 24
+          Height = 40
           Style = orcsDropDown
-          Align = alClient
+          Align = alTop
           AutoSelect = True
           Caption = 'Attention'
           Color = clWindow
           DropDownCount = 8
-          ItemHeight = 16
+          ItemHeight = 13
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = True
@@ -395,13 +401,18 @@ inherited frmEditProc: TfrmEditProc
           OnChange = ControlChange
           OnNeedData = txtAttnNeedData
           CharsNeedMatch = 1
+          MainCheckBoxCaption = 'Include Non-VA Providers'
+          MainCheckBoxVisible = True
+          MainCheckBoxAlignment = calBottom
+          OnMainCheckboxClick = txtAttnMainCheckboxClick
+          DropdownStyle = ddsControl
         end
       end
       object Panel5: TPanel
         Left = 1
-        Top = 50
+        Top = 70
         Width = 185
-        Height = 49
+        Height = 55
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -412,21 +423,20 @@ inherited frmEditProc: TfrmEditProc
           Left = 3
           Top = 3
           Width = 179
-          Height = 16
+          Height = 17
           Align = alTop
           Caption = 'Service to perform this procedure'
           HorzOffset = 2
           Transparent = False
           VertOffset = 2
           WordWrap = False
-          ExplicitWidth = 192
         end
         object cboService: TORComboBox
           AlignWithMargins = True
           Left = 3
-          Top = 25
+          Top = 26
           Width = 179
-          Height = 24
+          Height = 21
           Style = orcsDropDown
           Align = alClient
           AutoSelect = True
@@ -439,7 +449,7 @@ inherited frmEditProc: TfrmEditProc
           Font.Height = -11
           Font.Name = 'MS Sans Serif'
           Font.Style = []
-          ItemHeight = 16
+          ItemHeight = 13
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = False
@@ -458,9 +468,9 @@ inherited frmEditProc: TfrmEditProc
       end
       object Panel6: TPanel
         Left = 186
-        Top = 50
+        Top = 70
         Width = 189
-        Height = 49
+        Height = 55
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -469,23 +479,23 @@ inherited frmEditProc: TfrmEditProc
         object calClinicallyIndicated: TORDateBox
           AlignWithMargins = True
           Left = 3
-          Top = 29
+          Top = 26
           Width = 183
-          Height = 17
+          Height = 26
           Align = alClient
           TabOrder = 0
           OnExit = calClinicallyIndicatedExit
           DateOnly = True
           RequireTime = False
           Caption = ''
-          ExplicitHeight = 24
+          ExplicitHeight = 21
         end
         object lblClinicallyIndicated: TStaticText
           AlignWithMargins = True
           Left = 3
           Top = 3
           Width = 183
-          Height = 20
+          Height = 17
           Align = alTop
           Caption = 'Clinically indicated date:'
           TabOrder = 1
@@ -493,9 +503,9 @@ inherited frmEditProc: TfrmEditProc
       end
       object Panel7: TPanel
         Left = 375
-        Top = 50
+        Top = 70
         Width = 182
-        Height = 49
+        Height = 55
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -506,7 +516,7 @@ inherited frmEditProc: TfrmEditProc
           Left = 3
           Top = 3
           Width = 176
-          Height = 20
+          Height = 17
           Align = alTop
           Caption = 'Latest appropriate date:'
           TabOrder = 0
@@ -515,9 +525,9 @@ inherited frmEditProc: TfrmEditProc
         object calLatest: TORDateBox
           AlignWithMargins = True
           Left = 3
-          Top = 29
+          Top = 26
           Width = 176
-          Height = 17
+          Height = 26
           Align = alClient
           TabOrder = 1
           Visible = False
@@ -525,14 +535,14 @@ inherited frmEditProc: TfrmEditProc
           DateOnly = True
           RequireTime = False
           Caption = ''
-          ExplicitHeight = 24
+          ExplicitHeight = 21
         end
       end
       object Panel9: TPanel
         Left = 186
-        Top = 99
+        Top = 125
         Width = 189
-        Height = 49
+        Height = 50
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -543,7 +553,7 @@ inherited frmEditProc: TfrmEditProc
           Left = 3
           Top = 3
           Width = 183
-          Height = 20
+          Height = 17
           Align = alTop
           Caption = 'Patient will be seen as an:'
           TabOrder = 0
@@ -569,9 +579,9 @@ inherited frmEditProc: TfrmEditProc
       end
       object Panel10: TPanel
         Left = 375
-        Top = 99
+        Top = 125
         Width = 182
-        Height = 49
+        Height = 50
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -582,7 +592,7 @@ inherited frmEditProc: TfrmEditProc
           Left = 3
           Top = 3
           Width = 176
-          Height = 20
+          Height = 17
           Align = alTop
           Caption = 'Place of Consultation'
           TabOrder = 0
@@ -590,16 +600,16 @@ inherited frmEditProc: TfrmEditProc
         object cboPlace: TORComboBox
           AlignWithMargins = True
           Left = 3
-          Top = 29
+          Top = 26
           Width = 176
-          Height = 24
+          Height = 21
           Style = orcsDropDown
           Align = alClient
           AutoSelect = True
           Caption = 'Place of Consultation'
           Color = clWindow
           DropDownCount = 8
-          ItemHeight = 16
+          ItemHeight = 13
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = True
@@ -617,16 +627,16 @@ inherited frmEditProc: TfrmEditProc
         object cboCategory: TORComboBox
           AlignWithMargins = True
           Left = 3
-          Top = 29
+          Top = 26
           Width = 176
-          Height = 24
+          Height = 21
           Style = orcsDropDown
           Align = alClient
           AutoSelect = True
           Caption = ''
           Color = clWindow
           DropDownCount = 8
-          ItemHeight = 16
+          ItemHeight = 13
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = False
@@ -644,9 +654,9 @@ inherited frmEditProc: TfrmEditProc
       end
       object Panel11: TPanel
         Left = 1
-        Top = 148
+        Top = 175
         Width = 185
-        Height = 52
+        Height = 57
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -656,7 +666,7 @@ inherited frmEditProc: TfrmEditProc
           Left = 0
           Top = 0
           Width = 185
-          Height = 52
+          Height = 57
           Align = alClient
           BevelOuter = bvNone
           Caption = 'Panel1'
@@ -667,17 +677,17 @@ inherited frmEditProc: TfrmEditProc
             Left = 3
             Top = 3
             Width = 179
-            Height = 16
+            Height = 13
             Align = alTop
             Caption = 'Display Comments:'
-            ExplicitWidth = 116
+            ExplicitWidth = 89
           end
           object btnCmtCancel: TButton
             AlignWithMargins = True
             Left = 3
-            Top = 25
+            Top = 22
             Width = 106
-            Height = 24
+            Height = 32
             Align = alClient
             Caption = 'Cancellation'
             TabOrder = 0
@@ -686,9 +696,9 @@ inherited frmEditProc: TfrmEditProc
           object btnCmtOther: TButton
             AlignWithMargins = True
             Left = 115
-            Top = 25
+            Top = 22
             Width = 67
-            Height = 24
+            Height = 32
             Align = alRight
             Caption = 'Other'
             TabOrder = 1
@@ -698,9 +708,9 @@ inherited frmEditProc: TfrmEditProc
       end
       object Panel12: TPanel
         Left = 186
-        Top = 148
+        Top = 175
         Width = 371
-        Height = 52
+        Height = 57
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -711,16 +721,16 @@ inherited frmEditProc: TfrmEditProc
           Left = 3
           Top = 3
           Width = 365
-          Height = 20
+          Height = 17
           Align = alTop
           Caption = 'Provisional Diagnosis'
           TabOrder = 0
         end
         object Panel8: TPanel
           Left = 0
-          Top = 26
+          Top = 23
           Width = 371
-          Height = 26
+          Height = 34
           Align = alClient
           BevelOuter = bvNone
           Caption = 'Panel1'
@@ -731,7 +741,7 @@ inherited frmEditProc: TfrmEditProc
             Left = 311
             Top = 3
             Width = 57
-            Height = 20
+            Height = 28
             Align = alRight
             Caption = 'Lexicon'
             TabOrder = 1
@@ -742,7 +752,7 @@ inherited frmEditProc: TfrmEditProc
             Left = 3
             Top = 3
             Width = 302
-            Height = 20
+            Height = 28
             Align = alClient
             MaxLength = 180
             ParentShowHint = False
@@ -751,7 +761,6 @@ inherited frmEditProc: TfrmEditProc
             TabOrder = 0
             OnChange = ControlChange
             Caption = 'Provisional Diagnosis'
-            ExplicitHeight = 24
           end
         end
       end
@@ -759,7 +768,7 @@ inherited frmEditProc: TfrmEditProc
   end
   object pnlButtons: TPanel [3]
     Left = 0
-    Top = 409
+    Top = 408
     Width = 564
     Height = 33
     Align = alBottom

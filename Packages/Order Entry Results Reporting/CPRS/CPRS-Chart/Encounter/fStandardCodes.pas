@@ -6,19 +6,19 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, fPCEBaseMain, ORCtrls, ORFn,
   VA508AccessibilityManager, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.ComCtrls, Vcl.Buttons,
-  ORStaticText, ORClasses, uPCE;
+  ORStaticText, ORClasses, uPCE, U508CaptionEdit, U508CheckBox;
 
 type
   TfrmStandardCodes = class(TfrmPCEBaseMain)
     lblMag: TLabel;
-    edtMag: TCaptionEdit;
+    edtMag: U508CaptionEdit.TCaptionEdit;
     lblUCUM: TLabel;
     btnTaxonomy: TButton;
     pnlRight: TPanel;
     lbxCodes: TORListBox;
     lblCodes: TLabel;
     btnAdd: TButton;
-    ckbAdd2PL: TCheckBox;
+    ckbAdd2PL: U508CheckBox.TCheckBox;
     lblTaxonomies: TORStaticText;
     btnPL: TButton;
     lblUCUM2: TLabel;
@@ -47,22 +47,18 @@ type
     FProblems: TORStringList;
     FTaxIEN: integer;
     procedure showMagnitude(active: boolean);
-    { Private declarations }
   public
-    { Public declarations }
     procedure UpdateControls; override;
     procedure UpdateNewItemStr(var x: string); override;
     function NotOnPL(index: integer): boolean;
   end;
 
-var
-  frmStandardCodes: TfrmStandardCodes;
-
 implementation
 
 {$R *.dfm}
 
-uses fEncounterFrame, rPCE, rCore, uProbs, uCore, rProbs, uMisc;
+uses fEncounterFrame, rPCE, rCore, uProbs, uCore, rProbs, uMisc,
+  VAShared.UTStringsHelper;
 
 procedure ListStandardCodes(Dest: TStrings; SectionIndex: Integer);
 begin
@@ -120,7 +116,7 @@ procedure TfrmStandardCodes.btnOKClick(Sender: TObject);
 //  i: integer;
 //  code: TStandardCode;
 //  aList: TStringList;
-//  PLPt: TPLPt;
+//  PLPtQualifiers  :TProblemListPatientQualifiers; // Replaces PLPt
 
 begin
   inherited;

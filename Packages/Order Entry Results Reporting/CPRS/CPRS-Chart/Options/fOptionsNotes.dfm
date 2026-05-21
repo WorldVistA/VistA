@@ -18,7 +18,7 @@ inherited frmOptionsNotes: TfrmOptionsNotes
     Left = 3
     Top = 3
     Width = 308
-    Height = 158
+    Height = 169
     Align = alClient
     BevelOuter = bvNone
     ShowCaption = False
@@ -32,7 +32,7 @@ inherited frmOptionsNotes: TfrmOptionsNotes
       Left = 3
       Top = 3
       Width = 302
-      Height = 21
+      Height = 13
       Align = alTop
       Caption = 'Interval for autosave of notes (sec):'
       WordWrap = True
@@ -41,29 +41,29 @@ inherited frmOptionsNotes: TfrmOptionsNotes
     object lblCosigner: TLabel
       AlignWithMargins = True
       Left = 3
-      Top = 109
+      Top = 98
       Width = 302
-      Height = 16
-      Align = alBottom
+      Height = 13
+      Align = alTop
       Caption = 'Default cosigner:'
       ExplicitLeft = 9
       ExplicitTop = 75
       ExplicitWidth = 100
     end
-    object cboCosigner: TORComboBox
+    object cboCosigner: TORCheckComboBox
       AlignWithMargins = True
       Left = 3
-      Top = 131
+      Top = 117
       Width = 302
-      Height = 24
+      Height = 40
       HelpContext = 9216
       Style = orcsDropDown
-      Align = alBottom
+      Align = alTop
       AutoSelect = True
       Caption = 'Default cosigner'
       Color = clWindow
       DropDownCount = 8
-      ItemHeight = 16
+      ItemHeight = 13
       ItemTipColor = clWindow
       ItemTipEnable = True
       ListItemsOnly = False
@@ -78,17 +78,20 @@ inherited frmOptionsNotes: TfrmOptionsNotes
       OnExit = cboCosignerExit
       OnNeedData = cboCosignerNeedData
       CharsNeedMatch = 1
-      ExplicitTop = 337
-      ExplicitWidth = 568
+      MainCheckBoxCaption = 'Include Non-VA Providers'
+      MainCheckBoxVisible = True
+      MainCheckBoxAlignment = calBottom
+      OnMainCheckboxClick = cboCosignerMainCheckboxClick
+      DropdownStyle = ddsControl
     end
     object chkVerifyNote: TCheckBox
       AlignWithMargins = True
       Left = 3
-      Top = 86
+      Top = 52
       Width = 302
       Height = 17
       HelpContext = 9214
-      Align = alBottom
+      Align = alTop
       Caption = 'Verify note title'
       TabOrder = 1
       ExplicitTop = 344
@@ -97,11 +100,11 @@ inherited frmOptionsNotes: TfrmOptionsNotes
     object chkAskSubject: TCheckBox
       AlignWithMargins = True
       Left = 3
-      Top = 63
+      Top = 75
       Width = 302
       Height = 17
       HelpContext = 9215
-      Align = alBottom
+      Align = alTop
       Caption = 'Ask subject for progress notes'
       TabOrder = 2
       ExplicitTop = 376
@@ -109,10 +112,11 @@ inherited frmOptionsNotes: TfrmOptionsNotes
     end
     object Panel2: TPanel
       Left = 0
-      Top = 27
+      Top = 19
       Width = 308
       Height = 30
       Align = alTop
+      AutoSize = True
       BevelOuter = bvNone
       Caption = 'Panel2'
       ShowCaption = False
@@ -151,7 +155,7 @@ inherited frmOptionsNotes: TfrmOptionsNotes
   end
   object pnlBottom: TPanel [1]
     Left = 0
-    Top = 164
+    Top = 175
     Width = 314
     Height = 32
     HelpContext = 9210

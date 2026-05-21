@@ -2,7 +2,7 @@ inherited frmOptions: TfrmOptions
   Left = 315
   Top = 110
   Width = 670
-  Height = 599
+  Height = 520
   HelpContext = 9999
   VertScrollBar.Range = 360
   BorderIcons = [biSystemMenu, biHelp]
@@ -13,12 +13,12 @@ inherited frmOptions: TfrmOptions
   HelpFile = 'CPRSWT.HLP'
   Position = poScreenCenter
   ExplicitWidth = 670
-  ExplicitHeight = 599
+  ExplicitHeight = 520
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBottom: TPanel [0]
     Left = 0
-    Top = 538
+    Top = 459
     Width = 664
     Height = 32
     HelpContext = 9999
@@ -26,7 +26,6 @@ inherited frmOptions: TfrmOptions
     BevelOuter = bvNone
     ParentColor = True
     TabOrder = 1
-    ExplicitTop = 459
     object btnOK: TButton
       AlignWithMargins = True
       Left = 409
@@ -73,9 +72,9 @@ inherited frmOptions: TfrmOptions
     Left = 0
     Top = 0
     Width = 664
-    Height = 538
+    Height = 459
     HelpContext = 9999
-    ActivePage = tsCopyPaste
+    ActivePage = tsCoverSheet
     Align = alClient
     OwnerDraw = True
     TabOrder = 0
@@ -83,7 +82,6 @@ inherited frmOptions: TfrmOptions
     OnChanging = pagOptionsChanging
     OnDrawTab = pagOptionsDrawTab
     OnEnter = pagOptionsEnter
-    ExplicitHeight = 459
     object tsCoverSheet: TTabSheet
       HelpContext = 9700
       Caption = 'General'
@@ -595,8 +593,6 @@ inherited frmOptions: TfrmOptions
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
-        ExplicitTop = 120
-        ExplicitHeight = 307
         object lvwNotifications: TCaptionListView
           Left = 0
           Top = 54
@@ -632,7 +628,6 @@ inherited frmOptions: TfrmOptions
             'You can turn on or off these notifications except those that are' +
             ' mandatory.'
           HideTinyColumns = False
-          ExplicitHeight = 253
         end
         object Panel2: TPanel
           Left = 0
@@ -717,7 +712,7 @@ inherited frmOptions: TfrmOptions
         Height = 89
         Align = alTop
         BevelOuter = bvNone
-        TabOrder = 2
+        TabOrder = 1
         object Panel82: TPanel
           Left = 0
           Top = 0
@@ -900,7 +895,6 @@ inherited frmOptions: TfrmOptions
       HelpContext = 9040
       Caption = 'Order Checks'
       ImageIndex = 3
-      ExplicitHeight = 431
       object lblOrderChecksView: TLabel
         AlignWithMargins = True
         Left = 3
@@ -924,7 +918,7 @@ inherited frmOptions: TfrmOptions
         Left = 3
         Top = 111
         Width = 650
-        Height = 396
+        Height = 317
         HelpContext = 9041
         Align = alClient
         Checkboxes = True
@@ -955,7 +949,6 @@ inherited frmOptions: TfrmOptions
           'You can turn on or off these notifications except those that are' +
           ' mandatory.'
         HideTinyColumns = False
-        ExplicitHeight = 317
       end
       object Panel42: TPanel
         Left = 0
@@ -1106,7 +1099,6 @@ inherited frmOptions: TfrmOptions
       HelpContext = 9050
       Caption = 'Lists/Teams'
       ImageIndex = 4
-      ExplicitHeight = 431
       object Panel71: TPanel
         Left = 0
         Top = 0
@@ -1489,7 +1481,6 @@ inherited frmOptions: TfrmOptions
       HelpContext = 9200
       Caption = 'Notes'
       ImageIndex = 4
-      ExplicitHeight = 431
       object pnlTIU: TPanel
         Left = 0
         Top = 170
@@ -1510,9 +1501,9 @@ inherited frmOptions: TfrmOptions
           TabOrder = 0
           object Bevel9: TBevel
             AlignWithMargins = True
-            Left = 165
+            Left = 171
             Top = 12
-            Width = 488
+            Width = 482
             Height = 11
             Margins.Top = 12
             Align = alClient
@@ -1526,7 +1517,7 @@ inherited frmOptions: TfrmOptions
             AlignWithMargins = True
             Left = 3
             Top = 3
-            Width = 156
+            Width = 162
             Height = 20
             Align = alLeft
             Caption = 'Required Fields of TIU Templates'
@@ -2016,7 +2007,6 @@ inherited frmOptions: TfrmOptions
     object tsCprsReports: TTabSheet
       Caption = 'Reports'
       ImageIndex = 5
-      ExplicitHeight = 431
       object Panel22: TPanel
         Left = 0
         Top = 170
@@ -2499,7 +2489,6 @@ inherited frmOptions: TfrmOptions
     object tsGraphs: TTabSheet
       Caption = 'Graphs'
       ImageIndex = 6
-      ExplicitHeight = 431
       object Panel7: TPanel
         Left = 0
         Top = 0
@@ -2795,7 +2784,6 @@ inherited frmOptions: TfrmOptions
     object tsSurrogates: TTabSheet
       Caption = 'Surrogates'
       ImageIndex = 7
-      ExplicitHeight = 431
       object pnlSurrogatesTop: TPanel
         Left = 0
         Top = 0
@@ -2929,20 +2917,18 @@ inherited frmOptions: TfrmOptions
         Left = 0
         Top = 65
         Width = 656
-        Height = 445
+        Height = 366
         Align = alClient
         BevelOuter = bvNone
         Caption = '"Canvas" for TfrmOptionsSurrogate'
         Color = clSilver
         ParentBackground = False
         TabOrder = 1
-        ExplicitHeight = 366
       end
     end
     object tsCopyPaste: TTabSheet
       Caption = 'Copy/Paste'
       ImageIndex = 7
-      ExplicitHeight = 431
       object bvlCopyPasteTitle: TBevel
         AlignWithMargins = True
         Left = 100
@@ -3202,8 +3188,6 @@ inherited frmOptions: TfrmOptions
         Font.Style = []
         ParentFont = False
         TabOrder = 0
-        ExplicitLeft = 3
-        ExplicitWidth = 650
       end
       object cbkCopyPaste: TCheckBox
         AlignWithMargins = True
@@ -3218,21 +3202,16 @@ inherited frmOptions: TfrmOptions
         Caption = 'Copy/Paste viewing is currently disabled. '
         TabOrder = 1
         OnClick = cbkCopyPasteClick
-        ExplicitLeft = 3
-        ExplicitTop = 48
-        ExplicitWidth = 637
       end
       object pnlCPOptions: TPanel
         Left = 0
         Top = 56
         Width = 656
-        Height = 454
+        Height = 375
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 2
         Visible = False
-        ExplicitTop = 0
-        ExplicitHeight = 429
         object GroupBox1: TGroupBox
           AlignWithMargins = True
           Left = 100
@@ -3245,8 +3224,6 @@ inherited frmOptions: TfrmOptions
           Align = alTop
           Caption = 'How text is identifed on the note'
           TabOrder = 0
-          ExplicitLeft = 16
-          ExplicitWidth = 624
           object pnlCPMain: TPanel
             AlignWithMargins = True
             Left = 5
@@ -3256,7 +3233,6 @@ inherited frmOptions: TfrmOptions
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
-            ExplicitWidth = 614
             object Panel1: TPanel
               Left = 0
               Top = 0
@@ -3267,7 +3243,6 @@ inherited frmOptions: TfrmOptions
               Caption = 'Panel1'
               ShowCaption = False
               TabOrder = 0
-              ExplicitWidth = 614
               object lblCP: TStaticText
                 AlignWithMargins = True
                 Left = 3
@@ -3278,7 +3253,6 @@ inherited frmOptions: TfrmOptions
                 Caption = 'Configure visual element(s) for copy / paste'
                 TabOrder = 0
                 TabStop = True
-                ExplicitWidth = 608
               end
               object CopyPasteOptions: TCheckListBox
                 AlignWithMargins = True
@@ -3301,6 +3275,7 @@ inherited frmOptions: TfrmOptions
                   'Highlight')
                 Style = lbOwnerDrawFixed
                 TabOrder = 1
+                OnClickCheck = CPOptionsClickCheck
                 OnDrawItem = CPOptionsDrawItem
               end
               object lbCPhighLight: TStaticText
@@ -3349,8 +3324,6 @@ inherited frmOptions: TfrmOptions
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 0
-            ExplicitWidth = 620
-            ExplicitHeight = 277
             object CPLCSToggle: TCheckBox
               AlignWithMargins = True
               Left = 8
@@ -3369,7 +3342,6 @@ inherited frmOptions: TfrmOptions
               TabOrder = 0
               WordWrap = True
               OnClick = CPLCSToggleClick
-              ExplicitWidth = 612
             end
             object pnlCPLCsSub: TPanel
               AlignWithMargins = True
@@ -3384,8 +3356,6 @@ inherited frmOptions: TfrmOptions
               BevelOuter = bvNone
               TabOrder = 1
               Visible = False
-              ExplicitWidth = 617
-              ExplicitHeight = 227
               object CPLcsMemo: TMemo
                 AlignWithMargins = True
                 Left = 8
@@ -3408,8 +3378,6 @@ inherited frmOptions: TfrmOptions
                     'ces.')
                 ReadOnly = True
                 TabOrder = 0
-                ExplicitTop = 149
-                ExplicitWidth = 606
               end
               object CPLCSCOLOR: TColorBox
                 AlignWithMargins = True
@@ -3442,8 +3410,8 @@ inherited frmOptions: TfrmOptions
                   'Text Color')
                 Style = lbOwnerDrawFixed
                 TabOrder = 2
+                OnClickCheck = CPLCSIDENTClickCheck
                 OnDrawItem = CPOptionsDrawItem
-                ExplicitHeight = 117
               end
               object CPLCSLimit: TEdit
                 AlignWithMargins = True
@@ -3455,8 +3423,6 @@ inherited frmOptions: TfrmOptions
                 TabOrder = 3
                 Text = '5000'
                 OnKeyPress = CPLCSLimitKeyPress
-                ExplicitTop = 203
-                ExplicitWidth = 611
               end
               object CPLcsLimitText: TStaticText
                 AlignWithMargins = True
@@ -3468,8 +3434,6 @@ inherited frmOptions: TfrmOptions
                 Caption = 'Character Limit:'
                 TabOrder = 4
                 TabStop = True
-                ExplicitTop = 126
-                ExplicitWidth = 611
               end
               object lblTextColor: TStaticText
                 AlignWithMargins = True
@@ -3481,7 +3445,6 @@ inherited frmOptions: TfrmOptions
                 Caption = 'Text Color'
                 TabOrder = 5
                 Visible = False
-                ExplicitHeight = 118
               end
             end
           end

@@ -112,7 +112,7 @@ implementation
 {$R *.DFM}
 
 uses
-  rGraphs, fGraphData, VAUtils;
+  rGraphs, fGraphData, VAUtils, VA508AccessibilityRouter;
 
 var
   FCloseSettings, FPersonalSettings, FPublicSettings: string;

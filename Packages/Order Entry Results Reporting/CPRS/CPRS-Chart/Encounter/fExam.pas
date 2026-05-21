@@ -3,63 +3,77 @@ unit fExam;
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  fPCEBase, StdCtrls, ORCtrls, CheckLst, ExtCtrls, Buttons, uPCE, rPCE, ORFn,
-  fPCELex, fPCEOther, ComCtrls, fPCEBaseMain, VA508AccessibilityManager;
+  System.Classes,
+  Vcl.Controls,
+  Vcl.StdCtrls,
+  Vcl.ComCtrls,
+  Vcl.ExtCtrls,
+  Vcl.Buttons,
+  ORCtrls,
+  fPCEBaseMain,
+  VA508AccessibilityManager,
+  U508CaptionEdit,
+  U508ORComboBox;
 
 type
   TfrmExams = class(TfrmPCEBaseMain)
+    gridMagUCUMData: TGridPanel;
+    pnlResult: TPanel;
+    pnlUCUM: TPanel;
     lblExamResults: TLabel;
-    cboExamResults: TORComboBox;
-    lblUCUM2: TLabel;
     lblUCUM: TLabel;
-    edtMag: TCaptionEdit;
+    cboExamResults: U508ORComboBox.TORComboBox;
+    lblUCUM2: TLabel;
+    pnlMagnitude: TPanel;
     lblMag: TLabel;
+    edtMag: U508CaptionEdit.TCaptionEdit;
     procedure cboExamResultsChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure edtMagChange(Sender: TObject);
     procedure edtMagExit(Sender: TObject);
     procedure edtMagKeyPress(Sender: TObject; var Key: Char);
-  private
+    procedure FormResize(Sender: TObject); override;
   protected
     procedure UpdateNewItemStr(var x: string); override;
     procedure UpdateControls; override;
-  public   
+    procedure Loaded; override;
   end;
-
-var
-  frmExams: TfrmExams;
 
 implementation
 
 {$R *.DFM}
 
 uses
-  fEncounterFrame, VA508AccessibilityRouter, uMisc;
+  fEncounterFrame,
+  VA508AccessibilityRouter,
+  uPCE,
+  rPCE,
+  ORFn;
 
 procedure TfrmExams.cboExamResultsChange(Sender: TObject);
 var
-  i: integer;
-
+  CaptionIdx: Integer;
 begin
-  if(NotUpdating) and (cboExamResults.Text <> '') and (lstCaptionList.SelCount > 0) then
+  if NotUpdating and (cboExamResults.Text <> '') and
+    (lstCaptionList.SelCount > 0) then
   begin
-    for i := 0 to lstCaptionList.Items.Count-1 do
-      if(lstCaptionList.Items[i].Selected) and (lstCaptionList.Objects[i] is TPCEExams) then
-        TPCEExams(lstCaptionList.Objects[i]).Results := cboExamResults.ItemID;
+    for CaptionIdx := 0 to lstCaptionList.Items.Count - 1 do
+      if lstCaptionList.Items[CaptionIdx].Selected and
+        (lstCaptionList.Objects[CaptionIdx] is TPCEExams) then
+        TPCEExams(lstCaptionList.Objects[CaptionIdx]).Results :=
+          cboExamResults.ItemID;
     GridChanged;
   end;
 end;
 
 procedure TfrmExams.edtMagChange(Sender: TObject);
 var
- item: TPCEExams;
-
+  APCEExams: TPCEExams;
 begin
   inherited;
-  if (GridIndex<0) or (lstCaptionList.SelCount <> 1) then exit;
-  item := lstCaptionList.Objects[GridIndex] as TPCEExams;
-  item.Magnitude := edtMag.Text;
+  if (GridIndex < 0) or (lstCaptionList.SelCount <> 1) then Exit;
+  APCEExams := lstCaptionList.Objects[GridIndex] as TPCEExams;
+  APCEExams.Magnitude := edtMag.Text;
 end;
 
 procedure TfrmExams.edtMagExit(Sender: TObject);
@@ -84,6 +98,18 @@ begin
   PCELoadORCombo(cboExamResults);
 end;
 
+procedure TfrmExams.FormResize(Sender: TObject);
+begin
+  grdMain.Realign; // Fixes an issue with the columns not initially adjusting
+  inherited;
+end;
+
+procedure TfrmExams.Loaded;
+begin
+  AutoSizeDisabled := True;
+  inherited Loaded;
+end;
+
 procedure TfrmExams.UpdateNewItemStr(var x: string);
 begin
   SetPiece(x, U, pnumExamResults, NoPCEValue);
@@ -91,49 +117,50 @@ end;
 
 procedure TfrmExams.UpdateControls;
 var
-  ok, First: boolean;
-  SameR: boolean;
-  i: integer;
-  Res: string;
-  Obj: TPCEExams;
-
+  HaveCaptions: Boolean;
+  First: Boolean;
+  SameResult: Boolean;
+  CaptionIndex: Integer;
+  ExamResult: string;
+  APCEExams: TPCEExams;
 begin
   inherited;
-  if(NotUpdating) then
+  if NotUpdating then
   begin
     BeginUpdate;
     try
-      ok := (lstCaptionList.SelCount > 0);
-      lblExamResults.Enabled := ok;
-      cboExamResults.Enabled := ok;
-      if(ok) then
-      begin
-        First := TRUE;
-        SameR := TRUE;
-        Res := NoPCEValue;
+      HaveCaptions := lstCaptionList.SelCount > 0;
+      lblExamResults.Enabled := HaveCaptions;
+      cboExamResults.Enabled := HaveCaptions;
 
-        for i := 0 to lstCaptionList.Items.Count-1 do
+      if HaveCaptions then
+      begin
+        First := True;
+        SameResult := True;
+        ExamResult := NoPCEValue;
+
+        for CaptionIndex := 0 to lstCaptionList.Items.Count - 1 do
         begin
-          if lstCaptionList.Items[i].Selected then
+          if lstCaptionList.Items[CaptionIndex].Selected then
           begin
-            if not (lstCaptionList.Objects[i] is TPCEExams) then
-              continue;
-            Obj := TPCEExams(lstCaptionList.Objects[i]);
-            if(First) then
+            if not (lstCaptionList.Objects[CaptionIndex] is TPCEExams) then
+              Continue;
+            APCEExams := TPCEExams(lstCaptionList.Objects[CaptionIndex]);
+            if First then
             begin
-              First := FALSE;
-              Res := Obj.Results;
+              First := False;
+              ExamResult := APCEExams.Results;
             end
             else
             begin
-              if(SameR) then
-                SameR := (Res = Obj.Results);
+              if SameResult then
+                SameResult := ExamResult = APCEExams.Results;
             end;
           end;
         end;
 
-        if(SameR) then
-          cboExamResults.SelectByID(Res)
+        if SameResult then
+          cboExamResults.SelectByID(ExamResult)
         else
           cboExamResults.Text := '';
       end
@@ -142,13 +169,19 @@ begin
         cboExamResults.Text := '';
       end;
 
-      ok := (lstCaptionList.SelCount = 1);
-      if(ok) then
+      HaveCaptions := lstCaptionList.SelCount = 1;
+      lblUCUM.Caption := 'Unified Code for Units of Measure  (UCUM)';
+      if HaveCaptions then
       begin
-        Obj := TPCEExams(lstCaptionList.Objects[GridIndex]);
-        ParseMagUCUMData(Obj.UCUMInfo, lblMag, edtMag, lblUCUM, lblUCUM2);
+        APCEExams := TPCEExams(lstCaptionList.Objects[GridIndex]);
+        ParseMagUCUMData(APCEExams.UCUMInfo, lblMag, edtMag, lblUCUM, lblUCUM2);
         if edtMag.Visible then
-          edtMag.Text := Obj.Magnitude;
+        begin
+          edtMag.Text := APCEExams.Magnitude;
+          amgrMain.AccessText[edtMag] := lblMag.Caption +
+            ' Units are ' + lblUCUM2.Caption +
+            ' Values are ' + edtMag.Hint;
+        end;
       end
       else
       begin
@@ -157,6 +190,15 @@ begin
         lblUCUM.Visible := False;
         lblUCUM2.Visible := False;
       end;
+
+      if lblMag.Visible then lblMag.Top := 0; // Reposition to Top. Messed up when set to invisible;
+      if not lblUCum.Visible then
+      begin
+        // We need the label as a spacer
+        lblUCUM.Caption := ' ';
+        lblUCum.Visible := True;
+      end;
+      lblUCum.Top := 0; // Reposition to Top. Messed up when set to invisible;
 
     finally
       EndUpdate;
@@ -168,4 +210,3 @@ initialization
   SpecifyFormIsNotADialog(TfrmExams);
 
 end.
-

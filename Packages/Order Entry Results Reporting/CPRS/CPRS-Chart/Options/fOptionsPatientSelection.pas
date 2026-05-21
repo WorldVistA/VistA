@@ -4,15 +4,15 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, ORCtrls, OrFn, ComCtrls, fBase508Form,
-  VA508AccessibilityManager;
+  StdCtrls, ExtCtrls, ORCtrls, OrFn, ComCtrls, fBase508Form, ORCheckComboBox,
+  VA508AccessibilityManager, uMisc;
 
 type
   TfrmOptionsPatientSelection = class(TfrmBase508Form)
     pnlBottom: TPanel;
     btnOK: TButton;
     btnCancel: TButton;
-    cboProvider: TORComboBox;
+    cboProvider: TORCheckComboBox;
     cboTreating: TORComboBox;
     cboTeam: TORComboBox;
     cboWard: TORComboBox;
@@ -39,7 +39,7 @@ type
     lblVisitStop: TLabel;
     lblVisitDateRange: TMemo;
     lblInfo: TMemo;
-    lbWard: TLabel;
+    lblWard: TLabel;
     lblTeam: TLabel;
     lblTreating: TLabel;
     lblProvider: TLabel;
@@ -75,6 +75,7 @@ type
     procedure txtVisitStopKeyPress(Sender: TObject; var Key: Char);
     procedure cboProviderKeyUp(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure cboProviderMainCheckboxClick(Sender: TObject);
   private
     { Private declarations }
     FStartEntered: boolean;
@@ -125,6 +126,16 @@ begin
 end;
 
 procedure TfrmOptionsPatientSelection.FormCreate(Sender: TObject);
+
+  // VISTAOR-39559
+  procedure stepUp(aLabel: TLabel; aBox:TOrComboBox; aStep: Integer);
+  begin
+    if assigned(aLabel) then
+      aLabel.Top := aLabel.top + aStep;
+    if assigned(aBox) then
+      aBox.Top := aBox.Top + aStep;
+  end;
+
 begin
   FStartEntered := false;
   FStopEntered := false;
@@ -140,6 +151,18 @@ begin
   ListTeamAll(cboTeam.Items);
   ListPcmmAll(cboPcmm.Items);
   ListWardAll(cboWard.Items);
+  cboProvider.MainCheckBoxVisible := IncludeNonVAProviders(cboProvider);
+
+  if not cboProvider.MainCheckBoxVisible then            // VISTAOR-39559  begin
+  begin
+    var delta := -(2 *cboTreating.Top - cboProvider.Top - cboTeam.Top);
+    stepUp(lblTreating, cboTreating, delta);
+    stepUp(lblTeam, cboTeam, delta);
+    stepUp(lblWard, cboWard, delta);
+    stepUp(lblPCMM, cboPCMM, delta);
+  end
+  else
+    cboProvider.Height := cboTreating.top - cboProvider.Top;// VISTAOR-39559 end
 end;
 
 procedure TfrmOptionsPatientSelection.FormShow(Sender: TObject);
@@ -522,6 +545,14 @@ procedure TfrmOptionsPatientSelection.cboProviderKeyUp(Sender: TObject;
 begin
   if not FProviderSpecial then NextControl(Char(Key));
   FProviderSpecial := false;
+end;
+
+procedure TfrmOptionsPatientSelection.cboProviderMainCheckboxClick(
+  Sender: TObject);
+begin
+  inherited;
+  cboProvider.ReInitLongList;
+  cboProviderExit(cboProvider);
 end;
 
 end.

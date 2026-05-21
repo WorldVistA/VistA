@@ -104,9 +104,9 @@ class procedure TResponsiveGUI.ProcessMessages(AStop: TDateTime;
   begin
     AIsUnicode := (AMsg.hwnd = 0) or IsWindowUnicode(AMsg.hwnd);
     if AIsUnicode then
-      AMsgExists := Winapi.Windows.PeekMessageW(AMsg, 0, 0, 0, ARemoveMsg)
+      AMsgExists := Winapi.Windows.PeekMessageW(AMsg, 0, AFilterMin, AFilterMax, ARemoveMsg)
     else
-      AMsgExists := Winapi.Windows.PeekMessageA(AMsg, 0, 0, 0, ARemoveMsg);
+      AMsgExists := Winapi.Windows.PeekMessageA(AMsg, 0, AFilterMin, AFilterMax, ARemoveMsg);
     if not AMsgExists then
       Exit;
     AHandled := False;

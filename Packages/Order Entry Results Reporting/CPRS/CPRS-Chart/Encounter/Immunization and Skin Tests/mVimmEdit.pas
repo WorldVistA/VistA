@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, mVimMBase, Vcl.StdCtrls, Vcl.ExtCtrls,
   mVimmGrid, Vcl.ComCtrls, ORCtrls, ORDtTm, rVimm, ORFn, Vcl.ImgList,
-  Vcl.Buttons, System.ImageList, mVimmEditGrid, mEditBase;
+  Vcl.Buttons, System.ImageList, mVimmEditGrid, mEditBase, fBase508Frame;
 
 type
   TfraImmEdit = class(TfraParent)
@@ -40,7 +40,7 @@ implementation
  mVimmSelect;
 
 var
-  vimmEditGrid: TFrame;
+  vimmEditGrid: TBase508Frame;
 {$R *.dfm}
 
 // uDlgComponents;

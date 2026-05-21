@@ -3,20 +3,19 @@ inherited frmPlVuFilt: TfrmPlVuFilt
   Top = 217
   BorderStyle = bsDialog
   Caption = 'Problem List View Filters'
-  ClientHeight = 343
+  ClientHeight = 369
   ClientWidth = 349
   OldCreateOrder = True
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
-  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TORAutoPanel [0]
     Left = 0
     Top = 0
     Width = 349
-    Height = 343
+    Height = 369
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
@@ -47,7 +46,7 @@ inherited frmPlVuFilt: TfrmPlVuFilt
       Left = 3
       Top = 4
       Width = 343
-      Height = 293
+      Height = 322
     end
     object OROffsetLabel1: TOROffsetLabel
       Left = 198
@@ -112,28 +111,28 @@ inherited frmPlVuFilt: TfrmPlVuFilt
     end
     object cmdOK: TBitBtn
       Left = 90
-      Top = 309
+      Top = 332
       Width = 77
       Height = 22
       Caption = 'OK'
-      TabOrder = 9
-      OnClick = cmdOKClick
       NumGlyphs = 2
       Spacing = -1
+      TabOrder = 9
+      OnClick = cmdOKClick
       IsControl = True
     end
     object cmdCancel: TBitBtn
-      Left = 176
-      Top = 309
+      Left = 186
+      Top = 332
       Width = 77
       Height = 22
       Cancel = True
       Caption = 'Cancel'
-      TabOrder = 10
-      OnClick = cmdCancelClick
       Layout = blGlyphTop
       NumGlyphs = 2
       Spacing = -1
+      TabOrder = 10
+      OnClick = cmdCancelClick
       IsControl = True
     end
     object lstDest: TORListBox
@@ -164,11 +163,11 @@ inherited frmPlVuFilt: TfrmPlVuFilt
       TabOrder = 0
       OnClick = rgVuClick
     end
-    object cboProvider: TORComboBox
+    object cboProvider: TORCheckComboBox
       Left = 200
-      Top = 265
+      Top = 269
       Width = 140
-      Height = 21
+      Height = 44
       Style = orcsDropDown
       AutoSelect = True
       Caption = 'Selected Provider'
@@ -187,8 +186,14 @@ inherited frmPlVuFilt: TfrmPlVuFilt
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 8
+      Text = ''
       OnNeedData = cboProviderNeedData
       CharsNeedMatch = 1
+      MainCheckBoxCaption = 'Include Non-VA Providers'
+      MainCheckBoxVisible = True
+      MainCheckBoxAlignment = calBottom
+      OnMainCheckboxClick = cboProviderMainCheckboxClick
+      DropdownStyle = ddsControl
     end
     object cmdDefaultView: TBitBtn
       Left = 180
@@ -196,10 +201,10 @@ inherited frmPlVuFilt: TfrmPlVuFilt
       Width = 128
       Height = 22
       Caption = 'Return to Default View'
+      NumGlyphs = 2
       TabOrder = 11
       Visible = False
       OnClick = cmdDefaultViewClick
-      NumGlyphs = 2
     end
     object cboSource: TORComboBox
       Left = 9
@@ -222,6 +227,7 @@ inherited frmPlVuFilt: TfrmPlVuFilt
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 2
+      Text = ''
       OnChange = cboSourceChange
       OnDblClick = cmdAddClick
       OnEnter = cboSourceEnter
@@ -268,6 +274,7 @@ inherited frmPlVuFilt: TfrmPlVuFilt
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 1
+      Text = ''
       CharsNeedMatch = 1
     end
   end

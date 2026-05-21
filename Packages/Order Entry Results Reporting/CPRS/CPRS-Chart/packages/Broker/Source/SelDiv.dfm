@@ -11,12 +11,10 @@ object SelDivForm: TSelDivForm
   Font.Height = -8
   Font.Name = 'MS Sans Serif'
   Font.Style = [fsBold]
-  OldCreateOrder = True
   OnCreate = FormCreate
   DesignSize = (
     360
     173)
-  PixelsPerInch = 96
   TextHeight = 13
   object DivLabel1: TLabel
     Left = 8

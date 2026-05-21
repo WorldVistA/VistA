@@ -3,19 +3,19 @@ inherited frmNoteProperties: TfrmNoteProperties
   Top = 56
   BorderIcons = []
   Caption = 'Progress Note Properties'
-  ClientHeight = 634
+  ClientHeight = 749
   ClientWidth = 691
   Constraints.MinHeight = 400
   Constraints.MinWidth = 551
+  StyleElements = [seFont, seClient, seBorder]
   OnResize = FormResize
   ExplicitWidth = 707
-  ExplicitHeight = 673
-  PixelsPerInch = 96
+  ExplicitHeight = 788
   TextHeight = 13
   object pnlConsults: TPanel [0]
     Tag = 1
     Left = 0
-    Top = 328
+    Top = 443
     Width = 691
     Height = 153
     Align = alBottom
@@ -148,7 +148,7 @@ inherited frmNoteProperties: TfrmNoteProperties
   object pnlPRF: TORAutoPanel [1]
     Tag = 3
     Left = 0
-    Top = 481
+    Top = 596
     Width = 691
     Height = 153
     Align = alBottom
@@ -179,9 +179,9 @@ inherited frmNoteProperties: TfrmNoteProperties
     end
     object lvPRF: TCaptionListView
       Left = 0
-      Top = 32
+      Top = 21
       Width = 691
-      Height = 121
+      Height = 132
       Align = alClient
       Columns = <
         item
@@ -218,9 +218,9 @@ inherited frmNoteProperties: TfrmNoteProperties
   object pnlSurgery: TPanel [2]
     Tag = 2
     Left = 0
-    Top = 175
+    Top = 307
     Width = 691
-    Height = 153
+    Height = 136
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 2
@@ -270,7 +270,7 @@ inherited frmNoteProperties: TfrmNoteProperties
       Left = 0
       Top = 47
       Width = 691
-      Height = 106
+      Height = 89
       Margins.Left = 8
       Margins.Right = 8
       Align = alClient
@@ -309,7 +309,7 @@ inherited frmNoteProperties: TfrmNoteProperties
     Left = 3
     Top = 3
     Width = 685
-    Height = 169
+    Height = 301
     Align = alClient
     BevelOuter = bvNone
     ColumnCollection = <
@@ -411,20 +411,20 @@ inherited frmNoteProperties: TfrmNoteProperties
         Value = 100.000000000000000000
       end
       item
-        SizeStyle = ssAbsolute
-        Value = 26.000000000000000000
+        SizeStyle = ssAuto
+        Value = 28.000000000000000000
       end
       item
-        SizeStyle = ssAbsolute
-        Value = 26.000000000000000000
+        SizeStyle = ssAuto
+        Value = 28.000000000000000000
       end
       item
-        SizeStyle = ssAbsolute
-        Value = 26.000000000000000000
+        SizeStyle = ssAuto
+        Value = 28.000000000000000000
       end
       item
-        SizeStyle = ssAbsolute
-        Value = 26.000000000000000000
+        SizeStyle = ssAuto
+        Value = 25.000000000000000000
       end>
     ShowCaption = False
     TabOrder = 3
@@ -433,7 +433,7 @@ inherited frmNoteProperties: TfrmNoteProperties
       Left = 32
       Top = 3
       Width = 93
-      Height = 59
+      Height = 186
       Align = alRight
       Alignment = taRightJustify
       Caption = 'Progress Note Title:'
@@ -444,7 +444,7 @@ inherited frmNoteProperties: TfrmNoteProperties
       Left = 131
       Top = 3
       Width = 447
-      Height = 59
+      Height = 186
       Style = orcsSimple
       Align = alClient
       AutoSelect = True
@@ -465,6 +465,7 @@ inherited frmNoteProperties: TfrmNoteProperties
       SynonymChars = '<>'
       TabOrder = 0
       Text = ''
+      FlatCheckBoxes = False
       OnDblClick = cboNewTitleDblClick
       OnEnter = cboNewTitleEnter
       OnExit = cboNewTitleExit
@@ -500,21 +501,22 @@ inherited frmNoteProperties: TfrmNoteProperties
     end
     object lblDateTime: TLabel
       AlignWithMargins = True
-      Left = 33
-      Top = 68
-      Width = 92
-      Height = 20
-      Align = alRight
+      Left = 3
+      Top = 195
+      Width = 122
+      Height = 13
+      Align = alTop
       Alignment = taRightJustify
       Caption = 'Date/Time of Note:'
-      ExplicitHeight = 13
+      ExplicitLeft = 33
+      ExplicitWidth = 92
     end
     object calNote: TORDateBox
       AlignWithMargins = True
       Left = 131
-      Top = 65
+      Top = 192
       Width = 220
-      Height = 26
+      Height = 28
       Margins.Top = 0
       Margins.Bottom = 0
       Align = alClient
@@ -528,31 +530,33 @@ inherited frmNoteProperties: TfrmNoteProperties
     object lblProcSummCode: TLabel
       AlignWithMargins = True
       Left = 357
-      Top = 68
-      Width = 123
-      Height = 20
-      Align = alLeft
+      Top = 195
+      Width = 221
+      Height = 13
+      Align = alTop
+      AutoSize = False
       Caption = 'Procedure Summary Code'
       Transparent = False
-      ExplicitHeight = 13
+      ExplicitTop = 191
     end
     object lblAuthor: TLabel
       AlignWithMargins = True
-      Left = 91
-      Top = 94
-      Width = 34
-      Height = 20
-      Align = alRight
+      Left = 3
+      Top = 223
+      Width = 122
+      Height = 13
+      Align = alTop
       Alignment = taRightJustify
       Caption = 'Author:'
-      ExplicitHeight = 13
+      ExplicitLeft = 91
+      ExplicitWidth = 34
     end
-    object cboAuthor: TORComboBox
+    object cboAuthor: TORCheckComboBox
       AlignWithMargins = True
       Left = 131
-      Top = 94
+      Top = 223
       Width = 220
-      Height = 21
+      Height = 25
       Style = orcsDropDown
       Align = alClient
       AutoSelect = True
@@ -573,21 +577,28 @@ inherited frmNoteProperties: TfrmNoteProperties
       SynonymChars = '<>'
       TabOrder = 4
       Text = ''
+      FlatCheckBoxes = False
       OnEnter = cboAuthorEnter
       OnExit = cboAuthorExit
       OnMouseClick = cboAuthorMouseClick
       OnNeedData = NewPersonNeedData
       CharsNeedMatch = 1
       UniqueAutoComplete = True
+      MainCheckBoxCaption = 'Include Non-VA Providers'
+      MainCheckBoxVisible = True
+      MainCheckBoxAlignment = calRight
+      OnMainCheckboxClick = cboAuthorMainCheckboxClick
+      DropdownStyle = ddsControl
     end
     object cboProcSummCode: TORComboBox
       AlignWithMargins = True
       Left = 357
-      Top = 94
+      Top = 223
       Width = 221
       Height = 21
+      Margins.Bottom = 7
       Style = orcsDropDown
-      Align = alClient
+      Align = alTop
       AutoSelect = True
       Caption = 'Procedure Summary Code'
       Color = clWindow
@@ -609,25 +620,28 @@ inherited frmNoteProperties: TfrmNoteProperties
       SynonymChars = '<>'
       TabOrder = 5
       Text = ''
+      FlatCheckBoxes = False
       CharsNeedMatch = 1
     end
     object lblCosigner: TLabel
       AlignWithMargins = True
-      Left = 33
-      Top = 120
-      Width = 92
-      Height = 20
-      Align = alRight
+      Left = 3
+      Top = 254
+      Width = 122
+      Height = 13
+      Align = alTop
       Alignment = taRightJustify
       Caption = 'Expected Cosigner:'
-      ExplicitHeight = 13
+      ExplicitLeft = 33
+      ExplicitWidth = 92
     end
-    object cboCosigner: TORComboBox
+    object cboCosigner: TORCheckComboBox
       AlignWithMargins = True
       Left = 131
-      Top = 120
+      Top = 251
       Width = 220
       Height = 21
+      Margins.Top = 0
       Style = orcsDropDown
       Align = alClient
       AutoSelect = True
@@ -648,26 +662,33 @@ inherited frmNoteProperties: TfrmNoteProperties
       SynonymChars = '<>'
       TabOrder = 6
       Text = ''
+      FlatCheckBoxes = False
       OnExit = cboCosignerExit
       OnNeedData = cboCosignerNeedData
       CharsNeedMatch = 1
       UniqueAutoComplete = True
+      MainCheckBoxCaption = 'Include Non-VA Providers'
+      MainCheckBoxVisible = True
+      MainCheckBoxAlignment = calRight
+      OnMainCheckboxClick = cboCosignerMainCheckboxClick
+      DropdownStyle = ddsControl
     end
     object lblProcDateTime: TLabel
       AlignWithMargins = True
       Left = 357
-      Top = 120
-      Width = 103
-      Height = 20
-      Align = alLeft
+      Top = 254
+      Width = 221
+      Height = 13
+      Align = alTop
+      AutoSize = False
       Caption = 'Procedure Date/Time'
       Transparent = False
-      ExplicitHeight = 13
+      ExplicitTop = 250
     end
     object calProcDateTime: TORDateBox
       AlignWithMargins = True
       Left = 357
-      Top = 143
+      Top = 275
       Width = 221
       Height = 26
       Margins.Top = 0
@@ -717,9 +738,7 @@ inherited frmNoteProperties: TfrmNoteProperties
         'Status = stsDefault')
       (
         'Component = lvPRF'
-        'Status = stsDefault'
-        'Columns'
-        ())
+        'Status = stsDefault')
       (
         'Component = frmNoteProperties'
         'Status = stsDefault')
@@ -734,9 +753,7 @@ inherited frmNoteProperties: TfrmNoteProperties
         'Status = stsDefault')
       (
         'Component = lstSurgery'
-        'Status = stsDefault'
-        'Columns'
-        ())
+        'Status = stsDefault')
       (
         'Component = pnlCTop'
         'Status = stsDefault')
@@ -755,9 +772,7 @@ inherited frmNoteProperties: TfrmNoteProperties
           'Text = This progress note title must be associated with a consul' +
           't request.'#13#10'Select one of the following or choose a different ti' +
           'tle.'
-        'Status = stsOK'
-        'Columns'
-        ())
+        'Status = stsOK')
       (
         'Component = gpMain'
         'Status = stsDefault'))

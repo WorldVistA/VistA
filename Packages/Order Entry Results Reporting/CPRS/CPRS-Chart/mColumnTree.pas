@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, VCL.Controls, Forms,
-  Types, Dialogs, ComCtrls, Themes, UxTheme, ORFn;
+  Types, Dialogs, ComCtrls, Themes, UxTheme, ORFn, fBase508Frame;
 
 type
 
@@ -26,7 +26,7 @@ type
     property ParentIndex: String read FParentIndex write FParentIndex;
   end;
 
-  TColumnTreeFrame = class(TFrame)
+  TColumnTreeFrame = class(TBase508Frame)
     hdrColumns: THeaderControl;
     tvTree: TTreeView;
     procedure tvTreeCreateNodeClass(Sender: TCustomTreeView;

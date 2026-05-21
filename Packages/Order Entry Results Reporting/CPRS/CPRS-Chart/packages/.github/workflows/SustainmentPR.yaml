@@ -1,0 +1,16 @@
+name: Verify NOT sustainment branch
+on:
+  pull_request:
+    branches: 
+    - rel*
+    - Rel*
+
+jobs:
+  check-not-sustainment-branch:
+    runs-on: [ self-hosted ]
+    steps:
+      - name: Check Branch Name
+        if: ${{ contains(github.head_ref, 'sustainment') }} 
+        run: |
+          echo "❌ Branch name '${{ github.head_ref }}' is a sustainment branch and should not be merged"
+          exit 1 

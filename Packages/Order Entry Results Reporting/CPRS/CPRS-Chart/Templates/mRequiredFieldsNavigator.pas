@@ -8,10 +8,10 @@ uses
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
   Vcl.ComCtrls, Vcl.ExtCtrls, uTemplateFields, TypInfo, ORFn, ORNet, StrUtils,
   ORCtrls, ORDtTm, Vcl.Menus, System.Actions,
-  Vcl.ActnList, Data.DB, Datasnap.DBClient;
+  Vcl.ActnList, Data.DB, Datasnap.DBClient, fBase508Frame;
 
 type
-  TRequiredFieldsFrame = class(TFrame)
+  TRequiredFieldsFrame = class(TBase508Frame)
     gpButtons: TGridPanel;
     btnPrev: TButton;
     btnNext: TButton;

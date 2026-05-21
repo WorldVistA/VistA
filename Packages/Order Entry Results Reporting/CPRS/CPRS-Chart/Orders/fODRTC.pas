@@ -103,7 +103,7 @@ implementation
 {$R *.DFM}
 
 uses rCore, uCore, rODMeds, rODBase, rOrders, fRptBox, fODMedOIFA,
-  fFrame, ORNet, VAUtils;
+  fFrame, ORNet, VAUtils, VA508AccessibilityRouter;
 
 const
   TX_CIDC_DATE_INVALID = 'CIDC date must be after the encounter date.';

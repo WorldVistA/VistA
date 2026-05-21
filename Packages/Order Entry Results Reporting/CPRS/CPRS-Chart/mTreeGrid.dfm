@@ -1,4 +1,4 @@
-object TreeGridFrame: TTreeGridFrame
+inherited TreeGridFrame: TTreeGridFrame
   Left = 0
   Top = 0
   Width = 426
@@ -14,7 +14,6 @@ object TreeGridFrame: TTreeGridFrame
   Font.Style = []
   ParentFont = False
   TabOrder = 0
-  TabStop = True
   object tv: TTreeView
     Left = 0
     Top = 24
@@ -108,13 +107,12 @@ object TreeGridFrame: TTreeGridFrame
       Width = 426
       Height = 24
       BevelOuter = bvNone
-      TabOrder = 1
+      TabOrder = 2
       object mmoCode: TMemo
         Left = 65
         Top = 0
         Width = 361
         Height = 24
-        TabStop = False
         Align = alClient
         BevelInner = bvNone
         BevelOuter = bvNone
@@ -141,13 +139,12 @@ object TreeGridFrame: TTreeGridFrame
       Height = 24
       Align = alTop
       BevelOuter = bvNone
-      TabOrder = 2
+      TabOrder = 1
       object mmoDesc: TMemo
         Left = 65
         Top = 0
         Width = 361
         Height = 24
-        TabStop = False
         Align = alClient
         BevelInner = bvNone
         BevelOuter = bvNone

@@ -46,7 +46,7 @@ implementation
 
 {$R *.dfm}
 
-uses rODDiet;
+uses rODDiet, VAUtils, VA508AccessibilityRouter;
 
 function IsAllergyCheckOK(aDlgID, anItemID:Integer): Boolean;
 var

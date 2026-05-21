@@ -1,4 +1,4 @@
-object RequiredFieldsFrame: TRequiredFieldsFrame
+inherited RequiredFieldsFrame: TRequiredFieldsFrame
   Left = 0
   Top = 0
   Width = 659

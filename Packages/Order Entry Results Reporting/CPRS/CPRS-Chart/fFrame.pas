@@ -9,14 +9,23 @@ unit fFrame;
 interface
 
 uses
+  fHTMLDialog,
+  VAShared.UJSONValueHelper,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, Tabs, ComCtrls,
   ExtCtrls, Menus, StdCtrls, Buttons, ORFn, fPage, uConst, ORCtrls, Trpcb, Contnrs,
-  OleCtrls, VERGENCECONTEXTORLib_TLB, ComObj, AppEvnts, fBase508Form, oPKIEncryption,
+  OleCtrls, VERGENCECONTEXTORLib_TLB {Vergence should be removed with OLD ccow mode}, ComObj, AppEvnts, fBase508Form, oPKIEncryption,
   VA508AccessibilityManager, RichEdit, fDebugReport, StrUtils, vcl.ActnList,
   System.SyncObjs, U_CPTAppMonitor, ORNetIntf, system.JSON, Vcl.ExtDlgs, System.Actions,
-  fPDMPMgr, uPDMP, uHelpManager, u508Button;
+  fPDMPMgr, uPDMP, uHelpManager, u508Button, ActivityLogDisplay,
+  mPtInfoPanel, rPtInfo, uPtInfoCommon, uPtInfoSplitView, Vcl.WinXCtrls,
+  fBase508Frame, CCOW.CCOWManager;
 
 type
+  TCCOWDisplay = (CCOW_CHANGING, CCOW_LINKED, CCOW_BROKEN, CCOW_RESET);
+
+  // Forward decleration
+  TCPRS_CCOW = Class;
+
   TfrmFrame = class(TfrmBase508Form)
     pnlToolbar: TPanel;
     stsArea: TStatusBar;
@@ -161,6 +170,10 @@ type
     N2: TMenuItem;
     mnuWAPermissions: TMenuItem;
     mnuShowActivityLog: TMenuItem;
+    svPtInfoPanel: uPtInfoSplitView.TSplitView;
+    fraPtInfoPanel: TfraPtInfoPanel;
+    pnlPtInfoGap: TPanel;
+    pnlRight: TPanel;
     procedure tabPageChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -226,10 +239,10 @@ type
     procedure pnlPrimaryCareClick(Sender: TObject);
     procedure pnlRemindersClick(Sender: TObject);
     procedure pnlPostingsClick(Sender: TObject);
-    procedure ctxContextorCanceled(Sender: TObject);
-    procedure ctxContextorCommitted(Sender: TObject);
+    procedure ctxContextorCanceled(Sender: TObject); deprecated 'CCOW - OLD. Remove after successful 33CON';
+    procedure ctxContextorCommitted(Sender: TObject); deprecated 'CCOW - OLD. Remove after successful 33CON';
     procedure ctxContextorPending(Sender: TObject;
-      const aContextItemCollection: IDispatch);
+      const aContextItemCollection: IDispatch); deprecated 'CCOW - OLD. Remove after successful 33CON';
     procedure mnuDebugReportClick(Sender: TObject);
     procedure mnuFileBreakContextClick(Sender: TObject);
     procedure mnuFileResumeContextGetClick(Sender: TObject);
@@ -299,9 +312,14 @@ type
     procedure AppEventsIdle(Sender: TObject; var Done: Boolean);
     procedure mnuWAPermissionsClick(Sender: TObject);
     procedure mnuShowActivityLogClick(Sender: TObject);
+    procedure ORFormCanResize(Sender: TObject; var NewWidth, NewHeight: Integer;
+      var Resize: Boolean);
   private
+    FfrmActivityLogDisplay: TfrmActivityLogDisplay;
     FProccessingNextClick : boolean;
     FJustEnteredApp : boolean;
+
+    // CCOW - OLD
     FCCOWInstalled: boolean;
     FCCOWContextChanging: boolean;
     FCCOWIconName: string;
@@ -309,10 +327,18 @@ type
     FCCOWBusy: boolean;
     FCCOWError: boolean;
 //    FCCOWJustJoined: boolean;
+
+    // Keep this
+    FContextChanging: Boolean;
+
+    // CCOW - NEW
+    FCPRS_CCOW: TCPRS_CCOW;
+    FUseOldCCOW: Boolean;
+
     FNoPatientSelected: boolean;
     FRefreshing: boolean;
     FClosing: boolean;
-    FContextChanging: Boolean;
+
     FChangeSource: Integer;
     FCreateProgress: Integer;
     FEditCtrl: TCustomEdit;
@@ -346,6 +372,8 @@ type
     FForceCloseTimer: TTimer;
     FPatientInfoCaption: String;
     FRPCExceptionLogSize: integer;
+    FPtInfoOpenState: TPtInfoDataTypes.TOpenState;
+    FActivated: Boolean;
     procedure RefreshFixedStatusWidth;
     procedure FocusApplicationTopForm;
     procedure AppActivated(Sender: TObject);
@@ -366,7 +394,6 @@ type
     procedure LoadUserPreferences;
     procedure SaveUserPreferences;
     procedure SwitchToPage(NewForm: TForm);
-    function TabToPageID(Tab: Integer): Integer;
     function TimeoutCondition: boolean;
     function GetTimedOut: boolean;
     procedure TimeOutAction;
@@ -377,6 +404,7 @@ type
     procedure setOtherInfoPanel;
     procedure UMInitiate(var Message: TMessage);   message UM_INITIATE;
     procedure UMNewOrder(var Message: TMessage);   message UM_NEWORDER;
+    procedure UMNewNote(var Message: TMessage);    message UM_NEWNOTE;
     procedure UMReminders(var Message: TMessage);  message UM_REMINDERS;
     procedure UMStatusText(var Message: TMessage); message UM_STATUSTEXT;
     procedure UMShowPage(var Message: TMessage);   message UM_SHOWPAGE;
@@ -402,18 +430,17 @@ type
 
     procedure UpdateECSParameter(var CmdParameter: string);
     function  ValidECSUser: boolean;
-    procedure StartCCOWContextor;
-    function  AllowCCOWContextChange(var CCOWResponse: UserResponse; NewDFN: string): boolean;
-    procedure UpdateCCOWContext;
-    procedure CheckHyperlinkResponse(aContextItemCollection: IDispatch; var HyperlinkReason: string);
-    procedure CheckForDifferentPatient(aContextItemCollection: IDispatch; var PtChanged: boolean);
+    procedure StartCCOWContextor;  deprecated 'CCOW - OLD. Remove after successful 33CON';
+    procedure UpdateCCOWContext; deprecated 'CCOW - OLD. Remove after successful 33CON';
+    procedure CheckHyperlinkResponse(aContextItemCollection: IDispatch; var HyperlinkReason: string); deprecated 'CCOW - OLD. Remove after successful 33CON';
+    procedure CheckForDifferentPatient(aContextItemCollection: IDispatch; var PtChanged: boolean); deprecated 'CCOW - OLD. Remove after successful 33CON';
 {$IFDEF CCOWBROKER}
-    procedure CheckForDifferentUser(aContextItemCollection: IDispatch; var UserChanged: boolean);
+    procedure CheckForDifferentUser(aContextItemCollection: IDispatch; var UserChanged: boolean); deprecated 'CCOW - OLD. Remove after successful 33CON';
 {$ENDIF}
     procedure HideEverything(AMessage: string = 'No patient is currently selected.');
     procedure ShowEverything;
-    function FindBestCCOWDFN: string;
-    procedure HandleCCOWError(AMessage: string);
+    function FindBestCCOWDFN: string;  deprecated 'CCOW - OLD. Remove after successful 33CON';
+    procedure HandleCCOWError(AMessage: string);  deprecated 'CCOW - OLD. Remove after successful 33CON';
     procedure SetUpNextButton;
     procedure NextButtonClick(Sender: TObject);
     procedure NextButtonMouseDown(Sender: TObject; Button: TMouseButton;
@@ -425,6 +452,11 @@ type
     procedure updateOTHD;
     procedure ForceCloseTimer(Sender: TObject);
     function GetPatientInfoLabelDisplay: string;
+    function GetContextChanging: Boolean;
+    function GetCCOWContextChanging: Boolean;
+    function GetCCOWBusy: Boolean;
+    procedure SetCCOWBusy(const Value: Boolean);
+    function GetCCOWDriveChange: Boolean;
   public
     EnduringPtSelSplitterPos, frmFrameHeight, pnlPatientSelectedHeight: integer;
     EnduringPtSelColumns: string;
@@ -434,6 +466,7 @@ type
     procedure RemindersChanged(Sender: TObject);
     procedure UpdateVAAMHVButtons(Sender: TObject); // TDrugs Patch OR*3*377 and WV*1*24 - DanP@SLC 01-02-2016
     function PageIDToTab(PageID: Integer): Integer;
+    function TabToPageID(Tab: Integer): Integer;
     procedure ShowHideChartTabMenus(AMenuItem: TMenuItem);
     procedure UpdatePtInfoOnRefresh;
     function  TabExists(ATabID: integer): boolean;
@@ -441,11 +474,21 @@ type
     function DLLActive: boolean;
     function FindNextControl(CurControl: TWinControl;
       GoForward, CheckTabStop, CheckParent: Boolean): TWinControl; reintroduce;
+    property Activated: Boolean read FActivated;
     property ChangeSource:    Integer read FChangeSource;
-    property CCOWContextChanging: Boolean read FCCOWContextChanging;
-    property CCOWDrivedChange: Boolean  read FCCOWDrivedChange;
-    property CCOWBusy: Boolean    read FCCOWBusy  write FCCOWBusy;
-    property ContextChanging: Boolean read FContextChanging;
+
+    // CCOW - OLD
+    function  AllowCCOWContextChange(var CCOWResponse: UserResponse; NewDFN: string): boolean; deprecated 'CCOW - OLD. Remove after successful 33CON';
+    property CCOWContextChanging: Boolean read GetCCOWContextChanging;
+    property CCOWDrivedChange: Boolean  read GetCCOWDriveChange;
+    property CCOWBusy: Boolean    read GetCCOWBusy  write SetCCOWBusy;
+    property ContextChanging: Boolean read GetContextChanging;
+
+    // CCOW - NEW
+    property CPRS_CCOW: TCPRS_CCOW read FCPRS_CCOW;
+    property NoPatientSelected: boolean read FNoPatientSelected;
+    property UseOldCCOW: Boolean read FUseOldCCOW;
+
     property TimedOut:        Boolean read GetTimedOut;
     property Closing:         Boolean read FClosing;
     property OnTabChanged:    TNotifyEvent read FTabChanged write FTabChanged;
@@ -460,19 +503,42 @@ type
     procedure pdmpRun(anAlign: TAlign);
     procedure pdmpCloseReport;
 
-
     function EditInProgress: String;
     function SaveEditInProgress(var ShowMessage: Boolean): Boolean;
+    procedure SetupPtInfoPanel;
     property PatientInfoLabelCaption: string read GetPatientInfoLabelDisplay;
   end;
 
-  TRpcRecord = record
-    RpcName: String;
-    UCallListIndex: Integer;
-    ResultListIndex: Integer;
-    SearchIndex: Integer;
-    RPCText: TStringList;
-    RPCRunTime: string;
+  // CCOW - NEW
+  TCPRS_CCOW = Class(TObject)
+  private
+      FAction: string;
+      FAllowRetry: Boolean;
+      FContextChanging: Boolean;
+      FDisabled: Boolean;
+      FDrivedChange: Boolean;
+      FFrmFrame: TfrmFrame;
+      FIconName: string;
+      FRetry: Boolean;
+      procedure ContextorCanceled(Sender: TObject);
+      procedure ContextorCommitted(Sender: TObject);
+      procedure ContextorPending(Sender: TObject; const aContextItemCollection: IDispatch);
+  public
+      constructor Create(aFrmFrame: TfrmFrame);
+      function  AllowCCOWContextChange(var CCOWResponse: TCCOWResponse; NewDFN: string): boolean;
+      procedure BreakContext;
+      procedure HandleCCOWError(AMessage: string; CanShow: Boolean);
+      procedure ResumeJoinContext;
+      procedure ResumeSetContext;
+      procedure StartCCOWContextor;
+      procedure UpdateCCOWContext;
+      procedure UpdateCCOWDisplay(CCOWStatus: TCCOWDisplay);
+      property AllowRetry: Boolean read FAllowRetry write FAllowRetry;
+      property ContextChanging: Boolean read FContextChanging write FContextChanging;
+      property Disabled: Boolean read FDisabled write FDisabled;
+      property DrivedChange: Boolean read FDrivedChange write FDrivedChange;
+      property IconName: string read FIconName write FIconName;
+      property Retry: Boolean read FRetry;
   end;
 
 var
@@ -480,7 +546,7 @@ var
   uTabList: TStringList;
   uLabRemoteType, uRemoteType, uReportID, uLabRepID : string;
   FlaggedPTList: TStringList;
-  ctxContextor : TContextorControl;
+  ctxContextor : TContextorControl; // CCOW - OLD
   NextTab, LastTab, ChangingTab: Integer;
   uUseVistaWeb: boolean;
   PTSwitchRefresh: boolean = False;  //flag for patient refresh or switch of patients
@@ -488,7 +554,6 @@ var
   TabCtrlClicked: Boolean = FALSE;
   DEAContext: Boolean = False;
   DelayReviewChanges: Boolean = False;
-  WatchArray: Array of TRpcRecord;
 
 const
   PASSCODE = '_gghwn7pghCrOJvOV61PtPvgdeEU2u5cRsGvpkVDjKT_H7SdKE_hqFYWsUIVT1H7JwT6Yz8oCtd2u2PALqWxibNXx3Yo8GPcTYsNaxW' + 'ZFo8OgT11D5TIvpu3cDQuZd3Yh_nV9jhkvb0ZBGdO9n-uNXPPEK7xfYWCI2Wp3Dsu9YDSd_EM34nvrgy64cqu9_jFJKJnGiXY96Lf1ecLiv4LT9qtmJ-BawYt7O9JZGAswi344BmmCbNxfgvgf0gfGZea';
@@ -498,8 +563,6 @@ const
 implementation
 
 {$R *.DFM}
-{$R sBitmaps}
-{$R sRemSrch}
 
 uses
   ORNet, rCore, fPtSelMsg, fPtSel, fCoverSheet, fProbs, fMeds, fOrders, rOrders, fNotes, fConsults, fDCSumm,
@@ -520,7 +583,9 @@ uses
   , oPDMPData, rPDMP, fPDMPView
   , uInfoBoxWithBtnControls, uSimilarNames, fODBase, UExceptHook, ORExtensions,
   UResponsiveGUI, uWriteAccess, System.Math, UMHDll,
-  ORCtrls.ActivityLog, ORCtrls.ActivityLogDisplay;
+  ORCtrls.ActivityLog, ORCtrls.ActivityLogger, rSpecialAuthority,
+  VAPieceHelper,
+  VAShared.CursorHelper;
 
 //PaPI =========================================================================
 procedure SwitchToThisWindow(h1: hWnd; x: bool); stdcall;
@@ -577,12 +642,15 @@ const
   TC_DGSR_DENY   = 'Remote Access Denied';
   TX_DGSR_YESNO  = CRLF + 'Do you want to continue accessing this remote patient record?';
 
+  // CCOW - OLD
   TX_CCOW_LINKED   = 'Clinical Link On';
   TX_CCOW_CHANGING = 'Clinical link changing';
   TX_CCOW_BROKEN   = 'Clinical link broken';
   TX_CCOW_ERROR    = 'CPRS was unable to communicate with the CCOW Context Vault' + CRLF +
                      'CCOW patient synchronization will be unavailable for the remainder of this session.';
   TC_CCOW_ERROR    = 'CCOW Error';
+
+  PtInfoPanelSettings = 'PtInfoPanelSettings';
 
 function TfrmFrame.TimeoutCondition: boolean;
 begin
@@ -661,6 +729,7 @@ begin
   try
     if assigned(frmOtherSchedule) then frmOtherSchedule.Close;
     if assigned (frmIVRoutes) then frmIVRoutes.Close;
+//    TfrmHTMLDialog.DestroyAllDialogs;
     CloseDLLWindows;
     CloseCPRS;
   except
@@ -761,22 +830,28 @@ var
   end;
 
   procedure AddInfo(Caption: string; Component: TComponent);
+  var
+    AObjectData: TObjectData;
   begin
-    if Assigned(Component) then
-      CustomDetails.Add(TORActivityLog.ComponentDescription(Component, Caption))
-    else
+    if not Assigned(Component) then
+    begin
       CustomDetails.Add(Caption + 'None;');
+    end else begin
+      AObjectData := TObjectData.Create(Component);
+      try
+        CustomDetails.Add(Caption + '; '+ AObjectData.ToString);
+      finally
+        FreeAndNil(AObjectData);
+      end;
+    end;
   end;
 
-  procedure ShowLog(Log: TORActivityLog.TLogWrapper; LogName: string);
-  var
-    i: integer;
+  procedure ShowLog(Log: TActivityLog; LogName: string);
   begin
-    if Log.Running and (Log.Count > 0) then
+    if TActivityLogger.Enabled and not Log.IsEmpty then
     begin
       ExceptionLog.AddSectionHeader(CustomDetails, LogName, soFirst);
-      for i := Log.Count - 1 downto 0 do
-        CustomDetails.Add(Log[i]);
+      CustomDetails.Add(Log.ToString(TActivityLogger.LogMaxSize));
     end;
   end;
 
@@ -815,9 +890,8 @@ begin
     AddInfo('Active Form = ', Screen.ActiveForm);
 
   ShowRPCLog;
+  ShowLog(TActivityLogger.Log, 'Activity Log');
 
-  ShowLog(TORActivityLog.ActivityLog, 'Activity Log');
-  ShowLog(TORActivityLog.MessageLog, 'Windows Message Queue Log');
 end;
 
 procedure TfrmFrame.btnCombatVetClick(Sender: TObject);
@@ -847,44 +921,47 @@ begin
     exit;
   end;
   FContextChanging := True;
-  Result := True;
-  if COMObjectActive or SpellCheckInProgress or DLLActive then
-    begin
-      Reason := 'COM_OBJECT_ACTIVE';
-      Result:= False;
-    end;
-
-  if Result then Result := checkOtherForms(Reason);
-  // frmCoverSheet will always AllowContextChange
-  if Result then Result := frmProblems.AllowContextChange(Reason);
-  if Result then Result := frmMeds.AllowContextChange(Reason);
-  if Result then Result := frmOrders.AllowContextChange(Reason);
-  if Result then Result := frmNotes.AllowContextChange(Reason);
-  if Result then Result := frmConsults.AllowContextChange(Reason);
-  if Result then Result := frmDCSumm.AllowContextChange(Reason);
-  if Result then
-    if Assigned(frmSurgery) then Result := frmSurgery.AllowContextChange(Reason);;
-  if Result then Result := frmLabs.AllowContextChange(Reason);;
-  if Result then Result := frmReports.AllowContextChange(Reason);
-  if Result then Result := frmGraphData.AllowContextChange(Reason);
-  if (not User.IsReportsOnly) then
-    if Result and Changes.RequireReview then //Result := ReviewChanges(TimedOut);
-      case BOOLCHAR[FCCOWContextChanging] of
-        '1': begin
-               if Changes.RequireReview then
-                 begin
-                   Reason := 'Items will be left unsigned.';
-                   Result := False;
-                 end
-               else
-                 Result := True;
-             end;
-        '0': begin
-               Silent := (TimedOut) or (Reason = 'COMMIT');
-               Result := ReviewChanges(Silent);
-             end;
+  try
+    Result := True;
+    if COMObjectActive or SpellCheckInProgress or DLLActive then
+      begin
+        Reason := 'COM_OBJECT_ACTIVE';
+        Result:= False;
       end;
-  FContextChanging := False;
+
+    if Result then Result := checkOtherForms(Reason);
+    // frmCoverSheet will always AllowContextChange
+    if Result then Result := frmProblems.AllowContextChange(Reason);
+    if Result then Result := frmMeds.AllowContextChange(Reason);
+    if Result then Result := frmOrders.AllowContextChange(Reason);
+    if Result then Result := frmNotes.AllowContextChange(Reason);
+    if Result then Result := frmConsults.AllowContextChange(Reason);
+    if Result then Result := frmDCSumm.AllowContextChange(Reason);
+    if Result then
+      if Assigned(frmSurgery) then Result := frmSurgery.AllowContextChange(Reason);;
+    if Result then Result := frmLabs.AllowContextChange(Reason);;
+    if Result then Result := frmReports.AllowContextChange(Reason);
+    if Result then Result := frmGraphData.AllowContextChange(Reason);
+    if (not User.IsReportsOnly) then
+      if Result and Changes.RequireReview then //Result := ReviewChanges(TimedOut);
+        case BOOLCHAR[CCOWContextChanging] of
+          '1': begin
+                 if Changes.RequireReview then
+                   begin
+                     Reason := 'Items will be left unsigned.';
+                     Result := False;
+                   end
+                 else
+                   Result := True;
+               end;
+          '0': begin
+                 Silent := (TimedOut) or (Reason = 'COMMIT');
+                 Result := ReviewChanges(Silent);
+               end;
+        end;
+  Finally
+    FContextChanging := False;
+  end;
 end;
 
 // TDrugs Patch OR*3*377 and WV*1*24 - DanP@SLC 11-20-2015
@@ -1039,7 +1116,7 @@ end;
 procedure TfrmFrame.FormCreate(Sender: TObject);
 { connect to server, create tab pages, select a patient, & initialize core objects }
 var
-  SAN: string;
+  SAN, Error: string;
   bConnect: Boolean;
 
   Procedure LoadExceptionLogger;
@@ -1058,22 +1135,17 @@ var
     {$ENDIF}
     if ExceptionLog.Enabled then
     begin
-      TORActivityLog.ActivityLog.MaxSize := SystemParameters.AsTypeDef<Integer>
+      TActivityLogger.LogMaxSize := SystemParameters.AsTypeDef<Integer>
         (Log + 'activityLogSize', 0);
-      TORActivityLog.MessageLog.MaxSize := SystemParameters.AsTypeDef<Integer>
-        (Log + 'winMessageLogSize', 0);
+      TActivityLogger.Enabled := TActivityLogger.LogMaxSize > 0;
       FRPCExceptionLogSize := SystemParameters.AsTypeDef<Integer>
         (Log + 'RPCLogSize', 0);;
-    end
-    else
-    begin
-      TORActivityLog.ActivityLog.MaxSize := 0;
-      TORActivityLog.MessageLog.MaxSize := 0;
+    end else begin
+      TActivityLogger.Enabled := False;
+      TActivityLogger.Log.Clear;
       FRPCExceptionLogSize := 0;
     end;
-    if (not ExceptionLog.Enabled) or ((TORActivityLog.ActivityLog.MaxSize = 0) and
-      (TORActivityLog.MessageLog.MaxSize = 0)) then
-      mnuShowActivityLog.Visible := False;
+    mnuShowActivityLog.Visible := TActivityLogger.Enabled;
 
     ExceptionLog.IncludeModuleInfo := SystemParameters.AsTypeDef<Boolean>
       (Log + 'includeModuleInfo', False);
@@ -1093,7 +1165,7 @@ begin
   // constructor.
   inConstructor := true;
   try
-
+      FActivated := True;
     {$IFDEF DEBUG}
       setRetainedRPCMax(500); // default 100 is now too small
     {$ENDIF}
@@ -1101,26 +1173,42 @@ begin
       SizeHolder := TSizeHolder.Create;
       FOldActiveFormChange := Screen.OnActiveFormChange;
       Screen.OnActiveFormChange := ScreenActiveFormChange;
-    //  FCCOWJustJoined := False;
-      if not (ParamSearch('CCOW')='DISABLE') then
-        try
-          StartCCOWContextor;
-    //      FCCOWJustJoined := True;
-        except
-          IsRunExecuted := False;
-          FCCOWInstalled := False;
-          pnlCCOW.Visible := False;
-          mnuFileResumeContext.Visible := False;
-          mnuFileBreakContext.Visible := False;
-        end
-      else
+      FUseOldCCOW := FindCmdLineSwitch('OLDCCOW', ['-', '/'], True);
+
+      if FUseOldCCOW then
+      begin
+      //  FCCOWJustJoined := False;
+        if not (ParamSearch('CCOW')='DISABLE') then
+          try
+            StartCCOWContextor;
+      //      FCCOWJustJoined := True;
+          except
+            IsRunExecuted := False;
+            FCCOWInstalled := False;
+            pnlCCOW.Visible := False;
+            mnuFileResumeContext.Visible := False;
+            mnuFileBreakContext.Visible := False;
+          end
+        else
+          begin
+            IsRunExecuted := False;
+            FCCOWInstalled := False;
+            pnlCCOW.Visible := False;
+            mnuFileResumeContext.Visible := False;
+            mnuFileBreakContext.Visible := False;
+          end;
+      end else begin
+        FCPRS_CCOW := TCPRS_CCOW.Create(Self);
+        if not(ParamSearch('CCOW') = 'DISABLE') then
+          FCPRS_CCOW.StartCCOWContextor
+        else
         begin
-          IsRunExecuted := False;
-          FCCOWInstalled := False;
+          FCPRS_CCOW.Disabled := True;
           pnlCCOW.Visible := False;
           mnuFileResumeContext.Visible := False;
           mnuFileBreakContext.Visible := False;
         end;
+      end;
 
       RefreshFixedStatusWidth;
       FTerminate := False;
@@ -1134,15 +1222,31 @@ begin
 
     {$IFDEF CCOWBROKER}
       EnsureBroker;
-      if ctxContextor <> nil then
+
+      if FUseOldCCOW then
       begin
-        if ParamSearch('CCOW') = 'PATIENTONLY' then
-          RPCBrokerV.Contextor := nil
+        if ctxContextor <> nil then
+        begin
+          if ParamSearch('CCOW') = 'PATIENTONLY' then
+            RPCBrokerV.Contextor := nil
+          else
+            RPCBrokerV.Contextor := ctxContextor;
+        end
         else
-          RPCBrokerV.Contextor := ctxContextor;
+          RPCBrokerV.Contextor := nil;
       end
       else
-        RPCBrokerV.Contextor := nil;
+      begin
+        if CCOWManager.Enabled and assigned(CCOWManager.Contextor) then
+        begin
+          if ParamSearch('CCOW') = 'PATIENTONLY' then
+            RPCBrokerV.Contextor := nil
+          else
+            RPCBrokerV.Contextor := CCOWManager.Contextor;
+        end
+        else
+          RPCBrokerV.Contextor := nil;
+      end;
     {$ENDIF}
       try
         bConnect := ConnectToServer(TX_OPTION);
@@ -1174,10 +1278,13 @@ begin
           exit;
         end;
 
-      if ctxContextor <> nil then
+      if FUseOldCCOW then
       begin
-        if not (ParamSearch('CCOW') = 'PATIENTONLY') then
-          ctxContextor.NotificationFilter := ctxContextor.NotificationFilter + ';User';
+        if ctxContextor <> nil then
+        begin
+          if not (ParamSearch('CCOW') = 'PATIENTONLY') then
+            ctxContextor.NotificationFilter := ctxContextor.NotificationFilter + ';User';
+        end;
       end;
 
       FECSAuthUser := ValidECSUser;
@@ -1210,9 +1317,11 @@ begin
         end;
     {$ENDIF}
       User := TUser.Create;
+      DataTracker.AddData('User', @User, TypeInfo(TUser));
 //      getSysUserParameters(user.DUZ);
       LoadExceptionLogger;
       TResponsiveGUI.Enabled := SystemParameters.AsTypeDef<boolean>('ResponsiveGUI', True);
+      setRetainedRPCMax(SystemParameters.AsTypeDef<Integer>('retainedRPCMax',500));
       CallVistA('XUS PKI GET UPN', [], SAN);
       if SAN='' then DigitalSigningSetup1.Visible := True
       else DigitalSigningSetup1.Visible := False;
@@ -1259,7 +1368,9 @@ begin
 
       // create creating core objects
       Patient := TPatient.Create;
+      DataTracker.AddData('Patient', @Patient, TypeInfo(TPatient));
       Encounter := TEncounter.Create;
+      DataTracker.AddData('Encounter', @Encounter, TypeInfo(TEncounter));
       Changes := TChanges.Create;
       Notifications := TNotifications.Create;
       RemoteSites := TRemoteSiteList.Create;
@@ -1342,6 +1453,13 @@ begin
       CPAppMon.LoadTheBuffer;
 
       TSimilarNames.Enabled := Uppercase(Getuserparam('OR SIMILAR NAMES ENABLED')) = '1';
+
+      InitSpecialAuthorityTypesEx(Error);
+      if Error <> '' then
+      begin
+        ShowMessage(Error);
+        Exit;
+      end;
   finally
     inConstructor := false;
   end;
@@ -1420,11 +1538,7 @@ end;
 
 procedure TfrmFrame.FormDestroy(Sender: TObject);
 { free core objects used by CPRS }
-Var
- I:integer;
 begin
-  if Assigned(frmActivityLogDisplay) then
-    FreeAndNil(frmActivityLogDisplay);
   Application.OnActivate := FOldActivate;
   Screen.OnActiveFormChange := FOldActiveFormChange;
   FNextButtonBitmap.Free;
@@ -1444,10 +1558,7 @@ begin
   frmDebugReport.Free;
   FreeAndNil(OTHDDspList);
   FreeAndNil(FlagList);
-
-  for I := high(WatchArray) downto low(WatchArray) do
-    WatchArray[I].RPCText.Free;
-  SetLength(WatchArray, 0);
+  FreeAndNil(FCPRS_CCOW);
 end;
 
 procedure TfrmFrame.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
@@ -1461,6 +1572,11 @@ begin
     FForceCloseTimer.OnTimer := FForceCloseTimer.OnTimer; // reset timer
   if FCPRSClosing then
     exit;
+  if not svPtInfoPanel.CanCloseEmbeddedForm then
+  begin
+    CanClose := False;
+    exit;
+  end;
  //check for modal windows and close any that may exist
   if Application.ModalLevel > 0 then
   begin
@@ -1694,9 +1810,9 @@ begin
   FClosing := TRUE;
   FInitCPRSClose := False;
 
-  TORActivityLog.ActivityLog.MaxSize := 0;
-  TORActivityLog.MessageLog.MaxSize := 0;
-  FreeAndNil(frmActivityLogDisplay);
+  TActivityLogger.Enabled := False;
+  TfrmHTMLDialog.ClosedHTMLForms;
+  TfrmHTMLDialog.DestroyAllDialogs;
 
   if assigned(FForceCloseTimer) then
     FForceCloseTimer.Enabled := False;
@@ -1802,6 +1918,22 @@ begin
 end;
 
 { Updates posted to MainForm --------------------------------------------------------------- }
+
+procedure TfrmFrame.UMNewNote(var Message: TMessage);
+var
+  Saved: Boolean;
+begin
+  Saved := True;
+  if frmNotes.EditingIndex > -1 then
+    frmNotes.SaveCurrentNote(Saved);
+  if Saved then
+  begin
+    frmNotes.LoadNotes;
+    if Message.WParam > 0 then
+      frmNotes.tvNotes.Selected := frmNotes.tvNotes.FindPieceNode
+        (Message.WParam.ToString, u, frmNotes.tvNotes.Items.GetFirstNode);
+  end;
+end;
 
 procedure TfrmFrame.UMNewOrder(var Message: TMessage);
 { post a notice of change in orders to all TPages, wParam=OrderAction, lParam=TOrder }
@@ -1917,7 +2049,13 @@ var
   aCPRSTab: ICPRSTab;
 begin
   if FTerminate or FClosing then Exit;
-  if FCCOWDrivedChange then FCCOWDrivedChange := False;
+
+  if FUseOldCCOW then
+  begin
+    if FCCOWDrivedChange then FCCOWDrivedChange := False;
+  end else begin
+    if FCPRS_CCOW.DrivedChange then FCPRS_CCOW.DrivedChange := False;
+  end;
 
   if FLastPage <> nil then
     if FLastPage.InheritsFrom(TfrmPage) then
@@ -1934,6 +2072,8 @@ end;
 
 procedure TfrmFrame.SwitchToPage(NewForm: TForm);
 { unmerge/merge menus, bring page to top of z-order, call form-specific OnDisplay code }
+var
+  OldSVInfoPanelVisible: Boolean;
 begin
   if FTerminate or FClosing then Exit;
   if FLastPage = NewForm then
@@ -1946,34 +2086,46 @@ begin
     mnuFrame.Unmerge(FLastPage.Menu);
     FLastPage.Hide;
   end;
-  if Assigned(NewForm) then begin
-    mnuFrame.Merge(NewForm.Menu);
-    NewForm.Show;
-    FormResize(Self);
-  end;
-  lstCIRNLocations.Visible := False;
-  pnlCIRN.BevelOuter := bvRaised;
-  lstCIRNLocations.SendToBack;
-  mnuFilePrint.Enabled := False;           // let individual page enable this
-  mnuFilePrintSetup.Enabled := False;      // let individual page enable this
-  mnuFilePrintSelectedItems.Enabled := False;
-  FLastPage := NewForm;
-  if NewForm <> nil then
-  begin
-    if NewForm.Name = frmNotes.Name then frmNotes.Align := alClient
-      else frmNotes.Align := alNone;
-    if NewForm.Name = frmConsults.Name then frmConsults.Align := alClient
-      else frmConsults.Align := alNone;
-    if NewForm.Name = frmReports.Name then frmReports.Align := alClient
-      else frmReports.Align := alNone;
-    if NewForm.Name = frmDCSumm.Name then frmDCSumm.Align := alClient
-      else frmDCSumm.Align := alNone;
-    if Assigned(frmSurgery) then
-      if NewForm.Name = frmSurgery.Name then frmSurgery.Align := alclient
-        else frmSurgery.Align := alNone;
-    NewForm.BringToFront;                    // to cause tab switch to happen immediately
-    TResponsiveGUI.ProcessMessages;
-    PostMessage(Handle, UM_SHOWPAGE, 0, 0);  // this calls DisplayPage for the form
+  pnlPatientSelected.LockDrawing;
+  try
+    OldSVInfoPanelVisible := svPtInfoPanel.Visible;
+    svPtInfoPanel.Visible := False;
+    try
+      if Assigned(NewForm) then begin
+        mnuFrame.Merge(NewForm.Menu);
+        NewForm.Show;
+        FormResize(Self);
+      end;
+      lstCIRNLocations.Visible := False;
+      pnlCIRN.BevelOuter := bvRaised;
+      lstCIRNLocations.SendToBack;
+      mnuFilePrint.Enabled := False;           // let individual page enable this
+      mnuFilePrintSetup.Enabled := False;      // let individual page enable this
+      mnuFilePrintSelectedItems.Enabled := False;
+      FLastPage := NewForm;
+      if NewForm <> nil then
+      begin
+        if NewForm.Name = frmNotes.Name then frmNotes.Align := alClient
+          else frmNotes.Align := alNone;
+        if NewForm.Name = frmConsults.Name then frmConsults.Align := alClient
+          else frmConsults.Align := alNone;
+        if NewForm.Name = frmReports.Name then frmReports.Align := alClient
+          else frmReports.Align := alNone;
+        if NewForm.Name = frmDCSumm.Name then frmDCSumm.Align := alClient
+          else frmDCSumm.Align := alNone;
+        if Assigned(frmSurgery) then
+          if NewForm.Name = frmSurgery.Name then frmSurgery.Align := alclient
+            else frmSurgery.Align := alNone;
+        NewForm.BringToFront;                    // to cause tab switch to happen immediately
+        TResponsiveGUI.ProcessMessages;
+        PostMessage(Handle, UM_SHOWPAGE, 0, 0);  // this calls DisplayPage for the form
+      end;
+    finally
+      svPtInfoPanel.ResetMaxConstraints;
+      svPtInfoPanel.Visible := OldSVInfoPanelVisible;
+    end;
+  finally
+    pnlPatientSelected.UnlockDrawing;
   end;
 end;
 
@@ -1995,8 +2147,19 @@ end;
 procedure TfrmFrame.tabPageChange(Sender: TObject);
 { switches to form linked to NewTab }
 var
-  PageID : integer;
+  W, PageID : integer;
 begin
+  if svPtInfoPanel.DisplayMode = svmDocked then
+  begin
+    pnlPatientSelected.LockDrawing;
+    try
+      W := Width;
+      svPtInfoPanel.DisplayMode := svmOverlay;
+      Width := W;
+    finally
+      pnlPatientSelected.UnlockDrawing;
+    end;
+  end;
   PageID := TabToPageID((sender as TTabControl).TabIndex);
   if (PageID <> CT_NOPAGE) and (TabPage.CanFocus) and Assigned(FLastPage) and
      (not TabPage.Focused) then
@@ -2024,6 +2187,7 @@ begin
     SwitchToPage(frmReports);
     NextTab := CT_REPORTS;
   end;
+  SetupPtInfoPanel;
   if ScreenReaderSystemActive and FCtrlTabUsed then
     SpeakPatient;
   ChangingTab := PageID;
@@ -2175,15 +2339,42 @@ begin
     pdmpSetup(Patient.DFN);
     pdmpAlign;
 
+    svPtInfoPanel.InitPatient;
+    SetupPtInfoPanel;
   end;
-end;  // SetupPatient
+end;
+
+procedure TfrmFrame.SetupPtInfoPanel;
+var
+  PageID : integer;
+begin
+  PageID := TabToPageID(tabPage.TabIndex);
+  if (svPtInfoPanel.OpenState <> osClosed) then
+    FPtInfoOpenState := svPtInfoPanel.OpenState;
+  if PageID = CT_NOPAGE then
+    svPtInfoPanel.OpenState := osClosed
+  else
+  begin
+    svPtInfoPanel.InitPanels(PageID);
+    if svPtInfoPanel.OpenState <> osClosed then
+    begin
+      if svPtInfoPanel.OpenState = FPtInfoOpenState then
+        svPtInfoPanel.ResetOpenState
+      else
+        svPtInfoPanel.OpenState := FPtInfoOpenState;
+    end;
+  end;
+end;
+
+// SetupPatient
 
 procedure TfrmFrame.mnuFileNextClick(Sender: TObject);
 var
   SaveDFN, NewDFN: string; // *DFN*
   NextIndex, CurrentTab: Integer;
   Reason: string;
-  CCOWResponse: UserResponse;
+  CCOWUserResponse: UserResponse;
+  CCOWResponse: TCCOWResponse;
   AccessStatus: integer;
   LongTextBtns: TStringList;
   LongTextResult: integer;
@@ -2218,6 +2409,36 @@ var
       end;
     end;
 
+    function switchPatientsForAlerts: integer;
+    begin
+      result := -1;
+      if NewDFN = '' then
+        NextIndex := CT_NOPAGE
+      else if User.UseLastTab then
+      begin
+        if (CurrentTab < 0) then
+          result := PageIDToTab(User.InitialTab)
+        else
+          result := CurrentTab;
+      end
+      else
+        result := PageIDToTab(User.InitialTab);
+    end;
+
+    procedure NewPatientSetup;
+    begin
+      RemindersStarted := False;
+      Encounter.Clear;
+      Changes.Clear;
+      if assigned(FlagList) then
+      begin
+        FlagList.Clear;
+        HasFlag := False;
+        HasActiveFlg(FlagList, HasFlag, NewDFN);
+      end;
+      UpdatePatientInfoForAlert;
+    end;
+
 begin
   DoNotChangeEncWindow := False;
   OrderPrintForm := False;
@@ -2235,46 +2456,75 @@ begin
       if assigned(fPDMPMgr) then  // canceling PDMP request (if any)
         fPDMPMgr.acCancel.Execute;
 
-      // newdfn does not have new patient.co information for CCOW call
-      if ((Sender = mnuFileOpen) or (AllowContextChangeAll(Reason)))
-          and AllowAccessToSensitivePatient(NewDFN, AccessStatus) then
+      if ((Sender = mnuFileOpen) or (AllowContextChangeAll(Reason))) and
+        AllowAccessToSensitivePatient(NewDFN, AccessStatus) then
       begin
-        RemindersStarted := FALSE;
-        Patient.DFN := NewDFN;
-        Encounter.Clear;
-        Changes.Clear;
-        if Assigned(FlagList) then
+        if FUseOldCCOW then
         begin
-         FlagList.Clear;
-         HasFlag := False;
-         HasActiveFlg(FlagList, HasFlag, NewDFN);
-        end;
-        if FCCOWInstalled and (ctxContextor.State = csParticipating) then
+          RemindersStarted := False;
+          Patient.DFN := NewDFN;
+          Encounter.Clear;
+          Changes.Clear;
+          if assigned(FlagList) then
           begin
-            if (AllowCCOWContextChange(CCOWResponse, Patient.DFN)) then
+            FlagList.Clear;
+            HasFlag := False;
+            HasActiveFlg(FlagList, HasFlag, NewDFN);
+          end;
+          if FCCOWInstalled and (ctxContextor.State = csParticipating) then
+          begin
+            if (AllowCCOWContextChange(CCOWUserResponse, Patient.DFN)) then
               UpdatePatientInfoForAlert
             else
-              begin
-                case CCOWResponse of
-                  urCancel:
-                    begin
+            begin
+              case CCOWUserResponse of
+                urCancel:
+                  begin
+                    Patient.DFN := SaveDFN;
+                    Notifications.Prior;
+                    exit;
+                  end;
+                urBreak:
+                  begin
+                    // do not revert to old DFN if context was manually broken by user - v26 (RV)
+                    if (ctxContextor.State = csParticipating) then
                       Patient.DFN := SaveDFN;
-                      Notifications.Prior;
-                      Exit;
-                    end;
-                  urBreak:
-                    begin
-                      // do not revert to old DFN if context was manually broken by user - v26 (RV)
-                      if (ctxContextor.State = csParticipating) then Patient.DFN := SaveDFN;
-                      UpdatePatientInfoForAlert;
-                    end;
-                  else
                     UpdatePatientInfoForAlert;
-                end;
+                  end;
+              else
+                UpdatePatientInfoForAlert;
               end;
+            end;
           end
+          else
+            UpdatePatientInfoForAlert
+        end
         else
-          UpdatePatientInfoForAlert
+        begin
+          if CCOWManager.Enabled and CCOWManager.IsParticipating then
+          begin
+            if (FCPRS_CCOW.AllowCCOWContextChange(CCOWResponse, NewDFN)) then
+              NewPatientSetup
+            else
+            begin
+              case CCOWResponse of
+                urCancel:
+                  begin
+                    Notifications.Prior;
+                    exit;
+                  end
+              else
+                NewPatientSetup;
+              end;
+            end;
+          end
+          else
+          begin
+            // THIS NEEDS TO BE AFTER WE ARE ALLOWED TO SWITCH CONTEXT
+            Patient.DFN := NewDFN;
+            NewPatientSetup;
+          end;
+        end;
       end else
       begin
         if AccessStatus in [DGSR_ASK, DGSR_DENY] then
@@ -2324,18 +2574,8 @@ begin
                                                              NF_FLAGGED_OI_EXP_INPT,
                                                              NF_FLAGGED_OI_EXP_OUTPT];
     case Notifications.FollowUp of
-      NF_LONG_TEXT_ALERT:
-        if NewDFN = '' then
-          NextIndex := CT_NOPAGE
-        else if User.UseLastTab then
-        begin
-          if (CurrentTab < 0) then
-            NextIndex := PageIDToTab(User.InitialTab)
-          else
-            NextIndex := CurrentTab;
-        end
-        else
-          NextIndex := PageIDToTab(User.InitialTab);
+      NF_LONG_TEXT_ALERT               : NextIndex := switchPatientsForAlerts;
+      NF_COMPACT_UPDATES               : NextIndex := switchPatientsForAlerts;
       NF_LAB_RESULTS                   : NextIndex := PageIDToTab(CT_LABS);
       NF_FLAGGED_ORDERS                : NextIndex := PageIDToTab(CT_ORDERS);
       NF_ORDER_REQUIRES_ELEC_SIGNATURE : NextIndex := PageIDToTab(CT_ORDERS);
@@ -2419,6 +2659,27 @@ begin
       tabPageChange(tabPage);
     end;
 
+    if Notifications.FollowUp = NF_COMPACT_UPDATES then
+    begin
+      DeleteAlert(Piece(Notifications.RecordID, U, 2));
+      if NewDFN = '' then
+      begin
+        Quit := False;
+        repeat
+          Next := Notifications.IsLast;
+          if not Next then Next := (ShowMsg('Process Next Alert?',
+            'No Patient Selected', smiQuestion, smbYesNo) = smrYes);
+          if not Next then
+            Quit := (infoBox(TX_NOTIF_STOP, TC_NOTIF_STOP, MB_YESNO) = ID_YES);
+        until Next or Quit;
+        if Quit then
+          Notifications.Clear;
+        ShowEverything;
+        mnuFileNextClick(Sender);
+      end;
+    end;
+
+
     if Notifications.FollowUp = NF_LONG_TEXT_ALERT then
     begin
       LongTextBtns := TStringList.Create();
@@ -2487,12 +2748,20 @@ begin
      end;
 end;
 
+procedure TfrmFrame.SetCCOWBusy(const Value: Boolean);
+begin
+  if FUseOldCCOW then
+    FCCOWBusy := Value
+  else
+    CCOWManager.Busy := Value;
+end;
+
 procedure TfrmFrame.mnuFileOpenClick(Sender: TObject);
 { select a new patient & update the header displays (patient id, encounter, postings) }
 var
   SaveDFN, Reason: string;
   ok, OldRemindersStarted, PtSelCancelled: Boolean;
-  CCOWResponse: UserResponse;
+  CCOWUserResponse: UserResponse;
   ThisSessionChanges: TChanges;
   i: Integer;
   sl: TStrings;
@@ -2648,6 +2917,7 @@ begin
   OldRemindersStarted := RemindersStarted;
   RemindersStarted := FALSE;
   try
+    TfrmHTMLDialog.DestroyAllDialogs;
     if FRefreshing then
       begin
         UpdatePtInfoOnRefresh;
@@ -2658,22 +2928,31 @@ begin
         ok := FALSE;
         if (not User.IsReportsOnly) then
           begin
-            if FCCOWInstalled and (ctxContextor.State = csParticipating) then
-              begin
-                UpdateCCOWContext;
-                if not FCCOWError then
-                  begin
-                    FCCOWIconName := 'BMP_CCOW_LINKED';
-                    pnlCCOW.Hint := TX_CCOW_LINKED;
-                    imgCCOW.Picture.Bitmap.LoadFromResourceName(hInstance, FCCOWIconName);
-                  end;
-              end
-            else
-              begin
-                FCCOWIconName := 'BMP_CCOW_BROKEN';
-                pnlCCOW.Hint := TX_CCOW_BROKEN;
-                imgCCOW.Picture.Bitmap.LoadFromResourceName(hInstance, FCCOWIconName);
-              end;
+            if FUseOldCCOW then
+            begin
+              if FCCOWInstalled and (ctxContextor.State = csParticipating) then
+                begin
+                  UpdateCCOWContext;
+                  if not FCCOWError then
+                    begin
+                      FCCOWIconName := 'BMP_CCOW_LINKED';
+                      pnlCCOW.Hint := TX_CCOW_LINKED;
+                      imgCCOW.Picture.Bitmap.LoadFromResourceName(hInstance, FCCOWIconName);
+                    end;
+                end
+              else
+                begin
+                  FCCOWIconName := 'BMP_CCOW_BROKEN';
+                  pnlCCOW.Hint := TX_CCOW_BROKEN;
+                  imgCCOW.Picture.Bitmap.LoadFromResourceName(hInstance, FCCOWIconName);
+                end;
+            end else begin
+              if CCOWManager.Enabled and CCOWManager.IsParticipating then
+                FCPRS_CCOW.UpdateCCOWContext
+              else
+                FCPRS_CCOW.UpdateCCOWDisplay(CCOW_BROKEN);
+            end;
+
             if (Patient.DFN = '') or (Sender = mnuFileOpen) or (Sender = mnuFileNext) or (Sender = mnuViewDemo) then
               SelectPatient(SHOW_NOTIFICATIONS, Font.Size, PtSelCancelled);
             if PtSelCancelled then
@@ -2720,45 +2999,55 @@ begin
       end;
     if ok then
       begin
-//        if FCCOWInstalled and (ctxContextor.State = csParticipating) and (not FRefreshing) and (not FCCOWJustJoined) then
-        if FCCOWInstalled and (ctxContextor.State = csParticipating) and (not FRefreshing) then
+        if FUseOldCCOW then
+        begin
+          // if FCCOWInstalled and (ctxContextor.State = csParticipating) and (not FRefreshing) and (not FCCOWJustJoined) then
+          if FCCOWInstalled and (ctxContextor.State = csParticipating) and
+            (not FRefreshing) then
           begin
-            if (AllowCCOWContextChange(CCOWResponse, Patient.DFN)) then
-              begin
-                SetupPatient;
-                tabPage.TabIndex := PageIDToTab(NextTab);
-                tabPageChange(tabPage);
-              end
+            if (AllowCCOWContextChange(CCOWUserResponse, Patient.DFN)) then
+            begin
+              SetupPatient;
+              tabPage.TabIndex := PageIDToTab(NextTab);
+              tabPageChange(tabPage);
+            end
             else
-              begin
-                case CCOWResponse of
-                  urCancel:
-                    UpdateCCOWContext;
-                  urBreak:
-                    begin
-                      // do not revert to old DFN if context was manually broken by user - v26 (RV)
-                      if (ctxContextor.State = csParticipating) then
-                        Patient.DFN := SaveDFN;
-                      SetupPatient;
-                      tabPage.TabIndex := PageIDToTab(NextTab);
-                      tabPageChange(tabPage);
-                    end;
-                else
+            begin
+              case CCOWUserResponse of
+                urCancel:
+                  UpdateCCOWContext;
+                urBreak:
                   begin
+                    // do not revert to old DFN if context was manually broken by user - v26 (RV)
+                    if (ctxContextor.State = csParticipating) then
+                      Patient.DFN := SaveDFN;
                     SetupPatient;
                     tabPage.TabIndex := PageIDToTab(NextTab);
                     tabPageChange(tabPage);
                   end;
+              else
+                begin
+                  SetupPatient;
+                  tabPage.TabIndex := PageIDToTab(NextTab);
+                  tabPageChange(tabPage);
                 end;
               end;
+            end;
           end
-        else
+          else
           begin
             SetupPatient;
             tabPage.TabIndex := PageIDToTab(NextTab);
             tabPageChange(tabPage);
-//            FCCOWJustJoined := FALSE;
+            // FCCOWJustJoined := FALSE;
           end;
+        end
+        else
+        begin
+          SetupPatient;
+          tabPage.TabIndex := PageIDToTab(NextTab);
+          tabPageChange(tabPage);
+        end;
       end;
   finally
     if (not FRefreshing) and (Patient.DFN = SaveDFN) then
@@ -3238,6 +3527,7 @@ procedure TfrmFrame.LoadSizesForUser;
 var
   s1, s2, s3, s4, Dummy: integer;
   panelBottom, panelMedIn, RestoreWidth, MinCnst : integer;
+  Temp: string;
 
   procedure GetMinContraint(aControl: TWinControl; var LastMinWidth: Integer);
   var
@@ -3280,6 +3570,12 @@ begin
   SetUserColumns(TControl(frmMeds.hdrMedsOut));
   SetUserString('frmPtSel.lstvAlerts',EnduringPtSelColumns);
   SetUserString(SpellCheckerSettingName, SpellCheckerSettings);
+  SetUserString(PtInfoPanelSettings, Temp);
+  svPtInfoPanel.PinnedWidth := StrToIntDef(Piece(Temp, ';', 1), 400);
+  FPtInfoOpenState := TPtInfoDataTypes.TOpenState
+    (StrToIntDef(Piece(Temp, ';', 2), ord(TPtInfoDataTypes.TOpenState.osUnpinned)));
+  if FPtInfoOpenState = osClosed then
+    FPtInfoOpenState := osUnpinned;
   SetUserBounds2(TemplateEditorSplitters, tmplEditorSplitterMiddle,
                  tmplEditorSplitterProperties, tmplEditorSplitterMain, tmplEditorSplitterBoil);
   SetUserBounds2(TemplateEditorSplitters2, tmplEditorSplitterNotes, Dummy, Dummy, Dummy);
@@ -3318,38 +3614,58 @@ var
   SizeList: TStringList;
   SurgTempHt: integer;
   i, s1, s2, s3, s4: integer;
+  Temp: string;
 begin
   SaveUserFontSize(MainFontSize);
   SizeList := TStringList.Create;
   try
     with SizeList do
     begin
-      Add(StrUserBounds(frmFrame));
-      Add(StrUserWidth(frmProblems.pnlLeft));
-      Add(StrUserWidth(frmOrders.pnlLeft));
-      Add(StrUserWidth(frmNotes.pnlLeft));
-      Add(StrUserWidth(frmConsults.pnlLeft));
-      Add(StrUserWidth(frmDCSumm.pnlLeft));
-      if Assigned(frmSurgery) then Add(StrUserWidth(frmSurgery.pnlLeft));
-      Add(StrUserWidth(frmLabs.pnlLeft));
-      Add(StrUserWidth(frmReports.pnlLeft));
-      Add(StrUserColumns(frmOrders.hdrOrders));
-      Add(StrUserColumns(frmMeds.hdrMedsIn));
-      Add(StrUserColumns(frmMeds.hdrMedsOut));
-      Add(StrUserString(SpellCheckerSettingName, SpellCheckerSettings));
-      Add(StrUserBounds2(TemplateEditorSplitters, tmplEditorSplitterMiddle,
-              tmplEditorSplitterProperties, tmplEditorSplitterMain, tmplEditorSplitterBoil));
-      Add(StrUserBounds2(TemplateEditorSplitters2, tmplEditorSplitterNotes, 0, 0, 0));
-      Add(StrUserBounds2(ReminderTreeName, RemTreeDlgLeft, RemTreeDlgTop, RemTreeDlgWidth, RemTreeDlgHeight));
-      Add(StrUserBounds2(RemDlgName, RemDlgLeft, RemDlgTop, RemDlgWidth, RemDlgHeight));
-      Add(StrUserBounds2(RemDlgSplitters, RemDlgSpltr1, RemDlgSpltr2, 0 ,0));
+      if assigned(frmFrame) then
+        Add(StrUserBounds(frmFrame));
 
-      // v26.47 - RV - access violation if Surgery Tab not enabled.  Set to designer height as default.
-      if assigned(frmSurgery) and assigned(frmSurgery.Drawers) and
-        assigned(frmSurgery.Drawers.pnlTemplates) then
-        SurgTempHt := frmSurgery.Drawers.pnlTemplates.Height
-      else
-        SurgTempHt := 85;
+      if assigned(frmProblems) then
+        Add(StrUserWidth(frmProblems.pnlLeft));
+
+      if assigned(frmOrders) then
+        begin
+          Add(StrUserWidth(frmOrders.pnlLeft));
+          Add(StrUserColumns(frmOrders.hdrOrders));
+          Add(StrUserColumns(frmMeds.hdrMedsIn));
+          Add(StrUserColumns(frmMeds.hdrMedsOut));
+          //Meds Tab Splitters
+          Add(StrUserBounds2(frmMeds.Name+'Split',
+            frmMeds.gdpOut.Height,frmMeds.gdpIn.Height,0,0));
+          //Meds Tab Non-VA meds columns
+          Add(StrUserColumns(fMeds.frmMeds.hdrMedsNonVA)); //CQ7314
+        end;
+
+      Add(StrUserString(SpellCheckerSettingName, SpellCheckerSettings));
+
+      if (svPtInfoPanel.OpenState <> osClosed) then
+        FPtInfoOpenState := svPtInfoPanel.OpenState;
+      Temp := svPtInfoPanel.PinnedWidth.ToString + ';' + ord(FPtInfoOpenState).ToString;
+      Add(StrUserString(PtInfoPanelSettings, Temp));
+
+      Add(StrUserBounds2(TemplateEditorSplitters, tmplEditorSplitterMiddle,
+                         tmplEditorSplitterProperties, tmplEditorSplitterMain,
+                         tmplEditorSplitterBoil));
+      Add(StrUserBounds2(TemplateEditorSplitters2, tmplEditorSplitterNotes, 0, 0, 0));
+      Add(StrUserBounds2(ReminderTreeName, RemTreeDlgLeft,
+                         RemTreeDlgTop, RemTreeDlgWidth, RemTreeDlgHeight));
+      Add(StrUserBounds2(RemDlgName, RemDlgLeft,
+                         RemDlgTop, RemDlgWidth, RemDlgHeight));
+      Add(StrUserBounds2(RemDlgSplitters, RemDlgSpltr1,
+                         RemDlgSpltr2, 0 ,0));
+
+      // v26.47 - RV - access violation if Surgery Tab not enabled.
+      SurgTempHt := 85; // Assign default value
+      if Assigned(frmSurgery) then
+      begin
+        Add(StrUserWidth(frmSurgery.pnlLeft));
+        if Assigned(frmSurgery.Drawers) and Assigned(frmSurgery.Drawers.pnlTemplates) then
+          SurgTempHt := frmSurgery.Drawers.pnlTemplates.Height;
+      end;
 
       if assigned(frmNotes) and assigned(frmConsults) and assigned(frmDCSumm)
         and assigned(frmNotes.Drawers) and assigned(frmConsults.Drawers) and
@@ -3363,21 +3679,6 @@ begin
           SurgTempHt));
       end;
 
-      frmNotes.SaveUserSplitterSettings(s1, s2, s3, s4);
-      Add(StrUserBounds2(NoteSplitters, s1, s2, s3, s4));
-
-      frmLabs.SaveUserSettings(s1, s2, s3, s4);
-      Add(StrUserBounds2(LabSplitters, s1, s2, s3, s4));
-
-      //Meds Tab Splitters
-      Add(StrUserBounds2(frmMeds.Name+'Split',frmMeds.gdpOut.Height,frmMeds.gdpIn.Height,0,0));
-
-      //Meds Tab Non-VA meds columns
-      Add(StrUserColumns(fMeds.frmMeds.hdrMedsNonVA)); //CQ7314
-
-      //Orders Tab columns
-      Add(StrUserColumns(fOrders.frmOrders.hdrOrders)); //CQ6328
-
       if EnduringPtSelSplitterPos <> 0 then
         Add(StrUserBounds2('frmPtSel.sptVert', EnduringPtSelSplitterPos, 0, 0, 0));
       if EnduringPtSelColumns <> '' then
@@ -3387,10 +3688,12 @@ begin
         if Strings[i] = '' then
           Delete(i);
       //**** Copy/Paste
-//      Add(StrUserBounds2('frmNotes.ReadOnlyEditMonitor', frmNotes.ReadOnlyEditMonitor.Height, 0, 0, 0)); // Notes saving is done on the notes form.
+//      Add(StrUserBounds2('frmNotes.ReadOnlyEditMonitor',
+//        frmNotes.ReadOnlyEditMonitor.Height, 0, 0, 0)); // Notes saving is done on the notes form.
     end;
     //Add sizes for forms that used SaveUserBounds() to save thier positions
     SizeHolder.AddSizesToStrList(SizeList);
+
     //Send the SizeList to the Database
     SaveUserSizes(SizeList);
   finally
@@ -3405,48 +3708,42 @@ var
   r, newBounds: TRect;
 
 begin
-  if FTerminate or FClosing then Exit;
-  if csDestroying in ComponentState then Exit;
-  // These MoveWindow methods can be phased out. TForm now has TAlign property that set to
-  // alClient works perfectly well. TfrmCoverSheet update no longer uses it.
-  //MoveWindow(frmCover.Handle,  0, 0, pnlPage.ClientWidth, pnlPage.ClientHeight, True);
-  MoveWindow(frmProblems.Handle, 0, 0, pnlPage.ClientWidth, pnlPage.ClientHeight, True);
-  MoveWindow(frmMeds.Handle,     0, 0, pnlPage.ClientWidth, pnlPage.ClientHeight, True);
-  MoveWindow(frmOrders.Handle,   0, 0, pnlPage.ClientWidth, pnlPage.ClientHeight, True);
-  MoveWindow(frmNotes.Handle,    0, 0, pnlPage.ClientWidth, pnlPage.ClientHeight, True);
-  MoveWindow(frmConsults.Handle, 0, 0, pnlPage.ClientWidth, pnlPage.ClientHeight, True);
-  MoveWindow(frmDCSumm.Handle,   0, 0, pnlPage.ClientWidth, pnlPage.ClientHeight, True);
-  if Assigned(frmSurgery) then MoveWindow(frmSurgery.Handle,     0, 0, pnlPage.ClientWidth, pnlPage.ClientHeight, True);
-  MoveWindow(frmLabs.Handle,     0, 0, pnlPage.ClientWidth, pnlPage.ClientHeight, True);
-  MoveWindow(frmReports.Handle,  0, 0, pnlPage.ClientWidth, pnlPage.ClientHeight, True);
-  with stsArea do
-  begin
-    Panels[1].Width := stsArea.Width - FFixedStatusWidth;
-    FNextButtonL := Panels[0].Width + Panels[1].Width;
-    FNextButtonR := FNextButtonL + Panels[2].Width;
-  end;
-  if Notifications.Active then SetUpNextButton;
-  lstCIRNLocations.Left  := FNextButtonL - ScrollBarWidth - 100;
-  lstCIRNLocations.Width := ClientWidth - lstCIRNLocations.Left;
-  //cq: 15641
-  if frmFrame.FNextButtonActive then // keeps button aligned if cancel is pressed
-  begin
-    FNextButton.Left := FNextButtonL;
-    FNextButton.Top := stsArea.Top;
-  end;
+  pnlPatientSelected.LockDrawing;
+  try
+    if FTerminate or FClosing then Exit;
+    if csDestroying in ComponentState then Exit;
+    with stsArea do
+    begin
+      Panels[1].Width := stsArea.Width - FFixedStatusWidth;
+      FNextButtonL := Panels[0].Width + Panels[1].Width;
+      FNextButtonR := FNextButtonL + Panels[2].Width;
+    end;
+    if Notifications.Active then SetUpNextButton;
+    lstCIRNLocations.Left  := FNextButtonL - ScrollBarWidth - 100;
+    lstCIRNLocations.Width := ClientWidth - lstCIRNLocations.Left;
+    //cq: 15641
+    if frmFrame.FNextButtonActive then // keeps button aligned if cancel is pressed
+    begin
+      FNextButton.Left := FNextButtonL;
+      FNextButton.Top := stsArea.Top;
+    end;
+    svPtInfoPanel.ResetMaxConstraints;
 
-  if Self.WindowState <> wsMaximized then
-  begin
-    newBounds := BoundsRect;
-    r := Screen.MonitorFromWindow(Self.Handle).WorkareaRect;
-    if newBounds.Height > r.Height then
-      newBounds.Height := r.Height;
-    if newBounds.Top < r.Top then
-       newBounds.Top := r.Top;
-    BoundsRect := newBounds;
+    if Self.WindowState <> wsMaximized then
+    begin
+      newBounds := BoundsRect;
+      r := Screen.MonitorFromWindow(Self.Handle).WorkareaRect;
+      if newBounds.Height > r.Height then
+        newBounds.Height := r.Height;
+      if newBounds.Top < r.Top then
+         newBounds.Top := r.Top;
+      BoundsRect := newBounds;
+    end;
+    stsArea.Invalidate;
+    Self.Repaint;
+  finally
+    pnlPatientSelected.UnlockDrawing;
   end;
-  stsArea.Invalidate;
-  Self.Repaint;
 end;
 
 procedure TfrmFrame.ChangeFont(NewFontSize: Integer);
@@ -3458,105 +3755,111 @@ const
 var
   OldFont: TFont;
   OrdDlg: TfrmODBase;
-
+  OldSVInfoPanelVisible: Boolean;
 begin
   if FTerminate or FClosing then Exit;
 // Ho ho!  ResizeAnchoredFormToFont(self) doesn't work here because the
 // Form size is aliased with MainFormSize.
-  OldFont := TFont.Create;
+  pnlPatientSelected.LockDrawing;
   try
-    DisableAlign;
+    OldSVInfoPanelVisible := svPtInfoPanel.Visible;
+    svPtInfoPanel.Visible := False;
     try
-      OldFont.Assign(Font);
-      with Self          do Font.Size := NewFontSize;
-      with lblPtName     do Font.Size := NewFontSize;   // must change BOLDED labels by hand
-      with lblPtInfo      do Font.Size := NewFontSize;
-      with lblOTHDTitle  do Font.Size := NewFontSize;  // rpk 11/28/2017
-      with lblOTHDDtl    do Font.Size := NewFontSize;  // rpk 11/28/2017
-      with lblPtLocation do Font.Size := NewFontSize;
-      with lblPtProvider do Font.Size := NewFontSize;
-      with lblPtPostings do Font.Size := NewFontSize;
-      with lblPtCare     do Font.Size := NewFontSize;
-      with lblPtAttending do Font.Size := NewFontSize;
-      with lblPtMHTC      do Font.Size := NewFontSize;
-      with lblFlag       do Font.Size := NewFontSize;
-      with lblPtCWAD     do Font.Size := NewFontSize;
-      with lblCIRN       do Font.Size := NewFontSize;
-      with lblVistaWeb   do Font.Size := NewFontSize;
-      with lstCIRNLocations do
-        begin
-          Font.Size := NewFontSize;
-          ItemHeight := NewFontSize + 6;
+      OldFont := TFont.Create;
+      try
+        DisableAlign;
+        try
+          OldFont.Assign(Font);
+          with Self          do Font.Size := NewFontSize;
+          with lblPtName     do Font.Size := NewFontSize;   // must change BOLDED labels by hand
+          with lblPtInfo      do Font.Size := NewFontSize;
+          with lblOTHDTitle  do Font.Size := NewFontSize;  // rpk 11/28/2017
+          with lblOTHDDtl    do Font.Size := NewFontSize;  // rpk 11/28/2017
+          with lblPtLocation do Font.Size := NewFontSize;
+          with lblPtProvider do Font.Size := NewFontSize;
+          with lblPtPostings do Font.Size := NewFontSize;
+          with lblPtCare     do Font.Size := NewFontSize;
+          with lblPtAttending do Font.Size := NewFontSize;
+          with lblPtMHTC      do Font.Size := NewFontSize;
+          with lblFlag       do Font.Size := NewFontSize;
+          with lblPtCWAD     do Font.Size := NewFontSize;
+          with lblCIRN       do Font.Size := NewFontSize;
+          with lblVistaWeb   do Font.Size := NewFontSize;
+          with lstCIRNLocations do
+            begin
+              Font.Size := NewFontSize;
+              ItemHeight := NewFontSize + 6;
+            end;
+          with tabPage       do Font.Size := NewFontSize;
+          with laMHV         do Font.Size := NewFontSize; //VAA
+          with laVAA2        do Font.Size := NewFontSize; //VAA
+
+          frmFrameHeight := frmFrame.Height;
+          pnlPatientSelectedHeight := pnlPatientSelected.Height;
+          tabPage.Height := MainFontHeight + TAB_VOFFSET;   // resize tab selector
+          FitToolbar;                                       // resize toolbar
+          stsArea.Font.Size := NewFontSize;
+          stsArea.Height := MainFontHeight + TAB_VOFFSET;
+          stsArea.Panels[0].Width := ResizeWidth( OldFont, Font, stsArea.Panels[0].Width);
+          stsArea.Panels[2].Width := ResizeWidth( OldFont, Font, stsArea.Panels[2].Width);
+          pnlOtherInfo.Font.Size := NewFontSize;
+          RefreshFixedStatusWidth;
+          FormResize( self );
+    //      RPCLogSetFontSize(NewFontSize);
+        finally
+          EnableAlign;
         end;
-      with tabPage       do Font.Size := NewFontSize;
-      with laMHV         do Font.Size := NewFontSize; //VAA
-      with laVAA2        do Font.Size := NewFontSize; //VAA
+      finally
+        OldFont.Free;
+      end;
 
-      frmFrameHeight := frmFrame.Height;
-      pnlPatientSelectedHeight := pnlPatientSelected.Height;
-      tabPage.Height := MainFontHeight + TAB_VOFFSET;   // resize tab selector
-      FitToolbar;                                       // resize toolbar
-      stsArea.Font.Size := NewFontSize;
-      stsArea.Height := MainFontHeight + TAB_VOFFSET;
-      stsArea.Panels[0].Width := ResizeWidth( OldFont, Font, stsArea.Panels[0].Width);
-      stsArea.Panels[2].Width := ResizeWidth( OldFont, Font, stsArea.Panels[2].Width);
-      pnlOtherInfo.Font.Size := NewFontSize;
-      RefreshFixedStatusWidth;
-      FormResize( self );
+      case (NewFontSize) of
+       8: mnu8pt.Checked := true;
+      10: mnu10pt1.Checked := true;
+      12: mnu12pt1.Checked := true;
+      14: mnu14pt1.Checked := true;
+      //18: mnu18pt1.Checked := true;
+      end;
 
-//      RPCLogSetFontSize(NewFontSize);
+      if assigned(fPDMPMgr) then
+        fPDMPMgr.updateFont;
 
+      RPCLogSetFontSize(NewFontSize);
+
+      //Now that the form elements are resized, the pages will know what size to take.
+
+      //frmCoverSheet.Font.Size := NewFontSize;
+      CoverSheet.OnSetFontSize(Self, NewFontSize);
+      frmProblems.SetFontSize(NewFontSize);
+      frmMeds.SetFontSize(NewFontSize);
+      frmOrders.SetFontSize(NewFontSize);
+      frmNotes.SetFontSize(NewFontSize);
+      frmConsults.SetFontSize(NewFontSize);
+      frmDCSumm.SetFontSize(NewFontSize);
+      if Assigned(frmSurgery) then frmSurgery.SetFontSize(NewFontSize);
+      frmLabs.SetFontSize(NewFontSize);
+      frmReports.SetFontSize(NewFontSize);
+      TfrmIconLegend.SetFontSize(NewFontSize);
+      uOrders.SetFontSize(NewFontSize);
+      if Assigned(frmRemDlg) then frmRemDlg.SetFontSize;
+      //if (TfrmRemDlg.GetInstance <> nil) then TfrmRemDlg.GetInstance.SetFontSize;
+      if Assigned(frmReminderTree) then frmReminderTree.SetFontSize(NewFontSize);
+      if GraphFloat <> nil then ResizeAnchoredFormToFont(GraphFloat);
+
+      OrdDlg := CurrentDialog;
+      if assigned(OrdDlg) then
+        OrdDlg.setFontSize(NewFontSize);
+      if Assigned(FfrmActivityLogDisplay) then
+        FfrmActivityLogDisplay.ResetFontSize(NewFontSize);
     finally
-      EnableAlign;
+      svPtInfoPanel.FontChanged;
+      svPtInfoPanel.ResetMaxConstraints;
+      SetupPtInfoPanel;
+      svPtInfoPanel.Visible := OldSVInfoPanelVisible;
     end;
   finally
-    OldFont.Free;
+    pnlPatientSelected.UnlockDrawing;
   end;
-
-  case (NewFontSize) of
-   8: mnu8pt.Checked := true;
-  10: mnu10pt1.Checked := true;
-  12: mnu12pt1.Checked := true;
-  14: mnu14pt1.Checked := true;
-  //18: mnu18pt1.Checked := true;
-  end;
-
-  if assigned(fPDMPMgr) then
-    fPDMPMgr.updateFont;
-
-  RPCLogSetFontSize(NewFontSize);
-
-  //Now that the form elements are resized, the pages will know what size to take.
-
-  //frmCoverSheet.Font.Size := NewFontSize;
-  CoverSheet.OnSetFontSize(Self, NewFontSize);
-  frmProblems.SetFontSize(NewFontSize);
-  frmMeds.SetFontSize(NewFontSize);
-  frmOrders.SetFontSize(NewFontSize);
-  frmNotes.SetFontSize(NewFontSize);
-  frmConsults.SetFontSize(NewFontSize);
-  frmDCSumm.SetFontSize(NewFontSize);
-  if Assigned(frmSurgery) then frmSurgery.SetFontSize(NewFontSize);
-  frmLabs.SetFontSize(NewFontSize);
-  frmReports.SetFontSize(NewFontSize);
-  TfrmIconLegend.SetFontSize(NewFontSize);
-  uOrders.SetFontSize(NewFontSize);
-  if Assigned(frmRemDlg) then frmRemDlg.SetFontSize;
-  //if (TfrmRemDlg.GetInstance <> nil) then TfrmRemDlg.GetInstance.SetFontSize;
-  if Assigned(frmReminderTree) then frmReminderTree.SetFontSize(NewFontSize);
-  if GraphFloat <> nil then ResizeAnchoredFormToFont(GraphFloat);
-
-  OrdDlg := CurrentDialog;
-  if assigned(OrdDlg) then
-    OrdDlg.setFontSize(NewFontSize);
-
-  if Assigned(frmActivityLogDisplay) then
-    frmActivityLogDisplay.SetFontSize(NewFontSize);
-
-//  if assigned(fPDMPMgr) then
-//    fPDMPMgr.updateFont;
-//
-//  RPCLogSetFontSize(NewFontSize);
 end;
 
 procedure TfrmFrame.FitToolBar;
@@ -4355,22 +4658,19 @@ begin
   SetActiveWindow(Application.Handle);
   if ScreenReaderSystemActive and assigned(Patient) and (Patient.Name <> '') and (Patient.Status <> '') then
       SpeakTabAndPatient;
+  FActivated := True;
 end;
 
 // close Treatment Factor hint window if alt-tab pressed.
 procedure TfrmFrame.AppDeActivated(Sender: TObject);
 begin
+  FActivated := False;
   if FRVTFhintWindowActive then
   begin
      FRVTFHintWindow.ReleaseHandle;
      FRVTFHintWindowActive := False;
   end
   else
-  if FOSTFHintWndActive then
-  begin
-     FOSTFhintWindow.ReleaseHandle;
-     FOSTFHintWndActive := False ;
-  end;
   if FHintWinActive then   // graphing - hints on values
   begin
     FHintWin.ReleaseHandle;
@@ -4557,15 +4857,18 @@ begin
     CT_PROBLEMS : begin
                     frmProblems := TfrmProblems.Create(Self);
                     frmProblems.Parent := pnlPage;
+                    frmProblems.Align := alClient;
                   end;
     CT_MEDS     : begin
                     frmMeds := TfrmMeds.Create(Self);
                     frmMeds.Parent := pnlPage;
                     frmMeds.InitfMedsSize;
+                    frmMeds.Align := alClient;
                   end;
     CT_ORDERS   : begin
                     frmOrders := TfrmOrders.Create(Self);
                     frmOrders.Parent := pnlPage;
+                    frmOrders.Align := alClient;
                   end;
     CT_HP       : begin
                     // not yet
@@ -4573,32 +4876,39 @@ begin
     CT_NOTES    : begin
                     frmNotes := TfrmNotes.Create(Self);
                     frmNotes.Parent := pnlPage;
+                    frmNotes.Align := alClient;
                   end;
     CT_CONSULTS : begin
                     frmConsults := TfrmConsults.Create(Self);
                     frmConsults.Parent := pnlPage;
+                    frmConsults.Align := alClient;
                   end;
     CT_DCSUMM   : begin
                     frmDCSumm := TfrmDCSumm.Create(Self);
                     frmDCSumm.Parent := pnlPage;
+                    frmDCSumm.Align := alClient;
                   end;
     CT_LABS     : begin
                     frmLabs := TfrmLabs.Create(Self);
                     frmLabs.Parent := pnlPage;
+                    frmLabs.Align := alClient;
                   end;
     CT_REPORTS  : begin
                     frmReports := TfrmReports.Create(Self);
                     frmReports.Parent := pnlPage;
+                    frmReports.Align := alClient;
                   end;
     CT_SURGERY  : begin
                     frmSurgery := TfrmSurgery.Create(Self);
                     frmSurgery.Parent := pnlPage;
+                    frmSurgery.Align := alClient;
                   end;
     CT_COVER    : begin
                     frmCoverSheet := TfrmCoverSheet.Create(Self);
                     frmCoverSheet.Parent := pnlPage;
                     CoverSheet.OnRefreshCWAD := RefreshCWAD;
                     CoverSheet.OnRefreshReminders := RemindersChanged;
+                    frmCoverSheet.Align := alClient;
                   end;
   else
     Exit;
@@ -5131,7 +5441,7 @@ var
   PtData : IContextItemCollection;
   PtDataItem2, PtDataItem3, PtDataItem4 : IContextItem;
   response : UserResponse;
-  StationNumber: string;
+  StationNumber, X, ptName, ptICN: string;
   IsProdAcct: boolean;
 begin
   Result := False;
@@ -5156,8 +5466,14 @@ begin
           end;
           // Set the new proposed context data.
           PtData := CoContextItemCollection.Create();
+
+          // Get information about potential new patient
+          CallVistA('ORWPT SELECT', [NewDFN], X);
+
           StationNumber := User.StationNumber;
           IsProdAcct := User.IsProductionAccount;
+          ptName := TPiece(X).Piece(1);
+          ptICN := TPiece(X).Piece(14);
 
           {$IFDEF CCOWBROKER}
           //IsProdAcct := RPCBrokerV.Login.IsProduction;  //not yet
@@ -5165,7 +5481,7 @@ begin
 
           PtDataItem2 := CoContextItem.Create();
           PtDataItem2.Set_Name('Patient.co.PatientName');                // Patient.Name
-          PtDataItem2.Set_Value(Piece(Patient.Name, ',', 1) + U + Piece(Patient.Name, ',', 2) + '^^^^');
+          PtDataItem2.Set_Value(Piece(ptName, ',', 1) + U + Piece(ptName, ',', 2) + '^^^^');
           PtData.Add(PtDataItem2);
 
           PtDataItem3 := CoContextItem.Create();
@@ -5173,17 +5489,17 @@ begin
             PtDataItem3.Set_Name('Patient.id.MRN.DFN_' + StationNumber + '_TEST')    // Patient.DFN
           else
             PtDataItem3.Set_Name('Patient.id.MRN.DFN_' + StationNumber);             // Patient.DFN
-          PtDataItem3.Set_Value(Patient.DFN);
+          PtDataItem3.Set_Value(NewDFN);
           PtData.Add(PtDataItem3);
 
-          if Patient.ICN <> '' then
+          if ptICN <> '' then
             begin
               PtDataItem4 := CoContextItem.Create();
               if not IsProdAcct then
                 PtDataItem4.Set_Name('Patient.id.MRN.NationalIDNumber_TEST')   // Patient.ICN
               else
                 PtDataItem4.Set_Name('Patient.id.MRN.NationalIDNumber');       // Patient.ICN
-              PtDataItem4.Set_Value(Patient.ICN);
+              PtDataItem4.Set_Value(ptICN);
               PtData.Add(PtDataItem4);
             end;
 
@@ -5211,6 +5527,7 @@ begin
     if (response = UrCommit) then
     begin
       // New context is committed.
+      Patient.DFN := NewDFN;
       mnuFileResumeContext.Enabled := False;
       mnuFileBreakContext.Enabled := True;
       FCCOWIconName := 'BMP_CCOW_LINKED';
@@ -5232,6 +5549,7 @@ begin
       // The contextor has broken the link by suspending.  This app should
       // update the Clinical Link icon, enable the Resume menu item, and
       // disable the Suspend menu item.
+      Patient.DFN := NewDFN;
       PtData.RemoveAll;
       mnuFileResumeContext.Enabled := True;
       mnuFileBreakContext.Enabled := False;
@@ -5475,49 +5793,57 @@ end;
 
 procedure TfrmFrame.mnuFileBreakContextClick(Sender: TObject);
 begin
-  FCCOWError := False;
-  FCCOWIconName := 'BMP_CCOW_CHANGING';
-  pnlCCOW.Hint := TX_CCOW_CHANGING;
-  imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FCCOWIconName);
-  try
-    ctxContextor.Suspend;
-  except
-    on E: Exception do HandleCCOWError(E.Message);
-  end;
-  if FCCOWError then exit;
-  FCCOWIconName := 'BMP_CCOW_BROKEN';
-  pnlCCOW.Hint := TX_CCOW_BROKEN;
-  imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FCCOWIconName);
-  mnuFileResumeContext.Enabled := True;
-  mnuFileBreakContext.Enabled := False;
+  if FUseOldCCOW then
+  begin
+    FCCOWError := False;
+    FCCOWIconName := 'BMP_CCOW_CHANGING';
+    pnlCCOW.Hint := TX_CCOW_CHANGING;
+    imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FCCOWIconName);
+    try
+      ctxContextor.Suspend;
+    except
+      on E: Exception do HandleCCOWError(E.Message);
+    end;
+    if FCCOWError then exit;
+    FCCOWIconName := 'BMP_CCOW_BROKEN';
+    pnlCCOW.Hint := TX_CCOW_BROKEN;
+    imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FCCOWIconName);
+    mnuFileResumeContext.Enabled := True;
+    mnuFileBreakContext.Enabled := False;
+  end else
+    FCPRS_CCOW.BreakContext;
 end;
 
 procedure TfrmFrame.mnuFileResumeContextGetClick(Sender: TObject);
 var
   Reason: string;
 begin
-  Reason := '';
-  if not AllowContextChangeAll(Reason) then exit;
-  FCCOWIconName := 'BMP_CCOW_CHANGING';
-  pnlCCOW.Hint := TX_CCOW_CHANGING;
-  imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FCCOWIconName);
-  FCCOWError := False;
-  try
-    ctxContextor.Resume;
-  except
-    on E: Exception do HandleCCOWError(E.Message);
-  end;
-  if FCCOWError then exit;
-  UpdateCCOWContext;
-  if not FNoPatientSelected then
+  if FUseOldCCOW then
   begin
-    FCCOWIconName := 'BMP_CCOW_LINKED';
-    pnlCCOW.Hint := TX_CCOW_LINKED;
+    Reason := '';
+    if not AllowContextChangeAll(Reason) then exit;
+    FCCOWIconName := 'BMP_CCOW_CHANGING';
+    pnlCCOW.Hint := TX_CCOW_CHANGING;
     imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FCCOWIconName);
-    mnuFileResumeContext.Enabled := False;
-    mnuFileBreakContext.Visible := True;
-    mnuFileBreakContext.Enabled := True;
-  end;
+    FCCOWError := False;
+    try
+      ctxContextor.Resume;
+    except
+      on E: Exception do HandleCCOWError(E.Message);
+    end;
+    if FCCOWError then exit;
+    UpdateCCOWContext;
+    if not FNoPatientSelected then
+    begin
+      FCCOWIconName := 'BMP_CCOW_LINKED';
+      pnlCCOW.Hint := TX_CCOW_LINKED;
+      imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FCCOWIconName);
+      mnuFileResumeContext.Enabled := False;
+      mnuFileBreakContext.Visible := True;
+      mnuFileBreakContext.Enabled := True;
+    end;
+  end else
+    FCPRS_CCOW.ResumeJoinContext;
 end;
 
 procedure TfrmFrame.mnuFileResumeContextSetClick(Sender: TObject);
@@ -5525,43 +5851,47 @@ var
   CCOWResponse: UserResponse;
   Reason: string;
 begin
-  Reason := '';
-  if not AllowContextChangeAll(Reason) then exit;
-  FCCOWIconName := 'BMP_CCOW_CHANGING';
-  pnlCCOW.Hint := TX_CCOW_CHANGING;
-  imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FCCOWIconName);
-  FCCOWError := False;
-  try
-    ctxContextor.Resume;
-  except
-    on E: Exception do HandleCCOWError(E.Message);
-  end;
-  if FCCOWError then exit;
-  if (AllowCCOWContextChange(CCOWResponse, Patient.DFN)) then
-    begin
-      mnuFileResumeContext.Enabled := False;
-      mnuFileBreakContext.Visible := True;
-      mnuFileBreakContext.Enabled := True;
-      FCCOWIconName := 'BMP_CCOW_LINKED';
-      pnlCCOW.Hint := TX_CCOW_LINKED;
-      imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FCCOWIconName);
-    end
-  else
-    begin
-      mnuFileResumeContext.Enabled := True;
-      mnuFileBreakContext.Enabled := False;
-      FCCOWIconName := 'BMP_CCOW_BROKEN';
-      pnlCCOW.Hint := TX_CCOW_BROKEN;
-      imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FCCOWIconName);
-      try
-        if ctxContextor.State in [csParticipating] then ctxContextor.Suspend;
-      except
-        on E: Exception do HandleCCOWError(E.Message);
-      end;
-   end;
-  SetupPatient;
-  tabPage.TabIndex := PageIDToTab(User.InitialTab);
-  tabPageChange(tabPage);
+  if FUseOldCCOW then
+  begin
+    Reason := '';
+    if not AllowContextChangeAll(Reason) then exit;
+    FCCOWIconName := 'BMP_CCOW_CHANGING';
+    pnlCCOW.Hint := TX_CCOW_CHANGING;
+    imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FCCOWIconName);
+    FCCOWError := False;
+    try
+      ctxContextor.Resume;
+    except
+      on E: Exception do HandleCCOWError(E.Message);
+    end;
+    if FCCOWError then exit;
+    if (AllowCCOWContextChange(CCOWResponse, Patient.DFN)) then
+      begin
+        mnuFileResumeContext.Enabled := False;
+        mnuFileBreakContext.Visible := True;
+        mnuFileBreakContext.Enabled := True;
+        FCCOWIconName := 'BMP_CCOW_LINKED';
+        pnlCCOW.Hint := TX_CCOW_LINKED;
+        imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FCCOWIconName);
+      end
+    else
+      begin
+        mnuFileResumeContext.Enabled := True;
+        mnuFileBreakContext.Enabled := False;
+        FCCOWIconName := 'BMP_CCOW_BROKEN';
+        pnlCCOW.Hint := TX_CCOW_BROKEN;
+        imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FCCOWIconName);
+        try
+          if ctxContextor.State in [csParticipating] then ctxContextor.Suspend;
+        except
+          on E: Exception do HandleCCOWError(E.Message);
+        end;
+     end;
+    SetupPatient;
+    tabPage.TabIndex := PageIDToTab(User.InitialTab);
+    tabPageChange(tabPage);
+  end else
+    FCPRS_CCOW.ResumeSetContext;
 end;
 
 procedure TfrmFrame.CheckForDifferentPatient(aContextItemCollection: IDispatch; var PtChanged: boolean);
@@ -5625,10 +5955,16 @@ end;
 
 function TfrmFrame.checkOtherForms(var Reason: String): boolean;
 var
-i: integer;
+c,i: integer;
+inEditor: boolean;
 begin
   result := true;
-  if not frmFrame.CCOWContextChanging then exit;
+  if FUseOldCCOW then
+  begin
+    if not frmFrame.CCOWContextChanging then exit;
+  end else begin
+    if not FCPRS_CCOW.ContextChanging then exit;
+  end;
   for i := 0 to screen.FormCount - 1 do
     begin
       if (screen.Forms[i].Name = 'frmWVPregLacStatusUpdate') and
@@ -5642,6 +5978,30 @@ begin
        (screen.Forms[i].Showing) then
         begin
           Reason := 'Immunization/Skin Test Update in progress, documentation will be discarded.';
+          result := false;
+          exit;
+        end;
+      if (screen.Forms[i].Name = 'frmHTMLDialog') and
+       (screen.Forms[i].Showing) then
+        begin
+          Reason := 'Information Panel Update in progress, documentation will be discarded.';
+          result := false;
+          exit;
+        end;
+      if (screen.Forms[i].name = 'frmPtInfoDetails') and
+        (screen.Forms[i].showing) then
+        begin
+          inEditor := false;
+          for c := 0 to screen.Forms[i].ControlCount - 1 do
+            begin
+              if (screen.Forms[i].Controls[c].Name = 'fraEditGrid') then
+              begin
+                inEditor := screen.Forms[i].Controls[c].Visible;
+                break
+              end;
+            end;
+          if not inEditor then continue;
+          Reason := 'Information Panel Update in progress, documentation will be discarded.';
           result := false;
           exit;
         end;
@@ -5674,12 +6034,12 @@ end;
 procedure TfrmFrame.mnuShowActivityLogClick(Sender: TObject);
 begin
   inherited;
-  if not Assigned(frmActivityLogDisplay) then
-    frmActivityLogDisplay := TfrmActivityLogDisplay.Create(Self);
-  if frmActivityLogDisplay.WindowState = TWindowState.wsMinimized then
-    frmActivityLogDisplay.WindowState := TWindowState.wsNormal;
-  frmActivityLogDisplay.Show;
-  frmActivityLogDisplay.BringToFront;
+  if not Assigned(FfrmActivityLogDisplay) then
+    FfrmActivityLogDisplay := TfrmActivityLogDisplay.Create(Self);
+  if FfrmActivityLogDisplay.WindowState = TWindowState.wsMinimized then
+    FfrmActivityLogDisplay.WindowState := TWindowState.wsNormal;
+  FfrmActivityLogDisplay.Show;
+  FfrmActivityLogDisplay.BringToFront;
 end;
 
 procedure TfrmFrame.ShowEverything;
@@ -5696,16 +6056,32 @@ begin
   mnuFilePrintSetup.Enabled := True;
   mnuFilePrintSelectedItems.Enabled := True;
   mnuFileNotifRemove.Enabled := True;
-  if not FCCOWError then
+  if FUseOldCCOW then
   begin
-    if FCCOWIconName= 'BMP_CCOW_BROKEN' then
+    if not FCCOWError then
     begin
-      mnuFileResumeContext.Enabled := True;
-      mnuFileBreakContext.Enabled := False;
-    end else
+      if FCCOWIconName= 'BMP_CCOW_BROKEN' then
+      begin
+        mnuFileResumeContext.Enabled := True;
+        mnuFileBreakContext.Enabled := False;
+      end else
+      begin
+        mnuFileResumeContext.Enabled := False;
+        mnuFileBreakContext.Enabled := True;
+      end;
+    end;
+  end else begin
+    if CCOWManager.Enabled and (not CCOWManager.ErrorOccured) then
     begin
-      mnuFileResumeContext.Enabled := False;
-      mnuFileBreakContext.Enabled := True;
+      if FCPRS_CCOW.IconName = 'BMP_CCOW_BROKEN' then
+      begin
+        mnuFileResumeContext.Enabled := True;
+        mnuFileBreakContext.Enabled := False;
+      end else
+      begin
+        mnuFileResumeContext.Enabled := False;
+        mnuFileBreakContext.Enabled := True;
+      end;
     end;
   end;
   mnuEdit.Enabled := True;
@@ -6048,6 +6424,7 @@ var
   Control: TComponent;
 begin
   Handled := false;
+// Do NOT replace this with TForm.Active or Application.Active - it will break
   if (Msg.Message = WM_MOUSEWHEEL) and (GetKeyState(VK_LBUTTON) < 0) then
   begin
     Control := FindControl(Msg.hWnd);
@@ -6353,6 +6730,15 @@ begin
    popAlerts.AutoPopup := TRUE;
 end;
 
+procedure TfrmFrame.ORFormCanResize(Sender: TObject; var NewWidth,
+  NewHeight: Integer; var Resize: Boolean);
+begin
+  if svPtInfoPanel.IsInternalCall then
+    Resize := False
+  else
+    inherited;
+end;
+
 procedure TfrmFrame.SetUpNextButton;
 var
   bEnabled: Boolean;
@@ -6380,6 +6766,35 @@ begin
   FNextButton.TabOrder := 1;
   FNextButton.Enabled := bEnabled; // VISTAOR-31343
   FNextButton.Show;
+end;
+
+function TfrmFrame.GetCCOWBusy: Boolean;
+begin
+  if FUseOldCCOW then
+    Exit(FCCOWBusy)
+  else
+    Exit(CCOWManager.Busy);
+end;
+
+function TfrmFrame.GetCCOWContextChanging: Boolean;
+begin
+  if FUseOldCCOW then
+    Exit(FCCOWContextChanging)
+  else
+    Exit(FCPRS_CCOW.ContextChanging);
+end;
+
+function TfrmFrame.GetCCOWDriveChange: Boolean;
+begin
+  if FUseOldCCOW then
+    Exit(FCCOWDrivedChange)
+  else
+    Exit(FCPRS_CCOW.DrivedChange);
+end;
+
+function TfrmFrame.GetContextChanging: Boolean;
+begin
+  Exit(FContextChanging)
 end;
 
 Procedure TfrmFrame.GetExcludedFromMixed();
@@ -6669,6 +7084,496 @@ begin
     on E: Exception do
       ShowMessage(E.Message);
   end;
+end;
+
+constructor TCPRS_CCOW.Create(aFrmFrame: TfrmFrame);
+begin
+  Inherited Create;
+  FFrmFrame := aFrmFrame;
+end;
+
+{ TCCOW_CPRS }
+
+function TCPRS_CCOW.AllowCCOWContextChange(var CCOWResponse: TCCOWResponse;
+  NewDFN: string): boolean;
+var
+  X, ptName, ptICN, usrStation: string;
+  usrIsProd, retryCall: Boolean;
+begin
+  if not CCOWManager.Enabled then
+    Exit(True);
+
+  Result := False;
+
+   Screen.Cursor.Change(crHourGlass);
+  try
+    // Get info about potential next patient
+    CallVistA('ORWPT SELECT', [NewDFN], X);
+
+    usrStation := User.StationNumber;
+    usrIsProd := User.IsProductionAccount;
+    ptName := TPiece(X).Piece(1);
+    ptICN := TPiece(X).Piece(14);
+
+    try
+      try
+        repeat
+          FAllowRetry := True;
+          FAction := 'patient selection';
+          CCOWResponse := CCOWManager.TryChangeContext(usrStation, ptName, NewDFN, ptICN,
+            usrIsProd);
+
+          retryCall := CCOWManager.ErrorOccured and FRetry;
+          if retryCall then
+          begin
+            FAllowRetry := False;
+            FAction := '';
+            If not CCOWManager.Enabled then
+              StartCCOWContextor;
+
+            If not CCOWManager.Enabled then
+            begin
+              retryCall := False;
+              CCOWResponse := UrBreak;
+            end else begin
+              UpdateCCOWDisplay(CCOW_CHANGING);
+              CCOWManager.Resume;
+            end;
+
+          end;
+        until (not retryCall);
+      finally
+        FAction := '';
+        FAllowRetry := False;
+      end;
+
+      if CCOWManager.ErrorOccured and (not FRetry) then
+        CCOWResponse := UrBreak;
+
+      if (CCOWResponse = UrCommit) then
+      begin
+        // New context is committed.
+        Patient.DFN := NewDFN;
+        UpdateCCOWDisplay(CCOW_LINKED);
+        Result := True;
+      end
+      else if (CCOWResponse = UrCancel) then
+      begin
+        // Proposed context change is canceled. Return to the current context.
+        FFrmFrame.mnuFileResumeContext.Enabled := False;
+        FFrmFrame.mnuFileBreakContext.Enabled := True;
+        UpdateCCOWDisplay(CCOW_RESET);
+        Result := False;
+      end
+      else if (CCOWResponse = UrBreak) then
+      begin
+        // The contextor has broken the link by suspending.  This app should
+        // update the Clinical Link icon, enable the Resume menu item, and
+        // disable the Suspend menu item.
+        UpdateCCOWDisplay(CCOW_BROKEN);
+        // Load the patient
+        Patient.DFN := NewDFN;
+        if Patient.Inpatient then
+        begin
+          Encounter.Inpatient := True;
+          Encounter.Location := Patient.Location;
+          Encounter.DateTime := Patient.AdmitTime;
+          Encounter.VisitCategory := 'H';
+        end;
+        if User.IsProvider then
+          Encounter.Provider := User.DUZ;
+        FFrmFrame.SetupPatient;
+        FFrmFrame.tabPage.TabIndex := FFrmFrame.PageIDToTab(User.InitialTab);
+        FFrmFrame.tabPageChange(FFrmFrame.tabPage);
+        Result := False;
+      end;
+    except
+      on exc: EOleException do
+        ShowMsg('EOleException: ' + exc.Message);
+    end;
+  finally
+     Screen.Cursor.Restore;
+  end;
+end;
+
+procedure TCPRS_CCOW.BreakContext;
+begin
+   if not CCOWManager.Enabled then
+    Exit;
+
+  UpdateCCOWDisplay(CCOW_CHANGING);
+  try
+    CCOWManager.Suspend;
+  except
+    on E: Exception do
+      Exit;
+  end;
+  UpdateCCOWDisplay(CCOW_BROKEN);
+end;
+
+procedure TCPRS_CCOW.ContextorCanceled(Sender: TObject);
+begin
+  // Application should maintain its state as the current (existing) context.
+  // Icon will rest if there is something to reset to
+  If Trim(FIconName) <> '' then
+    UpdateCCOWDisplay(CCOW_RESET);
+end;
+
+procedure TCPRS_CCOW.ContextorCommitted(Sender: TObject);
+var
+  Reason: string;
+  PtChanged: boolean;
+  i: integer;
+begin
+  if (not CCOWManager.Enabled) or (not assigned(User)) or
+    (not assigned(Patient)) then
+    Exit;
+
+  // Application should now access the new context and update its state.
+  try
+  {$IFDEF CCOWBROKER}
+    with RPCBrokerV do if (WasUserDefined and IsUserCleared and (not CCOWManager.Present[CCOW_USER_NAME])) then    // RV 05/11/04
+    begin
+      Reason := 'COMMIT';
+      if FFrmFrame.AllowContextChangeAll(Reason) then
+      begin
+        FFrmFrame.Close;
+        Exit;
+      end;
+    end;
+  {$ENDIF}
+    PtChanged := CCOWManager.IsDifferentPatient(CCOWManager.Contextor.CurrentContext, User.StationNumber, Patient.Name, Patient.DFN, User.IsProductionAccount);
+  except
+    on E: Exception do
+      Exit;
+  end;
+
+  if not PtChanged then exit;
+  FDrivedChange := True;
+  i := 0;
+  while Length(Screen.Forms[i].Name) > 0 do
+  begin
+    if fsModal in Screen.Forms[i].FormState then
+    begin
+      Screen.Forms[i].ModalResult := mrCancel;
+      i := i + 1;
+    end else  // the fsModal forms always sequenced prior to the none-fsModal forms
+      Break;
+  end;
+  Reason := 'COMMIT';
+  if FFrmFrame.AllowContextChangeAll(Reason) then UpdateCCOWContext;
+end;
+
+procedure TCPRS_CCOW.ContextorPending(Sender: TObject;
+  const aContextItemCollection: IDispatch);
+var
+  Reason, HyperLinkReason: string;
+  PtChanged: boolean;
+{$IFDEF CCOWBROKER}
+  UserChanged: boolean;
+{$ENDIF}
+begin
+  if (not CCOWManager.Enabled) or (not assigned(User)) or
+    (not assigned(Patient)) then
+    Exit;
+
+  // If the app would lose data, or have other problems changing context at
+  // this time, it should return a message using SetSurveyReponse. Note that the
+  // user may decide to commit the context change anyway.
+  //
+  // if (cannot-change-context-without-a-problem) then
+  //   contextor.SetSurveyResponse('Conditional accept reason...');
+  if CCOWManager.Busy then
+  begin
+    Sleep(10000);
+  end;
+
+  try
+    PtChanged := Assigned(uCore.Patient) and CCOWManager.IsDifferentPatient(aContextItemCollection, User.StationNumber, Patient.Name, Patient.DFN, User.IsProductionAccount);
+{$IFDEF CCOWBROKER}
+    UserChanged := Assigned(uCore.User) and CCOWManager.IsDifferentUser(aContextItemCollection, RPCBrokerV);
+{$ENDIF}
+  except
+    Exit;
+  end;
+
+{$IFDEF CCOWBROKER}
+  if PtChanged or UserChanged then
+{$ELSE}
+  if PtChanged then
+{$ENDIF}
+    begin
+      FContextChanging := True;
+      FFrmFrame.AllowContextChangeAll(Reason);
+    end;
+  HyperLinkReason := CCOWManager.GetHyperLinkResponse(aContextItemCollection, User.StationNumber, User.IsProductionAccount, FFrmFrame.Handle);
+
+  Reason := HyperlinkReason + Reason;
+  if Pos('COM_OBJECT_ACTIVE', Reason) > 0 then
+    Sleep(12000)
+  else if Length(Reason) > 0 then
+    CCOWManager.SetSurveyResponse(Reason);
+  FContextChanging := False;
+end;
+
+procedure TCPRS_CCOW.HandleCCOWError(AMessage: string; CanShow: Boolean);
+const
+  TX_CCOW_ERROR    = 'CPRS was unable to communicate with the CCOW Context Vault' + CRLF +
+                     'CCOW patient synchronization will be unavailable for the remainder of this session.';
+  TC_CCOW_ERROR    = 'CCOW Error';
+var
+  CustomIcon: TIcon;
+  IconInfo: TIconInfo;
+  Img: TImage;
+begin
+  CustomIcon := TIcon.Create;
+  try
+    Img := TImage.Create(nil);
+    try
+      Img.Picture.Bitmap.LoadFromResourceName(hInstance, 'BMP_CCOW_BROKEN');
+      Img.Picture.Bitmap.PixelFormat := pf32bit;
+      Img.Transparent := true;
+      FillChar(IconInfo, SizeOf(IconInfo), 0);
+      IconInfo.fIcon := True;
+      IconInfo.hbmMask := Img.Picture.Bitmap.MaskHandle;
+      IconInfo.hbmColor := Img.Picture.Bitmap.Handle;
+      CustomIcon.Handle := CreateIconIndirect(IconInfo);
+    finally
+      FreeAndNil(Img);
+    end;
+
+    var
+    ErrMsg := TTaskDialog.Create(Application);
+    try
+      ErrMsg.title := TC_CCOW_ERROR;
+      ErrMsg.Caption := TC_CCOW_ERROR;
+      ErrMsg.Text := Format(TX_CCOW_ERROR, [AMessage]);
+      ErrMsg.CommonButtons := [tcbOk];
+      ErrMsg.Flags := [tfUseHiconMain];
+      ErrMsg.CustomMainIcon := CustomIcon;
+      ErrMsg.ExpandedText := AMessage;
+      ErrMsg.ExpandButtonCaption := 'Error Detail...';
+      if ErrMsg.Execute then
+        if ErrMsg.ModalResult = mrYes then
+          FRetry := True
+        else
+        begin
+          FRetry := False;
+          UpdateCCOWDisplay(CCOW_BROKEN);
+        end;
+    finally
+      ErrMsg.Free;
+    end;
+  finally
+    FreeAndNil(CustomIcon);
+  end;
+
+  CCOWManager.Enabled := False;
+  UpdateCCOWDisplay(CCOW_BROKEN);
+
+  if not CanShow then
+    FFrmFrame.HideEverything;
+end;
+
+procedure TCPRS_CCOW.ResumeJoinContext;
+var
+  Reason: string;
+begin
+  if not CCOWManager.Enabled then
+  begin
+    StartCCOWContextor;
+    If not CCOWManager.Enabled then
+      Exit;
+  end;
+
+  Reason := '';
+  if not FFrmFrame.AllowContextChangeAll(Reason) then exit;
+  try
+    CCOWManager.Resume;
+  except
+    on E: Exception do
+      Exit;
+  end;
+  UpdateCCOWContext;
+end;
+
+procedure TCPRS_CCOW.ResumeSetContext;
+var
+  CCOWResponse: TCCOWResponse;
+  Reason: string;
+begin
+  if not CCOWManager.Enabled then
+  begin
+    StartCCOWContextor;
+    If not CCOWManager.Enabled then
+      Exit;
+  end;
+
+  Reason := '';
+  if not FFrmFrame.AllowContextChangeAll(Reason) then exit;
+  UpdateCCOWDisplay(CCOW_CHANGING);
+
+  CCOWManager.Resume;
+
+  if (AllowCCOWContextChange(CCOWResponse, Patient.DFN)) then
+    UpdateCCOWDisplay(CCOW_LINKED)
+  else
+    begin
+      FFrmFrame.mnuFileResumeContext.Enabled := True;
+      FFrmFrame.mnuFileBreakContext.Enabled := False;
+      UpdateCCOWDisplay(CCOW_BROKEN);
+
+      if CCOWManager.IsParticipating then
+        CCOWManager.Suspend;
+
+   end;
+  FFrmFrame.SetupPatient;
+  FFrmFrame.tabPage.TabIndex := FFrmFrame.PageIDToTab(User.InitialTab);
+  FFrmFrame.tabPageChange(FFrmFrame.tabPage);
+end;
+
+procedure TCPRS_CCOW.StartCCOWContextor;
+var
+  s: string;
+begin
+  try
+    CCOWManager.OnPending := ContextorPending;
+    CCOWManager.OnCommited := ContextorCommitted;
+    CCOWManager.OnCanceled := ContextorCanceled;
+    CCOWManager.OnError := HandleCCOWError;
+
+    if (ParamSearch('CCOW') = 'PATIENTONLY') then
+     s := 'Patient'
+    else
+      s := 'Patient;User';
+
+    Case CCOWManager.Start('CPRSChart', s) of
+      UrBreak: begin
+        if ParamSearch('CCOW') = 'FORCE' then
+        begin
+          FFrmFrame.mnuFileResumeContext.Enabled := False;
+          FFrmFrame.mnuFileBreakContext.Visible := True;
+          FFrmFrame.mnuFileBreakContext.Enabled := True;
+        end
+        else
+        begin
+          CCOWManager.Suspend;
+          FFrmFrame.mnuFileResumeContext.Visible := True;
+          FFrmFrame.mnuFileBreakContext.Visible := True;
+          FFrmFrame.mnuFileBreakContext.Enabled := False;
+        end;
+      end;
+      UrCancel: begin
+        Disabled := true;
+        FFrmFrame.pnlCCOW.Visible := False;
+        FFrmFrame.mnuFileResumeContext.Visible := False;
+        FFrmFrame.mnuFileBreakContext.Visible := False;
+      end;
+    End;
+    If assigned(RPCBrokerV) then
+    begin
+      if ParamSearch('CCOW') = 'PATIENTONLY' then
+        RPCBrokerV.Contextor := nil
+      else
+        RPCBrokerV.Contextor := CCOWManager.Contextor;
+    end;
+  Except
+    raise;
+  end;
+end;
+
+procedure TCPRS_CCOW.UpdateCCOWContext;
+var
+  PtDFN(*, PtName*): string;
+begin
+  if not CCOWManager.Enabled then exit;
+  UpdateCCOWDisplay(CCOW_CHANGING);
+  try
+    FFrmFrame.DoNotChangeEncWindow := false;
+    PtDFN := CCOWManager.FindBestDFN(User.StationNumber, User.IsProductionAccount);
+    if StrToInt64Def(PtDFN, 0) > 0 then
+      begin
+        UpdateCCOWDisplay(CCOW_LINKED);
+        // Select new patient based on context value
+        if Patient.DFN = PtDFN then exit;
+        Patient.DFN := PtDFN;
+        UpdateCCOWDisplay(CCOW_LINKED);
+        if (Patient.Name = '-1') then
+          begin
+            FFrmFrame.HideEverything;
+            exit;
+          end
+        else
+          FFrmFrame.ShowEverything;
+        Encounter.Clear;
+        if Patient.Inpatient then
+        begin
+          Encounter.Inpatient := True;
+          Encounter.Location := Patient.Location;
+          Encounter.DateTime := Patient.AdmitTime;
+          Encounter.VisitCategory := 'H';
+        end;
+        if User.IsProvider then Encounter.Provider := User.DUZ;
+        if not FFrmFrame.FFirstLoad then FFrmFrame.SetupPatient;
+        { frmCover.UpdateVAAButton; //VAA}
+        FFrmFrame.UpdateVAAMHVButtons(nil);
+        FFrmFrame.DetermineNextTab;
+        FFrmFrame.tabPage.TabIndex := FFrmFrame.PageIDToTab(NextTab);
+        FFrmFrame.tabPageChange(FFrmFrame.tabPage);
+      end
+    else begin
+      UpdateCCOWDisplay(CCOW_BROKEN);
+      FFrmFrame.HideEverything;
+    end;
+  finally
+    If (CCOWManager.IsParticipating) then
+      UpdateCCOWDisplay(CCOW_LINKED)
+    else
+      UpdateCCOWDisplay(CCOW_BROKEN);
+  end;
+end;
+
+procedure TCPRS_CCOW.UpdateCCOWDisplay(CCOWStatus: TCCOWDisplay);
+const
+  TX_CCOW_LINKED   = 'Clinical Link On';
+  TX_CCOW_CHANGING = 'Clinical link changing';
+  TX_CCOW_BROKEN   = 'Clinical link broken';
+begin
+  if FDisabled then
+    Exit;
+
+  Case CCOWStatus of
+    CCOW_CHANGING: begin
+      FIconName := 'BMP_CCOW_CHANGING';
+      FFrmFrame.pnlCCOW.Hint := TX_CCOW_CHANGING;
+      FFrmFrame.imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FIconName);
+    end;
+    CCOW_LINKED: Begin
+      FIconName := 'BMP_CCOW_LINKED';
+      FFrmFrame.pnlCCOW.Hint := TX_CCOW_LINKED;
+      FFrmFrame.imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FIconName);
+      FFrmFrame.mnuFileResumeContext.Visible := True;
+      FFrmFrame.mnuFileResumeContext.Enabled := False;
+      FFrmFrame.mnuFileBreakContext.Visible := True;
+      FFrmFrame.mnuFileBreakContext.Enabled := True;
+    End;
+    CCOW_BROKEN: Begin
+      FIconName := 'BMP_CCOW_BROKEN';
+      FFrmFrame.pnlCCOW.Hint := TX_CCOW_BROKEN;
+      FFrmFrame.imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FIconName);
+      FFrmFrame.mnuFileResumeContext.Visible := True;
+      FFrmFrame.mnuFileResumeContext.Enabled := CCOWManager.Enabled;
+      FFrmFrame.mnuFileBreakContext.Visible := True;
+      FFrmFrame.mnuFileBreakContext.Enabled := False;
+    End;
+    else
+      If FIconName = '' then
+      begin
+        FIconName := 'BMP_CCOW_CHANGING';
+        FFrmFrame.pnlCCOW.Hint := TX_CCOW_CHANGING;
+      end;
+      FFrmFrame.imgCCOW.Picture.BitMap.LoadFromResourceName(hInstance, FIconName);
+  End;
 end;
 
 initialization

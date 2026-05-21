@@ -918,6 +918,9 @@ end;
 procedure TfrmOrders.FormDestroy(Sender: TObject);
 begin
   inherited;
+  // Clear any event handlers or references
+  mnuOptimizeFields.OnClick := nil;  // VISTAOR-41629
+
   RemoveMessageHandler(lstOrders, RightClickMessageHandler);
   ClearOrders(uOrderList);
   uEvtDCList.Clear;
@@ -2184,22 +2187,29 @@ begin
     if BILLING_AWARE then // CQ5114
       fODConsult.displayDXCode := ''; // CQ5114
 
-    inherited;
-    // frmFrame.UpdatePtInfoOnRefresh;
-    if not ActiveOrdering then
-      SetConfirmEventDelay;
-    NextIndex := lstWrite.ItemIndex;
-    if (NextIndex < 0) then
-      Exit;
-    if (FCurrentView.EventDelay.PtEventIFN > 0) and
-      (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN,
-      FCurrentView.EventDelay.EventName)) then
-      Exit;
-    if not ReadyForNewOrder(FCurrentView.EventDelay) then
-    begin
-      lstWrite.ItemIndex := RefNumFor(Self);
-      Exit;
-    end;
+  inherited;
+  // frmFrame.UpdatePtInfoOnRefresh;
+  if not ActiveOrdering then
+    SetConfirmEventDelay;
+  NextIndex := lstWrite.ItemIndex;
+  if (NextIndex < 0) then
+  begin
+    OrderListClickProcessing := False;
+    Exit;
+  end;
+  if (FCurrentView.EventDelay.PtEventIFN > 0) and
+    (PtEvtCompleted(FCurrentView.EventDelay.PtEventIFN,
+    FCurrentView.EventDelay.EventName)) then
+  begin
+    OrderListClickProcessing := False;
+    Exit;
+  end;
+  if not ReadyForNewOrder(FCurrentView.EventDelay) then
+  begin
+    lstWrite.ItemIndex := RefNumFor(Self);
+    OrderListClickProcessing := False;
+    Exit;
+  end;
 
     Try2Unlock := False;
     try
@@ -2788,6 +2798,13 @@ var
 begin
   if FRenewing then
     Exit;
+  if not AuthorizedUser then
+    Exit;
+  if not EncounterPresent then
+    Exit; // make sure have provider & location
+  if not LockedForOrdering then
+    Exit;
+
   FRenewing := True;
   try
     inherited;
@@ -3866,6 +3883,8 @@ procedure TfrmOrders.pnlRightResize(Sender: TObject);
 begin
   inherited;
   imgHide.Left := pnlRight.Width - 19;
+  if Visible then
+    mnuOptimizeFieldsClick(Sender);
 end;
 
 procedure TfrmOrders.RequestPrint;
@@ -4998,6 +5017,8 @@ procedure TfrmOrders.mnuOptimizeFieldsClick(Sender: TObject);
 var
   totalSectionsWidth, unitvalue: Integer;
 begin
+  if not assigned(self) or not assigned(self.pnlRight) then  //VISTAOR-41629
+    exit;
   totalSectionsWidth := pnlRight.Width - 3;
   if totalSectionsWidth < 16 then
     Exit;

@@ -18,14 +18,13 @@ uses
   fODBase, StdCtrls, ORCtrls, ExtCtrls, ComCtrls, ORfn, uConst, Buttons,
   Menus,
   UBAGlobals, rOrders,
-  fBALocalDiagnoses, UBAConst, UBACore, uORLists,
+  fBALocalDiagnoses, UBAConst, UBACore, uORLists, ORCheckComboBox,
   ORNet,
   ORDtTm, VA508AccessibilityManager, System.Actions, Vcl.ActnList, oDST;
 
 
 type
   TfrmODCslt = class(TfrmODBase)
-    pnlMain: TPanel;
     pnlReason: TPanel;
     lblReason: TLabel;
     memReason: ORExtensions.TRichEdit;
@@ -50,8 +49,6 @@ type
     btnDiagnosis: TButton;
     txtProvDiag: TCaptionEdit;
     lblProvDiag: TLabel;
-    lblService: TLabel;
-    cboCategory: TORComboBox;
     lblPlace: TLabel;
     cboPlace: TORComboBox;
     gbInptOpt: TGroupBox;
@@ -59,18 +56,23 @@ type
     radOutpatient: TRadioButton;
     lblLatest: TStaticText;
     lblAttn: TLabel;
-    cboAttn: TORComboBox;
+    cboAttn: TORCheckComboBox;
     lblClinicallyIndicated: TStaticText;
     calClinicallyIndicated: TORDateBox;
     lblUrgency: TLabel;
     cboUrgency: TORComboBox;
-    treService: TORTreeView;
-    servicelbl508: TVA508StaticText;
-    cboService: TORComboBox;
-    pnlServiceTreeButton: TKeyClickPanel;
-    btnServiceTree: TSpeedButton;
     calLatest: TORDateBox;
     btnLaunchToolbox: TButton;
+    gpDetails: TGridPanel;
+    pnlLeft: TPanel;
+    cboService: TORComboBox;
+    treService: TORTreeView;
+    pnlServiceTreeButton: TKeyClickPanel;
+    btnServiceTree: TSpeedButton;
+    lblService: TLabel;
+    servicelbl508: TVA508StaticText;
+    cboCategory: TORComboBox;
+    pnlHeader: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure cboAttnNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
@@ -120,6 +122,7 @@ type
     procedure FormShow(Sender: TObject);
     procedure calClinicallyIndicatedExit(Sender: TObject);
     procedure btnLaunchToolboxClick(Sender: TObject);
+    procedure cboAttnMainCheckboxClick(Sender: TObject);
 
   private
     FcboServiceKeyDownStopClick : boolean;
@@ -182,7 +185,7 @@ uses
     rODBase, rConsults, uCore, uConsults, rCore, fConsults, fPCELex, rPCE, fPreReq,
     ORClasses, clipbrd, uTemplates, fFrame, uODBase, uVA508CPRSCompatibility,
     VA508AccessibilityRouter, VAUtils,
-    uSizing, uDstConst, uSimilarNames;
+    uSizing, uDstConst, uSimilarNames, uMisc;
 
 var
   SvcList, QuickList, Defaults: TStrings ;
@@ -191,8 +194,6 @@ var
   BADxUpdated: boolean;
   quickCode: string;
   AreGlobalsFree: boolean;
-
-
 
 const
   TX_NOTTHISSVC_TEXT = 'Consults cannot be ordered from this service' ;
@@ -254,16 +255,6 @@ begin
   Result := true;
 end;
 
-function getRectHeight(aRectWidth: Integer; aText: String): Integer;
-var
-  r: TRect;
-begin
-  r := Rect(0, 0, aRectWidth, aRectWidth);
-  DrawText(Application.MainForm.Canvas.Handle, PChar(aText), Length(aText), r,
-    DT_LEFT or DT_WORDBREAK or DT_CALCRECT);
-  Result := r.Bottom - r.Top + 6; // Default margings
-end;
-
 {*************** TfrmODCslt Methods ***********}
 
 procedure TfrmODCslt.FormCreate(Sender: TObject);
@@ -303,11 +294,9 @@ begin
   InitDialog;
 
   cmdQuit.Parent := pnlBaseCancel;
-//  cmdQuit.Align := alBottom;
   cmdQuit.Align := alClient;
 
   cmdAccept.Parent := pnlBaseAccept;
-//  cmdAccept.Align := alTop;
   cmdAccept.Align := alClient;
 
   memOrder.Parent := pnlBaseMessage;
@@ -322,6 +311,9 @@ begin
   DstStatusUpdate;
   FcboServiceKeyDownStopClick := false;
   consultQuickOrder := false;
+
+  cboAttn.MainCheckBoxVisible := IncludeNonVAProviders(cboAttn);
+
 end;
 
 
@@ -367,7 +359,8 @@ end;
 
 function TfrmODCslt.getMinHeight: Integer;
 begin
-  Result := pnlMain.Height;
+//  Result := pnlMain.Height;
+  Result := gpDetails.Height;
   Result := Result + grdDstControls.Height;
   if pnlCombatVet.Visible then
     Result := Result + getCombatVetHeight;
@@ -540,18 +533,18 @@ begin
              end;
         end;
 
-
       SetControl(cboUrgency,    'URGENCY',   1);
       SetControl(cboPlace,      'PLACE',     1);
       SetControl(cboAttn,       'PROVIDER',  1);
       TSimilarNames.RegORComboBox(cboAttn);
       SetControl(calClinicallyIndicated,   'CLINICALLY',  1);
+
+(* According to the unit header comments calLatest should not be used
       if getDstMgr.DSTMode <> DST_OTH then
       begin
         SetControl(calLatest, 'NLTD', 1);
         tmpResp := TResponse(FindResponseByName('NLTD',1));
         if tmpResp <> nil then
-
         begin
           lblLatest.Enabled := True;
           lblLatest.Visible := True;
@@ -559,6 +552,7 @@ begin
           calLatest.Visible := True;
         end;
       end;
+*)
       btnLaunchToolbox.Caption := getDstMgr.DSTCaption;
       btnLaunchToolbox.Visible := (getDstMgr.DSTBtnVisible and DstPro.DstParameters.FOrderConsult);
       DoSetFontSize;
@@ -737,6 +731,15 @@ procedure TfrmODCslt.ValidateDst(var AnErrMsg: string);
 begin
    if (lblClinicallyIndicated.Enabled) and (calClinicallyIndicated.FMDateTime < FMToday) then SetError(TX_PAST_DATE);
 //   if (cboUrgency.Text = 'SPECIAL INSTRUCTIONS') and (calLatest.FMDateTime = 0) then SetError(TX_NLTD_SI_URG);
+end;
+
+procedure TfrmODCslt.cboAttnMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := cboAttn.SelectedDataString;
+  cboAttn.ReInitLongList;
+  if ALastData <> cboAttn.SelectedDataString then
+    ControlChange(cboAttn);
 end;
 
 procedure TfrmODCslt.cboAttnNeedData(Sender: TObject;
@@ -1602,14 +1605,10 @@ begin
 end;
 
 procedure TfrmODCslt.ShowOrderMessage(Show: boolean);
-//var
-//  Update: boolean;
-
 begin
 (*
-  Update := (pnlMessage.Visible <> Show);
   inherited;
-  if Update then
+  if (pnlMessage.Visible <> Show) then
   begin
     DisableAlign;
     try
@@ -1828,19 +1827,33 @@ var
   iButtonHeight, iButtonWidth, iWidth,
   iTextHeight, iTextWidth: Integer;
 begin
+  gpDetails.LockDrawing;
   if FontSize = -1 then
     FontSize := Application.MainForm.Font.Size;
-
-  adjustBtn(cmdQuit);
-  adjustBtn(cmdAccept);
-  adjustBtn(btnLaunchToolbox);
 
   iButtonHeight := getMainFormTextHeight + GAP;
   iButtonWidth := GetMainFormTextWidth(cmdAccept.Caption) + GAP * 2;
   iWidth := GetMainFormTextWidth(btnLaunchToolbox.Caption) + GAP * 2;
   if iWidth > iButtonWidth then
     iButtonWidth := iWidth;
-  grdDstControls.ColumnCollection[1].Value := iButtonWidth;
+  grdDstControls.ColumnCollection[1].Value := iButtonWidth + Gap * 2;
+
+  for var i := 0 to gpDetails.RowCollection.Count - 1 do
+    gpDetails.RowCollection[i].Value := iButtonHeight;
+  gpDetails.RowCollection[2].Value := gpDetails.RowCollection[2].Value + GAP;
+  gpDetails.RowCollection[7].Value := gpDetails.RowCollection[7].Value + GAP;
+  gpDetails.RowCollection[5].Value := iButtonHeight div 2;
+  gpDetails.RowCollection[10].Value := iButtonHeight div 2;
+
+  gpDetails.Height := 11 * iButtonHeight + GAP * 3;
+  pnlHeader.Height := iButtonHeight;
+
+  gpDetails.ColumnCollection[2].Value :=
+    GetMainFormTextWidth('Patient will be seen an:  ') + GAP * 8;
+  gpDetails.ColumnCollection[3].Value :=   gpDetails.ColumnCollection[2].Value;
+
+  cmdLexSearch.Width := iButtonWidth;
+  btnDiagnosis.Width := iButtonWidth;
 
   iTextWidth := grdDstControls.Width - iButtonWidth;
   iTextHeight := getRectHeight(iTextWidth, pnlDstStatus.Caption);
@@ -1856,6 +1869,7 @@ begin
   treService.Font.Size := FontSize * 7 div 8;
 
   Constraints.MinHeight := getMinHeight;
+  gpDetails.UnLockDrawing;
 end;
 
 procedure TfrmODCslt.SetFontSize(FontSize: integer);
@@ -1885,7 +1899,6 @@ end;
 procedure TfrmODCslt.GetProvDxandValidateCode(AResponses: TResponses);
 var
   tmpDx: TResponse;
-
 begin
   with AResponses do
     begin
@@ -1957,15 +1970,11 @@ begin
   FcboServiceKeyDownStopClick := false;
 end;
 
-
 procedure TfrmODCslt.btnDiagnosisClick(Sender: TObject);
 var
   leftParan, rightParan: string;
-//  tmpOrderIDList: TStringList;
 begin
   inherited;
-//  tmpOrderIDList := TStringList.Create;
-//  tmpOrderIDList.Clear;
   leftParan := '(';
   rightParan := ')';
   UBAGlobals.BAtmpOrderList.Clear;
@@ -2084,7 +2093,6 @@ begin
   self.Constraints.MinWidth := TextWidthByFont(memReason.Font.Handle,
     StringOfChar('X', MAX_PROGRESSNOTE_WIDTH)) + (LEFT_MARGIN * 10) +
     ScrollBarWidth;
-
   self.Constraints.MinHeight := getMinHeight;
 end;
 
@@ -2114,7 +2122,6 @@ begin
       Result := True;
     cboService.Items.Insert(x,y);
   end;
-
 end;
 
 function TfrmODCslt.GetItemIndex(Service: String; Index: integer): integer;     {TP - HDS00015782:}
@@ -2122,7 +2129,6 @@ function TfrmODCslt.GetItemIndex(Service: String; Index: integer): integer;     
 has the exact same name}
 var
   y: String;
-
 begin
   y := cboService.Items[Index];
   cboService.Items.Delete(Index);
@@ -2147,7 +2153,6 @@ begin
     end;
 end;
 
-
 procedure TfrmODCslt.DstStatusUpdate;
 var
   b: Boolean;
@@ -2156,7 +2161,8 @@ begin
     DST mode must be D or C
     Consult Service, Urgency, CID cannot be null
     Service cannot be prosthetics service
-    DST mode C and radInpatient are allowed. DST mode D and radInpatient is not.
+    DST mode C and radInpatient are allowed.
+    DST mode D and radInpatient is not.
   }
   b := (cboService.ItemIEN > 0) and (not isProsSvc) and (cboUrgency.ItemIEN > 0)
     and (Length(calClinicallyIndicated.Text) > 0) and

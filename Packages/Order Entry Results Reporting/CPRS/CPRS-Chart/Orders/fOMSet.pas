@@ -133,7 +133,6 @@ begin
       SetItem.OwnedBy := AnOwner;
       SetItem.RefNum  := ARefNum;
     end;
-    DEAFailStr := '';
     DEAFailStr := DeaCheckPassed(SetItem.OIIEN, SetItem.InPkg, AnEventType);
     if DEAFailStr <> '' then
       begin
@@ -157,9 +156,13 @@ begin
               begin
                 DEAContext := True;
                 fFrame.frmFrame.mnuFileEncounterClick(Self);
-                DEAFailStr := '';
                 DEAFailStr := DeaCheckPassed(SetItem.OIIEN, SetItem.InPkg, AnEventType);
-                if StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] then Continue
+                if StrToIntDef(Piece(DEAFailStr,U,1),0) in [1..5] then
+                begin
+                  FClosebyDeaCheck := True;
+                  Close;
+                  Exit;
+                end;
               end
             else
               begin

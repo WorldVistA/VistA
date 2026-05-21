@@ -12,8 +12,6 @@ object frmDebugInfo: TfrmDebugInfo
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   FormStyle = fsStayOnTop
-  OldCreateOrder = False
-  PixelsPerInch = 96
   TextHeight = 13
   object lblDebugInfo: TLabel
     Left = 34

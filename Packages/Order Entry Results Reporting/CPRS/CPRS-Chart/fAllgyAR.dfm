@@ -300,6 +300,9 @@ inherited frmARTAllergy: TfrmARTAllergy
               TabStop = True
               Visible = False
               ShowAccelChar = True
+              WordWrap = False
+              LabelAlignment = taLeftJustify
+              LabelLayout = tlTop
             end
           end
           object pnlOriginator: TPanel
@@ -340,6 +343,9 @@ inherited frmARTAllergy: TfrmARTAllergy
               Enabled = False
               TabOrder = 0
               ShowAccelChar = True
+              WordWrap = False
+              LabelAlignment = taLeftJustify
+              LabelLayout = tlTop
             end
           end
           object grpObsHist: TRadioGroup
@@ -468,6 +474,9 @@ inherited frmARTAllergy: TfrmARTAllergy
               Enabled = False
               TabOrder = 0
               ShowAccelChar = True
+              WordWrap = False
+              LabelAlignment = taLeftJustify
+              LabelLayout = tlTop
             end
           end
           object lblObservedDate: TOROffsetLabel

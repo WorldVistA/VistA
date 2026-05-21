@@ -4,12 +4,12 @@ inherited frmGraphProfiles: TfrmGraphProfiles
   BorderIcons = [biSystemMenu, biHelp]
   BorderStyle = bsDialog
   Caption = 'Select Items and Define Views'
-  ClientHeight = 470
+  ClientHeight = 520
   ClientWidth = 526
   Constraints.MinWidth = 532
   Position = poMainFormCenter
   ExplicitWidth = 532
-  ExplicitHeight = 499
+  ExplicitHeight = 549
   PixelsPerInch = 96
   TextHeight = 13
   object lblSelectandDefine: TLabel [0]
@@ -89,7 +89,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
   end
   object Panel1: TPanel [2]
     Left = 0
-    Top = 438
+    Top = 488
     Width = 526
     Height = 32
     Align = alBottom
@@ -129,7 +129,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     Left = 0
     Top = 68
     Width = 526
-    Height = 370
+    Height = 420
     Align = alClient
     Caption = 'Panel3'
     ShowCaption = False
@@ -137,7 +137,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     object bvlBase: TBevel
       AlignWithMargins = True
       Left = 4
-      Top = 331
+      Top = 381
       Width = 518
       Height = 3
       Align = alBottom
@@ -149,7 +149,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
       Left = 1
       Top = 1
       Width = 524
-      Height = 295
+      Height = 345
       Align = alClient
       BevelOuter = bvNone
       Caption = 'Panel1'
@@ -159,7 +159,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
         Left = 0
         Top = 0
         Width = 177
-        Height = 295
+        Height = 345
         Align = alLeft
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -182,7 +182,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
         object btnDefinitions: TButton
           AlignWithMargins = True
           Left = 3
-          Top = 266
+          Top = 316
           Width = 171
           Height = 26
           Align = alBottom
@@ -197,7 +197,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
           Left = 3
           Top = 35
           Width = 171
-          Height = 225
+          Height = 275
           Align = alClient
           BevelOuter = bvNone
           ParentShowHint = False
@@ -205,19 +205,18 @@ inherited frmGraphProfiles: TfrmGraphProfiles
           TabOrder = 2
           object splViews: TSplitter
             Left = 0
-            Top = 83
+            Top = 109
             Width = 171
             Height = 3
             Cursor = crVSplit
             Align = alBottom
-            ExplicitTop = 121
-            ExplicitWidth = 128
+            ExplicitTop = 102
           end
           object pnlOtherSources: TPanel
             Left = 0
-            Top = 86
+            Top = 112
             Width = 171
-            Height = 139
+            Height = 163
             Align = alBottom
             BevelOuter = bvNone
             BorderWidth = 1
@@ -226,26 +225,26 @@ inherited frmGraphProfiles: TfrmGraphProfiles
               Left = 1
               Top = 1
               Width = 169
-              Height = 73
+              Height = 97
               Align = alClient
               BevelOuter = bvNone
               TabOrder = 0
               object lblOtherPersons: TLabel
                 AlignWithMargins = True
                 Left = 3
-                Top = 30
+                Top = 35
                 Width = 163
                 Height = 13
                 Align = alBottom
                 Caption = 'Select Person:'
                 ExplicitWidth = 69
               end
-              object cboUser: TORComboBox
+              object cboUser: TORCheckComboBox
                 AlignWithMargins = True
                 Left = 3
-                Top = 49
+                Top = 54
                 Width = 163
-                Height = 21
+                Height = 40
                 Style = orcsDropDown
                 Align = alBottom
                 AutoSelect = True
@@ -274,6 +273,11 @@ inherited frmGraphProfiles: TfrmGraphProfiles
                 OnMouseClick = cboUserMouseClick
                 OnNeedData = cboUserNeedData
                 CharsNeedMatch = 1
+                MainCheckBoxCaption = 'Include Non-VA Providers'
+                MainCheckBoxVisible = True
+                MainCheckBoxAlignment = calBottom
+                OnMainCheckboxClick = cboUserMainCheckboxClick
+                DropdownStyle = ddsControl
               end
               object lbl508SelectOthers: TVA508StaticText
                 Name = 'lbl508SelectOthers'
@@ -287,11 +291,14 @@ inherited frmGraphProfiles: TfrmGraphProfiles
                 Caption = 'Select Views from others'
                 TabOrder = 0
                 ShowAccelChar = True
+                WordWrap = False
+                LabelAlignment = taLeftJustify
+                LabelLayout = tlTop
               end
             end
             object pnlOtherSourcesBottom: TPanel
               Left = 1
-              Top = 74
+              Top = 98
               Width = 169
               Height = 64
               Align = alBottom
@@ -344,7 +351,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
             Left = 0
             Top = 0
             Width = 171
-            Height = 83
+            Height = 109
             Align = alClient
             BevelOuter = bvNone
             TabOrder = 1
@@ -365,7 +372,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
               Left = 3
               Top = 16
               Width = 165
-              Height = 64
+              Height = 90
               Align = alClient
               ItemHeight = 13
               ParentShowHint = False
@@ -387,7 +394,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
         Left = 177
         Top = 0
         Width = 347
-        Height = 295
+        Height = 345
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -428,6 +435,9 @@ inherited frmGraphProfiles: TfrmGraphProfiles
             TabOrder = 0
             Visible = False
             ShowAccelChar = True
+            WordWrap = False
+            LabelAlignment = taLeftJustify
+            LabelLayout = tlTop
           end
           object pnlSource: TPanel
             Left = 95
@@ -471,7 +481,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
         end
         object Panel8: TPanel
           Left = 0
-          Top = 254
+          Top = 304
           Width = 347
           Height = 41
           Align = alBottom
@@ -511,6 +521,9 @@ inherited frmGraphProfiles: TfrmGraphProfiles
             TabOrder = 0
             Visible = False
             ShowAccelChar = True
+            WordWrap = False
+            LabelAlignment = taLeftJustify
+            LabelLayout = tlTop
           end
           object lbl508EditInfo1: TVA508StaticText
             Name = 'lbl508EditInfo1'
@@ -524,13 +537,16 @@ inherited frmGraphProfiles: TfrmGraphProfiles
             TabOrder = 1
             Visible = False
             ShowAccelChar = True
+            WordWrap = False
+            LabelAlignment = taLeftJustify
+            LabelLayout = tlTop
           end
         end
         object Panel9: TPanel
           Left = 0
           Top = 32
           Width = 127
-          Height = 222
+          Height = 272
           Align = alLeft
           BevelOuter = bvNone
           Caption = 'Panel9'
@@ -554,7 +570,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
             Left = 3
             Top = 22
             Width = 121
-            Height = 197
+            Height = 247
             Style = orcsSimple
             Align = alClient
             AutoSelect = True
@@ -584,7 +600,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
             Left = 0
             Top = 19
             Width = 127
-            Height = 203
+            Height = 253
             Align = alClient
             ItemHeight = 13
             ParentShowHint = False
@@ -604,7 +620,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
           Left = 127
           Top = 32
           Width = 34
-          Height = 222
+          Height = 272
           Align = alLeft
           BevelOuter = bvNone
           Caption = 'Panel10'
@@ -672,7 +688,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
           Left = 161
           Top = 32
           Width = 186
-          Height = 222
+          Height = 272
           Align = alClient
           BevelOuter = bvNone
           Caption = 'Panel11'
@@ -698,7 +714,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
             Left = 3
             Top = 22
             Width = 180
-            Height = 197
+            Height = 247
             Align = alClient
             ItemHeight = 13
             ParentShowHint = False
@@ -717,7 +733,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     end
     object Panel2: TPanel
       Left = 1
-      Top = 296
+      Top = 346
       Width = 524
       Height = 32
       Align = alBottom
@@ -798,7 +814,7 @@ inherited frmGraphProfiles: TfrmGraphProfiles
     end
     object pnlApply: TPanel
       Left = 1
-      Top = 337
+      Top = 387
       Width = 524
       Height = 32
       Align = alBottom
@@ -829,6 +845,9 @@ inherited frmGraphProfiles: TfrmGraphProfiles
         TabOrder = 0
         Visible = False
         ShowAccelChar = True
+        WordWrap = False
+        LabelAlignment = taLeftJustify
+        LabelLayout = tlTop
       end
       object radBoth: TRadioButton
         AlignWithMargins = True

@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Types, Dialogs, ComCtrls, CommCtrl, Themes, UxTheme, ORFn, ExtCtrls, StdCtrls;
+  Types, Dialogs, ComCtrls, CommCtrl, Themes, UxTheme, ORFn, ExtCtrls, StdCtrls,
+  VA508AccessibilityManager, fBase508Frame;
 
 type
 
@@ -40,7 +41,7 @@ type
     property ResultLine: string read fResultLine write FResultLine;
   end;
 
-  TTreeGridFrame = class(TFrame)
+  TTreeGridFrame = class(TBase508Frame)
     tv: TTreeView;
     pnlTop: TPanel;
     stTitle: TStaticText;
@@ -67,6 +68,7 @@ type
     fShowTargetCode: boolean;
     tvHintText: String;
     fDefTreeViewWndProc: TWndMethod;
+    F508Mgr: TVA508AccessibilityManager;
     function GetSelectedNode: TLexTreeNode;
     procedure SetSelectedNode(const Value: TLexTreeNode);
     procedure SetShowCode(const Value: boolean);
@@ -94,6 +96,7 @@ type
     procedure CMFontChanged(var Message: TMessage); message CM_FONTCHANGED;
   public
     { Public declarations }
+    procedure Setup508(aMgr: TVA508AccessibilityManager);
     procedure SetColumnTreeModel(ResultSet: TStrings);
     procedure TreeViewWndProc(var Message: TMessage);
     function FindNode(AValue:String; ByDesc: boolean = false): TLexTreeNode;
@@ -401,6 +404,17 @@ begin
   pnlCodeSys.Caption := Value;
 end;
 
+procedure TTreeGridFrame.Setup508(aMgr: TVA508AccessibilityManager);
+begin
+  F508Mgr := aMgr;
+  if F508Mgr <> nil then
+  begin
+    F508Mgr.AccessText[tv] := stTitle.Caption;
+    F508Mgr.AccessText[mmoDesc] := 'Description';
+    F508Mgr.AccessText[mmoCode] := 'Code';
+  end;
+end;
+
 procedure TTreeGridFrame.SetColumnTreeModel(ResultSet: TStrings);
 var
   i: integer;
@@ -497,6 +511,10 @@ end;
 procedure TTreeGridFrame.SetTitle(const Value: string);
 begin
   stTitle.Caption := Value;
+  if F508Mgr <> nil then
+  begin
+    F508Mgr.AccessText[tv] := Value;
+  end;
 end;
 
 procedure TTreeGridFrame.SetVertPanelSpace(const Value: integer);

@@ -1,63 +1,86 @@
 unit uORLists;
+
 interface
+
 uses
   System.Classes,
   rCore,
   rConsults,
   ORCtrls;
 
-procedure setClinicList(aComponent: TORComboBox; aStart: string; aDirection: Integer);
-procedure setPatientList(aComponent: TORComboBox; aStart: string; aDirection: Integer);
-procedure setPersonList(aComponent: TORComboBox; aStart: string; aDirection: Integer);
-procedure setProviderList(aComponent: TORComboBox; aStart: string; aDirection: Integer);
-procedure setProcedureList(aComponent: TORComboBox; aStart: string; aDirection: Integer);
+procedure setClinicList(AORComboBox: TORComboBox; aStart: string;
+  aDirection: Integer);
+procedure setPatientList(AORComboBox: TORComboBox; aStart: string;
+  aDirection: Integer);
+procedure setPersonList(AORComboBox: TORComboBox; aStart: string;
+  aDirection: Integer);
+procedure setPersonListWithClass(AORComboBox: TORComboBox; aStart: string;
+  aDirection: Integer);
+procedure setProviderList(AORComboBox: TORComboBox; aStart: string;
+  aDirection: Integer);
+procedure setProcedureList(AORComboBox: TORComboBox; aStart: string;
+  aDirection: Integer);
 
 implementation
-type
-  ITEM_TYPES = (itPerson, itClinic, itProvider, itPatient, itProcedure);
 
-procedure setItemsList(anItem: ITEM_TYPES; aComponent: TORComboBox; aStart: String; aDirection: Integer);
+type
+  ITEM_TYPES = (itPerson, itPersonWithClass, itClinic, itProvider, itPatient, itProcedure);
+
+procedure setItemsList(anItem: ITEM_TYPES; AORComboBox: TORComboBox;
+  aStart: string; aDirection: Integer);
 var
   sl: TStrings;
 begin
   sl := TStringList.Create;
   try
     case anItem of
-      itPerson: setSubSetOfPersons(aComponent, sl, aStart, aDirection);
+      itPerson: setSubSetOfPersons(AORComboBox, sl, aStart, aDirection, False);
+      itPersonWithClass: setSubSetOfPersons(AORComboBox, sl, aStart, aDirection, True);
       itClinic: setSubSetOfClinics(sl, aStart, aDirection);
-      itProvider: setSubSetOfProviders(aComponent, sl, aStart, aDirection);
+      itProvider: setSubSetOfProviders(AORComboBox, sl, aStart, aDirection);
       itPatient: setSubSetOfPatients(sl, aStart, aDirection);
       itProcedure: setSubSetOfProcedures(sl, aStart, aDirection);
     end;
-    aComponent.ForDataUse(sl);
+    AORComboBox.ForDataUse(sl);
   finally
     sl.Free;
   end;
 end;
 
-procedure setClinicList(aComponent: TORComboBox; aStart: String; aDirection: Integer);
+procedure setClinicList(AORComboBox: TORComboBox; aStart: string;
+  aDirection: Integer);
 begin
-  setItemsList(itClinic, aComponent, aStart, aDirection);
+  setItemsList(itClinic, AORComboBox, aStart, aDirection);
 end;
 
-procedure setPatientList(aComponent: TORComboBox; aStart: String; aDirection: Integer);
+procedure setPatientList(AORComboBox: TORComboBox; aStart: string;
+  aDirection: Integer);
 begin
-  setItemsList(itPatient, aComponent, aStart, aDirection);
+  setItemsList(itPatient, AORComboBox, aStart, aDirection);
 end;
 
-procedure setPersonList(aComponent: TORComboBox; aStart: String; aDirection: Integer);
+procedure setPersonList(AORComboBox: TORComboBox; aStart: string;
+  aDirection: Integer);
 begin
-  setItemsList(itPerson, aComponent, aStart, aDirection);
+  setItemsList(itPerson, AORComboBox, aStart, aDirection);
 end;
 
-procedure setProviderList(aComponent: TORComboBox; aStart: String; aDirection: Integer);
+procedure setPersonListWithClass(AORComboBox: TORComboBox; aStart: string;
+  aDirection: Integer);
 begin
-  setItemsList(itProvider, aComponent, aStart, aDirection);
+  setItemsList(itPersonWithClass, AORComboBox, aStart, aDirection);
 end;
 
-procedure setProcedureList(aComponent: TORComboBox; aStart: String; aDirection: Integer);
+procedure setProviderList(AORComboBox: TORComboBox; aStart: string;
+  aDirection: Integer);
 begin
-  setItemsList(itProcedure, aComponent, aStart, aDirection);
+  setItemsList(itProvider, AORComboBox, aStart, aDirection);
+end;
+
+procedure setProcedureList(AORComboBox: TORComboBox; aStart: string;
+  aDirection: Integer);
+begin
+  setItemsList(itProcedure, AORComboBox, aStart, aDirection);
 end;
 
 end.

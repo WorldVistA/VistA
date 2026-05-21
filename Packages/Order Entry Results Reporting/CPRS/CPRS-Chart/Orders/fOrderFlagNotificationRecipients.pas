@@ -5,7 +5,8 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, fBase508Form, ORCtrls, Vcl.StdCtrls,
-  Vcl.ExtCtrls, VA508AccessibilityManager, System.Actions, Vcl.ActnList, u508Button ;
+  Vcl.ExtCtrls, VA508AccessibilityManager, System.Actions, Vcl.ActnList, u508Button,
+  ORCheckComboBox, uMisc;
 
 type
 
@@ -24,7 +25,7 @@ type
     btnRemoveAllRecipients: u508Button.TButton;
     btnRemoveRecipients: u508Button.TButton;
     pnlRecipientsSource: TPanel;
-    cboAlertRecipient: TORComboBox;
+    cboAlertRecipient: TORCheckComboBox;
     alRecipients: TActionList;
     acAdd: TAction;
     acDelete: TAction;
@@ -42,6 +43,8 @@ type
       Shift: TShiftState);
     procedure orSelectedRecipientsClick(Sender: TObject);
     procedure cboAlertRecipientChange(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure cboAlertRecipientMainCheckboxClick(Sender: TObject);
   private
     fExistentRecipients:TStrings;
     procedure RecipientAdd;
@@ -125,12 +128,29 @@ begin
     cboAlertRecipientDblClick(Sender);
 end;
 
+procedure TfrmOrderFlagRecipients.cboAlertRecipientMainCheckboxClick(
+  Sender: TObject);
+begin
+  inherited;
+  var ALastData := cboAlertRecipient.SelectedDataString;
+  cboAlertRecipient.ReInitLongList;
+  if ALastData <> cboAlertRecipient.SelectedDataString then
+    cboAlertRecipientChange(cboAlertRecipient);
+end;
+
 procedure TfrmOrderFlagRecipients.cboAlertRecipientNeedData(Sender: TObject;
   const StartFrom: string; Direction, InsertAt: Integer);
 begin
   inherited;
   //Get the list of potential recipients
   setPersonList(TORComboBox(Sender), StartFrom, Direction); // RTC Defect 732085
+end;
+
+procedure TfrmOrderFlagRecipients.FormCreate(Sender: TObject);
+begin
+  inherited;
+  ResizeAnchoredFormToFont(self);
+  cboAlertRecipient.MainCheckBoxVisible := IncludeNonVAProviders(cboAlertRecipient);
 end;
 
 Procedure TfrmOrderFlagRecipients.getRecipientsList(

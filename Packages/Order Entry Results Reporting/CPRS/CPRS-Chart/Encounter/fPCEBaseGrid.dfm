@@ -2,48 +2,69 @@ inherited frmPCEBaseGrid: TfrmPCEBaseGrid
   Left = 128
   Top = 192
   Caption = 'frmPCEBaseGrid'
-  PixelsPerInch = 96
-  TextHeight = 16
-  inherited btnCancel: TBitBtn
-    TabOrder = 2
+  ClientWidth = 620
+  ExplicitHeight = 436
+  TextHeight = 13
+  inherited pnlBottomAncestor: TPanel
+    Width = 620
+    ExplicitTop = 370
+    ExplicitWidth = 616
+    inherited btnOK: TBitBtn
+      ExplicitTop = 3
+    end
+    inherited btnCancel: TBitBtn
+      ExplicitLeft = 538
+      ExplicitTop = 3
+    end
   end
-  object pnlGrid: TPanel [2]
-    Left = 6
-    Top = 238
-    Width = 451
-    Height = 87
-    BevelOuter = bvNone
-    TabOrder = 1
-    object lstCaptionList: TCaptionListView
+  inherited pnlMainAncestor: TPanel
+    Width = 620
+    ExplicitHeight = 370
+    object pnlGrid: TPanel
       Left = 0
       Top = 0
-      Width = 451
-      Height = 87
-      Margins.Left = 8
-      Margins.Right = 8
+      Width = 620
+      Height = 371
       Align = alClient
-      Color = clCream
-      Columns = <
-        item
-          Width = 30
-        end
-        item
-          Tag = 1
-          Width = 120
-        end>
-      HideSelection = False
-      HoverTime = 0
-      IconOptions.WrapText = False
-      MultiSelect = True
-      ReadOnly = True
-      RowSelect = True
-      ParentShowHint = False
-      ShowWorkAreas = True
-      ShowHint = True
+      BevelOuter = bvNone
       TabOrder = 0
-      ViewStyle = vsReport
-      OnChanging = lstCaptionListChanging
-      AutoSize = False
+      ExplicitLeft = 6
+      ExplicitTop = 238
+      ExplicitWidth = 451
+      ExplicitHeight = 87
+      object lstCaptionList: TCaptionListView
+        AlignWithMargins = True
+        Left = 3
+        Top = 3
+        Width = 614
+        Height = 365
+        Align = alClient
+        Color = clCream
+        Columns = <
+          item
+            Width = 30
+          end
+          item
+            Tag = 1
+            Width = 120
+          end>
+        HideSelection = False
+        HoverTime = 0
+        IconOptions.WrapText = False
+        MultiSelect = True
+        ReadOnly = True
+        RowSelect = True
+        ParentShowHint = False
+        ShowWorkAreas = True
+        ShowHint = True
+        TabOrder = 0
+        ViewStyle = vsReport
+        OnChanging = lstCaptionListChanging
+        AutoSize = False
+        ExplicitLeft = 0
+        ExplicitWidth = 435
+        ExplicitHeight = 81
+      end
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -62,6 +83,8 @@ inherited frmPCEBaseGrid: TfrmPCEBaseGrid
         'Status = stsDefault')
       (
         'Component = lstCaptionList'
-        'Status = stsDefault'))
+        'Status = stsDefault'
+        'Columns'
+        ()))
   end
 end

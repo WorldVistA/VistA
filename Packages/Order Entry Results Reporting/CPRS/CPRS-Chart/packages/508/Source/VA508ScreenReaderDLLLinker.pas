@@ -447,92 +447,68 @@ begin
 end;
 
 procedure FindScreenReaders;
-var
-  ok: boolean;
 
-  procedure CheckProcs;
+  function DLLMethodExist(MethodName: PAnsiChar): Boolean;
   begin
-    if not assigned(SRInitialize) then
-      SRInitialize := GetProcAddress(DLLHandle, TVA508InitializeProcName);
-    if not assigned(SRInitializeEx) then
-      SRInitializeEx := GetProcAddress(DLLHandle, TVA508InitializeExProcName);
-
-    ok := assigned(SRInitialize) or assigned(SRInitializeEx);
-    if ok then
-    begin
-      if not assigned(SRShutDown) then
-        SRShutDown := GetProcAddress(DLLHandle, TVA508ShutDownProcName);
-      ok := assigned(SRShutDown);
-      if ok then
-      begin
-        if not assigned(SRRegisterCustomBehavior) then
-          SRRegisterCustomBehavior := GetProcAddress(DLLHandle,
-            TVA508RegisterCustomBehaviorProcName);
-        ok := assigned(SRRegisterCustomBehavior);
-        if ok then
-        begin
-          if not assigned(SRSpeakText) then
-            SRSpeakText := GetProcAddress(DLLHandle, TVA508SpeakTextProcName);
-          ok := assigned(SRSpeakText);
-          if ok then
-          begin
-            if not assigned(SRIsRunning) then
-              SRIsRunning := GetProcAddress(DLLHandle, TVA508IsRunningFuncName);
-            ok := assigned(SRIsRunning);
-            if ok then
-            begin
-              if not assigned(SRComponentData) then
-                SRComponentData := GetProcAddress(DLLHandle,
-                  TVA508ComponentDataProcName);
-              ok := assigned(SRComponentData);
-              if ok then
-              begin
-                if not assigned(SRConfigChangePending) then
-                  SRConfigChangePending := GetProcAddress(DLLHandle,
-                    TVA508ConfigChangePendingName);
-                ok := assigned(SRConfigChangePending);
-              end;
-            end;
-          end;
-        end;
-      end;
-    end;
-    ClearProcPointers;
+    Result := Assigned(GetProcAddress(DLLHandle, MethodName));
   end;
 
-  procedure CheckFile(FileName: string);
+  function CheckProcs(): Boolean;
   begin
+    Result := DLLMethodExist(TVA508InitializeProcName) or
+      DLLMethodExist(TVA508InitializeExProcName);
+    if not Result then exit;
+
+    Result := DLLMethodExist(TVA508ShutDownProcName);
+    if not Result then exit;
+
+    Result := DLLMethodExist(TVA508RegisterCustomBehaviorProcName);
+    if not Result then exit;
+
+    Result := DLLMethodExist(TVA508SpeakTextProcName);
+    if not Result then exit;
+
+    Result := DLLMethodExist(TVA508IsRunningFuncName);
+    if not Result then exit;
+
+    Result := DLLMethodExist(TVA508ComponentDataProcName);
+    if not Result then exit;
+
+    Result := DLLMethodExist(TVA508ConfigChangePendingName);
+    if not Result then exit;
+
+  end;
+
+  function CheckFile(FileName: string): boolean;
+  begin
+    Result := false;
     DLLHandle := 0;
-    ok := FileExists(FileName);
-    if ok then
+    if FileExists(FileName) then
     begin
-      ok := FALSE;
-      // idx := ValidSRFiles.IndexOf(FileName);
-      // if idx < 0 then
-      // begin
       DLLHandle := LoadLibrary(PChar(FileName));
       if DLLHandle > HINSTANCE_ERROR then
       begin
         try
-          CheckProcs;
-          if ok then
-            // ValidSRFiles.Add(FileName)
+          if CheckProcs then
+          begin
             ValidSRFile := FileName;
+            Result := true;
+          end;
         finally
           FreeLibrary(DLLHandle);
           DLLHandle := 0;
         end;
       end;
-      // end;
     end
   end;
 
-  procedure ScanScreenReaders(dir: string; addCommonFilesPath: boolean = TRUE);
+  function ScanScreenReaders(dir: string; addCommonFilesPath: boolean = TRUE): boolean;
   var
     SR: TSearchRec;
     Done: integer;
     RootDir: string;
   begin
+    Result := False;
     if dir = '' then
       exit;
     RootDir := AppendBackSlash(dir);
@@ -546,7 +522,7 @@ var
           (CompareText(ExtractFileExt(SR.Name), ScreenReaderFileExtension) = 0)
         then
         begin
-          CheckFile(RootDir + SR.Name);
+          Result := CheckFile(RootDir + SR.Name);
         end;
         Done := FindNext(SR);
       end;
@@ -558,15 +534,11 @@ var
 begin
   if ExecuteFind then
   begin
-    ok := FALSE;
-    // if not assigned(ValidSRFiles) then
-    // ValidSRFiles := TStringList.Create;
-    ScanScreenReaders(ExtractFilePath(Application.ExeName), FALSE);
-
-    if not ok then
-      ScanScreenReaders(GetAlternateProgramFilesPath);
-    if not ok then
-      ScanScreenReaders(GetProgramFilesPath);
+    if not ScanScreenReaders(ExtractFilePath(Application.ExeName), FALSE) then
+    begin
+      if not ScanScreenReaders(GetAlternateProgramFilesPath) then
+        ScanScreenReaders(GetProgramFilesPath);
+    end;
     ExecuteFind := FALSE;
   end;
 end;

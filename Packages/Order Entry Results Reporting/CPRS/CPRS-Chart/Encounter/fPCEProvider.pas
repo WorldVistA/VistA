@@ -4,12 +4,12 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ORCtrls, ExtCtrls, uPCE, ORFn, fBase508Form,
-  VA508AccessibilityManager;
+  StdCtrls, ORCtrls, ExtCtrls, uPCE, ORFn, fBase508Form, ORCheckComboBox,
+  VA508AccessibilityManager, U508ORCheckComboBox;
 
 type
   TfrmPCEProvider = class(TfrmBase508Form)
-    cboPrimary: TORComboBox;
+    cboPrimary: U508ORCheckComboBox.TORCheckComboBox;
     lblMsg: TMemo;
     btnYes: TButton;
     btnNo: TButton;
@@ -21,6 +21,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure btnSelectClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
+    procedure cboPrimaryMainCheckboxClick(Sender: TObject);
   private
     FPCEData: TPCEData;
     FUseDefault: boolean;
@@ -34,7 +35,7 @@ function NoPrimaryPCEProvider(AProviders: TPCEProviderList; PCEData: TPCEData): 
 
 implementation
 
-uses rCore, uCore, rTIU, rPCE, uORLists, uSimilarNames;
+uses rCore, uCore, rTIU, rPCE, uORLists, uSimilarNames, uMisc;
 
 {$R *.DFM}
 
@@ -146,6 +147,15 @@ begin
   end;
 end;
 
+procedure TfrmPCEProvider.cboPrimaryMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := cboPrimary.SelectedDataString;
+  cboPrimary.ReInitLongList;
+  if ALastData <> cboPrimary.SelectedDataString then
+    cboPrimaryChange(cboPrimary);
+end;
+
 procedure TfrmPCEProvider.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 var
@@ -165,6 +175,7 @@ procedure TfrmPCEProvider.FormCreate(Sender: TObject);
 begin
   ResizeAnchoredFormToFont(self);
   ClientHeight := cboPrimary.Top;
+  cboPrimary.MainCheckBoxVisible := IncludeNonVAProviders(cboPrimary);
 end;
 
 procedure TfrmPCEProvider.btnSelectClick(Sender: TObject);

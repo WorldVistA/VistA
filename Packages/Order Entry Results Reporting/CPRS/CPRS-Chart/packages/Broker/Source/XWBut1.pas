@@ -5,10 +5,19 @@
   Developers: Danila Manapsal, Don Craven, Joel Ivey, Herlan Westra
   Description: Contains TRPCBroker and related components.
   Unit: XWBut1 contains utilities used by the BDK.
-  Current Release: Version 1.1 Patch 72
+  Current Release: Version 1.1 Patch 74
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*74 (CLG 05/30/2024) XWB*1.1*74
+  1. Updated RPC Version to version 74.
+  2. Fixed a bug in ReadRegValues procedure that caused issues
+  with the Rpcconf1.GetServerInfo function when HKCU registry Keys
+  do not exist.
+
+  Changes in XWB*1.1*73 (RGG 07/19/2021) XWB*1.1*73
+  1. Updated RPC Version to version 73.
+
   Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
   1. Updated RPC Version to version 72.
 
@@ -319,7 +328,8 @@ begin
           (RegNames.Strings[I]));
     end
     else
-      RegValues.Add('');
+      {Not sure why this was here. Caused bug with GetServerInfo - p74}
+      //RegValues.Add('');
   finally
     Registry.Destroy;
     RegNames.Free;

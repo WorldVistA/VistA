@@ -8,8 +8,6 @@ uses
   VA508AccessibilityManager;
 
 type
-
-
   TfrmPCEBaseGrid = class(TfrmPCEBase)
     pnlGrid: TPanel;
     lstCaptionList: TCaptionListView;
@@ -39,21 +37,15 @@ uses
 
 {$R *.DFM}
 
-const
-  JustificationGap = 5;
-
-
 function TfrmPCEBaseGrid.GetGridIndex: integer;
 var
   i: integer;
-
 begin
   Result := -1;
-
   if(lstCaptionList.SelCount > 0) then
   begin
     for i := 0 to lstCaptionList.Items.Count-1 do
-      if(lstCaptionList.Items[i].Selected) then
+      if lstCaptionList.Items[i].Selected then
       begin
         Result := i;
         exit;
@@ -71,7 +63,6 @@ end;
 procedure TfrmPCEBaseGrid.SetGridIndex(const Value: integer);
 var
   i: integer;
-
 begin
   for i := 0 to lstCaptionList.Items.Count-1 do
     lstCaptionList.Items[i].Selected := (i = Value);
@@ -96,7 +87,6 @@ end;
 procedure TfrmPCEBaseGrid.RestoreGridSelected;
 var
   i: integer;
-
 begin
   for I := 0 to lstCaptionList.Items.Count - 1 do
    lstCaptionList.Items[i].Selected :=  (copy(FSel,i+1,1) = BOOLCHAR[TRUE]);
@@ -111,8 +101,6 @@ begin
     FSel := FSel + BOOLCHAR[lstCaptionList.Items[i].Selected];
 end;
 
-
 initialization
   SpecifyFormIsNotADialog(TfrmPCEBaseGrid);
-
 end.

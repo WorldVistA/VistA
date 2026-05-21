@@ -2,14 +2,56 @@
   Package: XWB - Kernel RPCBroker
   Date Created: Sept 18, 1997 (Version 1.1)
   Site Name: Oakland, OI Field Office, Dept of Veteran Affairs
-  Developers: Herlan Westra, Roy Gaber
+  Developers: Herlan Westra, Roy Gaber, Chris Grant
   Description: Contains the TXWBSSOiToken component.
   Unit: XWBSSOi contains a simple TWebBrowser to 'POST' a SOAP
   message to IAM to obtain a SAML token.
-  Current Release: Version 1.1 Patch 72
+  Current Release: Version 1.1 Patch 74
   *************************************************************** }
 
 { *************************************************************
+  Changes in XWB*1.1*74 (CLG 05/30/2024) XWB*1.1*74
+  1. Updated RPC Version to version 74.
+  2. The certificate selection logic has been redesigned to find ONLY
+  certificates that are specifically PIV authentication type certificates.
+  This is done by finding the certificates that contain the certificate policies
+  "id-fpki-common-authentication" or "id_fpki_common_derived_pivauth_hardware
+  or "treasury_pivi_hardware", which is the standard identifiers
+  of a PIV Authentication Certificate as defined by NIST FIPS Publication
+  201-3 and the department of the Treasury PKI X.509 Certificate Policy.
+  This PIV identity marker elminates other non-PIV related certificates
+  from being found/utilized when the auto-certificate selection is used.
+  3. The auto certificate selection logic (enabled by default) has been
+  redesigned to always select the newest PIV certificate when more than
+  one exists (i.e., new PIV card is issued and old and new certificates
+  exist that have not expired yet).  The certificate with the greatest
+  expiration will now always be used.
+  4.  As a contingency, if no certifcates are found by PIV policy or the
+  certificate that was auto-selected fails authentication, then the user will
+  automatically be presented with a certificate dialog to select the appropiate
+  certificate to authenticate with.  If the authentication fails after this
+  attempt, then the standard Access/Verify Codes dialog will be presented to
+  authenicate by A/V codes.
+
+
+
+
+
+  Changes in XWB*1.1*73 (RGG 07/19/2021) XWB*1.1*73
+  1. Updated RPC Version to version 73.
+  2. Modified to auto-select Authentication certificate for user.
+  Users were becoming confused when presented with a certificate
+  selection dialog, which contained an array of certficates to choose
+  from.  Auto-selecting and using this certificate removes the need
+  for the user to select a certificate, but it does present an issue
+  when testing an app compiled with the new version.  While the user
+  can cancel the PIN input prompt and be presented with an Access/Verify
+  code dialog, this is not common knowledge for users.  Code was added to
+  check the value of a new property of the TRPCBroker component, this new
+  property (ShowCertDialog) is of type boolean, setting to either True
+  to show the certificate selection dialog, or False (the default) to
+  proceed with auto-selection/use of the Authentication Certificate.
+
   Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
   1. Updated RPC Version to version 72.
 
@@ -72,7 +114,7 @@ unit XWBSSOi;
 }
 
 {
-  Youï¿½ve got a client on a VA deployed Microsoft Windows workstation that is
+  You’ve got a client on a VA deployed Microsoft Windows workstation that is
   part of the VA forest and you want to obtain a SAML token from the IAM STS
   service.  Submit a SOAP request token message using mutual TLS, where
   the client certificate identifies the user making the request.
@@ -204,13 +246,20 @@ type
     lCertContext: PCCERT_CONTEXT; // p71
     UserName, Password: String; // p71
     httpRio1: THTTPRIO; // p71
+   end;
+
+type
+  TCertCompareNewest = record  //p74
+    certContext: PCCERT_CONTEXT;
+    ExpirationDate: TDateTime;
   end;
-var  ShowCertDialog: boolean;
+
+var  ShowCertDialog: boolean; //p73
 
 const
   NameUnknown = 0; // Unknown name type.
   NameFullyQualifiedDN = 1; // Fully qualified distinguished name
-  NameSamCompatible = 2; // Windows NTï¿½ 4.0 account name
+  NameSamCompatible = 2; // Windows NT® 4.0 account name
   NameDisplay = 3; // A "friendly" display name
   NameUniqueId = 6; // GUID string that the IIDFromString function returns
   NameCanonical = 7; // Complete canonical name
@@ -219,7 +268,17 @@ const
   NameServicePrincipal = 10; // Generalized service principal name
   DNSDomainName = 11; // DNS domain name, plus the user name
 
-var
+  {PIV Certficiate Identifiers - Cert Policy Info}  //p74
+  //PIV Authentication = ID_FPKI_COMMON_AUTHENTICATION
+  //PIV-I Authentication (Interoperable) = TREASURY_PIVI_HARDWARE
+  //PIV-D Authentication (Derived credential LOA-4) = ID_FPKI_COMMON_DERIVED_PIVAUTH_HARDWARE
+
+  ID_FPKI_COMMON_AUTHENTICATION: string = '2.16.840.1.101.3.2.1.3.13';  //p74
+  ID_FPKI_COMMON_DERIVED_PIVAUTH_HARDWARE: string = '2.16.840.1.101.3.2.1.3.41';  //p74
+  TREASURY_PIVI_HARDWARE: string = '2.16.840.1.101.3.2.1.5.10';  //p74
+
+
+  var
   XWBSSOiFrm: TXWBSSOiFrm;
   myToken, lType: String;
 
@@ -386,23 +445,102 @@ end;
   ------------------------------------------------------------------ }
 function TXWBSSOiFrm.GetMyToken: String; // p71
 var
-  //CurrentUser,
-  NameString, STSServerInfo, STSServer, RIOSERVER,
-  RIOPORT: String;
+  NameString, STSServerInfo, STSServer, RIOSERVER, RIOPORT: String;
   IAMRequest: SecurityTokenService;
   Store: hCertStore;
+  MemoryStore: hCertStore;
   SelectedCert: PCCERT_CONTEXT;
   ValidCert: PCCERT_CONTEXT;
-  MemoryStore: hCertStore;
-  CertContext: PCCERT_CONTEXT;
-  Size: DWORD;
-  KeyUsageBits: Byte;
+  certContext: PCCERT_CONTEXT;
   CertInfo: PCERT_INFO;
+  Size: DWORD;
   ValidDate: DWORD;
-  begin
+  KeyUsageBits: Byte;
+  CertRecValid: TCertCompareNewest; // p74
+  CertRecNewest: TCertCompareNewest; // p74
+  CertExtension: PCERT_EXTENSION; // p74
+  CertPolicyInfo: PCERT_POLICIES_INFO; // p74
+  CertObjectStructSize: DWORD; // p74
+  CertTempDate: Integer; // p74
+  MemStoreCount: Integer;  // p74
+
+begin
+  CertRecValid.certContext := nil; // p74
+  CertRecValid.ExpirationDate := 0; // p74
+  CertRecNewest.certContext := nil; // p74
+  CertRecNewest.ExpirationDate := 0; // p74
+  MemStoreCount := 0; // p74
   Store := CertOpenSystemStore(0, 'MY');
   MemoryStore := CertOpenStore(CERT_STORE_PROV_MEMORY, 0, 0, 0, nil);
   SelectedCert := nil;
+
+  if ShowCertDialog = false then
+  begin
+  try
+    certContext := CertEnumCertificatesInStore(Store, nil);
+    while certContext <> nil do
+    begin
+      ValidCert := CertFindCertificateInStore(Store, X509_ASN_ENCODING or
+        PKCS_7_ASN_ENCODING, 0, CERT_FIND_ANY, nil, nil);
+      if (ValidCert <> nil) then
+      begin
+        NameString := '';
+        CertInfo := certContext.pCertInfo;
+        CertExtension := CertFindExtension(szOID_CERT_POLICIES,
+          certContext^.pCertInfo^.cExtension,
+          certContext^.pCertInfo^.rgExtension);
+
+        if CertExtension <> nil then
+        begin
+          CertObjectStructSize := 0;
+          if CryptDecodeObject(X509_ASN_ENCODING or PKCS_7_ASN_ENCODING,
+            szOID_CERT_POLICIES, CertExtension^.Value.pbData,
+            CertExtension^.Value.cbData, CRYPT_DECODE_NOCOPY_FLAG, nil,
+            @CertObjectStructSize) then
+          begin
+            GetMem(CertPolicyInfo, CertObjectStructSize);
+
+            if CryptDecodeObject(X509_ASN_ENCODING or PKCS_7_ASN_ENCODING,
+              szOID_CERT_POLICIES, CertExtension^.Value.pbData,
+              CertExtension^.Value.cbData, CRYPT_DECODE_NOCOPY_FLAG,
+              CertPolicyInfo, @CertObjectStructSize) then
+            begin
+              ValidDate := CertVerifyTimeValidity(nil, CertInfo);
+
+              if ((ID_FPKI_COMMON_AUTHENTICATION = string
+                (CertPolicyInfo^.rgPolicyInfo.pszPolicyIdentifier)) or
+                (TREASURY_PIVI_HARDWARE = string
+                (CertPolicyInfo^.rgPolicyInfo.pszPolicyIdentifier)) or
+                (ID_FPKI_COMMON_DERIVED_PIVAUTH_HARDWARE = string
+                (CertPolicyInfo^.rgPolicyInfo.pszPolicyIdentifier))) and
+                (ValidDate = 0) then
+              begin
+                inc(MemStoreCount);
+                CertAddCertificateContextToStore(MemoryStore, certContext,
+                  CERT_STORE_ADD_ALWAYS, ValidCert);
+                CertRecValid.certContext := ValidCert;
+                FileTimeToDosDateTime(ValidCert^.pCertInfo.NotAfter,
+                  LongRec(CertTempDate).Hi, LongRec(CertTempDate).Lo);
+                CertRecValid.ExpirationDate := FileDatetoDateTime(CertTempDate);
+                if (CertRecNewest.certContext = nil) or
+                  (CertRecValid.ExpirationDate > CertRecNewest.ExpirationDate)
+                then
+                  CertRecNewest := CertRecValid;
+                SelectedCert := CertRecNewest.certContext;
+              end;
+            end;
+          end;
+        end;
+      end;
+      certContext := CertEnumCertificatesInStore(Store, certContext);
+    end;
+  finally
+    If MemStoreCount > 0 then CertCloseStore(Store, 0);
+  end;
+  end;
+
+  if (ShowCertDialog = true) or (MemStoreCount = 0) then
+  begin
   try
     CertContext := CertEnumCertificatesInStore(Store, nil);
     while CertContext <> nil do
@@ -413,33 +551,20 @@ var
       begin
         NameString := '';
         Size := 0;
-        {Size := CertGetNameString(CertContext, CERT_NAME_SIMPLE_DISPLAY_TYPE, 0,
-          0, PWideChar(SimpleNameString), Size);
-        SetLength(SimpleNameString, Size);
-        CertGetNameString(CertContext, CERT_NAME_SIMPLE_DISPLAY_TYPE, 0, 0,
-          PWideChar(SimpleNameString), Size);}
-		//Chris' Change Starts Here
         Size := CertGetNameString(CertContext, CERT_NAME_FRIENDLY_DISPLAY_TYPE, 0,
           0, PWideChar(NameString), Size);
         SetLength(NameString, Size);
         CertGetNameString(CertContext, CERT_NAME_FRIENDLY_DISPLAY_TYPE, 0, 0,
           PWideChar(NameString), Size);
-		//Chris' Change Ends Here
           CertInfo := CertContext.pCertInfo;
         CertGetIntendedKeyUsage(X509_ASN_ENCODING or
           PKCS_7_ASN_ENCODING, CertInfo, @KeyUsageBits, 1);
           ValidDate := CertVerifyTimeValidity(nil, CertInfo);
-          {if((KeyUsageBits and CERT_DIGITAL_SIGNATURE_KEY_USAGE)=CERT_DIGITAL_SIGNATURE_KEY_USAGE) and
-          (ValidDate = 0) and (not ContainsText(NameString, 'people')) then}
-          //Chris' Change Starts Here
-//		  if((KeyUsageBits and CERT_DIGITAL_SIGNATURE_KEY_USAGE)=CERT_DIGITAL_SIGNATURE_KEY_USAGE) and
-//          (ValidDate = 0) and (ContainsText(NameString, 'Authentication - ')) then
 		          if((KeyUsageBits and CERT_DIGITAL_SIGNATURE_KEY_USAGE)=CERT_DIGITAL_SIGNATURE_KEY_USAGE) and
                 (ValidDate = 0) and (not ContainsText(NameString, 'Card Authentication')) and
                   (not ContainsText(NameString, '0,')) and
                     (not ContainsText(NameString, 'Signature'))
               then
-          //Chris' Change Ends Here
             begin
               CertAddCertificateContextToStore(MemoryStore, CertContext,
                 CERT_STORE_ADD_ALWAYS, ValidCert);
@@ -459,14 +584,16 @@ var
   finally
     CertCloseStore(Store, 0);
   end;
+  end;
 
-  if ShowCertDialog = true then
-    begin
+  //p74 - Using p73 cert logic for cert selection or if cert policy lookup fails
+  if (ShowCertDialog = true) or (MemStoreCount = 0) then
+  begin
     SelectedCert := CryptUIDlgSelectCertificateFromStore(MemoryStore, 0,
-    'VistA Logon - Certificate Selection',
-    'Select a certificate for VistA authentication', 0, 0, nil);
-    end;
-
+      'VistA Logon - Certificate Selection',
+      'Select a certificate for VistA authentication', 0, 0, nil);
+  end;
+  ShowCertDialog := false;
   if MemoryStore <> nil then
     CertCloseStore(MemoryStore, 0);
   tokenMemo.Clear;
@@ -478,12 +605,15 @@ var
   RIOPORT := Piece(STSServerInfo, '^', 3);
   httpRio1.Service := RIOSERVER;
   httpRio1.Port := RIOPORT;
-  IAMRequest := GetSecurityTokenService(False, STSServer, httpRio1);
+  IAMRequest := GetSecurityTokenService(false, STSServer, httpRio1);
   if lCertContext <> nil then
     try
       IAMRequest.RequestSecurityToken;
     except
-      exit;
+      on E:Exception do
+      begin
+        ShowMessage(E.ClassName + ': ' + E.Message);
+      end;
 
     end;
   myToken := tokenMemo.Lines.Text;
@@ -512,7 +642,10 @@ begin
   try
     IAMRequest.RequestSecurityToken;
   except
-    exit;
+      on E:Exception do
+      begin
+        ShowMessage(E.ClassName + ': ' + E.Message);
+      end;
   end;
 end;
 // function TXWBSSOiFrm.LogonAD

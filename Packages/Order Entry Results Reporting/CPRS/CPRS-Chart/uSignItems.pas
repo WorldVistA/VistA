@@ -10,6 +10,7 @@ uses
   Classes,
   Graphics,
   Controls,
+  ExtCtrls,
   StdCtrls,
   CheckLst,
   ORClasses,
@@ -19,106 +20,168 @@ uses
   fODBase,
   UBACore,
   Forms,
-  System.Generics.Collections;
+  System.Generics.Collections,
+  VAShared.GenericStringList,
+  uSpecialAuthorityEx,
+  uSpecialAuthorityTypesEx,
+  rSpecialAuthority,
+  uComponentNexus;
 
 type
-  TSigItemType = (siServiceConnected, siAgentOrange, siIonizingRadiation,
-    siEnvironmentalContaminants, siMST, siHeadNeckCancer, siCombatVeteran, siSHAD, siCL);
+  TSigItems = class;
 
-  TSigItemTagInfo = record
-    SigType: TSigItemType;
-    Index: integer;
+  TCaptionCheckListBox = class(ORCtrls.TCaptionCheckListBox)
+  private
+    FRectWidth: Integer;
+    FResizing: Boolean;
+    FSigItems: TSigItems;
+    function GetMinItemHeight: Integer;
+  protected
+    procedure DrawItem(Index: Integer; Rect: TRect;
+      State: TOwnerDrawState); override;
+    procedure Resize; override;
+  public
+    property MinItemHeight: Integer read GetMinItemHeight;
+    property RectWidth: Integer read FRectWidth write FRectWidth;
+    property SigItems: TSigItems read FSigItems write FSigItems;
   end;
 
-  TlbOnDrawEvent = record
-    xcontrol: TWinControl;
-    xevent: TDrawItemEvent;
-  end;
-
-type
   TSigItems = class(TComponent)
   private const
-    cbWidth: integer = 13;
-    cbHeight: integer = 13;
-    btnGap: integer = 0;
-    btnGapAboveLB: integer = 1;
-    lbdx: integer = -3;
-    cbdx: integer = -2;
-    cbdy: integer = 0;
+    btnGap: Integer = 0;
+    btnGapAboveLB: Integer = 1;
+    lbDX: Integer = -3;
+    cbDX: Integer = -3;
+    cbDY: Integer = -1;
     AllTxt = 'All';
-    HasScrollBar = 'HasScrollBar';
   public const
-    RectWidth = 'RectWidth';
     MinWidthDX = 35;
-    btnMargin: integer = 4;
+    btnMargin: Integer = 6;
+  private type
+
+    TSpecialAuthorityInfo = class
+    strict private
+      FComponentNexus: TComponentNexus;
+      FDisabledFlag: Boolean;
+      FOrderID: string;
+      FListBox: uSignItems.TCaptionCheckListBox;
+      FListBoxIndex: Integer;
+      FRPCCalled: Boolean;
+      FSpecialAuthorities: TSpecialAuthoritiesEx;
+      FUpdated: Boolean;
+      function CanEnable(Sender: TSpecialAuthoritiesEx): Boolean;
+      procedure FreeNotification(Sender: TObject; AComponent: TComponent);
+      function GetSpecialAuthorities: TSpecialAuthoritiesEx;
+      procedure SetDisabledFlag(const Value: Boolean);
+      procedure SetListBox(const Value: uSignItems.TCaptionCheckListBox);
+      procedure SetSpecialAuthorities(const Value: TSpecialAuthoritiesEx);
+    public
+      constructor Create(AOrderID: string); reintroduce;
+      destructor Destroy; override;
+      function IsInvalidMatch(AListBox
+        : uSignItems.TCaptionCheckListBox): Boolean;
+      property DisabledFlag: Boolean read FDisabledFlag write SetDisabledFlag;
+      property OrderID: string read FOrderID;
+      property ListBox: uSignItems.TCaptionCheckListBox read FListBox
+        write SetListBox;
+      property ListBoxIndex: Integer read FListBoxIndex write FListBoxIndex;
+      property RPCCalled: Boolean read FRPCCalled write FRPCCalled;
+      property SpecialAuthorities: TSpecialAuthoritiesEx
+        read GetSpecialAuthorities write SetSpecialAuthorities;
+      property Updated: Boolean read FUpdated write FUpdated;
+    end;
+
+    TSpecialAuthorityButton = class(TButton)
+    private
+      FAllCheck: Boolean;
+      FCode: string;
+      FSigItems: TSigItems;
+      procedure ResetAllCheck;
+    public
+      constructor Create(AOwner: TComponent; ASigItems: TSigItems;
+        ACode: string); reintroduce;
+      procedure Click; override;
+      property AllCheck: Boolean read FAllCheck write FAllCheck;
+      property Code: string read FCode;
+    end;
+
+    TSigItemCheckBox = class(TSpecialAuthorityCheckBox)
+    private
+      FSAInfo: TSpecialAuthorityInfo;
+    protected
+      procedure DoEnter; override;
+    public
+      constructor Create(AOwner: TComponent;
+        ASpecialAuthority: TSpecialAuthorityEx; ASAInfo: TSpecialAuthorityInfo);
+        reintroduce;
+      property SAInfo: TSpecialAuthorityInfo read FSAInfo;
+    end;
+
+  public type
+    TCombinedSpecialAuthority = class(TSpecialAuthorityEx)
+    private
+      FButton: TSpecialAuthorityButton;
+      FItems: TObjectList<TSpecialAuthorityEx>;
+    public
+      constructor Create; override;
+      destructor Destroy; override;
+      procedure ClearExternalReferences; override;
+      property Items: TObjectList<TSpecialAuthorityEx> read FItems;
+    end;
+
+    TCombinedSpecialAuthorities = class(TSpecialAuthoritiesEx)
+    private
+      FButton: TSpecialAuthorityButton;
+      FVisibleCount: Integer;
+    public
+      procedure Clear(ClearVisible: Boolean = False); override;
+      procedure Combine(AListBox: uSignItems.TCaptionCheckListBox;
+        SpecialAuthoritiesList: TSpecialAuthoritiesStringList);
+      property VisibleCount: Integer read FVisibleCount;
+    end;
+
   private
-    FBuilding: boolean;
-    FStsCount: integer;
-    FItems: TORStringList;
-    FOldDrawItemEvent: TDrawItemEvent;
-    FOldDrawItemEvents: array of TlbOnDrawEvent;
-    FOldResizeEvent: TNotifyEvent;
-    FCtrl: TObjectList<TWinControl>;
-    Flb: TCaptionCheckListBox;
-    FBtnW, FBtnH, FBtnCount: integer;
-    FcbDX: integer;
-    FCellW: integer;
-    FAllCheck: array [TSigItemType] of boolean;
-    FAllCatCheck: boolean;
-    FMaxSI: TSigItemType;
-    FX: array [TSigItemType] of integer;
-    function TagInfo(ASigType: TSigItemType; AIndex: integer): TSigItemTagInfo;
-    procedure cbClicked(Sender: TObject);
-    procedure cbEnter(Sender: TObject);
-    procedure cbExit(Sender: TObject);
-    procedure lbDrawItem(Control: TWinControl; Index: integer; Rect: TRect; State: TOwnerDrawState);
-    procedure lbResize(Sender: TObject);
+    FBuilding: Boolean;
+    FInfoItems: TStringList<TSpecialAuthorityInfo>;
+    FCombinedSpecialAuthorities: TCombinedSpecialAuthorities;
+    Flb: uSignItems.TCaptionCheckListBox;
+    FBtnW, FBtnH, FBtnCount: Integer;
+    FcbDX: Integer;
+    FCellW: Integer;
+    FXIdx: TList<Integer>;
+    FX: TList<Integer>;
+    FDefaultGrayedToChecked: Boolean;
+    FDefaultGrayedToCheckedLoaded: Boolean;
     procedure CalcFX;
-    procedure CopyCBValues(FromIndex, ToIndex: integer);
-    function FindCBValues(ATag: integer): TORCheckBox;
-    function GetTempCkBxState(Index: integer; CBValue: TSigItemType): string;
-  protected
-    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+    function DefaultGrayedToChecked: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure Add(ItemType: integer; const ID: string; Index: integer);
-    procedure Remove(ItemType: integer; const ID: string);
+    procedure Add(AListBox: uSignItems.TCaptionCheckListBox; ItemType: Integer;
+      const ID: string; AListBoxIndex: Integer);
+    procedure Remove(ItemType: Integer; const ID: string);
     procedure ResetOrders;
     procedure Clear;
-    procedure ClearDrawItems;
-    procedure ClearFCtrls;
-    function UpdateListBox(lb: TCaptionCheckListBox): boolean;
-    procedure EnableSettings(Index: integer; Checked: boolean);
-    function OK2SaveSettings: boolean;
+    procedure ClearCBSettings;
+    function UpdateListBox(AListBox: uSignItems.TCaptionCheckListBox;
+      AButtonPanel: TPanel): Boolean;
+    procedure EnableSettings(AOrderID: string; Checked: Boolean);
+    function OK2SaveSettings: Boolean;
     procedure SaveSettings;
-    procedure DisplayPlTreatmentFactors;
-    procedure DisplayUnsignedStsFlags(sFlags: string);
-    function ItemToTag(Info: TSigItemTagInfo): integer; // CQ5074
-    function TagToItem(ATag: integer): TSigItemTagInfo; // CQ5074
-    function BtnWidths: integer;
+    function BtnWidths: Integer;
+    property CombinedSpecialAuthorities: TCombinedSpecialAuthorities
+      read FCombinedSpecialAuthorities;
   end;
 
 function SigItems: TSigItems;
 function SigItemsCS: TSigItems;
-function SigItemHeight: integer;
+function SigItemHeight: Integer;
 
 const
   SIG_ITEM_VERTICAL_PAD = 2;
 
-  TC_Order_Error = 'All Service Connection and/or Rated Disabilities questions must be answered, ' + #13 +
-    'and at least one diagnosis selected for each order that requires a diagnosis.';
-
-  TX_Order_Error = 'All Service Connection and/or Rated Disabilities questions must be answered, ' + #13 +
-    'and at least one diagnosis selected for each order that requires a diagnosis.';
-
-  TC_Diagnosis_Error = ' Missing Diagnosis';
-  TX_Diagnosis_Error = ' One or more Orders have not been assigned a Diagnosis';
-  INIT_STR = '';
-
-var
-  uSigItems: TSigItems = nil; // BAPHII 1.3.1
-  uSigItemsCS: TSigItems = nil;
+  TX_Order_Error =
+    'All Special Authority, Service Connection and/or Rated Disabilities questions must be answered.';
 
 implementation
 
@@ -137,129 +200,465 @@ uses
   rMisc,
   VAHelpers;
 
-type
-  ItemStatus = (isNA, isChecked, isUnchecked, isUnknown);
-  SigDescType = (sdShort, sdLong);
-
-const
-  SigItemDesc: array [TSigItemType, SigDescType] of string =
-  { siServiceConnected } (('SC', 'Service Connected Condition'),
-    { siAgentOrange } ('AO', 'Agent Orange Exposure'),
-    { siIonizingRadiation } ('IR', 'Ionizing Radiation Exposure'),
-    { siEnvironmentalContaminants } ('SWAC', 'Southwest Asia Conditions'),
-    { siMST } ('MST', 'MST'), // 'Military Sexual Trauma'
-    { siHeadNeckCancer } ('HNC', 'Head and/or Neck Cancer'),
-    { siCombatVeteran } ('CV', 'Combat Veteran Related'),
-    { siSHAD } ('SHD', 'Shipboard Hazard and Defense'),
-    { siCL } ('CL', 'Camp Lejeune'));
-
-  SigItemDisplayOrder: array [TSigItemType] of TSigItemType =
-    (siServiceConnected,
-    siCombatVeteran,
-    siAgentOrange,
-    siIonizingRadiation,
-    siEnvironmentalContaminants,
-    siSHAD,
-    siMST,
-    siHeadNeckCancer,
-    siCL);
-
-  StsChar: array [ItemStatus] of char =
-  { isNA } ('N',
-    { isChecked } 'C',
-    { isUnchecked } 'U',
-    { isUnknown } '?');
-
-  ColIdx = 30000;
-  AllIdx = 31000;
-  NA_FLAGS = 'NNNNNNNN';
-  NA_FLAGS_CL = 'NNNNNNNNN';
-
 var
-  uSingletonFlag: boolean = FALSE;
-  FlagCount: integer;
-  BaseFlags: string;
-  tempCkBx: TORCheckBox = nil;
-  thisOrderID: string;
-  thisChangeItem: TChangeItem;
+  uSingletonFlag: Boolean = False;
+  uSigItems: TSigItems = nil; // BAPHII 1.3.1
+  uSigItemsCS: TSigItems = nil;
 
 function SigItems: TSigItems;
 begin
   if not assigned(uSigItems) then
-    begin
-      uSingletonFlag := TRUE;
-      try
-        uSigItems := TSigItems.Create(nil);
-      finally
-        uSingletonFlag := FALSE;
-      end;
+  begin
+    uSingletonFlag := True;
+    try
+      uSigItems := TSigItems.Create(nil);
+    finally
+      uSingletonFlag := False;
     end;
+  end;
   Result := uSigItems;
 end;
 
 function SigItemsCS: TSigItems;
 begin
   if not assigned(uSigItemsCS) then
-    begin
-      uSingletonFlag := TRUE;
-      try
-        uSigItemsCS := TSigItems.Create(nil);
-      finally
-        uSingletonFlag := FALSE;
-      end;
+  begin
+    uSingletonFlag := True;
+    try
+      uSigItemsCS := TSigItems.Create(nil);
+    finally
+      uSingletonFlag := False;
     end;
+  end;
   Result := uSigItemsCS;
 end;
 
-function SigItemHeight: integer;
+function SigItemHeight: Integer;
 begin
   Result := abs(BaseFont.height) + 2 + SIG_ITEM_VERTICAL_PAD;
 end;
 
-{ TSigItems }
-{
-  FItems Layout:
-  1         2               3                            4                      5
-  OrderID ^ ListBox Index ^ RPC Call was Made (0 or 1) ^ Settings by char pos ^ Disabled Flag
-}
+{ uSigItems.TCaptionCheckListBox }
 
-procedure TSigItems.Add(ItemType: integer; const ID: string; Index: integer);
+procedure TCaptionCheckListBox.DrawItem(Index: Integer; Rect: TRect;
+  State: TOwnerDrawState);
 var
-  idx: integer;
+  OldRect: TRect;
+  dy, topLine: Integer;
+  DrawGrid: Boolean;
+  CombinedSpecialAuthority: TSigItems.TCombinedSpecialAuthority;
+  CheckBox: TSigItems.TSigItemCheckBox;
+begin
+  if (not assigned(FSigItems)) or (FSigItems.FXIdx.Count = 0) or
+    (FSigItems.FXIdx[FSigItems.FXIdx.Count - 1] >= FSigItems.FX.Count) or
+    (FSigItems.FCombinedSpecialAuthorities.VisibleCount = 0) then
+    inherited
+  else
+  begin
+    DrawGrid := (Index < Count);
+    if DrawGrid and (Trim(Items[Index]) = '') and (Index = (Count - 1)) then
+      DrawGrid := False;
+    if DrawGrid then
+      dec(Rect.Bottom);
+    OldRect := Rect;
+
+    Rect.Right := FSigItems.FX[FSigItems.FXIdx[0]] - TSigItems.btnMargin;
+
+    inc(Rect.Bottom);
+    inherited DrawItem(Index, Rect, State);
+    dec(Rect.Bottom);
+
+    if DrawGrid then
+    begin
+      Canvas.Pen.Color := Get508CompliantColor(clSilver);
+      Canvas.MoveTo(Rect.Left, Rect.Bottom);
+      Canvas.LineTo(OldRect.Right, Rect.Bottom);
+    end;
+
+    OldRect.Left := Rect.Right;
+
+    // SA Column
+    Canvas.FillRect(OldRect);
+    dy := ((Rect.height - CheckBoxWidth) div 2) + TSigItems.cbDY;
+
+    for var i := 0 to FSigItems.FCombinedSpecialAuthorities.Count - 1 do
+    begin
+      CombinedSpecialAuthority := FSigItems.FCombinedSpecialAuthorities[i]
+        as TSigItems.TCombinedSpecialAuthority;
+      for var j := 0 to CombinedSpecialAuthority.Items.Count - 1 do
+      begin
+        CheckBox := CombinedSpecialAuthority.Items[j].CheckBox[cbtBoth]
+          as TSigItems.TSigItemCheckBox;
+        if assigned(CheckBox) then
+        begin
+          if CheckBox.SAInfo.ListBoxIndex = Index then
+          begin
+            CheckBox.Invalidate;
+            CheckBox.Top := Rect.Top + dy;
+            CheckBox.Left := FSigItems.FX
+              [CheckBox.SpecialAuthorityEx.SpecialAuthorityTypeEx.ID] +
+              FSigItems.FcbDX;
+          end
+          else if CheckBox.SAInfo.ListBoxIndex < TopIndex then
+          begin
+            CheckBox.Invalidate;
+            CheckBox.Top := -CheckBoxWidth;
+          end;
+        end;
+      end;
+
+      // Columns
+      if DrawGrid then
+      begin
+        topLine := Rect.Top;
+        if TopIndex = Index then
+          dec(topLine);
+        for var j := 0 to FSigItems.FXIdx.Count - 1 do
+        begin
+          Canvas.MoveTo(FSigItems.FX[FSigItems.FXIdx[j]] +
+            TSigItems.lbDX, topLine);
+          Canvas.LineTo(FSigItems.FX[FSigItems.FXIdx[j]] + TSigItems.lbDX,
+            Rect.Bottom);
+        end;
+      end;
+    end;
+  end;
+end;
+
+function TCaptionCheckListBox.GetMinItemHeight: Integer;
+begin
+  Result := CheckBoxWidth + 3;
+end;
+
+procedure TCaptionCheckListBox.Resize;
+begin
+  if not FResizing then
+  begin
+    FResizing := True;
+    try
+      Parent.LockDrawing;
+      try
+        inherited;
+        if assigned(FSigItems) then
+        begin
+          FSigItems.CalcFX;
+          ForceItemHeightRecalc;
+          Invalidate;
+        end;
+      finally
+        Parent.UnlockDrawing;
+      end;
+    finally
+      FResizing := False;
+    end;
+  end;
+end;
+
+function TSigItems.TSpecialAuthorityInfo.CanEnable
+  (Sender: TSpecialAuthoritiesEx): Boolean;
+begin
+  if assigned(FListBox) and (FListBoxIndex >= 0) then
+    Result := FListBox.Checked[FListBoxIndex]
+  else
+    Result := False;
+end;
+
+constructor TSigItems.TSpecialAuthorityInfo.Create(AOrderID: string);
+begin
+  inherited Create;
+  FOrderID := AOrderID;
+  FListBoxIndex := -1;
+end;
+
+{ TSigItems.TOrderData }
+
+destructor TSigItems.TSpecialAuthorityInfo.Destroy;
+var
+  CSA: TCombinedSpecialAuthority;
+begin
+  if assigned(FSpecialAuthorities) and assigned(FListBox) and
+    assigned(FListBox.SigItems) and
+    assigned(FListBox.SigItems.FCombinedSpecialAuthorities) then
+    for var i := 0 to FSpecialAuthorities.Count - 1 do
+      for var j := 0 to FListBox.SigItems.FCombinedSpecialAuthorities.
+        Count - 1 do
+      begin
+        CSA := FListBox.SigItems.FCombinedSpecialAuthorities[j]
+          as TCombinedSpecialAuthority;
+        for var k := CSA.FItems.Count - 1 downto 0 do
+          if CSA.FItems[k] = FSpecialAuthorities[i] then
+            CSA.FItems.Delete(k);
+      end;
+
+  FreeAndNil(FSpecialAuthorities);
+  FreeAndNil(FComponentNexus);
+  inherited;
+end;
+
+procedure TSigItems.TSpecialAuthorityInfo.FreeNotification(Sender: TObject;
+  AComponent: TComponent);
+begin
+  if AComponent = FListBox then
+  begin
+    ListBox := nil;
+    ListBoxIndex := -1;
+  end;
+end;
+
+function TSigItems.TSpecialAuthorityInfo.IsInvalidMatch
+  (AListBox: uSignItems.TCaptionCheckListBox): Boolean;
+begin
+  Result := (FListBox <> AListBox) or (ListBoxIndex < 0);
+end;
+
+function TSigItems.TSpecialAuthorityInfo.GetSpecialAuthorities
+  : TSpecialAuthoritiesEx;
+begin
+  if not assigned(FSpecialAuthorities) then
+    FSpecialAuthorities := TSpecialAuthoritiesEx.Create;
+  Result := FSpecialAuthorities;
+end;
+
+procedure TSigItems.TSpecialAuthorityInfo.SetDisabledFlag(const Value: Boolean);
+begin
+  FDisabledFlag := Value;
+  if assigned(FSpecialAuthorities) then
+    for var i := 0 to FSpecialAuthorities.Count - 1 do
+      FSpecialAuthorities[i].Enabled := not Value;
+end;
+
+procedure TSigItems.TSpecialAuthorityInfo.SetListBox
+  (const Value: uSignItems.TCaptionCheckListBox);
+begin
+  if FListBox <> Value then
+  begin
+    if assigned(FListBox) and assigned(FComponentNexus) then
+      FListBox.RemoveFreeNotification(FComponentNexus);
+    FListBox := Value;
+    if assigned(FListBox) then
+    begin
+      if not assigned(FComponentNexus) then
+      begin
+        FComponentNexus := TComponentNexus.Create(nil);
+        FComponentNexus.OnFreeNotification := FreeNotification;
+      end;
+      FListBox.FreeNotification(FComponentNexus);
+    end;
+  end;
+end;
+
+procedure TSigItems.TSpecialAuthorityInfo.SetSpecialAuthorities
+  (const Value: TSpecialAuthoritiesEx);
+begin
+  if FSpecialAuthorities <> Value then
+  begin
+    if assigned(FSpecialAuthorities) then
+      FreeAndNil(FSpecialAuthorities);
+    FSpecialAuthorities := Value;
+    FSpecialAuthorities.OnCanEnableEvent := CanEnable;
+    FSpecialAuthorities.ResetEnabled;
+  end;
+end;
+
+{ TSigItems.TSpecialAuthorityButton }
+
+procedure TSigItems.TSpecialAuthorityButton.Click;
+var
+  CombinedSpecialAuthority: TCombinedSpecialAuthority;
+begin
+  inherited;
+  if (not assigned(FSigItems)) or FSigItems.FBuilding then
+    Exit;
+  ResetAllCheck;
+  FAllCheck := not FAllCheck;
+  for var i := 0 to FSigItems.FCombinedSpecialAuthorities.Count - 1 do
+  begin
+    CombinedSpecialAuthority := FSigItems.FCombinedSpecialAuthorities[i]
+      as TCombinedSpecialAuthority;
+    for var j := 0 to CombinedSpecialAuthority.FItems.Count - 1 do
+      if (FCode = '') or (FCode = CombinedSpecialAuthority.FItems[j].Code) then
+        if FAllCheck then
+          CombinedSpecialAuthority.FItems[j].Value := savYes
+        else
+          CombinedSpecialAuthority.FItems[j].Value := savNo;
+  end;
+end;
+
+constructor TSigItems.TSpecialAuthorityButton.Create(AOwner: TComponent;
+  ASigItems: TSigItems; ACode: string);
+begin
+  inherited Create(AOwner);
+  FSigItems := ASigItems;
+  FCode := ACode;
+  FAllCheck := not ASigItems.DefaultGrayedToChecked;
+end;
+
+procedure TSigItems.TSpecialAuthorityButton.ResetAllCheck;
+var
+  CombinedSpecialAuthority: TCombinedSpecialAuthority;
+  First: Boolean;
+  Value: TSpecialAuthorityValue;
+begin
+  First := True;
+  Value := savUnanswered;
+  for var i := 0 to FSigItems.FCombinedSpecialAuthorities.Count - 1 do
+  begin
+    CombinedSpecialAuthority := FSigItems.FCombinedSpecialAuthorities[i]
+      as TCombinedSpecialAuthority;
+    for var j := 0 to CombinedSpecialAuthority.FItems.Count - 1 do
+      if (FCode = '') or (FCode = CombinedSpecialAuthority.FItems[j].Code) then
+      begin
+        if First then
+        begin
+          Value := CombinedSpecialAuthority.FItems[j].Value;
+          First := False;
+        end
+        else if Value <> CombinedSpecialAuthority.FItems[j].Value then
+          Exit;
+      end;
+  end;
+  case Value of
+    savUnanswered:
+      FAllCheck := not FSigItems.DefaultGrayedToChecked;
+    savNo:
+      FAllCheck := False;
+    savYes:
+      FAllCheck := True;
+  end;
+end;
+
+{ TSigItems.TSigItemCheckBox }
+
+constructor TSigItems.TSigItemCheckBox.Create(AOwner: TComponent;
+  ASpecialAuthority: TSpecialAuthorityEx; ASAInfo: TSpecialAuthorityInfo);
+begin
+  inherited Create(AOwner, ASpecialAuthority, cbtBoth, nil, nil);
+  FSAInfo := ASAInfo;
+  FocusOnBox := True;
+end;
+
+procedure TSigItems.TSigItemCheckBox.DoEnter;
+begin
+  inherited;
+  if assigned(FSAInfo) and assigned(FSAInfo.ListBox) and
+    (FSAInfo.ListBoxIndex >= 0) then
+  begin
+    if FSAInfo.ListBox.TopIndex > FSAInfo.ListBoxIndex then
+      FSAInfo.ListBox.TopIndex := FSAInfo.ListBoxIndex
+    else
+    begin
+      FSAInfo.ListBox.LockDrawing;
+      try
+        while (FSAInfo.ListBox.TopIndex <> FSAInfo.ListBoxIndex) and
+          (not FSAInfo.ListBox.ClientRect.Contains
+          (FSAInfo.ListBox.ItemRect(FSAInfo.ListBoxIndex))) do
+          FSAInfo.ListBox.TopIndex := FSAInfo.ListBox.TopIndex + 1;
+      finally
+        FSAInfo.ListBox.UnlockDrawing;
+      end;
+    end;
+  end;
+end;
+
+{ TSigItems.TCombinedSpecialAuthority }
+
+procedure TSigItems.TCombinedSpecialAuthority.ClearExternalReferences;
+begin
+  inherited;
+  FButton := nil;
+end;
+
+constructor TSigItems.TCombinedSpecialAuthority.Create;
+begin
+  inherited Create;
+  FItems := TObjectList<TSpecialAuthorityEx>.Create(False);
+end;
+
+destructor TSigItems.TCombinedSpecialAuthority.Destroy;
+begin
+  FreeAndNil(FItems);
+  inherited;
+end;
+
+{ TSigItems.TCombinedSpecialAuthorities }
+
+procedure TSigItems.TCombinedSpecialAuthorities.Clear(ClearVisible: Boolean);
+var
+  CombinedSpecialAuthority: TCombinedSpecialAuthority;
+begin
+  inherited Clear(ClearVisible);
+  FButton := nil;
+  FVisibleCount := 0;
+  for var i := 0 to Count - 1 do
+  begin
+    CombinedSpecialAuthority := Item[i] as TCombinedSpecialAuthority;
+    CombinedSpecialAuthority.ClearExternalReferences;
+    for var j := 0 to CombinedSpecialAuthority.FItems.Count - 1 do
+      CombinedSpecialAuthority.FItems[j].ClearExternalReferences;
+    CombinedSpecialAuthority.FItems.Clear;
+  end;
+end;
+
+procedure TSigItems.TCombinedSpecialAuthorities.Combine
+  (AListBox: uSignItems.TCaptionCheckListBox;
+  SpecialAuthoritiesList: TSpecialAuthoritiesStringList);
+var
+  CombinedSpecialAuthority: TCombinedSpecialAuthority;
+begin
+  Clear(True);
+  for var i := 0 to SpecialAuthoritiesList.Count - 1 do
+    if assigned(SpecialAuthoritiesList.Objects[i]) then
+    begin
+      for var j := 0 to SpecialAuthoritiesList.Objects[i].Count - 1 do
+        if SpecialAuthoritiesList.Objects[i][j].Visible then
+        begin
+          CombinedSpecialAuthority :=
+            Item[SpecialAuthoritiesList.Objects[i][j].Code]
+            as TCombinedSpecialAuthority;
+          CombinedSpecialAuthority.Visible := True;
+          CombinedSpecialAuthority.Items.Add
+            (SpecialAuthoritiesList.Objects[i][j]);
+        end;
+    end;
+  FVisibleCount := 0;
+  for var i := 0 to Count - 1 do
+    if Item[i].Visible then
+      inc(FVisibleCount);
+end;
+
+{ TSigItems }
+
+procedure TSigItems.Add(AListBox: uSignItems.TCaptionCheckListBox;
+  ItemType: Integer; const ID: string; AListBoxIndex: Integer);
+var
+  idx: Integer;
 begin
   if ItemType = CH_ORD then
-    begin
-      idx := FItems.IndexOfPiece(ID);
-      if idx < 0 then
-        idx := FItems.Add(ID);
-      FItems.SetStrPiece(idx, 2, IntToStr(Index));
-      FItems.SetStrPiece(idx, 5, INIT_STR); // hds4807 value was being reatained when same order selected in FReview.
-
-    end;
+  begin
+    idx := FInfoItems.IndexOf(ID);
+    if idx < 0 then
+      idx := FInfoItems.AddObject(ID, TSpecialAuthorityInfo.Create(ID));
+    FInfoItems.Objects[idx].ListBox := AListBox;
+    FInfoItems.Objects[idx].ListBoxIndex := AListBoxIndex;
+    FInfoItems.Objects[idx].DisabledFlag := False;
+  end;
 end;
 
 procedure TSigItems.Clear;
 begin
-  FItems.Clear;
-  FCtrl.Clear;
+  FInfoItems.Clear;
+  Flb := nil;
+  FCombinedSpecialAuthorities.Clear(True);
+  FXIdx.Clear;
+  FX.Clear;
+end;
+
+procedure TSigItems.ClearCBSettings;
+begin
   if assigned(Flb) then
   begin
-    Flb.CVarDeleteAll;
-    Flb := nil;
+    Flb.RectWidth := 0;
   end;
-  Finalize(FOldDrawItemEvents);
-end;
-
-procedure TSigItems.ClearDrawItems;
-begin
-  Finalize(FOldDrawItemEvents);
-end;
-
-procedure TSigItems.ClearFCtrls;
-begin
-  FCtrl.Clear;
-  if assigned(Flb) then
-    Flb.CVarDeleteAll;
 end;
 
 constructor TSigItems.Create(AOwner: TComponent);
@@ -267,70 +666,54 @@ begin
   if not uSingletonFlag then
     raise Exception.Create('Only one instance of TSigItems allowed');
   inherited Create(AOwner);
-  FItems := TORStringList.Create;
-  FCtrl := TObjectList<TWinControl>.Create(False);
-  if not assigned(tempCkBx) then
-    tempCkBx := TORCheckBox.Create(AOwner);
-  FMaxSI := high(TSigItemType);
-  if not IsLejeuneActive then
-    dec(FMaxSI);
+  FInfoItems := TStringList<TSpecialAuthorityInfo>.Create;
+  FCombinedSpecialAuthorities := TCombinedSpecialAuthorities.Create
+    (TCombinedSpecialAuthority);
+  FCombinedSpecialAuthorities.PackageLink := VISTA_PACKAGE;
+  FXIdx := TList<Integer>.Create;
+  FX := TList<Integer>.Create;
+end;
+
+function TSigItems.DefaultGrayedToChecked: Boolean;
+begin
+  if not FDefaultGrayedToCheckedLoaded then
+  begin
+    FDefaultGrayedToChecked := SystemParameters.AsTypeDef<Boolean>
+      ('specialAuthority.orderUnansweredToValue', True);
+    FDefaultGrayedToCheckedLoaded := True;
+  end;
+  Result := FDefaultGrayedToChecked;
 end;
 
 destructor TSigItems.Destroy;
 begin
-  Clear;
-  FreeAndNil(FItems);
-  FreeAndNil(FCtrl);
+  FreeAndNil(FX);
+  FreeAndNil(FXIdx);
+  FreeAndNil(FCombinedSpecialAuthorities);
+  FreeAndNil(FInfoItems);
   inherited;
 end;
 
-procedure TSigItems.Remove(ItemType: integer; const ID: string);
+procedure TSigItems.Remove(ItemType: Integer; const ID: string);
 var
-  idx: integer;
+  idx: Integer;
 begin
   if ItemType = CH_ORD then
-    begin
-      idx := FItems.IndexOfPiece(ID);
-      if idx >= 0 then
-        FItems.Delete(idx);
-    end;
+  begin
+    idx := FInfoItems.IndexOf(ID);
+    if idx >= 0 then
+      FInfoItems.Delete(idx);
+  end;
 end;
 
-procedure TSigItems.ResetOrders; // Resets ListBox positions, to avoid old data messing things up
-var
-  i: integer;
+// Resets ListBox positions, to avoid old data messing things up
+procedure TSigItems.ResetOrders;
 begin
-  for i := 0 to FItems.Count - 1 do
-    FItems.SetStrPiece(i, 2, '-1');
-end;
-
-function TSigItems.ItemToTag(Info: TSigItemTagInfo): integer;
-begin
-  if Info.Index < 0 then
-    Result := 0
-  else
-    Result := (Info.Index * FlagCount) + ord(Info.SigType) + 1;
-end;
-
-function TSigItems.TagInfo(ASigType: TSigItemType; AIndex: integer): TSigItemTagInfo;
-begin
-  Result.SigType := ASigType;
-  Result.Index := AIndex;
-end;
-
-function TSigItems.TagToItem(ATag: integer): TSigItemTagInfo;
-begin
-  if ATag <= 0 then
-    begin
-      Result.Index := -1;
-      Result.SigType := TSigItemType(0);
-    end
-  else
-    begin
-      dec(ATag);
-      Result.SigType := TSigItemType(ATag mod FlagCount);
-      Result.Index := ATag div FlagCount;
-    end;
+  for var i := 0 to FInfoItems.Count - 1 do
+  begin
+    FInfoItems.Objects[i].ListBox := nil;
+    FInfoItems.Objects[i].ListBoxIndex := -1;
+  end;
 end;
 
 type
@@ -339,417 +722,185 @@ type
     property OnResize;
   end;
 
-function TSigItems.UpdateListBox(lb: TCaptionCheckListBox): boolean;
+function TSigItems.UpdateListBox(AListBox: uSignItems.TCaptionCheckListBox;
+  AButtonPanel: TPanel): Boolean;
 var
-  cb: TORCheckBox;
-  btn: TButton;
-  lbl: TLabel;
-  prnt: TWinControl;
   ownr: TComponent;
-  y, i, j, dx, ht, idx, dgrp: integer;
-  s, ID, Code, cType, Flags, OrderStatus, CVFlag, ChangedFlags: string;
-  odie: TlbOnDrawEvent;
-  StsCode: char;
-  sx, si: TSigItemType;
-  sts, StsIdx: ItemStatus;
-  StsUsed: array [TSigItemType] of boolean;
-  AResponses: TResponses;
-  UFlags, HoldFlags: string;
-  thisCB: TORCheckBox;
-  cpFlags: string;
+  idx: Integer;
+  Error: string;
+  SAInfo: TSpecialAuthorityInfo;
+  OSAList: TSpecialAuthoritiesStringList;
 
-  itemText: string;
-  thisTagInfo: TSigItemTagInfo;
-  sl: TStrings;
-
-  aList: iORNetMult;
-
-  function CreateCB(AParent: TWinControl): TORCheckBox;
+  procedure CreateSpecialAuthorityButton(ACode: string);
+  var
+    SAButton: TSpecialAuthorityButton;
+    SAType: TSpecialAuthorityTypeEx;
   begin
-    Result := TORCheckBox.Create(ownr);
-    Result.Parent := AParent;
-    Result.height := cbHeight;
-    Result.Width := cbWidth;
-    Result.GrayedStyle := gsBlueQuestionMark;
-    Result.GrayedToChecked := FALSE;
-    Result.OnClick := cbClicked;
-    Result.OnEnter := cbEnter;
-    Result.OnExit := cbExit;
-    UpdateColorsFor508Compliance(Result);
-    FCtrl.Add(Result);
+    if assigned(FCombinedSpecialAuthorities[ACode]) and
+      (FX[FCombinedSpecialAuthorities[ACode].SpecialAuthorityTypeEx.ID] = 0)
+    then
+      Exit;
+    inc(FBtnCount);
+    SAButton := TSpecialAuthorityButton.Create(ownr, Self, ACode);
+    SAButton.Parent := AButtonPanel;
+    SAButton.height := FBtnH;
+    SAButton.Width := FBtnW;
+    if ACode = '' then
+    begin
+      SAButton.Caption := AllTxt;
+      SAButton.Left := FX[FXIdx[0]] - FCellW + btnGap;
+      SAButton.Hint := 'Set All Related Entries';
+      FCombinedSpecialAuthorities.FButton := SAButton;
+    end
+    else
+    begin
+      SAType := FCombinedSpecialAuthorities[ACode].SpecialAuthorityTypeEx;
+      SAButton.Caption := SAType.abbreviation;
+      SAButton.Left := FX[SAType.ID] + btnGap;
+      SAButton.Hint := 'Set All ' + SAType.DisplayText;
+      (FCombinedSpecialAuthorities[ACode] as TCombinedSpecialAuthority).FButton
+        := SAButton;
+    end;
+    SAButton.Top := Flb.Top - FBtnH - btnGapAboveLB;
+    SAButton.Anchors := [akTop, akRight];
+    SAButton.ShowHint := True;
+    UpdateColorsFor508Compliance(SAButton);
   end;
 
-  function notRightOne(cnter: integer): boolean;
+  procedure CreateSigItemCheckBox(ASpecialAuthority: TSpecialAuthorityEx;
+    ASAInfo: TSpecialAuthorityInfo);
   var
-    ID, idx: string;
-    ix: integer;
+    SICheckBox: TSigItemCheckBox;
   begin
-    Result := TRUE;
-    ID := piece(FItems[cnter], '^', 1);
-    for ix := 0 to lb.Items.Count - 1 do
-      begin
-        if lb.Items.Objects[ix] is TOrder then
-          begin
-            idx := TOrder(lb.Items.Objects[ix]).ID;
-            if ID = idx then
-              Result := FALSE;
-          end;
-        if lb.Items.Objects[ix] is TChangeItem then
-          begin
-            idx := TChangeItem(lb.Items.Objects[ix]).ID;
-            if ID = idx then
-              Result := FALSE;
-          end;
-      end;
+    SICheckBox := TSigItemCheckBox.Create(ownr, ASpecialAuthority, ASAInfo);
+    SICheckBox.Parent := Flb;
+    SICheckBox.height := Flb.CheckBoxWidth + 2;
+    SICheckBox.Width := Flb.CheckBoxWidth + 2;
+    SICheckBox.AllowGrayed := False;
+    SICheckBox.GrayedStyle := gsBlueQuestionMark;
+    SICheckBox.GrayedToChecked := DefaultGrayedToChecked;
+    SICheckBox.Left := FX[ASpecialAuthority.SpecialAuthorityTypeEx.ID] + FcbDX;
+    SICheckBox.Top := -200;
+    SICheckBox.Anchors := [akTop, akRight];
+    SICheckBox.ShowHint := True;
+    SICheckBox.Hint := ASpecialAuthority.SpecialAuthorityTypeEx.DisplayText;
+    UpdateColorsFor508Compliance(SICheckBox);
+    SICheckBox.Enabled := not ASAInfo.DisabledFlag;
+    if assigned(Flb.Items.Objects[ASAInfo.ListBoxIndex]) then
+      SICheckBox.Caption := FilteredString(Flb.Items[ASAInfo.ListBoxIndex] + ' '
+        + SICheckBox.Hint);
   end;
 
 begin
-  Result := FALSE;
-  // Fcb.Clear;
-  FBuilding := TRUE;
-  NewORNetMult(aList);
+  Result := False;
+  // Should not own objects
+  OSAList := TSpecialAuthoritiesStringList.Create(False);
   try
-    Flb := lb;
-    CalcFX;
+    Flb := AListBox;
+    Flb.SigItems := Self;
+    Flb.Parent.LockDrawing;
     try
-      Flb := lb;
-      CalcFX;
+      FBuilding := True;
       try
-        idx := 0;
-        for i := 0 to FItems.Count - 1 do
-          begin
-            if notRightOne(i) then
-              continue;
-
-            s := FItems[i];
-            thisOrderID := piece(s, U, 1);
-
-            if BILLING_AWARE then
-              if not UBACore.IsOrderBillable(thisOrderID) then
-                RemoveOrderFromDxList(thisOrderID);
-
-            if (piece(s, U, 2) <> '-1') and (piece(s, U, 3) <> '1') then
-              begin
-                inc(idx);
-                aList.AddSubscript([IntToStr(idx)], thisOrderID);
-              end;
-           end; // for
-
-        if idx > 0 then
-          begin
-            sl := TStringList.Create;
-            try
-              rpcGetSC4Orders(sl,Patient.DFN ,aList);
-            for i := 0 to sl.Count - 1 do
-              begin
-                s := sl[i];
-                { Begin BillingAware }
-                if BILLING_AWARE then
-                  begin
-                    if (CharAt(piece(s, ';', 2), 1) <> '1') then
-                      s := piece(s, U, 1);
-                  end; { End BillingAware }
-                ID := piece(s, U, 1);
-                idx := FItems.IndexOfPiece(ID);
-
-                if idx >= 0 then
-                  begin
-                    FItems.SetStrPiece(idx, 3, '1'); // Mark as read from RPC
-                    j := 2;
-                    Flags := BaseFlags;
-                    repeat
-                      Code := piece(s, U, j);
-                      if Code = 'EC' then
-                        Code := 'SWAC'; // CQ:15431  ; resolve issue of displaying SWAC vs EC.
-                      if Code <> '' then
-                        begin
-                          cType := piece(Code, ';', 1);
-
-                          for si := low(TSigItemType) to high(TSigItemType) do
-                            begin
-                              if cType = SigItemDesc[si, sdShort] then
-                                begin
-                                  cType := piece(Code, ';', 2);
-
-                                  if cType = '0' then
-                                    sts := isUnchecked
-                                  else
-                                    if cType = '1' then
-                                    sts := isChecked
-                                  else
-                                    sts := isUnknown;
-
-                                  Flags[ord(si) + 1] := StsChar[sts];
-                                  break;
-
-                                end; // if cType = SigItemDesc[si, sdShort]
-                            end; // for
-                        end; // if Code <> ''
-
-                      inc(j);
-                    until (Code = '');
-
-                    FItems.SetStrPiece(idx, 4, Flags);
-                    // new code  if deleted order and ba on then
-                    // reset appropriate tf flags to "?".
-
-                    if BILLING_AWARE then
-                      begin
-                        if not UBACore.OrderRequiresSCEI(piece(s, U, 1)) then
-                          begin
-                            if IsLejeuneActive then
-                              FItems.SetStrPiece(idx, 4, NA_FLAGS_CL)
-                            else
-                              FItems.SetStrPiece(idx, 4, NA_FLAGS);
-                          end
-                        else
-                          begin
-
-                            if UBAGlobals.BAUnsignedOrders.Count > 0 then
-                              begin
-                                UFlags := UBACore.GetUnsignedOrderFlags(piece(s, U, 1), UBAGlobals.BAUnsignedOrders);
-                                if UFlags <> '' then
-                                  FItems.SetStrPiece(idx, 4, UFlags)
-                              end;
-                            // ********************************
-                            if UBAGlobals.BACopiedOrderFlags.Count > 0 then // BAPHII 1.3.2
-                              begin
-                                UFlags := UBACore.GetUnsignedOrderFlags(piece(s, U, 1), UBAGlobals.BACopiedOrderFlags); // BAPHII 1.3.2
-                                if UFlags <> '' then // BAPHII 1.3.2
-                                  FItems.SetStrPiece(idx, 4, UFlags); // BAPHII 1.3.2
-                              end;
-                            // ********************************
-                            if UBAGlobals.BAConsultPLFlags.Count > 0 then
-                              begin
-                                UFlags := GetConsultFlags(piece(s, U, 1), UBAGlobals.BAConsultPLFlags, Flags);
-
-                                if UFlags <> '' then
-                                  FItems.SetStrPiece(idx, 4, UFlags);
-                              end;
-
-                            UBAGlobals.BAFlagsIN := Flags;
-                          end; // else
-                      end; // if BILLING_AWARE
-
-                  end; // if idx >= 0
-
-              end;
-              finally
-                sl.Free;
-            end;
-          end; // if idx > 0
-        FStsCount := 0;
-
-        for si := low(TSigItemType) to high(TSigItemType) do
-          StsUsed[si] := FALSE;
-        // loop thru orders selected to be signed
-        for i := 0 to FItems.Count - 1 do
-          begin
-            if notRightOne(i) then
-              continue;
-            s := FItems[i];
-
-            if (piece(s, U, 2) <> '-1') and (piece(s, U, 3) = '1') then
-              begin
-                s := piece(s, U, 4); // SC/EI
-                // code added 01/17/2006 - check dc'd nurse orders,
-                // originals where requiring CIDC if assigned to patient.
-                if (BILLING_AWARE) and (not UBACore.IsOrderBillable(piece(s, U, 1))) then
-                  if IsLejeuneActive then
-                    s := NA_FLAGS_CL
-                  else
-                  s := NA_FLAGS;
-
-                for si := low(TSigItemType) to high(TSigItemType) do
-  //                if (not StsUsed[si]) and (s[ord(si) + 1] <> StsChar[isNA]) then
-                  if (not StsUsed[si]) and ((length(s) > ord(si)) and
-                    (s[ord(si) + 1] <> StsChar[isNA])) then
-                    begin
-                      StsUsed[si] := TRUE;
-                      inc(FStsCount);
-                      if FStsCount >= FlagCount then
-                        break;
-                    end;
-              end;
-
-            if FStsCount >= FlagCount then
-              break;
-          end; // for
-
-        { Begin BillingAware }
-        if BILLING_AWARE then
-          begin
-            if FStsCount = 0 then // Billing Awareness.  Force Grid to paint correctly
-              FStsCount := 1;
-          end;
-        { End BillingAware }
-
-        FBtnCount := 0;
-        if FStsCount > 0 then
-          begin
-            Result := TRUE;
-            prnt := lb.Parent;
-            ownr := lb.Owner;
-
-            if FStsCount > 1 then
-              begin
-                FAllCatCheck := FALSE;
-                btn := TButton.Create(ownr);
-                btn.Parent := prnt;
-                btn.height := FBtnH;
-                btn.Width := FBtnW;
-                btn.Caption := AllTxt;
-                btn.OnClick := cbClicked;
-                btn.Left := FX[low(TSigItemType)] - FCellW + btnGap;
-                btn.Top := lb.Top - FBtnH - btnGapAboveLB;
-                btn.Anchors := [akTop, akRight];
-                btn.Tag := AllIdx;
-                btn.ShowHint := TRUE;
-                btn.Hint := 'Set All Related Entries';
-                btn.TabOrder := lb.TabOrder;
-                UpdateColorsFor508Compliance(btn);
-                FCtrl.Add(btn);
-                inc(FBtnCount);
-              end;
-
-            for sx := low(TSigItemType) to FMaxSI do
-              begin // print buttons on header of columns ie SC,AO,IR, etc....
-                si := SigItemDisplayOrder[sx];
-                FAllCheck[si] := TRUE;
-                btn := TButton.Create(ownr);
-                btn.Parent := prnt;
-                btn.height := FBtnH;
-                btn.Width := FBtnW;
-                btn.Caption := SigItemDesc[si, sdShort];
-                btn.OnClick := cbClicked;
-                btn.Left := FX[sx] + btnGap;
-                btn.Top := lb.Top - FBtnH - btnGapAboveLB;
-                btn.Anchors := [akTop, akRight];
-                btn.Tag := ColIdx + ord(si);
-                btn.ShowHint := TRUE;
-                btn.Hint := 'Set all ' + SigItemDesc[si, sdLong];
-                btn.Enabled := StsUsed[si];
-                // tab order before listbox but after previous buttons.
-                btn.TabOrder := lb.TabOrder;
-                UpdateColorsFor508Compliance(btn);
-                FCtrl.Add(btn);
-                inc(FBtnCount);
-              end;
-
-            lb.ControlStyle := lb.ControlStyle + [csAcceptsControls];
-
-            try
-              ht := SigItemHeight;
-              y := lb.TopIndex;
-              FOldDrawItemEvent := Flb.OnDrawItem;
-              FOldResizeEvent := TExposedListBox(Flb).OnResize;
-              odie.xcontrol := Flb;
-              odie.xevent := FOldDrawItemEvent;
-              SetLength(FOldDrawItemEvents, Length(FOldDrawItemEvents) + 1);
-              FOldDrawItemEvents[Length(FOldDrawItemEvents) - 1] := odie;
-              Flb.OnDrawItem := lbDrawItem;
-              TExposedListBox(Flb).OnResize := lbResize;
-              Flb.FreeNotification(Self);
-
-              for i := 0 to FItems.Count - 1 do
-                begin
-                  if notRightOne(i) then
-                    continue;
-                  s := FItems[i];
-                  OrderStatus := (piece(s, U, 1));
-                  if piece(s, U, 3) = '1' then
-                    begin
-                      idx := StrToIntDef(piece(s, U, 2), -1);
-
-                      if idx >= 0 then
-                        begin
-                          Flags := piece(s, U, 4);
-                          // loop thru treatment factors
-                          for sx := low(TSigItemType) to FMaxSI do
-                            begin
-                              si := SigItemDisplayOrder[sx];
-                              StsCode := Flags[ord(si) + 1];
-                              StsIdx := isNA;
-
-                              for sts := low(ItemStatus) to high(ItemStatus) do
-                                if StsCode = StsChar[sts] then
-                                  begin
-                                    StsIdx := sts;
-                                    break;
-                                  end;
-
-                              if (StsIdx <> isNA) then
-                                begin
-                                  cb := CreateCB(lb);
-                                  cb.Left := FX[sx] + FcbDX;
-                                  cb.Top := (ht * (idx - y));
-                                  cb.Anchors := [akTop, akRight];
-                                  cb.Tag := ItemToTag(TagInfo(si, idx));
-                                  cb.ShowHint := TRUE;
-                                  cb.Hint := SigItemDesc[si, sdLong];
-
-                                  // CQ3301/3302
-                                  thisTagInfo := TagToItem(cb.Tag);
-                                  itemText := '';
-                                  thisChangeItem := nil; // init
-
-                                  thisChangeItem := TChangeItem(lb.Items.Objects[thisTagInfo.Index]);
-
-                                  if (thisChangeItem <> nil) then
-                                    begin
-                                      itemText := (FilteredString(lb.Items[thisTagInfo.Index]));
-                                      cb.Caption := itemText + cb.Hint; // CQ3301/3302 - gives JAWS a caption to read
-                                    end;
-                                  // end CQ3301/3302
-                                  if ((si = siCombatVeteran) and (StsIdx = isUnknown)) then
-                                    begin
-                                      StsIdx := isChecked;
-                                      Flags[ord(siCombatVeteran) + 1] := 'C'; // HD200866 default as Combat Related - GWOT mandated Change
-                                      FItems.SetStrPiece(i, 4, Flags); // HD200866 default as Combat Related - GWOT mandated Change
-                                    end;
-                                  case StsIdx of
-                                    isChecked:
-                                      cb.State := cbChecked;
-                                    isUnchecked:
-                                      cb.State := cbUnchecked;
-                                  else
-                                    cb.State := cbGrayed;
-                                  end; // case
-
-                                end; // if (StsIdx <> isNA)
-
-                            end; // for sx := low(TSigItemType) to high(TSigItemType)
-
-                        end; // if idx >= 0
-
-                    end; // if piece(s,u,3) = '1'
-
-                end; // for i := 0 to FItems.Count-1
-
-            finally
-              lb.ControlStyle := lb.ControlStyle - [csAcceptsControls];
-            end; // if FStsCount > 0
-          end;
-
-      finally
-        FBuilding := FALSE;
-      end;
-    except
-      on ERangeError do
+        for var i := 0 to FInfoItems.Count - 1 do
         begin
-          ShowMsg('ERangeError in UpdateListBox' + s);
-          raise;
+          SAInfo := FInfoItems.Objects[i];
+          if SAInfo.IsInvalidMatch(Flb) then
+            continue;
+          if not SAInfo.RPCCalled then
+            OSAList.Add(SAInfo.OrderID);
         end;
+
+        if OSAList.Count > 0 then
+        begin
+          CreateOrderSpecialAuthorities(OSAList, Error);
+          try
+            if Error <> '' then
+            begin
+              ShowMessage(Error);
+              Exit;
+            end;
+
+            for var i := OSAList.Count - 1 downto 0 do
+            begin
+              idx := FInfoItems.IndexOf(OSAList[i]);
+              if idx >= 0 then
+              begin
+                SAInfo := FInfoItems.Objects[idx];
+                // Transfer ownership of objects in OSAList to SAInfo
+                SAInfo.SpecialAuthorities := OSAList.Objects[i];
+                SAInfo.RPCCalled := True;
+                OSAList.Delete(i);
+              end;
+            end;
+          finally
+            // delete any unused objects
+            OSAList.OwnsObjects := True;
+            try
+              OSAList.Clear;
+            finally
+              OSAList.OwnsObjects := False;
+            end;
+          end;
+        end;
+
+        for var i := 0 to FInfoItems.Count - 1 do
+        begin
+          SAInfo := FInfoItems.Objects[i];
+          if SAInfo.IsInvalidMatch(Flb) then
+            continue;
+          if SAInfo.RPCCalled then
+            OSAList.AddObject(SAInfo.OrderID, SAInfo.SpecialAuthorities);
+        end;
+        FCombinedSpecialAuthorities.Combine(Flb, OSAList);
+        CalcFX;
+        FBtnCount := 0;
+
+        if FCombinedSpecialAuthorities.VisibleCount > 0 then
+        begin
+          Result := True;
+          ownr := Flb.Owner;
+
+          if FCombinedSpecialAuthorities.VisibleCount > 1 then
+            CreateSpecialAuthorityButton('');
+
+          for var i := 0 to FCombinedSpecialAuthorities.Count - 1 do
+            if FCombinedSpecialAuthorities[i].Visible then
+              CreateSpecialAuthorityButton(FCombinedSpecialAuthorities[i].Code);
+
+          Flb.ControlStyle := Flb.ControlStyle + [csAcceptsControls];
+          try
+            for var i := 0 to FInfoItems.Count - 1 do
+            begin
+              SAInfo := FInfoItems.Objects[i];
+              if SAInfo.IsInvalidMatch(Flb) or (not SAInfo.RPCCalled) then
+                continue;
+              if SAInfo.ListBoxIndex >= 0 then
+                SAInfo.DisabledFlag := not Flb.Checked[SAInfo.ListBoxIndex];
+              for var j := 0 to SAInfo.SpecialAuthorities.Count - 1 do
+                if SAInfo.SpecialAuthorities[j].Visible then
+                  CreateSigItemCheckBox(SAInfo.SpecialAuthorities[j], SAInfo);
+            end;
+          finally
+            Flb.ControlStyle := Flb.ControlStyle - [csAcceptsControls];
+          end;
+        end;
+      finally
+        Flb.Parent.UnlockDrawing;
+      end;
+    finally
+      FBuilding := False;
     end;
   finally
+    OSAList.Free;
     if not Result then
-      Flb.CVarDelete(RectWidth);
+      Flb.RectWidth := 0;
   end;
 end;
 
-function TSigItems.BtnWidths: integer;
+function TSigItems.BtnWidths: Integer;
 begin
-  if FCtrl.Count > 0 then
+  if FCombinedSpecialAuthorities.VisibleCount > 0 then
     Result := (FBtnW + (btnGap * 2) + 3) * FBtnCount
   else
     Result := 0;
@@ -757,496 +908,123 @@ end;
 
 procedure TSigItems.CalcFX;
 var
-  si: TSigItemType;
-  i, w, x, sbw, btnDX: integer;
-  move: (mvNone, mvLeft, mvRight);
-  AHasScrollBar: boolean;
-
+  w, x, LowestX: Integer;
+  CombinedSpecialAuthority: TCombinedSpecialAuthority;
 begin
   FBtnW := 0;
-  for si := low(TSigItemType) to FMaxSI do
+  FXIdx.Clear;
+  FX.Clear;
+  for var i := 0 to FCombinedSpecialAuthorities.Count - 1 do
   begin
-    w := TextWidthByFont(MainFont.Handle, SigItemDesc[si, sdShort]);
-    if FBtnW < w then
-      FBtnW := w;
+    if FCombinedSpecialAuthorities[i].Visible then
+    begin
+      while FX.Count <= FCombinedSpecialAuthorities[i]
+        .SpecialAuthorityTypeEx.ID do
+        FX.Add(0);
+      w := TextWidthByFont(MainFont.Handle, FCombinedSpecialAuthorities[i]
+        .SpecialAuthorityTypeEx.abbreviation);
+      if FBtnW < w then
+        FBtnW := w;
+    end;
   end;
   inc(FBtnW, btnMargin * 2);
-  FCellW := fBtnW + (btnGap * 2) + 1;
+  FCellW := FBtnW + (btnGap * 2) + 1;
   FBtnH := TextHeightByFont(MainFont.Handle, AllTxt) + btnMargin;
-  FcbDX := ((FCellW - cbWidth) div 2) + cbDX;
+  FcbDX := ((FCellW - Flb.CheckBoxWidth) div 2) + cbDX;
 
   x := Flb.ClientWidth;
-  for si := FMaxSI downto low(TSigItemType) do
+  LowestX := x;
+  for var i := FCombinedSpecialAuthorities.Count - 1 downto 0 do
+    if FCombinedSpecialAuthorities[i].Visible then
+    begin
+      dec(x, FCellW);
+      FXIdx.Insert(0, FCombinedSpecialAuthorities[i].SpecialAuthorityTypeEx.ID);
+      FX[FCombinedSpecialAuthorities[i].SpecialAuthorityTypeEx.ID] := x;
+      LowestX := x;
+    end;
+  Flb.RectWidth := LowestX + lbDX - btnMargin;
+  if assigned(FCombinedSpecialAuthorities.FButton) then
+    FCombinedSpecialAuthorities.FButton.Left := FX[FXIdx[0]] - FCellW + btnGap;
+  for var i := 0 to FCombinedSpecialAuthorities.Count - 1 do
   begin
-    FX[si] := x - FCellW;
-    dec(x, FCellW);
+    CombinedSpecialAuthority := FCombinedSpecialAuthorities[i]
+      as TCombinedSpecialAuthority;
+    if assigned(CombinedSpecialAuthority.FButton) then
+      CombinedSpecialAuthority.FButton.Left :=
+        FX[CombinedSpecialAuthority.SpecialAuthorityTypeEx.ID] + btnGap;
   end;
-  Flb.CVar[RectWidth] := FX[low(TSigItemType)] + lbDX - btnMargin;
-  sbw := ScrollBarWidth;
-  AHasScrollBar := ((Flb.ClientWidth + sbw) <= Flb.Width);
-  move := mvNone;
-  if Flb.CVarExists(HasScrollBar) then
+end;
+
+procedure TSigItems.EnableSettings(AOrderID: string; Checked: Boolean);
+var
+  idx: Integer;
+  SpecialAuthorities: TSpecialAuthoritiesEx;
+begin
+  idx := FInfoItems.IndexOf(AOrderID);
+  if idx >= 0 then
   begin
-    if AHasScrollBar and (not Flb.CVar[HasScrollBar]) then
-      move := mvLeft
-    else if Flb.CVar[HasScrollBar] and (not AHasScrollBar) then
-      move := mvRight;
-  end
-  else if AHasScrollBar then
-    move := mvLeft;
-  Flb.CVar[HasScrollBar] := AHasScrollBar;
-  case move of
-    mvLeft: btnDX := -sbw;
-    mvRight: btnDX := sbw;
-  else
-    btnDX := 0
-  end;
-  if btnDX <> 0 then
-    for i := 0 to FCtrl.Count - 1 do
-      if FCtrl[i] is TButton then
-        FCtrl[i].Left := FCtrl[i].Left + btnDX;
-end;
-
-procedure TSigItems.cbClicked(Sender: TObject);
-var
-  i, cnt, p: integer;
-  cb: TORCheckBox;
-  sType: TSigItemType;
-  idx, Flags: string;
-  Info: TSigItemTagInfo;
-  wc: TWinControl;
-
-begin
-  if FBuilding then
-    exit;
-  wc := TWinControl(Sender);
-  if wc.Tag = AllIdx then
-    begin
-      FAllCatCheck := not FAllCatCheck;
-      for sType := low(TSigItemType) to high(TSigItemType) do
-        FAllCheck[sType] := FAllCatCheck;
-      cnt := 0;
-      for i := 0 to FCtrl.Count - 1 do
-      begin
-        if (FCtrl[i] <> wc) and (FCtrl[i].Tag >= ColIdx) and
-          (FCtrl[i] is TButton) then
-        begin
-          inc(cnt);
-          if FCtrl[i].Enabled then
-            TButton(FCtrl[i]).Click;
-          if cnt >= FlagCount then
-            break;
-        end;
-      end;
-    end
-  else
-    if wc.Tag >= ColIdx then
-    begin
-      sType := TSigItemType(wc.Tag - ColIdx);
-      FAllCheck[sType] := not FAllCheck[sType];
-      for i := 0 to FCtrl.Count - 1 do
-      begin
-        if (FCtrl[i].Tag < ColIdx) and (FCtrl[i] is TORCheckBox) then
-        begin
-          if TagToItem(FCtrl[i].Tag).SigType = sType then
-            TORCheckBox(FCtrl[i]).Checked := FAllCheck[sType];
-        end;
-      end;
-    end
-  else
-    begin
-      cb := TORCheckBox(wc);
-      Info := TagToItem(cb.Tag);
-      if Info.Index >= 0 then
-      begin
-        idx := IntToStr(Info.Index);
-        i := FItems.IndexOfPiece(idx, U, 2);
-        if i >= 0 then
-        begin
-          p := ord(Info.SigType) + 1;
-          Flags := piece(FItems[i], U, 4);
-          case cb.State of
-            cbUnchecked:
-              Flags[p] := StsChar[isUnchecked];
-            cbChecked:
-              Flags[p] := StsChar[isChecked];
-          else
-            Flags[p] := StsChar[isUnknown];
-          end;
-          FItems.SetStrPiece(i, 4, Flags);
-          if BILLING_AWARE then
-            UBAGlobals.BAFlagsIN := Flags;
-        end;
-      end;
-    end;
-end;
-
-procedure TSigItems.cbEnter(Sender: TObject);
-var
-  cb: TORCheckBox;
-begin
-  cb := TORCheckBox(Sender);
-  cb.Color := clHighlight;
-  cb.Font.Color := clHighlightText;
-
-  // commented out causing check box states to be out of sync when
-  // checked individually and/or when by column or all.
-  // CQ5074
-  if ((cb.Focused) and (cb.State = cbGrayed)) and (not IsAMouseButtonDown) then
-    cb.Checked := FALSE;
-  // end CQ5074
-end;
-
-procedure TSigItems.cbExit(Sender: TObject);
-var
-  cb: TORCheckBox;
-begin
-  cb := TORCheckBox(Sender);
-  cb.Color := clWindow;
-  cb.Font.Color := clWindowText;
-end;
-
-procedure TSigItems.lbDrawItem(Control: TWinControl; Index: integer; Rect: TRect; State: TOwnerDrawState);
-var
-  OldRect: TRect;
-  i, j, dy, topLine, idx: integer;
-  si: TSigItemType;
-  DrawGrid: boolean;
-  lb: TCustomListBox;
-
-begin
-  lb := TCaptionCheckListBox(Control);
-  DrawGrid := (Index < lb.Items.Count);
-  if DrawGrid and (trim(lb.Items[Index]) = '') and
-    (Index = (lb.Items.Count - 1)) then
-    DrawGrid := FALSE;
-  if DrawGrid then
-    dec(Rect.Bottom);
-  OldRect := Rect;
-
-  Rect.Right := FX[low(TSigItemType)] - btnMargin;
-  { Begin BillingAware }
-  if BILLING_AWARE then
-    Rect.Right := Rect.Right - 51;
-  { End BillingAware }
-
-  // if assigned(FOldDrawItemEvent) then
-  if TRUE then
-    begin
-      for j := 0 to Length(FOldDrawItemEvents) - 1 do
-        begin
-          if FOldDrawItemEvents[j].xcontrol = lb then
-            begin
-              inc(Rect.Bottom);
-              FOldDrawItemEvents[j].xevent(Control, Index, Rect, State);
-              dec(Rect.Bottom);
-            end;
-        end;
-      // inc(Rect.Bottom);
-      // FOldDrawItemEvent(Control, Index, Rect, State);
-      // dec(Rect.Bottom);
-    end
-  else
-    begin
-      lb.Canvas.FillRect(Rect);
-      if Index < lb.Items.Count then
-        lb.Canvas.TextRect(Rect, Rect.Left + 2, Rect.Top, FilteredString(lb.Items[Index]));
-    end;
-
-  if DrawGrid then
-    begin
-      lb.Canvas.Pen.Color := Get508CompliantColor(clSilver);
-      lb.Canvas.MoveTo(Rect.Left, Rect.Bottom);
-      lb.Canvas.LineTo(OldRect.Right, Rect.Bottom);
-    end;
-
-  if BILLING_AWARE then
-    OldRect.Left := Rect.Right + 90
-  else
-    OldRect.Left := Rect.Right;
-
-  /// / SC Column
-  ///
-  lb.Canvas.FillRect(OldRect);
-  dy := ((Rect.Height - cbHeight) div 2) + cbDY;
-
-  for i := 0 to FCtrl.Count - 1 do
-    begin
-      if FCtrl[i] is TORCheckBox then
-      begin
-        idx := TagToItem(FCtrl[i].Tag).Index;
-        if idx = Index then
-        begin
-          FCtrl[i].Invalidate;
-          FCtrl[i].Top := Rect.Top + dy;
-        end
-        else if idx < Flb.TopIndex then
-        begin
-          FCtrl[i].Invalidate;
-          FCtrl[i].Top := -cbHeight;
-        end;
-      end;
-    end;
-
-  // EI Columns
-  if DrawGrid then
-    begin
-      topLine := Rect.Top;
-      if lb.TopIndex = Index then
-        dec(topLine);
-      for si := low(TSigItemType) to FMaxSI do
-        begin
-          lb.Canvas.MoveTo(FX[si] + lbDX, topLine);
-          lb.Canvas.LineTo(FX[si] + lbDX, Rect.Bottom);
-        end;
-    end;
-end;
-
-procedure TSigItems.lbResize(Sender: TObject);
-begin
-  if assigned(FOldResizeEvent) then
-    FOldResizeEvent(Sender);
-  Flb.LockDrawing;
-  try
-    CalcFX;
-    Flb.ForceItemHeightRecalc;
-    Flb.Invalidate;
-  finally
-    Flb.UnlockDrawing;
+    FInfoItems.Objects[idx].DisabledFlag := not Checked;
+    SpecialAuthorities := FInfoItems.Objects[idx].SpecialAuthorities;
+    for var i := 0 to SpecialAuthorities.Count - 1 do
+      if SpecialAuthorities[i].Visible then
+        SpecialAuthorities[i].Enabled := Checked;
+    SpecialAuthorities.ResetEnabled;
   end;
 end;
 
-procedure TSigItems.Notification(AComponent: TComponent;
-  Operation: TOperation);
-begin
-  inherited;
-  if (AComponent = Flb) and (Operation = opRemove) then
-    begin
-      FCtrl.Clear;
-      Flb.OnDrawItem := FOldDrawItemEvent;
-      FOldDrawItemEvent := nil;
-      TExposedListBox(Flb).OnResize := FOldResizeEvent;
-      FOldResizeEvent := nil;
-      Flb := nil;
-    end;
-end;
-
-procedure TSigItems.EnableSettings(Index: integer; Checked: boolean);
+function TSigItems.OK2SaveSettings: Boolean;
 var
-  cb: TORCheckBox;
-  i: integer;
-  Info: TSigItemTagInfo;
-
+  SpecialAuthorities: TSpecialAuthoritiesEx;
 begin
-  if Index < 0 then
-    exit;
-  for i := 0 to FCtrl.Count - 1 do
-    begin
-      if TObject(FCtrl[i]) is TORCheckBox then
-        begin
-          cb := TORCheckBox(FCtrl[i]);
-          Info := TagToItem(cb.Tag);
-          if Info.Index = Index then
-            cb.Enabled := Checked;
-        end;
-    end;
-  i := FItems.IndexOfPiece(IntToStr(Index), U, 2);
-  if i >= 0 then
-    FItems.SetStrPiece(i, 5, BoolChar[not Checked]);
-end;
-
-function TSigItems.OK2SaveSettings: boolean;
-var
-  i, Index: integer;
-  s: string;
-
-begin
-  { Begin BillingAware }
-  if BILLING_AWARE then
-    begin
-      if assigned(UBAGlobals.BAOrderList) then
-        BAOrderList.Clear
-      else
-        begin
-          BAOrderList := TStringList.Create;
-          BAOrderList.Clear;
-        end;
-      { End BillingAware }
-    end;
-
-  Result := TRUE;
-  for i := 0 to FItems.Count - 1 do
-    begin
-      s := FItems[i];
-      Index := StrToIntDef(piece(s, U, 2), -1);
-      if (Index >= 0) and (piece(s, U, 5) <> '1') then
-        begin
-          if pos(StsChar[isUnknown], piece(s, U, 4)) > 0 then
-            begin
-              Result := FALSE;
-              break;
-            end { end if }
-          else
-            if BILLING_AWARE then
-            BAOrderList.Add(piece(s, U, 1) + piece(s, U, 3) + piece(s, U, 4)); // baph1
-        end; { end if }
-    end; { end for }
+  Result := True;
+  for var i := 0 to FInfoItems.Count - 1 do
+  begin
+    if FInfoItems.Objects[i].IsInvalidMatch(Flb) or FInfoItems.Objects[i].DisabledFlag
+    then
+      continue;
+    SpecialAuthorities := FInfoItems.Objects[i].SpecialAuthorities;
+    for var j := 0 to SpecialAuthorities.Count - 1 do
+      if SpecialAuthorities[j].Visible and SpecialAuthorities[j].Enabled and
+        (SpecialAuthorities[j].Value = savUnanswered) then
+        Exit(False);
+  end;
 end;
 
 procedure TSigItems.SaveSettings;
 var
-  s: string;
-  i, Index: integer;
-  TmpSL: TStringList;
-
+  OrderList: TSpecialAuthoritiesStringList;
+  Error: string;
 begin
-  TmpSL := TStringList.Create;
-
+  OrderList := TSpecialAuthoritiesStringList.Create(False);
   try
-    for i := 0 to FItems.Count - 1 do
+    for var i := 0 to FInfoItems.Count - 1 do
+      if (FInfoItems.Objects[i].ListBox <> nil) and
+        (FInfoItems.Objects[i].ListBoxIndex >= 0) and FInfoItems.Objects[i]
+        .ListBox.Checked[FInfoItems.Objects[i].ListBoxIndex] and
+        (not FInfoItems.Objects[i].DisabledFlag) and
+        assigned(FInfoItems.Objects[i].SpecialAuthorities) then
       begin
-        s := FItems[i];
-        Index := StrToIntDef(piece(s, U, 2), -1);
-        if (Index >= 0) and (piece(s, U, 5) <> '1') then
-          begin
-            TmpSL.Add(piece(s, U, 1) + U + piece(s, U, 4));
-            FItems.SetStrPiece(i, 6, '1');
-          end;
+        OrderList.AddObject(FInfoItems[i],
+          FInfoItems.Objects[i].SpecialAuthorities);
+        FInfoItems.Objects[i].Updated := True;
       end;
-
-    SaveCoPayStatus(TmpSL);
-
+    SaveOrderSpecialAuthorities(OrderList, Error);
   finally
-    TmpSL.Free;
+    FreeAndNil(OrderList);
   end;
-  i := 0;
-  while i < FItems.Count do
-    begin
-      if piece(FItems[i], U, 6) = '1' then
-        FItems.Delete(i)
-      else
-        inc(i);
-    end;
-  FCtrl.Clear;
+
+  for var i := FInfoItems.Count - 1 downto 0 do
+    if FInfoItems.Objects[i].Updated then
+      FInfoItems.Delete(i);
 end;
-
-{ Begin Billing Aware }
-
-procedure TSigItems.DisplayUnsignedStsFlags(sFlags: string);
-var
-  Index: integer;
-  Flags: string;
-begin
-  Index := 0;
-  Flags := sFlags;
-  CopyCBValues(Index, Index);
-
-end;
-
-procedure TSigItems.DisplayPlTreatmentFactors;
-var
-  FactorsOut: TStringList;
-  y: integer;
-  Index: integer;
-begin
-  FactorsOut := TStringList.Create;
-  FactorsOut.Clear;
-  FactorsOut := UBAGlobals.PLFactorsIndexes;
-  for y := 0 to FactorsOut.Count - 1 do
-    begin
-      Index := StrToInt(piece(FactorsOut.Strings[y], U, 1));
-      CopyCBValues(Index, Index);
-    end;
-end;
-
-procedure TSigItems.CopyCBValues(FromIndex, ToIndex: integer);
-var
-  si: TSigItemType;
-  FromTag, ToTag: integer;
-  FromCB, ToCB: TORCheckBox;
-  x: string;
-begin
-  tempCkBx.GrayedStyle := gsBlueQuestionMark;
-
-  for si := low(TSigItemType) to high(TSigItemType) do
-    begin
-      FromTag := ItemToTag(TagInfo(si, FromIndex));
-      ToTag := ItemToTag(TagInfo(si, ToIndex));
-      FromCB := FindCBValues(FromTag);
-      ToCB := FindCBValues(ToTag);
-
-      if assigned(FromCB) then // and assigned(ToCB)) then
-        begin
-          tempCkBx.State := cbGrayed;
-          x := GetTempCkBxState(FromIndex, si);
-          if x = 'C' then
-            tempCkBx.State := cbChecked
-          else if x = 'U' then
-            tempCkBx.State := cbUnchecked;
-          ToCB.State := tempCkBx.State; // FromCB.State;
-        end;
-    end; // for
-end;
-
-function TSigItems.FindCBValues(ATag: integer): TORCheckBox;
-var
-  i: integer;
-  wc: TWinControl;
-begin
-  for i := 0 to FCtrl.Count - 1 do
-    begin
-      wc := FCtrl[i];
-      if (wc is TORCheckBox) and (wc.Tag = ATag) then
-        begin
-          Result := TORCheckBox(wc);
-          exit;
-        end;
-    end;
-  Result := nil;
-end;
-
-function TSigItems.GetTempCkBxState(Index: integer; CBValue: TSigItemType): string;
-var
-  locateIdx, thisIdx, i: integer;
-  iFactor: integer;
-  TmpCBStatus: string;
-begin
-  try
-    locateIdx := Index;
-    iFactor := ord(CBValue) + 1;
-    for i := 0 to UBAGlobals.BAFlagsOut.Count - 1 do
-      begin
-        thisIdx := StrToInt(piece(UBAGlobals.BAFlagsOut.Strings[i], U, 1));
-        if thisIdx = locateIdx then
-          begin
-            TmpCBStatus := piece(UBAGlobals.BAFlagsOut.Strings[i], U, 2);
-            TmpCBStatus := Copy(TmpCBStatus, iFactor, 1);
-            Result := TmpCBStatus;
-          end;
-      end;
-  except
-    on EAccessViolation do
-      begin
-        // Show508Message('EAccessViolation in uSignItems.GetTempCkBxState()');
-        raise;
-      end;
-  end;
-end;
-{ End Billing Aware }
 
 initialization
 
-  FlagCount := ord(high(TSigItemType)) - ord(low(TSigItemType)) + 1;
-  BaseFlags := StringOfChar(StsChar[isNA], FlagCount);
-  thisChangeItem := nil;
-
 finalization
 
-  if assigned(tempCkBx) then
-    FreeAndNil(tempCkBx);
-  if assigned(uSigItems) then
-    FreeAndNil(uSigItems);
-  if assigned(uSigItemsCS) then
-    FreeAndNil(uSigItemsCS);
+if assigned(uSigItems) then
+  FreeAndNil(uSigItems);
+if assigned(uSigItemsCS) then
+  FreeAndNil(uSigItemsCS);
 
 end.

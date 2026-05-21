@@ -43,6 +43,9 @@ inherited frmEditCslt: TfrmEditCslt
       Enabled = False
       TabOrder = 0
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taCenter
+      LabelLayout = tlTop
     end
   end
   object pnlMain: TPanel [1]
@@ -56,7 +59,7 @@ inherited frmEditCslt: TfrmEditCslt
     object lblReason: TLabel
       AlignWithMargins = True
       Left = 4
-      Top = 277
+      Top = 315
       Width = 550
       Height = 13
       Align = alTop
@@ -66,7 +69,7 @@ inherited frmEditCslt: TfrmEditCslt
     object lblComment: TLabel
       AlignWithMargins = True
       Left = 4
-      Top = 211
+      Top = 249
       Width = 550
       Height = 13
       Align = alTop
@@ -76,9 +79,9 @@ inherited frmEditCslt: TfrmEditCslt
     object memReason: TRichEdit
       AlignWithMargins = True
       Left = 4
-      Top = 296
+      Top = 334
       Width = 550
-      Height = 41
+      Height = 3
       Align = alClient
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
@@ -100,7 +103,7 @@ inherited frmEditCslt: TfrmEditCslt
     object memComment: TRichEdit
       AlignWithMargins = True
       Left = 4
-      Top = 230
+      Top = 268
       Width = 550
       Height = 41
       Align = alTop
@@ -167,7 +170,7 @@ inherited frmEditCslt: TfrmEditCslt
       Left = 1
       Top = 1
       Width = 556
-      Height = 207
+      Height = 245
       Align = alTop
       BevelOuter = bvNone
       Caption = 'GridPanel1'
@@ -233,16 +236,16 @@ inherited frmEditCslt: TfrmEditCslt
       ParentCtl3D = False
       RowCollection = <
         item
-          Value = 25.101873336510030000
+          Value = 28.846305773673160000
         end
         item
-          Value = 24.994790006888740000
+          Value = 23.962481212225460000
         end
         item
-          Value = 24.811492231582010000
+          Value = 25.188345835198530000
         end
         item
-          Value = 25.091844425019210000
+          Value = 22.002867178902850000
         end>
       ShowCaption = False
       TabOrder = 0
@@ -250,7 +253,7 @@ inherited frmEditCslt: TfrmEditCslt
         Left = 0
         Top = 0
         Width = 185
-        Height = 153
+        Height = 191
         Align = alClient
         BevelOuter = bvNone
         Caption = 'Panel1'
@@ -271,7 +274,7 @@ inherited frmEditCslt: TfrmEditCslt
           Left = 3
           Top = 22
           Width = 179
-          Height = 128
+          Height = 166
           Style = orcsSimple
           Align = alClient
           AutoSelect = True
@@ -302,7 +305,7 @@ inherited frmEditCslt: TfrmEditCslt
       end
       object Panel2: TPanel
         Left = 0
-        Top = 153
+        Top = 191
         Width = 185
         Height = 54
         Align = alClient
@@ -346,8 +349,8 @@ inherited frmEditCslt: TfrmEditCslt
       object Panel3: TPanel
         Left = 185
         Top = 0
-        Width = 185
-        Height = 51
+        Width = 186
+        Height = 71
         Align = alClient
         BevelOuter = bvNone
         ParentShowHint = False
@@ -357,8 +360,8 @@ inherited frmEditCslt: TfrmEditCslt
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 179
-          Height = 17
+          Width = 180
+          Height = 13
           Align = alTop
           Caption = 'Urgency'
           TabOrder = 0
@@ -366,8 +369,8 @@ inherited frmEditCslt: TfrmEditCslt
         object cboUrgency: TORComboBox
           AlignWithMargins = True
           Left = 3
-          Top = 26
-          Width = 179
+          Top = 22
+          Width = 180
           Height = 21
           Style = orcsDropDown
           Align = alClient
@@ -393,9 +396,9 @@ inherited frmEditCslt: TfrmEditCslt
       end
       object Panel4: TPanel
         Left = 185
-        Top = 51
-        Width = 185
-        Height = 51
+        Top = 71
+        Width = 186
+        Height = 58
         Align = alClient
         BevelOuter = bvNone
         ParentShowHint = False
@@ -405,7 +408,7 @@ inherited frmEditCslt: TfrmEditCslt
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 179
+          Width = 180
           Height = 17
           Align = alTop
           Caption = 'Clinically indicated date:'
@@ -415,8 +418,8 @@ inherited frmEditCslt: TfrmEditCslt
           AlignWithMargins = True
           Left = 3
           Top = 26
-          Width = 179
-          Height = 22
+          Width = 180
+          Height = 29
           Align = alClient
           TabOrder = 1
           OnExit = calClinicallyIndicatedExit
@@ -428,9 +431,9 @@ inherited frmEditCslt: TfrmEditCslt
       end
       object Panel5: TPanel
         Left = 185
-        Top = 102
-        Width = 185
-        Height = 51
+        Top = 129
+        Width = 186
+        Height = 62
         Align = alClient
         BevelOuter = bvNone
         ParentShowHint = False
@@ -440,7 +443,7 @@ inherited frmEditCslt: TfrmEditCslt
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 179
+          Width = 180
           Height = 17
           Align = alTop
           Caption = 'Patient will be seen as an:'
@@ -467,7 +470,7 @@ inherited frmEditCslt: TfrmEditCslt
       end
       object Panel6: TPanel
         Left = 185
-        Top = 153
+        Top = 191
         Width = 371
         Height = 54
         Align = alClient
@@ -524,10 +527,10 @@ inherited frmEditCslt: TfrmEditCslt
         end
       end
       object Panel8: TPanel
-        Left = 370
+        Left = 371
         Top = 0
-        Width = 186
-        Height = 51
+        Width = 185
+        Height = 71
         Align = alClient
         BevelOuter = bvNone
         ParentShowHint = False
@@ -537,18 +540,18 @@ inherited frmEditCslt: TfrmEditCslt
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 180
-          Height = 17
+          Width = 179
+          Height = 13
           Align = alTop
           Caption = 'Attention'
           TabOrder = 0
         end
-        object cboAttn: TORComboBox
+        object cboAttn: TORCheckComboBox
           AlignWithMargins = True
           Left = 3
-          Top = 26
-          Width = 180
-          Height = 21
+          Top = 22
+          Width = 179
+          Height = 46
           Style = orcsDropDown
           Align = alClient
           AutoSelect = True
@@ -571,13 +574,17 @@ inherited frmEditCslt: TfrmEditCslt
           OnChange = ControlChange
           OnNeedData = cboAttnNeedData
           CharsNeedMatch = 1
+          MainCheckBoxCaption = 'Include Non-VA Providers'
+          MainCheckBoxVisible = True
+          MainCheckBoxAlignment = calBottom
+          OnMainCheckboxClick = cboAttnMainCheckboxClick
         end
       end
       object Panel9: TPanel
-        Left = 370
-        Top = 51
-        Width = 186
-        Height = 51
+        Left = 371
+        Top = 71
+        Width = 185
+        Height = 58
         Align = alClient
         BevelOuter = bvNone
         ParentShowHint = False
@@ -587,7 +594,7 @@ inherited frmEditCslt: TfrmEditCslt
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 180
+          Width = 179
           Height = 17
           Align = alTop
           Caption = 'Latest appropriate date:'
@@ -598,8 +605,8 @@ inherited frmEditCslt: TfrmEditCslt
           AlignWithMargins = True
           Left = 3
           Top = 26
-          Width = 180
-          Height = 22
+          Width = 179
+          Height = 29
           Align = alClient
           TabOrder = 1
           Visible = False
@@ -611,10 +618,10 @@ inherited frmEditCslt: TfrmEditCslt
         end
       end
       object Panel10: TPanel
-        Left = 370
-        Top = 102
-        Width = 186
-        Height = 51
+        Left = 371
+        Top = 129
+        Width = 185
+        Height = 62
         Align = alClient
         BevelOuter = bvNone
         ParentShowHint = False
@@ -624,7 +631,7 @@ inherited frmEditCslt: TfrmEditCslt
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 180
+          Width = 179
           Height = 17
           Align = alTop
           Caption = 'Place of Consultation'
@@ -634,7 +641,7 @@ inherited frmEditCslt: TfrmEditCslt
           AlignWithMargins = True
           Left = 3
           Top = 26
-          Width = 180
+          Width = 179
           Height = 21
           Style = orcsDropDown
           Align = alClient
@@ -660,7 +667,7 @@ inherited frmEditCslt: TfrmEditCslt
           AlignWithMargins = True
           Left = 3
           Top = 26
-          Width = 180
+          Width = 179
           Height = 21
           Style = orcsDropDown
           Align = alClient

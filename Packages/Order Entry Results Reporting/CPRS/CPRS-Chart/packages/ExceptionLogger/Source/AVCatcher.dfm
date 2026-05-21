@@ -5,8 +5,8 @@ object AppExcept: TAppExcept
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Error Dialog'
-  ClientHeight = 388
-  ClientWidth = 458
+  ClientHeight = 506
+  ClientWidth = 470
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,8 +19,8 @@ object AppExcept: TAppExcept
   object pnlBottom: TPanel
     AlignWithMargins = True
     Left = 10
-    Top = 350
-    Width = 438
+    Top = 468
+    Width = 450
     Height = 38
     Margins.Left = 10
     Margins.Top = 10
@@ -28,11 +28,11 @@ object AppExcept: TAppExcept
     Margins.Bottom = 0
     Align = alTop
     BevelOuter = bvNone
-    TabOrder = 1
+    TabOrder = 5
     object pnlBtns: TGridPanel
       Left = 0
       Top = 0
-      Width = 438
+      Width = 450
       Height = 38
       Align = alClient
       BevelOuter = bvNone
@@ -78,7 +78,7 @@ object AppExcept: TAppExcept
         end>
       TabOrder = 0
       DesignSize = (
-        438
+        450
         38)
       object btnLogFile: TButton
         Left = 0
@@ -95,7 +95,7 @@ object AppExcept: TAppExcept
         Visible = False
       end
       object btnClose: TButton
-        Left = 39
+        Left = 41
         Top = 6
         Width = 75
         Height = 25
@@ -107,7 +107,7 @@ object AppExcept: TAppExcept
         TabOrder = 1
       end
       object btnLogEMail: TButton
-        Left = 175
+        Left = 182
         Top = 6
         Width = 89
         Height = 25
@@ -120,7 +120,7 @@ object AppExcept: TAppExcept
         OnClick = btnLogEMailClick
       end
       object btnCustom: TButton
-        Left = 324
+        Left = 335
         Top = 6
         Width = 75
         Height = 25
@@ -135,7 +135,7 @@ object AppExcept: TAppExcept
   object pnlTop: TPanel
     Left = 0
     Top = 0
-    Width = 458
+    Width = 470
     Height = 73
     Align = alTop
     AutoSize = True
@@ -143,9 +143,9 @@ object AppExcept: TAppExcept
     BorderStyle = bsSingle
     Color = clWhite
     ParentBackground = False
-    TabOrder = 2
+    TabOrder = 0
     object imgAV: TImage
-      Left = 402
+      Left = 414
       Top = 11
       Width = 41
       Height = 47
@@ -187,8 +187,8 @@ object AppExcept: TAppExcept
     object lblAVHeading: TLabel
       Left = 11
       Top = 11
-      Width = 378
-      Height = 46
+      Width = 403
+      Height = 47
       Align = alClient
       Caption = 
         'The application has encountered a problem. We are sorry for the ' +
@@ -202,13 +202,15 @@ object AppExcept: TAppExcept
       ParentColor = False
       ParentFont = False
       WordWrap = True
+      ExplicitWidth = 378
+      ExplicitHeight = 46
     end
   end
   object pnlDetails: TPanel
     AlignWithMargins = True
     Left = 10
-    Top = 129
-    Width = 438
+    Top = 247
+    Width = 450
     Height = 211
     Margins.Left = 10
     Margins.Top = 5
@@ -216,13 +218,14 @@ object AppExcept: TAppExcept
     Margins.Bottom = 0
     Align = alTop
     BevelOuter = bvNone
-    TabOrder = 3
+    TabOrder = 4
     Visible = False
     object LogDetails: TMemo
       Left = 0
       Top = 0
-      Width = 438
+      Width = 450
       Height = 211
+      Margins.Bottom = 0
       Align = alClient
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
@@ -239,8 +242,8 @@ object AppExcept: TAppExcept
   object PnlDetailsMsg: TPanel
     AlignWithMargins = True
     Left = 10
-    Top = 109
-    Width = 438
+    Top = 227
+    Width = 450
     Height = 15
     Margins.Left = 10
     Margins.Top = 10
@@ -248,12 +251,14 @@ object AppExcept: TAppExcept
     Margins.Bottom = 0
     Align = alTop
     BevelOuter = bvNone
-    TabOrder = 4
+    TabOrder = 3
+    TabStop = True
+    OnClick = lblDeatailTxt1Click
     object lblDeatailTxt1: TLabel
       Left = 0
       Top = 0
       Width = 46
-      Height = 13
+      Height = 15
       Cursor = crHandPoint
       Align = alLeft
       Caption = 'Click here'
@@ -264,18 +269,21 @@ object AppExcept: TAppExcept
       Font.Style = []
       ParentFont = False
       OnClick = lblDeatailTxt1Click
+      ExplicitHeight = 13
     end
     object lblDeatailTxt2: TLabel
       Left = 46
       Top = 0
-      Width = 191
-      Height = 13
+      Width = 404
+      Height = 15
       Align = alClient
       Caption = ' to see what data the error log contains'
+      ExplicitWidth = 191
+      ExplicitHeight = 13
     end
   end
   object lblAVText: TVA508StaticText
-    Name = 'VA508StaticText1'
+    Name = 'lblAVText'
     AlignWithMargins = True
     Left = 3
     Top = 76
@@ -290,17 +298,64 @@ object AppExcept: TAppExcept
     Padding.Left = 10
     Padding.Top = 10
     Padding.Right = 10
-    TabOrder = 0
+    TabOrder = 1
     ShowAccelChar = True
     WordWrap = True
     LabelAlignment = taLeftJustify
     LabelLayout = tlTop
   end
+  object pnlFeedback: TPanel
+    AlignWithMargins = True
+    Left = 10
+    Top = 109
+    Width = 450
+    Height = 108
+    Margins.Left = 10
+    Margins.Top = 5
+    Margins.Right = 10
+    Margins.Bottom = 0
+    Align = alTop
+    BevelOuter = bvNone
+    TabOrder = 2
+    object lblFeedback: TLabel
+      Left = 0
+      Top = 0
+      Width = 450
+      Height = 26
+      Align = alTop
+      Caption = 
+        'Please provide any feedback that you think will be helpful to su' +
+        'pport staff. Please do not include any PII in this description.'
+      WordWrap = True
+      ExplicitWidth = 429
+    end
+    object memFeedback: TMemo
+      AlignWithMargins = True
+      Left = 0
+      Top = 29
+      Width = 450
+      Height = 79
+      Margins.Left = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Align = alClient
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Courier New'
+      Font.Style = []
+      ParentFont = False
+      ScrollBars = ssBoth
+      TabOrder = 0
+      ExplicitTop = 16
+      ExplicitHeight = 92
+    end
+  end
   object ImageList1: TImageList
     ColorDepth = cd32Bit
     Left = 8
     Bitmap = {
-      494C010105001000C80010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
+      494C010105001000040010001000FFFFFFFF2110FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000002000000001002000000000000020
       0000000000000000000000000000000000000000000000000000000000000000
       000000000000000000000000000000515E94006A7CC6006A7CC6006A7CC6006A
@@ -570,5 +625,55 @@ object AppExcept: TAppExcept
       00000000803F800100000000803F000000000000803F000000000000803F0180
       00008001803F83C1FFFFFFFFC07FC7E300000000000000000000000000000000
       000000000000}
+  end
+  object VA508Man: TVA508AccessibilityManager
+    Left = 8
+    Top = 40
+    Data = (
+      (
+        'Component = AppExcept'
+        'Status = stsDefault')
+      (
+        'Component = pnlBottom'
+        'Status = stsDefault')
+      (
+        'Component = pnlBtns'
+        'Status = stsDefault')
+      (
+        'Component = btnLogFile'
+        'Status = stsDefault')
+      (
+        'Component = btnClose'
+        'Status = stsDefault')
+      (
+        'Component = btnLogEMail'
+        'Status = stsDefault')
+      (
+        'Component = btnCustom'
+        'Status = stsDefault')
+      (
+        'Component = pnlTop'
+        'Status = stsDefault')
+      (
+        'Component = pnlDetails'
+        'Text = Press the space bar to hear what this log will contain'
+        'Status = stsOK')
+      (
+        'Component = LogDetails'
+        'Status = stsDefault')
+      (
+        'Component = PnlDetailsMsg'
+        'Status = stsDefault')
+      (
+        'Component = lblAVText'
+        'Label = lblAVHeading'
+        'Status = stsOK')
+      (
+        'Component = pnlFeedback'
+        'Status = stsDefault')
+      (
+        'Component = memFeedback'
+        'Label = lblFeedback'
+        'Status = stsOK'))
   end
 end

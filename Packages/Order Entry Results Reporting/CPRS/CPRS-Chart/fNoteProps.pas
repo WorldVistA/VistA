@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ORDtTm, ORCtrls, ExtCtrls, rTIU, uConst, uTIU, ORFn, ORNet,
   ComCtrls, Buttons, fBase508Form, VA508AccessibilityManager,
-  u508Button;
+  u508Button, ORCheckComboBox;
 
 type
   TfrmNoteProperties = class(TfrmBase508Form)
@@ -15,9 +15,9 @@ type
     lblDateTime: TLabel;
     calNote: TORDateBox;
     lblAuthor: TLabel;
-    cboAuthor: TORComboBox;
+    cboAuthor: TORCheckComboBox;
     lblCosigner: TLabel;
-    cboCosigner: TORComboBox;
+    cboCosigner: TORCheckComboBox;
     cmdOK: u508Button.TButton;
     cmdCancel: u508Button.TButton;
     pnlConsults: TPanel;
@@ -45,7 +45,7 @@ type
     gpMain: TGridPanel;
     procedure cboNewTitleNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
-    procedure NewPersonNeedData(Sender: TObject; const StartFrom: String;
+    procedure NewPersonNeedData(Sender: TObject; const StartFrom: string;
       Direction, InsertAt: Integer);
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
@@ -69,6 +69,8 @@ type
     procedure FormCreate(Sender: TObject);
     procedure lvPRFCompare(Sender: TObject; Item1, Item2: TListItem;
       Data: Integer; var Compare: Integer);
+    procedure cboAuthorMainCheckboxClick(Sender: TObject);
+    procedure cboCosignerMainCheckboxClick(Sender: TObject);
   private
     FCheckDefault: boolean;
     FIsNewNote : Boolean;     // Is set at the begining of the function: ExecuteNoteProperties
@@ -112,6 +114,7 @@ type
     function GetActionHasNote: Boolean;
   public
     { Public declarations }
+    procedure UpdateLongList(aNote: TEditNoteRec; IsNewIDEntry: boolean);
   protected
     procedure SetFontSize(NewFontSize:Integer);// override;
   end;
@@ -135,7 +138,8 @@ implementation
 
 uses uCore, rCore, rConsults, uConsults, rSurgery, fRptBox, VA508AccessibilityRouter,
   uORLists, uSimilarNames, VAUtils, uSizing, UCaptionListView508Manager,
-  UResponsiveGUI, CommCtrl, System.DateUtils, VAHelpers, System.Math;
+  UResponsiveGUI, CommCtrl, System.DateUtils, uMisc,
+  VAHelpers, System.Math;
 
 { Initial values in ANote
 
@@ -214,6 +218,7 @@ var
   frmNoteProperties: TfrmNoteProperties;
   MarginW,MarginH: Integer;
 
+
 begin
   frmNoteProperties := TfrmNoteProperties.Create(Application);
   // GN_ResizeAnchoredFormToFont(frmNoteProperties);
@@ -236,11 +241,9 @@ begin
       ColumnCollection[0].Value := getMainFormTextWidth(frmNoteProperties.lblNewTitle.Caption) + MarginW ;
       ColumnCollection[3].Value := getMainFormTextWidth(frmNoteProperties.btnDetails.Caption) + MarginW;
 
-      RowCollection[0].Value := getMainFormTextHeight + MarginH;
-      RowCollection[2].Value := RowCollection[0].Value;
-      RowCollection[3].Value := RowCollection[0].Value;
-      RowCollection[4].Value := RowCollection[0].Value;
+      RowCollection[0].Value := frmNoteProperties.Font.Size + MarginH;
     end;
+
   try
     ResizeAnchoredFormToFont(frmNoteProperties);
     with frmNoteProperties do
@@ -255,119 +258,26 @@ begin
       FCPStatusFlag := CPStatusFlag;
       //uShowUnresolvedOnly := False;                      //v26.5 (RV)
       uShowUnresolvedOnly := True;                         //v26.5 (RV)
-      if ANote.DocType <> TYP_ADDENDUM then
-        begin
-          case FCallingTab of
-            CT_CONSULTS:  begin
-                            Caption := 'Consult Note Properties';
-                            cboNewTitle.InitLongList('');
-                            if FIsClinProcNote then
-                              begin
-                                Caption := TX_CP_CAPTION;
-                                lblNewTitle.Caption := TX_CP_TITLE;
-                                ListClinProcTitlesShort(cboNewTitle.Items);
-                                cboAuthor.InitLongList(User.Name);
-                                cboAuthor.SelectByIEN(User.DUZ);
-                                cboProcSummCode.SelectByIEN(ANote.ClinProcSummCode);
-                                calProcDateTime.FMDateTime := ANote.ClinProcDateTime;
-                              end
-                            else   // not CP note
-                              begin
-                                ListConsultTitlesShort(cboNewTitle.Items);
-                                cboAuthor.InitLongList(ANote.AuthorName);
-                                if ANote.Author > 0 then cboAuthor.SelectByIEN(ANote.Author);
-                              end;
-                          end ;
-           CT_SURGERY:    begin
-                            Caption := TX_SR_CAPTION;
-                            lblNewTitle.Caption := TX_SR_TITLE;
-                            cboNewTitle.InitLongList('');
-                            cboAuthor.InitLongList(ANote.AuthorName);
-                            if ANote.Author > 0 then cboAuthor.SelectByIEN(ANote.Author);
-                            ListSurgeryTitlesShort(cboNewTitle.Items, FClassName);
-                          end;
-           CT_NOTES:      begin
-                            Caption := 'Progress Note Properties';
-                            if ANote.IsNewNote then
-                            begin
-                              GetUnresolvedConsultsInfo; // v26.5 (RV) removed nag screen
-                            end;
-                            cboNewTitle.InitLongList('');
-                            cboAuthor.InitLongList(ANote.AuthorName);
-                            if ANote.Author > 0 then cboAuthor.SelectByIEN(ANote.Author);
-                            ListNoteTitlesShort(cboNewTitle.Items);
-                            // HOW TO PREVENT TITLE CHANGE ON ID CHILD, BUT NOT ON INITIAL CREATE?????
-                            cboNewTitle.Enabled := not ((ANote.IDParent > 0) and (ANote.Title > 0) and (not IsNewIDEntry));
-                            if not cboNewTitle.Enabled then
-                              begin
-                                cboNewTitle.Color := clBtnFace;
-                                InfoBox(TX_NO_TITLE_CHANGE, TC_NO_TITLE_CHANGE, MB_OK);
-                              end;
-                          end;
-            end;
-        end
-      else //if addendum
-        begin
-          Caption := 'Addendum Properties';
-          cboNewTitle.Items.Insert(0, IntToStr(ANote.Title) + U + ANote.TitleName);
-          cboAuthor.InitLongList(ANote.AuthorName);
-          if ANote.Author > 0 then cboAuthor.SelectByIEN(ANote.Author);
-        end;
-      TSimilarNames.RegORComboBox(cboAuthor);
-      ShowClinProcFields(FIsClinProcNote);
-      FStarting := True;
-      if ANote.Title > 0 then cboNewTitle.SelectByIEN(ANote.Title);
-      if (ANote.Title > 0) and (cboNewTitle.ItemIndex < 0)
-        then cboNewTitle.SetExactByIEN(ANote.Title, ANote.TitleName);
-      FStarting := False;
-      calNote.FMDateTime := ANote.DateTime;
-      // setup cosigner fields
-      FAddend           := ANote.Addend;
-      FCosignIEN        := ANote.Cosigner;
-      FCosignName       := ANote.CosignerName;
-      FDocType          := ANote.DocType;
-     // FLastCosigner     := ANote.LastCosigner;
-     // FLastCosignerName := ANote.LastCosignerName;
-      FFirstCosignerAssign := True;
-      SetCosignerRequired(True);
-      // setup package fields
-      ClientHeight := getGenericFormSize;
-      case FCallingTab of
-        CT_CONSULTS:  begin
-                        ShowRequestList(False);
-                        ShowSurgCaseList(False);
-                        ShowPRFList(False);
-                      end;
-        CT_SURGERY :  begin
-                        ShowRequestList(False);
-                        ShowSurgCaseList(False);
-                        ShowPRFList(False);
-                      end;
-        CT_NOTES   :  begin
-                        with uUnresolvedConsults do                          // v26.5 (RV)
-                          ShowRequestList(IsConsultTitle(ANote.Title) or
-                            (UnresolvedConsultsExist and ShowNagScreen));    // v26.5 (RV)
-                        ShowSurgCaseList(IsSurgeryTitle(ANote.Title));
-                        ShowPRFList(IsPRFTitle(ANote.Title));
-                      end;
-      end;
-      // restrict edit of title if addendum
-      if FDocType = TYP_ADDENDUM then
-      begin
-        lblNewTitle.Caption := 'Addendum to:';
-        cboNewTitle.Enabled := False;
-        cboNewTitle.Color   := clBtnFace;
-      end;
-      cboNewTitle.Caption := lblNewTitle.Caption;
-      FStarting := True;
-      cboNewTitleExit(frmNoteProperties);        // force display of request/case list
-      FStarting := False;
-      if uShowUnresolvedOnly then                // override previous display if SHOW ME clicked on entrance
-      begin
-        //cboNewTitle.ItemIndex := -1;      CQ#7587, v26.25 - RV
-        uShowUnresolvedOnly := not uShowUnresolvedOnly;
-        FormatRequestList;
-      end ;
+
+      // LongList initialization delayed until height of dialog is adjusted
+      // to match Note.Type [#VISTAOR-40651]
+
+      //[#VISTAOR-41038 - need to move more of the logic into UpdateLongList
+      //This was adversely affecting adding addendum with cosigners
+
+      // brought here from FormShow to adjust ClientHeight before
+      // initialization of the cboNewTitle [#VISTAOR-40651]
+      var iHeight := 400;
+      if pnlConsults.Visible  then
+        inc(iHeight,pnlConsults.Height);
+      if pnlPRF.Visible  then
+        inc(iHeight,pnlPRF.Height);
+      if pnlSurgery.Visible  then
+        inc(iHeight,pnlSurgery.Height);
+      ClientHeight := iHeight;
+
+      UpdateLongList(aNote,IsNewIDEntry);
+
       Result := ShowModal = idOK;                // display the form
       if Result then with ANote do
       begin
@@ -449,6 +359,131 @@ begin
 end;
 
 { General calls }
+procedure TfrmNoteProperties.UpdateLongList(aNote: TEditNoteRec; IsNewIDEntry: boolean);
+begin
+    if ANote.DocType <> TYP_ADDENDUM then
+      begin
+        case FCallingTab of
+          CT_CONSULTS:  begin
+                          Caption := 'Consult Note Properties';
+                          cboNewTitle.InitLongList('');
+                          if FIsClinProcNote then
+                            begin
+                              Caption := TX_CP_CAPTION;
+                              lblNewTitle.Caption := TX_CP_TITLE;
+                              ListClinProcTitlesShort(cboNewTitle.Items);
+                              cboAuthor.MainCheckBoxAlignment := calRight;
+                              cboAuthor.InitLongList(User.Name);
+                              cboAuthor.SelectByIEN(User.DUZ);
+                              cboProcSummCode.SelectByIEN(ANote.ClinProcSummCode);
+                              calProcDateTime.FMDateTime := ANote.ClinProcDateTime;
+                            end
+                          else   // not CP note
+                            begin
+                              ListConsultTitlesShort(cboNewTitle.Items);
+                              cboAuthor.InitLongList(ANote.AuthorName);
+                              if ANote.Author > 0 then cboAuthor.SelectByIEN(ANote.Author);
+                            end;
+                        end ;
+         CT_SURGERY:    begin
+                          Caption := TX_SR_CAPTION;
+                          lblNewTitle.Caption := TX_SR_TITLE;
+                          cboNewTitle.InitLongList('');
+                          cboAuthor.InitLongList(ANote.AuthorName);
+                          if ANote.Author > 0 then cboAuthor.SelectByIEN(ANote.Author);
+                          ListSurgeryTitlesShort(cboNewTitle.Items, FClassName);
+                        end;
+         CT_NOTES:      begin
+                          Caption := 'Progress Note Properties';
+                          if ANote.IsNewNote then
+                          begin
+                            GetUnresolvedConsultsInfo; // v26.5 (RV) removed nag screen
+                          end;
+                          cboNewTitle.InitLongList('');
+                          cboAuthor.InitLongList(ANote.AuthorName);
+                          if ANote.Author > 0 then cboAuthor.SelectByIEN(ANote.Author);
+                          ListNoteTitlesShort(cboNewTitle.Items);
+                          // HOW TO PREVENT TITLE CHANGE ON ID CHILD, BUT NOT ON INITIAL CREATE?????
+                          cboNewTitle.Enabled := not ((ANote.IDParent > 0) and (ANote.Title > 0) and (not IsNewIDEntry));
+                          if not cboNewTitle.Enabled then
+                            begin
+                              cboNewTitle.Color := clBtnFace;
+                              InfoBox(TX_NO_TITLE_CHANGE, TC_NO_TITLE_CHANGE, MB_OK);
+                            end;
+                        end;
+          end;
+      end
+    else //if addendum
+      begin
+        Caption := 'Addendum Properties';
+        cboNewTitle.Items.Insert(0, IntToStr(ANote.Title) + U + ANote.TitleName);
+        cboAuthor.InitLongList(ANote.AuthorName);
+        if ANote.Author > 0 then cboAuthor.SelectByIEN(ANote.Author);
+      end;
+
+    TSimilarNames.RegORComboBox(cboAuthor);
+    ShowClinProcFields(FIsClinProcNote);
+    FStarting := True;
+    if aNote.Title > 0 then
+      cboNewTitle.SelectByIEN(aNote.Title);
+    if (aNote.Title > 0) and (cboNewTitle.ItemIndex < 0) then
+      cboNewTitle.SetExactByIEN(aNote.Title, aNote.TitleName);
+    FStarting := False;
+    calNote.FMDateTime := aNote.DateTime;
+    // setup cosigner fields
+    FAddend := aNote.Addend;
+    FCosignIEN := aNote.Cosigner;
+    FCosignName := aNote.CosignerName;
+    FDocType := aNote.DocType;
+    // FLastCosigner     := ANote.LastCosigner;
+    // FLastCosignerName := ANote.LastCosignerName;
+    FFirstCosignerAssign := True;
+    SetCosignerRequired(True);
+    // setup package fields
+    ClientHeight := getGenericFormSize;
+    case FCallingTab of
+      CT_CONSULTS:
+        begin
+          ShowRequestList(False);
+          ShowSurgCaseList(False);
+          ShowPRFList(False);
+        end;
+      CT_SURGERY:
+        begin
+          ShowRequestList(False);
+          ShowSurgCaseList(False);
+          ShowPRFList(False);
+        end;
+      CT_NOTES:
+        begin
+          with uUnresolvedConsults do // v26.5 (RV)
+            ShowRequestList(IsConsultTitle(aNote.Title) or
+              (UnresolvedConsultsExist and ShowNagScreen)); // v26.5 (RV)
+          ShowSurgCaseList(IsSurgeryTitle(aNote.Title));
+          ShowPRFList(IsPRFTitle(aNote.Title));
+        end;
+    end;
+    // restrict edit of title if addendum
+    if FDocType = TYP_ADDENDUM then
+    begin
+      lblNewTitle.Caption := 'Addendum to:';
+      cboNewTitle.Enabled := False;
+      cboNewTitle.Color := clBtnFace;
+    end;
+    cboNewTitle.Caption := lblNewTitle.Caption;
+    FStarting := True;
+    cboNewTitleExit(self);          // force display of request/case list
+    FStarting := False;
+    if uShowUnresolvedOnly then
+    // override previous display if SHOW ME clicked on entrance
+    begin
+      // cboNewTitle.ItemIndex := -1;      CQ#7587, v26.25 - RV
+      uShowUnresolvedOnly := not uShowUnresolvedOnly;
+      FormatRequestList;
+    end;
+end;
+
+
 
 procedure TfrmNoteProperties.SelectNoteTitle;
 const
@@ -677,26 +712,24 @@ end;
 
 { cboAuthor & cboCosigner events }
 
-procedure TfrmNoteProperties.NewPersonNeedData(Sender: TObject; const StartFrom: String;
-  Direction, InsertAt: Integer);
-var
-  sl: TStrings;
-  cbo: TORComboBox;
-
-begin
-  sl := TStringList.Create;
-  try
-    cbo := (Sender as TORComboBox);
-    setSubSetOfPersons(cbo, sl, StartFrom, Direction);
-    cbo.ForDataUse(sl);
-  finally
-    sl.Free;
-  end;
-end;
-
 procedure TfrmNoteProperties.cboAuthorEnter(Sender: TObject);
 begin
   FLastAuthor := 0;
+end;
+
+procedure TfrmNoteProperties.NewPersonNeedData(Sender: TObject;
+  const StartFrom: string; Direction, InsertAt: Integer);
+begin
+  // FH May 2023 - Using the New call
+  inherited;
+  setPersonList(cboAuthor,StartFrom,Direction);
+end;
+
+procedure TfrmNoteProperties.cboAuthorMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  cboAuthor.ReInitLongList;
+  cboAuthorExit(cboAuthor);
 end;
 
 procedure TfrmNoteProperties.cboAuthorMouseClick(Sender: TObject);
@@ -725,6 +758,13 @@ begin
   end;
   FCosignIEN := cboCosigner.ItemIEN;
   FCosignName := Piece(cboCosigner.Items[cboCosigner.ItemIndex], U, 2);
+end;
+
+procedure TfrmNoteProperties.cboCosignerMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  cboCosigner.ReInitLongList;
+  cboCosignerExit(cboCosigner);
 end;
 
 { Command Button events }
@@ -875,7 +915,6 @@ procedure TfrmNoteProperties.cboCosignerNeedData(Sender: TObject;
 var
   sl: TStrings;
   cbo: TORComboBox;
-
 begin
   sl := TStringList.Create;
   try
@@ -930,6 +969,10 @@ procedure TfrmNoteProperties.FormCreate(Sender: TObject);
 begin
   inherited;
   FCheckDefault := True;
+
+  // Non-Va Providers call
+  cboAuthor.MainCheckBoxVisible := IncludeNonVAProviders(cboAuthor);
+  cboCosigner.MainCheckBoxVisible := IncludeNonVAProviders(cboCosigner);
 end;
 
 procedure TfrmNoteProperties.calNoteEnter(Sender: TObject);
@@ -1108,19 +1151,9 @@ begin
 end;
 
 procedure TfrmNoteProperties.FormShow(Sender: TObject);
-var
-  iHeight: Integer;
 begin
   inherited;
 
-  iHeight := 400;
-  if pnlConsults.Visible  then
-    inc(iHeight,pnlConsults.Height);
-  if pnlPRF.Visible  then
-    inc(iHeight,pnlPRF.Height);
-  if pnlSurgery.Visible  then
-    inc(iHeight,pnlSurgery.Height);
-  ClientHeight := iHeight;
   if FCheckDefault then
   begin
     if cboNewTitle.ItemIndex >= 0 then

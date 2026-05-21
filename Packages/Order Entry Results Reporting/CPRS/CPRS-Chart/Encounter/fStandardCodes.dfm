@@ -2,38 +2,12 @@ inherited frmStandardCodes: TfrmStandardCodes
   Caption = 'frmStandardCodes'
   ClientHeight = 439
   ClientWidth = 625
+  StyleElements = [seFont, seClient, seBorder]
+  ScaleMethod = smManual
   ExplicitWidth = 641
   ExplicitHeight = 478
-  PixelsPerInch = 96
   TextHeight = 13
-  inherited lblSection: TLabel
-    Top = 50
-    Visible = False
-    ExplicitTop = 50
-  end
-  inherited lblList: TLabel
-    Left = 113
-    Top = 40
-    Visible = False
-    ExplicitLeft = 113
-    ExplicitTop = 40
-  end
-  inherited lblComment: TLabel
-    Left = 8
-    Top = 368
-    Anchors = [akRight, akBottom]
-    ExplicitLeft = 8
-    ExplicitTop = 369
-  end
-  inherited bvlMain: TBevel
-    Left = -1
-    Top = 247
-    Height = 164
-    ExplicitLeft = -1
-    ExplicitTop = 247
-    ExplicitHeight = 164
-  end
-  object lblMag: TLabel [4]
+  object lblMag: TLabel [0]
     Left = 8
     Top = 322
     Width = 53
@@ -41,7 +15,7 @@ inherited frmStandardCodes: TfrmStandardCodes
     Anchors = [akRight, akBottom]
     Caption = 'Magnitude:'
   end
-  object lblUCUM: TLabel [5]
+  object lblUCUM: TLabel [1]
     Left = 104
     Top = 323
     Width = 203
@@ -49,7 +23,7 @@ inherited frmStandardCodes: TfrmStandardCodes
     Anchors = [akRight, akBottom]
     Caption = 'Unified Code for Units of Measure  (UCUM)'
   end
-  object lblUCUM2: TLabel [6]
+  object lblUCUM2: TLabel [2]
     Left = 104
     Top = 342
     Width = 48
@@ -57,187 +31,211 @@ inherited frmStandardCodes: TfrmStandardCodes
     Caption = 'lblUCUM2'
     Visible = False
   end
-  inherited btnOK: TBitBtn
-    Left = 465
-    Top = 412
-    Height = 24
-    TabOrder = 5
-    ExplicitLeft = 465
-    ExplicitTop = 412
-    ExplicitHeight = 24
-  end
-  inherited btnCancel: TBitBtn
-    Left = 545
-    Top = 411
-    Height = 25
-    TabOrder = 6
-    ExplicitLeft = 545
-    ExplicitTop = 411
-    ExplicitHeight = 25
-  end
-  inherited pnlGrid: TPanel
-    Left = 0
+  inherited pnlMainAncestor: TPanel
     Top = 200
     Width = 625
-    Height = 118
-    Align = alTop
-    TabOrder = 1
-    ExplicitLeft = 0
+    Height = 212
+    StyleElements = [seFont, seClient, seBorder]
     ExplicitTop = 200
     ExplicitWidth = 625
-    ExplicitHeight = 118
-    inherited lstCaptionList: TCaptionListView
-      Width = 625
+    ExplicitHeight = 212
+    inherited pnlGrid: TPanel
+      Width = 619
       Height = 118
-      Columns = <
-        item
-          Caption = 'System'
-          Width = 80
-        end
-        item
-          Caption = 'Code'
-          Width = 100
-        end
-        item
-          Caption = 'Description'
-          Width = 340
-        end
-        item
-          Caption = 'Add to PL'
-          Width = 70
-        end>
-      Pieces = '1,2,3,4'
-      ExplicitWidth = 625
+      Align = alTop
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitWidth = 619
       ExplicitHeight = 118
+      inherited lstCaptionList: TCaptionListView
+        Width = 609
+        Height = 65
+        Columns = <
+          item
+            Caption = 'System'
+            Width = 80
+          end
+          item
+            Caption = 'Code'
+            Width = 100
+          end
+          item
+            Caption = 'Description'
+            Width = 340
+          end
+          item
+            Caption = 'Add to PL'
+            Width = 70
+          end>
+        Pieces = '1,2,3,4'
+        ExplicitWidth = 609
+        ExplicitHeight = 65
+      end
+      inherited pnlComments: TPanel
+        Top = 71
+        Width = 615
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitTop = 71
+        ExplicitWidth = 615
+        inherited lblComment: TLabel
+          Width = 609
+          Anchors = [akRight, akBottom]
+          StyleElements = [seFont, seClient, seBorder]
+        end
+        inherited edtComment: TCaptionEdit
+          Width = 609
+          Anchors = [akLeft, akRight, akBottom]
+          StyleElements = [seFont, seClient, seBorder]
+          ExplicitWidth = 609
+        end
+      end
+    end
+    inherited pnlGridRight: TPanel
+      Left = 547
+      Top = 124
+      Height = 88
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitLeft = 547
+      ExplicitTop = 124
+      ExplicitHeight = 88
+      inherited btnRemove: TButton
+        Top = 30
+        Height = 27
+        Anchors = [akRight, akBottom]
+        ExplicitTop = 30
+        ExplicitHeight = 27
+      end
+      inherited btnSelectAll: TButton
+        Height = 24
+        Anchors = [akRight, akBottom]
+        ExplicitHeight = 24
+      end
     end
   end
-  inherited edtComment: TCaptionEdit
-    Left = 8
-    Top = 383
-    Anchors = [akLeft, akRight, akBottom]
+  inherited pnlBottomAncestor: TPanel
+    Top = 412
+    Width = 625
     TabOrder = 4
-    ExplicitLeft = 8
-    ExplicitTop = 383
-  end
-  object edtMag: TCaptionEdit [11]
-    Left = 8
-    Top = 338
-    Width = 90
-    Height = 21
-    Anchors = [akRight, akBottom]
-    ParentShowHint = False
-    ShowHint = True
-    TabOrder = 2
-    OnChange = edtMagChange
-    OnEnter = edtMagEnter
-    OnExit = edtMagExit
-    OnKeyPress = edtMagKeyPress
-    Caption = '0'
-  end
-  object ckbAdd2PL: TCheckBox [12]
-    Left = 441
-    Top = 334
-    Width = 100
-    Height = 32
-    Anchors = [akRight, akBottom]
-    Caption = 'Add to Problem List'
-    TabOrder = 3
-    WordWrap = True
-    OnClick = ckbAdd2PLClick
-  end
-  inherited btnRemove: TButton
-    Left = 545
-    Top = 371
-    Height = 27
-    Anchors = [akRight, akBottom]
-    TabOrder = 7
-    ExplicitLeft = 545
-    ExplicitTop = 371
-    ExplicitHeight = 27
-  end
-  inherited btnSelectAll: TButton
-    Left = 545
-    Top = 322
-    Height = 24
-    Anchors = [akRight, akBottom]
-    TabOrder = 8
-    ExplicitLeft = 545
-    ExplicitTop = 322
-    ExplicitHeight = 24
+    StyleElements = [seFont, seClient, seBorder]
+    ExplicitTop = 412
+    ExplicitWidth = 625
+    inherited btnOK: TBitBtn
+      Left = 466
+      ExplicitLeft = 466
+    end
+    inherited btnCancel: TBitBtn
+      Left = 547
+      ExplicitLeft = 547
+    end
   end
   inherited pnlMain: TPanel
-    Left = 0
-    Top = 0
     Width = 625
     Height = 200
-    Align = alTop
-    TabOrder = 0
-    ExplicitLeft = 0
-    ExplicitTop = 0
+    StyleElements = [seFont, seClient, seBorder]
     ExplicitWidth = 625
     ExplicitHeight = 200
-    inherited splLeft: TSplitter
+    inherited grdMain: TGridPanel
+      Width = 625
       Height = 200
-      ExplicitHeight = 177
-    end
-    inherited pnlLeft: TPanel [1]
-      Height = 200
-      TabStop = True
+      ControlCollection = <
+        item
+          Column = 0
+          Control = lblSection
+          Row = 0
+        end
+        item
+          Column = 1
+          Control = lblList
+          Row = 0
+        end
+        item
+          Column = 0
+          Control = lbSection
+          Row = 1
+        end
+        item
+          Column = 1
+          Control = lbxSection
+          Row = 1
+          RowSpan = 2
+        end
+        item
+          Column = 0
+          Control = btnOther
+          Row = 2
+        end>
+      RowCollection = <
+        item
+          SizeStyle = ssAuto
+          Value = 50.000000000000000000
+        end
+        item
+          Value = 100.000000000000000000
+        end
+        item
+        end
+        item
+          SizeStyle = ssAuto
+        end>
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitWidth = 625
       ExplicitHeight = 200
-      inherited lbSection: TORListBox
-        Left = 6
-        Top = 22
-        Width = 192
-        Height = 138
-        Align = alNone
-        Anchors = [akLeft, akTop, akRight, akBottom]
+      inherited lblSection: TLabel
+        Width = 309
         Visible = False
-        Pieces = '2'
-        OnChange = lbSectionChange
-        ExplicitLeft = 6
-        ExplicitTop = 22
-        ExplicitWidth = 192
-        ExplicitHeight = 138
+        StyleElements = [seFont, seClient, seBorder]
+      end
+      inherited lblList: TLabel
+        Left = 313
+        Width = 308
+        Visible = False
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitLeft = 313
+      end
+      inherited lbSection: TORListBox
+        Width = 309
+        Height = 176
+        Visible = False
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitWidth = 309
+        ExplicitHeight = 175
+      end
+      inherited lbxSection: TORListBox
+        Left = 313
+        Width = 308
+        Height = 176
+        TabStop = False
+        Style = lbStandard
+        Enabled = False
+        ItemHeight = 13
+        Visible = False
+        StyleElements = [seFont, seClient, seBorder]
+        Caption = 'Section Name'
+        Pieces = '1,2,3'
+        TabPosInPixels = False
+        CheckBoxes = False
+        ExplicitLeft = 313
+        ExplicitWidth = 308
+        ExplicitHeight = 175
       end
       inherited btnOther: TButton
-        Tag = 4
-        Left = 6
-        Top = 166
-        Width = 123
-        Height = 28
-        Anchors = [akLeft, akBottom]
+        Top = 175
+        Width = 309
         Caption = 'SNOMED Codes'
         Visible = False
-        ExplicitLeft = 6
-        ExplicitTop = 166
-        ExplicitWidth = 123
-        ExplicitHeight = 28
-      end
-      object lblTaxonomies: TORStaticText
-        Left = 3
-        Top = 2
-        Width = 161
-        Height = 16
-        Alignment = taLeftJustify
-        BevelOuter = bvNone
-        Caption = 'Reminder Taxonomies'
-        TabOrder = 3
-        Visible = False
-        Text = 'Reminder Taxonomies'#13#10
-        Lines.Strings = (
-          'Reminder Taxonomies')
+        ExplicitTop = 174
+        ExplicitWidth = 309
       end
     end
-    object pnlRight: TPanel [2]
-      Left = 207
+    object pnlRight: TPanel
+      Left = 0
       Top = 0
-      Width = 418
+      Width = 625
       Height = 200
       Align = alClient
       TabOrder = 1
       TabStop = True
       DesignSize = (
-        418
+        625
         200)
       object lblCodes: TLabel
         Left = 7
@@ -272,13 +270,13 @@ inherited frmStandardCodes: TfrmStandardCodes
         OnClick = clbListClick
         OnDblClick = lbxCodesDblClick
         OnExit = lbxSectionExit
-        OnMouseDown = clbListMouseDown
         Caption = 'Standard Code'
         ItemTipColor = clWindow
         LongList = False
         Pieces = '1,2,3'
         TabPosInPixels = True
         OnChange = lbxCodesChange
+        FlatCheckBoxes = False
         CheckEntireLine = True
         OnClickCheck = lbxSectionClickCheck
       end
@@ -303,26 +301,47 @@ inherited frmStandardCodes: TfrmStandardCodes
         OnClick = btnPLClick
       end
     end
-    inherited lbxSection: TORListBox [3]
-      Left = 94
-      Top = 62
-      Width = 96
-      Height = 72
-      TabStop = False
-      Style = lbStandard
-      Align = alNone
-      Enabled = False
-      ItemHeight = 13
-      TabOrder = 3
+    object lblTaxonomies: TORStaticText
+      Left = 156
+      Top = 198
+      Width = 1
+      Height = 1
+      Alignment = taLeftJustify
+      Anchors = []
+      BevelOuter = bvNone
+      Caption = 'Reminder Taxonomies'
+      TabOrder = 2
       Visible = False
-      Pieces = '1,2,3'
-      TabPosInPixels = False
-      CheckBoxes = False
-      ExplicitLeft = 94
-      ExplicitTop = 62
-      ExplicitWidth = 96
-      ExplicitHeight = 72
+      Text = 'Reminder Taxonomies'#13#10
+      Lines.Strings = (
+        'Reminder Taxonomies')
     end
+  end
+  object edtMag: TCaptionEdit [6]
+    Left = 8
+    Top = 338
+    Width = 90
+    Height = 21
+    Anchors = [akRight, akBottom]
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 2
+    OnChange = edtMagChange
+    OnEnter = edtMagEnter
+    OnExit = edtMagExit
+    OnKeyPress = edtMagKeyPress
+    Caption = '0'
+  end
+  object ckbAdd2PL: TCheckBox [7]
+    Left = 441
+    Top = 334
+    Width = 100
+    Height = 32
+    Anchors = [akRight, akBottom]
+    Caption = 'Add to Problem List'
+    TabOrder = 3
+    WordWrap = True
+    OnClick = ckbAdd2PLClick
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
@@ -343,9 +362,6 @@ inherited frmStandardCodes: TfrmStandardCodes
         'Component = lbxSection'
         'Label = lblList'
         'Status = stsOK')
-      (
-        'Component = pnlLeft'
-        'Status = stsDefault')
       (
         'Component = lbSection'
         'Label = lblSection'

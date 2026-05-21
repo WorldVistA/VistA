@@ -3,14 +3,21 @@ unit ORNet;
 interface
 
 uses
-  SysUtils,
-  Windows,
-  Classes,
-  Forms,
-  Controls,
+  System.JSON,
+  System.SysUtils,
+  Winapi.Windows,
+  System.Classes,
+  Vcl.Forms,
+  Vcl.Controls,
   ORFn,
   TRPCB,
-  RPCConf1;
+  RPCConf1,
+  ORCtrls.RPCList;
+
+type
+  TRPCMethods = class
+    class function RPCList: TRPCList;
+  end;
 
 procedure SetBrokerServer(const AName: string; APort: Integer; WantDebug: boolean);
 function AuthorizedOption(const OptionName: string): boolean;
@@ -28,6 +35,7 @@ procedure SetRetainedRPCMax(Value: Integer);
 function GetRPCMax: Integer;
 procedure LoadRPCData(Dest: TStrings; ID: Integer);
 function RetrieveRPCName(ID: Integer): string;
+
 function DottedIPStr: string;
 procedure CallRPCWhenIdle(CallProc: TORIdleCallProc; Msg: string);
 function ShowRPCList: boolean;
@@ -65,6 +73,14 @@ function CallVistA(const aRPCName: string; const aParam: array of const;
 function CallVistA(const aRPCName: string; const aParam: array of const;
   aReturn: TStrings; RequireResults: boolean = False): boolean; overload;
 
+type
+  TErrorAction = (eaErrorOnNoReturnData);
+  TErrorActions = set of TErrorAction;
+
+function CreateJSONFromVistACall(const aRPCName: string; out Error: string;
+  InputJSON: TJSONValue = nil; AdditionalErrorText: string = '';
+  ErrorAction: TErrorActions = []): TJSONValue;
+
 function GetFMNow: TFMDateTime;
 function GetFMDT(const aString: string; const aParams: string = ''): TFMDateTime;
 
@@ -74,8 +90,6 @@ var
   AppStartedCursorForm: TForm = nil;
 
 type
-  TAfterRPCEvent = procedure() of object;
-
   tPulseObject = class
   private
     FInPulseErrorCount: integer;
@@ -86,19 +100,27 @@ type
 var
   PulseObject: tPulseObject;
 
-procedure SetAfterRPCEvent(Value: TAfterRPCEvent);
+procedure SetAfterRPCEvent(Value: TNotifyEvent);
+
+const
+  ORNET_HEADER = '';
+  ORNET_PARAMS = 'Params ------------------------------------------------------------------';
+  ORNET_RESULT = 'Results -----------------------------------------------------------------';
+  ORNET_ERROR  = 'BROKER ERROR ------------------------------------------------------------';
+  ORNET_PANIC  = 'Application must shutdown due to lost VistA Connection.';
 
 implementation
 
 uses
-  System.Generics.Collections,
   System.SyncObjs,
   ORNetIntf,
-  Winsock,
-  DateUtils,
+  Winapi.Winsock,
+  System.DateUtils,
   uLockBroker,
   ORUnitTesting,
-  UResponsiveGUI;
+  UResponsiveGUI,
+  System.StrUtils,
+  VAPieceHelper;
 
 const
   // *** these are constants from RPCBErr.pas, will broker document them????
@@ -111,21 +133,23 @@ const
   MAX_RPC_TRIES = 3;
 
 type
+
   TCallList = class(TObject)
   private
-    FList: TObjectList<TStringList>;
+    FList: TRPCList;
     FLock: TCriticalSection;
     function GetItems(Index: integer): TStringList;
     function GetCount: Integer;
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Add(Item: TStringList);
+    procedure Add(Item: TRPC);
     procedure Delete(Index: Integer);
     procedure Lock;
     procedure Unlock;
     property Count: Integer read GetCount;
     property Items[Index: integer]: TStringList read GetItems; default;
+    property CriticalSection: TCriticalSection read FLock;
   end;
 
 var
@@ -133,7 +157,7 @@ var
   uMaxCalls: Integer;
   uShowRPCs: boolean;
   uBaseContext: string = '';
-  AfterRPCEvent: TAfterRPCEvent;
+  AfterRPCEvent: TNotifyEvent;
   RPCTestRetry: boolean = False;
   RPCTestFail: boolean = False;
 
@@ -317,7 +341,7 @@ begin
      ((not assigned(RPCBrokerV)) or (not RPCBrokerV.Connected)));
 end;
 
-{ public procedures and functions ----------------------------------------------------------- }
+{ public procedures and functions -------------------------------------------- }
 
 function CallVistA(const aRPCName: string; const aParam: array of const;
   RequireResults: boolean = False): boolean; overload;
@@ -436,6 +460,105 @@ begin
   end;
 end;
 
+function CreateJSONFromVistACall(const aRPCName: string; out Error: string;
+  InputJSON: TJSONValue = nil; AdditionalErrorText: string = '';
+  ErrorAction: TErrorActions = []): TJSONValue;
+const
+  JSONIndent = 3;
+var
+  Data, Input: TStringList;
+
+  procedure SetErrorMessage(const Text: string);
+  begin
+    Error := AdditionalErrorText;
+    if Error <> '' then
+    begin
+      if not Error.EndsWith(',') then
+        Error := Error + ',';
+      Error := Error + CRLF + 'the'
+    end
+    else
+      Error := 'The';
+    Error := Error + ' remote procedure ' + aRPCName + ' ' + Text + '.';
+  end;
+
+  procedure SetJSONErrorMessage(E: Exception);
+  var
+    Text: string;
+  begin
+    Text := 'caused an error trying to convert it''s return data to JSON';
+    if Assigned(E) then
+      Text := Text + '.' + CRLF + CRLF + E.ClassName + ' ' + E.Message;
+    SetErrorMessage(Text);
+  end;
+
+var
+  RPCResult, Success: boolean;
+  RPCError: string;
+begin
+  Result := nil;
+  Error := '';
+  Data := TStringList.Create;
+  try
+    Data.LineBreak := '';
+    if Assigned(InputJSON) then
+    begin
+      Input := TStringList.Create;
+      try
+        Input.Text := InputJSON.Format(0);
+        RPCResult := CallVistA(aRPCName, [Input], Data);
+      finally
+        FreeAndNil(Input);
+      end;
+    end
+    else
+      RPCResult := CallVistA(aRPCName, [], Data);
+
+    if not RPCResult then
+    begin
+      SetErrorMessage('errored out');
+      Exit;
+    end;
+
+    if Data.Count = 0 then
+    begin
+      if eaErrorOnNoReturnData in ErrorAction then
+        SetErrorMessage('failed to return any data');
+      Exit;
+    end;
+
+    try
+      Result := TJSONValue.ParseJSONValue(Data.Text.Replace(CRLF, '', [rfReplaceAll]));
+    except
+      on E: Exception do
+      begin
+        Result := nil;
+        SetJSONErrorMessage(E);
+        Exit;
+      end;
+    end;
+
+    if not Assigned(Result) then
+    begin
+      SetJSONErrorMessage(nil);
+      Exit;
+    end;
+
+    if Result.TryGetValue<boolean>('success', Success) and (not Success) then
+    begin
+      if Result.TryGetValue<string>('error', RPCError) and (RPCError <> '') then
+        Error := RPCError
+      else
+        SetErrorMessage('returned an unknown error');
+      FreeAndNil(Result);
+      Exit;
+    end;
+
+  finally
+    FreeAndNil(Data);
+  end;
+end;
+
 function UpdateContext(NewContext: string): boolean;
 const
   Max_Tries = 5;
@@ -492,7 +615,7 @@ end;
 
 function CallBrokerInContext(aReturn: TStrings = nil; RequireResults: boolean = False): Boolean;
 var
-  AStringList: TStringList;
+  aRPCLog: TRPC;
   i, j, attempt, RunLine: Integer;
   x, y, RunString: string;
   RPCStart, RPCStop, fFrequency: TLargeInteger;
@@ -501,7 +624,6 @@ var
   msg: string;
   ReturnList: TStrings;
   Retry, ClrParams: boolean;
-
 begin
   Result := True;
   LockBroker;
@@ -534,6 +656,7 @@ begin
     end
     else
       ClrParams := False;
+
     try
       repeat
         RunLine := 1;
@@ -552,9 +675,11 @@ begin
         finally
           uCallList.Unlock;
         end;
-        AStringList := TStringList.Create;
+
+        aRPCLog := TRPC.Create(uCallList.FLock);
         try
-          AStringList.Add(string(RPCBrokerV.RemoteProcedure));
+          aRPCLog.Name := string(RPCBrokerV.RemoteProcedure);
+          aRPCLog.Add(string(RPCBrokerV.RemoteProcedure));
           if RequireResults and (attempt > 1) then
           begin
             x := '  (Return Data Required, attempt #' + IntToStr(attempt);
@@ -566,14 +691,14 @@ begin
               x := x + ' ***';
             end;
             x := x + ')';
-            AStringList.Add(x);
+            aRPCLog.Add(x);
             inc(RunLine);
           end;
-          AStringList.Add(''); // add to the second line
+          aRPCLog.Add(''); // add to the second line
           if RPCBrokerV.CurrentContext <> uBaseContext then
-            AStringList.Add('Context: ' + RPCBrokerV.CurrentContext);
-          AStringList.Add(' ');
-          AStringList.Add('Params ------------------------------------------------------------------');
+            aRPCLog.Add('Context: ' + RPCBrokerV.CurrentContext);
+          aRPCLog.Add(' ');
+          aRPCLog.Add(ORNET_PARAMS);
           with RPCBrokerV do
             for i := 0 to Param.Count - 1 do
               begin
@@ -587,14 +712,14 @@ begin
                   stream:    x := 'stream';
                   else       x := 'unknown';
                 end;
-                AStringList.Add(x + #9 + Param[i].Value);
+                aRPCLog.Add(x + #9 + Param[i].Value);
                 if Param[i].PType = list then
                   begin
                     for j := 0 to Param[i].Mult.Count - 1 do
                       begin
                         x := Param[i].Mult.Subscript(j);
                         y := Param[i].Mult[x];
-                        AStringList.Add(#9 + '(' + x + ')=' + y);
+                        aRPCLog.Add(#9 + '(' + x + ')=' + y);
                       end;
                   end;
               end; { with...for }
@@ -611,14 +736,17 @@ begin
             on E: EBrokerError do
               begin
                 //Add to log
-                AStringList[RunLine] := 'Ran at:' + FormatDateTime('hh:nn:ss.z a/p', now);
-                AStringList.Add(' ');
-                AStringList.Add('BROKER ERROR ------------------------------------------------------------');
-                AStringList.Add(e.Message);
+
+                aRPCLog[RunLine] := 'Ran at:' + FormatDateTime('hh:nn:ss.z a/p', now);
+                aRPCLog.Add(' ');
+                aRPCLog.Add(ORNET_ERROR);
+                aRPCLog.Add(e.Message);
+
+                aRPCLog.RanAt := FormatDateTime('hh:nn:ss.z a/p', now);
 
                 if not RPCBrokerV.Connected then
                   begin
-                    Application.MessageBox('Application must shutdown due to lost VistA Connection.', 'Server Error', MB_OK);
+                    Application.MessageBox(ORNET_PANIC, 'Server Error', MB_OK);
                     Application.Terminate; // This just posts WM_QUIT
                     TResponsiveGUI.ProcessMessages(True); // This will see the WM_QUIT and set Application.Terminated to TRUE;
                     Exit;
@@ -634,14 +762,18 @@ begin
           QueryPerformanceFrequency(fFrequency);
           dt := ((MSecsPerSec * (RPCStop - RPCStart)) div fFrequency) / MSecsPerSec / SecsPerDay;
           RunString := RunString + #13#10 + 'Run time:' + FormatDateTime('hh:nn:ss.z', dt);
-          AStringList[RunLine] := RunString;
-          AStringList.Add(' ');
-          AStringList.Add('Results -----------------------------------------------------------------');
-          FastAddStrings(ReturnList, AStringList)
+          aRPCLog[RunLine] := RunString;
+          aRPCLog.Add(' ');
+          aRPCLog.Add(ORNET_RESULT);
+          FastAddStrings(ReturnList, aRPCLog.List);
+
+          aRPCLog.RanAt := FormatDateTime('hh:nn:ss.z a/p', now);
+          aRPCLog.Duration := FormatDateTime('hh:nn:ss.z', dt);
+
         finally
-          uCallList.Add(AStringList);
+          uCallList.Add(aRPCLog);
           if Assigned(AfterRPCEvent) then
-            AfterRPCEvent();
+            AfterRPCEvent(nil);
         end;
         if uShowRPCs then StatusText('');
         RPCLastCall := string(RPCBrokerV.RemoteProcedure) + ' (completed)';
@@ -909,6 +1041,10 @@ end;
 procedure SetRetainedRPCMax(Value: Integer);
 begin
   if Value > 0 then uMaxCalls := Value;
+
+  //Update the max number of RPCs in the list
+  while uCallList.Count > uMaxCalls do
+    uCallList.Delete(0);
 end;
 
 function GetRPCMax: Integer;
@@ -916,7 +1052,7 @@ begin
   Result := uMaxCalls;
 end;
 
-procedure SetAfterRPCEvent(Value: TAfterRPCEvent);
+procedure SetAfterRPCEvent(Value: TNotifyEvent);
 begin
   AfterRPCEvent := Value;
 end;
@@ -1156,7 +1292,7 @@ end;
 
 { TCallList }
 
-procedure TCallList.Add(Item: TStringList);
+procedure TCallList.Add(Item: TRPC);
 begin
   Lock;
   try
@@ -1169,8 +1305,8 @@ end;
 constructor TCallList.Create;
 begin
   inherited;
-  FList := TObjectList<TStringList>.Create;
   FLock := TCriticalSection.Create;
+  FList := TRPCList.Create(True, FLock);
 end;
 
 procedure TCallList.Delete(Index: Integer);
@@ -1185,8 +1321,8 @@ end;
 
 destructor TCallList.Destroy;
 begin
-  FreeAndNil(FLock);
   FreeAndNil(FList);
+  FreeAndNil(FLock);
   inherited;
 end;
 
@@ -1194,7 +1330,10 @@ function TCallList.GetCount: Integer;
 begin
   Lock;
   try
-    Result := FList.Count;
+    If Assigned(FList) then
+      Exit(FList.Count)
+    else
+      Exit(0);
   finally
     Unlock;
   end;
@@ -1218,6 +1357,21 @@ end;
 procedure TCallList.Unlock;
 begin
   FLock.Release;
+end;
+
+{ TRPCMethods }
+
+class function TRPCMethods.RPCList: TRPCList;
+begin
+  uCallList.Lock;
+  try
+    if Assigned(uCallList) then
+      Exit(uCallList.FList)
+    else
+      Exit(nil);
+  finally
+    uCallList.Unlock;
+  end;
 end;
 
 initialization

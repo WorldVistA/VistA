@@ -15,10 +15,14 @@ uses
   system.uitypes,
   vcl.Dialogs,
   Vcl.StdCtrls,
+  Vcl.Controls,
    // Application units...
 //  uProg,
   orNet,
-  orFn;
+  orFn,
+  uConst,
+  uCore,
+  U508Extensions;
 
 type
   tSrchDictGroup = TDictionary<String, TListGroup>;
@@ -33,14 +37,21 @@ type
       : TListGroup;
   end;
 
-  tStringlistHelper = class helper for TStringList
-    function IndexOfPiece(const S: string; const PieceDelim: Char; const PieceNum: integer): Integer;
-    function IndexOfPieceEx(const S: string; const PieceDelim: Char; const PieceNum: integer; const StartFrom: Integer): Integer;
-    function FindByPiece(const S: string; var Index: Integer; const PieceDelim: Char; const PieceNum: integer): Boolean;
-    function FindByPieceEx(const S: string; var Index: Integer; const PieceDelim: Char; const PieceNum: integer;const StartFrom: Integer): Boolean;
+  TMisc = class
+  public
+    class function GetEnumValueFromString<T>(const AName: string;
+      const Prefix: string = ''): T;
   end;
 
 function CalcSize(list: TStrings; index: integer = -1): integer;
+//function GetControlInfo(AFormatedFormName: string): Boolean;
+function IsParameterOn(AParameter: string): Boolean; overload;
+function IsParameterOn(AParameter: string;
+  ADefault: Boolean): Boolean; overload;
+
+function IsNonVAProvidersFeatureEnabled: Boolean;
+function IncludeNonVAProviders(AControl: TControl): Boolean;
+
 procedure MarkMostRecent(list: TStrings; index: integer);
 procedure PurgeOldIfNeeded(list: TStrings; MaxSize: integer);
 
@@ -53,7 +64,13 @@ function StripAllExcept(Input, KeepChars: string): string;
 
 function IsDigits(str: string): boolean;
 
+function IsObject(P: PPointer): Boolean;
+
 implementation
+
+uses
+ System.Rtti,
+ System.TypInfo;
 
 function CalcSize(list: TStrings; index: integer = -1): integer;
 var
@@ -88,6 +105,54 @@ begin
   end;
 end;
 
+function IsParameterOn(AParameter: string): Boolean; overload;
+// AParameter is a fully qualified path name to a Boolean value in
+// SystemParameters
+begin
+  Result := SystemParameters.AsType<Boolean>(AParameter);
+end;
+
+function IsParameterOn(AParameter: string;
+  ADefault: Boolean): Boolean; overload;
+begin
+  Result := SystemParameters.AsTypeDef<Boolean>(AParameter, ADefault);
+end;
+
+function IsNonVAProvidersFeatureEnabled: Boolean;
+var
+  AOldCaseSensitive: Boolean;
+begin
+  AOldCaseSensitive := SystemParameters.CaseSensitive;
+  SystemParameters.CaseSensitive := False;
+  try
+    Result := IsParameterOn(System.SysUtils.Format('%0:s.%1:s',
+      [SPJ_NVA_PROVIDERS, SPJ_NVA_FEATURESWITCH]), False);
+  finally
+    SystemParameters.CaseSensitive := AOldCaseSensitive;
+  end;
+end;
+
+function IncludeNonVAProviders(AControl: TControl): Boolean;
+var
+  AForm: TCustomForm;
+  AOldCaseSensitive: Boolean;
+begin
+  // We return False when feature switch is off, but we do return non-VA
+  // providers from the server (because we are never sending NVAP).
+  if not IsNonVAProvidersFeatureEnabled then Exit(False);
+  AForm := GetParentForm(AControl);
+  if not Assigned(AForm) then Exit(False);
+
+  AOldCaseSensitive := SystemParameters.CaseSensitive;
+  SystemParameters.CaseSensitive := False;
+  try
+    Result := IsParameterOn(SysUtils.Format('%0:s.%1:s.%2:s.%3:s',
+      [SPJ_NVA_PROVIDERS, SPJ_NVA_FORMS, AForm.Name, AControl.Name]), False);
+  finally
+    SystemParameters.CaseSensitive := AOldCaseSensitive;
+  end;
+end;
+
 procedure MarkMostRecent(list: TStrings; index: integer);
 begin
   if index < list.Count - 1 then
@@ -97,18 +162,20 @@ end;
 procedure PurgeOldIfNeeded(list: TStrings; MaxSize: integer);
 var
   size: integer;
-
+  FreeObjects: Boolean;
 begin
   size := CalcSize(list);
   while (list.Count > 0) and (size > MaxSize) do
   begin
+    FreeObjects := True;
+    if (list is TStringList) and (list as TStringList).OwnsObjects then
+      FreeObjects := False;
     dec(size, CalcSize(list, 0));
-    if assigned(list.Objects[0]) then
+    if FreeObjects and assigned(list.Objects[0]) then
       list.Objects[0].Free;
     list.Delete(0);
   end;
 end;
-
 
 procedure InitSL(var list: TStringList);
 begin
@@ -190,71 +257,24 @@ begin
   end;
 end;
 
-{ tStringlistHelper }
+{ TMisc }
 
-function tStringlistHelper.IndexOfPiece(const S: string; const PieceDelim: Char; const PieceNum: integer): Integer;
-begin
- Result := IndexOfPieceEx(S, PieceDelim, PieceNum, 0);
-end;
-
-function tStringlistHelper.IndexOfPieceEx(const S: string; const PieceDelim: Char; const PieceNum: integer; const StartFrom: Integer): Integer;
+class function TMisc.GetEnumValueFromString<T>(const AName, Prefix: string): T;
 var
-  Count: Integer;
-  SLen: Integer;
-  aStr: String;
+  IValue: Integer;
+  ATypeInf: PTypeInfo;
+  TypeData: PTypeData;
+  Value: TValue;
 begin
-  Count := GetCount;
-
-  if StartFrom > count then
-  begin
-    Result := -1;
-    exit;
-  end;
-
-  if not Sorted then
-  begin
-
-    SLen := Length(S);
-    for Result := StartFrom to Count - 1 do
-    begin
-      aStr := Piece(self.Strings[Result], PieceDelim, PieceNum);
-      if (Length(aStr) = SLen) and (CompareStrings(aStr, S) = 0) then
-        Exit;
-    end;
-    Result := -1;
-  end
-  else
-    if not FindByPieceEx(S, Result, PieceDelim, PieceNum, StartFrom) then
-      Result := -1;
-end;
-
-function tStringlistHelper.FindByPiece(const S: string; var Index: Integer; const PieceDelim: Char; const PieceNum: integer): Boolean;
-begin
-  Result := FindByPieceEx(S, Index, PieceDelim, PieceNum, 0);
-end;
-
-function tStringlistHelper.FindByPieceEx(const S: string; var Index: Integer; const PieceDelim: Char; const PieceNum: integer; const StartFrom: Integer): Boolean;
-var
-  L, H, I, C: Integer;
-begin
-  Result := False;
-  L := 0;
-  H := GetCount - 1;
-  while L <= H do
-  begin
-    I := (L + H) shr 1;
-    C := CompareStrings(Piece(self.Strings[I], PieceDelim, PieceNum), S);
-    if C < 0 then L := I + 1 else
-    begin
-      H := I - 1;
-      if C = 0 then
-      begin
-        Result := True;
-        if Duplicates <> dupAccept then L := I;
-      end;
-    end;
-  end;
-  Index := L;
+  ATypeInf := TypeInfo(T);
+  IValue := GetEnumValue(ATypeInf, AName);
+  if (IValue < 0) and (Prefix <> '') then
+    IValue := GetEnumValue(ATypeInf, Prefix + AName);
+  TypeData := ATypeInf^.TypeData;
+  if (IValue < TypeData^.MinValue) or (IValue > TypeData^.MaxValue) then
+    IValue := TypeData^.MinValue;
+  TValue.Make(@IValue, ATypeInf, Value);
+  Result := Value.AsType<T>;
 end;
 
 function AssignedAndHasData(Node: TTreeNode): boolean;
@@ -284,6 +304,60 @@ begin
     if not CharInSet(str[i], ['0'..'9']) then
       Exit(False);
   Result := True;
+end;
+
+function IsObject(P: PPointer): Boolean;
+// Code from https://stackoverflow.com/questions/74740944/test-if-a-pointer-is-a-tobject-instance (slight rework)
+// Use: if IsObject(List[I]) then... etc.
+{$IFDEF MSWINDOWS}
+var
+  MemInfo: TMemoryBasicInformation;
+{$ENDIF}
+  function IsValidAddress(Address: Pointer): Boolean;
+  begin
+    // Must be above 64k and 4 byte aligned
+    if (UIntPtr(Address) > $FFFF) and (UIntPtr(Address) and 3 = 0) then
+    begin
+{$IFDEF MSWINDOWS}
+      // do we need to recheck the virtual memory?
+      if (UIntPtr(MemInfo.BaseAddress) > UIntPtr(Address)) or
+        ((UIntPtr(MemInfo.BaseAddress) + MemInfo.RegionSize) <
+        (UIntPtr(Address) + SizeOf(Pointer))) then
+      begin
+        // retrieve the status for the pointer
+        MemInfo.RegionSize := 0;
+        VirtualQuery(Address, MemInfo, SizeOf(MemInfo));
+      end;
+      // check the readability of the memory address
+      if (MemInfo.RegionSize >= SizeOf(Pointer)) and
+        (MemInfo.State = MEM_COMMIT) and
+        (MemInfo.Protect and (PAGE_READONLY or PAGE_READWRITE or
+        PAGE_WRITECOPY or PAGE_EXECUTE or PAGE_EXECUTE_READ or
+        PAGE_EXECUTE_READWRITE or PAGE_EXECUTE_WRITECOPY) <> 0) and
+        (MemInfo.Protect and PAGE_GUARD = 0) then
+{$ENDIF}
+        Exit(True);
+    end;
+    Result := False;
+  end;
+
+begin
+  if not Assigned(P) then Exit(False);
+  try
+{$IFDEF MSWINDOWS}
+    MemInfo.RegionSize := 0;
+{$ENDIF}
+    if IsValidAddress(P)
+    // not a class pointer - they point to themselves in the vmtSelfPtr slot
+      and not(IsValidAddress(PByte(P) + vmtSelfPtr) and
+      (P = PPointer(PByte(P) + vmtSelfPtr)^)) then
+      if IsValidAddress(P^) and IsValidAddress(PByte(P^) + vmtSelfPtr)
+      // looks to be an object, it points to a valid class pointer
+        and (P^ = PPointer(PByte(P^) + vmtSelfPtr)^) then Exit(True);
+  except
+    Exit(False);
+  end;
+  Result := False;
 end;
 
 end.

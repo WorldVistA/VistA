@@ -14,7 +14,6 @@ object rpcConfig: TrpcConfig
   Font.Height = -11
   Font.Name = 'System'
   Font.Style = []
-  OldCreateOrder = True
   Position = poScreenCenter
   Scaled = False
   OnClose = FormClose
@@ -22,7 +21,6 @@ object rpcConfig: TrpcConfig
   DesignSize = (
     358
     139)
-  PixelsPerInch = 96
   TextHeight = 16
   object cboServer: TComboBox
     Left = 5

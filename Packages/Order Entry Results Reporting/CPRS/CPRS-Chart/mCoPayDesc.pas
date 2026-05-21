@@ -2,54 +2,45 @@ unit mCoPayDesc;
 
 interface
 
-uses 
+uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  ExtCtrls, StdCtrls, ORCtrls, UBAConst, VA508AccessibilityManager, rMisc, uConst;
+  ExtCtrls, StdCtrls, ORCtrls, UBAConst, VA508AccessibilityManager, rMisc, uConst,
+  uSpecialAuthorityEx, Vcl.AppEvnts, fBase508Frame;
 
 type
-  TfraCoPayDesc = class(TFrame)
+  TfraCoPayDesc = class(TBase508Frame)
     lblCaption: TStaticText;
     pnlSCandRD: TPanel;
     lblSCDisplay: TLabel;
     memSCDisplay: TCaptionMemo;
-    lblHNC2: TVA508StaticText;
-    lblHNC: TVA508StaticText;
-    lblMST2: TVA508StaticText;
-    lblMST: TVA508StaticText;
-    lblSWAC2: TVA508StaticText;
-    lblSWAC: TVA508StaticText;
-    lblIR2: TVA508StaticText;
-    lblIR: TVA508StaticText;
-    lblAO2: TVA508StaticText;
-    lblAO: TVA508StaticText;
-    lblSC2: TVA508StaticText;
-    lblSC: TVA508StaticText;
-    lblCV2: TVA508StaticText;
-    lblCV: TVA508StaticText;
-    lblSHAD: TVA508StaticText;
-    lblSHAD2: TVA508StaticText;
-    lblCL: TVA508StaticText;
-    lblCL2: TVA508StaticText;
     pnlRight: TPanel;
     gpRight: TGridPanel;
     gpMain: TGridPanel;
     pnlBorderLeft: TPanel;
     pnlBorderRight: TPanel;
+    sbRight: TScrollBox;
+    bHint: TBalloonHint;
+    appEvents: TApplicationEvents;
     procedure lblEnter(Sender: TObject);
     procedure lblExit(Sender: TObject);
     procedure gpRightResize(Sender: TObject);
+    procedure appEventsMessage(var Msg: TMsg; var Handled: Boolean);
   private
     FlblWidth: array[0..1] of integer;
-    procedure ConvertShortLabelsToLong;
+    FRowHeight: Integer;
+    FSpecialAuthorities: TSpecialAuthoritiesEx;
     procedure AdjustLblGrid;
+    procedure ConvertShortLabelsToLong;
+    procedure InitRowHeight;
     procedure CMFontChanged(var Message: TMessage); message CM_FONTCHANGED;
   protected
     procedure Loaded; override;
   public
-    procedure ShowTreatmentFactorHints(var pHintText: string; var pCompName: TVA508StaticText);
-    procedure LabelCaptionsOn(CaptionsOn : Boolean = true);
     constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
     function AdjustAndGetSize: integer;
+    procedure Init(ASpecialAuthorities1, ASpecialAuthorities2: TSpecialAuthoritiesEx);
+    procedure LabelCaptionsOn(CaptionsOn : Boolean = true);
   end;
 
 implementation
@@ -57,10 +48,29 @@ implementation
 uses uGlobalVar, rPCE, UBAGlobals, VAUtils, VA508AccessibilityRouter, ORFn;
 
 {$R *.DFM}
-var
-    FOSTFHintWndActive: boolean;
-    FOSTFhintWindow: THintWindow;
 
+type
+  TCopayLabel = class(TVA508StaticText)
+  private
+    FSpecialAuthority: TSpecialAuthorityEx;
+    procedure CMDialogChar(var Message: TCMDialogChar); message CM_DIALOGCHAR;
+  end;
+
+  TCustomHintAccess = class(TCustomHint);
+
+{ TCopayLabel }
+
+procedure TCopayLabel.CMDialogChar(var Message: TCMDialogChar);
+begin
+  if IsAccel(Message.CharCode, Caption) then
+  begin
+    Message.Result := 1;
+    if Assigned(CustomHint) then
+      TCustomHintAccess(CustomHint).ShowHint(Self);
+  end
+  else
+    inherited;
+end;
 
 { TfraCoPayDesc }
 
@@ -69,34 +79,16 @@ begin
   inherited Create(AOwner);
   TabStop := FALSE;
   ListSCDisabilities(memSCDisplay.Lines);
-  lblSC.Hint          := BAFactorsRec.FBAFactorSC;
-  lblSC2.Hint         := BAFactorsRec.FBAFactorSC;
-  lblCV.Hint          := BAFactorsRec.FBAFactorCV;
-  lblCV2.Hint         := BAFactorsRec.FBAFactorCV;
-  lblAO.Hint          := BAFactorsRec.FBAFactorAO;
-  lblAO2.Hint         := BAFactorsRec.FBAFactorAO;
-  lblIR.Hint          := BAFactorsRec.FBAFactorIR;
-  lblIR2.Hint         := BAFactorsRec.FBAFactorIR;
-  lblSWAC.Hint        := BAFactorsRec.FBAFactorEC;
-  lblSWAC2.Hint       := BAFactorsRec.FBAFactorEC;
-  lblMST.Hint         := BAFactorsRec.FBAFactorMST;
-  lblMST2.Hint        := BAFactorsRec.FBAFactorMST;
-  lblHNC.Hint         := BAFactorsRec.FBAFactorHNC;
-  lblHNC2.Hint        := BAFactorsRec.FBAFactorHNC;
-  lblSHAD.Hint        := BAFactorsRec.FBAFactorSHAD;
-  lblSHAD2.Hint       := BAFactorsRec.FBAFactorSHAD;
-  lblCL.Visible := IsLejeuneActive;
-  lblCL2.Visible := IsLejeuneActive;
-  if IsLejeuneActive then
-  begin
-   lblCL.Hint          := BAFactorsRec.FBAFactorCL;
-   lblCL2.Hint         := BAFactorsRec.FBAFactorCL;
-  end
-  else
-    gpRight.RowCollection[8].Value := 0;
-
   if ScreenReaderActive then
     ConvertShortLabelsToLong;
+  FSpecialAuthorities := TSpecialAuthoritiesEx.Create;
+end;
+
+
+destructor TfraCoPayDesc.Destroy;
+begin
+  FreeAndNil(FSpecialAuthorities);
+  inherited;
 end;
 
 procedure TfraCoPayDesc.gpRightResize(Sender: TObject);
@@ -108,30 +100,96 @@ begin
   gpRight.ColumnCollection[0].Value := FlblWidth[0] + adj;
 end;
 
-procedure TfraCoPayDesc.LabelCaptionsOn(CaptionsOn: Boolean);
+procedure TfraCoPayDesc.Init(ASpecialAuthorities1, ASpecialAuthorities2: TSpecialAuthoritiesEx);
+var
+  I, Column: Integer;
+  ctrl: TControl;
+  Row: TRowItem;
+  lbl: TCopayLabel;
+
+  procedure Merge(ASpecialAuthorities: TSpecialAuthoritiesEx);
+  begin
+    if Assigned(ASpecialAuthorities) then
+      for var i := 0 to ASpecialAuthorities.Count - 1 do
+        if ASpecialAuthorities[i].Visible then
+          FSpecialAuthorities[ASpecialAuthorities[i].Code].Visible := True;
+  end;
+
 begin
-  //Abbreviated captions
-  lblSC.ShowHint := CaptionsOn;
-  lblCV.ShowHint := CaptionsOn;
-  lblAO.ShowHint := CaptionsOn;
-  lblIR.ShowHint := CaptionsOn;
-  lblSWAC.ShowHint := CaptionsOn;
-  lblMST.ShowHint := CaptionsOn;
-  lblHNC.ShowHint := CaptionsOn;
-  lblSHAD.ShowHint := CaptionsOn;
-  if IsLejeuneActive then
-   lblCL.ShowHint := CaptionsOn;
-  //Long captions
-  lblSC2.ShowHint := CaptionsOn;
-  lblCV2.ShowHint := CaptionsOn;
-  lblAO2.ShowHint := CaptionsOn;
-  lblIR2.ShowHint := CaptionsOn;
-  lblSWAC2.ShowHint := CaptionsOn;
-  lblMST2.ShowHint  := CaptionsOn;
-  lblHNC2.ShowHint := CaptionsOn;
-  lblSHAD2.ShowHint := CaptionsOn;
-  if IsLejeuneActive then
-   lblCL2.ShowHint := CaptionsOn;
+  FSpecialAuthorities.Clear(True);
+  Merge(ASpecialAuthorities1);
+  Merge(ASpecialAuthorities2);
+  InitRowHeight;
+  gpRight.BeginUpdate;
+  try
+    for I := gpRight.ControlCollection.Count - 1 downto 0 do
+    begin
+      ctrl := gpRight.ControlCollection[I].Control;
+      gpRight.ControlCollection.RemoveControl(ctrl);
+      ctrl.Free;
+    end;
+    gpRight.RowCollection.Clear;
+    AdjustLblGrid;
+    gpRightResize(nil);
+    for I := 0 to FSpecialAuthorities.Count - 1 do
+      if FSpecialAuthorities[I].Visible then
+      begin
+        Row := gpRight.RowCollection.Add;
+        Row.SizeStyle := ssAbsolute;
+        Row.Value := FRowHeight;
+        for Column := 0 to 1 do
+        begin
+          lbl := TCopayLabel.Create(Owner);
+          lbl.CustomHint := bHint;
+          lbl.StaticLabel.CustomHint := bHint;
+          lbl.ParentCustomHint := True;
+          lbl.StaticLabel.ParentCustomHint := True;
+          lbl.FSpecialAuthority := FSpecialAuthorities[I];
+          lbl.Parent := gpRight;
+          gpRight.ControlCollection.AddControl(lbl, Column, Row.Index);
+          lbl.LabelLayout := tlCenter;
+          lbl.ShowHint := True;
+          lbl.Hint := FSpecialAuthorities[I].SpecialAuthorityTypeEx.Description;
+          lbl.StaticLabel.Hint := lbl.Hint;
+          lbl.OnEnter := lblEnter;
+          lbl.OnExit := lblExit;
+          lbl.TabStop := True;
+          if Column = 0 then
+          begin
+            lbl.Caption := FSpecialAuthorities[I].SpecialAuthorityTypeEx.abbreviation + ' -';
+            lbl.Align := alRight;
+          end
+          else
+          begin
+            lbl.Caption := FSpecialAuthorities[I].SpecialAuthorityTypeEx.displayName;
+            lbl.Align := alLeft;
+          end;
+        end;
+      end;
+  finally
+    gpRight.EndUpdate;
+  end;
+end;
+
+procedure TfraCoPayDesc.InitRowHeight;
+begin
+  FRowHeight := TextHeightByFont(MainFont.Handle, 'Tg') + 2;
+end;
+
+procedure TfraCoPayDesc.LabelCaptionsOn(CaptionsOn: Boolean);
+var
+  lbl: TCopayLabel;
+begin
+  if Assigned(FSpecialAuthorities) then
+    for var i := 0 to gpRight.RowCollection.Count - 1 do
+      if gpRight.ControlCollection.Controls[1, i] is TCopayLabel then
+      begin
+        lbl := gpRight.ControlCollection.Controls[1, i] as TCopayLabel;
+        if CaptionsOn then
+          lbl.Caption := lbl.FSpecialAuthority.SpecialAuthorityTypeEx.displayName
+        else
+          lbl.Caption := lbl.FSpecialAuthority.SpecialAuthorityTypeEx.displayText;
+      end;
 end;
 
 procedure TfraCoPayDesc.lblEnter(Sender: TObject);
@@ -152,118 +210,87 @@ begin
 end;
 
 function TfraCoPayDesc.AdjustAndGetSize: integer;
-var
-  ht, i: integer;
-
 begin
-  ht := TextHeightByFont(MainFont.Handle, 'Tg') + 2;
-  lblCaption.Height := ht;
-  lblSCDisplay.Height := ht;
-  Result := 4;
+  InitRowHeight;
+  lblCaption.Height := FRowHeight;
+  lblSCDisplay.Height := FRowHeight;
+  Result := 0;
   gpRight.RowCollection.BeginUpdate;
   try
-    for i := 0 to gpRight.RowCollection.Count - 1 do
+    for var i := 0 to gpRight.RowCollection.Count - 1 do
       if gpRight.RowCollection[i].Value > 0 then
       begin
-        gpRight.RowCollection[i].Value := ht;
-        inc(Result, ht);
+        gpRight.RowCollection[i].Value := FRowHeight;
+        inc(Result, FRowHeight);
       end;
+    gpRight.Height := Result;
   finally
     gpRight.RowCollection.EndUpdate;
   end;
-  inc(Result, ht + 10);
+  if Result < (FRowHeight * 8) then
+    Result := (FRowHeight * 8);
+  inc(Result, FRowHeight + 14);
 end;
 
 procedure TfraCoPayDesc.AdjustLblGrid;
 var
-  i: integer;
-  item: TControlItem;
-  lbl: TVA508StaticText;
-
+  i, j, TextWidth: integer;
+  Text: string;
 begin
   FlblWidth[0] := 0;
   FlblWidth[1] := 0;
-  for i := 0 to gpRight.ControlCollection.Count - 1 do
+  if Assigned(FSpecialAuthorities) then
   begin
-    Item := gpRight.ControlCollection[i];
-    lbl := Item.Control as TVA508StaticText;
-    if FlblWidth[Item.Column] < lbl.Width then
-      FlblWidth[Item.Column] := lbl.Width;
+    for i := 0 to FSpecialAuthorities.Count - 1 do
+      if FSpecialAuthorities[i].Visible then
+      begin
+        for j := 0 to 1 do
+        begin
+          if j = 0 then
+            Text := FSpecialAuthorities[i].SpecialAuthorityTypeEx.abbreviation
+          else
+            Text := FSpecialAuthorities[i].SpecialAuthorityTypeEx.DisplayText;
+          TextWidth := TextWidthByFont(MainFont.Handle, Text);
+          if FlblWidth[j] < TextWidth then
+            FlblWidth[j] := TextWidth;
+        end;
+      end;
   end;
   inc(FlblWidth[0], 10);
   inc(FlblWidth[1], 10);
-  Constraints.MinWidth := ((FlblWidth[0] + FlblWidth[1]) * 2) + 12;
+  gpRight.Constraints.MinWidth := FlblWidth[0] + FlblWidth[1] + 12;
+end;
+
+procedure TfraCoPayDesc.appEventsMessage(var Msg: TMsg; var Handled: Boolean);
+begin
+  if bHint.ShowingHint then
+    case Msg.message of
+      WM_LBUTTONDOWN, WM_MBUTTONDOWN, WM_RBUTTONDOWN, WM_XBUTTONDOWN,
+      WM_KEYDOWN, WM_SYSKEYDOWN:
+        bHint.HideHint;
+    end;
 end;
 
 procedure TfraCoPayDesc.CMFontChanged(var Message: TMessage);
 begin
   inherited;
   if not (csLoading in ComponentState) then
+  begin
     AdjustLblGrid;
+    gpRightResize(nil);
+  end;
 end;
 
 procedure TfraCoPayDesc.ConvertShortLabelsToLong;
-begin
-  lblSC2.Caption := BAFactorsRec.FBAFactorSC;
-  lblCV2.Caption := BAFactorsRec.FBAFactorCV;
-  lblAO2.Caption := BAFactorsRec.FBAFactorAO;
-  lblIR2.Caption  := BAFactorsRec.FBAFactorIR;
-  lblSWAC2.Caption := BAFactorsRec.FBAFactorEC;
-  lblSHAD2.Caption := BAFactorsRec.FBAFactorSHAD;
-  lblMST2.Caption := BAFactorsRec.FBAFactorMST;
-  lblHNC2.Caption := BAFactorsRec.FBAFactorHNC;
-
-  if IsLejeuneActive then
-  begin
-   lblCL2.Caption := BAFactorsRec.FBAFactorCL;
-  end;
-end;
-
-procedure TfraCoPayDesc.ShowTreatmentFactorHints(var pHintText: string;
-  var pCompName: TVA508StaticText);
 var
- HRect: TRect;
- thisRect: TRect;
- x,y: integer;
-
+  lbl: TVA508StaticText;
 begin
-  try
-     if FOSTFhintWndActive then
-        begin
-        FOSTFhintWindow.ReleaseHandle;
-        FOSTFhintWndActive := False;
-        end;
-  except
-     on E: Exception do
-        begin
-//        Show508Message('Unhandled exception in procedure TfrmSignOrders.ShowTreatmentFactorHints()');
-        raise;
-        end;
-  end;
-
-  try
-      FOSTFhintWindow := THintWindow.Create(Self);
-      FOSTFhintWindow.Color := clInfoBk;
-      GetWindowRect(pCompName.Handle,thisRect);
-      x := thisRect.Left;
-      y := thisRect.Top;
-      hrect := FOSTFhintWindow.CalcHintRect(Screen.Width, pHintText,nil);
-      hrect.Left   := hrect.Left + X;
-      hrect.Right  := hrect.Right + X;
-      hrect.Top    := hrect.Top + Y;
-      hrect.Bottom := hrect.Bottom + Y;
-
-      LabelCaptionsOn(not FOSTFHintWndActive);
-
-      FOSTFhintWindow.ActivateHint(hrect, pHintText);
-      FOSTFHintWndActive := True;
-  except
-     on E: Exception do
-        begin
-//        Show508Message('Unhandled exception in procedure TfrmSignOrders.ShowTreatmentFactorHints()');
-          raise;
-        end;
-  end;
+  for var Row := 0 to gpRight.RowCollection.Count - 1 do
+    if gpRight.ControlCollection.Controls[1, Row] is TVA508StaticText then
+    begin
+      lbl := gpRight.ControlCollection.Controls[1, Row] as TVA508StaticText;
+      lbl.Caption := lbl.Hint;
+    end;
 end;
 
 initialization

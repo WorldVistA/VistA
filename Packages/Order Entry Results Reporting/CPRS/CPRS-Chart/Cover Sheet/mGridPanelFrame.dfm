@@ -1,4 +1,4 @@
-object fraGridPanelFrame: TfraGridPanelFrame
+Inherited fraGridPanelFrame: TfraGridPanelFrame
   AlignWithMargins = True
   Left = 0
   Top = 0

@@ -32,6 +32,9 @@ inherited frmMedCopy: TfrmMedCopy
       Constraints.MinHeight = 40
       TabOrder = 1
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
     object pnlInpatient: TPanel
       Left = 1

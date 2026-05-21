@@ -8,7 +8,8 @@ const
   GAP = 8;
 
 procedure adjustBtn(aBtn: TButton;IncludeParent:Boolean = false);
-procedure adjustToolPanel(aPanel: TPanel);
+procedure adjustToolPanel(aPanel: TPanel); overload;
+procedure adjustToolPanel(aPanel: TPanel; out aWidth:Integer); overload;
 
 function getMainFormTextHeight: Integer;
 function getMainFormTextWidth(aText: String): Integer;
@@ -20,7 +21,12 @@ function getLabelWidth(aLabel: TLabel): Integer;
 function getStaticTextHeight(aLabel: TStaticText): Integer;
 function getStaticTextWidth(aLabel: TStaticText): Integer;
 
+function getRectHeight(aRectWidth: Integer; aText: String): Integer;
+
 implementation
+
+uses
+  WinAPI.Windows, System.Classes, Math;
 
 procedure adjustToolPanel(aPanel:TPanel);
 var
@@ -31,19 +37,67 @@ begin
     begin
       cntrl := aPanel.Controls[i];
       if cntrl is TButton then
-        AdjustBtn(TButton(cntrl),true);
+        AdjustBtn(TButton(cntrl), true);
+    end;
+end;
+
+procedure adjustChkBox(aCkb: TCheckBox);
+begin
+  aCkb.Width := getMainFormTextWidth(aCkb.Caption) + GAP * 2 + 42;
+  if aCkb.AlignWithMargins then
+    aCkb.Width := aCkb.Width + aCkb.Margins.Left + aCkb.Margins.Right;
+end;
+
+procedure adjustLbl(aLbl: TLabel);
+begin
+  aLbl.Width := getMainFormTextWidth(aLbl.Caption) + GAP * 2;
+  if aLbl.AlignWithMargins then
+    aLbl.Width := aLbl.Width + aLbl.Margins.Left + aLbl.Margins.Right;
+end;
+
+procedure adjustStTxt(aTxt: TStaticText);
+begin
+  aTxt.Width := getMainFormTextWidth(aTxt.Caption) + GAP * 2;
+  if aTxt.AlignWithMargins then
+    aTxt.Width := aTxt.Width + aTxt.Margins.Left + aTxt.Margins.Right;
+end;
+
+
+procedure adjustToolPanel(aPanel: TPanel; out aWidth:Integer);
+var
+  cntrl: TControl;
+begin
+  aWidth := 0;
+  for var i := 0 to aPanel.ControlCount - 1 do
+    begin
+      cntrl := aPanel.Controls[i];
+      if cntrl is TButton then
+        AdjustBtn(TButton(cntrl), true)
+      else if cntrl is TCheckBox then
+        AdjustChkBox(TCheckBox(cntrl))
+      else if Cntrl is TLabel then
+        AdjustLbl(TLabel(cntrl))
+      else if cntrl is TStaticText then
+        AdjustStTxt(TStaticText(cntrl))
+      else
+        continue;
+      inc(aWidth, cntrl.Width);
     end;
 end;
 
 procedure adjustBtn(aBtn: TButton; IncludeParent: Boolean = false);
 var
-  i: Integer;
+  i,j: Integer;
 begin
-  aBtn.Width := getMainFormTextWidth(aBtn.Caption) + GAP * 2;
+  i := getMainFormTextWidth('Cancel');
+  j := getMainFormTextWidth(aBtn.Caption);
+
+  aBtn.Width := max(i,j) + GAP * 2;
   if aBtn.AlignWithMargins then
     aBtn.Width := aBtn.Width + aBtn.Margins.Left + aBtn.Margins.Right;
 
   aBtn.height := getMainFormTextHeight + GAP;
+
   if aBtn.AlignWithMargins then
     aBtn.height := aBtn.height + aBtn.Margins.Top + aBtn.Margins.Bottom;
   if IncludeParent and (aBtn.Parent is TPanel) then
@@ -122,6 +176,16 @@ begin
     if aLabel.AlignWithMargins then
       Result := Result + aLabel.Margins.Left + aLabel.Margins.Right;
   end;
+end;
+
+function getRectHeight(aRectWidth: Integer; aText: String): Integer;
+var
+  r: TRect;
+begin
+  r := Rect(0, 0, aRectWidth, aRectWidth);
+  DrawText(Application.MainForm.Canvas.Handle, PChar(aText), Length(aText), r,
+    DT_LEFT or DT_WORDBREAK or DT_CALCRECT);
+  Result := r.Bottom - r.Top + 6; // Default margings
 end;
 
 end.

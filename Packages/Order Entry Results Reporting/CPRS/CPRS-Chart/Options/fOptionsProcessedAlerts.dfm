@@ -104,6 +104,9 @@ inherited frmOptionsProcessedAlerts: TfrmOptionsProcessedAlerts
     Caption = 'Max # of records to show:'
     TabOrder = 2
     ShowAccelChar = True
+    WordWrap = False
+    LabelAlignment = taLeftJustify
+    LabelLayout = tlTop
   end
   object sTxtLogDays: TVA508StaticText [4]
     Name = 'sTxtLogDays'
@@ -115,6 +118,9 @@ inherited frmOptionsProcessedAlerts: TfrmOptionsProcessedAlerts
     Caption = 'Show Log Data for (days)'
     TabOrder = 0
     ShowAccelChar = True
+    WordWrap = False
+    LabelAlignment = taLeftJustify
+    LabelLayout = tlTop
   end
   inherited amgrMain: TVA508AccessibilityManager
     Left = 152

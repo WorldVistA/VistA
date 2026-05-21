@@ -7,31 +7,45 @@ Update History
 
 interface
 
-uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
-  Buttons, ORCtrls, ORfn, ExtCtrls, FNoteProps, Dialogs, fBase508Form,
-  VA508AccessibilityManager;
+uses
+  Windows,
+  SysUtils,
+  Classes,
+  Graphics,
+  Forms,
+  Controls,
+  StdCtrls,
+  Buttons,
+  ORCtrls,
+  ORfn,
+  ExtCtrls,
+  FNoteProps,
+  Dialogs,
+  fBase508Form,
+  VA508AccessibilityManager,
+  ORCheckComboBox;
 
 type
   TfrmAddlSigners = class(TfrmBase508Form)
     cmdOK: TButton;
     cmdCancel: TButton;
-    cboSrcList: TORComboBox;
+    cboSrcList: TORCheckComboBox;
     DstList: TORListBox;
     SrcLabel: TLabel;
     DstLabel: TLabel;
     pnlBase: TPanel;
     btnRemoveSigners: TButton;
-    lblAuthor: TOROffsetLabel;
-    cboCosigner: TORComboBox;
-    lblCosigner: TOROffsetLabel;
-    txtAuthor: TCaptionEdit;
     pnlAdditional: TORAutoPanel;
     pnlButtons: TORAutoPanel;
-    pnlTop: TORAutoPanel;
+    pnlTop: TPanel;
     btnAddSigners: TButton;
     btnRemoveAllSigners: TButton;
+    txtAuthor: TCaptionEdit;
+    lblAuthor: TLabel;
+    cboCosigner: TORCheckComboBox;
+    lblCosigner: TLabel;
     procedure btnAddSignersClick(Sender: TObject);
-    procedure NewPersonNeedData(Sender: TObject; const StartFrom: String;
+    procedure NewPersonNeedData(Sender: TObject; const StartFrom: string;
       Direction, InsertAt: Integer);
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
@@ -47,6 +61,8 @@ type
     procedure DstListChange(Sender: TObject);
     procedure btnRemoveAllSignersClick(Sender: TObject);
     procedure cboSrcListChange(Sender: TObject);
+    procedure cboSrcListMainCheckboxClick(Sender: TObject);
+    procedure cboCosignerMainCheckboxClick(Sender: TObject);
   private
     FSigners: TStringList ;
     FCosigner: int64;
@@ -80,7 +96,15 @@ implementation
 {$R *.DFM}
 
 uses
-  rCore, uCore, rTIU, uConst, rPCE, fDCSumm, uORLists, uSimilarNames;
+  rCore,
+  uCore,
+  rTIU,
+  uConst,
+  rPCE,
+  fDCSumm,
+  uORLists,
+  uSimilarNames,
+  uMisc;
 
 const
   TX_SIGNER_CAP = 'Error adding signers';
@@ -93,13 +117,44 @@ const
   TX_NO_DELETE = 'A cosigner is required';
   TX_NO_DELETE_CAP = 'No cosigner selected';
 
-
-procedure SelectAdditionalSigners(FontSize, NoteIEN, SigAction: Integer; Exclusions: TStrings;
-          var SignerList: TSignerList; TabID: integer; ARefDate: TFMDateTime) ;
+procedure SelectAdditionalSigners(FontSize, NoteIEN, SigAction: Integer;
+  Exclusions: TStrings; var SignerList: TSignerList; TabID: integer;
+  ARefDate: TFMDateTime);
 { displays additional signer form for notes and returns a record of the selection }
+
+  procedure ResizeToFont(AfrmAddlSigners: TfrmAddlSigners);
+
+    procedure AdjustTop(AControl, AControlAbove: TControl;
+      ASpaceBetween: Integer);
+    begin
+      AControl.Top := AControlAbove.Top + AControlAbove.Height + ASpaceBetween;
+    end;
+
+  var
+    APoint: TPoint;
+  begin
+    AfrmAddlSigners.Font.Size := FontSize;
+    APoint.X := AfrmAddlSigners.ClientWidth;
+    APoint.Y := AfrmAddlSigners.ClientHeight;
+    ORFn.ResizeToFont(AfrmAddlSigners.Font.Size, APoint.X, APoint.Y);
+    AfrmAddlSigners.ClientWidth  := APoint.X;
+    AfrmAddlSigners.ClientHeight := APoint.Y;
+
+    AfrmAddlSigners.cboCosigner.Height := AfrmAddlSigners.cboCosigner.CalcHeight;
+
+    AfrmAddlSigners.lblAuthor.Left := AfrmAddlSigners.cboSrcList.Left;
+    AdjustTop(AfrmAddlSigners.txtAuthor, AfrmAddlSigners.LblAuthor, 4);
+    AfrmAddlSigners.txtAuthor.Left := AfrmAddlSigners.cboSrcList.Left;
+    AfrmAddlSigners.txtAuthor.Width := AfrmAddlSigners.cboSrcList.Width;
+    AfrmAddlSigners.lblCosigner.Left := AfrmAddlSigners.DstList.Left;
+    AdjustTop(AfrmAddlSigners.cboCosigner, AfrmAddlSigners.LblCosigner, 4);
+    AfrmAddlSigners.cboCosigner.Left := AfrmAddlSigners.DstList.Left;
+    AfrmAddlSigners.cboCosigner.Width := AfrmAddlSigners.DstList.Width;
+  end;
+
 var
   frmAddlSigners: TfrmAddlSigners;
-  W, H, i: Integer;
+  I: Integer;
 begin
   frmAddlSigners := TfrmAddlSigners.Create(Application);
   try
@@ -112,39 +167,36 @@ begin
       FastAssign(Exclusions, FExclusions);
       FToday := FloatToStr(FMToday);
       if FSigAction = SG_COSIGNER then
-        begin
-          pnlAdditional.Visible := False;
-          Height := Height - pnlAdditional.Height;
-        end;
-      Font.Size := FontSize;
-      W := ClientWidth;
-      H := ClientHeight;
-      ResizeToFont(FontSize, W, H);
-      ClientWidth  := W; pnlBase.Width  := W;
-      ClientHeight := H; pnlBase.Height := H;
+      begin
+        pnlAdditional.Visible := False;
+        Height := Height - pnlAdditional.Height;
+      end;
+
+      ResizeToFont(frmAddlSigners);
+
       with FExclusions do for i := 0 to Count-1 do
-        begin
-          if Piece(Strings[i],U,3) = 'Author' then txtAuthor.Text := Piece(Strings[i], U, 2)
-          else if Piece(Strings[i],U,3) = 'Expected Cosigner' then
-            begin
-              cboCosigner.Items.Add(Strings[i]);
-              cboCosigner.ItemIndex := 0;
-            end
-          else
+      begin
+        if Piece(Strings[i],U,3) = 'Author' then txtAuthor.Text := Piece(Strings[i], U, 2)
+        else if Piece(Strings[i],U,3) = 'Expected Cosigner' then
           begin
-            DstList.Items.Add(Strings[i]);
-            btnRemoveAllSigners.Enabled := DstList.Items.Count > 0;
-          end;
+            cboCosigner.Items.Add(Strings[i]);
+            cboCosigner.ItemIndex := 0;
+          end
+        else
+        begin
+          DstList.Items.Add(Strings[i]);
+          btnRemoveAllSigners.Enabled := DstList.Items.Count > 0;
         end;
+      end;
 
       if (SigAction = SG_COSIGNER) or (SigAction = SG_BOTH) then
-        begin
-          lblCosigner.Caption := 'Expected cosigner';
-          cboCosigner.Caption := 'Expected cosigner';
-          cboCosigner.Color := clWindow;
-          cboCosigner.Enabled := True;
-          cboCosigner.InitLongList('');
-        end;
+      begin
+        lblCosigner.Caption := 'Expected cosigner';
+        cboCosigner.Caption := 'Expected cosigner';
+        cboCosigner.Color := clWindow;
+        cboCosigner.Enabled := True;
+        cboCosigner.InitLongList('');
+      end;
       if (SigAction = SG_ADDITIONAL) or (SigAction = SG_BOTH) then
         cboSrcList.InitLongList('');
       FChanged := False;
@@ -152,36 +204,28 @@ begin
       TSimilarNames.RegORComboBox(cboCosigner);
       ShowModal;
       with SignerList do
-        begin
-          Signers := TStringList.Create;
-          FastAssign(FSigners, Signers);
-          Cosigner := FCosigner;
-          Changed := FChanged ;
-        end ;
+      begin
+        Signers := TStringList.Create;
+        FastAssign(FSigners, Signers);
+        Cosigner := FCosigner;
+        Changed := FChanged ;
+      end ;
     end; {with frmAddlSigners}
   finally
-    frmAddlSigners.Release;
+    FreeAndNil(frmAddlSigners);
   end;
 end;
 
 procedure TfrmAddlSigners.NewPersonNeedData(Sender: TObject;
-  const StartFrom: String; Direction, InsertAt: Integer);
-var
-  Astrings: TStrings;
+  const StartFrom: string; Direction, InsertAt: Integer);
 begin
   // SDS - See also V32 issue #126 M changes by AB - #129 is a Delphi follow-on to #126
   // SDS - We only show providers for additional signers, by request from field users
   // setProviderList(TORComboBox(Sender), StartFrom, Direction);    // SDS Aug 2017 V32 Test Issue #129
   // FH Oct 2019 - Revert Back from providerlist to personlist
-  Astrings := TStringList.Create;
-  try
-    setSubSetOfPersons(cboSrcList, Astrings, StartFrom, Direction, True);
-    cboSrcList.ForDataUse(Astrings);
-  finally
-    FreeAndNil(Astrings);
-  end;
+  // FH May 2023 - Using the New call
+  setPersonListWithClass(cboSrcList,StartFrom,Direction);
 end;
-
 
 procedure TfrmAddlSigners.cmdCancelClick(Sender: TObject);
 begin
@@ -293,6 +337,9 @@ procedure TfrmAddlSigners.FormCreate(Sender: TObject);
 begin
   FSigners := TStringList.Create;
   FExclusions := TStringList.Create;
+
+  cboSrcList.MainCheckBoxVisible := IncludeNonVAProviders(cboSrcList);
+  cboCosigner.MainCheckBoxVisible := IncludeNonVAProviders(cboCosigner);
 end;
 
 procedure TfrmAddlSigners.FormDestroy(Sender: TObject);
@@ -319,6 +366,15 @@ procedure TfrmAddlSigners.cboSrcListKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key = VK_RETURN then btnAddSignersClick(Self);
+end;
+
+procedure TfrmAddlSigners.cboSrcListMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := cboSrcList.SelectedDataString;
+  cboSrcList.ReInitLongList;
+  if ALastData <> cboSrcList.SelectedDataString then
+    cboSrcListChange(cboSrcList);
 end;
 
 function TfrmAddlSigners.CosignerOK: Boolean;
@@ -395,6 +451,15 @@ end;
 procedure TfrmAddlSigners.cboCosignerExit(Sender: TObject);
 begin
   with cboCosigner do if Text = '' then ItemIndex := -1;
+end;
+
+procedure TfrmAddlSigners.cboCosignerMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := cboCosigner.SelectedDataString;
+  cboCosigner.ReInitLongList;
+  if ALastData <> cboCosigner.SelectedDataString then
+    cboCosignerChange(cboCosigner);
 end;
 
 procedure TfrmAddlSigners.cboSrcListChange(Sender: TObject);

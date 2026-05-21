@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
-  Vcl.ImgList, Vcl.Buttons, System.ImageList, VA508AccessibilityRouter, VAUtils;
+  Vcl.ImgList, Vcl.Buttons, System.ImageList, VA508AccessibilityRouter, VAUtils, fBase508Frame;
 
 type
   TPanelHelper = class helper for TPanel
@@ -17,7 +17,7 @@ type
   end;
 
 
-  TfraParent = class(TFrame)
+  TfraParent = class(TBase508Frame)
     pnlHeader: TPanel;
     pnlWorkspace: TPanel;
     lblHeader: TLabel;

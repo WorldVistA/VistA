@@ -5,15 +5,13 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fPCEBase, ORDtTm, StdCtrls, ORCtrls, ExtCtrls, Buttons, fAutoSz, ORFn,
-  rvitals, ComCtrls, ORNet, uVitals, VAUtils, TRPCB, VA508AccessibilityManager;
+  rvitals, ComCtrls, ORNet, uVitals, VAUtils, TRPCB, VA508AccessibilityManager,
+  U508Button;
 
 type
   TfrmEncVitals = class(TfrmPCEBase)
-    pnlBottom: TPanel;
     lvVitals: TCaptionListView;
-    btnEnterVitals: TButton;
-    btnOKkludge: TButton;
-    btnCancelkludge: TButton;
+    btnEnterVitals: U508Button.TButton;
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -24,20 +22,19 @@ type
   public
   end;
 
-var
-  frmEncVitals: TfrmEncVitals;
-
 implementation
 
 {$R *.DFM}
 
-uses UCore, rCore, rPCE, fPCELex, fPCEOther, fVitals,fVisit, fFrame, fEncnt,
-     fEncounterFrame, uInit, VA508AccessibilityRouter, System.UITypes, rMisc,
-     VAPieceHelper;
+uses
+  {rCore, rPCE, fPCELex, fPCEOther, fVitals, fVisit, fEncnt, uInit, System.UITypes,}
+  uCore, fFrame, fEncounterFrame, VA508AccessibilityRouter, rMisc, VAPieceHelper
+  ;
 
 procedure TfrmEncVitals.FormCreate(Sender: TObject);
 begin
   inherited;
+  AutoSizeDisabled := True;
   FTabName := CT_VitNm;
 end;
 
@@ -56,10 +53,14 @@ begin
   tmpRtnRec := LoadVitalsDLL;
   case tmpRtnRec.Return_Type of
     DLL_Success: LoadVitalsList;
-    DLL_Missing: TaskMessageDlg('File Missing or Invalid', tmpRtnRec.Return_Message,mtError,[mbok],0);
-    DLL_VersionErr: TaskMessageDlg('Incorrect Version Found', tmpRtnRec.Return_Message,mtError,[mbok],0);
+//    DLL_Missing: TaskMessageDlg('File Missing or Invalid', tmpRtnRec.Return_Message,mtError,[mbok],0);
+//    DLL_VersionErr: TaskMessageDlg('Incorrect Version Found', tmpRtnRec.Return_Message,mtError,[mbok],0);
+    DLL_Missing: InfoBox(tmpRtnRec.Return_Message, 'File Missing or Invalid', MB_ICONError + mb_ok);
+    DLL_VersionErr: InfoBox(tmpRtnRec.Return_Message,'Incorrect Version Found', MB_ICONError + MB_OK);
   end;
   FormActivate(Sender);
+
+  btnEnterVitals.Enabled := (VitalsDLLHandle <>0);
 end;
 
 procedure TfrmEncVitals.LoadVitalView(VitalsList: TStringList);
@@ -80,8 +81,8 @@ procedure TfrmEncVitals.LoadVitalView(VitalsList: TStringList);
       exit;
     //Find the piece that contains the metric header and value
     aCprsStr := TPiece(aVitalsList.Strings[0]);
-    MetricIdx := TPiece(aVitalsList.Strings[0]).IndexOfPiece(U, MetricColHeader);
-    ImperialIdx := TPiece(aVitalsList.Strings[0]).IndexOfPiece(U, ImperialColHeader);
+    MetricIdx := TPiece(aVitalsList.Strings[0]).IndexOf(MetricColHeader, U);
+    ImperialIdx := TPiece(aVitalsList.Strings[0]).IndexOf(ImperialColHeader, U);
     MetricFirst := SystemParameters.AsTypeDef<string>('vitals.gmvMetricFirst', '0') = '1';
     for I := 0 to aVitalsList.Count - 1 do
     begin
@@ -96,17 +97,17 @@ procedure TfrmEncVitals.LoadVitalView(VitalsList: TStringList);
           begin
             ImperialStr := Piece(aStr, U, ImperialIdx);
             SetPiece(aStr, U, ImperialIdx, '(' + ImperialStr + ')');
-            SetPiece(aStr, U, ImperialIdx, TPiece(aStr).Pieces([MetricIdx, ImperialIdx], U, ' '));
+            SetPiece(aStr, U, ImperialIdx, TPiece(aStr).ToDelimitedString([MetricIdx, ImperialIdx], U, ' '));
           end else begin
             SetPiece(aStr, U, MetricIdx, '(' + MetricStr + ')');
-            SetPiece(aStr, U, ImperialIdx, TPiece(aStr).Pieces([ImperialIdx, MetricIdx], U, ' '));
+            SetPiece(aStr, U, ImperialIdx, TPiece(aStr).ToDelimitedString([ImperialIdx, MetricIdx], U, ' '));
           end;
         end;
       end else
         SetPiece(aStr, U, ImperialIdx, NewColName);
 
       aCprsStr := TPiece(aStr);
-      aCprsStr.DeletePiece(U, MetricIdx);
+      aCprsStr.Delete(MetricIdx, U);
       aVitalsList[i] := string(aCprsStr);
 
     end;
@@ -121,7 +122,7 @@ begin
   HeadingList := TStringList.Create;
   tmpList := TStringList.Create;
   try
-    lvVitals.ShowColumnHeaders := false;                //CQ: 10069 - the column display becomes squished.
+    lvVitals.ShowColumnHeaders := false; //CQ: 10069 - the column display becomes squished.
     lvVitals.Items.Clear;
     lvVitals.Columns.Clear;
     CombineMetricandImperial(VitalsList);
@@ -144,7 +145,7 @@ begin
       end;
       curItem.SubItems.Assign(tmpList);
     end;
-    lvVitals.ShowColumnHeaders := true;                 //CQ: 10069 - the column display becomes squished.
+    lvVitals.ShowColumnHeaders := true; //CQ: 10069 - the column display becomes squished.
   finally
     HeadingList.Free;
     tmpList.Free;

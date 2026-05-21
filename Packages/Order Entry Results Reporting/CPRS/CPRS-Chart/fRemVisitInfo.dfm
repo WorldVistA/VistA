@@ -2,18 +2,17 @@ inherited frmRemVisitInfo: TfrmRemVisitInfo
   Left = 192
   Top = 195
   BorderIcons = [biSystemMenu]
-  BorderStyle = bsDialog
   Caption = 'Other Visit Information'
-  ClientHeight = 221
+  ClientHeight = 170
   ClientWidth = 316
-  Position = poOwnerFormCenter
-  OnCreate = FormCreate
-  ExplicitWidth = 322
-  ExplicitHeight = 249
+  Constraints.MinHeight = 200
+  Constraints.MinWidth = 300
+  StyleElements = [seFont, seClient, seBorder]
+  ExplicitWidth = 332
+  ExplicitHeight = 209
   DesignSize = (
     316
-    221)
-  PixelsPerInch = 96
+    170)
   TextHeight = 13
   object lblVital: TLabel [0]
     Left = 3
@@ -23,53 +22,59 @@ inherited frmRemVisitInfo: TfrmRemVisitInfo
     Caption = 'Vital Entry Date && Time:'
   end
   inline fraVisitRelated: TfraVisitRelated [1]
-    Left = 106
-    Top = 27
-    Width = 207
-    Height = 174
+    Left = 0
+    Top = 0
+    Width = 316
+    Height = 136
+    Align = alClient
     Anchors = [akTop, akRight]
     TabOrder = 2
     TabStop = True
-    ExplicitLeft = 106
-    ExplicitTop = 27
-    ExplicitWidth = 207
-    ExplicitHeight = 174
-    inherited ScrollBox1: TScrollBox
-      Width = 207
-      Height = 174
-      ExplicitWidth = 207
-      ExplicitHeight = 174
-      inherited Panel1: TPanel
-        Width = 190
-        ExplicitWidth = 190
+    ExplicitWidth = 316
+    ExplicitHeight = 136
+    inherited sbMain: TScrollBox
+      Width = 316
+      Height = 136
+      inherited pnlMain: TPanel
+        Width = 316
+        StyleElements = [seFont, seClient, seBorder]
         inherited gbVisitRelatedTo: TGroupBox
-          Width = 190
-          ExplicitWidth = 190
+          Width = 310
+          inherited gpMain: TGridPanel
+            Top = 15
+            Width = 300
+            Height = 75
+            ControlCollection = <
+              item
+                Column = 0
+                Control = fraVisitRelated.lblYes
+                Row = 0
+              end
+              item
+                Column = 1
+                Control = fraVisitRelated.lblNo
+                Row = 0
+              end>
+            StyleElements = [seFont, seClient, seBorder]
+            inherited lblYes: TLabel
+              Top = 2
+              Height = 13
+              StyleElements = [seFont, seClient, seBorder]
+              ExplicitWidth = 23
+              ExplicitHeight = 13
+            end
+            inherited lblNo: TLabel
+              Top = 2
+              Width = 277
+              Height = 13
+              StyleElements = [seFont, seClient, seBorder]
+              ExplicitWidth = 277
+              ExplicitHeight = 13
+            end
+          end
         end
       end
     end
-  end
-  object btnOK: TButton
-    Left = 158
-    Top = 198
-    Width = 75
-    Height = 21
-    Anchors = [akRight, akBottom]
-    Caption = '&OK'
-    Default = True
-    ModalResult = 1
-    TabOrder = 3
-  end
-  object btnCancel: TButton
-    Left = 238
-    Top = 198
-    Width = 75
-    Height = 21
-    Anchors = [akRight, akBottom]
-    Cancel = True
-    Caption = '&Cancel'
-    ModalResult = 2
-    TabOrder = 4
   end
   object dteVitals: TORDateBox
     Tag = 11
@@ -83,7 +88,7 @@ inherited frmRemVisitInfo: TfrmRemVisitInfo
     Caption = 'Vital Entry Date && Time:'
   end
   object btnNow: TButton
-    Left = 269
+    Left = 264
     Top = 2
     Width = 43
     Height = 21
@@ -92,83 +97,49 @@ inherited frmRemVisitInfo: TfrmRemVisitInfo
     TabOrder = 1
     OnClick = btnNowClick
   end
+  object pnlBottom: TPanel
+    Left = 0
+    Top = 136
+    Width = 316
+    Height = 34
+    Align = alBottom
+    Caption = 'pnlBottom'
+    ShowCaption = False
+    TabOrder = 4
+    object btnOK: TButton
+      AlignWithMargins = True
+      Left = 156
+      Top = 4
+      Width = 75
+      Height = 26
+      Align = alRight
+      Caption = 'OK'
+      Default = True
+      ModalResult = 1
+      TabOrder = 0
+    end
+    object btnCancel: TButton
+      AlignWithMargins = True
+      Left = 237
+      Top = 4
+      Width = 75
+      Height = 26
+      Align = alRight
+      Cancel = True
+      Caption = 'Cancel'
+      ModalResult = 2
+      TabOrder = 1
+    end
+  end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 24
+    Top = 88
     Data = (
       (
         'Component = fraVisitRelated'
         'Status = stsDefault')
       (
         'Component = fraVisitRelated.gbVisitRelatedTo'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.chkSCYes'
-        'Text = Service Connected Condition     Yes'
-        'Status = stsOK')
-      (
-        'Component = fraVisitRelated.chkSCNo'
-        'Text = Service Connected Condition    No'
-        'Status = stsOK')
-      (
-        'Component = fraVisitRelated.chkCVYes'
-        'Text = Combat Vet (Combat Related)     Yes'
-        'Status = stsOK')
-      (
-        'Component = fraVisitRelated.chkCVNo'
-        'Text = Combat Vet (Combat Related)    No'
-        'Status = stsOK')
-      (
-        'Component = fraVisitRelated.chkAOYes'
-        'Text = Agent Orange Exposure     Yes'
-        'Status = stsOK')
-      (
-        'Component = fraVisitRelated.chkAONo'
-        'Text = Agent Orange Exposure    No'
-        'Status = stsOK')
-      (
-        'Component = fraVisitRelated.chkIRYes'
-        'Text = Ionizing Radiation Exposure     Yes'
-        'Status = stsOK')
-      (
-        'Component = fraVisitRelated.chkIRNo'
-        'Text = Ionizing Radiation Exposure    No'
-        'Status = stsOK')
-      (
-        'Component = fraVisitRelated.chkECYes'
-        'Text = Southwest Asia Conditions     Yes'
-        'Status = stsOK')
-      (
-        'Component = fraVisitRelated.chkECNo'
-        'Text = Southwest Asia Conditions     No'
-        'Status = stsOK')
-      (
-        'Component = fraVisitRelated.chkSHDYes'
-        'Text = Shipboard Hazard and Defense     Yes'
-        'Status = stsOK')
-      (
-        'Component = fraVisitRelated.chkSHDNo'
-        'Text = Shipboard Hazard and Defense     No'
-        'Status = stsOK')
-      (
-        'Component = fraVisitRelated.chkMSTYes'
-        'Text = MST     Yes'
-        'Status = stsOK')
-      (
-        'Component = fraVisitRelated.chkMSTNo'
-        'Text = MST     No'
-        'Status = stsOK')
-      (
-        'Component = fraVisitRelated.chkHNCYes'
-        'Text = Head and/or Neck Cancer    Yes'
-        'Status = stsOK')
-      (
-        'Component = fraVisitRelated.chkHNCNo'
-        'Text = Head and/or Neck Cancer    No'
-        'Status = stsOK')
-      (
-        'Component = fraVisitRelated.lblSCNo'
-        'Status = stsDefault')
-      (
-        'Component = fraVisitRelated.lblSCYes'
         'Status = stsDefault')
       (
         'Component = btnOK'
@@ -185,6 +156,9 @@ inherited frmRemVisitInfo: TfrmRemVisitInfo
         'Status = stsDefault')
       (
         'Component = frmRemVisitInfo'
+        'Status = stsDefault')
+      (
+        'Component = pnlBottom'
         'Status = stsDefault'))
   end
 end

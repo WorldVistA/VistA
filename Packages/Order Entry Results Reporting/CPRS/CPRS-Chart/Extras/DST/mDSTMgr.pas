@@ -6,10 +6,10 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
-  System.Actions, Vcl.ActnList, oDST;
+  System.Actions, Vcl.ActnList, oDST, fBase508Frame;
 
 type
-  TfrDSTMgr = class(TFrame)
+  TfrDSTMgr = class(TBase508Frame)
     btnLaunchToolbox: TButton;
     alDST: TActionList;
     acDST: TAction;

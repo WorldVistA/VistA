@@ -9,9 +9,12 @@ uses
   Vcl.Controls;
 
 type
+  TScaleMethod = (smManual, smFontOld, smFontNew);
+
   TORForm = class(TForm)
   private
     FOldCreateOrder: Boolean;
+    FScaleMethod: TScaleMethod;
     FOriginalFont: TFont;
     FOriginalConstraints: TSizeConstraints;
     FIsResizeContraintsEnabled: Boolean; // Scale size constraints with the font
@@ -19,6 +22,8 @@ type
     procedure WriteOldCreateOrder(Writer: TWriter);
   protected
     procedure DefineProperties(Filer: TFiler); override;
+    property OlderCreateOrder: Boolean read FOldCreateOrder
+      write FOldCreateOrder stored True;
     procedure Loaded; override;
     procedure OldDoCreate; virtual;
     procedure DoCreate; override;
@@ -28,15 +33,19 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
+    procedure ResetFontSize(FontSize: Integer = Low(Integer));
   published
     property OldCreateOrder: Boolean read FOldCreateOrder write FOldCreateOrder
       stored True;
+    property ScaleMethod: TScaleMethod read FScaleMethod write FScaleMethod default smFontOld;
     property IsResizeContraintsEnabled: Boolean
       read FIsResizeContraintsEnabled write FIsResizeContraintsEnabled default False;
   end;
 
 implementation
+
 uses
+  ORCtrls.FormFontScaler,
   ORFn,
   System.SysUtils;
 
@@ -47,6 +56,7 @@ begin
   FOriginalFont := TFont.Create;
   FOriginalConstraints := TSizeConstraints.Create(Self);
   OldCreateOrder := True;
+  ScaleMethod := smFontOld;
   inherited Create(AOwner);
   if OldCreateOrder then OldDoCreate;
 end;
@@ -92,8 +102,19 @@ end;
 procedure TORForm.DoSetFontSize(FontSize: Integer);
 // This may be overriden in child classes (FE: unit fODBase in CPRS)
 begin
-  ORFn.ResizeAnchoredFormToFont(Self, FIsResizeContraintsEnabled,
-    FOriginalFont, FOriginalConstraints);
+  case ScaleMethod of
+    smFontOld: ORFn.ResizeAnchoredFormToFont(Self, FIsResizeContraintsEnabled, FOriginalFont, FOriginalConstraints);
+    smFontNew: TFormFontScaler.Scale(Self, MainFont.Height);
+  end;
+end;
+
+procedure TORForm.ResetFontSize(FontSize: Integer = Low(Integer));
+// The name is clunky due to all non-clunky names all being in use already.
+begin
+  if FontSize <> Low(Integer) then
+    DoSetFontSize(ORFn.MainFontSize)
+  else
+    DoSetFontSize(FontSize);
 end;
 
 procedure TORForm.Loaded;
@@ -128,6 +149,7 @@ begin
   // effectively restores this functionality to Delphi 10 behavior.
   Filer.DefineProperty('OldCreateOrder', ReadOldCreateOrder,
     WriteOldCreateOrder, False);
+  Filer.DefineProperty('OlderCreateOrder', ReadOldCreateOrder, nil, False);
 end;
 
 end.

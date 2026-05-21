@@ -3,19 +3,17 @@ inherited frmAlertForward: TfrmAlertForward
   Top = 206
   BorderStyle = bsDialog
   Caption = 'Forward Alert'
-  ClientHeight = 381
-  ClientWidth = 387
-  OldCreateOrder = True
+  ClientHeight = 382
+  ClientWidth = 385
   Position = poScreenCenter
   ExplicitWidth = 393
   ExplicitHeight = 410
-  PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TORAutoPanel [0]
     Left = 0
     Top = 0
-    Width = 387
-    Height = 381
+    Width = 385
+    Height = 382
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
@@ -59,11 +57,11 @@ inherited frmAlertForward: TfrmAlertForward
       TabOrder = 8
       OnClick = cmdCancelClick
     end
-    object cboSrcList: TORComboBox
+    object cboSrcList: TORCheckComboBox
       Left = 12
-      Top = 156
+      Top = 155
       Width = 144
-      Height = 185
+      Height = 188
       Style = orcsSimple
       AutoSelect = True
       Caption = ''
@@ -84,9 +82,14 @@ inherited frmAlertForward: TfrmAlertForward
       OnChange = cboSrcListChange
       OnDblClick = cboSrcListMouseClick
       OnKeyDown = cboSrcListKeyDown
-      OnNeedData = cboSrcListNeedData
+      OnNeedData = NewPersonNeedData
       CharsNeedMatch = 1
       UniqueAutoComplete = True
+      MainCheckBoxCaption = 'Include Non-VA Providers'
+      MainCheckBoxVisible = True
+      MainCheckBoxAlignment = calBottom
+      OnMainCheckboxClick = cboSrcListMainCheckboxClick
+      DropdownStyle = ddsControl
     end
     object DstList: TORListBox
       Left = 231

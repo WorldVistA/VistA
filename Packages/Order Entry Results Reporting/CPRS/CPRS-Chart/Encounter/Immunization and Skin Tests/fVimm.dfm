@@ -2,20 +2,22 @@ inherited vimmMainForm: TvimmMainForm
   Left = 0
   Top = 0
   Caption = 'vimmMainForm'
-  ClientHeight = 557
-  ClientWidth = 847
+  ClientHeight = 561
+  ClientWidth = 1011
   Color = clWhite
+  Constraints.MinHeight = 600
+  Constraints.MinWidth = 1024
   Font.Name = 'Tahoma'
+  StyleElements = [seFont, seClient, seBorder]
   OnCloseQuery = FormCloseQuery
-  ExplicitWidth = 863
-  ExplicitHeight = 596
-  PixelsPerInch = 96
+  ExplicitWidth = 1027
+  ExplicitHeight = 600
   TextHeight = 13
   object ScrollBox: TScrollBox [0]
     Left = 0
     Top = 0
-    Width = 847
-    Height = 557
+    Width = 1011
+    Height = 561
     Align = alClient
     ParentBackground = True
     TabOrder = 0
@@ -23,7 +25,7 @@ inherited vimmMainForm: TvimmMainForm
     object pnlForm: TPanel
       Left = 0
       Top = 0
-      Width = 843
+      Width = 1007
       Height = 553
       Align = alTop
       Caption = 'pnlForm'
@@ -31,16 +33,16 @@ inherited vimmMainForm: TvimmMainForm
       object Panel1: TPanel
         Left = 1
         Top = 511
-        Width = 841
+        Width = 1005
         Height = 41
         Align = alBottom
         ParentBackground = False
         TabOrder = 0
         DesignSize = (
-          841
+          1005
           41)
         object btnCancel: TButton
-          Left = 480
+          Left = 644
           Top = 6
           Width = 74
           Height = 25
@@ -51,7 +53,7 @@ inherited vimmMainForm: TvimmMainForm
           OnClick = btnCancelClick
         end
         object btnSave: TButton
-          Left = 736
+          Left = 900
           Top = 6
           Width = 93
           Height = 25
@@ -62,7 +64,7 @@ inherited vimmMainForm: TvimmMainForm
           OnClick = btnSaveClick
         end
         object btnAdd: TButton
-          Left = 648
+          Left = 812
           Top = 6
           Width = 84
           Height = 25
@@ -72,7 +74,7 @@ inherited vimmMainForm: TvimmMainForm
           OnClick = btnAddClick
         end
         object btnCancelRecord: TButton
-          Left = 560
+          Left = 724
           Top = 6
           Width = 82
           Height = 25
@@ -85,7 +87,7 @@ inherited vimmMainForm: TvimmMainForm
       object GridPanel: TGridPanel
         Left = 1
         Top = 1
-        Width = 841
+        Width = 1005
         Height = 510
         Align = alClient
         BevelInner = bvRaised

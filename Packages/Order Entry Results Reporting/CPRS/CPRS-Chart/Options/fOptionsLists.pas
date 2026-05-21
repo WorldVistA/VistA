@@ -4,36 +4,46 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, ORCtrls, OrFn, Menus, fBase508Form,
-  VA508AccessibilityManager;
+  StdCtrls, ExtCtrls, ORCtrls, OrFn, Menus, fBase508Form, ORCheckComboBox,
+  VA508AccessibilityManager, uMisc;
 
 type
   TfrmOptionsLists = class(TfrmBase508Form)
+    mnuPopPatient: TPopupMenu;
+    mnuPatientID: TMenuItem;
+    gpMain: TGridPanel;
+    radAddByType: TRadioGroup;
+    Panel1: TPanel;
+    lblInfo: TMemo;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Panel4: TPanel;
+    lblAddBy: TLabel;
+    lstAddBy: TORCheckComboBox;
+    btnNewList: TButton;
+    btnDeleteList: TButton;
+    lblPersonalLists: TLabel;
+    lstPersonalLists: TORListBox;
+    Panel5: TPanel;
+    Panel6: TPanel;
+    Panel7: TPanel;
+    Panel8: TPanel;
+    Panel9: TPanel;
+    Panel10: TPanel;
+    lblPatientsAdd: TLabel;
+    lstListPats: TORListBox;
+    btnListAdd: TButton;
+    btnListAddAll: TButton;
+    btnPersonalPatientR: TButton;
+    btnPersonalPatientRA: TButton;
+    btnListSaveChanges: TButton;
+    lblPersonalPatientList: TLabel;
+    lstPersonalPatients: TORListBox;
+    grpVisibility: TRadioGroup;
+    btnSaveSchanges: TButton;
     pnlBottom: TPanel;
     btnOK: TButton;
     btnCancel: TButton;
-    lblAddBy: TLabel;
-    lblPatientsAdd: TLabel;
-    lblPersonalPatientList: TLabel;
-    lblPersonalLists: TLabel;
-    lstAddBy: TORComboBox;
-    btnPersonalPatientRA: TButton;
-    btnPersonalPatientR: TButton;
-    lstListPats: TORListBox;
-    lstPersonalPatients: TORListBox;
-    btnListAddAll: TButton;
-    btnNewList: TButton;
-    btnDeleteList: TButton;
-    lstPersonalLists: TORListBox;
-    radAddByType: TRadioGroup;
-    btnListSaveChanges: TButton;
-    btnListAdd: TButton;
-    lblInfo: TMemo;
-    bvlBottom: TBevel;
-    mnuPopPatient: TPopupMenu;
-    mnuPatientID: TMenuItem;
-    grpVisibility: TRadioGroup;
-    Button1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure btnNewListClick(Sender: TObject);
     procedure radAddByTypeClick(Sender: TObject);
@@ -64,12 +74,14 @@ type
     procedure lstAddByKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure lstAddByMouseClick(Sender: TObject);
+    procedure lstAddByMainCheckboxClick(Sender: TObject);
   private
     { Private declarations }
     FLastList: integer;
     FChanging: boolean;
     FProviderChanging: Boolean;
     FAddSelection: Boolean;
+    FIncludeNonVAProviders: boolean;
     procedure AddIfUnique(entry: string; aList: TORListBox);
   public
     { Public declarations }
@@ -82,7 +94,10 @@ procedure DialogOptionsLists(topvalue, leftvalue, fontsize: integer; var actiont
 
 implementation
 
-uses fOptionsNewList, rOptions, uOptions, rCore, mPtSelOptns, VAUtils, uORLists, uSimilarNames;
+uses
+  fOptionsNewList, rOptions, uOptions, rCore, mPtSelOptns, VAUtils, uORLists,
+  uSimilarNames
+  , uSizing;
 
 {$R *.DFM}
 
@@ -110,21 +125,25 @@ begin
       end;
       ResizeAnchoredFormToFont(frmOptionsLists);
       ShowModal;
-      actiontype := btnOK.Tag;
+      actiontype := btnOK.Tag; // NOTE: actiontype is never used. VISTAOR-41630
     end;
   finally
-    frmOptionsLists.Release;
+//    frmOptionsLists.Release;   // commenting out Release. VISTAOR-41630
+    FreeAndNil(frmOptionsLists); // VISTAOR-41630
   end;
 end;
 
 procedure TfrmOptionsLists.FormCreate(Sender: TObject);
 begin
   rpcGetPersonalLists(lstPersonalLists.Items);
-  grpVisibility.ItemIndex := 1;
+  grpVisibility.ItemIndex := 1; // All CPRS Users
   grpVisibility.Enabled := FALSE;
   radAddByType.ItemIndex := 0;
   radAddByTypeClick(self);
-  FLastList := 0;
+//  FLastList := 0;
+  FLastList := -1; // AA: No selected lists at the start VISTAOR-41630
+  // Non-Va Providers call
+  FIncludeNonVAProviders := IncludeNonVAProviders(lstAddBy);
 end;
 
 procedure TfrmOptionsLists.btnNewListClick(Sender: TObject);
@@ -153,6 +172,7 @@ begin
   with lstAddBy do
   begin
     Clear;
+    MainCheckBoxVisible := False;
     case radAddByType.ItemIndex of
       0: begin
            ListItemsOnly := false;
@@ -177,6 +197,8 @@ begin
            LongList := true;
            InitLongList('');
            lblAddBy.Caption := 'Provider:';
+           if FIncludeNonVAProviders then
+             MainCheckBoxVisible := True;
          end;
       4: begin
            ListItemsOnly := false;
@@ -223,6 +245,10 @@ begin
     end;
   if not inlist then
     aList.Items.Add(entry);
+
+//  in case of checking the whole entry not just 1st piece:
+//  if aList.Items.IndexOf(entry) < 0 then
+//    aList.Items.Add(entry);
 end;
 
 procedure TfrmOptionsLists.lstPersonalListsChange(Sender: TObject);
@@ -260,6 +286,7 @@ begin
     FChanging := False;
     btnDeleteList.Enabled := true;
   end;
+
   if lstPersonalPatients.Items.Count = 1 then         // avoid selecting '^No patients found.' msg
     if Piece(lstPersonalPatients.Items[0], '^', 1) = '' then
     begin
@@ -292,33 +319,36 @@ var
 
 begin
   inherited;
-  if FProviderChanging and ((radAddByType.ItemIndex = 0) or (radAddByType.ItemIndex = 3)) then
+  if FProviderChanging and
+    ((radAddByType.ItemIndex = 0) or (radAddByType.ItemIndex = 3)) then
     exit;
 
-  if radAddByType.ItemIndex = 0 {patient} then begin
+  if radAddByType.ItemIndex = 0 { patient } then
+  begin
     with lstAddBy do
-    if TfraPtSelOptns.IsLast5(Text) then begin
+      if TfraPtSelOptns.IsLast5(Text) then
+      begin
         ListPtByLast5(Items, Text);
         ShowMatchingPatients;
       end
-    else if TfraPtSelOptns.IsFullSSN(Text) then begin
+      else if TfraPtSelOptns.IsFullSSN(Text) then
+      begin
         ListPtByFullSSN(Items, Text);
         ShowMatchingPatients;
-    end;
+      end;
   end;
 
- if radAddByType.ItemIndex = 3 then
+  if radAddByType.ItemIndex = 3 { provider } then
   begin
-    if not CheckForSimilarName(lstAddBy, aErrMsg, sPr, lstPersonalLists.Items) then
-    begin
-      ShowMsgOn(Trim(aErrMsg) <> '' , aErrMsg, 'Invalid Provider');
-    end;
+    if not CheckForSimilarName(lstAddBy, aErrMsg, sPr, lstPersonalLists.Items)
+    then
+      ShowMsgOn(Trim(aErrMsg) <> '', aErrMsg, 'Invalid Provider');
   end;
 
   if FAddSelection or (radAddByType.ItemIndex <> 0) then
   begin
-    FAddSelection := False;
-    lstAddByClick(sender);
+    FAddSelection := FALSE;
+    lstAddByClick(Sender);
   end;
 end;
 
@@ -342,10 +372,7 @@ begin
       lstAddBy.Caption := lblAddBy.Caption;
       AddIfUnique(lstAddBy.Items[lstAddBy.ItemIndex], lstListPats);
     end;
-    1:
-    begin
-      ListPtByWard(lstListPats.Items, strtointdef(ien,0));
-    end;
+    1: ListPtByWard(lstListPats.Items, strtointdef(ien,0));
     2:
     begin
       rpcGetApptUserDays(visitstart, visitstop);   // use user's date range for appointments
@@ -358,24 +385,13 @@ begin
         AddIfUnique(aList[i], lstListPats);
       aList.Free;
     end;
-    3:
-    begin
-      ListPtByProvider(lstListPats.Items, strtoint64def(ien,0));
-    end;
-    4:
-    begin
-      ListPtBySpecialty(lstListPats.Items, strtointdef(ien,0));
-    end;
-    5:
-    begin
-      ListPtByTeam(lstListPats.Items, strtointdef(ien,0));
-    end;
-    6:
-    begin
-      ListPtByPCMMTeam(lstListPats.Items, strtointdef(ien,0));
-    end;
+    3: ListPtByProvider(lstListPats.Items, strtoint64def(ien,0));
+    4: ListPtBySpecialty(lstListPats.Items, strtointdef(ien,0));
+    5: ListPtByTeam(lstListPats.Items, strtointdef(ien,0));
+    6: ListPtByPCMMTeam(lstListPats.Items, strtointdef(ien,0));
 
   end;
+
   if lstListPats.Items.Count = 1 then         // avoid selecting '^No patients found.' msg
     if Piece(lstListPats.Items[0], '^', 1) = '' then
     begin
@@ -383,6 +399,7 @@ begin
       btnListAdd.Enabled := false;
       exit;
     end;
+
   btnListAddAll.Enabled := (lstListPats.Items.Count > 0) and (lstPersonalLists.ItemIndex > -1);
   btnListAdd.Enabled := (lstListPats.SelCount > 0) and (lstPersonalLists.ItemIndex > -1);
 end;
@@ -555,6 +572,11 @@ begin
       ItemIndex := 0;
       lstPersonalListsChange(self);
     end;
+  ClientHeight := gpMain.Height + 6;
+  gpMain.ColumnCollection[1].Value :=
+    getMainFormTextWidth(btnListSaveChanges.Caption) + 26;
+  btnNewList.Margins.Top := lblAddBy.Height + 6;
+  btnListAdd.Margins.Top := lblAddBy.Height + 6;
 end;
 
 procedure TfrmOptionsLists.grpVisibilityClick(Sender: TObject);
@@ -568,27 +590,13 @@ procedure TfrmOptionsLists.lstAddByNeedData(Sender: TObject;
 begin
   with lstAddBy do
   begin
+    Pieces := '2';
     case radAddByType.ItemIndex of
-      0: begin
-           Pieces := '2';
-           setPatientList(lstAddBy, StartFrom, Direction);
-         end;
-      1: begin
-           Pieces := '2';
-         end;
-      2: begin
-           Pieces := '2';
-           setClinicList(lstAddBy, StartFrom, Direction);
-         end;
+      0: setPatientList(lstAddBy, StartFrom, Direction);
+      2: setClinicList( lstAddBy, StartFrom, Direction);
       3: begin
            Pieces := '2,3';
            setProviderList(lstAddBy, StartFrom, Direction);
-         end;
-      4: begin
-           Pieces := '2';
-         end;
-      5: begin
-           Pieces := '2';
          end;
     end;
   end;
@@ -692,6 +700,15 @@ begin
         end;
     end;
   end;
+end;
+
+procedure TfrmOptionsLists.lstAddByMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := lstAddBy.SelectedDataString;
+  lstAddBy.ReInitLongList;
+  if ALastData <> lstAddBy.SelectedDataString then
+    lstAddByChange(lstAddBy);
 end;
 
 procedure TfrmOptionsLists.lstAddByMouseClick(Sender: TObject);

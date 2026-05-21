@@ -160,6 +160,7 @@ type
     FCaption: TStaticText;
     FBlackColorMode: Boolean;
     FOnDateDialogClosed: TNotifyEvent;
+    FOnDateDialogOpening: TNotifyEvent;
     // NSR20071216 AA 2016-01-22 --------------------------------------------- Begin
     fDateSelected: TDateTime;
     fDateRange: TDateRange;
@@ -208,6 +209,8 @@ type
     property Caption: string read GetCaption write SetCaption;
     property OnDateDialogClosed: TNotifyEvent read FOnDateDialogClosed
       write FOnDateDialogClosed;
+    property OnDateDialogOpening: TNotifyEvent read FOnDateDialogOpening
+      write FOnDateDialogOpening;
   end;
 
   // 508 classes
@@ -245,7 +248,9 @@ type
     FTemplateField: Boolean;
     FBlackColorMode: Boolean;
     FORYearEditClass: TORYearEditClass;
-    fColor: TColor; // NSR20071216 AA 2016-01-22
+    fColor: TColor;
+    FOnDateDialogOpening: TNotifyEvent;
+    FOnDateDialogClosed: TNotifyEvent; // NSR20071216 AA 2016-01-22
     procedure SetColor(const Value: TColor); // NSR20071216 AA 2016-01-22
     procedure SetIncludeBtn(const Value: Boolean);
     procedure SetIncludeDay(Value: Boolean);
@@ -302,6 +307,10 @@ type
     property Year: Integer read FYear write SetYear;
     property OnChange: TNotifyEvent read FOnChange write FOnChange;
     property Color: TColor read fColor write SetColor; // NSR20071216
+    property OnDateDialogClosed: TNotifyEvent read FOnDateDialogClosed
+      write FOnDateDialogClosed;
+    property OnDateDialogOpening: TNotifyEvent read FOnDateDialogOpening
+      write FOnDateDialogOpening;
     property Anchors;
     property Enabled;
     property Font;
@@ -326,7 +335,6 @@ uses
   System.UITypes, VAUtils, ORUnitTesting, System.StrUtils;
 
 {$R *.DFM}
-{$R ORDtTm}
 
 const
   FMT_DATETIME = 'mmm d,yyyy@hh:nn';
@@ -1210,39 +1218,44 @@ var
   DateDialog: TORDateTimeDlg;
   ParsedDate: TFMDateTime;
 begin
-  DateDialog := TORDateTimeDlg.Create(Application);
+  if Assigned(FOnDateDialogOpening) then
+    FOnDateDialogOpening(self);
   try
-    // NSR20071216 AA 2016-01-22 --------------------------------------------- Begin
-    DateDialog.DateRange := DateRange;
-    if DateSelected <> 0 then // RTC item # 322517 (20160518)
-    DateDialog.DateTime := DateSelected;
-    // NSR20071216 AA 2016-01-22 ----------------------------------------------- End
-    if Length(Text) > 0 then
-    begin
-      ParsedDate := ServerParseFMDate(Text);
-      if ParsedDate > -1 then
-        FFMDateTime := ParsedDate
-      else
-        FFMDateTime := 0;
-    end;
-    DateDialog.DateOnly := FDateOnly;
-    DateDialog.FMDateTime := FFMDateTime;
-    DateDialog.RequireTime := FRequireTime;
+    DateDialog := TORDateTimeDlg.Create(Application);
+    try
+      // NSR20071216 AA 2016-01-22 --------------------------------------------- Begin
+      DateDialog.DateRange := DateRange;
+      if DateSelected <> 0 then // RTC item # 322517 (20160518)
+      DateDialog.DateTime := DateSelected;
+      // NSR20071216 AA 2016-01-22 ----------------------------------------------- End
+      if Length(Text) > 0 then
+      begin
+        ParsedDate := ServerParseFMDate(Text);
+        if ParsedDate > -1 then
+          FFMDateTime := ParsedDate
+        else
+          FFMDateTime := 0;
+      end;
+      DateDialog.DateOnly := FDateOnly;
+      DateDialog.FMDateTime := FFMDateTime;
+      DateDialog.RequireTime := FRequireTime;
 
-    if DateDialog.Execute then
-    begin
-      FFMDateTime := DateDialog.FMDateTime;
-      UpdateText;
-      FTimeIsNow := DateDialog.RelativeTime = 'NOW';
-      fDateSelected := DateDialog.DateTime; // NSR20071216 AA 2016-01-22
+      if DateDialog.Execute then
+      begin
+        FFMDateTime := DateDialog.FMDateTime;
+        UpdateText;
+        FTimeIsNow := DateDialog.RelativeTime = 'NOW';
+        fDateSelected := DateDialog.DateTime; // NSR20071216 AA 2016-01-22
+      end;
+    finally
+      DateDialog.Free;
     end;
+    if ShouldFocus(Self) then // Some events may hide the component
+      SetFocus;
   finally
-    DateDialog.Free;
+    if Assigned(OnDateDialogClosed) then
+      OnDateDialogClosed(self);
   end;
-  if Assigned(OnDateDialogClosed) then
-    OnDateDialogClosed(self);
-  if ShouldFocus(Self) then // Some events may hide the component
-    SetFocus;
 end;
 
 procedure TORDateBox.Change;
@@ -1945,44 +1958,51 @@ var
   m, d, Y: Word;
   DateDialog: TORDateTimeDlg;
 begin
-  DateDialog := TORDateTimeDlg.Create(self);
+  if Assigned(FOnDateDialogOpening) then
+    FOnDateDialogOpening(Self);
   try
-    mm := FMonth;
-    dd := FDay;
-    yy := FYear;
-    DecodeDate(Now, Y, m, d);
-    if (FYear = 0) then
-      FYear := Y;
-    if (FYear = Y) then
-    begin
-      if ((FMonth = 0) or (FMonth = m)) and (FDay = 0) then
+    DateDialog := TORDateTimeDlg.Create(self);
+    try
+      mm := FMonth;
+      dd := FDay;
+      yy := FYear;
+      DecodeDate(Now, Y, m, d);
+      if (FYear = 0) then
+        FYear := Y;
+      if (FYear = Y) then
       begin
-        FMonth := m;
-        FDay := d;
+        if ((FMonth = 0) or (FMonth = m)) and (FDay = 0) then
+        begin
+          FMonth := m;
+          FDay := d;
+        end;
       end;
-    end;
-    if (FMonth = 0) then
-      FMonth := 1;
-    if (FDay = 0) then
-      FDay := 1;
-    DateDialog.FMDateTime := GetFMDate;
-    DateDialog.DateOnly := True;
-    DateDialog.RequireTime := False;
-    if DateDialog.Execute then
-    begin
-      FYear := 0;
-      FMonth := 0;
-      FDay := 0;
-      SetFMDate(DateDialog.FMDateTime);
-    end
-    else
-    begin
-      SetYear(yy);
-      SetMonth(mm);
-      SetDay(dd);
+      if (FMonth = 0) then
+        FMonth := 1;
+      if (FDay = 0) then
+        FDay := 1;
+      DateDialog.FMDateTime := GetFMDate;
+      DateDialog.DateOnly := True;
+      DateDialog.RequireTime := False;
+      if DateDialog.Execute then
+      begin
+        FYear := 0;
+        FMonth := 0;
+        FDay := 0;
+        SetFMDate(DateDialog.FMDateTime);
+      end
+      else
+      begin
+        SetYear(yy);
+        SetMonth(mm);
+        SetDay(dd);
+      end;
+    finally
+      DateDialog.Free;
     end;
   finally
-    DateDialog.Free;
+    if Assigned(FOnDateDialogClosed) then
+      FOnDateDialogClosed(Self);
   end;
 end;
 

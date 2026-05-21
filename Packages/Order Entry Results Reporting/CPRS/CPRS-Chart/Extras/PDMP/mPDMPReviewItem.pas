@@ -6,10 +6,10 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
   System.Classes,
   Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls,
-  Vcl.ExtCtrls, VA508AccessibilityManager, Vcl.Menus;
+  Vcl.ExtCtrls, VA508AccessibilityManager, Vcl.Menus, fBase508Frame;
 
 type
-  TfrPDMPReviewItem = class(TFrame)
+  TfrPDMPReviewItem = class(TBase508Frame)
     mm: TMemo;
     pnlItem: TPanel;
     pnlRequired: TPanel;

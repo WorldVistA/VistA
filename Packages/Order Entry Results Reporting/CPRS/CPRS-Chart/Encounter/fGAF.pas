@@ -5,35 +5,41 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fPCEBase, StdCtrls, Buttons, ExtCtrls, Grids, ORFn, ORNet, ORCtrls,
-  ORDtTm, ComCtrls, fPCEBaseGrid, Menus, VA508AccessibilityManager;
+  ORDtTm, ComCtrls, fPCEBaseGrid, Menus, VA508AccessibilityManager,
+  ORCheckComboBox, U508Button, U508CaptionEdit, U508ORCheckComboBox;
 
 type
   TfrmGAF = class(TfrmPCEBaseGrid)
     lblGAF: TStaticText;
-    edtScore: TCaptionEdit;
+    edtScore: U508CaptionEdit.TCaptionEdit;
     udScore: TUpDown;
     dteGAF: TORDateBox;
     lblEntry: TStaticText;
     lblScore: TLabel;
     lblDate: TLabel;
     lblDeterminedBy: TLabel;
-    cboGAFProvider: TORComboBox;
-    btnURL: TButton;
-    Spacer1: TLabel;
-    Spacer2: TLabel;
+    cboGAFProvider: U508ORCheckComboBox.TORCheckComboBox;
+    btnURL: U508Button.TButton;
+    pnlBottom: TPanel;
+    pnlTop: TPanel;
     procedure cboGAFProviderNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure edtScoreChange(Sender: TObject);
-    procedure dteGAFExit(Sender: TObject);
     procedure cboGAFProviderExit(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure btnURLClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure cboGAFProviderMainCheckboxClick(Sender: TObject);
+    procedure pnlGAFProviderResize(Sender: TObject);
+    procedure dteGAFExit(Sender: TObject);
   private
     FDataLoaded: boolean;
     procedure LoadScores;
     function BADData(ShowMessage: boolean): boolean;
+    procedure CheckForBadDate;
+  protected
+    procedure Loaded; override;
   public
     procedure AllowTabChange(var AllowChange: boolean); override;
     procedure GetGAFScore(var Score: integer; var Date: TFMDateTime; var Staff: Int64);
@@ -42,13 +48,10 @@ type
 
 function ValidGAFData(Score: integer; Date: TFMDateTime; Staff: Int64): boolean;
 
-var
-  frmGAF: TfrmGAF;
-
 implementation
 
 uses rPCE, rCore, uCore, uPCE, fEncounterFrame, VA508AccessibilityRouter,
-  uORLists, uSimilarNames;
+  uORLists, uSimilarNames, uMisc;
 
 {$R *.DFM}
 
@@ -58,6 +61,12 @@ begin
     Result := FALSE
   else
     Result := ((Patient.DateDied <= 0) or (Date <= Patient.DateDied));
+end;
+
+procedure TfrmGAF.Loaded;
+begin
+  AutoSizeDisabled := True;
+  inherited;
 end;
 
 procedure TfrmGAF.LoadScores;
@@ -85,6 +94,18 @@ begin
   end;
 end;
 
+procedure TfrmGAF.pnlGAFProviderResize(Sender: TObject);
+// cboGAFProvider completely disappears upon font resizing without this code
+begin
+  inherited;
+  cboGAFProvider.Left := dteGAF.Left;
+  cboGAFProvider.Width := pnlBottom.Width - cboGAFProvider.Left -
+    cboGAFProvider.Margins.Right;
+  cboGAFProvider.Top := lblDeterminedBy.Top - 3;
+  cboGAFProvider.Height := pnlBottom.Height - cboGAFProvider.Top -
+    cboGAFProvider.Margins.Bottom;
+end;
+
 procedure TfrmGAF.cboGAFProviderNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 begin
@@ -92,12 +113,26 @@ begin
   setPersonList(cboGAFProvider,StartFrom, Direction);
 end;
 
+procedure TfrmGAF.CheckForBadDate;
+var
+  msg: string;
+  GAFDate: TFMDateTime;
+begin
+  GAFDate := dteGAF.FMDateTime;
+  msg := ValidateGAFDate(GAFDate);
+  if (msg <> '') then
+  begin
+    if(dteGAF.FMDateTime <> GAFDate) then
+      dteGAF.FMDateTime := GAFDate;
+    InfoBox(msg, 'Invalid Date Determined', MB_OK);
+  end;
+end;
+
 function TfrmGAF.BADData(ShowMessage: boolean): boolean;
 var
   PName, msg: string;
   GAFDate: TFMDateTime;
   UIEN: Int64;
-
 begin
   GAFDate := dteGAF.FMDateTime;
   msg := ValidateGAFDate(GAFDate);
@@ -131,7 +166,6 @@ end;
 procedure TfrmGAF.edtScoreChange(Sender: TObject);
 var
   i: integer;
-
 begin
   inherited;
   i := StrToIntDef(edtScore.Text,udScore.Min);
@@ -142,16 +176,19 @@ begin
   edtScore.SelStart := length(edtScore.Text);
 end;
 
-procedure TfrmGAF.dteGAFExit(Sender: TObject);
-begin
-  inherited;
-//  BadData(TRUE);
-end;
-
 procedure TfrmGAF.cboGAFProviderExit(Sender: TObject);
 begin
   inherited;
   BadData(TRUE);
+end;
+
+procedure TfrmGAF.cboGAFProviderMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := cboGAFProvider.SelectedDataString;
+  cboGAFProvider.ReInitLongList;
+  if ALastData <> cboGAFProvider.SelectedDataString then
+    cboGAFProviderExit(cboGAFProvider);
 end;
 
 procedure TfrmGAF.AllowTabChange(var AllowChange: boolean);
@@ -190,6 +227,12 @@ begin
   end;
 end;
 
+procedure TfrmGAF.dteGAFExit(Sender: TObject);
+begin
+  inherited;
+  CheckForBadDate;
+end;
+
 procedure TfrmGAF.FormActivate(Sender: TObject);
 begin
   inherited;
@@ -224,12 +267,13 @@ end;
 procedure TfrmGAF.FormCreate(Sender: TObject);
 begin
   inherited;
+  AutoSizeDisabled := True;
   FTabName := CT_GAFNm;
   btnURL.Visible := (User.WebAccess and (GAFURL <> ''));
   FormActivate(Sender);
+  cboGAFProvider.MainCheckBoxVisible := IncludeNonVAProviders(cboGAFProvider);
 end;
 
 initialization
   SpecifyFormIsNotADialog(TfrmGAF);
-
 end.

@@ -112,6 +112,9 @@ inherited frmAlertRangeEdit: TfrmAlertRangeEdit
       Caption = ''
       TabOrder = 2
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
     object stxtRangeInfo: TVA508StaticText
       Name = 'stxtRangeInfo'
@@ -123,6 +126,9 @@ inherited frmAlertRangeEdit: TfrmAlertRangeEdit
       Caption = 'Select Start and Stop Dates within the Range of:'
       TabOrder = 3
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
     object stxtStart: TVA508StaticText
       Name = 'stxtStart'
@@ -134,6 +140,9 @@ inherited frmAlertRangeEdit: TfrmAlertRangeEdit
       Caption = 'Start '
       TabOrder = 4
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
     object stxtStop: TVA508StaticText
       Name = 'stxtStop'
@@ -145,6 +154,9 @@ inherited frmAlertRangeEdit: TfrmAlertRangeEdit
       Caption = 'Stop Date'
       TabOrder = 5
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
     object stxtChanged: TStaticText
       Left = 312
@@ -176,6 +188,9 @@ inherited frmAlertRangeEdit: TfrmAlertRangeEdit
         'site'
       TabOrder = 7
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
   end
   inherited amgrMain: TVA508AccessibilityManager

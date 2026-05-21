@@ -9,13 +9,13 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fAutoSz, StdCtrls, ORCtrls, ORFn, ORDtTm, VA508AccessibilityManager,
-  Vcl.ExtCtrls, fBase508Form;
+  Vcl.ExtCtrls, fBase508Form, ORCheckComboBox, uMisc;
 
 type
 
   TfrmNoteCPFields = class(TfrmBase508Form)
     lblAuthor: TLabel;
-    cboAuthor: TORComboBox;
+    cboAuthor: TORCheckComboBox;
     lblProcSummCode: TOROffsetLabel;
     cboProcSummCode: TORComboBox;
     lblProcDateTime: TOROffsetLabel;
@@ -29,6 +29,7 @@ type
     procedure cmdOKClick(Sender: TObject);
     procedure cboAuthorNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
+    procedure cboAuthorMainCheckboxClick(Sender: TObject);
   private
     FAuthor: int64;
     FProcSummCode: integer;
@@ -87,6 +88,9 @@ procedure TfrmNoteCPFields.FormCreate(Sender: TObject);
 begin
   inherited;
   FOKPressed := False;
+
+  cboAuthor.MainCheckBoxVisible := IncludeNonVAProviders(cboAuthor);
+
   cboAuthor.InitLongList(User.Name);
   cboAuthor.SelectByIEN(User.DUZ);
 end;
@@ -158,10 +162,15 @@ begin
   Close;
 end;
 
+procedure TfrmNoteCPFields.cboAuthorMainCheckboxClick(Sender: TObject);
+begin
+  cboAuthor.ReInitLongList;
+end;
+
 procedure TfrmNoteCPFields.cboAuthorNeedData(Sender: TObject;
   const StartFrom: String; Direction, InsertAt: Integer);
 begin
-  setPersonList((Sender as TORComboBox), StartFrom, Direction);
+  setPersonList(cboAuthor, StartFrom, Direction);
 end;
 
 end.

@@ -5,7 +5,7 @@ unit ORFn;
 interface  // --------------------------------------------------------------------------------
 
 uses SysUtils, Windows, Messages, Classes, Controls, StdCtrls, ExtCtrls, ComCtrls, Forms,
-     Graphics, Menus, RichEdit, Buttons, System.Character, Vcl.Dialogs;
+     Graphics, Menus, RichEdit, Buttons, System.Character, Vcl.Dialogs, System.JSON;
 
 const
   U = '^';
@@ -35,8 +35,16 @@ var
 
 type
   TFMDateTime = Double;
-  TORIdleCallProc = procedure(Msg: string);
+  TFMDateTimeHelper = record helper for TFMDateTime
+  public
+    function ToString: string;
+  end;
+  TORJSONObjectHelper = class helper for TJSONObject
+  public
+    function AddPair(const Str: string; const Val: TFMDateTime): TJSONObject; overload;
+  end;
 
+  TORIdleCallProc = procedure(Msg: string);
 
 { Date/Time functions }
 function DateTimeToFMDateTime(ADateTime: TDateTime): TFMDateTime;
@@ -210,7 +218,7 @@ implementation  // -------------------------------------------------------------
 uses
   System.Math,
   ORCtrls, Grids, VCLTee.Chart, CheckLst, VAUtils, VCLTee.TeEngine, VCLTee.TeCanvas,
-  VCLTee.TeeProcs, ORUnitTesting, DateUtils;
+  VCLTee.TeeProcs, ORUnitTesting, DateUtils, System.Generics.Collections;
 
 const
   { names of months used by FormatFMDateTime }
@@ -274,6 +282,19 @@ type
       property Font;
       property ParentFont;
     end;
+
+{ TFMDateTimeHelper }
+function TFMDateTimeHelper.ToString: string;
+begin
+  Result := FloatToStrF(Self, ffGeneral, 13, 0);
+end;
+
+{ TORJSONObjectHelper }
+
+function TORJSONObjectHelper.AddPair(const Str: string; const Val: TFMDateTime): TJSONObject;
+begin
+  Result := AddPair(Str, FloatToStrF(Val, ffGeneral, 13, 0));
+end;
 
 { Date/Time functions }
 
@@ -1627,29 +1648,79 @@ begin
   Result := uMainFontTextHeight;
 end;
 
+type
+  TNestedRedrawInfo = class(TObject)
+  private
+    FHandle: HWnd;
+    FCount: Integer;
+  end;
+
+var
+  NestedRedrawHandles: TObjectList<TNestedRedrawInfo>;
+
 procedure RedrawSuspend(AHandle: HWnd);
+var
+  i, idx: Integer;
+  Info: TNestedRedrawInfo;
 begin
-  SendMessage(AHandle, WM_SETREDRAW, 0, 0);
+  if not Assigned(NestedRedrawHandles) then
+    NestedRedrawHandles := TObjectList<TNestedRedrawInfo>.Create;
+  idx := -1;
+  for i := 0 to NestedRedrawHandles.Count - 1 do
+    if NestedRedrawHandles[i].FHandle = AHandle then
+    begin
+      idx := i;
+      break;
+    end;
+  if idx < 0 then
+  begin
+    Info := TNestedRedrawInfo.Create;
+    Info.FHandle := AHandle;
+    idx := NestedRedrawHandles.Add(info);
+  end;
+  if (idx >= 0) then
+  begin
+    if NestedRedrawHandles[idx].FCount = 0 then
+      SendMessage(AHandle, WM_SETREDRAW, 0, 0);
+    inc(NestedRedrawHandles[idx].FCount);
+  end;
 end;
 
 procedure RedrawActivate(AHandle: HWnd);
+var
+  i, idx: Integer;
 begin
-  SendMessage(AHandle, WM_SETREDRAW, 1, 0);
-//  InvalidateRect(AHandle, nil, True);
-  RedrawWindow(AHandle, nil, 0,
-    RDW_ERASE or RDW_FRAME or RDW_INVALIDATE or RDW_ALLCHILDREN);
-  // This webpage:
-  //   https://docs.microsoft.com/en-us/windows/win32/gdi/wm-setredraw
-  // documents why the old code: InvalidateRect(AHandle, nil, True);
-  // is wrong:
-  //   Note
-  //   You should use RedrawWindow with the specified flags, instead of
-  //   InvalidateRect, because the former is necessary for some controls that
-  //   have nonclient area of their own, or have window styles that cause them
-  //   to be given a nonclient area (such as WS_THICKFRAME, WS_BORDER,
-  //   or WS_EX_CLIENTEDGE). If the control does not have a nonclient area,
-  //   then RedrawWindow with these flags will do only as much invalidation as
-  //   InvalidateRect would.
+  idx := -1;
+  if Assigned(NestedRedrawHandles) then
+    for i := 0 to NestedRedrawHandles.Count - 1 do
+      if NestedRedrawHandles[i].FHandle = AHandle then
+      begin
+        idx := i;
+        break;
+      end;
+  if (idx >= 0) then
+    dec(NestedRedrawHandles[idx].FCount);
+  if (idx < 0) or (NestedRedrawHandles[idx].FCount < 1) then
+  begin
+    SendMessage(AHandle, WM_SETREDRAW, 1, 0);
+    //  InvalidateRect(AHandle, nil, True);
+    RedrawWindow(AHandle, nil, 0,
+      RDW_ERASE or RDW_FRAME or RDW_INVALIDATE or RDW_ALLCHILDREN);
+    // This webpage:
+    //   https://docs.microsoft.com/en-us/windows/win32/gdi/wm-setredraw
+    // documents why the old code: InvalidateRect(AHandle, nil, True);
+    // is wrong:
+    //   Note
+    //   You should use RedrawWindow with the specified flags, instead of
+    //   InvalidateRect, because the former is necessary for some controls that
+    //   have nonclient area of their own, or have window styles that cause them
+    //   to be given a nonclient area (such as WS_THICKFRAME, WS_BORDER,
+    //   or WS_EX_CLIENTEDGE). If the control does not have a nonclient area,
+    //   then RedrawWindow with these flags will do only as much invalidation as
+    //   InvalidateRect would.
+    if (idx >= 0) then
+      NestedRedrawHandles.Delete(idx);
+  end;
 end;
 
 procedure ResetSelectedForList(AListBox: TListBox);
@@ -3077,5 +3148,6 @@ finalization
   KillObj(@IdleCaller);
   FreeAndNil(AlignList);
   FreeAndNil(AnchorList);
+  FreeAndNil(NestedRedrawHandles);
 
 end.

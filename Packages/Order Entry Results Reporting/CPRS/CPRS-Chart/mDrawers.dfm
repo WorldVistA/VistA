@@ -1,4 +1,4 @@
-object fraDrawers: TfraDrawers
+inherited fraDrawers: TfraDrawers
   Left = 0
   Top = 0
   Width = 223

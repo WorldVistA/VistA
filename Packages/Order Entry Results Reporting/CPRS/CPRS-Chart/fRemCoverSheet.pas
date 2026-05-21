@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ORCtrls, StdCtrls, ExtCtrls, ComCtrls, ImgList, mImgText, Buttons, ORClasses, fBase508Form,
-  VA508AccessibilityManager, VA508ImageListLabeler, System.ImageList;
+  VA508AccessibilityManager, VA508ImageListLabeler, System.ImageList,
+  ORCheckComboBox, uMisc, fBase508Frame;
 
 type
   TRemCoverDataLevel = (dlPackage, dlSystem, dlDivision, dlService, dlLocation, dlUserClass, dlUser);
@@ -44,7 +45,6 @@ type
     cbLocation: TORCheckBox;
     cbUserClass: TORCheckBox;
     cbUser: TORCheckBox;
-    cbxUser: TORComboBox;
     cbxClass: TORComboBox;
     cbxLocation: TORComboBox;
     lblEdit: TLabel;
@@ -72,6 +72,7 @@ type
     caMoveUP: TVA508ComponentAccessibility;
     grdPanel: TGridPanel;
     cbLegend: TCheckBox;
+    cbxUser: TORCheckComboBox;
     procedure cbxLocationNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure cbxServiceNeedData(Sender: TObject; const StartFrom: String;
@@ -143,6 +144,7 @@ type
     procedure cbxUserEnter(Sender: TObject);
     procedure cbxUserExit(Sender: TObject);
     procedure cbxUserMouseClick(Sender: TObject);
+    procedure cbxUserMainCheckboxClick(Sender: TObject);
   private
     FData: TORStringList;     // DataCode IEN ^ Modified Flag  Object=TStringList
     FUserInfo: TORStringList; // C^User Class, D^Division
@@ -208,10 +210,9 @@ implementation
 
 uses rCore, uCore, uPCE, rProbs, rTIU, ORFn, rReminders, uReminders,
   fRemCoverPreview, VAUtils, VA508AccessibilityRouter, uORLists, uSimilarNames,
-  uWriteAccess;
+  uWriteAccess, VAShared.UTStringsHelper;
 
 {$R *.DFM}
-{$R sremcvr}
 
 const
   DataCode: array[TRemCoverDataLevel] of string[1] =
@@ -313,8 +314,8 @@ begin
   ResizeAnchoredFormToFont(self);
   pnlBtns.Top := pnlBottom.Top + pnlBottom.Height;
 
-  FCatInfo := TORStringList.Create;
-  FData := TORStringList.Create;
+  FCatInfo := TORStringList.Create(True);
+  FData := TORStringList.Create(True);
   FUserInfo := TORStringList.Create;
   FDivisions := TORStringList.Create;
   FServices := TORStringList.Create;
@@ -494,9 +495,7 @@ begin
   FServices.Free;
   FDivisions.Free;
   FUserInfo.Free;
-  FData.KillObjects;
   FData.Free;
-  FCatInfo.KillObjects;
   FCatInfo.Free;
   Application.HintHidePause := FSavePause  //Reset Hint pause to original setting
 end;
@@ -830,6 +829,15 @@ begin
     if ScreenReaderSystemActive then lblCAC.SetFocus
     else btnView.SetFocus;
   end;
+end;
+
+procedure TfrmRemCoverSheet.cbxUserMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := cbxUser.SelectedDataString;
+  cbxUser.ReInitLongList;
+  if ALastData <> cbxUser.SelectedDataString then
+    cbxUserChange(cbxUser);
 end;
 
 procedure TfrmRemCoverSheet.cbxUserMouseClick(Sender: TObject);
@@ -1706,7 +1714,6 @@ begin
           for j := 0 to tmpSL.Count-1 do
             tmpSL[j] := pieces(tmpSL[j],U,1,2);
           SetCoverSheetLevelData(ALevel, AClass, tmpSL);
-          tmpSL.Free;
           DeleteIt := TRUE;
           FDataSaved := TRUE;
           DoRefresh := TRUE;
@@ -2101,11 +2108,15 @@ begin
           + CRLF + 'the Location, User Class, or User levels.';
   fOldFocusChanged := Screen.OnActiveControlChange;
   Screen.OnActiveControlChange := ActiveControlChanged;
+  cbxUser.MainCheckBoxVisible := IncludeNonVAProviders(cbxUser);
   if not WriteAccess(waReminderEditor) then
   begin
     btnOK.Enabled := false;
     btnApply.Enabled := false;
   end;
+  cbxUser.MainCheckBoxVisible := IncludeNonVAProviders(cbxUser);
+  cbxUser.Height := 50;
+  pnlCAC.Height := 103;
 end;
 
 procedure TfrmRemCoverSheet.ActiveControlChanged(Sender: TObject);

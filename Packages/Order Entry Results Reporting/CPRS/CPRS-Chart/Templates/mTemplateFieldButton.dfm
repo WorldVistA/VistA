@@ -1,4 +1,4 @@
-object fraTemplateFieldButton: TfraTemplateFieldButton
+inherited fraTemplateFieldButton: TfraTemplateFieldButton
   Left = 0
   Top = 0
   Width = 136

@@ -71,6 +71,9 @@ inherited frmTemplateFields: TfrmTemplateFields
       Caption = '* Indicates a Required Field'
       TabOrder = 0
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
   end
   object cboObjects: TORComboBox [1]
@@ -128,6 +131,9 @@ inherited frmTemplateFields: TfrmTemplateFields
         'ceives focus.'
       TabOrder = 3
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
     object lblSRCont1: TVA508StaticText
       Name = 'lblSRCont1'
@@ -146,6 +152,9 @@ inherited frmTemplateFields: TfrmTemplateFields
         'eader to continue'
       TabOrder = 2
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
     object lblSRStop: TVA508StaticText
       Name = 'lblSRStop'
@@ -162,6 +171,9 @@ inherited frmTemplateFields: TfrmTemplateFields
       Caption = '** Screen reader will stop speaking at this point'
       TabOrder = 1
       ShowAccelChar = True
+      WordWrap = False
+      LabelAlignment = taLeftJustify
+      LabelLayout = tlTop
     end
     object pnlSRIntro: TPanel
       Left = 0
@@ -192,6 +204,9 @@ inherited frmTemplateFields: TfrmTemplateFields
         ParentFont = False
         TabOrder = 0
         ShowAccelChar = True
+        WordWrap = False
+        LabelAlignment = taLeftJustify
+        LabelLayout = tlTop
       end
       object lblSRIntro2: TVA508StaticText
         Name = 'lblSRIntro2'
@@ -204,6 +219,9 @@ inherited frmTemplateFields: TfrmTemplateFields
         Caption = '(make templates user friendly for those using screen readers)'
         TabOrder = 1
         ShowAccelChar = True
+        WordWrap = False
+        LabelAlignment = taLeftJustify
+        LabelLayout = tlTop
       end
     end
   end

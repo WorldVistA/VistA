@@ -3,7 +3,7 @@
         <ProjectGuid>{27CA3364-B3C1-4B96-A780-7C08F7DB53DF}</ProjectGuid>
         <MainSource>XWB_R11_0.dpk</MainSource>
         <Base>True</Base>
-        <Config Condition="'$(Config)'==''">Release</Config>
+        <Config Condition="'$(Config)'==''">Debug</Config>
         <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Package</AppType>
         <FrameworkType>VCL</FrameworkType>
@@ -169,7 +169,7 @@ $(PreBuildEvent)]]></PreBuildEvent>
         <DCCReference Include="..\..\Source\XWBLoginForm.pas">
             <Form>XWBLoginForm</Form>
         </DCCReference>
-        <DCCReference Include="..\..\..\VA\Source\wcrypt2.pas"/>
+        <DCCReference Include="..\..\Source\wcrypt2.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -1072,19 +1072,19 @@ $(PreBuildEvent)]]></PreBuildEvent>
     <Import Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj" Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')"/>
     <Import Project="$(MSBuildProjectName).deployproj" Condition="Exists('$(MSBuildProjectName).deployproj')"/>
     <PropertyGroup Condition="'$(Config)'=='Release' And '$(Platform)'=='Win32'">
-        <PreBuildEvent>XWB_PreBuild_R11_0.bat </PreBuildEvent>
+        <PreBuildEvent>XWB_PreBuild_R11_0.bat </PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
-        <PostBuildEvent>XWB_PostBuild_R11_0.bat &quot;$(OUTPUTDIR)&quot;</PostBuildEvent>
+        <PostBuildEvent>XWB_PostBuild_R11_0.bat &quot;$(OUTPUTDIR)&quot;</PostBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Debug' And '$(Platform)'=='Win32'">
-        <PreBuildEvent>XWB_PreBuild_R11_0.bat </PreBuildEvent>
+        <PreBuildEvent>XWB_PreBuild_R11_0.bat </PreBuildEvent>
         <PreBuildEventIgnoreExitCode>False</PreBuildEventIgnoreExitCode>
         <PreLinkEvent/>
         <PreLinkEventIgnoreExitCode>False</PreLinkEventIgnoreExitCode>
-        <PostBuildEvent>XWB_PostBuild_R11_0.bat &quot;$(OUTPUTDIR)&quot;</PostBuildEvent>
+        <PostBuildEvent>XWB_PostBuild_R11_0.bat &quot;$(OUTPUTDIR)&quot;</PostBuildEvent>
         <PostBuildEventIgnoreExitCode>False</PostBuildEventIgnoreExitCode>
     </PropertyGroup>
 </Project>

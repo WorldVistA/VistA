@@ -118,22 +118,12 @@ type
     N8: TMenuItem;
     mnuActNotePrint: TMenuItem;
     timAutoSave: TTimer;
-    pnlFields: TPanel;
-    lblNewTitle: TStaticText;
-    lblRefDate: TStaticText;
-    lblAuthor: TStaticText;
-    lblVisit: TStaticText;
-    lblCosigner: TStaticText;
-    lblSubject: TStaticText;
-    cmdChange: TButton;
-    txtSubject: TCaptionEdit;
     mnuActSchedule: TMenuItem;
     popNoteMemoPaste2: TMenuItem;
     popNoteMemoReformat: TMenuItem;
     N9: TMenuItem;
     mnuActChange: TMenuItem;
     mnuActLoadBoiler: TMenuItem;
-    bvlNewTitle: TBevel;
     popNoteMemoSaveContinue: TMenuItem;
     mnuActAttachMed: TMenuItem;
     mnuActRemoveMed: TMenuItem;
@@ -184,7 +174,16 @@ type
     CPMemConsult: TCopyPasteDetails;
     spReadDetails: TSplitter;
     CPMemResults: TCopyPasteDetails;
-    spEditDetails: TSplitter;   //wat cq 17586
+    spEditDetails: TSplitter;
+    grdPnl: TGridPanel;
+    lblNewTitle: TStaticText;
+    stAuthor: TStaticText;
+    lblVisit: TStaticText;
+    stRefDate: TStaticText;
+    stCosigner: TStaticText;
+    cmdChange: TButton;
+    lblSubject: TStaticText;
+    txtSubject: TCaptionEdit;   //wat cq 17586
     procedure mnuChartTabClick(Sender: TObject);
     procedure lstConsultsClick(Sender: TObject);
     procedure pnlRightResize(Sender: TObject);
@@ -298,6 +297,7 @@ type
     procedure CPHide(Sender: TObject);
     procedure CPShow(Sender: TObject);
     procedure PasteToMonitor(Sender: TObject; var AllowMonitor: Boolean);
+    procedure grdPnlResize(Sender: TObject);
   private
     FocusToRightPanel : Boolean;
     FEditingIndex: Integer;      // TIU index of document being currently edited
@@ -336,7 +336,8 @@ type
     procedure DisplayPCE;
     procedure CompleteConsult(IsIDChild: boolean; AnIDParent: integer; UseClinProcTitles: boolean);
     procedure InsertAddendum;
-    procedure SetSubjectVisible(ShouldShow: Boolean);
+//    procedure SetSubjectVisible(ShouldShow: Boolean);
+    procedure SetSubjectVisible(aShow: Boolean);
     procedure SaveEditedConsult(var Saved: Boolean);
     procedure ShowPCEControls(ShouldShow: Boolean);
     procedure SetActionMenus ;
@@ -3216,6 +3217,7 @@ end;
 procedure TfrmConsults.popNoteMemoFindClick(Sender: TObject);
 begin
   inherited;
+  memConsult.SelStart := 0;
   SendMessage(TRichEdit(popNoteMemo.PopupComponent).Handle, WM_VSCROLL, SB_TOP, 0);
   with dlgFindText do
     begin
@@ -4333,6 +4335,12 @@ begin
   Result := x;
 end;
 
+procedure TfrmConsults.grdPnlResize(Sender: TObject);
+begin
+  inherited;
+  SetSubjectVisible(txtSubject.Visible);
+end;
+
 (*function TfrmConsults.MakeTitleText(IsAddendum: Boolean = False): string;
 { returns display text for list box based on FEditNote }
 begin
@@ -4358,7 +4366,7 @@ begin
   end;
   Result := FVerifyNoteTitle = VNT_YES;
 end;
-
+(*
 procedure TfrmConsults.SetSubjectVisible(ShouldShow: Boolean);
 { hide/show subject & resize panel accordingly - leave 6 pixel margin above memNewNote }
 begin
@@ -4374,6 +4382,74 @@ begin
     pnlFields.Height   := lblVisit.Top + lblVisit.Height + 6;
   end;
 end;
+*)
+procedure TfrmConsults.SetSubjectVisible(aShow: Boolean);
+var
+  r1, r2, r3, a1Row, a2Rows, aTextHeight: integer;
+
+  function RowHeight(lbl: array of TStaticText): integer;
+  var
+    i: integer;
+
+  begin
+    Result := a1Row;
+    for i := Low(lbl) to High(lbl) do
+    begin
+      if Canvas.TextWidth(lbl[i].Caption) > lbl[i].Width then
+      begin
+        Result := a2Rows;
+        exit;
+      end;
+    end;
+  end;
+
+begin
+  lblSubject.Visible := aShow;
+  txtSubject.Visible := aShow;
+  aTextHeight := Self.Canvas.TextHeight('|');
+  a1Row := Trunc(aTextHeight * 1.4);
+  a2Rows := a1Row + aTextHeight;
+  inc(a1Row, 6);
+  r1 := RowHeight([lblNewTitle, stAuthor]);
+  r2 := RowHeight([lblVisit, stRefDate, stCosigner]);
+  if aShow then
+    r3 := a1Row
+  else
+    r3 := 0;
+
+  if GrdPnl.ColumnCollection.Count > 4 then
+  begin
+    grdpnl.ColumnCollection.BeginUpdate;
+    try
+      if aShow then
+      begin
+        grdpnl.ColumnCollection[0].SizeStyle := ssAbsolute;
+        grdpnl.ColumnCollection[0].Value := Trunc(Self.Canvas.TextWidth(lblSubject.Caption) * 1.1);
+      end;
+      grdpnl.ColumnCollection[4].SizeStyle := ssAbsolute;
+      grdpnl.ColumnCollection[4].Value := Trunc(Self.Canvas.TextWidth(cmdChange.Caption) * 1.4);
+    finally
+      grdpnl.ColumnCollection.EndUpdate;
+    end;
+  end;
+
+  if grdPnl.RowCollection.Count > 2 then
+  begin
+    grdpnl.RowCollection.BeginUpdate;
+    try
+      grdpnl.RowCollection[0].SizeStyle := ssAbsolute;
+      grdpnl.RowCollection[0].Value := r1;
+      grdpnl.RowCollection[1].SizeStyle := ssAbsolute;
+      grdpnl.RowCollection[1].Value := r2;
+      grdpnl.RowCollection[2].SizeStyle := ssAbsolute;
+      grdpnl.RowCollection[2].Value := r3;
+      grdpnl.Height := r1 + r2 + r3;
+    finally
+      grdpnl.RowCollection.EndUpdate;
+    end;
+  end;
+end;
+
 
 
 procedure TfrmConsults.timAutoSaveTimer(Sender: TObject);
@@ -4455,15 +4531,15 @@ begin
   lblNewTitle.Caption := ' ' + FEditNote.TitleName + ' ';
   if (FEditNote.Addend > 0) and (CompareText(Copy(lblNewTitle.Caption, 2, 8), 'Addendum') <> 0)
     then lblNewTitle.Caption := ' Addendum to:' + lblNewTitle.Caption;
-  with lblNewTitle do bvlNewTitle.SetBounds(Left - 1, Top - 1, Width + 2, Height + 2);
-  lblRefDate.Caption := FormatFMDateTime('mmm dd,yyyy@hh:nn', FEditNote.DateTime);
-  lblAuthor.Caption  := FEditNote.AuthorName;
+//  with lblNewTitle do bvlNewTitle.SetBounds(Left - 1, Top - 1, Width + 2, Height + 2);
+  stRefDate.Caption := FormatFMDateTime('mmm dd,yyyy@hh:nn', FEditNote.DateTime);
+  stAuthor.Caption  := FEditNote.AuthorName;
   if uPCEMaster.Inpatient then x := 'Adm: ' else x := 'Vst: ';
   x := x + FormatFMDateTime('mm/dd/yy', FEditNote.VisitDate) + '  ' + FEditNote.LocationName;
   lblVisit.Caption   := x;
   if Length(FEditNote.CosignerName) > 0
-    then lblCosigner.Caption := 'Expected Cosigner: ' + FEditNote.CosignerName
-    else lblCosigner.Caption := '';
+    then stCosigner.Caption := 'Expected Cosigner: ' + FEditNote.CosignerName
+    else stCosigner.Caption := '';
   uPCEMaster.NoteTitle  := FEditNote.Title;
   // modify signature requirements if author or cosigner changed
   if (User.DUZ <> FEditNote.Author) and (User.DUZ <> FEditNote.Cosigner)
@@ -4504,9 +4580,9 @@ procedure TfrmConsults.pnlFieldsResize(Sender: TObject);
 { center the reference date on the panel }
 begin
   inherited;
-  lblRefDate.Left := (pnlFields.Width - lblRefDate.Width) div 2;
-  if lblRefDate.Left < (lblNewTitle.Left + lblNewTitle.Width + 6)
-    then lblRefDate.Left := (lblNewTitle.Left + lblNewTitle.Width);
+//  lblRefDate.Left := (pnlFields.Width - lblRefDate.Width) div 2;
+//  if lblRefDate.Left < (lblNewTitle.Left + lblNewTitle.Width + 6)
+//    then lblRefDate.Left := (lblNewTitle.Left + lblNewTitle.Width);
 end;
 
 

@@ -32,7 +32,9 @@ uses
   fPrintLocation,
   fCSRemaining,
   VA508AccessibilityManager,
-  rODMeds;
+  rODMeds,
+  uSignItems,
+  uSpecialAuthorityEx, fBase508Frame;
 
 type
   TfrmSignOrders = class(TfrmBase508Form)
@@ -43,11 +45,11 @@ type
     lblProvInfo: TLabel;
     pnlOrderList: TPanel;
     lblOrderList: TStaticText;
-    clstOrders: TCaptionCheckListBox;
+    clstOrders: uSignItems.TCaptionCheckListBox;
     pnlCSOrderList: TPanel;
     lblCSOrderList: TStaticText;
     lblSmartCardNeeded: TStaticText;
-    clstCSOrders: TCaptionCheckListBox;
+    clstCSOrders: uSignItems.TCaptionCheckListBox;
     pnlEsig: TPanel;
     lblESCode: TLabel;
     txtESCode: TCaptionEdit;
@@ -57,40 +59,34 @@ type
     pnlTop: TPanel;
     gpMain: TGridPanel;
     pnlCSTop: TPanel;
+    pnlNCSTop: TPanel;
     procedure FormCreate(Sender: TObject);
     procedure cmdOKClick(Sender: TObject);
     procedure cmdCancelClick(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
     procedure clstOrdersDrawItem(Control: TWinControl; Index: Integer; Rect: TRect; State: TOwnerDrawState);
     procedure clstOrdersMeasureItem(Control: TWinControl; Index: Integer; var AHeight: Integer);
     procedure clstOrdersClickCheck(Sender: TObject);
-    procedure clstOrdersMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure FormShow(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure FormMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
     procedure clstOrdersKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure gpMainResize(Sender: TObject);
+    procedure ORFormResize(Sender: TObject);
   private
     OKPressed: boolean;
     ESCode: string;
-    FLastHintItem: Integer;
-    FOldHintPause: Integer;
-    FOldHintHidePause: Integer;
-
+    FInternalResize: Integer;
     function IsSignatureRequired: boolean;
-    function ItemsAreChecked(aCaptionCheckListBox: TCaptionCheckListBox): boolean;
+    function ItemsAreChecked(aCaptionCheckListBox: uSignItems.TCaptionCheckListBox): boolean;
     function nonDCCSItemsAreChecked: boolean;
     function AnyItemsAreChecked: boolean;
-
     procedure FormatListForScreenReader(Sender: TObject);
+    procedure AdjustDEAPanel;
   public
     { Public Declarations }
   end;
 
 var
   frmSignOrders: TfrmSignOrders;
-  FOSTFHintWndActive: boolean;
-  FOSTFhintWindow: THintWindow;
 
 function ExecuteSignOrders(SelectedList: TList): boolean;
 
@@ -105,7 +101,6 @@ uses
   uConst,
   uCore,
   uOrders,
-  uSignItems,
   fOrders,
   fFrame,
   rODLab,
@@ -113,7 +108,9 @@ uses
   VAUtils,
   UResponsiveGUI,
   rMisc,
-  VAHelpers;
+  VAHelpers,
+  rSpecialAuthority,
+  VA508AccessibilityRouter;
 
 const
   TX_SAVERR1 = 'The error, ';
@@ -134,7 +131,7 @@ var
   cSignature, cHashData, cCrlUrl, cErr, WardName: string;
   //UsrAltName, IssuanceDate, PatientName, PatientAddress, DetoxNumber, ProviderName, ProviderAddress: string;
   //DrugName, Quantity, Directions: string;
-  OrderText, ASvc: string;
+  OrderText, ASvc, Error: string;
   PrintLoc: Integer;
   AList, ClinicList, OrderPrintList, WardList: TStringList;
   EncLocName, EncLocText: string;
@@ -200,23 +197,21 @@ begin
   PrintLoc := 0;
   EncLocIEN := 0;
   DoNotPrint := False;
-
+  if (not Assigned(SelectedList)) or (SelectedList.Count = 0) then
+    Exit;
   frmSignOrders := TfrmSignOrders.Create(Application);
-
-  aLst := TStringList.Create;
   try
-    CallVistA('ORDEA DEATEXT', [], aLst);
-    frmSignOrders.lblDEAText.Caption := '';
-    for X in aLst do
-      frmSignOrders.lblDEAText.Caption := frmSignOrders.lblDEAText.Caption + ' ' + X;
+    aLst := TStringList.Create;
+    try
+      frmSignOrders.lblDEAText.Caption := GetDEAText;
+      frmSignOrders.AdjustDEAPanel;
+      CallVistA('ORDEA SIGINFO', [Patient.DFN, User.DUZ], aLst);
+      frmSignOrders.lblProvInfo.Caption := aLst.Text;
+      frmSignOrders.pnlProvInfo.Width := frmSignOrders.lblProvInfo.Width + 8;
+    finally
+      FreeAndNil(aLst);
+    end;
 
-    CallVistA('ORDEA SIGINFO', [Patient.DFN, User.DUZ], aLst);
-    frmSignOrders.lblProvInfo.Caption := aLst.Text;
-    frmSignOrders.pnlProvInfo.Width := frmSignOrders.lblProvInfo.Width + 8;
-  finally
-    FreeAndNil(aLst);
-  end;
-  try
     SigItems.ResetOrders;
     SigItemsCS.ResetOrders;
 
@@ -228,7 +223,7 @@ begin
           if ((Obj.IsControlledSubstance = False) or IsPendingHold(Obj.ID)) then
             begin
               cidx := frmSignOrders.clstOrders.Items.AddObject(Obj.Text, Obj);
-              SigItems.Add(CH_ORD, Obj.ID, cidx);
+              SigItems.Add(frmSignOrders.clstOrders, CH_ORD, Obj.ID, cidx);
               frmSignOrders.clstOrders.Checked[cidx] := True;
 
               if Obj.Signature = OSS_NOT_REQUIRE then
@@ -238,7 +233,7 @@ begin
           else if (Obj.IsControlledSubstance and Obj.IsOrderPendDC) then
             begin
               cidx := frmSignOrders.clstOrders.Items.AddObject(Obj.Text, Obj);
-              SigItems.Add(CH_ORD, Obj.ID, cidx);
+              SigItems.Add(frmSignOrders.clstOrders, CH_ORD, Obj.ID, cidx);
 
               frmSignOrders.clstOrders.Checked[cidx] := True;
 
@@ -254,7 +249,7 @@ begin
               else
                 begin
                   cidx := frmSignOrders.clstCSOrders.Items.AddObject(Obj.Text, Obj);
-                  SigItemsCS.Add(CH_ORD, Obj.ID, cidx);
+                  SigItemsCS.Add(frmSignOrders.clstCSOrders, CH_ORD, Obj.ID, cidx);
 
                   if TOrder(Items[i]).IsOrderPendDC then
                     frmSignOrders.clstCSOrders.Checked[cidx] := True
@@ -294,10 +289,8 @@ begin
           end;
       end;
 
-    SigItems.ClearDrawItems;
-    SigItems.ClearFCtrls;
-    SigItemsCS.ClearDrawItems;
-    SigItemsCS.ClearFCtrls;
+    SigItems.ClearCBSettings;
+    SigItemsCS.ClearCBSettings;
 
     with frmSignOrders do
       begin
@@ -310,11 +303,13 @@ begin
         else
           minWidth := Canvas.TextWidth(lblOrderList.Caption);
         inc(minWidth, TSigItems.MinWidthDX + ScrollBarWidth);
-        t1 := SigItems.UpdateListBox(clstOrders);
-        t2 := SigItemsCS.UpdateListBox(clstCSOrders);
+        t1 := SigItems.UpdateListBox(clstOrders, pnlNCSTop);
+        t2 := SigItemsCS.UpdateListBox(clstCSOrders, pnlCSTop);
         if t1 or t2 then
         begin
           fraCoPay.Visible := True;
+          fraCoPay.Init(SigITems.CombinedSpecialAuthorities,
+            SigItemsCS.CombinedSpecialAuthorities);
           pnlTop.Visible := True;
           pnlTop.Height := fraCoPay.AdjustAndGetSize;
           if t1 then
@@ -333,6 +328,7 @@ begin
             txtESCode.Visible := False;
           end;
         pnlDEAText.Visible := True;
+        AdjustDEAPanel;
         txtESCode.Text := '';
         if ((clstOrders.Count = 0) and (clstCSOrders.Count = 0)) then
           Exit;
@@ -652,15 +648,12 @@ end;
 procedure TfrmSignOrders.FormCreate(Sender: TObject);
 begin
   inherited;
-  FLastHintItem := -1;
   OKPressed := False;
-  FOldHintPause := Application.HintPause;
-  Application.HintPause := 250;
-  FOldHintHidePause := Application.HintHidePause;
-  Application.HintHidePause := 30000;
   ResizeFormToFont(Self);
   lblSmartCardNeeded.Font.Size := MainFontSize;
   pnlCSTop.Height := MainFontTextHeight + TSigItems.btnMargin;
+  pnlNCSTop.Height := MainFontTextHeight + TSigItems.btnMargin;
+  AdjustDEAPanel;
 end;
 
 procedure TfrmSignOrders.FormShow(Sender: TObject);
@@ -668,7 +661,6 @@ begin
   if txtESCode.Visible then
     txtESCode.SetFocus;
 
-  clstOrders.TabOrder := 0; // CQ5057
   FormatListForScreenReader(clstOrders);
   FormatListForScreenReader(clstCSOrders);
 
@@ -690,11 +682,6 @@ var
   j: Integer; // CQ5054
 begin
   inherited;
-  if FOSTFHintWndActive then
-    begin
-      FOSTFhintWindow.ReleaseHandle;
-      FOSTFHintWndActive := False;
-    end;
 
   case Key of
     // CQ5054
@@ -712,40 +699,12 @@ begin
   end;
 end;
 
-procedure TfrmSignOrders.FormMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
-begin
-  try
-    if FOSTFHintWndActive then
-      begin
-        FOSTFhintWindow.ReleaseHandle;
-        FOSTFHintWndActive := False;
-        TResponsiveGUI.ProcessMessages;
-      end;
-  except
-    on E: Exception do
-      begin
-        // Show508Message('Unhandled exception in procedure TfrmSignOrders.FormMouseMove()');
-        raise;
-      end;
-  end;
-end;
-
-procedure TfrmSignOrders.FormDestroy(Sender: TObject);
-begin
-  inherited;
-  Application.HintPause := FOldHintPause;
-  Application.HintHidePause := FOldHintHidePause;
-end;
-
 procedure TfrmSignOrders.cmdOKClick(Sender: TObject);
 const
   TX_NO_CODE = 'An electronic signature code must be entered to sign orders.';
   TC_NO_CODE = 'Electronic Signature Code Required';
   TX_BAD_CODE = 'The electronic signature code entered is not valid.';
   TC_BAD_CODE = 'Invalid Electronic Signature Code';
-  TC_NO_DX = 'Incomplete Diagnosis Entry';
-  TX_NO_DX = 'A Diagnosis must be selected prior to signing any of the following order types:'
-    + CRLF + 'Lab, Radiology, Outpatient Medications, Prosthetics.';
 begin
   inherited;
 
@@ -763,7 +722,7 @@ begin
       Exit;
     end;
 
-  if not SigItems.OK2SaveSettings or not SigItemsCS.OK2SaveSettings then
+  if (not SigItems.OK2SaveSettings) or (not SigItemsCS.OK2SaveSettings) then
     begin
       InfoBox(TX_Order_Error, 'Sign Orders', MB_OK);
       Exit;
@@ -788,10 +747,10 @@ procedure TfrmSignOrders.clstOrdersDrawItem(Control: TWinControl; Index: Integer
 var
   X: string;
   ARect: TRect;
-  aListView: TCaptionCheckListBox;
+  aListView: uSignItems.TCaptionCheckListBox;
 begin
-  if Control.ClassNameIs('TCaptionCheckListBox') then
-    aListView := TCaptionCheckListBox(Control)
+  if Control is uSignItems.TCaptionCheckListBox then
+    aListView := uSignItems.TCaptionCheckListBox(Control)
   else
     raise Exception.Create('Invalid control passed to DrawItem');
 
@@ -821,10 +780,10 @@ procedure TfrmSignOrders.clstOrdersMeasureItem(Control: TWinControl; Index: Inte
 var
   X: string;
   ARect: TRect;
-  aListView: TCaptionCheckListBox;
+  aListView: uSignItems.TCaptionCheckListBox;
 begin
-  if Control is TCaptionCheckListBox then
-    aListView := TCaptionCheckListBox(Control)
+  if Control is uSignItems.TCaptionCheckListBox then
+    aListView := uSignItems.TCaptionCheckListBox(Control)
   else
     raise Exception.Create('Invalid control passed to MeasureItem');
 
@@ -833,25 +792,21 @@ begin
     if Index < Items.Count then
       begin
         ARect := ItemRect(Index);
-        if CVarExists(TSigItems.RectWidth) then
-          ARect.Right := CVar[TSigItems.RectWidth];
+        if RectWidth > 0 then
+          ARect.Right := RectWidth;
         Canvas.FillRect(ARect);
         X := FilteredString(Items[Index]);
         AHeight := WrappedTextHeightByFont(Canvas, Font, X, ARect);
         if AHeight > 255 then
           AHeight := 255;
-        // -------------------
-        { Bug fix-HDS00001627 }
-        // if AHeight <  13 then AHeight := 13; {ORIG}
-        if AHeight < 13 then
-          AHeight := 15;
-        // -------------------
+        if AHeight < aListView.MinItemHeight then
+          AHeight := aListView.MinItemHeight;
       end;
 end;
 
 procedure TfrmSignOrders.clstOrdersClickCheck(Sender: TObject);
 var
-  aListView: TCaptionCheckListBox;
+  aListView: uSignItems.TCaptionCheckListBox;
   aOrder: TOrder;
 
   procedure updateAllChilds(CheckedStatus: boolean; ParentOrderId: string);
@@ -864,23 +819,25 @@ var
           if aListView.Checked[idx] <> CheckedStatus then
             begin
               aListView.Checked[idx] := CheckedStatus;
-              SigItems.EnableSettings(idx, aListView.Checked[idx]);
+              SigItems.EnableSettings(TOrder(aListView.Items.Objects[idx]).ID,
+                aListView.Checked[idx]);
             end;
         end;
   end;
 
 begin
-  if Sender.ClassNameIs('TCaptionCheckListBox') then
-    aListView := TCaptionCheckListBox(Sender)
+  if Sender is uSignItems.TCaptionCheckListBox then
+    aListView := uSignItems.TCaptionCheckListBox(Sender)
   else
     raise Exception.Create('Invalid Sender in ClickCheck');
 
   if Sender = clstCSOrders then
     with clstCSOrders do
       try
-        CallVistA(
-          'ORDEA AUINTENT',
-          [TOrder(Items.Objects[ItemIndex]).ID, BOOLCHAR[Checked[ItemIndex]]]);
+        if Assigned(Items.Objects[ItemIndex]) then
+          CallVistA(
+            'ORDEA AUINTENT',
+            [TOrder(Items.Objects[ItemIndex]).ID, BOOLCHAR[Checked[ItemIndex]]]);
       except
         on E: Exception do
           MessageDlg(
@@ -900,18 +857,18 @@ begin
         if length(TOrder(Items.Objects[ItemIndex]).ParentID) > 0 then
           begin
             if aListView = clstOrders then
-              SigItems.EnableSettings(ItemIndex, Checked[ItemIndex]);
+              SigItems.EnableSettings(TOrder(Items.Objects[ItemIndex]).ID, Checked[ItemIndex]);
             if aListView = clstCSOrders then
-              SigItemsCS.EnableSettings(ItemIndex, Checked[ItemIndex]);
+              SigItemsCS.EnableSettings(TOrder(Items.Objects[ItemIndex]).ID, Checked[ItemIndex]);
 
             updateAllChilds(Checked[ItemIndex], TOrder(Items.Objects[ItemIndex]).ParentID);
           end
         else
           begin
             if aListView = clstOrders then
-              SigItems.EnableSettings(ItemIndex, Checked[ItemIndex]);
+              SigItems.EnableSettings(TOrder(Items.Objects[ItemIndex]).ID, Checked[ItemIndex]);
             if aListView = clstCSOrders then
-              SigItemsCS.EnableSettings(ItemIndex, Checked[ItemIndex]);
+              SigItemsCS.EnableSettings(TOrder(Items.Objects[ItemIndex]).ID, Checked[ItemIndex]);
           end
       end;
    end;
@@ -919,6 +876,7 @@ begin
   if ItemsAreChecked(clstCSOrders) and nonDCCSItemsAreChecked then
     begin
       lblDEAText.Visible := True;
+      AdjustDEAPanel;
       lblSmartCardNeeded.Visible := True;
     end
   else
@@ -934,35 +892,8 @@ begin
     txtESCode.SetFocus;
 end;
 
-procedure TfrmSignOrders.clstOrdersMouseMove(Sender: TObject; Shift: TShiftState; X, Y: Integer);
-var
-  aListView: TCaptionCheckListBox;
-  Itm: Integer;
-begin
-  if Sender.ClassNameIs('TCaptionCheckListBox') then
-    aListView := TCaptionCheckListBox(Sender)
-  else
-    raise Exception.Create('Invalid sender in MouseMove');
-
-  Itm := aListView.ItemAtPos(Point(X, Y), True);
-  if (Itm >= 0) then
-    begin
-      if (Itm <> FLastHintItem) then
-        begin
-          Application.CancelHint;
-          FLastHintItem := Itm;
-          Application.ActivateHint(Point(X, Y));
-        end;
-    end
-  else
-    begin
-      aListView.Hint := '';
-      FLastHintItem := -1;
-      Application.CancelHint;
-    end;
-end;
-
-function TfrmSignOrders.ItemsAreChecked(aCaptionCheckListBox: TCaptionCheckListBox): boolean;
+function TfrmSignOrders.ItemsAreChecked(
+  aCaptionCheckListBox: uSignItems.TCaptionCheckListBox): boolean;
 { return true if any items in the Review List are checked for applying signature }
 var
   i: Integer;
@@ -995,6 +926,39 @@ begin
               Break;
             end;
         end;
+end;
+
+procedure TfrmSignOrders.ORFormResize(Sender: TObject);
+begin
+  LockDrawing;
+  try
+    inherited;
+    if FInternalResize > 0 then
+      Exit;
+    inc(FInternalResize);
+    try
+      AdjustDEAPanel;
+    finally
+      dec(FInternalResize);
+    end;
+  finally
+    UnlockDrawing;
+  end;
+end;
+
+procedure TfrmSignOrders.AdjustDEAPanel;
+var
+  AHeight: Integer;
+  ARect: TRect;
+begin
+  inc(FInternalResize);
+  try
+    ARect := pnlDEAText.ClientRect;
+    AHeight := WrappedTextHeightByFont(Canvas, Font, lblDEAText.Caption, ARect);
+    pnlDEAText.ClientHeight := AHeight;
+  finally
+    dec(FInternalResize);
+  end;
 end;
 
 function TfrmSignOrders.AnyItemsAreChecked: boolean;
@@ -1032,12 +996,12 @@ end;
 
 procedure TfrmSignOrders.FormatListForScreenReader(Sender: TObject);
 var
-  aListView: TCaptionCheckListBox;
+  aListView: uSignItems.TCaptionCheckListBox;
   i: Integer;
 begin
   if ScreenReaderActive then
     begin
-      aListView := TCaptionCheckListBox(Sender);
+      aListView := uSignItems.TCaptionCheckListBox(Sender);
 
       if aListView.Count < 1 then
         Exit;

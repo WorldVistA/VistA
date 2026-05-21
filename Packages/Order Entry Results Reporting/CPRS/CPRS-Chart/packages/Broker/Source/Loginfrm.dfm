@@ -13,7 +13,6 @@ object frmSignon: TfrmSignon
   Font.Height = -16
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = True
   Position = poScreenCenter
   Scaled = False
   OnClose = FormClose
@@ -22,7 +21,6 @@ object frmSignon: TfrmSignon
   DesignSize = (
     771
     546)
-  PixelsPerInch = 96
   TextHeight = 20
   object Panel1: TPanel
     Left = 8
@@ -577,6 +575,7 @@ object frmSignon: TfrmSignon
     end
   end
   object RPCbiBroker: TRPCBroker
+    ShowCertDialog = False
     ClearParameters = True
     ClearResults = True
     Connected = False

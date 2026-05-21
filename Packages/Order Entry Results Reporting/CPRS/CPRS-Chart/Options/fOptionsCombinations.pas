@@ -4,8 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  ExtCtrls, StdCtrls, ORCtrls, OrFn, ComCtrls, fBase508Form,
-  VA508AccessibilityManager;
+  ExtCtrls, StdCtrls, ORCtrls, OrFn, ComCtrls, fBase508Form, ORCheckComboBox,
+  VA508AccessibilityManager, uMisc;
 
 type
   TfrmOptionsCombinations = class(TfrmBase508Form)
@@ -13,7 +13,7 @@ type
     lblInfo: TMemo;
     lblAddby: TLabel;
     lblCombinations: TLabel;
-    lstAddBy: TORComboBox;
+    lstAddBy: TORCheckComboBox;
     btnAdd: TButton;
     btnRemove: TButton;
     pnlBottom: TPanel;
@@ -40,11 +40,13 @@ type
     procedure lvwCombinationsChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
     procedure FormShow(Sender: TObject);
+    procedure lstAddByMainCheckboxClick(Sender: TObject);
   private
     { Private declarations }
     FsortCol: integer;
     FsortAscending: boolean;
     FDirty: boolean;
+    FIncludeNonVAProviders: boolean;
     function Duplicate(avalueien, asource: string): boolean;
     procedure LoadCombinations(alist: TStrings);
   public
@@ -101,6 +103,7 @@ procedure TfrmOptionsCombinations.radAddByTypeClick(Sender: TObject);
 begin
   with lstAddBy do
   begin
+    MainCheckBoxVisible := False;
     case radAddByType.ItemIndex of
       0: begin
            ListItemsOnly := false;
@@ -120,6 +123,8 @@ begin
            LongList := true;
            InitLongList('');
            lblAddby.Caption := 'Provider:';
+           if FIncludeNonVAProviders then
+             MainCheckBoxVisible := IncludeNonVAProviders(lstAddBy);;
          end;
       3: begin
            ListItemsOnly := false;
@@ -179,6 +184,9 @@ begin
   radAddByType.ItemIndex := 0;
   radAddByTypeClick(self);
   FDirty := false;
+
+  // Non-Va Providers call
+  FIncludeNonVAProviders := IncludeNonVAProviders(lstAddBy);
 end;
 
 procedure TfrmOptionsCombinations.btnAddClick(Sender: TObject);
@@ -187,6 +195,8 @@ var
   aCombination: TCombination;
   valueien, valuename, valuesource, aErrMsg: string;
 begin
+  if lstAddBy.ItemIndex < 0 then Exit;
+
   if radAddByType.ItemIndex = 2 then
   begin
     if not CheckForSimilarName(lstAddBy, aErrMsg, sPr) then
@@ -314,6 +324,15 @@ procedure TfrmOptionsCombinations.lstAddByKeyUp(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
   if Key = 13 then Perform(WM_NextDlgCtl, 0, 0);
+end;
+
+procedure TfrmOptionsCombinations.lstAddByMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := lstAddBy.SelectedDataString;
+  lstAddBy.ReInitLongList;
+  if ALastData <> lstAddBy.SelectedDataString then
+    lstAddByChange(lstAddBy);
 end;
 
 procedure TfrmOptionsCombinations.btnOKClick(Sender: TObject);

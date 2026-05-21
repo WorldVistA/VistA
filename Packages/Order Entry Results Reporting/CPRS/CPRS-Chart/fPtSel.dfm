@@ -8,6 +8,7 @@ inherited frmPtSel: TfrmPtSel
   Constraints.MinHeight = 600
   Constraints.MinWidth = 800
   Position = poMainFormCenter
+  OnCanResize = ORFormCanResize
   OnCloseQuery = FormCloseQuery
   OnResize = FormResize
   ExplicitWidth = 884
@@ -31,6 +32,7 @@ inherited frmPtSel: TfrmPtSel
     Height = 199
     ActivePage = tsPendNoti
     Align = alClient
+    Constraints.MinHeight = 150
     TabOrder = 1
     OnChange = pcProcNotiChange
     OnChanging = pcProcNotiChanging
@@ -172,6 +174,9 @@ inherited frmPtSel: TfrmPtSel
           TabOrder = 7
           Visible = False
           ShowAccelChar = True
+          WordWrap = False
+          LabelAlignment = taLeftJustify
+          LabelLayout = tlTop
         end
         object txtCmdRemove: TVA508StaticText
           Name = 'txtCmdRemove'
@@ -184,6 +189,9 @@ inherited frmPtSel: TfrmPtSel
           TabOrder = 9
           Visible = False
           ShowAccelChar = True
+          WordWrap = False
+          LabelAlignment = taLeftJustify
+          LabelLayout = tlTop
         end
         object txtCmdForward: TVA508StaticText
           Name = 'txtCmdForward'
@@ -196,6 +204,9 @@ inherited frmPtSel: TfrmPtSel
           TabOrder = 5
           Visible = False
           ShowAccelChar = True
+          WordWrap = False
+          LabelAlignment = taLeftJustify
+          LabelLayout = tlTop
         end
         object txtCmdProcess: TVA508StaticText
           Name = 'txtCmdProcess'
@@ -208,6 +219,9 @@ inherited frmPtSel: TfrmPtSel
           TabOrder = 3
           Visible = False
           ShowAccelChar = True
+          WordWrap = False
+          LabelAlignment = taLeftJustify
+          LabelLayout = tlTop
         end
         object cmdRemove: TButton
           Left = 578
@@ -292,6 +306,9 @@ inherited frmPtSel: TfrmPtSel
           TabOrder = 11
           Visible = False
           ShowAccelChar = True
+          WordWrap = False
+          LabelAlignment = taLeftJustify
+          LabelLayout = tlTop
         end
       end
     end
@@ -471,7 +488,7 @@ inherited frmPtSel: TfrmPtSel
       TabOrder = 5
       OnClick = cmdSaveListClick
     end
-    object cboPatient: TORComboBox
+    object cboPatient: TORCheckComboBox
       AlignWithMargins = True
       Left = 200
       Top = 25

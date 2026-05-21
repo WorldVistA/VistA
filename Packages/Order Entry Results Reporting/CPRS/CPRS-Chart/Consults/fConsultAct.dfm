@@ -3,7 +3,7 @@ inherited frmConsultAction: TfrmConsultAction
   Top = 217
   BorderIcons = []
   Caption = 'frmConsultAction'
-  ClientHeight = 414
+  ClientHeight = 426
   ClientWidth = 584
   Constraints.MinHeight = 406
   Constraints.MinWidth = 600
@@ -11,24 +11,24 @@ inherited frmConsultAction: TfrmConsultAction
   Position = poScreenCenter
   OnResize = ORFormResize
   ExplicitWidth = 600
-  ExplicitHeight = 453
-  PixelsPerInch = 96
+  ExplicitHeight = 465
   TextHeight = 13
   object pnlBase: TPanel [0]
     AlignWithMargins = True
     Left = 3
     Top = 3
-    Width = 578
-    Height = 369
+    Width = 582
+    Height = 311
     Margins.Bottom = 6
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 0
+    ExplicitHeight = 357
     object pnlForward: TPanel
       Left = 0
       Top = 0
       Width = 224
-      Height = 369
+      Height = 311
       Align = alLeft
       BevelOuter = bvNone
       TabOrder = 0
@@ -48,28 +48,11 @@ inherited frmConsultAction: TfrmConsultAction
         ExplicitTop = 0
         ExplicitWidth = 120
       end
-      object lblAttentionOf: TOROffsetLabel
-        AlignWithMargins = True
-        Left = 3
-        Top = 320
-        Width = 218
-        Height = 19
-        Align = alBottom
-        Caption = 'Attention'
-        HorzOffset = 2
-        Transparent = False
-        VertOffset = 6
-        WordWrap = False
-        ExplicitLeft = 2
-        ExplicitTop = 325
-        ExplicitWidth = 44
-      end
       object lblUrgency: TOROffsetLabel
-        AlignWithMargins = True
-        Left = 3
-        Top = 268
-        Width = 218
-        Height = 19
+        Left = 0
+        Top = 270
+        Width = 224
+        Height = 20
         Align = alBottom
         Caption = 'Urgency'
         HorzOffset = 2
@@ -94,40 +77,12 @@ inherited frmConsultAction: TfrmConsultAction
           'selections for this procedure are listed '
           'in the drop-down box above.')
         ReadOnly = True
-        TabOrder = 4
-      end
-      object cboAttentionOf: TORComboBox
-        AlignWithMargins = True
-        Left = 3
-        Top = 345
-        Width = 218
-        Height = 21
-        Style = orcsDropDown
-        Align = alBottom
-        AutoSelect = True
-        Caption = 'Attention'
-        Color = clWindow
-        DropDownCount = 8
-        ItemHeight = 13
-        ItemTipColor = clWindow
-        ItemTipEnable = True
-        ListItemsOnly = True
-        LongList = True
-        LookupPiece = 2
-        MaxLength = 0
-        Pieces = '2,3'
-        Sorted = False
-        SynonymChars = '<>'
         TabOrder = 3
-        Text = ''
-        OnNeedData = NewPersonNeedData
-        CharsNeedMatch = 1
       end
       object cboUrgency: TORComboBox
-        AlignWithMargins = True
-        Left = 3
-        Top = 293
-        Width = 218
+        Left = 0
+        Top = 290
+        Width = 224
         Height = 21
         Style = orcsDropDown
         Align = alBottom
@@ -154,7 +109,7 @@ inherited frmConsultAction: TfrmConsultAction
         Left = 3
         Top = 103
         Width = 218
-        Height = 159
+        Height = 164
         Margins.Top = 0
         Align = alClient
         HideSelection = False
@@ -198,16 +153,16 @@ inherited frmConsultAction: TfrmConsultAction
     object pnlOther: TPanel
       Left = 224
       Top = 0
-      Width = 354
-      Height = 369
+      Width = 358
+      Height = 311
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 1
       object pnlSigFind: TPanel
         Left = 0
         Top = 0
-        Width = 354
-        Height = 57
+        Width = 358
+        Height = 41
         Align = alTop
         BevelOuter = bvNone
         TabOrder = 0
@@ -215,7 +170,7 @@ inherited frmConsultAction: TfrmConsultAction
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 348
+          Width = 352
           Height = 41
           Align = alTop
           Caption = 'Significant Findings - Current status:  '
@@ -232,9 +187,9 @@ inherited frmConsultAction: TfrmConsultAction
       end
       object pnlComments: TPanel
         Left = 0
-        Top = 57
-        Width = 354
-        Height = 200
+        Top = 41
+        Width = 358
+        Height = 223
         Align = alClient
         Alignment = taLeftJustify
         BevelOuter = bvNone
@@ -243,7 +198,7 @@ inherited frmConsultAction: TfrmConsultAction
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 348
+          Width = 352
           Height = 19
           Align = alTop
           Caption = 'Comments'
@@ -259,8 +214,8 @@ inherited frmConsultAction: TfrmConsultAction
           AlignWithMargins = True
           Left = 3
           Top = 28
-          Width = 348
-          Height = 169
+          Width = 352
+          Height = 192
           Align = alClient
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
@@ -272,117 +227,15 @@ inherited frmConsultAction: TfrmConsultAction
           TabOrder = 0
           OnChange = ControlChange
           Caption = 'Comments'
-        end
-      end
-      object pnlAllActions: TPanel
-        Left = 0
-        Top = 315
-        Width = 354
-        Height = 54
-        Align = alBottom
-        BevelOuter = bvNone
-        TabOrder = 3
-        object pnlActionDate: TPanel
-          Left = 0
-          Top = 0
-          Width = 131
-          Height = 54
-          Align = alLeft
-          BevelOuter = bvNone
-          Caption = 'pnlActionDate'
-          ShowCaption = False
-          TabOrder = 0
-          object lblDateofAction: TOROffsetLabel
-            AlignWithMargins = True
-            Left = 3
-            Top = 5
-            Width = 125
-            Height = 19
-            Align = alBottom
-            Caption = 'Date/time of this action'
-            HorzOffset = 2
-            Transparent = False
-            VertOffset = 6
-            WordWrap = False
-            ExplicitLeft = 5
-            ExplicitTop = -4
-            ExplicitWidth = 112
-          end
-          object calDateofAction: TORDateBox
-            AlignWithMargins = True
-            Left = 3
-            Top = 30
-            Width = 125
-            Height = 21
-            Align = alBottom
-            TabOrder = 0
-            Text = 'Now'
-            DateOnly = False
-            RequireTime = False
-            Caption = 'Date/time of this action'
-          end
-        end
-        object pnlActionBy: TPanel
-          Left = 131
-          Top = 0
-          Width = 223
-          Height = 54
-          Align = alClient
-          BevelOuter = bvNone
-          Caption = 'pnlActionBy'
-          ShowCaption = False
-          TabOrder = 1
-          object lblActionBy: TOROffsetLabel
-            AlignWithMargins = True
-            Left = 3
-            Top = 5
-            Width = 217
-            Height = 19
-            Align = alBottom
-            Caption = 'Action by'
-            HorzOffset = 2
-            Transparent = False
-            VertOffset = 6
-            WordWrap = False
-            ExplicitLeft = 22
-            ExplicitTop = -4
-            ExplicitWidth = 215
-          end
-          object cboPerson: TORComboBox
-            AlignWithMargins = True
-            Left = 3
-            Top = 30
-            Width = 217
-            Height = 21
-            Style = orcsDropDown
-            Align = alBottom
-            AutoSelect = True
-            Caption = 'Action by'
-            Color = clWindow
-            DropDownCount = 8
-            ItemHeight = 13
-            ItemTipColor = clWindow
-            ItemTipEnable = True
-            ListItemsOnly = True
-            LongList = True
-            LookupPiece = 2
-            MaxLength = 0
-            Pieces = '2,3'
-            Sorted = False
-            SynonymChars = '<>'
-            TabOrder = 0
-            TabStop = True
-            Text = ''
-            OnNeedData = NewPersonNeedData
-            CharsNeedMatch = 1
-          end
+          ExplicitWidth = 348
+          ExplicitHeight = 191
         end
       end
       object pnlAlert: TPanel
         Left = 0
-        Top = 257
-        Width = 354
-        Height = 58
+        Top = 264
+        Width = 358
+        Height = 47
         Align = alBottom
         AutoSize = True
         BevelOuter = bvNone
@@ -391,7 +244,7 @@ inherited frmConsultAction: TfrmConsultAction
           AlignWithMargins = True
           Left = 3
           Top = 3
-          Width = 4
+          Width = 352
           Height = 4
           Align = alTop
           TabOrder = 1
@@ -399,9 +252,9 @@ inherited frmConsultAction: TfrmConsultAction
         object ckAlert: TCheckBox
           AlignWithMargins = True
           Left = 3
-          Top = 38
-          Width = 348
-          Height = 17
+          Top = 17
+          Width = 352
+          Height = 27
           Align = alTop
           Caption = 'Send additional alerts'
           TabOrder = 0
@@ -413,16 +266,16 @@ inherited frmConsultAction: TfrmConsultAction
   object pnlButtons: TPanel [1]
     AlignWithMargins = True
     Left = 3
-    Top = 381
-    Width = 578
+    Top = 393
+    Width = 582
     Height = 30
     Align = alBottom
     BevelOuter = bvNone
     ShowCaption = False
-    TabOrder = 1
+    TabOrder = 2
     object cmdCancel: TORAlignButton
       AlignWithMargins = True
-      Left = 500
+      Left = 504
       Top = 3
       Width = 75
       Height = 24
@@ -434,7 +287,7 @@ inherited frmConsultAction: TfrmConsultAction
     end
     object cmdOK: TORAlignButton
       AlignWithMargins = True
-      Left = 419
+      Left = 423
       Top = 3
       Width = 75
       Height = 24
@@ -453,6 +306,180 @@ inherited frmConsultAction: TfrmConsultAction
       OnClick = btnLaunchToolboxClick
     end
   end
+  object pnlAll: TGridPanel [2]
+    Left = 0
+    Top = 320
+    Width = 588
+    Height = 70
+    Align = alBottom
+    BevelOuter = bvNone
+    ColumnCollection = <
+      item
+        SizeStyle = ssAbsolute
+        Value = 230.000000000000000000
+      end
+      item
+        Value = 50.473963167969800000
+      end
+      item
+        Value = 49.526036832030200000
+      end>
+    ControlCollection = <
+      item
+        Column = 0
+        Control = lblAttentionOf
+        Row = 0
+      end
+      item
+        Column = 1
+        Control = lblDateofAction
+        Row = 0
+      end
+      item
+        Column = 2
+        Control = lblActionBy
+        Row = 0
+      end
+      item
+        Column = 0
+        Control = cboAttentionOf
+        Row = 1
+      end
+      item
+        Column = 1
+        Control = calDateofAction
+        Row = 1
+      end
+      item
+        Column = 2
+        Control = cboPerson
+        Row = 1
+      end>
+    RowCollection = <
+      item
+        SizeStyle = ssAuto
+        Value = 26.000000000000000000
+      end
+      item
+        SizeStyle = ssAuto
+        Value = 100.000000000000000000
+      end>
+    TabOrder = 1
+    object lblAttentionOf: TOROffsetLabel
+      Left = 1
+      Top = 1
+      Width = 230
+      Height = 21
+      Align = alTop
+      Caption = 'Attention'
+      HorzOffset = 2
+      Transparent = False
+      VertOffset = 6
+      WordWrap = False
+    end
+    object lblDateofAction: TOROffsetLabel
+      Left = 231
+      Top = 1
+      Width = 180
+      Height = 21
+      Align = alTop
+      Caption = 'Date/time of this action'
+      HorzOffset = 2
+      Transparent = False
+      VertOffset = 6
+      WordWrap = False
+    end
+    object lblActionBy: TOROffsetLabel
+      Left = 411
+      Top = 1
+      Width = 176
+      Height = 21
+      Align = alTop
+      Caption = 'Action by'
+      HorzOffset = 2
+      Transparent = False
+      VertOffset = 6
+      WordWrap = False
+    end
+    object cboAttentionOf: TORCheckComboBox
+      AlignWithMargins = True
+      Left = 4
+      Top = 25
+      Width = 224
+      Height = 40
+      Style = orcsDropDown
+      Align = alTop
+      AutoSelect = True
+      Caption = 'Attention'
+      Color = clWindow
+      DropDownCount = 8
+      ItemHeight = 13
+      ItemTipColor = clWindow
+      ItemTipEnable = True
+      ListItemsOnly = True
+      LongList = True
+      LookupPiece = 2
+      MaxLength = 0
+      Pieces = '2,3'
+      Sorted = False
+      SynonymChars = '<>'
+      TabOrder = 0
+      Text = ''
+      OnNeedData = cboAttentionOfNeedData
+      CharsNeedMatch = 1
+      MainCheckBoxCaption = 'Include Non-VA Providers'
+      MainCheckBoxVisible = True
+      MainCheckBoxAlignment = calBottom
+      OnMainCheckboxClick = cboAttentionOfMainCheckboxClick
+      DropdownStyle = ddsControl
+    end
+    object calDateofAction: TORDateBox
+      AlignWithMargins = True
+      Left = 234
+      Top = 25
+      Width = 174
+      Height = 21
+      Align = alTop
+      TabOrder = 1
+      Text = 'Now'
+      DateOnly = False
+      RequireTime = False
+      Caption = 'Date/time of this action'
+    end
+    object cboPerson: TORCheckComboBox
+      AlignWithMargins = True
+      Left = 414
+      Top = 25
+      Width = 170
+      Height = 40
+      Style = orcsDropDown
+      Align = alTop
+      AutoSelect = True
+      Caption = 'Action by'
+      Color = clWindow
+      DropDownCount = 8
+      ItemHeight = 13
+      ItemTipColor = clWindow
+      ItemTipEnable = True
+      ListItemsOnly = True
+      LongList = True
+      LookupPiece = 2
+      MaxLength = 0
+      Pieces = '2,3'
+      Sorted = False
+      SynonymChars = '<>'
+      TabOrder = 3
+      TabStop = True
+      Text = ''
+      OnNeedData = cboPersonNeedData
+      CharsNeedMatch = 1
+      MainCheckBoxCaption = 'Include Non-VA Providers'
+      MainCheckBoxVisible = True
+      MainCheckBoxAlignment = calBottom
+      OnMainCheckboxClick = cboPersonMainCheckboxClick
+      DropdownStyle = ddsControl
+    end
+  end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
       (
@@ -463,9 +490,6 @@ inherited frmConsultAction: TfrmConsultAction
         'Status = stsDefault')
       (
         'Component = Label1'
-        'Status = stsDefault')
-      (
-        'Component = cboAttentionOf'
         'Status = stsDefault')
       (
         'Component = cboUrgency'
@@ -501,20 +525,10 @@ inherited frmConsultAction: TfrmConsultAction
         'Component = ckAlert'
         'Status = stsDefault')
       (
-        'Component = pnlAllActions'
-        'Status = stsDefault')
-      (
-        'Component = calDateofAction'
-        'Text = Date/Time of this action. Press the enter key to access.'
-        'Status = stsOK')
-      (
         'Component = cmdOK'
         'Status = stsDefault')
       (
         'Component = cmdCancel'
-        'Status = stsDefault')
-      (
-        'Component = cboPerson'
         'Status = stsDefault')
       (
         'Component = frmConsultAction'
@@ -523,13 +537,20 @@ inherited frmConsultAction: TfrmConsultAction
         'Component = pnlButtons'
         'Status = stsDefault')
       (
-        'Component = pnlActionDate'
-        'Status = stsDefault')
-      (
-        'Component = pnlActionBy'
-        'Status = stsDefault')
-      (
         'Component = btnLaunchToolbox'
+        'Status = stsDefault')
+      (
+        'Component = pnlAll'
+        'Status = stsDefault')
+      (
+        'Component = cboAttentionOf'
+        'Status = stsDefault')
+      (
+        'Component = calDateofAction'
+        'Text = Date/Time of this action. Press the enter key to access.'
+        'Status = stsOK')
+      (
+        'Component = cboPerson'
         'Status = stsDefault'))
   end
 end

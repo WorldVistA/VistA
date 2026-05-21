@@ -8,11 +8,7 @@ program CPRSChart;
 //     - $(Utils)\JawsLauncher
 //     - $(Utils)\FastMM
 
-{$R 'mGridPanelFrame.res' 'Cover Sheet\mGridPanelFrame.rc'}
-
-{$IFDEF FASTMM}
-  {$INCLUDE CPRSDefines.inc}
-{$ENDIF}
+{$R *.dres}
 
 uses
   {$IFDEF FASTMM}
@@ -446,7 +442,30 @@ uses
   uComponentNexus in 'Utils\uComponentNexus.pas',
   uWriteAccess in 'uWriteAccess.pas',
   UMemoTools in 'Tools\UMemoTools.pas',
-  UMHDll in 'UMHDll.pas';
+  UMHDll in 'UMHDll.pas',
+  ActivityLogDisplay in 'ActivityLogDisplay.pas' {frmActivityLogDisplay: TORForm},
+  U508CheckBox in '508\U508CheckBox.pas',
+  U508CaptionEdit in '508\U508CaptionEdit.pas',
+  U508ORCheckComboBox in '508\U508ORCheckComboBox.pas',
+  U508ORComboBox in '508\U508ORComboBox.pas',
+  fPtInfoDetails in 'InfoPanel\fPtInfoDetails.pas' {frmPtInfoDetails: TORForm},
+  mPtInfoPanel in 'InfoPanel\mPtInfoPanel.pas' {fraPtInfoPanel: TFrame},
+  rPtInfo in 'InfoPanel\rPtInfo.pas',
+  uPtInfoCommon in 'InfoPanel\uPtInfoCommon.pas',
+  uPtInfoSplitView in 'InfoPanel\uPtInfoSplitView.pas',
+  uPtInfoData in 'infoPanel\uPtInfoData.pas',
+  uPtInfoCore in 'infoPanel\uPtInfoCore.pas',
+  rSpecialAuthority in 'SpecialAuthority\rSpecialAuthority.pas',
+  uSpecialAuthority in 'SpecialAuthority\uSpecialAuthority.pas',
+  uSpecialAuthorityEx in 'SpecialAuthority\uSpecialAuthorityEx.pas',
+  uSpecialAuthorityTypesEx in 'SpecialAuthority\uSpecialAuthorityTypesEx.pas',
+  uSpecialAuthorityTypes in 'SpecialAuthority\uSpecialAuthorityTypes.pas',
+  fBase508Frame in 'fBase508Frame.pas' {Base508Frame: TFrame},
+  fHTMLDialog in 'HTML Dialogs\fHTMLDialog.pas' {frmHTMLDialog},
+  uMessageAdapterManager in 'HTML Dialogs\uMessageAdapterManager.pas',
+  uFMDateTimeMessageAdapter in 'HTML Dialogs\uFMDateTimeMessageAdapter.pas',
+  uComboBoxMessageAdapter in 'HTML Dialogs\uComboBoxMessageAdapter.pas',
+  rHTMLDialog in 'HTML Dialogs\rHTMLDialog.pas';
 
 {$R *.TLB}
 {$R *.RES}
@@ -474,15 +493,15 @@ begin
   end;
   Application.Title := 'CPRS - Patient Chart';
   Application.HelpFile := 'help\cprs.chm';
-  Application.MainFormOnTaskBar := true;
+  Application.MainFormOnTaskBar := True;
   Application.CreateForm(TdmodShared, dmodShared);
   Application.CreateForm(TfrmFrame, frmFrame);
+  Application.Title := frmFrame.Caption;
   Application.CreateForm(TfrmSearchStop, frmSearchStop);
   if Assigned(frmSplash) then
   begin
     frmSplash.Free;                       // close & free splash screen
     frmSplash := nil;
   end;
-
   Application.Run;
 end.

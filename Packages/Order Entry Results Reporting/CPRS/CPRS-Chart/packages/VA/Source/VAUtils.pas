@@ -7,11 +7,45 @@ on sorted text.}
 interface
 
 uses
-  SysUtils, Windows, Messages, Classes, Graphics, StrUtils, Controls, VAClasses, Forms,
-  SHFolder, ShlObj, PSAPI, ShellAPI, ComObj, vcl.Dialogs, vcl.StdCtrls, vcl.ExtCtrls;
+  SysUtils,
+  Windows,
+  Messages,
+  Classes,
+  Graphics,
+  StrUtils,
+  Controls,
+  VAClasses,
+  Forms,
+  SHFolder,
+  ShlObj,
+  PSAPI,
+  ShellAPI,
+  ComObj,
+  vcl.Dialogs,
+  vcl.StdCtrls,
+  vcl.ExtCtrls,
+  System.Generics.Defaults,
+  Generics.Collections;
+
+const
+  U = '^';
+
+// Return if a given process exist in windows
+function ProcessExists(exeFileName: string): Boolean;
+
 type
   /// <summary>array of string</summary>
   TStringarray = array of string;
+
+  TScreenReaderIsActiveEvent = function: Boolean of object;
+
+  TScreenReaderCallback = class
+  private
+    class var fOnIsActive: TScreenReaderIsActiveEvent;
+  public
+    class property OnIsActive: TScreenReaderIsActiveEvent read fOnIsActive
+      write fOnIsActive;
+  end;
 
 procedure ShowMessage(const Text: string);
 
@@ -104,9 +138,7 @@ function ShowMsg(const Msg: string; Icon: TShow508MessageIcon = smiNone;
 
 const
   SHARE_DIR = '\VISTA\Common Files\';
-  JAWS_EXENAME = 'jfw.exe';
-  JAWS_FORCED = 'FORCEJAWS';
-  JAWS_CL_EXE_SW = 'SCREADER';
+
 
 { returns the Nth piece (PieceNum) of a string delimited by Delim }
 function Piece(const S: string; Delim: char; PieceNum: Integer): string;
@@ -115,17 +147,17 @@ function Pieces(const S: string; Delim: char; FirstNum, LastNum: Integer): strin
 
 function Pieces(const S: string; PieceNumbers: array of Integer; PieceDelim, ReturnDelim: Char): string; overload;
 
+function ComparePieces(P1, P2: string; Pieces: array of integer; Delim:
+                       char = U; CaseInsensitive: boolean = FALSE): integer;
+
+{ sets the Nth piece (PieceNum) of a string to NewPiece, adding delimiters as necessary }
+procedure SetPiece(var x: string; Delim: Char; PieceNum: Integer; const NewPiece: string);
+
+procedure SetPieces(var x: string; Delim: Char; Pieces: Array of Integer; FromString: string);
+
 // Same as FreeAndNil, but for TString objects only
 // Frees any objects in the TStrings Objects list as well the TStrings object
 procedure FreeAndNilTStringsAndObjects(var Strings);
-
-// Returns true if a screen reader programm is running
-function OldScreenReaderActive: boolean;
-function ScreenReaderActive: boolean;
-
-// Special Coding for Screen Readers only enabled if screen reader was
-// running when the application first started up
-function ScreenReaderSupportEnabled: boolean;
 
 // Returns C:\...\subPath\File format based on maxSize and Canvas font setting
 function GetFileWithShortenedPath(FileName: String; MaxSize: integer; Canvas: TCanvas): string;
@@ -323,13 +355,6 @@ type
 function D2006FindCmdLineSwitch(const Switch: string; var Value: string; IgnoreCase: Boolean = True;
   const SwitchTypes: TD2006CmdLineSwitchTypes = [clstD2006ValueNextParam, clstD2006ValueAppended]): Boolean;
 
-type
- TStringsHelper = class helper for TStrings
-  public
-    //Return unedited raw text from TStrings
-    function RawText: String;
-  end;
-
 //Count the number of times a given sub string occurs within a string. Optional max character count
 function CountStringOccurrences(const aSubStr, aStr: String; aCutOff: Integer = -1): integer;
 
@@ -385,7 +410,65 @@ Var
   PieceStr: TPiece;
 begin
   PieceStr := TPiece(S);
-  Result := PieceStr.Pieces(PieceNumbers, PieceDelim, ReturnDelim);
+  Result := PieceStr.ToDelimitedString(PieceNumbers, PieceDelim, ReturnDelim);
+end;
+
+function ComparePieces(P1, P2: string; Pieces: array of integer; Delim:
+  char = U; CaseInsensitive: Boolean = FALSE): Integer;
+var
+  i: Integer;
+
+begin
+  i := 0;
+  Result := 0;
+  while i <= high(Pieces) do
+  begin
+    if (CaseInsensitive) then
+      Result := CompareText(Piece(P1, Delim, Pieces[i]),
+        Piece(P2, Delim, Pieces[i]))
+    else
+      Result := CompareStr(Piece(P1, Delim, Pieces[i]),
+        Piece(P2, Delim, Pieces[i]));
+    if (Result = 0) then
+      Inc(i)
+    else
+      break;
+  end;
+end;
+
+{ sets the Nth piece (PieceNum) of a string to NewPiece, adding delimiters as necessary }
+procedure SetPiece(var x: string; Delim: char; PieceNum: Integer;
+  const NewPiece: string);
+var
+  i: Integer;
+  Strt, Next: PChar;
+
+begin
+  i := 1;
+  Strt := PChar(x);
+  Next := StrScan(Strt, Delim);
+  while (i < PieceNum) and (Next <> nil) do
+  begin
+    Inc(i);
+    Strt := Next + 1;
+    Next := StrScan(Strt, Delim);
+  end;
+  if Next = nil then
+    Next := StrEnd(Strt);
+  if i < PieceNum then
+    x := x + StringOfChar(Delim, PieceNum - i) + NewPiece
+  else
+    x := Copy(x, 1, Strt - PChar(x)) + NewPiece + StrPas(Next);
+end;
+
+procedure SetPieces(var x: string; Delim: char; Pieces: Array of Integer;
+  FromString: string);
+var
+  i: Integer;
+
+begin
+  for i := low(Pieces) to high(Pieces) do
+    SetPiece(x, Delim, Pieces[i], Piece(FromString, Delim, Pieces[i]));
 end;
 
 procedure ShowMessage(const Text: string);
@@ -710,7 +793,8 @@ begin
         end;
       end;
 
-      if ScreenReaderActive then
+      if Assigned(TScreenReaderCallback.OnIsActive) and
+        (TScreenReaderCallback.OnIsActive()) then
       begin
         Dlg.Caption := Dlg.Caption + ' Dialog';
         Lbl := TStaticText4ScreenReader.Create(Dlg);
@@ -825,69 +909,6 @@ begin
     ContinueLoop := Process32Next(FSnapshotHandle, FProcessEntry32);
   end;
   CloseHandle(FSnapshotHandle);
-end;
-
-{
-TODO - This function will need to be retired in CPRS 32, and we'll need to migrate
-everyone over to ScreenReaderSystemActive() instead.
-}
-
-var
-  CheckScreenReaderSupport: boolean = TRUE;
-  uScreenReaderSupportEnabled: boolean = FALSE;
-
-
-function ScreenReaderActive: boolean;
-var
- JawsParam: String;
-begin
-  result := uScreenReaderSupportEnabled;
-
-  if not CheckScreenReaderSupport then
-    exit;
-  {
-  We want to fall out of this a quickly as possible so we're not spending a lot
-  of time looking for a process that probably won't exist.
-  }
-
-  CheckScreenReaderSupport := false; // we only want to do this check once.
-
-  uScreenReaderSupportEnabled := FindCmdLineSwitch(JAWS_FORCED,true);
-  if uScreenReaderSupportEnabled then
-  begin
-    result := uScreenReaderSupportEnabled;
-    exit;
-  end;
-
-
-  uScreenReaderSupportEnabled := ProcessExists(JAWS_EXENAME);
-  if uScreenReaderSupportEnabled then
-  begin
-    result := uScreenReaderSupportEnabled;
-    exit;
-  end;
-
-  FindCmdLineSwitch(JAWS_CL_EXE_SW, JawsParam, True, [clstValueAppended]);
-  JawsParam := trim(JawsParam);
-
-   if JawsParam <> '' then
-     uScreenReaderSupportEnabled := ProcessExists(JawsParam);
-   result := uScreenReaderSupportEnabled;
-end;
-
-function OldScreenReaderActive: boolean;
-var
-  ListStateOn : longbool;
-  Success: longbool;
-begin
-  //Determine if a screen reader is currently being used.
-  Success := SystemParametersInfo(SPI_GETSCREENREADER, 0, @ListStateOn,0);
-  Result := (Success and ListStateOn);
-end;
-
-function ScreenReaderSupportEnabled: boolean;
-begin
-  result := ScreenReaderActive;
 end;
 
 const
@@ -2173,41 +2194,6 @@ begin
   end;
 end;
 
-//Return text from the Lines with out non existent EOL markers
-function TStringsHelper.RawText: String;
-
-//Mirror of Load from base class except output is string
-Function Load(Stream: TStream; Encoding: TEncoding): String;
-var
-  Size: Integer;
-  Buffer: TBytes;
-begin
-  BeginUpdate;
-  try
-    Size := Stream.Size - Stream.Position;
-    SetLength(Buffer, Size);
-    Stream.Read(Buffer, 0, Size);
-    Size := TEncoding.GetBufferEncoding(Buffer, Encoding, DefaultEncoding);
-    SetEncoding(Encoding); // Keep Encoding in case the stream is saved
-    result := Encoding.GetString(Buffer, Size, Length(Buffer) - Size);
-  finally
-    EndUpdate;
-  end;
-end;
-
-var
-  Stream: TStream;
-begin
-  Stream := TMemoryStream.Create;
-  try
-    SaveToStream(Stream, Encoding);
-    Stream.Position := 0;
-    Result := Load(Stream, Encoding);
-  finally
-    Stream.Free;
-  end;
-end;
-
 function Pluralize(Count: Integer; const Singular: string; const Plural: string;
   const Args: array of const): string; overload;
 // This function returns singular or plural of a word or phrase based on the
@@ -2331,7 +2317,8 @@ begin
 end;
 
 initialization
-  ScreenReaderSupportEnabled;
+
+
 finalization
   CleanupMessageHandlerSystem;
 end.

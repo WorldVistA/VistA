@@ -77,7 +77,7 @@ function GetAllergyTitleText: string;
 implementation
 
 uses
-  ORNetIntf, uConst;
+  ORNetIntf, uConst, VA508AccessibilityRouter;
 
 const
   NO_YES: array[Boolean] of string = ('NO', 'YES');

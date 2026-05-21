@@ -6,7 +6,7 @@ uses
   ORExtensions,
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ORCtrls, ComCtrls, Buttons, ExtCtrls, Menus, ActnList,
-  uTemplates, ORClasses, System.Actions, U_CPTPasteDetails;
+  uTemplates, ORClasses, System.Actions, U_CPTPasteDetails, fBase508Frame;
 
 type
   // Indicates what a drawer is doing at the moment
@@ -51,7 +51,7 @@ type
     LastOpenSize: integer;
   end;
 
-  TfraDrawers = class(TFrame)
+  TfraDrawers = class(TBase508Frame)
     pnlTemplate: TPanel;
     pnlEncounter: TPanel;
     pnlReminder: TPanel;

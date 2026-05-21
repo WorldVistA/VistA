@@ -1,4 +1,4 @@
-object fraEditGridBase: TfraEditGridBase
+inherited fraEditGridBase: TfraEditGridBase
   Left = 0
   Top = 0
   Width = 674
@@ -20,8 +20,9 @@ object fraEditGridBase: TfraEditGridBase
       Top = 0
       Width = 670
       Height = 330
-      Align = alTop
+      Align = alClient
       BevelOuter = bvNone
+      ParentColor = True
       TabOrder = 0
       object grdEditPanel: TGridPanel
         Left = 0

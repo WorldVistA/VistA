@@ -1257,7 +1257,6 @@ procedure TJSONParameters.SetAsEnumerated<T>(const APath: string; const AValue: 
 //   the type of the old value is used instead to determine how to save the
 //   AValue.
 var
-  JSONPair: TJSONPair;
   OldJSONValue, NewJSONValue: TJSONValue;
   OrdinalValue: Int64;
   ATypeInfo: PTypeInfo;
@@ -1325,10 +1324,6 @@ procedure TJSONParameters.SetAsType<T>(const APath: string; const AValue: T);
 // Example:
 //   SystemParameters.SetAsType<PieceString>('CopyPaste.ExcludeApps', S);
 var
-  JSONPair: TJSONPair;
-  OldJSONValue, NewJSONValue: TJSONValue;
-  S: string;
-  B: Boolean;
   ATypeInfo: PTypeInfo;
 begin
   case GetTypeKind(T) of

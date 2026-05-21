@@ -189,7 +189,7 @@ implementation
 {$R *.DFM}
 
 uses ORFn, uConst, rODMeds, rODBase, fFrame, uCore, fOtherSchedule, rCore,
-  uSizing, UResponsiveGUI;
+  uSizing, UResponsiveGUI, VA508AccessibilityRouter;
 
 const
   TX_NO_DEA     = 'Provider must have a DEA# or VA# to order this medication';

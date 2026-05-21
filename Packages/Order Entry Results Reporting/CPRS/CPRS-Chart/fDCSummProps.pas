@@ -10,23 +10,12 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ORDtTm, ORCtrls, ExtCtrls, uConst, rTIU, rDCSumm, uDocTree, uDCSumm,
-  uTIU, fBase508Form, VA508AccessibilityManager, ORStaticText,
-  VA508AccessibilityRouter,
+  uTIU, fBase508Form, VA508AccessibilityManager, ORStaticText, ORCheckComboBox,
+  VA508AccessibilityRouter, uMisc, uSizing,
   Vcl.ComCtrls, Math;
 
 type
   TfrmDCSummProperties = class(TfrmBase508Form)
-    bvlConsult: TBevel;
-    lblNewTitle: TLabel;
-    cboNewTitle: TORComboBox;
-    calSumm: TORDateBox;
-    lblDateTime: TLabel;
-    lblAuthor: TLabel;
-    cboAttending: TORComboBox;
-    lblCosigner: TLabel;
-    cmdOK: TButton;
-    cmdCancel: TButton;
-    cboAuthor: TORComboBox;
     pnlTranscription: TPanel;
     cboTranscriptionist: TORComboBox;
     lblTranscriptionist: TLabel;
@@ -36,16 +25,20 @@ type
     lblDCSumm1: TStaticText;
     lblDCSumm2: TStaticText;
     lstAdmissions: TCaptionListView;
-    pnlSummaryTitle: TPanel;
-    pnlMain: TPanel;
-    pnlButtons: TPanel;
-    pnlCanvas: TPanel;
     Bevel1: TBevel;
-    Panel1: TPanel;
+    pnlSummaryTitle: TGridPanel;
+    cmdOK: TButton;
+    cmdCancel: TButton;
+    lblDateTime: TLabel;
+    lblAuthor: TLabel;
+    cboAuthor: TORCheckComboBox;
+    lblAttending: TLabel;
+    cboAttending: TORCheckComboBox;
+    cboNewTitle: TORComboBox;
+    lblNewTitle: TLabel;
+    calSumm: TORDateBox;
     procedure FormShow(Sender: TObject);
     procedure cboNewTitleNeedData(Sender: TObject; const StartFrom: String;
-      Direction, InsertAt: Integer);
-    procedure cboAuthorNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
     procedure cboAttendingNeedData(Sender: TObject; const StartFrom: String;
       Direction, InsertAt: Integer);
@@ -64,6 +57,12 @@ type
       Shift: TShiftState; X, Y: Integer);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure FormCreate(Sender: TObject);
+    procedure cboAttendingMainCheckboxClick(Sender: TObject);
+    procedure cboAuthorNeedData(Sender: TObject; const StartFrom: string;
+      Direction, InsertAt: Integer);
+    procedure FormResize(Sender: TObject);
+    procedure cboAuthorMainCheckboxClick(Sender: TObject);
   private
 //    FCosignIEN: Int64; // store cosigner that was passed in
 //    FCosignName: string; // store cosigner that was passed in
@@ -141,24 +140,27 @@ function ExecuteDCSummProperties(var ASumm: TEditDCSummRec;
   var ListBoxItem: string; ShowAdmissions, IDNoteTitlesOnly: Boolean): Boolean;
 var
   frmDCSummProperties: TfrmDCSummProperties;
+  MarginW: Integer;
   x: string;
 begin
   frmDCSummProperties := TfrmDCSummProperties.Create(Application);
+
+  with frmDCSummProperties.pnlSummaryTitle do
+  begin
+    MarginW := 2 * 6; //uGN_Utils._MarginW;
+    ColumnCollection[0].Value := getMainFormTextWidth(frmDCSummProperties.lblNewTitle.Caption) + MarginW ;
+  end;
+
   EditLines := TStringList.Create;
   try
     ResizeAnchoredFormToFont(frmDCSummProperties);
     with frmDCSummProperties do
     begin
-      Height := pnlSummaryTitle.Height + pnlMain.Height + pnlTranscription.Height;
+      AdjustToMainFontSize;
       // setup common fields (title, reference date, author)
       FShowAdmissions := ShowAdmissions;
       FIDNoteTitlesOnly := IDNoteTitlesOnly;
       pnlTranscription.Visible := False; { was never used on old form }
-      if not pnlTranscription.Visible then
-      begin
-        Height := Height - pnlTranscription.Height;
-        Top := Top - pnlTranscription.Height;
-      end;
       if ASumm.DocType <> TYP_ADDENDUM then
       begin
         cboNewTitle.InitLongList('');
@@ -314,8 +316,8 @@ begin
     then lblCosigner.Visible := AskCosignerForTitle(FDocType,            cboAuthor.ItemIEN)
     else lblCosigner.Visible := AskCosignerForTitle(cboNewTitle.ItemIEN, cboAuthor.ItemIEN);
     end; *)
-  lblCosigner.Visible := True;
-  cboAttending.Visible := lblCosigner.Visible;
+  lblAttending.Visible := True;
+  cboAttending.Visible := lblAttending.Visible;
 end;
 
 procedure TfrmDCSummProperties.ShowAdmissionList;
@@ -397,12 +399,11 @@ begin
   if FShowAdmissions and (not pnlAdmission.Visible) then
   begin
     pnlAdmission.Visible := True;
-//    pnlAdmission.Top := cmdCancel.Top + cmdCancel.Height + 8;
-//    pnlAdmission.Height := Height - pnlAdmission.Top;
+    Height := pnlSummaryTitle.Height + cboAuthor.Height + cboAttending.Height
+      + pnlAdmission.height;
   end;
-  FLastTitle := cboNewTitle.ItemIEN;
 
-  AdjustToMainFontSize;
+  FLastTitle := cboNewTitle.ItemIEN;
 end;
 
 procedure TfrmDCSummProperties.cboNewTitleExit(Sender: TObject);
@@ -420,9 +421,14 @@ end;
 { cboAuthor & cboAttending events }
 
 procedure TfrmDCSummProperties.cboAuthorNeedData(Sender: TObject;
-  const StartFrom: String; Direction, InsertAt: Integer);
+  const StartFrom: string; Direction, InsertAt: Integer);
 begin
   setPersonList(cboAuthor, StartFrom, Direction);
+end;
+
+procedure TfrmDCSummProperties.cboAttendingMainCheckboxClick(Sender: TObject);
+begin
+  cboAttending.ReInitLongList;
 end;
 
 procedure TfrmDCSummProperties.cboAttendingNeedData(Sender: TObject;
@@ -459,6 +465,16 @@ end;
 procedure TfrmDCSummProperties.cboAuthorEnter(Sender: TObject);
 begin
   FLastAuthor := 0;
+end;
+
+procedure TfrmDCSummProperties.cboAuthorMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  cboAuthorEnter(cboAuthor);
+  var ALastData := cboAuthor.SelectedDataString;
+  cboAuthor.ReInitLongList;
+  if (ALastData <> cboAuthor.SelectedDataString) and (cboAuthor.ItemIndex > -1) then
+    cboAuthorMouseClick(cboAuthor);
 end;
 
 procedure TfrmDCSummProperties.cboAuthorMouseClick(Sender: TObject);
@@ -702,6 +718,17 @@ begin
 
 end;
 
+procedure TfrmDCSummProperties.FormResize(Sender: TObject);
+begin
+  inherited;
+  if height <= (pnlSummaryTitle.Constraints.MinHeight + pnlAdmission.Height
+    + cboAuthor.Height + cboAttending.Height) then
+  begin
+    self.Constraints.minheight := (pnlSummaryTitle.Constraints.MinHeight + pnlAdmission.Height +
+       cboAuthor.Height + cboAttending.Height);
+  end;
+end;
+
 procedure TfrmDCSummProperties.cboNewTitleChange(Sender: TObject);
 var
   IEN: Int64;
@@ -727,6 +754,8 @@ begin
     cboAttending.SelectByIEN(IEN);
     TSimilarNames.RegORComboBox(cboAttending);
   end;
+
+  cboNewTitleMouseClick(Sender);
 end;
 
 procedure TfrmDCSummProperties.cboNewTitleDblClick(Sender: TObject);
@@ -748,6 +777,13 @@ begin
     CanClose := isValidInput;
 end;
 
+procedure TfrmDCSummProperties.FormCreate(Sender: TObject);
+begin
+  inherited;
+  cboAuthor.MainCheckBoxVisible := IncludeNonVAProviders(cboAuthor);
+  cboAttending.MainCheckBoxVisible := IncludeNonVAProviders(cboAttending);
+end;
+
 procedure TfrmDCSummProperties.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
@@ -760,12 +796,6 @@ procedure TfrmDCSummProperties.AdjustToMainFontSize;
 begin
   Width := 4 * Application.MainForm.Canvas.TextWidth(lblNewTitle.Caption);
   Constraints.MinWidth := Width;
-
-  Height := pnlSummaryTitle.Height +
-    pnlMain.Height + 32;
-
-  if pnlAdmission.Visible then
-    Height := Height + pnlSummaryTitle.Height;
 end;
 
 end.

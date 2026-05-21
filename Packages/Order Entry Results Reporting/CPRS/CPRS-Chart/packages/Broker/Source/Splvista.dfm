@@ -12,10 +12,8 @@ object frmVistaSplash: TfrmVistaSplash
   Font.Name = 'System'
   Font.Style = []
   FormStyle = fsStayOnTop
-  OldCreateOrder = True
   Position = poScreenCenter
   Scaled = False
-  PixelsPerInch = 96
   TextHeight = 16
   object Panel1: TPanel
     Left = 0

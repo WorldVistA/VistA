@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, ORCtrls, Vcl.ComCtrls;
+  StdCtrls, ExtCtrls, ORCtrls, Vcl.ComCtrls, fBase508Frame;
 
 const
   FROM_LABEL = ' @^@ ';
@@ -14,7 +14,7 @@ type
     drServiceConnected, drLocation, drRoomBed, drCombatVet, drProvider,
     drInpatientProvider, drAttending, drLastLocation, drLastVisited, drMemo);
 
-  TfraPtSelDemog = class(TFrame)
+  TfraPtSelDemog = class(TBase508Frame)
     stxSSN: TStaticText;
     lblPtSSN: TStaticText;
     stxDOB: TStaticText;

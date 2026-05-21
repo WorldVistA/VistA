@@ -1,3 +1,4 @@
+
 { ******************************************************************************
   *
   * AV Catcher
@@ -55,13 +56,16 @@ type
     pnlBtns: TGridPanel;
     btnCustom: TButton;
     lblAVText: TVA508StaticText;
+    pnlFeedback: TPanel;
+    lblFeedback: TLabel;
+    memFeedback: TMemo;
+    VA508Man: TVA508AccessibilityManager;
     procedure lblDeatailTxt1Click(Sender: TObject);
     procedure LogDetailsChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnLogEMailClick(Sender: TObject);
   private
     FShowingDetails: Boolean;
-    F508Manager: TVA508AccessibilityManager;
     function CalcWidthResize(): Integer;
   public
     constructor CreateForm(AOwner: TComponent; AException: Exception);
@@ -81,14 +85,21 @@ type
     FMapParser: TMapParser;
     FModuleParser: TModuleParser;
     FCustomErrorStrings: TStringList;
+    FUserFeedback: string;
     FMaxStackDepth: Integer;
     FExceptionStack: TStack;
     FExceptionUnitName: string;
     FExceptionClassName: string;
     FExceptionMessage: string;
     FExceptionString: string;
+    FExceptionStackDetails: TStringList;
+    FVersionStr: string;
+    FTopStack: string;
+    FParsedStack: TStringList;
     function GetJSONString: string;
     function GetReadableString: TStringList;
+    procedure SetUserFeedback(const Value: string);
+    function GetVersionString: string;
   protected
     procedure Execute; override;
   public
@@ -103,6 +114,8 @@ type
     property ExceptionClassName: string read FExceptionClassName;
     property ExceptionMessage: string read FExceptionMessage;
     property ExceptionString: string read FExceptionString;
+    property UserFeedback: string read FUserFeedback write SetUserFeedback;
+    property VersionString: string read GetVersionString;
   end;
 
   TExceptionLogger = class(TObject)
@@ -124,6 +137,7 @@ type
     FMapParser: TMapParser;
     FPurgeInfo: TStringList;
     FIncludeModuleInfo: Boolean;
+    FErrObj: TErrorObject;
     procedure WaitForParsing;
     procedure AppException(Sender: TObject; E: Exception);
     // Inital way to call code
@@ -134,6 +148,8 @@ type
     function GetLogFileName: string;
     // Writes JSON file
     procedure SaveJSON;
+
+    procedure SetFeedback(Value: string);
     // Purges log files based on DaysToPurge const
     function PurgeOldLogs: string;
     procedure StartParsing(AException: Exception; ACustomDetails: TStrings);
@@ -176,6 +192,7 @@ type
       read FOnCustomExceptionDetails write FOnCustomExceptionDetails;
     property MapParser: TMapParser read FMapParser;
     property Errors: TObjectList<TErrorObject> read FErrors;
+    property CurrentError: TErrorObject read FErrObj;
   end;
 
 var
@@ -309,11 +326,16 @@ begin
   FCustomErrorStrings := TStringList.Create;
   FCustomErrorStrings.Assign(ACustomDetails);
 
+  FParsedStack := TStringList.Create;
+  FExceptionStackDetails := TStringList.Create;
+
   inherited Create(False);
 end;
 
 destructor TErrorObject.Destroy;
 begin
+  FreeAndNil(FExceptionStackDetails);
+  FreeAndNil(FParsedStack);
   FreeAndNil(FCustomErrorStrings);
   FreeAndNil(FExceptionStack);
   FreeAndNil(FModuleParser);
@@ -328,13 +350,11 @@ end;
 
 procedure TErrorObject.Execute;
 
-  procedure GatherStackInfo(OutList, ParsedStack: TStringList;
-    out VersionStr, TopStack: string);
+  procedure GatherStackInfo();
 
     procedure Add(Text: string);
     begin
-      OutList.Add(Text);
-      if Assigned(ParsedStack) then ParsedStack.Add(Text);
+      FParsedStack.Add(Text);
     end;
 
     procedure LookupInModules(const LookUpAddr: Pointer;
@@ -354,30 +374,12 @@ procedure TErrorObject.Execute;
     CurrentLevel: Integer;
     AWasAddressFound: Boolean;
   begin
-    VersionStr := TExceptionLogger.FileVersion(Application.ExeName);
-    if Assigned(FExceptionStack) and (FExceptionStack.Count > 0) then
-      TopStack := Format(NoMapFormat, [FExceptionStack[0]])
-    else TopStack := Format(NoMapFormat, [nil]);
 
-    if Assigned(OutList) then
-    begin
-      ExceptionLog.AddSectionHeader(OutList,'Application Information');
-      ExceptionLog.AddDetail(OutList, 'Name',
-        ExtractFileName(Application.ExeName));
-      ExceptionLog.AddDetail(OutList, 'Version', VersionStr);
-      ExceptionLog.AddDetail(OutList, 'CRC',
-        IntToHex(CRCForFile(Application.ExeName), 8));
-      ExceptionLog.AddSectionHeader(OutList,'Error Information');
-      ExceptionLog.AddDetail(OutList, 'Date/Time',
-        FormatDateTime('mm/dd/yyyy hh:nn:ss', Now));
-      ExceptionLog.AddDetail(OutList, 'Unit', FExceptionUnitName);
-      ExceptionLog.AddDetail(OutList, 'Class', FExceptionClassName);
-      ExceptionLog.AddDetail(OutList, 'Message', FExceptionMessage);
-      if Length(Trim(FCustomErrorStrings.Text)) > 0 then
-        OutList.Add(FCustomErrorStrings.Text);
-      if FExceptionString <> FExceptionMessage then
-        ExceptionLog.AddDetail(OutList, 'Text', FExceptionString);
-      ExceptionLog.AddSectionHeader(OutList,'Error Trace', soFirst);
+    if Assigned(FExceptionStack) and (FExceptionStack.Count > 0) then
+      FTopStack := Format(NoMapFormat, [FExceptionStack[0]])
+    else FTopStack := Format(NoMapFormat, [nil]);
+
+
 
       if Assigned(FExceptionStack) then
       begin
@@ -412,30 +414,30 @@ procedure TErrorObject.Execute;
           Inc(CurrentLevel);
         end;
       end;
-    end;
   end;
 
-var
-  AStackInfo, ParsedStack: TStringList;
-  VersionStr, TopStack: string;
+
 begin
   inherited;
   try
-    AStackInfo := nil;
-    ParsedStack := nil;
-    try
-      AStackInfo := TStringList.Create;
-      ParsedStack := TStringList.Create;
-      GatherStackInfo(AStackInfo, ParsedStack, VersionStr, TopStack);
-      ReadableString.Assign(AStackInfo);
-      JSONBuilder //
+    GatherStackInfo;
+  except
+    // swallow
+  end;
+end;
+
+function TErrorObject.GetJSONString: string;
+begin
+    If FStringBuilder.ToString = '' then
+    begin
+    JSONBuilder //
       { - }.BeginObject //
       { --- }.BeginArray('Exception') //
       { ----- }.BeginObject //
       { ------- }.BeginArray('App') //
       { --------- }.BeginObject //
       { ----------- }.Add('Name', ExtractFileName(Application.ExeName)) //
-      { ----------- }.Add('Version', VersionStr) //
+      { ----------- }.Add('Version', FVersionStr) //
       { ----------- }.Add('CRC', IntToHex(CRCForFile(Application.ExeName), 8))
       //
       { --------- }.EndObject //
@@ -446,7 +448,7 @@ begin
       { ----------- }.Add('Date/Time', Now) //
       { ----------- }.Add('Unit', FExceptionUnitName) //
       { ----------- }.Add('Class', FExceptionClassName)
-        .Add('Message', FExceptionMessage) //
+      { ----------- }.Add('Message', FExceptionMessage) //
       { --------- }.EndObject //
       { ------- }.EndArray //
       //
@@ -456,34 +458,70 @@ begin
       { --------- }.EndObject //
       { ------- }.EndArray //
       //
+      { ------- }.BeginArray('Feedback') //
+      { --------- }.BeginObject //
+      { ----------- }.Add('Data', FUserFeedback) //
+      { --------- }.EndObject //
+      { ------- }.EndArray //
+      //
       { ------- }.BeginArray('Stack') //
       { --------- }.BeginObject //
-      { ----------- }.Add('Top', TopStack) //
-      { ----------- }.Add('Data', ParsedStack.Text) //
+      { ----------- }.Add('Top', FTopStack) //
+      { ----------- }.Add('Data', FParsedStack.Text) //
       { --------- }.EndObject //
       { ------- }.EndArray //
       //
       { ----- }.EndObject //
       { --- }.EndArray //
       { - }.EndObject; //
-
-    finally
-      FreeAndNil(ParsedStack);
-      FreeAndNil(AStackInfo)
     end;
-  except
-    // swallow
-  end;
-end;
 
-function TErrorObject.GetJSONString: string;
-begin
   Result := FStringBuilder.ToString;
 end;
 
 function TErrorObject.GetReadableString: TStringList;
 begin
   Result := FReadableString;
+
+  ExceptionLog.AddSectionHeader(Result, 'Application Information');
+  ExceptionLog.AddDetail(Result, 'Name', ExtractFileName(Application.ExeName));
+  ExceptionLog.AddDetail(Result, 'Version', VersionString);
+  ExceptionLog.AddDetail(Result, 'CRC', IntToHex(CRCForFile(Application.ExeName), 8));
+
+  If not FUserFeedback.IsEmpty then
+  begin
+    ExceptionLog.AddSectionHeader(Result, 'User Feedback');
+    ExceptionLog.AddDetail(Result, 'Feedback', FUserFeedback);
+  end;
+
+  ExceptionLog.AddSectionHeader(Result, 'Error Information');
+  ExceptionLog.AddDetail(Result, 'Date/Time', FormatDateTime('mm/dd/yyyy hh:nn:ss', Now));
+  ExceptionLog.AddDetail(Result, 'Unit', FExceptionUnitName);
+  ExceptionLog.AddDetail(Result, 'Class', FExceptionClassName);
+  ExceptionLog.AddDetail(Result, 'Message', FExceptionMessage);
+
+  if Length(Trim(FCustomErrorStrings.Text)) > 0 then
+    Result.Add(FCustomErrorStrings.Text.TrimRight);
+  if FExceptionString <> FExceptionMessage then
+    ExceptionLog.AddDetail(Result, 'Text', FExceptionString);
+
+  ExceptionLog.AddSectionHeader(Result, 'Error Trace', soFirst);
+  Result.AddStrings(FParsedStack);
+
+end;
+
+function TErrorObject.GetVersionString: string;
+begin
+  Result := TExceptionLogger.FileVersion(Application.ExeName);
+end;
+
+procedure TErrorObject.SetUserFeedback(const Value: string);
+begin
+  Synchronize(
+    procedure
+    begin
+      FUserFeedback := Value;
+    end);
 end;
 
 {$ENDREGION}
@@ -600,6 +638,7 @@ begin
       AExceptionForm.ShowModal;
       Screen.Cursor := crHourGlass;
       try
+        SetFeedback(Trim(AExceptionForm.memFeedback.Text));
         WaitForParsing;
         PurgeOldLogs;
         SaveJSON;
@@ -669,12 +708,10 @@ end;
 
 procedure TExceptionLogger.StartParsing(AException: Exception;
   ACustomDetails: TStrings);
-var
-  ErrObj: TErrorObject;
 begin
-  ErrObj := TErrorObject.Create(AException, ACustomDetails, FMapParser,
+  FErrObj := TErrorObject.Create(AException, ACustomDetails, FMapParser,
     FMaxStackDepth);
-  Errors.Add(ErrObj);
+  Errors.Add(FErrObj);
 end;
 
 function TExceptionLogger.PurgeOldLogs(): string;
@@ -797,6 +834,11 @@ begin
   end;
 end;
 
+procedure TExceptionLogger.SetFeedback(Value: string);
+begin
+  FErrObj.UserFeedback := Value;
+end;
+
 procedure TExceptionLogger.EmailError;
 var
   EmailUsrs, TmpStr: string;
@@ -839,7 +881,6 @@ var
     begin
       if FPurgeInfo.Count > 0 then
         Strings.AddStrings(FPurgeInfo);
-
       for var i: Integer := 0 to FErrors.Count - 1 do
       begin
         if FErrors.Count > 1 then
@@ -1020,15 +1061,14 @@ begin
   lblAVText.Caption := AException.Message;
   if ScreenReaderActive then
   begin
-    F508Manager := TVA508AccessibilityManager.Create(Self);
-    F508Manager.AccessText[lblAVText] := lblAVHeading.Caption;
     // will read lblAVHeading.Caption, then VA508StaticText1.Caption
     lblAVText.TabStop := True;
     lblAVText.TabOrder := 0;
     lblDeatailTxt1.Visible := False;
     lblDeatailTxt2.Visible := False;
-  end;
 
+
+  end;
   ExceptionLog.AddCustomExceptionDetails;
 
   ExceptionLog.StartParsing(AException, ExceptionLog.FCustomErrorStrings);

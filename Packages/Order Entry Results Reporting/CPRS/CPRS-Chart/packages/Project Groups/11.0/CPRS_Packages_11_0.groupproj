@@ -1,12 +1,12 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{F8E15202-4A9E-4237-8BB3-000B788BB4ED}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="..\..\VA\Packages\11.0\VAShared_R11_0.dproj">
+        <Projects Include="..\..\Broker\Packages\11.0\XWB_R11_0.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="..\..\Broker\Packages\11.0\XWB_R11_0.dproj">
+        <Projects Include="..\..\VA\Packages\11.0\VAShared_R11_0.dproj">
             <Dependencies/>
         </Projects>
         <Projects Include="..\..\PKI\Packages\11.0\PKI_R11_0.dproj">
@@ -41,15 +41,6 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
-    <Target Name="VAShared_R11_0">
-        <MSBuild Projects="..\..\VA\Packages\11.0\VAShared_R11_0.dproj"/>
-    </Target>
-    <Target Name="VAShared_R11_0:Clean">
-        <MSBuild Projects="..\..\VA\Packages\11.0\VAShared_R11_0.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="VAShared_R11_0:Make">
-        <MSBuild Projects="..\..\VA\Packages\11.0\VAShared_R11_0.dproj" Targets="Make"/>
-    </Target>
     <Target Name="XWB_R11_0">
         <MSBuild Projects="..\..\Broker\Packages\11.0\XWB_R11_0.dproj"/>
     </Target>
@@ -58,6 +49,15 @@
     </Target>
     <Target Name="XWB_R11_0:Make">
         <MSBuild Projects="..\..\Broker\Packages\11.0\XWB_R11_0.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VAShared_R11_0">
+        <MSBuild Projects="..\..\VA\Packages\11.0\VAShared_R11_0.dproj"/>
+    </Target>
+    <Target Name="VAShared_R11_0:Clean">
+        <MSBuild Projects="..\..\VA\Packages\11.0\VAShared_R11_0.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VAShared_R11_0:Make">
+        <MSBuild Projects="..\..\VA\Packages\11.0\VAShared_R11_0.dproj" Targets="Make"/>
     </Target>
     <Target Name="PKI_R11_0">
         <MSBuild Projects="..\..\PKI\Packages\11.0\PKI_R11_0.dproj"/>

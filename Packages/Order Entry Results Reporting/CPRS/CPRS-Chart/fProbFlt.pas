@@ -4,7 +4,7 @@ interface
 
 uses WinTypes, WinProcs, Classes, Graphics, Forms, Controls, Buttons,
   StdCtrls, SysUtils, ORCtrls, ExtCtrls, uProbs, uConst, Dialogs, fBase508Form,
-  VA508AccessibilityManager;
+  VA508AccessibilityManager, ORCheckComboBox, uMisc;
 
 type
   TfrmPlVuFilt = class(TfrmBase508Form)
@@ -21,7 +21,7 @@ type
     cmdCancel: TBitBtn;
     lstDest: TORListBox;
     rgVu: TRadioGroup;
-    cboProvider: TORComboBox;
+    cboProvider: TORCheckComboBox;
     cmdDefaultView: TBitBtn;
     cboSource: TORComboBox;
     cmdSave: TButton;
@@ -46,6 +46,7 @@ type
     procedure cboSourceExit(Sender: TObject);
     procedure cmdSaveClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure cboProviderMainCheckboxClick(Sender: TObject);
   private
     FContextString: string;
     FFilterString: string;
@@ -98,6 +99,9 @@ procedure TfrmPlVuFilt.FormCreate(Sender: TObject);
 begin
   FastAssign(frmProblems.lstView.Items, cboStatus.Items);
   cboStatus.SelectByID(PLUser.usViewAct);
+  // adjust height
+  cboProvider.Height := 44;
+  cboProvider.MainCheckBoxVisible := IncludeNonVAProviders(cboProvider);
 end;
 
 procedure TfrmPlVuFilt.FormShow(Sender: TObject);
@@ -391,6 +395,12 @@ begin
  cboSource.enabled:=false;
  lstDest.color:=clBtnFace;
  lstDest.enabled:=false;
+end;
+
+procedure TfrmPlVuFilt.cboProviderMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  cboProvider.ReInitLongList;
 end;
 
 procedure TfrmPlVuFilt.cboProviderNeedData(Sender: TObject;

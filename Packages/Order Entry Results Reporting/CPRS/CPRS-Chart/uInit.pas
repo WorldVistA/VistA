@@ -12,7 +12,8 @@ type
 procedure InitTimeOut(AUserCondition: TCPRSTimeoutTimerCondition;
                       AUserAction: TCPRSTimeoutTimerAction);
 procedure UpdateTimeOutInterval(NewTime: Cardinal);
-function TimedOut: boolean;
+function TimedOut: Boolean;
+function TimingOut: Boolean;
 procedure ShutDownTimeOut;
 procedure SuspendTimeout;
 procedure ResumeTimeout;
@@ -25,11 +26,13 @@ uses
 type
   TCPRSTimeoutTimer = class(TTimer)
   private
+    FIsTimeOutFormVisible: Boolean;
     FHooked: boolean;
     FUserCondition: TCPRSTimeoutTimerCondition;
     FUserAction: TCPRSTimeoutTimerAction;
     uTimeoutInterval: Cardinal;
     uTimeoutKeyHandle, uTimeoutMouseHandle: HHOOK;
+    function PromptForTimeout: Boolean;
   protected
     procedure ResetTimeout;
     procedure timTimeoutTimer(Sender: TObject);
@@ -37,7 +40,8 @@ type
 
 var
   timTimeout: TCPRSTimeoutTimer = nil;
-  FTimedOut: boolean = FALSE;
+  FTimedOut: boolean = False;
+  FTimingOut: boolean = False;
   uSuspended: boolean = False;
 
 function TimeoutKeyHook(Code: Integer; wParam: WPARAM; lParam: LPARAM): LRESULT; StdCall; forward;
@@ -94,9 +98,14 @@ begin
   end;
 end;
 
-function TimedOut: boolean;
+function TimedOut: Boolean;
 begin
   Result := FTimedOut;
+end;
+
+function TimingOut: Boolean;
+begin
+  Result := FTimingOut or FTimedOut;
 end;
 
 procedure ShutDownTimeOut;
@@ -119,9 +128,22 @@ end;
 
 { TCPRSTimeoutTime }
 
-procedure TCPRSTimeoutTimer.ResetTimeout;
-{ this restarts the timer whenever there is a keyboard or mouse event }
+function TCPRSTimeoutTimer.PromptForTimeout: Boolean;
 begin
+  FIsTimeOutFormVisible := True;
+  try
+    Result := AllowTimeout; // This shows a modal timeout form
+  finally
+    FIsTimeOutFormVisible := False;
+  end;
+end;
+
+procedure TCPRSTimeoutTimer.ResetTimeout;
+{ this restarts the timer whenever there is a keyboard or mouse event,
+  as long as the timeout form is not already visible }
+begin
+  if FIsTimeOutFormVisible then Exit;
+
   Enabled  := False;
   Interval := uTimeoutInterval;
   Enabled  := True;
@@ -136,16 +158,21 @@ begin
     exit;
   end;
   Enabled := False;
-  if(assigned(FUserCondition)) then
-    FTimedOut := FUserCondition or AllowTimeout
-  else
-    FTimedOut := AllowTimeout;
-  if FTimedOut then
-  begin
-    if(assigned(FUserAction)) then FUserAction;
-  end
-  else
-    Enabled := True;
+  FTimingOut := True;
+  try
+    if(assigned(FUserCondition)) then
+      FTimedOut := FUserCondition or PromptForTimeout
+    else
+      FTimedOut := PromptForTimeout;
+    if FTimedOut then
+    begin
+      if(assigned(FUserAction)) then FUserAction;
+    end
+    else
+      Enabled := True;
+  finally
+    FTimingOut := False;
+  end;
 end;
 
 procedure SuspendTimeout;

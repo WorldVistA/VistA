@@ -8,15 +8,9 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.CheckLst, Vcl.ImgList, Vcl.ComCtrls,
   Vcl.ToolWin,
   Vcl.StdCtrls, Vcl.ExtCtrls, VA508AccessibilityManager, ColnEdit,
-  Vcl.Menus;
+  Vcl.Menus, VAShared.UTStringsHelper;
 
 type
-
-   tStringsHelper = class helper for tStrings
-    function IndexOfPiece(const S: string; const PieceDelim: Char; const PieceNum: integer): Integer;
-    function IndexOfPieceEx(const S: string; const PieceDelim: Char; const PieceNum: integer; const StartFrom: Integer): Integer;
-  end;
-
   Tva508CollectionEditor = class(TForm)
     pnlLeft: TPanel;
     pnlRight: TPanel;
@@ -81,37 +75,6 @@ const
   HeaderTxt = 'Settings for %s';
 
 {$R *.dfm}
-
-
-function tStringsHelper.IndexOfPiece(const S: string; const PieceDelim: Char; const PieceNum: integer): Integer;
-begin
- Result := IndexOfPieceEx(S, PieceDelim, PieceNum, 0);
-end;
-
-function tStringsHelper.IndexOfPieceEx(const S: string; const PieceDelim: Char;
-  const PieceNum: integer; const StartFrom: integer): integer;
-var
-  Count: integer;
-  SLen: integer;
-  aStr: String;
-begin
-  Count := GetCount;
-
-  if StartFrom > Count then
-  begin
-    Result := -1;
-    exit;
-  end;
-
-  SLen := Length(S);
-  for Result := StartFrom to Count - 1 do
-  begin
-    aStr := Piece(self.Strings[Result], PieceDelim, PieceNum);
-    if (Length(aStr) = SLen) and (CompareStrings(aStr, S) = 0) then
-      exit;
-  end;
-  Result := -1;
-end;
 
 procedure Tva508CollectionEditor.MyHint(Sender: TObject);
 begin

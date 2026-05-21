@@ -1,4 +1,4 @@
-object fraPtSelDemog: TfraPtSelDemog
+inherited fraPtSelDemog: TfraPtSelDemog
   Left = 0
   Top = 0
   Width = 323

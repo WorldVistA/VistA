@@ -1,16 +1,22 @@
-﻿unit uEditObject;
+unit uEditObject;
+
 interface
 
 uses
-Vcl.Forms, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Controls, Vcl.graphics,  Vcl.Dialogs,
-Vcl.CheckLst,
-Winapi.Windows, Winapi.Messages,
-System.Classes, System.SysUtils, System.UITypes,
-VA508AccessibilityManager, rEditObject, ORCtrls, ORDtTm, ORFn, ORNetINTF, VAUtils, rCore, fBase508Form;
+  Vcl.Forms, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Controls, Vcl.graphics,  Vcl.Dialogs,
+  Vcl.CheckLst, Vcl.ComCtrls,
+  Winapi.Windows, Winapi.Messages,
+  System.Classes, System.SysUtils, System.UITypes, System.JSON, System.Generics.Collections,
+  VA508AccessibilityManager, rEditObject, ORCtrls, ORDtTm, ORFn, ORNetINTF, VAUtils, rCore,
+  uCore, fBase508Form, uConst, UJSONParameters;
 
 type
-
-tLayout = class(TObject)
+  TLayout = class(TObject)
+  public type
+    TPromptType = (ptCBO, ptLabel, ptDate, ptDateTime, ptDateBox, ptEdit, ptCBOLongList,
+      ptCheckListBox, ptCBOFreeText, ptMemo, ptRadioGroup, ptCheckBox, ptListBox);
+  public
+    class function TryStringToPromptType(Value: string; out PromptType: TPromptType): Boolean;
   private
   procedure returnDataForType(name: string; dataList: TStrings; var returnList: TStrings);
   procedure returnDataDefaultForType(name: string; dataDefaultList: TStrings; var returnList: TStrings);
@@ -24,10 +30,13 @@ tLayout = class(TObject)
   fInputList         : TStrings;
   public
   hasNoData: boolean;
+  InputJSON: TJSONParameters;
+  fromJSON: Boolean;
   constructor Create; overload;
   destructor Destroy; override;
   procedure initilizeLookups;
   procedure buildLayout(inputList, defaultList: TStrings);
+  procedure buildLayoutFromJSON(JSON: TJSONValue);
   procedure returnComponentDataList(name: string; dataList: TStrings);
   function validateData(compList: TStrings): boolean;
   function validate(list, inputList, resultList: TStrings): boolean;
@@ -41,35 +50,52 @@ tLayout = class(TObject)
   property controls: TStringList read fcontrols write fcontrols;
   property inputList: TStrings read fInputList write fInputList;
 end;
-
 TLayoutControl = class(TObject)
   private
   protected
   public
-  name            : string;
-  caption         : string;
-  control         : string;
-  required        : boolean;
-  needSort        : boolean;
-  colNum          : integer;
-  rowNum          : integer;
-  ColSpan         : integer;
-  intValue        : string;
-  extValue        : string;
-  uiControl       : TObject;
-  dataList        : TStrings;
-  dataDefaultList : TStrings;
+  name             : string;
+  caption          : string;
+  promptType       : TLayout.TPromptType;
+  required         : boolean;
+  needSort         : boolean;
+  colNum           : integer;
+  rowNum           : integer;
+  ColSpan          : integer;
+  RowSpan          : integer;
+  Columns          : integer;
+  intValue         : string;
+  extValue         : string;
+  uiControl        : TObject;
+  dataList         : TStringList;
+  dataDefaultList  : TStrings;
   aboveTheLineList : TStrings;
-  fAboveTheLine   : boolean;
-  fenabled        : boolean;
-  setDefault      : boolean;
+  fAboveTheLine    : boolean;
+  fenabled         : boolean;
+  setDefault       : boolean;
+  longListID       : Integer;
+  longListParameter: string;
+  HintText         : string;
   constructor Create; overload;
   destructor Destroy; override;
 end;
-
 tEditObject = class(TObject)
+private type
+  TLongListData = class(TComponent)
+  private
+    FComboBox: TORComboBox;
+    FID: Integer;
+    FParameter: string;
+    FOwner: TEditObject;
+  protected
+    procedure Notification(AComponent: TComponent; Operation: TOperation); override;
+  public
+    constructor CreateData(AOwner: TEditObject; AComboBox: TORComboBox);
+    destructor Destroy; override;
+    property ID: Integer read FID write FID;
+    property Parameter: string read FParameter write FParameter;
+  end;
 private
-
 protected
   caption       : string;
   required      : boolean;
@@ -80,15 +106,18 @@ protected
   fextVal: string;
   feditIntValue: string;
   feditExtValue: string;
+  fLongListData: TLongListData;
   dataList: TStrings;
   dataDefaultList: TStrings;
-  controlType: string;
+  promptType: TLayout.TPromptType;
   setDefault: boolean;
-  procedure CreateControl(layoutControl: TLayoutControl; AOwner, AParent: TWinControl);
+  layout: TLayout;
+  procedure CreateControl(layoutControl: TLayoutControl;
+    AOwner, AParent: TWinControl; AClass: TWinControlClass = nil); virtual;
   procedure CreateLabel(layoutControl: TLayoutControl; AOwner, AParent: TWinControl);
   procedure CreatePanel(layoutControl: TLayoutControl; AOwner, AParent: TWinControl);
 //  procedure loadUsers(control: TControl; const StartFrom: string; Direction, InsertAt: Integer; providerOnly: boolean);
-  procedure onNeedData(sender: TObject; const StartFrom: string; Direction, InsertAt: integer); virtual;
+  procedure onNeedData(Sender: TObject; const StartFrom: string; Direction, InsertAt: integer); virtual;
   procedure promptChange(Sender: TObject); virtual;
   procedure validatePrompt(Sender: TObject); virtual;
   procedure setDefaultValue;
@@ -97,41 +126,74 @@ protected
   procedure setDateDefault(editIntVal, editExtVal: string);
   procedure setLabelDefault(editIntVal, editExtVal: string);
   procedure setCheckBoxDefault(editIntVal, editExtVal: string);
+  procedure setListBoxDefault(editIntVal, editExtVal: string);
+  procedure setRadioGroupDefault(editIntVal, editExtVal: string);
   procedure populateComponent;
   procedure populateDefaultList;
   procedure populateAboveTheLine(name: string; aboveTheLineList: TStrings);
   procedure update508Label;
   procedure keyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
   function validateObject: string;
+public const
+  Dlim = #247;
 public
-  editPanel     : TPanel;
-  editLabel     : TStaticText;
-  editComponent : TControl;
-  name          : string;
-  origWidth     : integer;
-  VA508Label    : TVA508StaticText;
-  controlEnabled: boolean;
+  editPanel      : TPanel;
+  editLabel      : TVA508StaticText;
+  editComponent  : TControl;
+  name           : string;
+  origWidth      : integer;
+  controlEnabled : boolean;
   property longList: boolean read flongList write flongList;
   property extVal: string read fextVal write fextVal;
   property intVal: string read fIntVal write fIntVal;
   property editIntValue: string read feditIntValue write feditIntValue;
   property editExtValue: string read feditExtValue write feditExtValue;
-  constructor Create(layoutControl: TLayoutControl; AOwner, AParent: TWinControl);
+  constructor Create(ALayout: TLayout; layoutControl: TLayoutControl; AOwner, AParent: TWinControl);
   destructor Destroy; override;
   procedure update508Text(enabled: boolean);
 end;
-
-PromptType = (ptEdit, ptDate, ptDateBox, ptCBO, ptCBOLongList, ptLabel, ptCheckListBox, ptMemo, ptRadioGroup, ptCheckBox, ptListBox);
-
 implementation
 
+uses
+  System.Types, System.TypInfo, ORNet, ORExtensions, UJSONValueHelper, rPtInfo,
+  VA508AccessibilityRouter;
+
+
+constructor tEditObject.TLongListData.CreateData(AOwner: TEditObject; AComboBox: TORComboBox);
+begin
+  inherited Create(nil);
+  FOwner := AOwner;
+  FComboBox := AComboBox;
+  AComboBox.FreeNotification(Self);
+end;
+
+destructor tEditObject.TLongListData.Destroy;
+begin
+  if Assigned(FComboBox) then
+    FComboBox.RemoveFreeNotification(Self);
+  FOwner.fLongListData := nil;
+  inherited;
+end;
+
+procedure tEditObject.TLongListData.Notification(AComponent: TComponent;
+  Operation: TOperation);
+begin
+  inherited;
+  if (Operation = opRemove) and (AComponent = FComboBox) then
+  begin
+    FComboBox := nil;
+    Free;
+  end;
+end;
 
 { editObject }
 
-constructor tEditObject.Create(layoutControl: TLayoutControl; AOwner, AParent: TWinControl);
+constructor tEditObject.Create(ALayout: TLayout; layoutControl: TLayoutControl; AOwner,
+  AParent: TWinControl);
 var
-tempCaption: string;
+  tempCaption: string;
 begin
+  layout := ALayout;
   name := layoutControl.name;
   required := layoutControl.required;
   caption := layoutControl.caption;
@@ -161,8 +223,9 @@ begin
       else tempCaption := caption;
       if (GetParentForm(editComponent) is TfrmBase508Form) then
         begin
-          if editComponent is TStaticText then
-            (GetParentForm(editComponent) as TfrmBase508Form).amgrMain.AccessText[TWinControl(editComponent)] := tempCaption + ' ' + (editComponent as TStaticText).caption
+          if editComponent is TVA508StaticText then
+            (GetParentForm(editComponent) as TfrmBase508Form).amgrMain.AccessText[TWinControl(editComponent)] :=
+              tempCaption + ' ' + (editComponent as TVA508StaticText).caption
           else
           (GetParentForm(editComponent) as TfrmBase508Form).amgrMain.AccessText[TWinControl(editComponent)] := tempCaption;
         end;
@@ -171,63 +234,76 @@ begin
     end;
 end;
 
-procedure tEditObject.CreateControl(layoutControl: TLayoutControl; AOwner, AParent: TWinControl);
+procedure tEditObject.CreateControl(layoutControl: TLayoutControl;
+  AOwner, AParent: TWinControl; AClass: TWinControlClass = nil);
+// AClass is an override to create a different class of control than the default.
 var
-  lblPt: TStaticText;
+  lblPt: TVA508StaticText;
   edt: TEdit;
   orCBO: TORComboBox;
   orDTE: TORDateBox;
   orDTC: TORDateCombo;
   rgp: TRadioGroup;
   chk: TCheckBox;
-  memo: TMemo;
+  memo: ORExtensions.TRichEdit;
   M, d, Y: Word;
   orLstBox: TORListBox;
 //  controlType: string;
-  ptType: PromptType;
-
   function findIndex(control: TControl; lookUp: string): integer;
     begin
       result := (control as TORComboBox).Items.IndexOf(lookup);
     end;
 begin
-  controlType := layoutControl.control;
-  if controlType = 'ptCBO' then ptType := ptCBO
-  else if controlType = 'ptLabel' then ptType := ptLabel
-  else if controlType = 'ptDate' then ptType := ptDate
-  else if controlType = 'ptDateTime' then ptType := ptDate
-  else if controlType = 'ptDateBox' then ptType := ptDateBox
-  else if controlType = 'ptEdit' then ptType := ptEdit
-  else if controlType = 'ptCBOLongList' then ptType := ptCBOLongList
-  else if controlType = 'ptCheckListBox' then ptType := ptCheckListBox
-  else if controlType = 'ptCBOFreeText' then ptType := ptCBO
-  else if controlType = 'ptMemo' then ptType := ptMemo
-  else if controlType = 'ptRadioGroup' then ptType := ptRadioGroup
-  else if controlType = 'ptCheckBox' then ptType := ptCheckBox
-  else if controlType = 'ptListBox' then ptType := ptListBox
-  else
-    begin
-     ShowMessage('Control type ' + ControlType + ' is not valid');
-     exit;
-    end;
-
-
-  case ptType of
-    ptCBO, ptCBOLongList, ptCheckListBox:
+  promptType := layoutControl.promptType;
+//  if controlType = 'ptCBO' then ptType := ptCBO
+//  else if controlType = 'ptLabel' then ptType := ptLabel
+//  else if controlType = 'ptDate' then ptType := ptDate
+//  else if controlType = 'ptDateTime' then ptType := ptDate
+//  else if controlType = 'ptDateBox' then ptType := ptDateBox
+//  else if controlType = 'ptEdit' then ptType := ptEdit
+//  else if controlType = 'ptCBOLongList' then ptType := ptCBOLongList
+//  else if controlType = 'ptCheckListBox' then ptType := ptCheckListBox
+//  else if controlType = 'ptCBOFreeText' then ptType := ptCBO
+//  else if controlType = 'ptMemo' then ptType := ptMemo
+//  else if controlType = 'ptRadioGroup' then ptType := ptRadioGroup
+//  else if controlType = 'ptCheckBox' then ptType := ptCheckBox
+//  else if controlType = 'ptListBox' then ptType := ptListBox
+//  else
+//    begin
+//     ShowMessage('Control type ' + ControlType + ' is not valid');
+//     exit;
+//    end;
+  case promptType of
+    ptCBO, ptCBOLongList, ptCheckListBox, ptCBOFreeText:
       begin
-        orCBO := TORComboBox.Create(AOwner);
+        if promptType = ptCBOLongList then
+        begin
+          if Assigned(AClass) then
+            orCBO := AClass.Create(AOwner) as TORComboBox
+          else
+            orCBO := TORComboBox.Create(AOwner);
+          fLongListData := TLongListData.CreateData(Self, orCbo);
+          fLongListData.ID := layoutControl.longListID;
+          fLongListData.Parameter := layoutControl.longListParameter;
+        end
+        else if Assigned(AClass) then
+          orCBO := (AClass.Create(AOwner) as TORComboBox)
+        else
+          orCBO := TORComboBox.Create(AOwner);
         orCBO.Parent := editPanel;
+        orCBO.ParentColor := True;
         orCBO.Align := alTop;
         comboBox := true;
-        if ptType = ptCBOLongList then
+        if promptType = ptCBOLongList then
         begin
+          orCBO.OwnsData := True;
           orCBO.LongList := true;
           orCBO.OnNeedData := onNeedData;
           longList  := true;
         end
         else
           orCBO.LongList := false;
-        if ptType = ptCheckListBox then
+        if promptType = ptCheckListBox then
           begin
             orCBO.CheckBoxes := true;
 //            TCheckListBox(orCBO).IntegralHeight := true; // RTC 1299114
@@ -257,7 +333,7 @@ begin
       begin
         orLstBox := TORListBox.Create(AOwner);
         orLstBox.Parent := editPanel;
-        orLstBox.Align := alTop;
+        orLstBox.Align := alClient;
         orLstBox.OnClick := promptChange;
         orLstBox.OnExit := validatePrompt;
         orLstBox.LongList := false;
@@ -279,22 +355,31 @@ begin
       end;
     ptLabel:
       begin
-        lblPt := TStaticText.Create(AOwner);
+        lblPt := TVA508StaticText.Create(AOwner);
         lblPt.Parent := editPanel;
         lblPt.Align := alTop;
+        lblPt.WordWrap := True;
+        lblPt.AutoSize := True;
         lblPt.caption := 'Unknown';
         lblPt.Top := 1;
         lblPt.Visible := true;
         editComponent := lblPT;
         if ScreenReaderActive then lblPt.TabStop := true;
-
+        if (layoutControl.fenabled = false) then
+          begin
+            lblPt.Enabled := false;
+            lblPt.Color := cl3DLight;
+            controlEnabled := false;
+          end
+        else
+          controlEnabled := true;;
       end;
-    ptDate:
+    ptDate, ptDateTime:
       begin
         orDTE := TORDateBox.Create(AOwner);
         orDTE.Parent := editPanel;
         orDTE.Align := alTop;
-        orDTE.DateOnly := (controlType = 'ptDate');
+        orDTE.DateOnly := (promptType = ptDate);
         orDTE.RequireTime := false;
         ordte.Format := 'mmm d,yyyy@hh:nn';
         editComponent := orDTE;
@@ -350,9 +435,10 @@ begin
       end;
     ptMemo:
       begin
-        memo := TMemo.Create(AOwner);
+        memo := ORExtensions.TRichEdit.Create(AOwner);
         memo.Parent := editPanel;
         memo.Align := alClient;
+        memo.ScrollBars := ssBoth;
         editComponent := memo;
         memo.OnChange := promptChange;
         memo.OnExit := validatePrompt;
@@ -360,7 +446,8 @@ begin
         memo.TabStop := true;
         if (layoutControl.fenabled = false) then
           begin
-            memo.Enabled := false;
+            // make ReadOnly not Disabled so scroll bars still work
+            memo.ReadOnly := true;
             memo.Color := cl3DLight;
             controlEnabled := false;
           end
@@ -371,7 +458,7 @@ begin
       begin
         rgp := TRadioGroup.Create(AOwner);
         rgp.Parent := editPanel;
-        rgp.Align := alTop;
+        rgp.Align := alClient;
         if layoutControl.required then
           begin
             if ScreenReaderActive then
@@ -382,7 +469,10 @@ begin
         else rgp.Caption := layoutControl.caption;
         rgp.OnClick := promptChange;
         rgp.OnExit := validatePrompt;
-        rgp.Columns := 2;
+        if layoutControl.Columns < 1 then
+          rgp.Columns := 2
+        else
+          rgp.Columns := layoutControl.Columns;
         rgp.Top := 1;
         rgp.TabStop := true;
         editComponent := rgp;
@@ -415,19 +505,30 @@ begin
           controlEnabled := true;
       end;
   end;
+  if Assigned(editComponent) and (layoutControl.HintText <> '') then
+  begin
+    editComponent.Hint := layoutControl.HintText;
+    editComponent.ShowHint := True;
+  end;
 end;
-
 procedure tEditObject.CreateLabel(layoutControl: TLayoutControl; AOwner,
   AParent: TWinControl);
 begin
-  if controlType = 'ptRadioGroup' then
+  if promptType = ptRadioGroup then
     exit;
-  editLabel := TStaticText.Create(AOwner);
+  editLabel := TVA508StaticText.Create(AOwner);
   editLabel.Parent := editPanel;
   editLabel.Caption := layoutControl.caption;
   if layoutControl.required then editLabel.Caption := editLabel.Caption + '*';
   editLabel.Align := alTop;
   editLabel.Visible := true;
+  editLabel.WordWrap := True;
+  editLabel.AutoSize := True;
+  if layoutControl.HintText <> '' then
+  begin
+    editLabel.Hint := layoutControl.HintText;
+    editLabel.ShowHint := True;
+  end;
   editLabel.Top := 0;
   update508Text(layoutControl.fenabled);
 //  if not layoutControl.fenabled then
@@ -437,7 +538,6 @@ begin
 //    end
 //  else editLabel.Font.style := editLabel.Font.Style +  [TFontStyle.fsBold];
 end;
-
 procedure tEditObject.CreatePanel(layoutControl: TLayoutControl; AOwner,
   AParent: TWinControl);
 begin
@@ -464,28 +564,27 @@ begin
 //  editPanel.Padding.Bottom := 0;
   editPanel.Padding.Left := 5;
   editPanel.Padding.Right := 5;
-  editPanel.Align := alClient;
   editPanel.BevelOuter := bvNone;
   editPanel.BevelInner := bvNone;
   editPanel.BevelKind := bkNone;
   editPanel.Align := alClient;
   editPanel.ParentBackground := true;
   editPanel.ParentColor := true;
-  if (not layoutControl.fenabled) and (not ScreenReaderActive) then
+  if (not layoutControl.fenabled) and (not ScreenReaderActive) and
+    (layoutControl.promptType <> ptMemo) then
     begin
       editPanel.Enabled := false;
     end
   else editPanel.Enabled := true;
 //  editPanel.TabStop := true;
 end;
-
 destructor tEditObject.Destroy;
 begin
+  FreeAndNil(fLongListData);
   FreeAndNil(dataList);
   FreeAndNil(dataDefaultList);
   inherited;
 end;
-
 procedure tEditObject.keyUp(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
@@ -495,11 +594,48 @@ begin
    end;
 end;
 
-procedure tEditObject.onNeedData(sender: TObject; const StartFrom: string;
+procedure tEditObject.onNeedData(Sender: TObject; const StartFrom: string;
   Direction, InsertAt: integer);
+var
+  JSONResults: TJSONValue;
+  sl: TStringList;
+  list: TJSONArray;
+  i: integer;
+  data, Error: string;
 begin
-
+  if (not (Sender is TORComboBox)) or (not Assigned(layout)) or
+    (not Assigned(fLongListData)) or (not Assigned(layout.InputJSON)) then
+    exit;
+  layout.InputJSON.SetAsType<Integer>('direction', Direction);
+  layout.InputJSON.SetAsType<Integer>('longListId', fLongListData.ID);
+  layout.InputJSON.SetAsType<string>('longListParameter', fLongListData.Parameter);
+  layout.InputJSON.SetAsType<string>('startFrom', StartFrom);
+  JSONResults := nil;
+  sl := TStringList.Create;
+  try
+    JSONResults := CreateJSONfromLongList(layout.InputJSON.DataObject, Error);
+    if Error <> '' then
+      ShowMessage(Error)
+    else if Assigned(JSONResults) then
+    begin
+      list := JSONResults.AsTypeDef<TJSONArray>('list', nil);
+      if Assigned(List) then
+      begin
+        for i := 0 to list.Count - 1 do
+        begin
+          data := list[i].AsTypeDef<Int64>('internal', -1).ToString + U;
+          data := data + list[i].AsTypeDef<string>('external', '');
+          sl.Add(data);
+        end;
+        (Sender as TORComboBox).ForDataUse(sl);
+      end;
+    end;
+  finally
+    FreeAndNil(JSONResults);
+    FreeAndNil(sl);
+  end;
 end;
+
 
 procedure tEditObject.populateAboveTheLine(name: string; aboveTheLineList: TStrings);
 var
@@ -546,16 +682,17 @@ begin
       (editComponent as TORComboBox).Items.insert(idx + 1, '-1' + LLS_SPACE);
     end;
 end;
-
 procedure tEditObject.populateComponent;
 var
 i,fontSize,row: integer;
 rgp: TRadioGroup;
 begin
-  if (editComponent is TMemo) and (dataDefaultList <> nil) then
+  if (editComponent is ORExtensions.TRichEdit) and (dataDefaultList <> nil) then
     begin
       for i := 0 to dataDefaultList.Count - 1 do
-          (editComponent as TMemo).Lines.Add(Piece(dataDefaultList.Strings[i], u, 1));
+          (editComponent as ORExtensions.TRichEdit).Lines.Add(Piece(dataDefaultList.Strings[i], u, 1));
+      (editComponent as ORExtensions.TRichEdit).CaretPos := Point(0, 0);
+      (editComponent as ORExtensions.TRichEdit).ScrollPosition := Point(0, 0);
     end;
   if dataList = nil then exit;
   if dataList.Count = 0 then exit;
@@ -572,7 +709,7 @@ begin
       rgp := (editComponent as TRadioGroup);
       for i := 0 to dataList.Count - 1 do
         rgp.Items.Add(Piece(dataList[i],u,2));
-      row := rgp.Items.Count div 2;
+      row := rgp.Items.Count div rgp.Columns;
       fontSize := TextHeightByFont(rgp.Font.Handle, rgp.Caption);
       rgp.Height := (fontSize * row) + (fontSize * 2);
     end;
@@ -581,7 +718,6 @@ begin
   if dataDefaultList.Count = 0 then exit;
   populateDefaultList;
 end;
-
 procedure tEditObject.populateDefaultList;
 var
 idx, j, k: integer;
@@ -627,7 +763,6 @@ begin
       cbo.Items.insert(idx + 1, '-1' + LLS_SPACE);
     end;
 end;
-
 procedure tEditObject.promptChange(Sender: TObject);
 var
   idx: integer;
@@ -636,7 +771,7 @@ var
   edt: TEdit;
   dte: TORDateBox;
   dtc: TORDateCombo;
-  memo: TMemo;
+  memo: ORExtensions.TRichEdit;
   rgp: TRadioGroup;
   chk: TCheckBox;
   lstBox: TORListBox;
@@ -661,8 +796,8 @@ begin
                     end
                   else
                     begin
-                      intVal := intVal + ';' + Piece(cbo.Items.Strings[idx], u, 1);
-                      extVal := extVal + ';' + Piece(cbo.Items.Strings[idx], u, 2);
+                      intVal := intVal + DLim + Piece(cbo.Items.Strings[idx], u, 1);
+                      extVal := extVal + DLim + Piece(cbo.Items.Strings[idx], u, 2);
                     end;
                 end;
             end;
@@ -671,7 +806,7 @@ begin
       idx := cbo.ItemIndex;
       if idx = -1 then
         begin
-          if controlType = 'ptCBOFreeText' then
+          if promptType = ptCBOFreeText then
             begin
                 if cbo.Text <> '' then
                   begin
@@ -684,7 +819,6 @@ begin
       temp := cbo.Items.Strings[idx];
       if temp = '' then exit;
       if (Piece(temp, U, 1) = '-1') then exit;
-
       intVal := Piece(temp, u, 1);
       extVal := Piece(temp, u, 2);
     end
@@ -718,9 +852,9 @@ begin
       intVal := edt.Text;
       extVal := edt.Text;
     end
-  else if (Sender is TMemo) then
+  else if (Sender is ORExtensions.TRichEdit) then
     begin
-      memo := (Sender as TMemo);
+      memo := (Sender as ORExtensions.TRichEdit);
       intVal := '';
       for idx := 0 to memo.Lines.Count - 1 do
         begin
@@ -733,7 +867,7 @@ begin
     begin
       chk := (Sender as TCheckBox);
       intVal := '';
-      if chk.Checked then
+      if not chk.Checked then
         begin
           intVal := '0';
           extVal := 'No';
@@ -763,7 +897,6 @@ begin
         end;
     end;
 end;
-
 procedure tEditObject.setCheckBoxDefault(editIntVal, editExtVal: string);
 var
 chk: TCheckBox;
@@ -774,14 +907,12 @@ begin
   if intVal = '1' then chk.Checked := true
   else chk.Checked := false;
 end;
-
 procedure tEditObject.setComboBoxDefault(editIntVal, editExtVal: string);
 var
 cbo: TORComboBox;
 i,idx: integer;
 checked: boolean;
 temp: string;
-
   procedure handleMultipleValues(lookup: string; isInt: boolean);
   var
   tmpList: TStringList;
@@ -790,7 +921,7 @@ temp: string;
   begin
     tmpList := TStringList.Create;
     try
-      PiecestoList(lookup, ';', tmpList);
+      PiecestoList(lookup, DLim, tmpList);
       for i := 0 to tmpList.Count - 1 do
         begin
           find := tmpList.Strings[i];
@@ -808,11 +939,9 @@ temp: string;
               if j > -1 then cbo.Checked[j] := true;
             end;
         end;
-
     finally
       FreeAndNil(tmpList);
     end;
-
   end;
 begin
   checked := false;
@@ -820,7 +949,7 @@ begin
   try
   if editExtVal <> '' then
     begin
-      if (Pos(';', editExtVal) > 0) and (cbo.CheckBoxes) then
+      if (Pos(DLim, editExtVal) > 0) and (cbo.CheckBoxes) then
         handleMultipleValues(editExtVal, false)
       else
         begin
@@ -834,18 +963,17 @@ begin
                 end
               else cbo.ItemIndex := idx;
             end
-          else if (idx = -1) and (controlType = 'ptCBOFreeText') then
+          else if (idx = -1) and (promptType = ptCBOFreeText) then
             begin
               cbo.ItemIndex := -1;
               cbo.Text := editExtVal;
             end;
         end;
     end;
-
   if (cbo.ItemIndex > -1) or (checked) or (cbo.Text <> '') then exit;
   if editIntVal <> '' then
     begin
-      if (Pos(';', editIntVal) > 0) and (cbo.CheckBoxes) then
+      if (Pos(DLim, editIntVal) > 0) and (cbo.CheckBoxes) then
         handleMultipleValues(editIntVal, true)
       else
         begin
@@ -875,9 +1003,9 @@ begin
         begin
           if not cbo.Checked[idx] then continue;
           temp := cbo.Items.Strings[idx];
-          if IntVal <> '' then IntVal := IntVal + ';' + Piece(temp, u, 1)
+          if IntVal <> '' then IntVal := IntVal + DLim + Piece(temp, u, 1)
           else IntVal := Piece(temp, u, 1);
-          if ExtVal <> '' then ExtVal := ExtVal + ';' + Piece(temp, u, 2)
+          if ExtVal <> '' then ExtVal := ExtVal + DLim + Piece(temp, u, 2)
           else ExtVal := Piece(temp, u, 2);
         end;
     end
@@ -887,15 +1015,13 @@ begin
       intVal := Piece(temp, U, 1);
       extVal := Piece(temp, u, 2);
     end
-  else if (cbo.ItemIndex = -1) and (controlType = 'ptCBOFreeText') then
+  else if (cbo.ItemIndex = -1) and (promptType = ptCBOFreeText) then
     begin
       intVal := '';
       extVal := cbo.Text;
     end;
-
   end;
 end;
-
 procedure tEditObject.setDateDefault(editIntVal, editExtVal: string);
 var
 dte: TORDateBox;
@@ -903,14 +1029,15 @@ dtc: TORDateCombo;
 isEnabled: boolean;
 value: string;
 begin
-  if editExtVal <> '' then value := editExtVal
-  else value := editIntVal;
+  if editIntVal <> '' then
+    value := editIntVal
+  else
+    value := GetFMDT(editExtVal).ToString;
   if (self.editComponent is TORDateBox) then
     begin
       dte := (self.editComponent as TORDateBox);
       isEnabled := dte.Enabled;
       if not dte.Enabled then dte.Enabled := true;
-
       dte.FMDateTime := strToFloatDef(value, 0);
 //      dte.Text := editExtVal;
       intVal := FloatToStr(dte.FMDateTime);
@@ -927,9 +1054,7 @@ begin
       extVal := FloatToStr(dtc.FMDate);
       dtc.Enabled := isEnabled;
     end;
-
 end;
-
 procedure tEditObject.setDefaultValue;
 begin
   if (editIntValue = '') and (editExtValue = '') then exit;
@@ -938,11 +1063,11 @@ begin
   else if (editComponent is TORDateCombo) then setDateDefault(editIntValue, editExtValue)
   else if (editComponent is TORComboBox) then setComboBoxDefault(editIntValue, editExtValue)
   else if (editComponent is TEdit) then setEditDefault(editIntValue, editExtValue)
-  else if (editComponent is TStaticText) then  setLabelDefault(editIntValue, editExtValue)
-  else if (editComponent is TCheckBox) then setCheckBoxDefault(editIntValue, editExtValue);
-
+  else if (editComponent is TVA508StaticText) then  setLabelDefault(editIntValue, editExtValue)
+  else if (editComponent is TCheckBox) then setCheckBoxDefault(editIntValue, editExtValue)
+  else if (editComponent is TListBox) then setListBoxDefault(editIntValue, editExtValue)
+  else if (editComponent is TRadioGroup) then setRadioGroupDefault(editIntValue, editExtValue);
 end;
-
 procedure tEditObject.setEditDefault(editIntVal, editExtVal: string);
 var
 edt: TEdit;
@@ -955,28 +1080,66 @@ begin
   intVal := edt.Text;
   extVal := edt.Text;
 end;
-
 procedure tEditObject.setLabelDefault(editIntVal, editExtVal: string);
 var
-lbl: TStaticText;
-value: string;
+  lbl: TVA508StaticText;
+  value: string;
 begin
   if editExtVal <> '' then value := editExtVal
   else value := editIntVal;
-  lbl := (editComponent as TStaticText);
+  lbl := (editComponent as TVA508StaticText);
+  value := value.Replace(DLim, CRLF);
   lbl.Caption := value;
-  if editIntVal <> '' then intVal := editIntVal
-  else intVal := lbl.Caption;
+  intVal := lbl.Caption;
   extVal := lbl.Caption;
+end;
+
+procedure tEditObject.setListBoxDefault(editIntVal, editExtVal: string);
+var
+  lb: TORListBox;
+  i: integer;
+begin
+  lb := (editComponent as TORListBox);
+  intVal := editIntVal;
+  extVal := editExtVal;
+  for i := 0 to lb.MItems.Count - 1 do
+    if ((editIntVal <> '') and (editIntVal = Piece(lb.MItems[i], U, 1))) or
+      ((editExtVal <> '') and (editExtVal = Piece(lb.MItems[i], U, 2))) then
+    begin
+      lb.ItemIndex := i;
+      promptChange(editComponent); // OnChange doesn't fire when ItemIndex is set
+      break;
+    end;
+end;
+
+procedure tEditObject.setRadioGroupDefault(editIntVal, editExtVal: string);
+var
+  rg: TRadioGroup;
+  i, idx: Integer;
+begin
+  rg := (self.editComponent as TRadioGroup);
+  intVal := editIntVal;
+  extVal := editExtVal;
+  idx := StrToIntDef(intVal, -1);
+  if idx < 0 then
+    for i := 0 to rg.Items.Count - 1 do
+      if CompareText(editExtVal, rg.Items[i]) = 0 then
+      begin
+        idx := i;
+        break;
+      end;
+  if (idx < 0) or (idx > (rg.Items.Count - 1)) then
+    idx := -1;
+  rg.ItemIndex := Idx;
 end;
 
 procedure tEditObject.update508Label;
 begin
   //build label text for 508
   if not ScreenReaderActive then exit;
-  (GetParentForm(editComponent) as TfrmBase508Form).amgrMain.AccessText[TWinControl(editComponent)] := editLabel.Caption + ' ' + (editComponent as TStaticText).caption;
+  (GetParentForm(editComponent) as TfrmBase508Form).amgrMain.AccessText[TWinControl(editComponent)] :=
+    editLabel.Caption + ' ' + (editComponent as TVA508StaticText).caption;
 end;
-
 procedure tEditObject.update508Text(enabled: boolean);
 begin
   //build label text and enable tabstops for 508
@@ -1006,7 +1169,6 @@ begin
       (GetParentForm(editLabel) as TfrmBase508Form).amgrMain.AccessText[TWinControl(editLabel)] := editLabel.Caption;
     end;
 end;
-
 function tEditObject.validateObject: string;
 begin
   if (extVal <> '') and (pos(U, extVal)>0) then
@@ -1014,13 +1176,13 @@ begin
   if editPanel.Visible = false then result := ''
   else if (required = true) and ((self.editPanel.Enabled) and controlEnabled) then
     begin
-      if ((intVal = '') or (extVal = '')) and (controlType <> 'ptCBOFreeText') then
+      if ((intVal = '') or (extVal = '')) and (promptType <> ptCBOFreeText) then
         begin
-          if (controlType = 'ptCBO') or (controlType = 'ptCBOLongList') or (controlType = 'ptCheckListBox') then
+          if (promptType = ptCBO) or (promptType = ptCBOLongList) or (promptType = ptCheckListBox) then
             begin
               if (self.editComponent as TORComboBox).Items.Count = 0 then
                 begin
-                  if controlType <> 'ptCBOLongList' then
+                  if promptType <> ptCBOLongList then
                     result := name + U + '' + U + ''
                   else
                     result := '-1' + U + 'The value for ' + caption + ' cannot be blank. Please select a valid ' + caption + ' from the list of possible entries.';
@@ -1033,7 +1195,7 @@ begin
             end
           else result := '-1' + U + 'The value for ' + caption + ' is not defined';
         end
-      else if (controlType = 'ptDate') or (controlType = 'ptDateTime') or (controlType = 'ptDateBox') then
+      else if (promptType = ptDate) or (promptType = ptDateTime) or (promptType = ptDateBox) then
         begin
           if (intVal = '0') or (extVal = '0') then
             result := '-1' + U + 'The value for ' + caption + ' cannot be blank. Please select a valid ' + caption + ' from the list of possible entries.'
@@ -1045,7 +1207,6 @@ begin
   else
     result := name + U + intVal + U + extVal;
 end;
-
 procedure tEditObject.validatePrompt(Sender: TObject);
 begin
   if Pos(U, self.intVal) > 0 then
@@ -1053,49 +1214,50 @@ begin
   else if Pos(U, self.extVal) > 0 then
     ShowMessage(caption + ' cannot contain a ^');
 end;
-
 procedure tLayout.initilizeLookups;
 var
-i: integer;
+i, index: integer;
+IEN: Int64;
 layoutControl: TLayoutControl;
 editObject: TEditObject;
-returnList: TStrings;
-
 begin
   for i := 0 to controls.Count - 1 do
     begin
       layoutControl := TLayoutControl(controls.Objects[i]);
       editObject := TEditObject(layoutControl.uiControl);
-      if editObject.longList then
+      if editObject.longList and (editObject.editComponent is TORComboBox) then
+      begin
+        IEN := StrToInt64Def(editObject.editIntValue, -1);
+        if (IEN > 0) then
+          (editObject.editComponent as TORComboBox).SetExactByIEN(IEN, editObject.editExtValue)
+        else
+          (editObject.editComponent as TORComboBox).InitLongList(editObject.editExtValue);
+        index := (editObject.editComponent as TORComboBox).ItemIndex;
+        if index > -1 then
         begin
-
-        end
+          editObject.intVal := Piece((editObject.editComponent as TORComboBox).Items.Strings[index], U, 1);
+          editObject.extVal := Piece((editObject.editComponent as TORComboBox).Items.Strings[index], U, 2);
+        end;
+      end
       else
         begin
-          returnList := TStringList.Create;
-          try
-            editObject.populateComponent;
-            editObject.setDefaultValue;
-            if (editObject.editComponent is TORComboBox) and
-              (layoutControl.control = 'ptCBO') and
-              ((editObject.editComponent as TORComboBox).Items.Count = 0) then
-                begin
-                  (editObject.editComponent as TORComboBox).Enabled := false;
-                  (editObject.editComponent as TORComboBox).Color := cl3DLight;
-                  editObject.editLabel.Caption := editObject.caption;
-                  editObject.controlEnabled := false;
-                  editObject.update508Text(layoutControl.fenabled);
-                end;
-            if layoutControl.fAboveTheLine then
-              editObject.populateAboveTheLine(layoutControl.name, layoutControl.aboveTheLineList);
-          finally
-            FreeAndNil(returnList);
-          end;
-
+          editObject.populateComponent;
+          editObject.setDefaultValue;
+          if (editObject.editComponent is TORComboBox) and
+            (layoutControl.promptType = ptCBO) and
+            ((editObject.editComponent as TORComboBox).Items.Count = 0) then
+              begin
+                (editObject.editComponent as TORComboBox).Enabled := false;
+                (editObject.editComponent as TORComboBox).Color := cl3DLight;
+                editObject.editLabel.Caption := editObject.caption;
+                editObject.controlEnabled := false;
+                editObject.update508Text(layoutControl.fenabled);
+              end;
         end;
+      if layoutControl.fAboveTheLine then
+        editObject.populateAboveTheLine(layoutControl.name, layoutControl.aboveTheLineList);
     end;
 end;
-
 function tLayout.validateData(compList: TStrings): boolean;
 var
 i: integer;
@@ -1113,6 +1275,9 @@ begin
     begin
       layoutControl := TLayoutControl(controls.Objects[i]);
       editObject := tEditObject(layoutControl.uiControl);
+      if fromJSON and (editObject.promptType = ptLabel) and
+        (editObject.intVal = ' ') and (editObject.extVal = ' ') then
+        continue;
       temp := editObject.validateObject;
       if Piece(temp, U, 1) = '-1' then
         begin
@@ -1124,13 +1289,11 @@ begin
       else if temp <> '' then compList.Add(temp);
     end;
   end;
-
 procedure tLayout.returnAboveTheLineForType(name: string;
   dataLineList: TStrings; var returnList: TStrings);
 var
 i: integer;
 temp: string;
-
 begin
   for i := 0 to dataLineList.Count - 1 do
     begin
@@ -1140,7 +1303,6 @@ begin
       else returnList.Add(pieces(temp,u,2,3));
     end;
 end;
-
 procedure tLayout.returnComponentDataList(name: string; dataList: TStrings);
 var
 i: integer;
@@ -1155,9 +1317,7 @@ begin
     FastAssign(editObject.dataList, dataList);
 end;
 
-
 { tLayout }
-
 procedure tLayout.buildLayout(inputList, defaultList: TStrings);
 var
 temp: string;
@@ -1166,6 +1326,7 @@ i: integer;
 layoutControl: TLayoutControl;
 aList: iORNetMult;
 begin
+  fromJSON := False;
   neworNetMult(aList);
   for i := 0 to inputList.count - 1 do
     begin
@@ -1195,7 +1356,6 @@ begin
       hasNoData := true;
       exit;
     end;
-
   for i := 0 to layoutList.Count -1 do
     begin
       temp := layoutList.Strings[i];
@@ -1209,10 +1369,15 @@ begin
            layoutControl := TLayoutControl.Create;
            layoutControl.name := Piece(temp, U, 1);
            layoutControl.caption := Piece(temp, u, 2);
-           layoutControl.control := Piece(temp, u, 3);
+           if not TryStringToPromptType(Piece(temp, u, 3), layoutControl.promptType) then
+           begin
+              FreeAndNil(layoutControl);
+              continue;
+           end;
            layoutControl.colNum := StrToIntDef(Piece(temp, u, 4), 0);
            layoutControl.rowNum := StrToIntDef(Piece(temp, u, 5), 0);
            layoutControl.ColSpan := StrToIntDef(Piece(temp, u, 6), 0);
+           layoutControl.RowSpan := 1;
            layoutControl.needSort := Piece(temp, u, 7) = '1';
            layoutControl.required := Piece(temp, u, 8) = '1';
            layoutControl.fAboveTheLine := Piece(temp, u, 9) = '1';
@@ -1243,7 +1408,6 @@ begin
             end;
            controls.AddObject(layoutControl.name, layoutControl);
         end;
-
     end;
   finally
     FreeAndNil(layoutList);
@@ -1255,11 +1419,144 @@ begin
   end;
 end;
 
+procedure tLayout.buildLayoutFromJSON(JSON: TJSONValue);
+var
+  ID, temp: string;
+  i, j: integer;
+  layoutControl: TLayoutControl;
+  Editor: TJSONValue;
+  Layout, Default, PossibleData, AboveLineData: TJSONArray;
+  IsMemo: boolean;
+begin
+  fromJSON := False;
+  if (layoutType = -1) then
+  begin
+    row := 1;
+    column := 1;
+    exit;
+  end;
+  hasNoData := true;
+  if (not Assigned(JSON)) then
+    exit;
+  fromJSON := True;
+  Editor := JSON.AsTypeDef<TJSONValue>('editor', nil);
+  if (not Assigned(Editor)) then
+    exit;
+  if Editor.AsTypeDef<boolean>('disabled', false) then
+    exit;
+  hasNoData := false;
+  column := Editor.AsTypeDef<integer>('columns', 1);
+  row := Editor.AsTypeDef<integer>('rows', 1);
+
+  Layout := Editor.AsTypeDef<TJSONArray>('layout', nil);
+  if Assigned(Layout) then
+    for i := 0 to Layout.Count - 1 do
+    begin
+      ID := Layout[i].AsTypeDef<string>('id', '');
+      if ID <> '' then
+      begin
+        layoutControl := TLayoutControl.Create;
+        layoutControl.name := ID;
+        layoutControl.caption := Layout[i].AsTypeDef<string>('label', '');
+        if not TryStringToPromptType(Layout[i].AsTypeDef<string>('prompt', ''),
+          layoutControl.promptType) then
+        begin
+          FreeAndNil(layoutControl);
+          continue;
+        end;
+        layoutControl.colNum := Layout[i].AsTypeDef<integer>('column', 0);
+        layoutControl.rowNum := Layout[i].AsTypeDef<integer>('row', 0);
+        layoutControl.ColSpan := Layout[i].AsTypeDef<integer>('columnSpan', 1);
+        layoutControl.RowSpan := Layout[i].AsTypeDef<integer>('rowSpan', 1);
+        layoutControl.Columns := Layout[i].AsTypeDef<integer>('columns', 2);
+        layoutControl.needSort := Layout[i].AsTypeDef<boolean>('needSort', false);
+        layoutControl.required := Layout[i].AsTypeDef<boolean>('required', false);
+        layoutControl.fAboveTheLine := Layout[i].AsTypeDef<boolean>('aboveLine', false);
+        layoutControl.fenabled := not Layout[i].AsTypeDef<boolean>('disabled', false);
+        layoutControl.setDefault := Layout[i].AsTypeDef<boolean>('hasDefaults', false);
+        layoutControl.longListID := Layout[i].AsTypeDef<Integer>('longListId',  -1);
+        layoutControl.longListParameter:= Layout[i].AsTypeDef<string>('longListParameter', '');
+        layoutControl.HintText := Layout[i].AsTypeDef<string>('hint', '');
+
+        AboveLineData := Layout[i].AsTypeDef<TJSONArray>('aboveLineData', nil);
+        if Assigned(AboveLineData) and (AboveLineData.Count > 0) then
+        begin
+          for j := 0 to AboveLineData.Count - 1 do
+          begin
+            temp := AboveLineData[j].AsTypeDef<string>('id', '');
+            if temp <> '' then
+            begin
+              temp := temp + U + AboveLineData[j].AsTypeDef<string>
+                ('value', '');
+              layoutControl.aboveTheLineList.Add(temp);
+            end;
+          end;
+          // layoutControl.fAboveTheLine := true;
+        end;
+
+        PossibleData := Layout[i].AsTypeDef<TJSONArray>('possibleData', nil);
+        if Assigned(PossibleData) and (PossibleData.Count > 0) then
+          for j := 0 to PossibleData.Count - 1 do
+          begin
+            temp := PossibleData[j].AsTypeDef<string>('id', '');
+            if temp <> '' then
+            begin
+              temp := temp + U + PossibleData[j].AsTypeDef<string>('value', '');
+              layoutControl.dataList.Add(temp);
+            end;
+          end;
+
+        Default := Layout[i].AsTypeDef<TJSONArray>('defaults', nil);
+        if Assigned(Default) and (Default.Count > 0) then
+        begin
+          IsMemo := (layoutControl.promptType = ptMemo);
+          for j := 0 to Default.Count - 1 do
+          begin
+            if IsMemo then
+            begin
+              temp := Default [j].AsTypeDef<string>('external', '');
+              if temp = '' then
+                temp := Default [j].AsTypeDef<string>('internal', '');
+              layoutControl.dataDefaultList.Text :=
+                layoutControl.dataDefaultList.Text + temp;
+            end
+            else
+            begin
+              if j > 0 then
+              begin
+                layoutControl.intValue := layoutControl.intValue + tEditObject.DLim;
+                layoutControl.extValue := layoutControl.extValue + tEditObject.DLim;
+              end;
+              layoutControl.intValue := layoutControl.intValue +
+                Default [j].AsTypeDef<string>('internal', '');
+              layoutControl.extValue := layoutControl.extValue +
+                Default [j].AsTypeDef<string>('external', '');
+            end;
+          end;
+          // layoutControl.setDefault := true;
+        end;
+
+        if (layoutControl.promptType = ptLabel) and (layoutControl.extValue = '') and
+          (layoutControl.intValue = '') then
+        begin
+          layoutControl.setDefault := true;
+          layoutControl.extValue := ' ';
+        end;
+
+        if layoutControl.needSort then
+          SortByPiece(layoutControl.dataList, U, 2);
+
+        Controls.AddObject(layoutControl.name, layoutControl);
+      end;
+    end;
+end;
+
 procedure tLayout.clearLayoutControls;
 var
 i: integer;
 layoutControl: TLayOutControl;
 begin
+  FreeAndNil(InputJSON);
   try
     if controls = nil then exit;
     for I := 0 to controls.Count - 1 do
@@ -1270,43 +1567,37 @@ begin
     controls.Clear;
     layoutType := -1;
   finally
-
   end;
 end;
-
 constructor tLayout.Create;
 begin
  inputList := TStringList.Create;
  fcontrols := TStringList.Create;
 end;
-
 destructor tLayout.Destroy;
 var
 i: integer;
 begin
+  FreeAndNil(InputJSON);
   for I := 0 to fControls.Count - 1 do
     Controls.Objects[i].Free;
   FreeAndNil(fcontrols);
   FreeAndNil(fInputList);
   inherited;
 end;
-
 function tLayout.getControlIndex(name: string): integer;
 begin
  result := controls.IndexOf(name);
 end;
-
 function tLayout.getObject(idx: integer): TObject;
 begin
   result := controls.Objects[idx];
 end;
-
 procedure tLayout.returnDataDefaultForType(name: string; dataDefaultList: TStrings;
   var returnList: TStrings);
 var
 i: integer;
 temp: string;
-
 begin
   for i := 0 to dataDefaultList.Count - 1 do
     begin
@@ -1316,13 +1607,11 @@ begin
       else returnList.Add(Pieces(temp, u, 2, 20));
     end;
 end;
-
 procedure tLayout.returnDataForType(name: string; dataList: TStrings;
   var returnList: TStrings);
 var
 i: integer;
 temp: string;
-
 begin
   for i := 0 to dataList.Count - 1 do
     begin
@@ -1333,21 +1622,53 @@ begin
     end;
 end;
 
-function tLayout.validate(list, inputList,
-  resultList: TStrings): boolean;
+class function TLayout.TryStringToPromptType(Value: string;
+  out PromptType: TPromptType): Boolean;
+var
+  idx: Integer;
 begin
-  Result := validateResults(list, inputList, resultList);
+  idx := GetEnumValue(TypeInfo(TPromptType), Value);
+  if idx < 0 then
+  begin
+    ShowMessage('Control type ' + Value + ' is not valid');
+    Result := False;
+  end
+  else
+  begin
+    PromptType := TPromptType(idx);
+    Result := True;
+  end;
 end;
 
+function tLayout.validate(list, inputList,
+  resultList: TStrings): boolean;
+var
+I: integer;
+noteIEN, noteStr, tmp: string;
+begin
+  Result := validateResults(list, inputList, resultList);
+  if not result then exit;
+  noteIEN := '';
+  noteStr := '';
+  for I := 0 to resultList.Count - 1 do
+  begin
+    tmp := resultList[i];
+    if Piece(tmp, U, 1) = 'noteId' then noteIEN := Piece(tmp, U, 2);
+    if Piece(tmp, U, 1) = 'noteDetail' then noteStr := Piece(tmp, U, 2);
+  end;
+  if (noteIEN <> '') and (noteStr <> '') then
+  begin
+    Changes.Add(10, noteIEN, noteStr, '', 1);
+    PostMessage(Application.MainForm.Handle, UM_NEWNOTE, 0, 0);
+  end;
+end;
 { TLayoutControl }
-
 constructor TLayoutControl.Create;
 begin
   dataList := TStringList.Create;
   dataDefaultList := TStringList.Create;
   aboveTheLineList := TStringList.Create;
 end;
-
 destructor TLayoutControl.Destroy;
 begin
   FreeAndNil(uiControl);

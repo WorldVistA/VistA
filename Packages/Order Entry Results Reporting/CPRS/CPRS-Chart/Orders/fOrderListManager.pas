@@ -154,7 +154,7 @@ implementation
 {$R *.dfm}
 
 uses fOptions, uFormUtils, Math, fOrders, System.UITypes, VAUtils,
-UResponsiveGUI;
+UResponsiveGUI, VA508AccessibilityRouter;
 
 function ProcessOrderList(aList: TStrings; aCaption, aComment: String;
   aMode: TActionMode; aMaster: TForm): Integer;

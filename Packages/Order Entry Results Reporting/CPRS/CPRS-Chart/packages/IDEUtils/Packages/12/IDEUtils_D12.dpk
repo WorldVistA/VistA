@@ -1,0 +1,41 @@
+package IDEUtils_D12;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  designide,
+  VAShared_R12;
+
+ocontains
+  IDEUtils.JSONDescendantClassesBuilder in '..\..\Source\IDEUtils.JSONDescendantClassesBuilder.pas',
+  IDEUtils.JSONDescendantClassesCommon in '..\..\Source\IDEUtils.JSONDescendantClassesCommon.pas',
+  IDEUtils.JSONDescendantClassesWizard in '..\..\Source\IDEUtils.JSONDescendantClassesWizard.pas',
+  IDEUtils.JSONDescendantClassesWizardForm in '..\..\Source\IDEUtils.JSONDescendantClassesWizardForm.pas' {frmJSONDescendantClassesWizardForm};
+
+d.

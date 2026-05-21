@@ -4,15 +4,15 @@ inherited frmConsults: TfrmConsults
   HelpContext = 6000
   Caption = 'Consults Page'
   ClientHeight = 421
-  ClientWidth = 715
+  ClientWidth = 774
   Menu = mnuConsults
-  ExplicitWidth = 731
+  StyleElements = [seFont, seClient, seBorder]
+  ExplicitWidth = 790
   ExplicitHeight = 480
-  PixelsPerInch = 96
   TextHeight = 13
   inherited shpPageBottom: TShape
     Top = 416
-    Width = 715
+    Width = 774
     ExplicitTop = 416
     ExplicitWidth = 715
   end
@@ -27,26 +27,28 @@ inherited frmConsults: TfrmConsults
   end
   inherited pnlRight: TPanel [2]
     Left = 85
-    Width = 630
+    Width = 689
     Height = 416
+    StyleElements = [seFont, seClient, seBorder]
     OnExit = pnlRightExit
     OnResize = pnlRightResize
     ExplicitLeft = 85
-    ExplicitWidth = 630
+    ExplicitWidth = 689
     ExplicitHeight = 416
     object sptVert: TSplitter
       Left = 0
       Top = 350
-      Width = 630
+      Width = 689
       Height = 4
       Cursor = crVSplit
       Align = alBottom
       AutoSnap = False
+      ExplicitWidth = 630
     end
     object memPCEShow: TRichEdit
       Left = 0
       Top = 354
-      Width = 630
+      Width = 689
       Height = 62
       Align = alBottom
       Color = clCream
@@ -58,244 +60,11 @@ inherited frmConsults: TfrmConsults
       ParentFont = False
       TabOrder = 2
       WantReturns = False
-      Zoom = 100
-    end
-    object pnlResults: TPanel
-      Left = 0
-      Top = 0
-      Width = 630
-      Height = 350
-      Align = alClient
-      BevelOuter = bvNone
-      TabOrder = 0
-      OnResize = pnlResultsResize
-      object spEditDetails: TSplitter
-        Left = 0
-        Top = 246
-        Width = 630
-        Height = 4
-        Cursor = crVSplit
-        Align = alBottom
-        AutoSnap = False
-        Visible = False
-        ExplicitLeft = 4
-        ExplicitTop = 217
-      end
-      object memResults: TRichEdit
-        Left = 0
-        Top = 67
-        Width = 630
-        Height = 179
-        Align = alClient
-        Font.Charset = ANSI_CHARSET
-        Font.Color = clWindowText
-        Font.Height = -11
-        Font.Name = 'Courier New'
-        Font.Style = []
-        ParentFont = False
-        PopupMenu = popNoteMemo
-        ScrollBars = ssVertical
-        TabOrder = 1
-        WantTabs = True
-        Zoom = 100
-        OnChange = memResultChange
-        OnKeyDown = memResultsKeyDown
-      end
-      object pnlFields: TPanel
-        Left = 0
-        Top = 0
-        Width = 630
-        Height = 67
-        Align = alTop
-        BevelOuter = bvNone
-        TabOrder = 0
-        OnResize = pnlFieldsResize
-        DesignSize = (
-          630
-          67)
-        object bvlNewTitle: TBevel
-          Left = 5
-          Top = 5
-          Width = 117
-          Height = 15
-        end
-        object lblRefDate: TStaticText
-          Left = 237
-          Top = 6
-          Width = 101
-          Height = 17
-          Hint = 'Press "Change..." to change date/time of note.'
-          Alignment = taCenter
-          Caption = 'Oct 20,1999@15:30'
-          ParentShowHint = False
-          ShowAccelChar = False
-          ShowHint = True
-          TabOrder = 1
-        end
-        object lblAuthor: TStaticText
-          Left = 402
-          Top = 6
-          Width = 152
-          Height = 17
-          Hint = 'Press "Change..." to select a different author.'
-          Alignment = taRightJustify
-          Anchors = [akTop, akRight]
-          Caption = 'Winchester,Charles Emerson III'
-          ParentShowHint = False
-          ShowAccelChar = False
-          ShowHint = True
-          TabOrder = 2
-        end
-        object lblVisit: TStaticText
-          Left = 6
-          Top = 21
-          Width = 204
-          Height = 17
-          Caption = 'Vst: 10/20/99 Pulmonary Clinic, Dr. Welby'
-          ShowAccelChar = False
-          TabOrder = 4
-        end
-        object lblCosigner: TStaticText
-          Left = 307
-          Top = 21
-          Width = 243
-          Height = 13
-          Hint = 'Press "Change..." to select a different cosigner.'
-          Alignment = taRightJustify
-          Anchors = [akTop, akRight]
-          AutoSize = False
-          Caption = 'Expected Cosigner: Winchester,Charles Emerson III'
-          ParentShowHint = False
-          ShowAccelChar = False
-          ShowHint = True
-          TabOrder = 5
-        end
-        object lblSubject: TStaticText
-          Left = 6
-          Top = 43
-          Width = 43
-          Height = 17
-          Caption = 'Subject:'
-          TabOrder = 8
-        end
-        object lblNewTitle: TStaticText
-          Left = 6
-          Top = 6
-          Width = 119
-          Height = 17
-          Hint = 'Press "Change..." to select a different title.'
-          Caption = ' General Medicine Note '
-          Color = clCream
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          ParentColor = False
-          ParentFont = False
-          ParentShowHint = False
-          ShowAccelChar = False
-          ShowHint = True
-          TabOrder = 0
-        end
-        object cmdChange: TButton
-          Left = 556
-          Top = 6
-          Width = 58
-          Height = 21
-          Anchors = [akTop, akRight]
-          Caption = 'Change...'
-          TabOrder = 3
-          OnClick = cmdChangeClick
-        end
-        object txtSubject: TCaptionEdit
-          Left = 48
-          Top = 40
-          Width = 566
-          Height = 21
-          Hint = 'Subject is limited to a maximum of 80 characters.'
-          Anchors = [akLeft, akTop, akRight]
-          MaxLength = 80
-          ParentShowHint = False
-          ShowHint = True
-          TabOrder = 6
-          Text = 'txtSubject'
-          Caption = 'Subject'
-        end
-      end
-      object CPMemResults: TCopyPasteDetails
-        Left = 0
-        Top = 250
-        Width = 630
-        Height = 100
-        Align = alBottom
-        BevelInner = bvRaised
-        BorderStyle = bsSingle
-        Constraints.MinHeight = 32
-        ShowCaption = False
-        TabOrder = 2
-        Visible = False
-        CopyMonitor = frmFrame.CPAppMon
-        CollapseBtn.Left = 605
-        CollapseBtn.Top = 0
-        CollapseBtn.Width = 17
-        CollapseBtn.Height = 20
-        CollapseBtn.Align = alRight
-        CollapseBtn.Caption = #218
-        CollapseBtn.Font.Charset = DEFAULT_CHARSET
-        CollapseBtn.Font.Color = clWindowText
-        CollapseBtn.Font.Height = -11
-        CollapseBtn.Font.Name = 'Wingdings'
-        CollapseBtn.Font.Style = []
-        CollapseBtn.ParentFont = False
-        CollapseBtn.TabOrder = 0
-        CollapseBtn.TabStop = False
-        EditMonitor.CopyMonitor = frmFrame.CPAppMon
-        EditMonitor.OnLoadPastedText = LoadPastedText
-        EditMonitor.OnPasteToMonitor = PasteToMonitor
-        EditMonitor.OnSaveTheMonitor = SaveTheMonitor
-        EditMonitor.RelatedPackage = '8925'
-        EditMonitor.TrackOnlyEdits = <>
-        InfoMessage.AlignWithMargins = True
-        InfoMessage.Left = 3
-        InfoMessage.Top = 3
-        InfoMessage.Width = 491
-        InfoMessage.Height = 49
-        InfoMessage.Align = alClient
-        InfoMessage.Font.Charset = ANSI_CHARSET
-        InfoMessage.Font.Color = clWindowText
-        InfoMessage.Font.Height = -11
-        InfoMessage.Font.Name = 'MS Sans Serif'
-        InfoMessage.Font.Style = []
-        InfoMessage.Lines.Strings = (
-          '<-- Please select the desired paste date')
-        InfoMessage.ParentFont = False
-        InfoMessage.ReadOnly = True
-        InfoMessage.ScrollBars = ssBoth
-        InfoMessage.TabOrder = 0
-        InfoMessage.WantReturns = False
-        InfoMessage.WordWrap = False
-        InfoMessage.Zoom = 100
-        InfoSelector.AlignWithMargins = True
-        InfoSelector.Left = 3
-        InfoSelector.Top = 3
-        InfoSelector.Width = 111
-        InfoSelector.Height = 49
-        InfoSelector.Style = lbOwnerDrawFixed
-        InfoSelector.Align = alClient
-        InfoSelector.ItemHeight = 13
-        InfoSelector.TabOrder = 0
-        OnHide = CPHide
-        OnShow = CPShow
-        SyncSizes = True
-        VisualEdit = memResults
-        SaveFindAfter = 0
-      end
     end
     object pnlRead: TPanel
       Left = 0
       Top = 0
-      Width = 630
+      Width = 689
       Height = 350
       Align = alClient
       BevelOuter = bvNone
@@ -303,7 +72,7 @@ inherited frmConsults: TfrmConsults
       object lblTitle: TOROffsetLabel
         Left = 0
         Top = 0
-        Width = 630
+        Width = 689
         Height = 19
         Align = alTop
         Caption = 'Details of Selected Consult'
@@ -319,11 +88,12 @@ inherited frmConsults: TfrmConsults
         Transparent = False
         VertOffset = 6
         WordWrap = False
+        ExplicitWidth = 630
       end
       object spReadDetails: TSplitter
         Left = 0
         Top = 246
-        Width = 630
+        Width = 689
         Height = 4
         Cursor = crVSplit
         Align = alBottom
@@ -331,11 +101,12 @@ inherited frmConsults: TfrmConsults
         Visible = False
         ExplicitLeft = 4
         ExplicitTop = 240
+        ExplicitWidth = 630
       end
       object memConsult: TRichEdit
         Left = 0
         Top = 19
-        Width = 630
+        Width = 689
         Height = 227
         Align = alClient
         Color = clCream
@@ -358,12 +129,11 @@ inherited frmConsults: TfrmConsults
         TabOrder = 0
         WantReturns = False
         WordWrap = False
-        Zoom = 100
       end
       object CPMemConsult: TCopyPasteDetails
         Left = 0
         Top = 250
-        Width = 630
+        Width = 689
         Height = 100
         Align = alBottom
         BevelInner = bvRaised
@@ -374,7 +144,7 @@ inherited frmConsults: TfrmConsults
         TabOrder = 1
         Visible = False
         CopyMonitor = frmFrame.CPAppMon
-        CollapseBtn.Left = 605
+        CollapseBtn.Left = 664
         CollapseBtn.Top = 0
         CollapseBtn.Width = 17
         CollapseBtn.Height = 20
@@ -397,7 +167,7 @@ inherited frmConsults: TfrmConsults
         InfoMessage.AlignWithMargins = True
         InfoMessage.Left = 3
         InfoMessage.Top = 3
-        InfoMessage.Width = 491
+        InfoMessage.Width = 553
         InfoMessage.Height = 49
         InfoMessage.Align = alClient
         InfoMessage.Font.Charset = ANSI_CHARSET
@@ -413,11 +183,10 @@ inherited frmConsults: TfrmConsults
         InfoMessage.TabOrder = 0
         InfoMessage.WantReturns = False
         InfoMessage.WordWrap = False
-        InfoMessage.Zoom = 100
         InfoSelector.AlignWithMargins = True
         InfoSelector.Left = 3
         InfoSelector.Top = 3
-        InfoSelector.Width = 111
+        InfoSelector.Width = 108
         InfoSelector.Height = 49
         InfoSelector.Style = lbOwnerDrawFixed
         InfoSelector.Align = alClient
@@ -430,10 +199,324 @@ inherited frmConsults: TfrmConsults
         SaveFindAfter = 0
       end
     end
+    object pnlResults: TPanel
+      Left = 0
+      Top = 0
+      Width = 689
+      Height = 350
+      Align = alClient
+      BevelOuter = bvNone
+      TabOrder = 0
+      OnResize = pnlResultsResize
+      object spEditDetails: TSplitter
+        Left = 0
+        Top = 246
+        Width = 689
+        Height = 4
+        Cursor = crVSplit
+        Align = alBottom
+        AutoSnap = False
+        Visible = False
+        ExplicitLeft = 4
+        ExplicitTop = 217
+        ExplicitWidth = 630
+      end
+      object memResults: TRichEdit
+        Left = 0
+        Top = 97
+        Width = 689
+        Height = 149
+        Align = alClient
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Courier New'
+        Font.Style = []
+        ParentFont = False
+        PopupMenu = popNoteMemo
+        ScrollBars = ssVertical
+        TabOrder = 0
+        WantTabs = True
+        OnChange = memResultChange
+        OnKeyDown = memResultsKeyDown
+      end
+      object CPMemResults: TCopyPasteDetails
+        Left = 0
+        Top = 250
+        Width = 689
+        Height = 100
+        Align = alBottom
+        BevelInner = bvRaised
+        BorderStyle = bsSingle
+        Constraints.MinHeight = 32
+        ShowCaption = False
+        TabOrder = 1
+        Visible = False
+        CopyMonitor = frmFrame.CPAppMon
+        CollapseBtn.Left = 664
+        CollapseBtn.Top = 0
+        CollapseBtn.Width = 17
+        CollapseBtn.Height = 20
+        CollapseBtn.Align = alRight
+        CollapseBtn.Caption = #218
+        CollapseBtn.Font.Charset = DEFAULT_CHARSET
+        CollapseBtn.Font.Color = clWindowText
+        CollapseBtn.Font.Height = -11
+        CollapseBtn.Font.Name = 'Wingdings'
+        CollapseBtn.Font.Style = []
+        CollapseBtn.ParentFont = False
+        CollapseBtn.TabOrder = 0
+        CollapseBtn.TabStop = False
+        EditMonitor.CopyMonitor = frmFrame.CPAppMon
+        EditMonitor.OnLoadPastedText = LoadPastedText
+        EditMonitor.OnPasteToMonitor = PasteToMonitor
+        EditMonitor.OnSaveTheMonitor = SaveTheMonitor
+        EditMonitor.RelatedPackage = '8925'
+        EditMonitor.TrackOnlyEdits = <>
+        InfoMessage.AlignWithMargins = True
+        InfoMessage.Left = 3
+        InfoMessage.Top = 3
+        InfoMessage.Width = 553
+        InfoMessage.Height = 49
+        InfoMessage.Align = alClient
+        InfoMessage.Font.Charset = ANSI_CHARSET
+        InfoMessage.Font.Color = clWindowText
+        InfoMessage.Font.Height = -11
+        InfoMessage.Font.Name = 'MS Sans Serif'
+        InfoMessage.Font.Style = []
+        InfoMessage.Lines.Strings = (
+          '<-- Please select the desired paste date')
+        InfoMessage.ParentFont = False
+        InfoMessage.ReadOnly = True
+        InfoMessage.ScrollBars = ssBoth
+        InfoMessage.TabOrder = 0
+        InfoMessage.WantReturns = False
+        InfoMessage.WordWrap = False
+        InfoSelector.AlignWithMargins = True
+        InfoSelector.Left = 3
+        InfoSelector.Top = 3
+        InfoSelector.Width = 108
+        InfoSelector.Height = 49
+        InfoSelector.Style = lbOwnerDrawFixed
+        InfoSelector.Align = alClient
+        InfoSelector.ItemHeight = 13
+        InfoSelector.TabOrder = 0
+        OnHide = CPHide
+        OnShow = CPShow
+        SyncSizes = True
+        VisualEdit = memResults
+        SaveFindAfter = 0
+      end
+      object grdPnl: TGridPanel
+        Left = 0
+        Top = 0
+        Width = 689
+        Height = 97
+        Align = alTop
+        BevelOuter = bvNone
+        ColumnCollection = <
+          item
+            SizeStyle = ssAbsolute
+            Value = 48.000000000000000000
+          end
+          item
+            Value = 40.000000000000000000
+          end
+          item
+            Value = 25.000000000000000000
+          end
+          item
+            Value = 35.000000000000000000
+          end
+          item
+            SizeStyle = ssAbsolute
+            Value = 80.000000000000000000
+          end>
+        ControlCollection = <
+          item
+            Column = 0
+            ColumnSpan = 3
+            Control = lblNewTitle
+            Row = 0
+          end
+          item
+            Column = 3
+            Control = stAuthor
+            Row = 0
+          end
+          item
+            Column = 0
+            ColumnSpan = 2
+            Control = lblVisit
+            Row = 1
+          end
+          item
+            Column = 2
+            Control = stRefDate
+            Row = 1
+          end
+          item
+            Column = 3
+            Control = stCosigner
+            Row = 1
+          end
+          item
+            Column = 4
+            Control = cmdChange
+            Row = 1
+          end
+          item
+            Column = 0
+            Control = lblSubject
+            Row = 2
+          end
+          item
+            Column = 1
+            ColumnSpan = 4
+            Control = txtSubject
+            Row = 2
+          end>
+        DoubleBuffered = True
+        ParentDoubleBuffered = False
+        RowCollection = <
+          item
+            Value = 33.504898391225250000
+          end
+          item
+            Value = 33.329632444888350000
+          end
+          item
+            Value = 33.165469163886410000
+          end>
+        TabOrder = 2
+        OnResize = grdPnlResize
+        object lblNewTitle: TStaticText
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 407
+          Height = 26
+          Hint = 'Press "Change..." to select a different title.'
+          Align = alClient
+          Caption = ' General Medicine Note '
+          Color = clCream
+          ParentColor = False
+          ParentShowHint = False
+          ShowAccelChar = False
+          ShowHint = True
+          TabOrder = 0
+          Transparent = False
+        end
+        object stAuthor: TStaticText
+          AlignWithMargins = True
+          Left = 416
+          Top = 3
+          Width = 190
+          Height = 26
+          Hint = 'Press "Change..." to select a different author.'
+          Align = alClient
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Winchester,Charles Emerson III'
+          Color = clBtnFace
+          ParentColor = False
+          ParentShowHint = False
+          ShowAccelChar = False
+          ShowHint = True
+          TabOrder = 1
+          Transparent = False
+        end
+        object lblVisit: TStaticText
+          AlignWithMargins = True
+          Left = 3
+          Top = 35
+          Width = 266
+          Height = 27
+          Align = alClient
+          Caption = 'Vst: 10/20/99 Pulmonary Clinic, Dr. Welby'
+          Color = clBtnFace
+          ParentColor = False
+          ShowAccelChar = False
+          TabOrder = 2
+          Transparent = False
+        end
+        object stRefDate: TStaticText
+          AlignWithMargins = True
+          Left = 275
+          Top = 35
+          Width = 135
+          Height = 27
+          Hint = 'Press "Change..." to change date/time of note.'
+          Align = alClient
+          Alignment = taCenter
+          AutoSize = False
+          Caption = 'stRefDate'
+          ParentShowHint = False
+          ShowAccelChar = False
+          ShowHint = True
+          TabOrder = 3
+        end
+        object stCosigner: TStaticText
+          AlignWithMargins = True
+          Left = 416
+          Top = 35
+          Width = 190
+          Height = 27
+          Hint = 'Press "Change..." to select a different cosigner.'
+          Align = alClient
+          Alignment = taRightJustify
+          AutoSize = False
+          Caption = 'Expected Cosigner: Winchester,Charles Emerson III'
+          Color = clBtnFace
+          ParentColor = False
+          ParentShowHint = False
+          ShowAccelChar = False
+          ShowHint = True
+          TabOrder = 4
+          Transparent = False
+        end
+        object cmdChange: TButton
+          AlignWithMargins = True
+          Left = 612
+          Top = 35
+          Width = 74
+          Height = 27
+          Align = alClient
+          Caption = 'Change ...'
+          Constraints.MaxHeight = 57
+          TabOrder = 5
+        end
+        object lblSubject: TStaticText
+          Left = 0
+          Top = 65
+          Width = 48
+          Height = 17
+          Align = alTop
+          Caption = 'Subject:'
+          TabOrder = 6
+        end
+        object txtSubject: TCaptionEdit
+          AlignWithMargins = True
+          Left = 51
+          Top = 68
+          Width = 635
+          Height = 21
+          Hint = 'Subject is limited to a maximum of 80 characters.'
+          Align = alTop
+          MaxLength = 80
+          ParentShowHint = False
+          ShowHint = True
+          TabOrder = 7
+          Text = 'txtSubject'
+          Caption = #1
+        end
+      end
+    end
   end
   inherited pnlLeft: TPanel [3]
     Width = 83
     Height = 416
+    StyleElements = [seFont, seClient, seBorder]
     OnExit = pnlLeftExit
     OnResize = pnlLeftResize
     ExplicitWidth = 83
@@ -523,6 +606,7 @@ inherited frmConsults: TfrmConsults
         LongList = False
         Pieces = '2,3'
         TabPositions = '10'
+        FlatCheckBoxes = False
       end
       object tvCsltNotes: TORTreeView
         Left = 0
@@ -601,6 +685,7 @@ inherited frmConsults: TfrmConsults
         LongList = False
         Pieces = '2,3,4,5'
         TabPositions = '10,15,42'
+        FlatCheckBoxes = False
       end
       object tvConsults: TORTreeView
         Left = 0
@@ -641,33 +726,6 @@ inherited frmConsults: TfrmConsults
         'Status = stsDefault')
       (
         'Component = memResults'
-        'Status = stsDefault')
-      (
-        'Component = pnlFields'
-        'Status = stsDefault')
-      (
-        'Component = lblRefDate'
-        'Status = stsDefault')
-      (
-        'Component = lblAuthor'
-        'Status = stsDefault')
-      (
-        'Component = lblVisit'
-        'Status = stsDefault')
-      (
-        'Component = lblCosigner'
-        'Status = stsDefault')
-      (
-        'Component = lblSubject'
-        'Status = stsDefault')
-      (
-        'Component = lblNewTitle'
-        'Status = stsDefault')
-      (
-        'Component = cmdChange'
-        'Status = stsDefault')
-      (
-        'Component = txtSubject'
         'Status = stsDefault')
       (
         'Component = pnlAction'
@@ -713,6 +771,33 @@ inherited frmConsults: TfrmConsults
         'Status = stsDefault')
       (
         'Component = CPMemResults'
+        'Status = stsDefault')
+      (
+        'Component = grdPnl'
+        'Status = stsDefault')
+      (
+        'Component = lblNewTitle'
+        'Status = stsDefault')
+      (
+        'Component = stAuthor'
+        'Status = stsDefault')
+      (
+        'Component = lblVisit'
+        'Status = stsDefault')
+      (
+        'Component = stRefDate'
+        'Status = stsDefault')
+      (
+        'Component = stCosigner'
+        'Status = stsDefault')
+      (
+        'Component = cmdChange'
+        'Status = stsDefault')
+      (
+        'Component = lblSubject'
+        'Status = stsDefault')
+      (
+        'Component = txtSubject'
         'Status = stsDefault'))
   end
   object popNoteMemo: TPopupMenu

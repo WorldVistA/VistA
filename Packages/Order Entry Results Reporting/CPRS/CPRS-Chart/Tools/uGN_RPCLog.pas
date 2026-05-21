@@ -1,15 +1,19 @@
-unit uGN_RPCLog;
+ï»¿unit uGN_RPCLog;
 
 interface
 uses
-  fGN_RPCLog, Dialogs, Forms, Classes, System.SysUtils, System.Types, Graphics;
+  Dialogs, Forms, Classes, System.SysUtils, System.Types, Graphics;
+
+  type
+    TLog_ActionType = (LACT_NIL, LACT_FLAG, LACT_SYSINFO, LACT_EXPORT, LACT_ACTIVATE, LACT_DEACTIVATE, LACT_CREATE, LACT_SHOW, LACT_HIDE, LACT_CLOSE,
+    LACT_DESTROY);
 
 function WorkArea:TRect;
 
 function RPCLogExists:Boolean;
 procedure RPCLogInit;
 procedure RPCLogClose;
-procedure AddLogLine(aLine, aTitle: string; bLoud: Boolean = true);
+procedure AddLogLine(aLine, aTitle: string; aAction: TLog_ActionType = LACT_NIL; bLoud: Boolean = true);
 procedure AddFlag(aText,aTitle: string);
 procedure ShowBroker; overload;
 procedure ShowBroker(RR:TRect); overload;
@@ -33,6 +37,7 @@ var
   RPCLog_clFlag: Integer = clBlue;
   RPCLog_clItem: Integer = clBlue;
   RPCLog_clTarget: Integer = clRed;
+  RPCLog_clImport: Integer = clGreen;
 
   RPCLog_bgclTarget: Integer = clYellow;
   RPCLog_bgclFlag: Integer = clInfoBk;
@@ -44,21 +49,20 @@ const
   RPCLog_ItemBegin = '<<< ';
   RPCLog_ItemEnd = ' >>>';
 
-  RPCLog_Flag = '¤¤¤¤¤¤¤¤¤';
-  RPCLog_ItemExport = '---  ';
+  RPCLog_Flag = 'Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤Â¤';
   RPCLog_OnActivate = '---> Activate';
   RPCLog_OnDeactivate = '---< Deactivate';
-  RPCLog_OnCreate = '--»» Create ';
-  RPCLog_OnHide = '---¤ Hide ';
+  RPCLog_OnCreate = '--Â»Â» Create ';
+  RPCLog_OnHide = '---Â¤ Hide ';
   RPCLog_Onshow = '---- Show ';
   RPCLog_OnClose = '---x Close ';
-  RPCLog_OnDestroy = '--«« Destroy ';
-  RPCLog_Import = '--- IMPORT ---';
-  RPCLog_Export = '--- EXPORT ---';
+  RPCLog_OnDestroy = '--Â«Â« Destroy ';
+
 
 implementation
+
 uses
-  VAUtils, WinApi.SHFolder, Windows;
+  ORFn, VAUtils, WinApi.SHFolder, Windows, fGN_RPCLog;
 
 var
   RPCLog_Enabled: Boolean; // Indicates the Log is available
@@ -82,10 +86,9 @@ begin
   if not Assigned(frmRPCLog) then
     try
       frmRPCLog := TfrmRPCLog.Create(Application);
-{$IFDEF DEBUG}
-{$ELSE}
-      frmRPCLog.FileSaveAs1.Visible := False;
-      frmRPCLog.FileSaveAs2.Visible := False;
+{$IFNDEF DEBUG}
+      frmRPCLog.FileSave.Visible := False;
+      frmRPCLog.FileSaveAll.Visible := False;
 {$ENDIF}
     except
       on E: Exception do
@@ -112,7 +115,7 @@ begin
   RPCLog_Enabled := Assigned(frmRPCLog);
 end;
 
-procedure AddLogLine(aLine, aTitle: string; bLoud: Boolean = true);
+procedure AddLogLine(aLine, aTitle: string; aAction: TLog_ActionType = LACT_NIL; bLoud: Boolean = true);
 // Adds record to the Log. Does nothing if the bLoud is False
 var
   sl: TStringList;
@@ -125,7 +128,7 @@ begin
 
   sl := TStringList.Create;
   sl.Text := aLine;
-  frmRPCLog.addLogItem(aTitle, aTitle, sl);
+  frmRPCLog.AddNonRPCtoList(aAction, aTitle, '', '', sl);
 end;
 
 procedure AddFlag(aText,aTitle: string);
@@ -136,18 +139,23 @@ begin
   s := RPCLog_Flag + ' ' + aTitle;
   if aText = '' then
     aText := aTitle;
-  AddLogLine(aTitle, s);
+  AddLogLine(aTitle, s, LACT_FLAG);
 end;
 
 procedure ShowBroker(RR:TRect);
 // Opens Log Window in specified position
 var
-  b: Boolean;
+  R: TRect;
 begin
-  b := RPCLogExists;
   RPCLogInit;
   if Assigned(frmRPCLog) then
   begin
+    if frmRPCLog.WindowState = wsMinimized then
+    begin
+      R := frmRPCLog.BoundsRect;
+      frmRPCLog.WindowState := wsNormal;
+      frmRPCLog.BoundsRect := R;
+    end;
     if (RR.Top<> RR.Bottom) and (RR.Left <> RR.Right) then
       begin
         frmRPCLog.Top := RR.Top;
@@ -160,8 +168,6 @@ begin
       end;
     frmRPCLog.Show;
     frmRPCLog.BringToFront;
-    if not b then
-      frmRPCLog.acToTheLeft.Execute;
   end;
 end;
 
@@ -223,11 +229,16 @@ begin
 end;
 
 procedure DebugShowServer;
+var
+  b: Boolean;
 begin
+  b := RPCLogExists;
   RPCLogInit;
   if assigned(frmRPCLog) then
     begin
       frmRPCLog.acSymbolTable.Execute;
+      if not b then
+        frmRPCLog.acToTheLeft.Execute;
       ShowBroker;
     end;
 end;

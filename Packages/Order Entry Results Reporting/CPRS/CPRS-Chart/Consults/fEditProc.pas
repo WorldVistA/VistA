@@ -6,7 +6,7 @@ uses
   ORExtensions,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   StdCtrls, ORCtrls, ExtCtrls, ComCtrls, ORfn, uConst, uConsults, Buttons,
-  Menus, fAutoSz, ORDtTm, VA508AccessibilityManager, fBase508Form;
+  Menus, fAutoSz, ORDtTm, ORCheckComboBox, VA508AccessibilityManager, fBase508Form;
 
 type
   TfrmEditProc = class(TfrmAutoSz)
@@ -32,7 +32,7 @@ type
     radOutpatient: TRadioButton;
     cboPlace: TORComboBox;
     txtProvDiag: TCaptionEdit;
-    txtAttn: TORComboBox;
+    txtAttn: TORCheckComboBox;
     cboProc: TORComboBox;
     cboCategory: TORComboBox;
     cboService: TORComboBox;
@@ -99,6 +99,8 @@ type
     procedure calLatestExit(Sender: TObject);
     procedure memCommentExit(Sender: TObject);
     procedure FormResize(Sender: TObject);
+    procedure txtAttnMainCheckboxClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     FLastProcID: string;
     FChanged: boolean;
@@ -281,6 +283,15 @@ begin
       SetError(ErrMsg);
   end;
 
+end;
+
+procedure TfrmEditProc.txtAttnMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := txtAttn.SelectedDataString;
+  txtAttn.ReInitLongList;
+  if ALastData <> txtAttn.SelectedDataString then
+    ControlChange(txtAttn);
 end;
 
 procedure TfrmEditProc.txtAttnNeedData(Sender: TObject;
@@ -478,6 +489,16 @@ begin
   if FChanged then
     if InfoBox(TX_ACCEPT, TX_ACCEPT_CAP, MB_YESNO) = ID_YES then
       if not ValidSave then Action := caNone;
+end;
+
+procedure TfrmEditProc.FormCreate(Sender: TObject);
+begin
+  inherited;
+  txtAttn.MainCheckBoxVisible := IncludeNonVAProviders(txtAttn);
+  if txtAttn.MainCheckBoxVisible = True then
+    GridPanel1.RowCollection[0].Value := 38.4
+  else
+    GridPanel1.RowCollection[0].Value := 24.4;
 end;
 
 procedure TfrmEditProc.FormResize(Sender: TObject);

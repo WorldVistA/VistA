@@ -1,4 +1,4 @@
-object frPDMPReviewOptions: TfrPDMPReviewOptions
+inherited frPDMPReviewOptions: TfrPDMPReviewOptions
   Left = 0
   Top = 0
   Width = 293

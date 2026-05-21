@@ -7,8 +7,8 @@ inherited frmNotesByAuthor: TfrmNotesByAuthor
   ClientWidth = 308
   OldCreateOrder = True
   Position = poScreenCenter
-  ExplicitWidth = 316
-  ExplicitHeight = 232
+  ExplicitWidth = 324
+  ExplicitHeight = 244
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBase: TORAutoPanel [0]
@@ -37,11 +37,11 @@ inherited frmNotesByAuthor: TfrmNotesByAuthor
         '&Descending (newest first)')
       TabOrder = 1
     end
-    object cboAuthor: TORComboBox
+    object cboAuthor: TORCheckComboBox
       Left = 8
-      Top = 22
+      Top = 27
       Width = 212
-      Height = 118
+      Height = 113
       Style = orcsSimple
       AutoSelect = True
       Caption = 'Author'
@@ -58,8 +58,13 @@ inherited frmNotesByAuthor: TfrmNotesByAuthor
       Sorted = False
       SynonymChars = '<>'
       TabOrder = 0
+      Text = ''
       OnNeedData = cboAuthorNeedData
       CharsNeedMatch = 1
+      MainCheckBoxCaption = 'Include Non-VA Providers'
+      MainCheckBoxVisible = True
+      MainCheckBoxAlignment = calBottom
+      OnMainCheckboxClick = cboAuthorMainCheckboxClick
     end
     object cmdOK: TButton
       Left = 228
@@ -83,6 +88,8 @@ inherited frmNotesByAuthor: TfrmNotesByAuthor
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
+    Left = 256
+    Top = 128
     Data = (
       (
         'Component = pnlBase'

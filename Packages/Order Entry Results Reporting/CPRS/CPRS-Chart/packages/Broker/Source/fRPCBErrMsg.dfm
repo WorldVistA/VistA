@@ -12,8 +12,6 @@ object frmErrMsg: TfrmErrMsg
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   FormStyle = fsStayOnTop
-  OldCreateOrder = False
-  PixelsPerInch = 96
   TextHeight = 13
   object Button1: TButton
     Left = 62

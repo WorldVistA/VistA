@@ -13,10 +13,13 @@ type
     fClicking: boolean;
     fIgnore508StateChange: Boolean;
     procedure CMEnabledChanged(var Msg: TMessage); message CM_ENABLEDCHANGED;
+    procedure CMVisibleChanged(var Msg: TMessage); message CM_VISIBLECHANGED;
     procedure CMTextChanged(var Message: TMessage); message CM_TEXTCHANGED;
     procedure WMSize(var Msg: TMessage); message WM_SIZE;
+    procedure WMWindowPosChanged(var Message: TWMWindowPosChanged); message WM_WINDOWPOSCHANGED;
     procedure SetIgnore508StateChange(const Value: Boolean);
   protected
+    procedure DoEnabledChanged(var Msg: TMessage);
     procedure Loaded; override;
   public
     constructor Create(AControl: TComponent); override;
@@ -36,7 +39,7 @@ procedure TButton.Loaded;
 begin
   inherited;
   if not(csDesigning in ComponentState) then
-    if ScreenReaderActiveOnStartup and not Enabled then
+    if ScreenReaderActiveOnStartup and Visible and not Enabled then
     begin
       if (FStaticText = nil) and (not fIgnore508StateChange) then
         FStaticText := CreateHiddenStaticText(Self, 'Button', Caption);
@@ -64,17 +67,28 @@ begin
   end;
 end;
 
-procedure TButton.CMEnabledChanged(var Msg: TMessage);
+procedure TButton.DoEnabledChanged(var Msg: TMessage);
 begin
-  inherited;
   if not(csLoading in ComponentState) then
     if ScreenReaderActiveOnStartup then
     begin
-      if (not Enabled) and (not fIgnore508StateChange) then
+      if Visible and (not Enabled) and (not fIgnore508StateChange) then
         FStaticText := CreateHiddenStaticText(Self, 'Button', Caption)
       else
         FreeAndNil(FStaticText);
     end;
+end;
+
+procedure TButton.CMEnabledChanged(var Msg: TMessage);
+begin
+  inherited;
+  DoEnabledChanged(Msg);
+end;
+
+procedure TButton.CMVisibleChanged(var Msg: TMessage);
+begin
+  inherited;
+  DoEnabledChanged(Msg);
 end;
 
 procedure TButton.CMTextChanged(var Message: TMessage);
@@ -85,6 +99,13 @@ begin
 end;
 
 procedure TButton.WMSize(var Msg: TMessage);
+begin
+  inherited;
+  if (FStaticText <> nil) and (not fIgnore508StateChange) then
+    FStaticText.UpdateSize;
+end;
+
+procedure TButton.WMWindowPosChanged(var Message: TWMWindowPosChanged);
 begin
   inherited;
   if (FStaticText <> nil) and (not fIgnore508StateChange) then

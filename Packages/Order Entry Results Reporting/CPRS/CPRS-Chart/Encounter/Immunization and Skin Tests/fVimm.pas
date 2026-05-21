@@ -6,7 +6,8 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls,
   fBase508Form, mVimMBase, mVimmSelect, mVimmGrid, mVimmEdit, mVimmReminders,
-  rVimm, ORFn, rmisc, mVimmICE, fPDMPCosigner, VA508AccessibilityManager, VAUtils;
+  rVimm, ORFn, rmisc, mVimmICE, fPDMPCosigner, VA508AccessibilityManager, VAUtils,
+  fBase508Frame;
 
 type
 
@@ -51,8 +52,12 @@ var
   vimmMainForm: TvimmMainForm;
 
 implementation
+
+uses
+  VA508AccessibilityRouter;
+
 var
-frmInfoDisplay, frmGrid, frmImm, frmImmEdit: TFrame;
+frmInfoDisplay, frmGrid, frmImm, frmImmEdit: TBase508Frame;
 
 {$R *.dfm}
 // possible inputs and recommended settings
@@ -530,6 +535,7 @@ end;
 
 procedure TvimmMainForm.SetScrollBarHeight(FontSize: Integer);
 begin
+(*  VISTAOR-35393
   MinFormHeight := 300;
   case FontSize of
     8:
@@ -555,6 +561,7 @@ begin
   end;
   self.Constraints.MinHeight := MinFormHeight;
   self.Constraints.MinWidth := minFormWidth div 2;
+*)
 end;
 
 function TvimmMainForm.validateInput: boolean;

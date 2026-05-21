@@ -17,7 +17,9 @@ inherited frmODDietAccess: TfrmODDietAccess
     Caption = 'lblMsg'
     TabOrder = 0
     ShowAccelChar = True
-    ExplicitWidth = 184
+    WordWrap = False
+    LabelAlignment = taLeftJustify
+    LabelLayout = tlTop
   end
   inherited amgrMain: TVA508AccessibilityManager
     Left = 16

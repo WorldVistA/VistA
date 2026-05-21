@@ -208,7 +208,7 @@ inherited frmODAnatPath: TfrmODAnatPath
       end
       item
         SizeStyle = ssAbsolute
-        Value = 21.000000000000000000
+        Value = 41.000000000000000000
       end
       item
         SizeStyle = ssAbsolute
@@ -258,17 +258,17 @@ inherited frmODAnatPath: TfrmODAnatPath
     TabOrder = 5
     object pgctrlText: TPageControl
       Left = 1
-      Top = 418
+      Top = 429
       Width = 782
-      Height = 155
+      Height = 146
       Align = alClient
       TabOrder = 19
     end
     object lvwSpecimen: TListView
       Left = 1
-      Top = 264
-      Width = 218
-      Height = 154
+      Top = 284
+      Width = 219
+      Height = 145
       Align = alClient
       Anchors = []
       Columns = <
@@ -296,10 +296,10 @@ inherited frmODAnatPath: TfrmODAnatPath
       OnKeyDown = lvwSpecimenKeyDown
     end
     object pgctrlSpecimen: TPageControl
-      Left = 219
-      Top = 264
-      Width = 564
-      Height = 77
+      Left = 220
+      Top = 284
+      Width = 563
+      Height = 73
       Align = alClient
       ParentShowHint = False
       ShowHint = False
@@ -320,8 +320,8 @@ inherited frmODAnatPath: TfrmODAnatPath
       AlignWithMargins = True
       Left = 1
       Top = 14
-      Width = 215
-      Height = 229
+      Width = 216
+      Height = 249
       Margins.Left = 0
       Margins.Top = 0
       Margins.Bottom = 0
@@ -353,9 +353,9 @@ inherited frmODAnatPath: TfrmODAnatPath
     object lblUrgency: TLabel
       Tag = 2
       AlignWithMargins = True
-      Left = 222
+      Left = 223
       Top = 17
-      Width = 134
+      Width = 135
       Height = 15
       Align = alClient
       Caption = 'Urgency'
@@ -366,9 +366,9 @@ inherited frmODAnatPath: TfrmODAnatPath
     end
     object cbxUrgency: TORComboBox
       AlignWithMargins = True
-      Left = 222
+      Left = 223
       Top = 35
-      Width = 134
+      Width = 135
       Height = 21
       Margins.Top = 0
       Margins.Bottom = 0
@@ -399,7 +399,7 @@ inherited frmODAnatPath: TfrmODAnatPath
     object lblORDateBox: TLabel
       Tag = 3
       AlignWithMargins = True
-      Left = 362
+      Left = 364
       Top = 17
       Width = 134
       Height = 15
@@ -412,7 +412,7 @@ inherited frmODAnatPath: TfrmODAnatPath
     end
     object calCollTime: TORDateBox
       AlignWithMargins = True
-      Left = 362
+      Left = 364
       Top = 35
       Width = 134
       Height = 21
@@ -430,9 +430,9 @@ inherited frmODAnatPath: TfrmODAnatPath
     object lblSubmittedBy: TLabel
       Tag = 4
       AlignWithMargins = True
-      Left = 502
+      Left = 504
       Top = 17
-      Width = 134
+      Width = 135
       Height = 15
       Align = alClient
       Caption = 'Specimen Submitted By'
@@ -442,9 +442,9 @@ inherited frmODAnatPath: TfrmODAnatPath
     end
     object edtSubmittedBy: TEdit
       AlignWithMargins = True
-      Left = 502
+      Left = 504
       Top = 35
-      Width = 134
+      Width = 135
       Height = 21
       Margins.Top = 0
       Margins.Bottom = 0
@@ -453,9 +453,9 @@ inherited frmODAnatPath: TfrmODAnatPath
       OnExit = edtSubmittedbyExit
     end
     object lblEmpry: TLabel
-      Left = 639
+      Left = 642
       Top = 14
-      Width = 144
+      Width = 141
       Height = 42
       Align = alClient
       Alignment = taCenter
@@ -468,9 +468,9 @@ inherited frmODAnatPath: TfrmODAnatPath
     object lblCollectionType: TLabel
       Tag = 5
       AlignWithMargins = True
-      Left = 222
+      Left = 223
       Top = 59
-      Width = 134
+      Width = 135
       Height = 15
       Align = alClient
       Caption = 'Collection Type'
@@ -481,9 +481,9 @@ inherited frmODAnatPath: TfrmODAnatPath
     end
     object cbxCollType: TORComboBox
       AlignWithMargins = True
-      Left = 222
+      Left = 223
       Top = 77
-      Width = 134
+      Width = 135
       Height = 21
       Margins.Top = 0
       Margins.Bottom = 0
@@ -514,9 +514,9 @@ inherited frmODAnatPath: TfrmODAnatPath
     object lblHowLong: TLabel
       Tag = 7
       AlignWithMargins = True
-      Left = 502
+      Left = 504
       Top = 59
-      Width = 134
+      Width = 135
       Height = 15
       Align = alClient
       Caption = 'How Long?'
@@ -528,21 +528,22 @@ inherited frmODAnatPath: TfrmODAnatPath
     object edtDays: TEdit
       Tag = 7
       AlignWithMargins = True
-      Left = 502
+      Left = 504
       Top = 77
-      Width = 134
-      Height = 21
+      Width = 135
+      Height = 41
       Margins.Top = 0
       Margins.Bottom = 0
       Align = alClient
       Enabled = False
       TabOrder = 5
       OnChange = edtDaysChange
+      ExplicitHeight = 21
     end
     object lblOften: TLabel
       Tag = 6
       AlignWithMargins = True
-      Left = 362
+      Left = 364
       Top = 59
       Width = 134
       Height = 15
@@ -556,7 +557,7 @@ inherited frmODAnatPath: TfrmODAnatPath
     object cbxFrequency: TORComboBox
       Tag = 6
       AlignWithMargins = True
-      Left = 362
+      Left = 364
       Top = 77
       Width = 134
       Height = 21
@@ -589,9 +590,9 @@ inherited frmODAnatPath: TfrmODAnatPath
     object lblSurgeon: TLabel
       Tag = 8
       AlignWithMargins = True
-      Left = 642
+      Left = 645
       Top = 59
-      Width = 138
+      Width = 135
       Height = 15
       Align = alClient
       Caption = 'Surgeon/Provider'
@@ -600,12 +601,12 @@ inherited frmODAnatPath: TfrmODAnatPath
       ExplicitWidth = 84
       ExplicitHeight = 13
     end
-    object cbxPtProvider: TORComboBox
+    object cbxPtProvider: TORCheckComboBox
       AlignWithMargins = True
-      Left = 642
+      Left = 645
       Top = 77
-      Width = 138
-      Height = 21
+      Width = 135
+      Height = 41
       Margins.Top = 0
       Margins.Bottom = 0
       Style = orcsDropDown
@@ -632,11 +633,15 @@ inherited frmODAnatPath: TfrmODAnatPath
       OnKeyUp = LegacyKeyUp
       OnNeedData = cbxPtProviderNeedData
       CharsNeedMatch = 1
+      MainCheckBoxCaption = 'Include Non-VA Providers'
+      MainCheckBoxVisible = True
+      MainCheckBoxAlignment = calBottom
+      OnMainCheckboxClick = cbxPtProviderMainCheckboxClick
     end
     object pnlAntiCoagulation: TPanel
-      Left = 219
-      Top = 98
-      Width = 564
+      Left = 220
+      Top = 118
+      Width = 563
       Height = 29
       Align = alClient
       BevelOuter = bvNone
@@ -649,13 +654,12 @@ inherited frmODAnatPath: TfrmODAnatPath
         Align = alLeft
         Caption = 'What kind of anticoagulant is the patient on?'
         Layout = tlCenter
-        ExplicitHeight = 13
       end
       object edtAnticoag: TEdit
         AlignWithMargins = True
         Left = 215
         Top = 3
-        Width = 343
+        Width = 342
         Height = 23
         Margins.Right = 6
         Align = alClient
@@ -665,9 +669,9 @@ inherited frmODAnatPath: TfrmODAnatPath
       end
     end
     object pnlDoseDraw: TPanel
-      Left = 219
-      Top = 127
-      Width = 564
+      Left = 220
+      Top = 147
+      Width = 563
       Height = 29
       Align = alClient
       BevelOuter = bvNone
@@ -682,7 +686,6 @@ inherited frmODAnatPath: TfrmODAnatPath
         Caption = 'Enter the last dose time'
         Transparent = False
         Layout = tlCenter
-        ExplicitHeight = 13
       end
       object lblDraw: TLabel
         AlignWithMargins = True
@@ -694,7 +697,6 @@ inherited frmODAnatPath: TfrmODAnatPath
         Caption = 'Enter draw time'
         Transparent = False
         Layout = tlCenter
-        ExplicitHeight = 13
       end
       object calDoseTime: TORDateBox
         AlignWithMargins = True
@@ -728,9 +730,9 @@ inherited frmODAnatPath: TfrmODAnatPath
       end
     end
     object pnlOrderComment: TPanel
-      Left = 219
-      Top = 156
-      Width = 564
+      Left = 220
+      Top = 176
+      Width = 563
       Height = 29
       Align = alClient
       BevelOuter = bvNone
@@ -744,13 +746,12 @@ inherited frmODAnatPath: TfrmODAnatPath
         Align = alLeft
         Caption = 'Order Comment'
         Layout = tlCenter
-        ExplicitHeight = 13
       end
       object edtOrderComment: TEdit
         AlignWithMargins = True
         Left = 82
         Top = 3
-        Width = 476
+        Width = 475
         Height = 23
         Margins.Right = 6
         Align = alClient
@@ -760,9 +761,9 @@ inherited frmODAnatPath: TfrmODAnatPath
       end
     end
     object pnlPeakTrough: TPanel
-      Left = 219
-      Top = 185
-      Width = 564
+      Left = 220
+      Top = 205
+      Width = 563
       Height = 29
       Align = alClient
       BevelOuter = bvNone
@@ -778,13 +779,12 @@ inherited frmODAnatPath: TfrmODAnatPath
         Caption = 'Sample drawn at'
         Transparent = False
         Layout = tlCenter
-        ExplicitHeight = 13
       end
       object edtPeakComment: TEdit
         AlignWithMargins = True
         Left = 317
         Top = 4
-        Width = 244
+        Width = 243
         Height = 21
         Margins.Top = 4
         Margins.Bottom = 4
@@ -835,9 +835,9 @@ inherited frmODAnatPath: TfrmODAnatPath
       end
     end
     object pnlUrineVolume: TPanel
-      Left = 219
-      Top = 214
-      Width = 564
+      Left = 220
+      Top = 234
+      Width = 563
       Height = 29
       Align = alClient
       BevelOuter = bvNone
@@ -853,7 +853,6 @@ inherited frmODAnatPath: TfrmODAnatPath
         Caption = 'Enter the urine volume'
         Transparent = False
         Layout = tlCenter
-        ExplicitHeight = 13
       end
       object spnedtUrineVolume: TSpinEdit
         Left = 120
@@ -899,8 +898,8 @@ inherited frmODAnatPath: TfrmODAnatPath
     end
     object pnlTabs: TPanel
       Left = 1
-      Top = 243
-      Width = 218
+      Top = 263
+      Width = 219
       Height = 21
       Align = alClient
       BevelOuter = bvNone
@@ -959,9 +958,9 @@ inherited frmODAnatPath: TfrmODAnatPath
     end
     object pnlTotal: TPanel
       AlignWithMargins = True
-      Left = 222
-      Top = 246
-      Width = 555
+      Left = 223
+      Top = 266
+      Width = 554
       Height = 15
       Margins.Right = 6
       Align = alClient
@@ -972,10 +971,10 @@ inherited frmODAnatPath: TfrmODAnatPath
       OnExit = pnlFocusExit
     end
     object pnlSpecMessage: TPanel
-      Left = 219
-      Top = 341
-      Width = 564
-      Height = 77
+      Left = 220
+      Top = 357
+      Width = 563
+      Height = 72
       Align = alClient
       BevelOuter = bvNone
       Color = clWindow
@@ -985,8 +984,8 @@ inherited frmODAnatPath: TfrmODAnatPath
         AlignWithMargins = True
         Left = 100
         Top = 3
-        Width = 364
-        Height = 71
+        Width = 363
+        Height = 66
         Margins.Left = 100
         Margins.Right = 100
         Align = alClient
@@ -1061,20 +1060,19 @@ inherited frmODAnatPath: TfrmODAnatPath
     inherited memMessage: TRichEdit
       AlignWithMargins = True
       Left = 44
-      Top = 6
-      Width = 611
-      Height = 35
+      Top = 5
+      Width = 612
+      Height = 37
       Margins.Left = 42
       Align = alClient
       PopupMenu = mnuMessagePopup
       ExplicitLeft = 44
-      ExplicitTop = 6
-      ExplicitWidth = 611
-      ExplicitHeight = 35
+      ExplicitTop = 5
+      ExplicitWidth = 612
+      ExplicitHeight = 37
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
-    Left = 16
     Top = 40
     Data = (
       (

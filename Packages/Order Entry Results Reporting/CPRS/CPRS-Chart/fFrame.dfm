@@ -2,22 +2,25 @@ inherited frmFrame: TfrmFrame
   Left = 219
   Top = 102
   Caption = ']='
-  ClientHeight = 825
-  ClientWidth = 976
+  ClientHeight = 573
+  ClientWidth = 966
+  Constraints.MinWidth = 800
   FormStyle = fsMDIForm
   Menu = mnuFrame
   Visible = True
+  StyleElements = [seFont, seClient, seBorder]
+  OnCanResize = ORFormCanResize
   OnCloseQuery = FormCloseQuery
   OnResize = FormResize
   OldCreateOrder = True
-  ExplicitHeight = 884
-  PixelsPerInch = 96
+  ExplicitWidth = 982
+  ExplicitHeight = 632
   TextHeight = 13
   object pnlNoPatientSelected: TPanel [0]
     Left = 0
     Top = 0
-    Width = 976
-    Height = 825
+    Width = 966
+    Height = 573
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -36,8 +39,8 @@ inherited frmFrame: TfrmFrame
   object pnlPatientSelected: TPanel [1]
     Left = 0
     Top = 0
-    Width = 976
-    Height = 825
+    Width = 966
+    Height = 573
     Margins.Left = 4
     Margins.Top = 4
     Margins.Right = 4
@@ -47,7 +50,7 @@ inherited frmFrame: TfrmFrame
     object bvlPageTop: TBevel
       Left = 1
       Top = 103
-      Width = 974
+      Width = 964
       Height = 2
       Margins.Left = 5
       Margins.Top = 5
@@ -55,11 +58,12 @@ inherited frmFrame: TfrmFrame
       Margins.Bottom = 5
       Align = alTop
       ExplicitTop = 62
+      ExplicitWidth = 974
     end
     object pnlToolbar: TPanel
       Left = 1
       Top = 1
-      Width = 974
+      Width = 964
       Height = 61
       Margins.Left = 5
       Margins.Top = 5
@@ -67,11 +71,11 @@ inherited frmFrame: TfrmFrame
       Margins.Bottom = 5
       Align = alTop
       BevelOuter = bvNone
-      TabOrder = 0
+      TabOrder = 1
       object bvlToolTop: TBevel
         Left = 0
         Top = 0
-        Width = 974
+        Width = 964
         Height = 1
         Margins.Left = 5
         Margins.Top = 5
@@ -79,6 +83,7 @@ inherited frmFrame: TfrmFrame
         Margins.Bottom = 5
         Align = alTop
         Style = bsRaised
+        ExplicitWidth = 974
       end
       object pnlCCOW: TPanel
         Left = 0
@@ -379,7 +384,7 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlReminders: TKeyClickPanel
-        Left = 814
+        Left = 804
         Top = 1
         Width = 52
         Height = 60
@@ -434,7 +439,7 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlPostings: TKeyClickPanel
-        Left = 866
+        Left = 856
         Top = 1
         Width = 108
         Height = 60
@@ -512,7 +517,7 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlOTHD: TKeyClickPanel
-        Left = 456
+        Left = 446
         Top = 1
         Width = 109
         Height = 60
@@ -574,7 +579,7 @@ inherited frmFrame: TfrmFrame
         end
       end
       object paVAA: TKeyClickPanel
-        Left = 366
+        Left = 356
         Top = 1
         Width = 90
         Height = 60
@@ -631,7 +636,7 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlCVnFlag: TPanel
-        Left = 565
+        Left = 555
         Top = 1
         Width = 138
         Height = 60
@@ -708,7 +713,6 @@ inherited frmFrame: TfrmFrame
           end
         end
         object txtCmdFlags: TVA508StaticText
-          Name = 'txtCmdFlags'
           Left = 1
           Top = 1
           Width = 136
@@ -729,7 +733,7 @@ inherited frmFrame: TfrmFrame
         end
       end
       object pnlRemoteData: TKeyClickPanel
-        Left = 703
+        Left = 693
         Top = 1
         Width = 111
         Height = 60
@@ -863,8 +867,8 @@ inherited frmFrame: TfrmFrame
     end
     object stsArea: TStatusBar
       Left = 1
-      Top = 803
-      Width = 974
+      Top = 551
+      Width = 964
       Height = 21
       Margins.Left = 5
       Margins.Top = 5
@@ -893,85 +897,10 @@ inherited frmFrame: TfrmFrame
       PopupMenu = popAlerts
       SizeGrip = False
     end
-    object tabPage: TTabControl
-      Left = 1
-      Top = 776
-      Width = 974
-      Height = 27
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Align = alBottom
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -19
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 4
-      TabPosition = tpBottom
-      OnChange = tabPageChange
-      OnMouseDown = tabPageMouseDown
-      OnMouseUp = tabPageMouseUp
-    end
-    object pnlPage: TPanel
-      Left = 1
-      Top = 105
-      Width = 974
-      Height = 671
-      Margins.Left = 4
-      Margins.Top = 4
-      Margins.Right = 4
-      Margins.Bottom = 4
-      Align = alClient
-      BevelOuter = bvNone
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -19
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 2
-      object lstCIRNLocations: TORListBox
-        Left = 642
-        Top = 0
-        Width = 317
-        Height = 118
-        Margins.Left = 5
-        Margins.Top = 5
-        Margins.Right = 5
-        Margins.Bottom = 5
-        TabStop = False
-        Style = lbOwnerDrawFixed
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlue
-        Font.Height = -19
-        Font.Name = 'MS Sans Serif'
-        Font.Style = []
-        ItemHeight = 13
-        ParentFont = False
-        ParentShowHint = False
-        PopupMenu = popCIRN
-        ShowHint = False
-        TabOrder = 1
-        Visible = False
-        OnClick = lstCIRNLocationsClick
-        OnExit = lstCIRNLocationsExit
-        Caption = 'Remote Data'
-        ItemTipColor = clWindow
-        LongList = False
-        Pieces = '2,3,4'
-        TabPositions = '16'
-        RightClickSelect = True
-        CheckBoxes = True
-        CheckEntireLine = True
-      end
-    end
     object pnlOtherInfo: TKeyClickPanel
       Left = 1
       Top = 62
-      Width = 974
+      Width = 964
       Height = 41
       Align = alTop
       Color = clYellow
@@ -982,10 +911,200 @@ inherited frmFrame: TfrmFrame
       Font.Style = [fsBold]
       ParentBackground = False
       ParentFont = False
-      TabOrder = 1
+      TabOrder = 0
       OnClick = pnlOtherInfoClick
       OnMouseDown = pnlOtherInfoMouseDown
       OnMouseUp = pnlOtherInfoMouseUp
+    end
+    object pnlRight: TPanel
+      Left = 201
+      Top = 105
+      Width = 764
+      Height = 446
+      Align = alClient
+      BevelOuter = bvNone
+      Caption = 'pnlRight'
+      ShowCaption = False
+      TabOrder = 4
+      object tabPage: TTabControl
+        Left = 0
+        Top = 419
+        Width = 764
+        Height = 27
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
+        Align = alBottom
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 0
+        TabPosition = tpBottom
+        OnChange = tabPageChange
+        OnMouseDown = tabPageMouseDown
+        OnMouseUp = tabPageMouseUp
+      end
+      object pnlPage: TPanel
+        Left = 0
+        Top = 0
+        Width = 764
+        Height = 419
+        Margins.Left = 4
+        Margins.Top = 4
+        Margins.Right = 4
+        Margins.Bottom = 4
+        Align = alClient
+        BevelOuter = bvNone
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -19
+        Font.Name = 'MS Sans Serif'
+        Font.Style = []
+        ParentFont = False
+        TabOrder = 1
+        object lstCIRNLocations: TORListBox
+          Left = 642
+          Top = 0
+          Width = 317
+          Height = 118
+          Margins.Left = 5
+          Margins.Top = 5
+          Margins.Right = 5
+          Margins.Bottom = 5
+          TabStop = False
+          Style = lbOwnerDrawFixed
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clBlue
+          Font.Height = -19
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ItemHeight = 13
+          ParentFont = False
+          ParentShowHint = False
+          PopupMenu = popCIRN
+          ShowHint = False
+          TabOrder = 1
+          Visible = False
+          OnClick = lstCIRNLocationsClick
+          OnExit = lstCIRNLocationsExit
+          Caption = 'Remote Data'
+          ItemTipColor = clWindow
+          LongList = False
+          Pieces = '2,3,4'
+          TabPositions = '16'
+          RightClickSelect = True
+          CheckBoxes = True
+          FlatCheckBoxes = False
+          CheckEntireLine = True
+        end
+      end
+    end
+    object svPtInfoPanel: TSplitView
+      Left = 1
+      Top = 105
+      Width = 200
+      Height = 446
+      OpenedWidth = 200
+      Placement = svpLeft
+      TabOrder = 3
+      Visible = False
+      object pnlPtInfoGap: TPanel
+        Left = 0
+        Top = 0
+        Width = 3
+        Height = 446
+        Align = alLeft
+        BevelOuter = bvNone
+        Caption = 'pnlPtInfoGap'
+        ShowCaption = False
+        TabOrder = 1
+      end
+      inline fraPtInfoPanel: TfraPtInfoPanel
+        AlignWithMargins = True
+        Left = 6
+        Top = 0
+        Width = 191
+        Height = 446
+        Margins.Top = 0
+        Margins.Bottom = 0
+        Align = alClient
+        Color = clBtnFace
+        ParentColor = False
+        TabOrder = 0
+        StyleElements = [seFont, seBorder]
+        ExplicitLeft = 6
+        ExplicitWidth = 191
+        ExplicitHeight = 446
+        inherited pnlMain: TPanel
+          Width = 191
+          Height = 446
+          StyleElements = [seFont, seBorder]
+          ExplicitWidth = 191
+          ExplicitHeight = 446
+          inherited gpTop: TGridPanel
+            Width = 189
+            ControlCollection = <
+              item
+                Column = 0
+                Control = fraPtInfoPanel.pnlLeft
+                Row = 0
+              end
+              item
+                Column = 1
+                Control = fraPtInfoPanel.pnlRight
+                Row = 0
+              end>
+            StyleElements = [seFont, seBorder]
+            ExplicitWidth = 189
+            inherited pnlLeft: TKeyClickPanel
+              Width = 94
+              StyleElements = [seFont, seBorder]
+              ExplicitWidth = 94
+              inherited slblMain: TORSymbolLabel
+                Width = 11
+                Height = 22
+                ExplicitWidth = 11
+                ExplicitHeight = 11
+              end
+            end
+            inherited pnlRight: TKeyClickPanel
+              Left = 94
+              Width = 95
+              StyleElements = [seFont, seBorder]
+              ExplicitLeft = 94
+              ExplicitWidth = 95
+              inherited imgRight: TImage
+                Left = 72
+                ExplicitLeft = 77
+              end
+            end
+          end
+          inherited sbMain: TScrollBox
+            Width = 189
+            Height = 422
+            ExplicitWidth = 189
+            ExplicitHeight = 422
+            inherited gpMain: TGridPanel
+              Width = 189
+              Height = 278
+              StyleElements = [seFont, seClient, seBorder]
+              ExplicitWidth = 189
+              ExplicitHeight = 278
+            end
+            inherited gpDetails: TGridPanel
+              Top = 278
+              Width = 189
+              StyleElements = [seFont, seClient, seBorder]
+              ExplicitTop = 278
+              ExplicitWidth = 189
+            end
+          end
+        end
+      end
     end
   end
   inherited amgrMain: TVA508AccessibilityManager
@@ -1096,6 +1215,33 @@ inherited frmFrame: TfrmFrame
         'Status = stsDefault')
       (
         'Component = lblOTHDDtl'
+        'Status = stsDefault')
+      (
+        'Component = svPtInfoPanel'
+        'Status = stsDefault')
+      (
+        'Component = fraPtInfoPanel'
+        'Status = stsDefault')
+      (
+        'Component = fraPtInfoPanel.pnlMain'
+        'Status = stsDefault')
+      (
+        'Component = fraPtInfoPanel.gpTop'
+        'Status = stsDefault')
+      (
+        'Component = fraPtInfoPanel.sbMain'
+        'Status = stsDefault')
+      (
+        'Component = fraPtInfoPanel.gpMain'
+        'Status = stsDefault')
+      (
+        'Component = fraPtInfoPanel.gpDetails'
+        'Status = stsDefault')
+      (
+        'Component = pnlPtInfoGap'
+        'Status = stsDefault')
+      (
+        'Component = pnlRight'
         'Status = stsDefault'))
   end
   object mnuFrame: TMainMenu
@@ -1535,8 +1681,8 @@ inherited frmFrame: TfrmFrame
     LCSTextStyle = []
     UserDuz = 0
     Enabled = True
-    Left = 16
-    Top = 96
+    Left = 24
+    Top = 152
   end
   object alPdmp: TActionList
     Left = 528

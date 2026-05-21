@@ -4,7 +4,8 @@ interface
 
 uses Windows, SysUtils, Classes, Graphics, Forms, Controls, StdCtrls,
   Buttons, ORCtrls, ORfn, ExtCtrls, fAutoSz, ORDtTm, fConsultAlertTo, fRptBox,
-  VA508AccessibilityManager, Vcl.ComCtrls, Vcl.ImgList, System.ImageList;
+  VA508AccessibilityManager, Vcl.ComCtrls, Vcl.ImgList, System.ImageList,
+  ORCheckComboBox;
 
 type
   TMedResultRec = record
@@ -28,7 +29,7 @@ type
     calDateofAction: TORDateBox;
     lblDateofAction: TOROffsetLabel;
     lblActionBy: TOROffsetLabel;
-    cboPerson: TORComboBox;
+    cboPerson: TORCheckComboBox;
     SrcLabel: TLabel;
     lstMedResults: TCaptionListView;
     ImageList1: TImageList;
@@ -42,6 +43,7 @@ type
  //   procedure lstMedResultsDrawItem(Control: TWinControl; Index: Integer;
  //     Rect: TRect; State: TOwnerDrawState);
     procedure FormCreate(Sender: TObject);
+    procedure cboPersonMainCheckboxClick(Sender: TObject);
   protected
     procedure ShowDetailsDestroyed(Sender: TObject);
   private
@@ -57,7 +59,7 @@ implementation
 
 {$R *.DFM}
 
-uses rConsults, rCore, uCore, uConst, uORLists, uSimilarNames;
+uses rConsults, rCore, uCore, uConst, uORLists, uSimilarNames, uMisc;
 
 const
   TX_MEDRSLT_TEXT = 'Select medicine result or press Cancel.';
@@ -216,6 +218,12 @@ begin
 end;
 
 
+procedure TfrmConsMedRslt.cboPersonMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  cboPerson.ReInitLongList;
+end;
+
 procedure TfrmConsMedRslt.ckAlertClick(Sender: TObject);
 begin
   FillChar(RecipientList, SizeOf(RecipientList), 0);
@@ -241,6 +249,8 @@ begin
   finally
     AnImage.Free;
   end;
+
+  cboPerson.MainCheckBoxVisible := IncludeNonVAProviders(cboPerson);
 end;
 
 procedure TfrmConsMedRslt.FormDestroy(Sender: TObject);

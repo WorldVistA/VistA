@@ -4,373 +4,390 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, ExtCtrls, rPCE, uPCE, VA508AccessibilityManager, uConst;
+  Vcl.StdCtrls, ExtCtrls, rPCE, uPCE, VA508AccessibilityManager, uConst,
+  uSpecialAuthorityEx, Vcl.AppEvnts, fBase508Frame;
 
 type
-  tVA508Captions = record
+  TStaticText = class(Vcl.StdCtrls.TStaticText)
+  private
+    FFocused: Boolean;
+  protected
+    procedure WMSetFocus(var Message: TWMSetFocus); message WM_SETFOCUS;
+    procedure WMKillFocus(var Message: TWMKillFocus); message WM_KILLFOCUS;
+    procedure WMPaint(var Message: TWMPaint); message WM_PAINT;
+  end;
+
+  TVA508Captions = record
    CheckBox: TCheckBox;
    OrigCaption: String;
    OrigWidth: Integer;
    VA508Label: TStaticText;
   end;
 
-  TfraVisitRelated = class(TFrame)
+  TfraVisitRelated = class(TBase508Frame)
     gbVisitRelatedTo: TGroupBox;
-    chkSCYes: TCheckBox;
-    chkAOYes: TCheckBox;
-    chkIRYes: TCheckBox;
-    chkECYes: TCheckBox;
-    chkMSTYes: TCheckBox;
-    chkMSTNo: TCheckBox;
-    chkECNo: TCheckBox;
-    chkIRNo: TCheckBox;
-    chkAONo: TCheckBox;
-    chkSCNo: TCheckBox;
-    chkHNCYes: TCheckBox;
-    chkHNCNo: TCheckBox;
-    chkCVYes: TCheckBox;
-    chkCVNo: TCheckBox;
-    chkSHDYes: TCheckBox;
-    chkSHDNo: TCheckBox;
-    lblSCNo: TStaticText;
-    lblSCYes: TStaticText;
-    chkCLYes: TCheckBox;
-    chkCLNo: TCheckBox;
-    ScrollBox1: TScrollBox;
-    Panel1: TPanel;
-    procedure chkClick(Sender: TObject);
+    sbMain: TScrollBox;
+    pnlMain: TPanel;
+    gpMain: TGridPanel;
+    lblYes: TLabel;
+    lblNo: TLabel;
+    bHint: TBalloonHint;
+    appEvents: TApplicationEvents;
+    lblNoSAAvailable: TStaticText;
+    procedure appEventsMessage(var Msg: TMsg; var Handled: Boolean);
+    procedure CheckBoxCaptionQuery(Sender: TObject; var Text: string);
   private
-    FSCCond: TSCConditions;
+    FSpecialAuthorities: TSpecialAuthoritiesEx;
     VA508Captions: Array of tVA508Captions;
-    procedure SetCheckEnable(CheckYes, CheckNo: TCheckBox; Allow: Boolean);
-    procedure SetCheckState(CheckYes, CheckNo: TCheckBox; CheckState: Integer);
-    function GetCheckState(CheckYes, CheckNo: TCheckBox): Integer;
-    procedure HandleVA508Caption();
+    FOldFocusChanged: TNotifyEvent;
+    FLastActiveControl: TWinControl;
+    FActiveControl: TWinControl;
+    procedure chkClick(Sender: TObject);
+    procedure HandleVA508Caption(AWinControl: TWinControl);
+    procedure ActiveControlChanged(Sender: TObject);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure GetRelated(PCEData: TPCEData); overload;
-    procedure GetRelated(var ASCRelated, AAORelated, AIRRelated,
-                                AECRelated, AMSTRelated, AHNCRelated, ACVRelated,ASHDRelated, AClReleated: integer); overload;
-    procedure InitAllow(SCCond: TSCConditions);
-    procedure InitRelated(PCEData: TPCEData); overload;
-    procedure InitRelated(const ASCRelated, AAORelated, AIRRelated,
-                                AECRelated, AMSTRelated, AHNCRelated, ACVRelated,ASHDRelated, ACLRelated: integer); overload;
-
+    procedure GetRelated(ASpecialAuthorities: TSpecialAuthoritiesEx);
+    procedure InitAllow(ASpecialAuthorities: TSpecialAuthoritiesEx);
+    procedure ResizeToFit;
+    property SpecialAuthorities: TSpecialAuthoritiesEx read FSpecialAuthorities;
   end;
 
 implementation
 
-uses VA508AccessibilityRouter, VAUtils, rMisc, uGlobalVar;
+uses VA508AccessibilityRouter, VAUtils, ORFn, rMisc, uGlobalVar,
+  uSpecialAuthorityTypesEx, System.StrUtils;
 
 {$R *.DFM}
 
-const
-  TAG_SCYES      = 1;
-  TAG_AOYES      = 2;
-  TAG_IRYES      = 3;
-  TAG_ECYES      = 4;
-  TAG_MSTYES     = 5;
-  TAG_HNCYES     = 6;
-  TAG_CVYES      = 7;
-  TAG_SHDYES     = 8;
-  TAG_SCNO       = 11;
-  TAG_AONO       = 12;
-  TAG_IRNO       = 13;
-  TAG_ECNO       = 14;
-  TAG_MSTNO      = 15;
-  TAG_HNCNO      = 16;
-  TAG_CVNO       = 17;
-  TAG_SHDNO      = 18;
-  //Camp Lejeune
-  TAG_CLYES      = 19;
-  TAG_CLNO       = 20;
+{ TStaticText }
 
-procedure TfraVisitRelated.chkClick(Sender: TObject);
+procedure TStaticText.WMSetFocus(var Message: TWMSetFocus);
+begin
+  FFocused := True;
+  Invalidate;
+  inherited;
+end;
 
-  procedure DisableCheck(ACheckBox: TCheckBox);
-  begin
-    ACheckBox.Checked := False; ACheckBox.Enabled := False;
-    ACheckBox.Font.Style := [];
-  end;
-
+procedure TStaticText.WMKillFocus(var Message: TWMKillFocus);
+begin
+  FFocused := False;
+  Invalidate;
+  inherited;
+end;
+procedure TStaticText.WMPaint(var Message: TWMPaint);
+var
+  DC: HDC;
+  R: TRect;
 begin
   inherited;
-  if Sender is TCheckBox then with TCheckBox(Sender) do case Tag of
-    TAG_SCYES:   if Checked then chkSCNo.Checked    := False;
-    TAG_AOYES:   if Checked then chkAONo.Checked    := False;
-    TAG_IRYES:   if Checked then chkIRNo.Checked    := False;
-    TAG_ECYES:   if Checked then chkECNo.Checked    := False;
-    TAG_MSTYES:  if Checked then chkMSTNo.Checked   := False;
-    TAG_HNCYES:  if Checked then chkHNCNo.Checked   := False;
-    TAG_CVYES:   if Checked then chkCVNo.Checked    := False;
-    TAG_SHDYES:  if Checked then chkSHDNo.Checked   := False;
-    TAG_SCNO:    if Checked then chkSCYes.Checked   := False;
-    TAG_AONO:    if Checked then chkAOYes.Checked   := False;
-    TAG_IRNO:    if Checked then chkIRYes.Checked   := False;
-    TAG_ECNO:    if Checked then chkECYes.Checked   := False;
-    TAG_MSTNO:   if Checked then chkMSTYes.Checked  := False;
-    TAG_HNCNO:   if Checked then chkHNCYes.Checked  := False;
-    TAG_CVNO:    if Checked then chkCVYes.Checked   := False;
-    TAG_SHDNO:   if Checked then chkSHDYes.Checked  := False;
-    //Camp Lejeune
-    TAG_CLYES:   if Checked then chkCLNo.Checked    := False;
-    TAG_CLNO:    if Checked then chkCLYes.Checked   := False;
+  if FFocused then begin
+    DC := GetDC(Handle);
+    GetClipBox(DC, R);
+    DrawFocusRect(DC, R);
+    ReleaseDC(Handle, DC);
   end;
-  if chkSCYes.Checked then
-  begin
-    DisableCheck(chkAOYes);
-    DisableCheck(chkIRYes);
-    DisableCheck(chkECYes);
-    DisableCheck(chkAONo);
-    DisableCheck(chkIRNo);
-    DisableCheck(chkECNo);
-  end else
-  begin
-    SetCheckEnable(chkSCYes,  chkSCNo,  FSCCond.SCAllow);
-    SetCheckEnable(chkAOYes,  chkAONo,  FSCCond.AOAllow);
-    SetCheckEnable(chkIRYes,  chkIRNo,  FSCCond.IRAllow);
-    SetCheckEnable(chkECYes,  chkECNo,  FSCCond.ECAllow);
-  end;
-  SetCheckEnable(chkMSTYes, chkMSTNo, FSCCond.MSTAllow);
-  SetCheckEnable(chkHNCYes, chkHNCNo, FSCCond.HNCAllow);
-  SetCheckEnable(chkCVYes, chkCVNo,   FSCCond.CVAllow);
-  //Camp Lejeune
-  if IsLejeuneActive then SetCheckEnable(chkCLYes, chkCLNo,   FSCCond.CLAllow);
+end;
 
-  if ScreenReaderActive then
-   HandleVA508Caption();
+{ TfraVisitRelated }
 
-  if chkAOYes.Checked or chkIRYes.Checked or chkECYes.Checked then
-  begin
-    if FSCCond.SCAllow then
-    begin
-       chkSCYes.Checked := False;
-       chkSCNo.Checked := True;
+procedure TfraVisitRelated.ActiveControlChanged(Sender: TObject);
+begin
+  if Assigned(FOldFocusChanged) then FOldFocusChanged(Sender);
+  FLastActiveControl := FActiveControl;
+
+  if Sender is TScreen then
+    FActiveControl := TScreen(Sender).ActiveControl
+  else
+    FActiveControl := nil;
+end;
+
+procedure TfraVisitRelated.appEventsMessage(var Msg: TMsg;
+  var Handled: Boolean);
+begin
+  if bHint.ShowingHint then
+    case Msg.message of
+      WM_LBUTTONDOWN, WM_MBUTTONDOWN, WM_RBUTTONDOWN, WM_XBUTTONDOWN,
+      WM_KEYDOWN, WM_SYSKEYDOWN:
+        bHint.HideHint;
     end;
+end;
+
+procedure TfraVisitRelated.CheckBoxCaptionQuery(Sender: TObject;
+  var Text: string);
+var
+  AComponentAccessibility: TVA508ComponentAccessibility;
+  ACheckBox: TSpecialAuthorityCheckBox;
+  S: string;
+begin
+  if not (Sender is TVA508ComponentAccessibility) then Exit;
+  AComponentAccessibility := TVA508ComponentAccessibility(Sender);
+
+  if Assigned(AComponentAccessibility.Component) and
+    (AComponentAccessibility.Component is TSpecialAuthorityCheckBox) then
+  begin
+    ACheckBox := TSpecialAuthorityCheckBox(AComponentAccessibility.Component);
+
+    // Read TGroupBox's caption if last active control wasn't a special authority
+    S := IfThen(FLastActiveControl is TSpecialAuthorityCheckBox, '', gbVisitRelatedTo.Caption);
+
+    // Read the column name and the special authority text
+    S := S + ' Column ';
+    if ACheckBox.CheckBoxType = cbtYes then
+      S := S + 'Yes' + IfThen(Assigned(ACheckBox.LinkedCheckBox), ACheckBox.LinkedCheckBox.Caption, '')
+    else
+      S := S + 'No ' + ACheckBox.Caption;
+
+    Text := Trim(S + ' ' + Text);
+  end;
+end;
+
+procedure TfraVisitRelated.chkClick(Sender: TObject);
+begin
+  inherited;
+  if ScreenReaderActive then
+  begin
+    if (FActiveControl is TCheckBox) then
+    begin
+      if (FActiveControl as TCheckBox).Checked then
+        GetScreenReader.Speak('Checked')
+      else if not (FActiveControl as TCheckBox).Checked then
+        GetScreenReader.Speak('Not Checked');
+    end;
+    HandleVA508Caption(Self);
   end;
 end;
 
 constructor TfraVisitRelated.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  TabStop := FALSE;
-  lblSCYes.Height := 13;
-  lblSCNo.Height := 13;
-
-  chkCLYes.Visible := IsLejeuneActive;
-  chkCLNo.Visible := IsLejeuneActive;
-
+  FSpecialAuthorities := TSpecialAuthoritiesEx.Create;
+  FOldFocusChanged := Screen.OnActiveControlChange;
+  Screen.OnActiveControlChange := ActiveControlChanged;
 end;
 
 destructor TfraVisitRelated.Destroy;
 begin
-  inherited;
+  Screen.OnActiveControlChange := FOldFocusChanged;
   SetLength(VA508Captions, 0);
+  FreeAndNil(FSpecialAuthorities);
+  inherited;
 end;
 
-function TfraVisitRelated.GetCheckState(CheckYes, CheckNo: TCheckBox): Integer;
+procedure TfraVisitRelated.GetRelated(ASpecialAuthorities: TSpecialAuthoritiesEx);
 begin
-  Result := SCC_NA;
-  if CheckYes.Enabled and CheckYes.Checked then Result := SCC_YES;
-  if CheckNo.Enabled and CheckNo.Checked then Result := SCC_NO;
+  ASpecialAuthorities.CopyFrom(FSpecialAuthorities, [ctCopyValues, ctCopyChanged]);
 end;
 
-procedure TfraVisitRelated.GetRelated(PCEData: TPCEData);
-begin
-  PCEData.SCRelated  := GetCheckState(chkSCYes,  chkSCNo);
-  PCEData.AORelated  := GetCheckState(chkAOYes,  chkAONo);
-  PCEData.IRRelated  := GetCheckState(chkIRYes,  chkIRNo);
-  PCEData.ECRelated  := GetCheckState(chkECYes,  chkECNo);
-  PCEData.MSTRelated := GetCheckState(chkMSTYes, chkMSTNo);
-  PCEData.HNCRelated := GetCheckState(chkHNCYes, chkHNCNo);
-  PCEData.CVRelated  := GetCheckState(chkCVYes,  chkCVNo);
-  PCEData.SHADRelated := GetCheckState(chkSHDYes, chkSHDNo);
-  if IsLejeuneActive then
-   PCEData.CLRelated := GetCheckState(chkCLYes, chkCLNo)
-  else
-   PCEData.CLRelated := SCC_NA;
-end;
+procedure TfraVisitRelated.InitAllow(ASpecialAuthorities: TSpecialAuthoritiesEx);
 
-procedure TfraVisitRelated.GetRelated(var ASCRelated, AAORelated,
-  AIRRelated, AECRelated, AMSTRelated, AHNCRelated, ACVRelated, ASHDRelated, AClReleated: integer);
-begin
-  ASCRelated  := GetCheckState(chkSCYes,  chkSCNo);
-  AAORelated  := GetCheckState(chkAOYes,  chkAONo);
-  AIRRelated  := GetCheckState(chkIRYes,  chkIRNo);
-  AECRelated  := GetCheckState(chkECYes,  chkECNo);
-  AMSTRelated := GetCheckState(chkMSTYes, chkMSTNo);
-  AHNCRelated := GetCheckState(chkHNCYes, chkHNCNo);
-  ACVRelated  := GetCheckState(chkCVYes,  chkCVNo);
-  ASHDRelated := GetCheckState(chkSHDYes, chkSHDNo);
-  if IsLejeuneActive then
-   AClReleated := GetCheckState(chkCLYes, chkCLNo)
-  else
-   AClReleated := SCC_NA;
-end;
-
-procedure TfraVisitRelated.InitAllow(SCCond: TSCConditions);
-begin
-  FSCCond := SCCond;
-  with FSCCond do
+  procedure SetupCheckBox508(ACheckBox: TSpecialAuthorityCheckBox);
+  var
+    AComponentAccessibility: TVA508ComponentAccessibility;
   begin
-    SetCheckEnable(chkSCYes,  chkSCNo,  SCAllow);
-    SetCheckEnable(chkAOYes,  chkAONo,  AOAllow);
-    SetCheckEnable(chkIRYes,  chkIRNo,  IRAllow);
-    SetCheckEnable(chkECYes,  chkECNo,  ECAllow);
-    SetCheckEnable(chkMSTYes, chkMSTNo, MSTAllow);
-    SetCheckEnable(chkHNCYes, chkHNCNo, HNCAllow);
-    SetCheckEnable(chkCVYes,  chkCVNo,  CVAllow);
-    SetCheckEnable(chkSHDYes, chkSHDNo, SHDAllow);
-
-   if ScreenReaderActive then
-    HandleVA508Caption();
-
+    AComponentAccessibility := TVA508ComponentAccessibility.Create(Owner);
+    AComponentAccessibility.Component := ACheckBox;
+    AComponentAccessibility.OnCaptionQuery := CheckBoxCaptionQuery;
   end;
-end;
 
-procedure TfraVisitRelated.InitRelated(PCEData: TPCEData);
+const
+  CheckBoxSize = 13;
+var
+  I, RowHeight, YesWidth, NoWidth, YesMargin, NoMargin: Integer;
+  Row: TRowItem;
+  cbYes, cbNo: TSpecialAuthorityCheckBox;
+  APanel: TPanel;
+  checkBoxShowing: boolean;
 begin
-  SetCheckState(chkSCYes,  chkSCNo,  PCEData.SCRelated);
-  SetCheckState(chkAOYes,  chkAONo,  PCEData.AORelated);
-  SetCheckState(chkIRYes,  chkIRNo,  PCEData.IRRelated);
-  SetCheckState(chkECYes,  chkECNo,  PCEData.ECRelated);
-  SetCheckState(chkMSTYes, chkMSTNo, PCEData.MSTRelated);
-  SetCheckState(chkHNCYes, chkHNCNo, PCEData.HNCRelated);
-  SetCheckState(chkCVYes,  chkCVNo,  PCEData.CVRelated);
-  SetCheckState(chkSHDYes, chkSHDNo, PCEData.SHADRelated);
-  if IsLejeuneActive then
-   SetCheckState(chkCLYes, chkCLNo,   PCEData.CLRelated); //Camp lejeune
-   //HDS00015356: GWOT Default, if Related no specified default to "Yes"
-  // -1=Null, 0=No, 1 = Yes
-  if FSCCond.CVAllow then
-  begin
-    if PCEData.CVRelated = SCC_NA then
-       chkCVYes.Checked := True;
-  end;
-end;
-
-procedure TfraVisitRelated.InitRelated(const ASCRelated, AAORelated, AIRRelated,
-  AECRelated, AMSTRelated, AHNCRelated, ACVRelated, ASHDRelated, ACLRelated: integer);
-begin
-  SetCheckState(chkSCYes,  chkSCNo,  ASCRelated);
-  SetCheckState(chkAOYes,  chkAONo,  AAORelated);
-  SetCheckState(chkIRYes,  chkIRNo,  AIRRelated);
-  SetCheckState(chkECYes,  chkECNo,  AECRelated);
-  SetCheckState(chkMSTYes, chkMSTNo, AMSTRelated);
-  SetCheckState(chkHNCYes, chkHNCNo, AHNCRelated);
-  SetCheckState(chkCVYes,  chkCVNo,  ACVRelated);
-  SetCheckState(chkSHDYes, chkSHDNo, ASHDRelated);
-  if IsLejeuneActive then
-   SetCheckState(chkCLYes,  chkCLNo,  ACLRelated);
-   //HDS00015356: GWOT Default, if Related no specified default to "Yes"
-   // -1=Null, 0=No, 1 = Yes
-  if FSCCond.CVAllow then
-  begin
-    if ACVRelated = SCC_NA then
-       chkCVYes.Checked := True;
-  end;
-end;
-
-procedure TfraVisitRelated.SetCheckEnable(CheckYes, CheckNo: TCheckBox;
-  Allow: Boolean);
-begin
-  CheckYes.Enabled := Allow;
-  CheckNo.Enabled := Allow;
-  if CheckYes.Enabled and CheckNo.Enabled then CheckNo.Font.Style := [fsBold]
-  else CheckNo.Font.Style := [];
-end;
-
-procedure TfraVisitRelated.SetCheckState(CheckYes, CheckNo: TCheckBox; CheckState: Integer);
-begin
-  if CheckYes.Enabled then
-    case CheckState of
-    SCC_NA:  begin
-               CheckYes.Checked := False;
-               CheckNo.Checked := False;
-             end;
-    SCC_NO:  begin
-               CheckYes.Checked := False;
-               CheckNo.Checked := True;
-             end;
-    SCC_YES: begin
-               CheckYes.Checked := True;
-               CheckNo.Checked := False;
-             end;
-    end; {case}
-  chkClick(Self);
-end;
-
-//procedure TfraVisitRelated.HandleVA508Caption(ParentCheckBox: TCheckBox; chkEnabled: Boolean);
-procedure TfraVisitRelated.HandleVA508Caption();
-Var
- i,X: Integer;
- LabelExist: Boolean;
- ParentCheckBox: TCheckBox;
-begin
- for x := 0 to ComponentCount -1 do
- begin
-   if Components[x] is TCheckBox then
-   begin
-    ParentCheckBox := TCheckBox(Components[x]);
-
- LabelExist := False;
- for I := Low(VA508Captions) to High(VA508Captions) do
- begin
-   if VA508Captions[i].CheckBox = ParentCheckBox then
-   begin
-    LabelExist := true;
-    //Setup the caption
-    if ParentCheckBox.Enabled then
+  FSpecialAuthorities.CopyFrom(ASpecialAuthorities, [ctCopyVisible, ctCopyValues,
+    ctClearChanged]);
+  checkBoxShowing := false;
+  gpMain.Visible := true;
+  lblNoSAAvailable.Visible := false;
+  gpMain.BeginUpdate;
+  try
+    RowHeight := FontHeightInPixels(MainFont);
+    gpMain.RowCollection[0].Value := RowHeight;
+    inc(RowHeight, 2);
+    if RowHeight < 17 then
+      RowHeight := 17;
+    YesWidth := FontWidthInPixels(MainFont, lblYes.Caption) - 1;
+    if YesWidth < RowHeight then
+      YesWidth := RowHeight;
+    gpMain.ColumnCollection[0].Value := YesWidth + 5;
+    NoWidth := FontWidthInPixels(MainFont, lblNo.Caption) - 1;
+    if YesWidth > CheckBoxSize then
+      YesMargin := (YesWidth - CheckBoxSize) Div 2
+    else
+      YesMargin := 0;
+    if NoWidth > CheckBoxSize then
+      NoMargin := (NoWidth - CheckBoxSize) Div 2
+    else
+      NoMargin := 0;
+    for I := gpMain.ControlCount - 1 downto 0 do
+      if gpMain.Controls[I] is TSpecialAuthorityCheckBox then
+      begin
+        gpMain.ControlCollection.RemoveControl(gpMain.Controls[I]);
+        gpMain.Controls[I].Free;
+      end;
+    for I := gpMain.RowCollection.Count - 1 downto 1 do
+      gpMain.RowCollection.Delete(I);
+    for I := 0 to FSpecialAuthorities.Count - 1 do
     begin
-     VA508Captions[i].CheckBox.Caption := VA508Captions[i].OrigCaption;
-     VA508Captions[i].CheckBox.Width := VA508Captions[i].OrigWidth;
-    end else begin
-     VA508Captions[i].CheckBox.Caption := '';
-     VA508Captions[i].CheckBox.Width := 20;
+      if FSpecialAuthorities[I].Visible and
+        Assigned(FSpecialAuthorities[I].SpecialAuthorityTypeEx) then
+      begin
+        checkBoxShowing := true;
+        Row := gpMain.RowCollection.Add;
+        Row.SizeStyle := ssAbsolute;
+        Row.Value := RowHeight;
+
+        cbYes := TSpecialAuthorityCheckBox.Create(Owner, FSpecialAuthorities[I],
+          cbtYes, bHint);
+        cbYes.Parent := gpMain;
+        cbYes.Align := alClient;
+        cbYes.FocusOnBox := True;
+
+        if ScreenReaderActive then
+          SetupCheckBox508(cbYes);
+
+        if YesMargin > 0 then
+        begin
+          cbYes.Margins.Left := YesMargin;
+          cbYes.Margins.Right := 0;
+          cbYes.Margins.Top := 0;
+          cbYes.Margins.Bottom := 0;
+          cbYes.AlignWithMargins := True;
+        end;
+
+        APanel := TPanel.Create(Self);
+        APanel.Align := alClient;
+        APanel.BevelOuter := bvNone;
+        APanel.Parent := gpMain;
+        gpMain.ControlCollection.AddControl(APanel, 1, Row.Index);
+
+        cbNo := TSpecialAuthorityCheckBox.Create(Owner, FSpecialAuthorities[I],
+          cbtNo, bHint, cbYes);
+        cbNo.Parent := APanel;
+        cbNo.Align := alClient;
+
+        if ScreenReaderActive then
+          SetupCheckBox508(cbNo);
+
+        if NoMargin > 0 then
+        begin
+          cbNo.Margins.Left := NoMargin;
+          cbNo.Margins.Right := 0;
+          cbNo.Margins.Top := 0;
+          cbNo.Margins.Bottom := 0;
+          cbNo.AlignWithMargins := True;
+        end;
+
+        cbYes.OnClick := chkClick;
+        cbNo.OnClick := chkClick;
+      end;
     end;
-    //handle the label's visibility
-    VA508Captions[i].VA508Label.Visible := not ParentCheckBox.Enabled;
-    Break;
-   end;
-  if LabelExist then Break;
- end;
-
-
- if (not ParentCheckBox.Enabled) and (ParentCheckBox.Visible)and (not LabelExist) and (Trim(ParentCheckBox.Caption) <> '') then
- begin
-  SetLength(VA508Captions, length(VA508Captions) + 1);
-  with VA508Captions[High(VA508Captions)] do
-  begin
-   CheckBox := ParentCheckBox;
-   OrigCaption := ParentCheckBox.Caption;
-   OrigWidth := ParentCheckBox.Width;
-   ParentCheckBox.Width := 20;
-   ParentCheckBox.Caption := '';
-
-   VA508Label := TStaticText.Create(ParentCheckBox.Owner);
-   VA508Label.Parent := ParentCheckBox.Parent;
-   VA508Label.Top := ParentCheckBox.Top;
-   VA508Label.Left := ParentCheckBox.Left + 15;
-   VA508Label.TabStop := true;
-   VA508Label.Caption := Trim(OrigCaption) + ' disabled';
-   VA508Label.TabOrder := ParentCheckBox.TabOrder;
-   VA508Label.Visible := true;
+    pnlMain.Height := RowHeight * (gpMain.RowCollection.Count + 1) + 12;
+  finally
+    gpMain.EndUpdate;
+    if not checkBoxShowing then
+    begin
+      gpMain.Visible := false;
+      lblNoSAAvailable.Visible := true;
+    end;
   end;
- end;
 
-  end;
- end;
+  FSpecialAuthorities.ApplyDefaults;
 
+  if ScreenReaderActive then
+    HandleVA508Caption(Self);
 
-
-
-
-
+  ResizeToFit;
 end;
 
+procedure TfraVisitRelated.HandleVA508Caption(AWinControl: TWinControl);
+var
+  I, X: Integer;
+  LabelExist: Boolean;
+  ParentCheckBox: TCheckBox;
+begin
+  for X := 0 to AWinControl.ControlCount - 1 do
+  begin
+    if AWinControl.Controls[X] is TCheckBox then
+    begin
+      ParentCheckBox := TCheckBox(AWinControl.Controls[X]);
+
+      LabelExist := False;
+      for I := Low(VA508Captions) to High(VA508Captions) do
+      begin
+        if VA508Captions[I].CheckBox = ParentCheckBox then
+        begin
+          LabelExist := True;
+          //Setup the caption
+          if ParentCheckBox.Enabled then
+          begin
+            VA508Captions[I].CheckBox.Caption := VA508Captions[I].OrigCaption;
+            VA508Captions[I].CheckBox.Width := VA508Captions[I].OrigWidth;
+          end else begin
+            VA508Captions[I].CheckBox.Caption := '';
+            VA508Captions[I].CheckBox.Width := 20;
+          end;
+          //handle the label's visibility
+          VA508Captions[I].VA508Label.Visible := not ParentCheckBox.Enabled;
+          Break;
+        end;
+        if LabelExist then Break;
+      end;
+
+      if (not ParentCheckBox.Enabled) and (ParentCheckBox.Visible) and
+        (not LabelExist) and (Trim(ParentCheckBox.Caption) <> '') then
+      begin
+        SetLength(VA508Captions, Length(VA508Captions) + 1);
+        with VA508Captions[High(VA508Captions)] do
+        begin
+          CheckBox := ParentCheckBox;
+          OrigCaption := ParentCheckBox.Caption;
+          OrigWidth := ParentCheckBox.Width;
+          ParentCheckBox.Width := 20;
+          ParentCheckBox.Caption := '';
+
+          VA508Label := TStaticText.Create(ParentCheckBox.Owner);
+          VA508Label.Parent := ParentCheckBox.Parent;
+          VA508Label.Top := ParentCheckBox.Top;
+          VA508Label.Left := ParentCheckBox.Left + 15;
+          VA508Label.TabStop := True;
+          VA508Label.Caption := Trim(OrigCaption) + ' disabled';
+          VA508Label.TabOrder := ParentCheckBox.TabOrder;
+          VA508Label.Visible := True;
+        end;
+      end;
+    end;
+
+    if AWinControl.Controls[X] is TWinControl then
+      HandleVA508Caption(TWinControl(AWinControl.Controls[X]));
+  end;
+end;
+
+procedure TfraVisitRelated.ResizeToFit;
+var
+  MinSize, TempSize, Adjustment: Integer;
+begin
+  MinSize := TextWidthByFont(MainFont.Handle, gbVisitRelatedTo.Caption) + 16;
+  Adjustment := Trunc(gpMain.ColumnCollection[0].Value) + (Font.Size * 2) + 30;
+  for var i := 0 to FSpecialAuthorities.Count - 1 do
+    if FSpecialAuthorities[i].Visible and Assigned(FSpecialAuthorities[i].CheckBox[cbtNo]) then
+    begin
+      TempSize := Adjustment + FSpecialAuthorities[I].CheckBox[cbtNo]
+        .CheckBoxWidth + TextWidthByFont(MainFont.Handle,
+        ' ' + FSpecialAuthorities[I].SpecialAuthorityTypeEx.DisplayText);
+      if MinSize < TempSize then
+        MinSize := TempSize;
+    end;
+  Width := MinSize;
+end;
 
 initialization
   SpecifyFormIsNotADialog(TfraVisitRelated);
-
 end.
+

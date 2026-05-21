@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs, uCore,
   fAutoSz, StdCtrls, ORFn, ORCtrls, ExtCtrls, Buttons, VA508AccessibilityManager,
-  ComCtrls, fBase508Form, CommCtrl, mTreeGrid, rCore, StrUtils, Vcl.CheckLst;
+  ComCtrls, fBase508Form, CommCtrl, mTreeGrid, rCore, StrUtils, Vcl.CheckLst,
+  u508Button, fBase508Frame;
 
 type
   TfrmPCELex = class(TfrmBase508Form)
@@ -150,6 +151,7 @@ begin
   FFilter := TStringList.Create;
 
 
+  tgfLex.Setup508(amgrMain);
   tgfLex.DefTreeViewWndProc := tgfLex.tv.WindowProc;
   tgfLex.tv.WindowProc := tgfLex.TreeViewWndProc;
 end;
@@ -488,7 +490,7 @@ begin
     begin
       InfoBox(TX_SRCH_REFINE1 + #39 + SearchStr + #39 + TX_SRCH_REFINE2 + IntToStr(FreqOfText) +
               TX_SRCH_REFINE3,'Refine Search', MB_OK or MB_ICONINFORMATION);
-      lblStatus.Caption := '';
+      UpdateStatus('');
       Exit;
     end;
     ListLexicon(FLexResults, SearchStr, FLexApp, FDate, FExtend, FI10Active);

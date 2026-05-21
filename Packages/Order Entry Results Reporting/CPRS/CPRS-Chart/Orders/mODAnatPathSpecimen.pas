@@ -135,7 +135,8 @@ implementation
 {$R *.dfm}
 
 uses
-  ORNet, ORfn, VAUtils, rODLab, fODLabOthCollSamp, fODAnatPath;
+  ORNet, ORfn, VAUtils, rODLab, fODLabOthCollSamp, fODAnatPath,
+  VA508AccessibilityRouter;
 
 {$REGION 'TCollSamp'}
 

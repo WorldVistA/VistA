@@ -939,7 +939,7 @@ var
 begin
   value := 0;
   Offset(topsize, -60, leftsize, -60);
-  DialogOptionsNotes(topsize, leftsize, Font.Size, value);
+  DialogOptionsNotes(topsize, leftsize, value);
 end;
 
 procedure TfrmOptions.btnNotesTitlesClick(Sender: TObject);

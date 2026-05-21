@@ -196,7 +196,7 @@ implementation
 {$R *.DFM}
 
 uses rODBase, rODLab, uCore, rCore, fODLabOthCollSamp, fODLabOthSpec, fODLabImmedColl, fLabCollTimes,
- rOrders, uODBase, fRptBox, fFrame, VAUtils, ORClasses, uWriteAccess;
+ rOrders, uODBase, fRptBox, fFrame, VAUtils, ORClasses, uWriteAccess, VAShared.UTStringsHelper;
 
 
 var

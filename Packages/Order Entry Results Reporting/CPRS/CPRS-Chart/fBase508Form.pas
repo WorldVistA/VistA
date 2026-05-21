@@ -16,7 +16,7 @@ type
   TfrmBase508Form = class(TORForm, IORKeepBounds)
     amgrMain: TVA508AccessibilityManager;
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    function FormHelp(Command: Word; Data: NativeInt;
+    function FormHelp(Command: Word; Data: THelpEventData;
       var CallHelp: Boolean): Boolean;
     procedure FormActivate(Sender: TObject);
     procedure FormDeactivate(Sender: TObject);
@@ -43,7 +43,8 @@ type
     procedure WMNCLBUTTONDOWN(var Msg: TWMNCLButtonDown) ; message WM_NCLBUTTONDOWN;
     procedure WMNCLBUTTONUP(var Msg: TWMNCLButtonUp) ; message WM_NCLBUTTONUP;
     procedure CMShowingChanged(var Message: TMessage); message CM_SHOWINGCHANGED;
-    function DoOnHelp(Command: Word; Data: Integer; var CallHelp: Boolean): Boolean;
+    procedure CMFontChanged(var Message: TMessage); message CM_FONTCHANGED;
+    function DoOnHelp(Command: Word; Data: THelpEventData; var CallHelp: Boolean): Boolean;
   protected
     procedure Activate; override;
     procedure Loaded; override;
@@ -66,7 +67,7 @@ procedure UnfocusableControlEnter(Self, Sender: TObject);
 implementation
 
 uses ORSystem, ShellAPI, VA508AccessibilityRouter, VAUtils, uHelpManager,
-  uGN_RPCLog, uCore, ORNet;
+  uGN_RPCLog, uCore, ORNet, VAHelpers;
 
 {$R *.dfm}
 
@@ -233,6 +234,12 @@ begin
       TExposedBtn(tempDefaultBtn).Click;
 end;
 
+procedure TfrmBase508Form.CMFontChanged(var Message: TMessage);
+begin
+  inherited;
+  UpdateMenuFonts(Self, MainFont.Size);
+end;
+
 procedure TfrmBase508Form.CMShowingChanged(var Message: TMessage);
 begin
   inherited;
@@ -306,7 +313,7 @@ begin
   Result := CallNextHookEx(MouseMonitorHook, Code, wParam, lParam);
 end;
 
-function TfrmBase508Form.DoOnHelp(Command: Word; Data: Integer; var CallHelp: Boolean): Boolean;
+function TfrmBase508Form.DoOnHelp(Command: Word; Data: THelpEventData; var CallHelp: Boolean): Boolean;
 var
   context: THelpContext;
   current: TControl;
@@ -327,7 +334,7 @@ begin
   end;
 end;
 
-function TfrmBase508Form.FormHelp(Command: Word; Data: NativeInt;
+function TfrmBase508Form.FormHelp(Command: Word; Data: THelpEventData;
   var CallHelp: Boolean): Boolean;
 begin
   Result := THelpManager.GetInstance.ExecHelp(Command, Data, CallHelp);
@@ -448,7 +455,7 @@ procedure TfrmBase508Form.FormActivate(Sender: TObject);
 begin
   inherited;
   if RPCLog_TrackForms then
-    AddLogLine('Form Activate: '+ self.Name,RPCLog_OnActivate+self.Caption + ' ('+self.Name+')');
+    AddLogLine('Form Activate: '+ self.Name,RPCLog_OnActivate+self.Caption + ' ('+self.Name+')', TLog_ActionType.LACT_ACTIVATE);
 end;
 
 procedure TfrmBase508Form.FormShow(Sender: TObject);
@@ -460,42 +467,42 @@ begin
     exclude(FActions, aaTitleBarHeightAdjustment);
   end;
   if RPCLog_TrackForms then
-    AddLogLine('Form Show: '+ self.Name,RPCLog_OnActivate+self.Caption + ' ('+self.Name+')');
+    AddLogLine('Form Show: '+ self.Name,RPCLog_OnActivate+self.Caption + ' ('+self.Name+')', TLog_ActionType.LACT_SHOW);
 end;
 
 procedure TfrmBase508Form.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   inherited;
   if RPCLog_TrackForms then
-    AddLogLine('Form Close: '+ self.Name,RPCLog_OnClose+self.Caption + ' ('+self.Name+')');
+    AddLogLine('Form Close: '+ self.Name,RPCLog_OnClose+self.Caption + ' ('+self.Name+')', TLog_ActionType.LACT_CLOSE);
 end;
 
 procedure TfrmBase508Form.FormCreate(Sender: TObject);
 begin
   inherited;
   if RPCLog_TrackForms then
-    AddLogLine('Form Create: '+ self.Name,RPCLog_OnCreate+self.Caption + ' ('+self.Name+')');
+    AddLogLine('Form Create: '+ self.Name,RPCLog_OnCreate+self.Caption + ' ('+self.Name+')', TLog_ActionType.LACT_CREATE);
 end;
 
 procedure TfrmBase508Form.FormDeactivate(Sender: TObject);
 begin
   inherited;
   if RPCLog_TrackForms then
-    AddLogLine('Form DeActivate: '+ self.Name,RPCLog_OnDeActivate+self.Caption + ' ('+self.Name+')');
+    AddLogLine('Form DeActivate: '+ self.Name,RPCLog_OnDeActivate+self.Caption + ' ('+self.Name+')', TLog_ActionType.LACT_DEACTIVATE);
 end;
 
 procedure TfrmBase508Form.FormDestroy(Sender: TObject);
 begin
   inherited;
   if RPCLog_TrackForms then
-    AddLogLine('Form Destroy: '+ self.Name,RPCLog_OnDestroy+self.Caption + ' ('+self.Name+')');
+    AddLogLine('Form Destroy: '+ self.Name,RPCLog_OnDestroy+self.Caption + ' ('+self.Name+')', TLog_ActionType.LACT_DESTROY);
 end;
 
 procedure TfrmBase508Form.FormHide(Sender: TObject);
 begin
   inherited;
   if RPCLog_TrackForms then
-    AddLogLine('Form Hide: '+ self.Name,RPCLog_OnHide+self.Caption + ' ('+self.Name+')');
+    AddLogLine('Form Hide: '+ self.Name,RPCLog_OnHide+self.Caption + ' ('+self.Name+')', TLog_ActionType.LACT_HIDE);
 end;
 // RPCLog modification ----------------------------------------------------- end
 

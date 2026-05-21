@@ -40,7 +40,7 @@ implementation
 {$R *.dfm}
 
 uses
-  VAUtils, ORFn;
+  VAUtils, ORFn, VA508AccessibilityRouter;
 
 const
   TXR69 = 'A suitable term was not found based on user input and current defaults.' + CRLF + 'If you proceed with this nonspecific term, an ICD code of "R69 - ILLNESS, UNSPECIFIED" will be filed.';

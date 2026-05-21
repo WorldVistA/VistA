@@ -3,65 +3,88 @@ inherited frmNotesSearchText: TfrmNotesSearchText
   Top = 272
   BorderIcons = []
   Caption = 'List Signed Notes by Author'
-  ClientHeight = 123
+  ClientHeight = 154
   ClientWidth = 331
+  Constraints.MinHeight = 154
+  Constraints.MinWidth = 331
   Position = poScreenCenter
-  OnShow = FormShow
-  ExplicitWidth = 339
-  ExplicitHeight = 150
+  StyleElements = [seFont, seClient, seBorder]
+  ExplicitWidth = 347
+  ExplicitHeight = 193
   DesignSize = (
     331
-    123)
-  PixelsPerInch = 96
+    154)
   TextHeight = 13
-  object lblSearchInfo: TLabel [0]
-    Left = 8
-    Top = 56
-    Width = 221
-    Height = 52
-    Anchors = [akLeft, akTop, akBottom]
-    Caption = 
-      'Your current view of notes will be searched for the specified st' +
-      'ring.  If you want to search a larger range of notes, you need t' +
-      'o pull up that view prior to searching.'
-    WordWrap = True
-  end
-  object lblAuthor: TLabel [1]
+  object lblAuthor: TLabel [0]
     Left = 8
     Top = 8
     Width = 65
     Height = 13
     Caption = 'Search string:'
   end
-  object edtSearchText: TEdit [2]
+  object edtSearchText: TEdit [1]
     Left = 8
     Top = 24
-    Width = 224
+    Width = 216
     Height = 21
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 0
   end
-  object cmdOK: TButton [3]
-    Left = 251
-    Top = 24
-    Width = 72
-    Height = 19
-    Anchors = [akLeft, akTop, akRight]
-    Caption = 'OK'
-    Default = True
+  object pnlButtonPanel: TPanel [2]
+    Left = 238
+    Top = 0
+    Width = 93
+    Height = 154
+    Align = alRight
+    BevelOuter = bvNone
     TabOrder = 1
-    OnClick = cmdOKClick
+    DesignSize = (
+      93
+      154)
+    object cmdCancel: TButton
+      Left = 16
+      Top = 49
+      Width = 77
+      Height = 21
+      Anchors = [akLeft, akTop, akRight]
+      Cancel = True
+      Caption = 'Cancel'
+      TabOrder = 0
+      OnClick = cmdCancelClick
+    end
+    object cmdOK: TButton
+      Left = 16
+      Top = 24
+      Width = 77
+      Height = 19
+      Anchors = [akLeft, akTop, akRight]
+      Caption = 'OK'
+      Default = True
+      TabOrder = 1
+      OnClick = cmdOKClick
+    end
   end
-  object cmdCancel: TButton [4]
-    Left = 251
-    Top = 49
-    Width = 72
-    Height = 21
-    Anchors = [akLeft, akTop, akRight]
-    Cancel = True
-    Caption = 'Cancel'
+  object pnlSearchInfoPanel: TPanel [3]
+    Left = 8
+    Top = 51
+    Width = 217
+    Height = 95
+    BevelOuter = bvNone
     TabOrder = 2
-    OnClick = cmdCancelClick
+    object lblSearchInfo: TLabel
+      Left = 1
+      Top = 1
+      Width = 215
+      Height = 93
+      Align = alClient
+      Caption = 
+        'Your current view of notes will be searched for the specified st' +
+        'ring.  If you want to search a larger range of notes, you need t' +
+        'o pull up that view prior to searching.'
+      WordWrap = True
+      ExplicitWidth = 214
+      ExplicitHeight = 52
+    end
   end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
@@ -76,6 +99,12 @@ inherited frmNotesSearchText: TfrmNotesSearchText
         'Status = stsDefault')
       (
         'Component = frmNotesSearchText'
+        'Status = stsDefault')
+      (
+        'Component = pnlButtonPanel'
+        'Status = stsDefault')
+      (
+        'Component = pnlSearchInfoPanel'
         'Status = stsDefault'))
   end
 end

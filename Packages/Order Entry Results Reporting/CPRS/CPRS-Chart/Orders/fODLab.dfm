@@ -752,6 +752,9 @@ inherited frmODLab: TfrmODLab
     TabOrder = 19
     Visible = False
     ShowAccelChar = True
+    WordWrap = False
+    LabelAlignment = taLeftJustify
+    LabelLayout = tlTop
   end
   object HowManyDayslbl508: TVA508StaticText [32]
     Name = 'HowManyDayslbl508'
@@ -769,6 +772,9 @@ inherited frmODLab: TfrmODLab
     TabOrder = 21
     Visible = False
     ShowAccelChar = True
+    WordWrap = False
+    LabelAlignment = taLeftJustify
+    LabelLayout = tlTop
   end
   object specimenlbl508: TVA508StaticText [33]
     Name = 'specimenlbl508'
@@ -786,6 +792,9 @@ inherited frmODLab: TfrmODLab
     TabOrder = 4
     Visible = False
     ShowAccelChar = True
+    WordWrap = False
+    LabelAlignment = taLeftJustify
+    LabelLayout = tlTop
   end
   object CollSamplbl508: TVA508StaticText [34]
     Name = 'CollSamplbl508'
@@ -803,6 +812,9 @@ inherited frmODLab: TfrmODLab
     TabOrder = 2
     Visible = False
     ShowAccelChar = True
+    WordWrap = False
+    LabelAlignment = taLeftJustify
+    LabelLayout = tlTop
   end
   inherited cmdAccept: TButton
     Left = 562

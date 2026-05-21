@@ -1,0 +1,77 @@
+package XWB_R11;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'VistA RPC Broker Runtime Package'}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  dbrtl,
+  dsnap,
+  inet,
+  soaprtl,
+  vcl,
+  vcldb,
+  vclie,
+  vclimg,
+  xmlrtl;
+
+contains
+  AddServer in 'AddServer.pas' {frmAddServer},
+  CCOW_const in 'CCOW_const.pas',
+  CCOWRPCBroker in 'CCOWRPCBroker.pas',
+  fDebugInfo in 'fDebugInfo.pas' {frmDebugInfo},
+  fPlinkpw in 'fPlinkpw.pas' {fPlinkPassword},
+  frmSignonMessage in 'frmSignonMessage.pas' {frmSignonMsg},
+  fRPCBErrMsg in 'fRPCBErrMsg.pas' {frmErrMsg},
+  fSgnonDlg in 'fSgnonDlg.pas' {frmSignonDialog},
+  fSSHUsername in 'fSSHUsername.pas' {SSHUsername},
+  IAMConstants in 'IAMConstants.pas',
+  Loginfrm in 'Loginfrm.pas' {frmSignon},
+  MFunStr in 'MFunStr.pas',
+  RequestSecurityTokenSVC in 'RequestSecurityTokenSVC.pas',
+  RpcbErr in 'RpcbErr.pas' {frmRpcbError},
+  Rpcconf1 in 'Rpcconf1.pas' {rpcConfig},
+  Rpcnet in 'Rpcnet.pas' {RPCFRM1},
+  RpcSLogin in 'RpcSLogin.pas',
+  SelDiv in 'SelDiv.pas' {SelDivForm},
+  SgnonCnf in 'SgnonCnf.pas' {frmSignonConfig},
+  Splvista in 'Splvista.pas' {frmVistaSplash},
+  Trpcb in 'Trpcb.pas',
+  VCEdit in 'VCEdit.pas' {frmVCEdit},
+  Wsockc in 'Wsockc.pas',
+  XlfSid in 'XlfSid.pas',
+  XWBHash in 'XWBHash.pas',
+  XWBLoginForm in 'XWBLoginForm.pas' {XWBLoginForm},
+  XWBRich20 in 'XWBRich20.pas',
+  XWBSSOi in 'XWBSSOi.pas' {XWBSSOiFrm},
+  XWBut1 in 'XWBut1.pas',
+  VERGENCECONTEXTORLib_TLB in 'VERGENCECONTEXTORLib_TLB.pas',
+  wcrypt2 in 'wcrypt2.pas';
+
+end.

@@ -13,7 +13,7 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, fBase508Form, VA508AccessibilityManager,
   Vcl.StdCtrls, ORDtTm, ORCtrls, Vcl.ExtCtrls, Vcl.ComCtrls, ORDtTmRng,
-  System.Actions, Vcl.ActnList;
+  System.Actions, Vcl.ActnList, ORCheckComboBox;
 
 const
   fmtListDateTimeControls = 'mmm dd.yyyy@hh:nn';
@@ -79,7 +79,7 @@ implementation
 uses
   Math, ORFn, rCore, System.UITypes, fOptionsSurrogate, uORLists, uSimilarNames,
   System.DateUtils,
-  VAUtils;
+  VAUtils, uMisc, VA508AccessibilityRouter;
 
 {$R *.dfm}
 
@@ -308,7 +308,7 @@ begin
       msg := msg + ErrMsg + CRLF;
   end;
 
-  if (cboSurrogate.Text = '') or (cboSurrogate.ItemID = 0) then
+  if (cboSurrogate.ItemIndex < 0) or (cboSurrogate.Text = '') or (cboSurrogate.ItemID = '') then
     msg := msg + 'Please Select the Surrogate Name' + CRLF;
   if (Trim(ordtbStop.Text) <> '') and (ordtbStop.DateSelected <= ordtbStart.DateSelected) then
     msg := msg + 'Start Date can''t be greater than or equal to Stop date' + CRLF;

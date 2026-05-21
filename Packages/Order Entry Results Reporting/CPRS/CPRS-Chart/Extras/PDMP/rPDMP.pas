@@ -1,4 +1,4 @@
-unit rPDMP;
+﻿unit rPDMP;
 
 interface
 
@@ -67,10 +67,14 @@ function pdmpLastReviewDate(aPatient: String): String;
 implementation
 
 uses
-  System.SysUtils, ORFn, oPDMPData, uPDMP,
-//  uCore.SystemParameters
-  uCore
-  , uGN_RPCLog, uSimilarNames;
+  UNewPersonParams,
+  System.SysUtils,
+  ORFn,
+  oPDMPData,
+  uPDMP,
+  uCore,
+  uGN_RPCLog,
+  uSimilarNames;
 
 // Result format - the same as pieces 2-4 of the 0 node of STRTPDMP... NOTE:
 //                 IEN^Change Log^Date/Time
@@ -134,11 +138,22 @@ begin
     Result := Piece(PDMPList[0], U, TASK_ID_POS);
 end;
 
-function pdmpSetSubSetOfAuthorizedUsers(aORComboBox: TORComboBox; aDest: TStrings;
-  const StartFrom: string; Direction: Integer): Integer;
+function pdmpSetSubSetOfAuthorizedUsers(aORComboBox: TORComboBox;
+  aDest: TStrings; const StartFrom: string; Direction: Integer): Integer;
+var
+  ANewPersonParams: TNewPersonParams;
 begin
-  SNCallVistA(aORComboBox, SN_ORWU_NEWPERS, [StartFrom, Direction, '', '', '', '', '1'], aDest);
-  Result := aDest.Count;
+  ANewPersonParams := TNewPersonParams.Create(aORComboBox);
+  try
+    ANewPersonParams.From := StartFrom;
+    ANewPersonParams.Direction := Direction;
+    ANewPersonParams.PDMP := 1;
+    TSimilarNames.CallVistA(AORComboBox,
+      [ANewPersonParams.CreateORNetMult], aDest);
+    Result := aDest.Count;
+  finally
+    FreeAndNil(ANewPersonParams);
+  end;
 end;
 
 function pdmpKillTask(aTaskID: String): Integer;
@@ -191,7 +206,7 @@ begin
   sl := TStringList.Create;
   try
     sl.Add('ORWU SYSPARAM'); // RPC returns user parameters
-    sl.Add(SN_ORWU_NEWPERS);
+    sl.Add('ORNEWPERS NEWPERSON');
     sl.Add('ORPDMP STRTPDMP');
     sl.Add('ORPDMP CHCKTASK');
     sl.Add('ORPDMP STOPTASK');

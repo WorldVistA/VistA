@@ -15,11 +15,11 @@ uses
   Vcl.Dialogs,
   Vcl.StdCtrls,
   ORCtrls,
-  fBase508Form;
+  fBase508Form, ORCheckComboBox;
 
 type
   TpdmpUserForm = class(TfrmBase508Form)
-    cboProviderDEA: TORComboBox;
+    cboProviderDEA: TORCheckComboBox;
     lblUser: TLabel;
     pnlBottom: TPanel;
     btnCancel: TButton;
@@ -63,7 +63,8 @@ uses
   ORFn,
   uSizing,
   oPDMPData,
-  uPDMP;
+  uPDMP,
+  uMisc;
 
 {$R *.dfm}
 
@@ -170,6 +171,7 @@ end;
 procedure TpdmpUserForm.FormCreate(Sender: TObject);
 begin
   inherited;
+  cboProviderDEA.MainCheckBoxVisible := IncludeNonVAProviders(cboProviderDEA);
 {$IFDEF DEBUG}
   btnDebug.Visible := True;
 {$ENDIF}

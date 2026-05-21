@@ -1,8 +1,9 @@
-﻿unit fEncounterFrame;
+unit fEncounterFrame;
 
 interface
 
 uses
+  Generics.Collections,
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   Tabs, ComCtrls, ExtCtrls, Menus, StdCtrls, Buttons, fPCEBase, fStandardCodes,
   fVisitType, fDiagnoses, fProcedure, fImmunization, fSkinTest, fPatientEd,
@@ -83,6 +84,7 @@ type
     procedure TabControlEnter(Sender: TObject);
 
   private
+    FTabs: TObjectList<TfrmPCEBase>;
     FAutoSave: boolean;
     FSaveNeeded: boolean;
     FChangeSource: Integer;
@@ -95,7 +97,6 @@ type
     procedure CreateChildForms(Sender: TObject; Location: integer);
     procedure SynchPCEData;
     procedure SwitchToPage(NewForm: TfrmPCEBase);   //was tfrmPage
-    function PageIDToForm(PageID: Integer): TfrmPCEBase;
     function PageIDToTab(PageID: Integer): string;
     procedure LoadFormList(Location: integer);
     procedure CreateForms;
@@ -109,6 +110,7 @@ type
 //    procedure savePCEVimmSubData;
 //    procedure SynchPCEVimmSubData;
     procedure getCodesList(var tmpList: TStrings);
+    function PageIDToForm(PageID: Integer): TfrmPCEBase;
     procedure synchPCEVimmData(povList, cptList: TStringList);
     procedure SelectTab(NewTabName: string);
     property ChangeSource:    Integer read FChangeSource;
@@ -119,7 +121,6 @@ type
 
 var
   frmEncounterFrame: TfrmEncounterFrame;
-  uSCCond:              TSCConditions;
   uVisitType:           TPCEProc;       // contains info for visit type page
   uEncPCEData: TPCEData;
   uProviders: TPCEProviderList;
@@ -133,7 +134,8 @@ uses
   uCore,
   fGAF, uConst,
   rCore, fPCEProvider, rMisc, VA508AccessibilityRouter, VAUtils,
-  UResponsiveGUI, uWriteAccess, uInit;
+  UResponsiveGUI, uWriteAccess, uInit, uSpecialAuthorityEx,
+  rSpecialAuthority;
 
 {$R *.DFM}
 
@@ -144,9 +146,8 @@ uses
 //Location: ISL
 //Description: returns the tab index that corresponds to a given PageID .
 ///////////////////////////////////////////////////////////////////////////////}
-function TfrmEncounterFrame.PageIDToTab(PageID: Integer): String;
+function TfrmEncounterFrame.PageIDToTab(PageID: Integer): string;
 begin
-  result := '';
   case PageID of
     CT_NOPAGE:        Result := '';
     CT_UNKNOWN:       Result := '';
@@ -160,6 +161,8 @@ begin
     CT_EXAMS:         Result := CT_XamNm;
     CT_VITALS:        Result := CT_VitNm;
     CT_GAF:           Result := CT_GAFNm;
+    // CT_STANDARDCODES: Result := CT_STDNm;
+  else Result := '';
   end;
 end;
 
@@ -181,24 +184,16 @@ end;
 //Description: return the form name based on the PageID}
 ///////////////////////////////////////////////////////////////////////////////}
 function TfrmEncounterFrame.PageIDToForm(PageID: Integer): TfrmPCEBase;
+var
+  ATab: Integer;
 begin
-  case PageID of
-    CT_VISITTYPE:     Result := frmVisitType;
-    CT_DIAGNOSES:     Result := frmDiagnoses;
-    CT_PROCEDURES:    Result := frmProcedures;
-    CT_IMMUNIZATIONS: Result := frmImmunizations;
-    CT_SKINTESTS:     Result := frmSkinTests;
-    CT_PATIENTED:     Result := frmPatientEd;
-    CT_HEALTHFACTORS: Result := frmHealthFactors;
-    CT_EXAMS:         Result := frmExams;
-    CT_VITALS:        Result := frmEncVitals;
-    CT_GAF:           Result := frmGAF;
-    CT_STANDARDCODES: Result := frmStandardCodes;
-  else  //not a valid form
-    result := frmPCEBase;
-  end;
+  ATab := FormList.IndexOf(PageIDToTab(PageID));
+  if ATab < 0 then
+      raise Exception.CreateFmt('Page ID %d is not a valid form', [PageID]);
+  // The previous code here just returned nil, but that causes more issues than
+  // just raising a plain error here, I think.
+  Result := FTabs[ATab];
 end;
-
 
 {///////////////////////////////////////////////////////////////////////////////
 //Name: procedure TfrmEncounterFrame.CreatChildForms(Sender: TObject);
@@ -207,8 +202,6 @@ end;
 //Location: ISL
 //Description: Finds out what pages to display, has the pages and tabs created.
 ///////////////////////////////////////////////////////////////////////////////}
-
-
 procedure TfrmEncounterFrame.CreateChildForms(Sender: TObject; Location: integer);
 begin
   //load FormList with a list of all forms to display.
@@ -217,8 +210,6 @@ begin
   AddTabs;
   CreateForms;
 end;
-
-
 
 {///////////////////////////////////////////////////////////////////////////////
 //Name: TfrmEncounterFrame.LoadFormList;
@@ -231,7 +222,7 @@ procedure TfrmEncounterFrame.LoadFormList(Location: integer);
 begin
   //change this to an RPC in RPCE.pas
   FormList.clear;
-  FormList.add(CT_VisitNm);
+  FormList.Add(CT_VisitNm);
   FormList.add(CT_DiagNm);
   FormList.add(CT_ProcNm);
   formList.add(CT_VitNm);
@@ -242,6 +233,7 @@ begin
   formList.add(CT_XamNm);
   if MHClinic(Location) then
     formList.add(CT_GAFNm);
+//  formList.add(CT_STDNm);
 end;
 
 
@@ -269,40 +261,37 @@ end;
 ///////////////////////////////////////////////////////////////////////////////}
 procedure TfrmEncounterFrame.CreateForms;
 var
-  i: integer;
+  I: Integer;
 begin
-  //could this be placed in a loop using PagedIdToTab & PageIDToFOrm & ?
+  FTabs.Clear;
+  pnlPage.Constraints.MinHeight := 0;
+  pnlPage.Constraints.MinWidth := 0;
 
-  if FormListContains(CT_VisitNm) then
-    frmVisitType  := TfrmVisitType.CreateLinked(pnlPage);
-  if FormListContains(CT_DiagNm) then
-    frmDiagnoses  := TfrmDiagnoses.CreateLinked(pnlPage);
-  if FormListContains(CT_ProcNm) then
-    frmProcedures := TfrmProcedures.CreateLinked(pnlPage);
-  if FormListContains(CT_VitNm) then
-    frmEncVitals := TfrmEncVitals.CreateLinked(pnlPage);
-  if FormListContains(CT_ImmNm) then
-    frmImmunizations := TfrmImmunizations.CreateLinked(pnlPage);
-  if FormListContains(CT_SkinNm) then
-    frmSkinTests := TfrmSkinTests.CreateLinked(pnlPage);
-  if FormListContains(CT_PedNm) then
-    frmPatientEd := TfrmPatientEd.CreateLinked(pnlPage);
-  if FormListContains(CT_HlthNm) then
-    frmHealthFactors := TfrmHEalthFactors.CreateLinked(pnlPage);
-  if FormListContains(CT_XamNm) then
-    frmExams := TfrmExams.CreateLinked(pnlPage);
-  if FormListContains(CT_GAFNm) then
-    frmGAF := TfrmGAF.CreateLinked(pnlPage);
-  if FormListContains(CT_STDNm) then
-    frmStandardCodes := TfrmStandardCodes.CreateLinked(pnlPage);
-  //must switch based on caption, as all tabs may not be present.
-  for i := CT_FIRST to CT_LAST do
-  begin
-    if Formlist.IndexOf(PageIdToTab(i)) <> -1 then
-      PageIDToForm(i).Visible := (Formlist.IndexOf(PageIdToTab(i)) = 0);
-  end;
+  for I := 0 to FormList.Count - 1 do FTabs.Add(nil);
+
+  I := FormList.IndexOf(CT_VisitNm);
+  if I >= 0 then FTabs[I] := TfrmVisitType.CreateLinked(pnlPage, I = 0);
+  I := FormList.IndexOf(CT_DiagNm);
+  if I >= 0 then FTabs[I] := TfrmDiagnoses.CreateLinked(pnlPage, I = 0);
+  I := FormList.IndexOf(CT_ProcNm);
+  if I >= 0 then FTabs[I] := TfrmProcedures.CreateLinked(pnlPage, I = 0);
+  I := FormList.IndexOf(CT_VitNm);
+  if I >= 0 then FTabs[I] := TfrmEncVitals.CreateLinked(pnlPage, I = 0);
+  I := FormList.IndexOf(CT_ImmNm);
+  if I >= 0 then FTabs[I] := TfrmImmunizations.CreateLinked(pnlPage, I = 0);
+  I := FormList.IndexOf(CT_SkinNm);
+  if I >= 0 then FTabs[I] := TfrmSkinTests.CreateLinked(pnlPage, I = 0);
+  I := FormList.IndexOf(CT_PedNm);
+  if I >= 0 then FTabs[I] := TfrmPatientEd.CreateLinked(pnlPage, I = 0);
+  I := FormList.IndexOf(CT_HlthNm);
+  if I >= 0 then FTabs[I] := TfrmHealthFactors.CreateLinked(pnlPage, I = 0);
+  I := FormList.IndexOf(CT_XamNm);
+  if I >= 0 then FTabs[I] := TfrmExams.CreateLinked(pnlPage, I = 0);
+  I := FormList.IndexOf(CT_GAFNm);
+  if I >= 0 then FTabs[I] := TfrmGAF.CreateLinked(pnlPage, I = 0);
+  I := FormList.IndexOf(CT_STDNm);
+  if I >= 0 then FTabs[I] := TfrmStandardCodes.CreateLinked(pnlPage, I = 0);
 end;
-
 
 {///////////////////////////////////////////////////////////////////////////////
 //Name: TfrmEncounterFrame.SwitchToPage(NewForm: tfrmPCEBase);
@@ -322,8 +311,6 @@ begin
   NewForm.DisplayPage;  // this calls BringToFront for the form
 end;
 
-
-
 {///////////////////////////////////////////////////////////////////////////////
 //Name: procedure TfrmEncounterFrame.tabPageChange(Sender: TObject; NewTab: Integer; var AllowChange: Boolean);
 //Created: Jan 1999
@@ -331,21 +318,11 @@ end;
 //Location: ISL
 //Description: Finds the page, and calls SwithToPage to display it.
 ///////////////////////////////////////////////////////////////////////////////}
-procedure TfrmEncounterFrame.tabPageChange(Sender: TObject; NewTab: Integer; var AllowChange: Boolean);
-{ switches to form linked to NewTab }
-var
-  i: integer;
+procedure TfrmEncounterFrame.tabPageChange(Sender: TObject; NewTab: Integer;
+  var AllowChange: Boolean);
 begin
-//must switch based on caption, as all tabs may not be present.
-for i := CT_FIRST to CT_LAST do
-  begin
-  With Formlist do
-    if NewTab = IndexOf(PageIdToTab(i)) then
-    begin
-      PageIDToForm(i).show;
-      SwitchToPage(PageIDToForm(i));
-    end;
-  end;
+  FTabs[NewTab].Show;
+  SwitchToPage(FTabs[NewTab]);
 end;
 
 { Resize and Font-Change procedures --------------------------------------------------------- }
@@ -375,7 +352,6 @@ end;
 //Description: adds a tab for each page that will be displayed
 ///////////////////////////////////////////////////////////////////////////////}
 procedure TfrmEncounterFrame.AddTabs;
-
 var
   i: integer;
 begin
@@ -395,10 +371,7 @@ end;
 ///////////////////////////////////////////////////////////////////////////////}
 function UpdatePCE(PCEData: TPCEData; KeepPrimaryProvider: boolean = FALSE): boolean;
 var
-//  FontHeight,
-//  FontWidth: Integer;
   AUser, PrimaryProvider: string;
-
 begin
  if not WriteAccess(waEncounter, True) then
   begin
@@ -420,12 +393,11 @@ begin
   if (PrimaryProvider <> '') and (PCEData.Providers.PrimaryIdx < 0) then
     PCEData.Providers.Add(PrimaryProvider);
 
-  frmEncounterFrame := TfrmEncounterFrame.Create(Application);
+  uEncPCEData := PCEData;
   try
-    frmEncounterFrame.FAutoSave := True;
-
-    uEncPCEData := PCEData;
+    frmEncounterFrame := TfrmEncounterFrame.Create(Application);
     try
+      frmEncounterFrame.FAutoSave := True;
       if(uEncPCEData.Empty and ((uEncPCEData.Location = 0) or (uEncPCEData.VisitDateTime = 0)) and
         (not Encounter.NeedVisit)) then
         uEncPCEData.UseEncounter := TRUE;
@@ -438,38 +410,25 @@ begin
          AutoCheckout(uEncPCEData.Location) then
         uProviders.AddProvider(AUser, uProviders.PendingName(FALSE), FALSE);
 
-      frmEncounterFrame.CreateChildForms(frmEncounterFrame, PCEData.Location);
-      SetFormPosition(frmEncounterFrame);
-      ResizeAnchoredFormToFont(frmEncounterFrame);
-      //SetFormPosition(frmEncounterFrame);
-
-      with frmEncounterFrame do
-      begin
-        SetRPCEncLocation(PCEData.Location);
-        SynchPCEData;
-        TabControl.Tabindex := 0;
-        TabControlChange(TabControl);
-
-        ShowModal;
-        Result := FSaveNeeded;
-      end;
-
-      PCEData.PCEForNote(PCEData.NoteIEN); // VISTAOR-24268
-      if KeepPrimaryProvider and (PrimaryProvider <> '') and
-        (PCEData.Providers.PrimaryIdx < 0) then
-      begin
-        PCEData.Providers.Add(PrimaryProvider);
-        Result := True;
-      end;
-
+      SetRPCEncLocation(PCEData.Location);
+      frmEncounterFrame.SynchPCEData;
+      frmEncounterFrame.TabControl.Tabindex := 0;
+      frmEncounterFrame.TabControlChange(frmEncounterFrame.TabControl);
+      frmEncounterFrame.ShowModal;
+      Result := frmEncounterFrame.FSaveNeeded;
     finally
-      uEncPCEData := nil;
+      FreeAndNil(frmEncounterFrame);
     end;
 
+    PCEData.PCEForNote(PCEData.NoteIEN); // VISTAOR-24268
+    if KeepPrimaryProvider and (PrimaryProvider <> '') and
+      (PCEData.Providers.PrimaryIdx < 0) then
+    begin
+      PCEData.Providers.Add(PrimaryProvider);
+      Result := True;
+    end;
   finally
-    // frmEncounterFrame.Free;   v22.11 (JD and SM)
-    frmEncounterFrame.Release;
-    frmEncounterFrame := nil;
+    uEncPCEData := nil;
   end;
 end;
 
@@ -481,13 +440,16 @@ end;
 //Description: Call the procedure apropriate for the selected tab
 ///////////////////////////////////////////////////////////////////////////////}
 procedure TfrmEncounterFrame.SectionClick(Sender: TObject);
+var
+  I: Integer;
 begin
-  with Sender as TListBox do case Tag of
-  TAG_VTYPE:   if FormListContains(CT_VisitNm) then
-               begin
-                 with frmVisitType do
-                   lstVTypeSectionClick(Sender);
-               end;
+  case (Sender as TListBox).Tag of
+    TAG_VTYPE:
+      begin
+        I := FormList.IndexOf(CT_VisitNm);
+        if I >= 0 then
+          (FTabs[I] as TfrmVisitType).lstVTypeSectionClick(Sender);
+      end;
   end;
 end;
 
@@ -531,70 +493,91 @@ procedure TfrmEncounterFrame.SynchPCEData;
     end;
   end;
 
+var
+  I, VisitTypeIdx: Integer;
+  Error: string;
 begin
-  if FormListContains(CT_VisitNm) then
-  with frmVisitType do
-    begin
-      InitList(frmVisitType.lstVTypeSection);                     // set up Visit Type page
-      ListSCDisabilities(memSCDisplay.Lines);
-      uSCCond := EligbleConditions(uEncPCEData);
-      frmVisitType.fraVisitRelated.InitAllow(uSCCond);
-    end;
-  with uEncPCEData do                               // load any existing data from PCEData
+  VisitTypeIdx := FormList.IndexOf(CT_VisitNm);
+  if VisitTypeIdx >= 0 then
   begin
-    if FormListContains(CT_VisitNm) then
-      frmVisitType.fraVisitRelated.InitRelated(uEncPCEData);
-    if FormListContains(CT_DiagNm) then
-      frmDiagnoses.InitTab(CopyDiagnoses, ListDiagnosisSections);
-    if FormListContains(CT_ProcNm) then
-      frmProcedures.InitTab(CopyProcedures, ListProcedureSections);
-    if FormListContains(CT_ImmNm) then
-      frmImmunizations.InitTab(CopyImmunizations,ListImmunizSections);
-    if FormListContains(CT_SkinNm) then
-      frmSkinTests.InitTab(CopySkinTests, ListSkinSections);
-    if FormListContains(CT_PedNm) then
-      frmPatientEd.InitTab(CopyPatientEds, ListPatientSections);
-    if FormListContains(CT_HlthNm) then
-      frmHealthFactors.InitTab(CopyHealthFactors, ListHealthSections);
-    if FormListContains(CT_XamNm) then
-      frmExams.InitTab(CopyExams, ListExamsSections);
-    if FormListContains(CT_STDNm) then
-      frmStandardCodes.InitTab(CopyStandardCodes, EmptyProc);
-    uVisitType.Assign(VisitType);
-    if FormListContains(CT_VisitNm) then
-    with frmVisitType do
-    begin
-      MatchVType;
-    end;
+    InitList((FTabs[VisitTypeIdx] as TfrmVisitType).lstVTypeSection);
+    // set up Visit Type page
+    ListSCDisabilities((FTabs[VisitTypeIdx] as TfrmVisitType)
+      .memSCDisplay.Lines);
+    UpdateSpecialAuthoritiesEx(uEncPCEData, Error);
+    if Error <> '' then
+      raise EArgumentException.Create(Error);
+    (FTabs[VisitTypeIdx] as TfrmVisitType).fraVisitRelated.InitAllow(
+      uEncPCEData.SpecialAuthorities);
   end;
+  I := FormList.IndexOf(CT_DiagNm);
+  if I >= 0 then
+    (FTabs[I] as TfrmDiagnoses).InitTab(uEncPCEData.CopyDiagnoses,
+      ListDiagnosisSections);
+  I := FormList.IndexOf(CT_ProcNm);
+  if I >= 0 then
+    (FTabs[I] as TfrmProcedures).InitTab(uEncPCEData.CopyProcedures,
+      ListProcedureSections);
+  I := FormList.IndexOf(CT_ImmNm);
+  if I >= 0 then
+    (FTabs[I] as TfrmImmunizations).InitTab(uEncPCEData.CopyImmunizations,
+      ListImmunizSections);
+  I := FormList.IndexOf(CT_SkinNm);
+  if I >= 0 then
+    (FTabs[I] as TfrmSkinTests).InitTab(uEncPCEData.CopySkinTests,
+      ListSkinSections);
+  I := FormList.IndexOf(CT_PedNm);
+  if I >= 0 then
+    (FTabs[I] as TfrmPatientEd).InitTab(uEncPCEData.CopyPatientEds,
+      ListPatientSections);
+  I := FormList.IndexOf(CT_HlthNm);
+  if I >= 0 then
+    (FTabs[I] as TfrmHealthFactors).InitTab(uEncPCEData.CopyHealthFactors,
+      ListHealthSections);
+  I := FormList.IndexOf(CT_XamNm);
+  if I >= 0 then
+    (FTabs[I] as TfrmExams).InitTab(uEncPCEData.CopyExams, ListExamsSections);
+  I := FormList.IndexOf(CT_STDNm);
+  if I >= 0 then
+    (FTabs[I] as TfrmStandardCodes).InitTab(uEncPCEData.CopyStandardCodes,
+      EmptyProc);
+
+  uVisitType.Assign(uEncPCEData.VisitType);
+
+  if VisitTypeIdx >= 0 then
+    (FTabs[VisitTypeIdx] as TfrmVisitType).MatchVType;
 end;
 
 
 procedure TfrmEncounterFrame.synchPCEVimmData(povList, cptList: TStringList);
 var
-i: integer;
-str: string;
+  I, TabIndex: Integer;
+  frmDiagnoses: TfrmDiagnoses;
+  frmProcedures: TfrmProcedures;
+  Str: string;
 begin
-  if FormListContains(CT_DiagNm) and (povList.Count >0) then
+  TabIndex := FormList.IndexOf(CT_DiagNm);
+  if (TabIndex >= 0) and (povList.Count > 0) then
+  begin
+    frmDiagnoses := FTabs[TabIndex] as TfrmDiagnoses;
+    for I := povList.Count - 1 downto 0 do
     begin
-      for i := povList.Count -1 downto 0 do
-        begin
-          str := povList.Strings[i];
-          if Piece(str, U, 1) = 'POV-' then
-            frmDiagnoses.deleteFromList(str)
-          else frmDiagnoses.addToList(str);
-        end;
+      Str := povList.Strings[I];
+      if Piece(Str, U, 1) = 'POV-' then frmDiagnoses.DeleteFromList(Str)
+      else frmDiagnoses.AddToList(Str);
     end;
-  if FormListContains(CT_ProcNm) and (cptList.Count >0) then
+  end;
+  TabIndex := FormList.IndexOf(CT_ProcNm);
+  if (TabIndex >= 0) and (cptList.Count > 0) then
+  begin
+    frmProcedures := FTabs[TabIndex] as TfrmProcedures;
+    for I := cptList.Count - 1 downto 0 do
     begin
-      for i := cptList.Count -1 downto 0 do
-        begin
-          str := cptList.Strings[i];
-          if Piece(str, U, 1) = 'CPT-' then
-            frmProcedures.deleteFromList(str)
-          else frmProcedures.addToList(str);
-        end;
+      Str := cptList.Strings[I];
+      if Piece(Str, U, 1) = 'CPT-' then frmProcedures.DeleteFromList(Str)
+      else frmProcedures.AddToList(Str);
     end;
+  end;
 end;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -613,6 +596,7 @@ begin
   FreeAndNil(FormList);
   if (not uInit.TimedOut) and (not Application.Terminated) then
     TResponsiveGUI.ProcessMessages;
+  FreeAndNil(FTabs);
   inherited;
 end;
 
@@ -625,17 +609,21 @@ end;
 ///////////////////////////////////////////////////////////////////////////////}
 procedure TfrmEncounterFrame.FormCreate(Sender: TObject);
 begin
+  if not Assigned(uEncPCEData) then
+      raise Exception.Create('uEncPCEData not Assigned');
+  FTabs := TObjectList<TfrmPCEBase>.Create;
   uProviders := TPCEProviderList.Create;
   uVisitType := TPCEProc.create;
-  //uVitalOld  := TStringList.create;
-  //uVitalNew  := TStringList.create;
   FormList := TStringList.create;
   fCancel := False;
-  FAbort := TRUE;
+  FAbort := True;
   SetFormFonts;
   FGiveMultiTabMessage := ScreenReaderSystemActive;
-end;
 
+  CreateChildForms(Self, uEncPCEData.Location);
+  SetFormPosition(Self);
+  ResizeAnchoredFormToFont(Self);
+end;
 
 {///////////////////////////////////////////////////////////////////////////////
 //Name: procedure TfrmEncounterFrame.SendData;
@@ -650,14 +638,16 @@ var
   GAFScore: integer;
   GAFDate: TFMDateTime;
   GAFStaff: Int64;
+  I: Integer;
 begin
   inherited;
   // do validation for vitals & anything else here
   Result := true;
 
-  if(FormListContains(CT_GAFNm)) then
+  I := FormList.IndexOf(CT_GAFNm);
+  if I >= 0 then
   begin
-    frmGAF.GetGAFScore(GAFScore, GAFDate, GAFStaff);
+    (FTabs[I] as TfrmGAF).GetGAFScore(GAFScore, GAFDate, GAFStaff);
     if(GAFScore > 0) then
       SaveGAFScore(GAFScore, GAFDate, GAFStaff);
   end;
@@ -703,7 +693,7 @@ const
 var
   TmpPCEData: TPCEData;
   ask, ChangeOK: boolean;
-
+  I: Integer;
 begin
   ClearPostValidateMag(Self);
   CanClose := True;
@@ -741,9 +731,10 @@ begin
 
   uVisitType.Provider := uProviders.PrimaryIEN;  {RV - v20.1}
 
-  if CanClose and FormListContains(CT_ProcNm) then
+  I := FormList.IndexOf(CT_ProcNm);
+  if CanClose and (I >= 0) then
     begin
-      CanClose := frmProcedures.OK2SaveProcedures;
+      CanClose := (FTabs[I] as TfrmProcedures).OK2SaveProcedures;
       if not CanClose then
         begin
           tabPageChange(Self, FormList.IndexOf(CT_ProcNm), ChangeOK);
@@ -752,38 +743,29 @@ begin
         end;
     end;
 
-   if TabControl.TabIndex = FormList.IndexOf(CT_GAFNm) then
-    CanClose := frmGAF.CheckSimilarNameOK;
+  if TabControl.TabIndex = FormList.IndexOf(CT_GAFNm) then
+    CanClose := (FTabs[TabControl.TabIndex] as TfrmGAF).CheckSimilarNameOK;
 
-   if TabControl.TabIndex = FormList.IndexOf(CT_ProcNm) then
-    CanClose := frmProcedures.CheckSimilarNameOK;
-
+  if TabControl.Tabindex = FormList.IndexOf(CT_ProcNm) then
+      CanClose := (FTabs[TabControl.Tabindex] as TfrmProcedures)
+      .CheckSimilarNameOK;
 
   if CanClose then CanClose := SendData;  //*KCM*
-
 end;
 
 procedure TfrmEncounterFrame.TabControlChange(Sender: TObject);
 var
-  i: integer;
+  ATabIndex: Integer;
 begin
-//must switch based on caption, as all tabs may not be present.
-  if (sender as tTabControl).tabindex = -1 then exit;
+  //must switch based on caption, as all tabs may not be present.
+  if (Sender as TTabControl).TabIndex = -1 then Exit;
 
   if TabControl.CanFocus and Assigned(FLastPage) and not TabControl.Focused then
-    TabControl.SetFocus;  //CQ: 14845
+      TabControl.SetFocus; //CQ: 14845
 
-  for i := CT_FIRST to CT_LAST do
-  begin
-    with Formlist do
-      with sender as tTabControl do
-        if Tabindex = IndexOf(PageIdToTab(i)) then
-      begin
-        PageIDToForm(i).show;
-        SwitchToPage(PageIDToForm(i));
-        Exit;
-      end;
-  end;
+  ATabIndex := (Sender as TTabControl).TabIndex;
+  FTabs[ATabIndex].Show;
+  SwitchToPage(FTabs[ATabIndex]);
 end;
 
 procedure TfrmEncounterFrame.TabControlChanging(Sender: TObject;
@@ -799,33 +781,42 @@ begin
 end;
 
 procedure TfrmEncounterFrame.UpdateEncounter(PCE: TPCEData);
+var
+  I: Integer;
 begin
-  with PCE do
+  I := FormList.IndexOf(CT_VisitNm);
+  if I >= 0 then
   begin
-    if FormListContains(CT_VisitNm) then
-    begin
-      VisitType := uVisitType;
-      frmVisitType.fraVisitRelated.GetRelated(uEncPCEData);
-      Providers.Merge(uProviders);
-    end;
-    //ZZZZZZBELLC
-    if FormListContains(CT_DiagNm) then
-      SetDiagnoses(frmDiagnoses.lstCaptionList.ItemsStrings);
-    if FormListContains(CT_ProcNm) then
-     SetProcedures(frmProcedures.lstCaptionList.ItemsStrings);
-    if FormListContains(CT_ImmNm) then
-       SetImmunizations(frmImmunizations.lstCaptionList.ItemsStrings);
-    if FormListContains(CT_SkinNm) then
-       SetSkinTests(frmSkinTests.lstCaptionList.ItemsStrings);
-    if FormListContains(CT_PedNm) then
-      SetPatientEds(frmPatientEd.lstCaptionList.ItemsStrings);
-    if FormListContains(CT_HlthNm) then
-      SetHealthFactors(frmHealthFactors.lstCaptionList.ItemsStrings);
-    if FormListContains(CT_XamNm) then
-      SetExams(frmExams.lstCaptionList.ItemsStrings);
-    if FormListContains(CT_STDNm) then
-      SetStandardCodes(frmStandardCodes.lstCaptionList.ItemsStrings);
+    PCE.VisitType := uVisitType;
+    (FTabs[I] as TfrmVisitType).fraVisitRelated.GetRelated(uEncPCEData.SpecialAuthorities);
+    PCE.Providers.Merge(uProviders);
   end;
+
+  //ZZZZZZBELLC
+  I := FormList.IndexOf(CT_DiagNm);
+  if I >= 0 then
+    PCE.SetDiagnoses((FTabs[I] as TfrmDiagnoses).lstCaptionList.ItemsStrings);
+  I := FormList.IndexOf(CT_ProcNm);
+  if I >= 0 then
+    PCE.SetProcedures((FTabs[I] as TfrmProcedures).lstCaptionList.ItemsStrings);
+  I := FormList.IndexOf(CT_ImmNm);
+  if I >= 0 then
+    PCE.SetImmunizations((FTabs[I] as TfrmImmunizations).lstCaptionList.ItemsStrings);
+  I := FormList.IndexOf(CT_SkinNm);
+  if I >= 0 then
+    PCE.SetSkinTests((FTabs[I] as TfrmSkinTests).lstCaptionList.ItemsStrings);
+  I := FormList.IndexOf(CT_PedNm);
+  if I >= 0 then
+    PCE.SetPatientEds((FTabs[I] as TfrmPatientEd).lstCaptionList.ItemsStrings);
+  I := FormList.IndexOf(CT_HlthNm);
+  if I >= 0 then
+    PCE.SetHealthFactors((FTabs[I] as TfrmHealthFactors).lstCaptionList.ItemsStrings);
+  I := FormList.IndexOf(CT_XamNm);
+  if I >= 0 then
+    PCE.SetExams((FTabs[I] as TfrmExams).lstCaptionList.ItemsStrings);
+  I := FormList.IndexOf(CT_STDNm);
+  if I >= 0 then
+    PCE.SetStandardCodes((FTabs[I] as TfrmStandardCodes).lstCaptionList.ItemsStrings);
 end;
 
 procedure TfrmEncounterFrame.SelectTab(NewTabName: string);
@@ -892,31 +883,11 @@ end;
 
 procedure TfrmEncounterFrame.SetFormFonts;
 var
-  NewFontSize: integer;
+  NewFontSize: Integer;
+  ATab: TfrmPCEBase;
 begin
   NewFontSize := MainFontsize;
-  if FormListContains(CT_VisitNm) then
-    frmVisitType.Font.Size := NewFontSize;
-  if FormListContains(CT_DiagNm) then
-    frmDiagnoses.Font.Size := NewFontSize;
-  if FormListContains(CT_ProcNm) then
-    frmProcedures.Font.Size := NewFontSize;
-  if FormListContains(CT_ImmNm) then
-    frmImmunizations.Font.Size := NewFontSize;
-  if FormListContains(CT_SkinNm) then
-    frmSkinTests.Font.Size := NewFontSize;
-  if FormListContains(CT_PedNm) then
-    frmPatientEd.Font.Size := NewFontSize;
-  if FormListContains(CT_HlthNm) then
-    frmHealthFactors.Font.Size := NewFontSize;
-  if FormListContains(CT_XamNm) then
-    frmExams.Font.Size := NewFontSize;
-  if FormListContains(CT_VitNm) then
-    frmEncVitals.Font.Size := NewFontSize;
-  if FormListContains(CT_GAFNm) then
-    frmGAF.SetFontSize(NewFontSize);
-  if FormListContains(CT_STDNm) then
-    frmStandardCodes.SetFontSize(NewFontSize);
+  for ATab in FTabs do if Assigned(ATab) then ATab.Font.Size := NewFontSize;
 end;
 
 procedure TfrmEncounterFrame.FormClose(Sender: TObject;
@@ -930,10 +901,10 @@ procedure TfrmEncounterFrame.FormCanResize(Sender: TObject; var NewWidth,
 begin
   //CQ4740
   if NewWidth < 200 then
-     begin
-     NewWidth := 200;
-     Resize := false;
-     end;
+  begin
+    NewWidth := 200;
+    Resize := false;
+  end;
 end;
 
 procedure TfrmEncounterFrame.FormShow(Sender: TObject);
@@ -945,29 +916,37 @@ end;
 
 procedure TfrmEncounterFrame.getCodesList(var tmpList: TStrings);
 var
-i: integer;
-APCEProc: TPCEProc;
-APCEITem: TPCEItem;
-tmp: String;
+  I, TabIndex: Integer;
+  APCEProc: TPCEProc;
+  APCEITem: TPCEItem;
+  tmp: string;
+  frmDiagnoses: TfrmDiagnoses;
+  frmProcedures: TfrmProcedures;
 begin
-  if FormListContains(CT_DiagNm) then
+  TabIndex := FormList.IndexOf(CT_DiagNm);
+  if TabIndex >= 0 then
+  begin
+    frmDiagnoses := FTabs[TabIndex] as TfrmDiagnoses;
+    for I := 0 to frmDiagnoses.lstCaptionList.Items.Count - 1 do
     begin
-      for i := 0 to frmDiagnoses.lstCaptionList.Items.Count - 1 do
-        begin
-          APCEItem := TPCEItem(frmDiagnoses.lstCaptionList.Objects[i]);
-          tmp := 'POV^'+ APCEitem.Code + '^^' + APCEItem.Narrative;
-          tmpList.Add(tmp);
-        end;
+      APCEITem := TPCEItem(frmDiagnoses.lstCaptionList.Objects[I]);
+      tmp := 'POV^' + APCEITem.Code + '^^' + APCEITem.Narrative;
+      tmpList.Add(tmp);
     end;
-  if FormListContains(CT_ProcNm) then
+  end;
+
+  TabIndex := FormList.IndexOf(CT_ProcNm);
+  if TabIndex >= 0 then
+  begin
+    frmProcedures := FTabs[TabIndex] as TfrmProcedures;
+    for I := 0 to frmProcedures.lstCaptionList.Items.Count - 1 do
     begin
-      for i := 0 to frmProcedures.lstCaptionList.Items.Count - 1 do
-        begin
-          APCEProc := TPCEProc(frmProcedures.lstCaptionList.Objects[i]);
-          tmp := 'CPT^'+ APCEProc.Code + '^^' + APCEProc.Narrative + '^' + IntToStr(APCEProc.Quantity);
-          tmpList.Add(tmp);
-        end;
+      APCEProc := TPCEProc(frmProcedures.lstCaptionList.Objects[I]);
+      tmp := 'CPT^' + APCEProc.Code + '^^' + APCEProc.Narrative + '^' +
+        IntToStr(APCEProc.Quantity);
+      tmpList.Add(tmp);
     end;
+  end;
 end;
 
 end.

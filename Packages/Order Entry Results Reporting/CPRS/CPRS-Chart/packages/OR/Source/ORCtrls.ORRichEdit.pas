@@ -1,27 +1,46 @@
 unit ORCtrls.ORRichEdit;
 
+////////////////////////////////////////////////////////////////////////////////
+/// In D11 we started to experience some issues with TRichEdit.
+/// 1. TRichEditStrings.Insert introduces a new TOutOfResources error that
+///    sometimes gets raised for no valid reason.
+/// 2. TRichEdit scrolls to the bottom when the cursor is at the bottom and
+///    strings get added. This is undesired behavior in CPRS.
+/// 3. TRichEdit captures the mouse in certain situations. (We have reproduced
+///    this behavior, and implemented work around behavior, but we don't have a
+///    good full understanding of what exactly is happening)
+///
+/// TORRichEdit was introduced to handle our TRichEdit issues, and all
+/// TRichEdits used in CPRS should inherit from TORRichEdit.
+///
+/// TORRichEdit inherits from TORCopyPasteRichEdit, which is preexisting code
+/// that was written to introduce some new code for the copy/paste
+/// functionality in CPRS.
+////////////////////////////////////////////////////////////////////////////////
+
 interface
+
 uses
   System.Rtti,
   System.Classes,
-  WinApi.Messages,
-  Vcl.Controls,
-  Vcl.ComCtrls;
+  Winapi.Messages,
+  Vcl.ComCtrls,
+  ORCtrls.MessageReceiver;
 
 const
   UM_MESSAGE = WM_USER + 300;
 
 type
-  TMessageReceiver = class(TWinControl)
-  private
-    FNotifyEvent: TNotifyEvent;
-  protected
-    procedure HandleMessage(var Message: TMessage); message UM_MESSAGE;
+  TORCopyPasteRichEdit = class(Vcl.ComCtrls.TRichEdit)
   public
-    constructor Create(ANotifyEvent: TNotifyEvent); reintroduce;
+    procedure WMPaste(var Message: TMessage); message WM_PASTE;
+    procedure WMKeyDown(var Message: TMessage); message WM_KEYDOWN;
   end;
 
-  TORRichEdit = class(Vcl.ComCtrls.TRichEdit)
+  TMessageNotifyEvent = procedure(Sender: TObject; AMessage: TMessage)
+    of object;
+
+  TORRichEdit = class(TORCopyPasteRichEdit)
   strict private
     FMessageReceiver: TMessageReceiver;
     FMustScrollBackLine: Integer;
@@ -31,15 +50,13 @@ type
     FIsVScrollBottomEnabled: Boolean;
   protected
     procedure BeforeLinesInsert(const Args: TArray<TValue>);
-    procedure AfterLinesInsert(Sender: TObject);
+    procedure AfterLinesInsert(Sender: TObject; AMessage: TMessage);
     function StringToRTFString(const S: string): string;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure AddString(const S: string);
     procedure InsertStringBefore(const S: string);
-    procedure WMPaste(var Message: TMessage); message WM_PASTE;
-    procedure WMKeyDown(var Message: TMessage); message WM_KEYDOWN;
     procedure OnVScroll(var Msg: TMessage); message WM_VSCROLL;
   published
     // Toggles auto-scrolling to the bottom after a line is inserted
@@ -47,26 +64,97 @@ type
       write FIsAutoScrollEnabled default False;
   end;
 
+procedure Register;
+
 implementation
 
 uses
   Vcl.Forms,
   Vcl.ComStrs,
-  WinApi.Windows,
   System.StrUtils,
   System.SysUtils,
+  Winapi.Windows,
   ORExtensions;
 
-// TORRichEdit
-constructor TMessageReceiver.Create(ANotifyEvent: TNotifyEvent);
+// TORCopyPasteRichEdit
+procedure TORCopyPasteRichEdit.WMKeyDown(var Message: TMessage);
+var
+  aShiftState: TShiftState;
 begin
-  inherited CreateParented(HWND_MESSAGE);
-  FNotifyEvent := ANotifyEvent;
+  aShiftState := KeyDataToShiftState(message.WParam);
+  if (ssCtrl in aShiftState) and (message.WParam = Ord('V')) then
+    ClipboardFilemanSafe;
+  if (ssShift in aShiftState) and (message.WParam = VK_INSERT) then
+    ClipboardFilemanSafe;
+  inherited;
 end;
 
-procedure TMessageReceiver.HandleMessage(var Message: TMessage);
+procedure TORCopyPasteRichEdit.WMPaste(var Message: TMessage);
 begin
-  if Assigned(FNotifyEvent) then FNotifyEvent(Self);
+  ClipboardFilemanSafe;
+  inherited;
+end;
+
+// TORRichEdit
+constructor TORRichEdit.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
+  FIsVScrollBottomEnabled := True;
+  
+  // Create a reliable way to receive UM_MESSAGE messages. We set up the
+  // AfterLinesInsert method as the method that gets called when any UM_MESSAGE
+  // notifications come in.
+  FMessageReceiver := TMessageReceiver.Create(UM_MESSAGE, AfterLinesInsert);
+
+  FVirtualMethodInterceptor := TVirtualMethodInterceptor.Create
+    (Lines.ClassType);
+
+  // Intercept the TORRichEdit.Lines.Insert method before it fires and run
+  // procedure BeforeLinesInsert.
+  FVirtualMethodInterceptor.OnBefore :=
+    procedure(Instance: TObject; Method: TRttiMethod;
+      const Args: TArray<TValue>; out DoInvoke: Boolean; out Result: TValue)
+    begin
+      if SameText('Insert', Method.Name) then BeforeLinesInsert(Args);
+    end;
+
+  // Intercept any EOutOfResources exceptions with a message of
+  // sRichEditInsertError that were thrown by the TORRichEdit.Lines.Insert
+  // method. These exceptions, when they occur, are (usually?) not legit, and
+  // we do not want them. This is where we make them disappear.
+  FVirtualMethodInterceptor.OnException :=
+    procedure(Instance: TObject; Method: TRttiMethod;
+      const Args: TArray<TValue>; out RaiseException: Boolean;
+      TheException: Exception; out Result: TValue)
+    begin
+      RaiseException := not SameText('Insert', Method.Name) or
+        (TheException.ClassType <> EOutOfResources) or
+        (TheException.Message <> sRichEditInsertError);
+    end;
+
+  FMustScrollBackLine := -1;
+
+  // Start intercepting
+  FVirtualMethodInterceptor.Proxify(Self.Lines);
+end;
+
+destructor TORRichEdit.Destroy;
+var
+  AVirtualMethodInterceptor: TVirtualMethodInterceptor;
+begin
+  // We have an issue (VISTAOR-37245) reported that makes me wonder if the VMI
+  // is not assigned, so here's some (paranoia) code to obtain a local variable
+  // reference before further handling.
+  AVirtualMethodInterceptor := FVirtualMethodInterceptor;
+  FVirtualMethodInterceptor := nil;
+
+  // Stop intercepting
+  if Assigned(AVirtualMethodInterceptor) then
+    AVirtualMethodInterceptor.Unproxify(Self.Lines);
+
+  FreeAndNil(AVirtualMethodInterceptor);
+  FreeAndNil(FMessageReceiver);
+  inherited Destroy;
 end;
 
 procedure TORRichEdit.BeforeLinesInsert(const Args: TArray<TValue>);
@@ -78,6 +166,7 @@ var
   S: string;
   ANeedToPostMessage: Boolean;
 begin
+  // Sanity check on the passed in Args array
   if Length(Args) <> 2 then
     raise Exception.Create
       ('ORExtensions RichEdit Fatal Error: Incorrect number of Args');
@@ -88,37 +177,56 @@ begin
     raise Exception.Create
       ('ORExtensions RichEdit Fatal Error: Args[1] is not a string');
 
+  // Change an emty string to a space. Empty string inserts can cause errors.
   if Args[1].IsEmpty and Self.ReadOnly then Args[1] := ' ';
+
+  // Replace CRLFs with LFs and remove all leftover CRs
   S := Args[1].AsType<string>;
   S := StringReplace(S, #13#10, #10, [rfReplaceAll]);
   S := StringReplace(S, #13, '', [rfReplaceAll]);
   Args[1] := S;
 
+  // Determine if we need to post a UM_MESSAGE notification
   if not IsAutoScrollEnabled and not (csloading in ComponentState) then
   begin
     ANeedToPostMessage := False;
+	// If we don't want the RichEdit autoscrolling to the bottom
+	// (new RichEdits may scroll to the bottom under certain circumstances)
+	// then we need to discard those WM_VSCROLL messages and post a 
+	// UM_MESSAGE to allow those WM_VSCROLL messages to be handled again 
+	// when we are done
     if FIsVScrollBottomEnabled and (Args[0].AsType<Integer> = Lines.Count) then
     begin
       FIsVScrollBottomEnabled := False;
       ANeedToPostMessage := True;
     end;
 
+    // If we lock drawing then we need to post a UM_MESSAGE
     if (not FLockDrawingCalled) and CanFocus then
     begin
       LockDrawing;
       FLockDrawingCalled := True;
       ANeedToPostMessage := True;
     end;
-
+	
+    // Post a UM_MESSAGE message to our MessageReceiver if we previously
+    // determinded we had to post one.
     if ANeedToPostMessage then
       PostMessage(FMessageReceiver.Handle, UM_MESSAGE, 0, 0);
   end;
 end;
 
-procedure TORRichEdit.AfterLinesInsert(Sender: TObject);
+procedure TORRichEdit.AfterLinesInsert(Sender: TObject; AMessage: TMessage);
+// This method gets called when a UM_MESSAGE is received by FMessageReceiver.
+// The idea is that we aggregate any number of BeforeLinesInsert responses
+// into one single AfterLinesInsert update that only gets done when the Windows
+// message queue gets handled. While we may have multiple UM_MESSAGEs on the
+// queue for the same TORRichEdit, only the first one will make (all) changes,
+// and the others will just not have any effect at all.
 begin
+  // Allow WM_VSCROLL messages for scrolling to the bottom to be handled again  
   FIsVScrollBottomEnabled := True;
-
+  // Unlock drawing
   if FLockDrawingCalled then
   begin
     UnlockDrawing;
@@ -127,9 +235,13 @@ begin
 end;
 
 function TORRichEdit.StringToRTFString(const S: string): string;
-// Format a string to an rtf string compatible with streaming
+// Format a string to an rtf string compatible with streaming. This entails
+// changing CRLF, CR, and LF, to \par + CRLF.
 
   function FindUniqueSubText(const AText, ASubText: string): string;
+  // Result is a unique SubText that does not occur in AText. It is the passed
+  // in ASubText, if that is unique, or a slight variation of that if ASubText
+  // is not unique.
   begin
     Result := ASubText;
     if ContainsText(AText, ASubText) then
@@ -147,8 +259,9 @@ var
   ASubText: string;
 begin
   ASubText := FindUniqueSubText(S, '\par');
-  Result := StringReplace(StringReplace(StringReplace(StringReplace(StringReplace(
-    S, '\', '\\', [rfReplaceAll]),
+  Result := StringReplace(StringReplace(StringReplace(StringReplace(
+    StringReplace(S,
+    '\', '\\', [rfReplaceAll]),
     #13#10, ASubText, [rfReplaceAll]),
     #13, ASubText, [rfReplaceAll]),
     #10, ASubText, [rfReplaceAll]),
@@ -156,6 +269,9 @@ begin
 end;
 
 procedure TORRichEdit.AddString(const S: string);
+// Add a plain text string to the end of a TORRichEdit by streaming the
+// ORRichEdit contents to a Stream, and writing that new string to the end of
+// it. This gets around mouse capturing issues with TRichEdit (VISTAOR-37551)
 var
   AStream: TStringStream;
 begin
@@ -181,6 +297,12 @@ begin
 end;
 
 procedure TORRichEdit.InsertStringBefore(const S: string);
+// Insert a plain text string at the start of a TORRichEdit by streaming the
+// ORRichEdit contents to a Stream, and writing that new string to the beginning
+// of it. This gets around mouse capturing issues with TRichEdit (VISTAOR-37551)
+// The problem is that an RTF stream starts with a header, so we determine the
+// size of the header first, so we can insert the string after the header, and
+// before the contents of the TORRichEdit.
 
   function RTFHeaderSize(AStream: TStringStream): Integer;
   var
@@ -307,70 +429,9 @@ begin
   inherited;
 end;
 
-constructor TORRichEdit.Create(AOwner: TComponent);
+procedure Register;
 begin
-  inherited Create(AOwner);
-  FIsVScrollBottomEnabled := True;
-  FMessageReceiver := TMessageReceiver.Create(AfterLinesInsert);
-
-  FVirtualMethodInterceptor := TVirtualMethodInterceptor.Create
-    (Lines.ClassType);
-
-  FVirtualMethodInterceptor.OnBefore :=
-    procedure(Instance: TObject; Method: TRttiMethod;
-      const Args: TArray<TValue>; out DoInvoke: Boolean; out Result: TValue)
-    begin
-      if SameText('Insert', Method.Name) then BeforeLinesInsert(Args);
-    end;
-
-  FVirtualMethodInterceptor.OnException :=
-    procedure(Instance: TObject; Method: TRttiMethod;
-      const Args: TArray<TValue>; out RaiseException: Boolean;
-      TheException: Exception; out Result: TValue)
-    begin
-      RaiseException := not SameText('Insert', Method.Name) or
-        (TheException.ClassType <> EOutOfResources) or
-        (TheException.Message <> sRichEditInsertError);
-    end;
-
-  FMustScrollBackLine := -1;
-
-  FVirtualMethodInterceptor.Proxify(Self.Lines);
-end;
-
-destructor TORRichEdit.Destroy;
-var
-  AVirtualMethodInterceptor: TVirtualMethodInterceptor;
-begin
-  // We have an issue (VISTAOR-37245) reported that makes me wonder if the VMT
-  // is not assigned. I don't know how we get there, but I want to make sure we
-  // don't generate errors if that happens.
-  AVirtualMethodInterceptor := FVirtualMethodInterceptor;
-  FVirtualMethodInterceptor := nil;
-  if Assigned(AVirtualMethodInterceptor) then
-    AVirtualMethodInterceptor.Unproxify(Self.Lines);
-
-  FreeAndNil(AVirtualMethodInterceptor);
-  FreeAndNil(FMessageReceiver);
-  inherited Destroy;
-end;
-
-procedure TORRichEdit.WMKeyDown(var Message: TMessage);
-var
-  aShiftState: TShiftState;
-begin
-  aShiftState := KeyDataToShiftState(message.WParam);
-  if (ssCtrl in aShiftState) and (message.WParam = Ord('V')) then
-    ClipboardFilemanSafe;
-  if (ssShift in aShiftState) and (message.WParam = VK_INSERT) then
-    ClipboardFilemanSafe;
-  inherited;
-end;
-
-procedure TORRichEdit.WMPaste(var Message: TMessage);
-begin
-  ClipboardFilemanSafe;
-  inherited;
+  RegisterComponents('CPRS', [TORRichEdit]);
 end;
 
 end.

@@ -85,7 +85,7 @@ object pdmpUserForm: TpdmpUserForm
       FocusControl = cboProviderDEA
       ExplicitWidth = 58
     end
-    object cboProviderDEA: TORComboBox
+    object cboProviderDEA: TORCheckComboBox
       AlignWithMargins = True
       Left = 3
       Top = 22
@@ -113,6 +113,11 @@ object pdmpUserForm: TpdmpUserForm
       OnDblClick = cboProviderDEADblClick
       OnNeedData = cboProviderDEANeedData
       CharsNeedMatch = 1
+      MainCheckBoxCaption = 'Include Non-VA Providers'
+      MainCheckBoxVisible = True
+      MainCheckBoxAlignment = calBottom
+      DropdownStyle = ddsControl
+      MainCheckBoxAlignment = calBottom
     end
   end
 end

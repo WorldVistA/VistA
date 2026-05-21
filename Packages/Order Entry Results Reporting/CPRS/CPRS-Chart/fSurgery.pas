@@ -788,6 +788,7 @@ end;
 procedure TfrmSurgery.popNoteMemoFindClick(Sender: TObject);
 begin
   inherited;
+  memSurgery.SelStart := 0;
   SendMessage(TRichEdit(popNoteMemo.PopupComponent).Handle, WM_VSCROLL,
     SB_TOP, 0);
   with dlgFindText do

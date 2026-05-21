@@ -6,7 +6,8 @@ uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   fHSplit, StdCtrls, ExtCtrls, Menus, ORCtrls, Buttons, uProbs,
   Grids, Vawrgrid, ORfn, uCore, fProbEdt, uConst, ComCtrls,
-  VA508AccessibilityManager, VAUtils, fBase508Form, iCoverSheetIntf;
+  VA508AccessibilityManager, VAUtils, fBase508Form, iCoverSheetIntf,
+  uSpecialAuthorityEx;
 
 type
   TfrmProblems = class(TfrmHSplit)
@@ -162,7 +163,7 @@ type
     procedure LoadUserCats(AList:Tstringlist);
     procedure LoadUserProbs(AList:TstringList);
     procedure AddProblem;
-    procedure EditProblem(const why:char);
+    procedure EditProblem(const why: TProblemActionReason);
     procedure LoadPatientParams(AList:TstringList);
     procedure LoadUserParams(Alist:TstringList);
     procedure UpdateProblem(const why:char;Line: string;AllProblemsIndex:integer);
@@ -222,7 +223,7 @@ implementation
 
 uses fFrame, fProbFlt, fProbLex, rProbs, rCover, fRptBox, rCore,
      fProbCmt, fEncnt, fReportsPrint, fReports, rPCE, DateUtils, VA2006Utils,
-     VA508AccessibilityRouter, uWriteAccess;
+     VA508AccessibilityRouter, uWriteAccess, rSpecialAuthority;
 
 {$R *.DFM}
 
@@ -322,7 +323,7 @@ var
   FilterChanged: boolean;
   AllProblemsIndex: integer;
 begin
-  if PLPt = nil then
+  if PLPtQualifiers = nil then
   begin
     InfoBox(TX_INVALID_PATIENT, TC_NO_PATIENT, MB_OK or MB_ICONWARNING);
     Exit;
@@ -511,7 +512,7 @@ begin
             if not EncounterPresent then exit;
             pProviderID := Encounter.Provider;
             pProviderName := Encounter.ProviderName ;
-            EditProblem('E');
+            EditProblem(parEdit);
           end
       end;
     500: {Remove}
@@ -530,7 +531,7 @@ begin
             if not EncounterPresent then exit;
             pProviderID := Encounter.Provider;
             pProviderName := Encounter.ProviderName ;
-            EditProblem('R');
+            EditProblem(parRemove);
           end;
       end;
     550: {Restore}
@@ -589,7 +590,7 @@ begin
                   ProbRec.AddNewComment(Piece(cmt, U, 3));
                   ut := '';
                   If PLUser.usPrimeUser then ut := '1';
-                  EditSave(aList,ProblemIFN, pProviderID, PLPt.ptVAMC, ut, ProbRec.FilerObject, '');
+                  EditSave(aList,ProblemIFN, pProviderID, PLPtQualifiers.Facility, ut, ProbRec.FilerObject, '');
                   LoadPatientProblems(AList, PlUser.usViewAct[1], True);
                 end ;
             finally
@@ -981,10 +982,23 @@ begin
 end;
 
 procedure TfrmProblems.LoadPatientParams(AList:TstringList);
+var
+  Error: string;
 begin
   InitPt(aList,Patient.DFN);
-  KillObj(@PLPt);
-  PLPt := TPLPt.create(Alist);
+  FreeAndNil(PLPtQualifiers);
+  PLPtQualifiers := CreateProblemListPatientQualifiers(Error);
+  if (aList[1] <> '') then
+  begin
+    if PLPTQualifiers = nil then
+    begin
+      PLPTQualifiers := TSpecialAuthoritiesExConverter.ToObject<TProblemListPatientQualifiers>('{}');
+      PLPTQualifiers.PackageLink := PROBLEM_LIST_PACKAGE;
+    end;
+    PLPtQualifiers.DeathIndicator := aList[1];
+  end;
+  if Error <> '' then
+    ShowMessage(Error);
 end;
 
 procedure TfrmProblems.ClearGrid;
@@ -1035,7 +1049,7 @@ begin  {Body}
     ClearGrid;
     inactI := 0;
     inactS := 0;
-    if PLPt = nil then
+    if PLPtQualifiers = nil then
       begin
         InfoBox(TX_INVALID_PATIENT, TC_NO_PATIENT, MB_OK or MB_ICONWARNING);
         AList.Clear;
@@ -1345,8 +1359,8 @@ const
 var
   newprob: string;
 begin
-  if (PLPt.ptDead<>'') then {Check for dead patient}
-    if InfoBox('This Patient has been deceased since ' + PLPt.ptDead + #13#10 +
+  if (PLPtQualifiers.DeathIndicator<>'') then {Check for dead patient}
+    if InfoBox('This Patient has been deceased since ' + Piece(PLPtQualifiers.DeathIndicator, U, 2) + #13#10 +
     '        Proceed with problem addition?', 'Confirmation', MB_YESNO or MB_ICONQUESTION) = IDNO then
       exit; {bail out - if don't want to add to dead}
   {problems are in the form of: ien^.01^icd^icdifn , although only the .01 is required}
@@ -1386,11 +1400,11 @@ begin
       pnlProbDlg.Visible := True;
       pnlProbDlg.BringToFront ;
       dlgProbs:=TFrmDlgProb.create(pnlProbDlg);
-      dlgProbs.HorzScrollBar.Range := dlgProbs.ClientWidth;
-      dlgProbs.VertScrollBar.Range := dlgProbs.ClientHeight;
+//      dlgProbs.HorzScrollBar.Range := dlgProbs.ClientWidth;
+//      dlgProbs.VertScrollBar.Range := dlgProbs.ClientHeight;
       dlgProbs.parent:=pnlProbDlg;
       dlgProbs.Align := alClient ;
-      dlgProbs.Reason:='A';
+      dlgProbs.Reason:= parAdd;
       dlgProbs.SubjProb:=newprob;
       dlgProbs.show;
       PostMessage(dlgProbs.Handle, UM_TAKEFOCUS, 0, 0);
@@ -1404,7 +1418,7 @@ begin
       'Information', MB_OK or MB_ICONINFORMATION);
 end;
 
-procedure TfrmProblems.EditProblem(const why: char);
+procedure TfrmProblems.EditProblem(const why: TProblemActionReason);
 var
   prob: string;
   reas: string;
@@ -1416,9 +1430,9 @@ begin
       bbCancel.Enabled := False ;
       bbOtherProb.enabled := false; {don't let them invoke lexicon till edit completed}
       case why of
-        'E','e','C','c' : reas := 'Edit Problem';
-        'D','d'         : reas := 'Display Problem';
-        'R','r'         : reas := 'Remove Problem';
+        parEdit, parComment : reas := 'Edit Problem';
+        parDisplay          : reas := 'Display Problem';
+        parRemove           : reas := 'Remove Problem';
       end;
       pnlRight.Caption   := lblProbList.caption ;
       lblProbList.caption     := reas;
@@ -1428,8 +1442,8 @@ begin
       //prevents JAWS from reading the top item in the wgProbData caption listbox when hidden from view.
       pnlProbDlg.SetFocus;
       dlgProbs           := TFrmDlgProb.create(pnlProbDlg);
-      dlgProbs.HorzScrollBar.Range := dlgProbs.ClientWidth;
-      dlgProbs.VertScrollBar.Range := dlgProbs.ClientHeight;
+//      dlgProbs.HorzScrollBar.Range := dlgProbs.ClientWidth;
+//      dlgProbs.VertScrollBar.Range := dlgProbs.ClientHeight;
       dlgProbs.parent    := pnlProbDlg;
       dlgProbs.Align     := alClient ;
       dlgProbs.Reason    := why;
@@ -1444,9 +1458,9 @@ begin
   else
     begin
       case why of
-        'E','e','C','c' : reas := 'Edited';
-        'D','d'         : reas := 'Displayed';
-        'R','r'         : reas := 'Removed';
+        parEdit, parComment : reas := 'Edited';
+        parDisplay          : reas := 'Displayed';
+        parRemove           : reas := 'Removed';
       end;
       InfoBox('Current Add/Edit/Display activity must be completed' + #13#10 +
         'before another record may be ' + reas,
@@ -1560,7 +1574,7 @@ begin
         if InfoBox(TX_RESTORE_EDIT, TC_RESTORE_EDIT, MB_YESNO or MB_ICONWARNING) = IDYES then
         begin
           AProbRec.Status := 'A';
-          EditProblem('C');
+          EditProblem(parComment);
         end
         else
           Exit;
@@ -1740,7 +1754,7 @@ end;
 procedure TfrmProblems.mnuViewSaveClick(Sender: TObject);
 begin
   inherited;
-  if PLPt = nil then
+  if PLPtQualifiers = nil then
     begin
       InfoBox(TX_INVALID_PATIENT, TC_NO_PATIENT, MB_OK or MB_ICONWARNING);
       Exit;
@@ -1759,7 +1773,7 @@ end;
 procedure TfrmProblems.mnuViewRestoreDefaultClick(Sender: TObject);
 begin
   inherited;
-  if PLPt = nil then
+  if PLPtQualifiers = nil then
     begin
       InfoBox(TX_INVALID_PATIENT, TC_NO_PATIENT, MB_OK or MB_ICONWARNING);
       Exit;
@@ -1786,7 +1800,7 @@ var
   i, j: integer;
 begin
   inherited;
-  if PLPt = nil then
+  if PLPtQualifiers = nil then
     begin
       InfoBox(TX_INVALID_PATIENT, TC_NO_PATIENT, MB_OK or MB_ICONWARNING);
       Exit;
@@ -1824,7 +1838,7 @@ end;
 procedure TfrmProblems.RequestPrint;
 begin
   inherited;
-  if PLPt = nil then
+  if PLPtQualifiers = nil then
     begin
       InfoBox(TX_INVALID_PATIENT, TC_NO_PATIENT, MB_OK or MB_ICONWARNING);
       Exit;
@@ -1852,7 +1866,7 @@ begin
       dlgProbs.Parent := OldParent;
   end;
   if Assigned(dlgProbs) then
-    dlgProbs.SetFontSize( MainFontSize);
+    dlgProbs.ResetSizes;
   mnuOptimizeFieldsClick(self);
 end;
 

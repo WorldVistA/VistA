@@ -7,7 +7,7 @@ uses
   System.Classes, Vcl.Graphics, fAutoSz,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, ORCtrls, Vcl.StdCtrls, Vcl.ExtCtrls,
   VA508AccessibilityManager, Vcl.Buttons, System.Actions, Vcl.ActnList,
-  u508Button;
+  u508Button, ORCheckComboBox, uMisc;
 
 type
   TfrmNewAllergyCheck = class(TfrmAutoSz)
@@ -20,7 +20,7 @@ type
     pnlButton: TPanel;
     btnSendAlertBtn: u508Button.TButton;
     pnlOptRecipientsSub: TPanel;
-    OptRecip: TORComboBox;
+    OptRecip: TORCheckComboBox;
     pnlOptRecipientsButtons: TPanel;
     btnRemove: u508Button.TButton;
     btnAdd: u508Button.TButton;
@@ -52,6 +52,9 @@ type
     procedure SelRecipEnter(Sender: TObject);
     procedure SelRecipKeyPress(Sender: TObject; var Key: Char);
     procedure FormDestroy(Sender: TObject);
+    // procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure OptRecipMainCheckboxClick(Sender: TObject);
+    procedure OptRecipMouseClick(Sender: TObject);
   private
     { Private declarations }
     fOrderNo:string;
@@ -70,7 +73,8 @@ implementation
 
 {$R *.dfm}
 
-uses fAllgyAR, ORNet, uCore, rCore, ORfn, uORLists, uSimilarNames, VAUtils;
+uses fAllgyAR, ORNet, uCore, rCore, ORfn, uORLists, uSimilarNames, VAUtils,
+  VAShared.UTStringsHelper, VA508AccessibilityRouter;
 
 Function ExecuteNewAllergyCheck(aMatchingDrugs: TStringList;
   aNewAllergy: string): Boolean;
@@ -194,6 +198,7 @@ begin
   fOrderNo := '';
   Check.TabStop := ScreenReaderActive;
   fRecipientList := TORStringList.Create;
+  OptRecip.MainCheckBoxVisible := IncludeNonVAProviders(OptRecip);
 end;
 
 procedure TfrmNewAllergyCheck.FormDestroy(Sender: TObject);
@@ -228,6 +233,25 @@ begin
   // If enter is pressed then try to add to the recipients
   if Key = VK_RETURN then
     OptRecipDblClick(Self);
+end;
+
+procedure TfrmNewAllergyCheck.OptRecipMainCheckboxClick(Sender: TObject);
+begin
+  inherited;
+  var ALastData := OptRecip.SelectedDataString;
+  OptRecip.ReInitLongList;
+  if ALastData <> OptRecip.SelectedDataString then
+    OptRecipChange(OptRecip);
+end;
+
+procedure TfrmNewAllergyCheck.OptRecipMouseClick(Sender: TObject);
+begin
+  inherited;
+  if (OptRecip.ItemIndex < 0) or (OptRecip.Text = '') or (OptRecip.ItemID = '') then
+    Exit;
+  if OptRecip.ItemIndex > -1 then
+  with OptRecip do
+    OptRecip.Items.Add(items[itemIndex]);
 end;
 
 procedure TfrmNewAllergyCheck.OptRecipxxNeedData(Sender: TObject;     // NJC - 1 090717

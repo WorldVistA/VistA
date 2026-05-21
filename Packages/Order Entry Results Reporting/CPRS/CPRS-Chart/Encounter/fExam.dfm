@@ -1,175 +1,295 @@
 inherited frmExams: TfrmExams
-  Left = 509
-  Top = 223
+  Tag = 24
   Caption = 'Encounter Examinations'
-  ClientHeight = 458
-  ExplicitHeight = 503
-  PixelsPerInch = 96
-  TextHeight = 16
-  object lblExamResults: TLabel [0]
-    Left = 8
-    Top = 334
-    Width = 45
-    Height = 16
-    Caption = 'Results'
-  end
-  inherited lblSection: TLabel
-    Width = 82
-    Caption = 'Exam Section'
-    ExplicitWidth = 82
-  end
-  inherited lblComment: TLabel
-    Left = 8
-    Top = 376
-    ExplicitLeft = 8
-    ExplicitTop = 376
-  end
-  inherited bvlMain: TBevel
-    Height = 194
-    ExplicitHeight = 194
-  end
-  object lblUCUM2: TLabel [5]
-    Left = 253
-    Top = 352
-    Width = 61
-    Height = 16
-    Caption = 'lblUCUM2'
-    Visible = False
-  end
-  object lblUCUM: TLabel [6]
-    Left = 253
-    Top = 331
-    Width = 253
-    Height = 16
-    Anchors = [akRight, akBottom]
-    Caption = 'Unified Code for Units of Measure  (UCUM)'
-    Visible = False
-  end
-  object lblMag: TLabel [7]
-    Left = 157
-    Top = 331
-    Width = 66
-    Height = 16
-    Anchors = [akRight, akBottom]
-    Caption = 'Magnitude:'
-    Visible = False
-  end
-  inherited btnOK: TBitBtn
-    Top = 434
-    TabOrder = 7
-  end
-  inherited btnCancel: TBitBtn
-    Top = 434
-    TabOrder = 8
-  end
-  inherited pnlGrid: TPanel
-    Width = 610
-    TabOrder = 1
-    ExplicitWidth = 610
-    inherited lstCaptionList: TCaptionListView
-      Width = 610
-      Columns = <
-        item
-          Caption = 'Results'
-          Width = 100
+  ClientHeight = 586
+  ClientWidth = 884
+  StyleElements = [seFont, seClient, seBorder]
+  ScaleMethod = smManual
+  ExplicitWidth = 900
+  ExplicitHeight = 625
+  TextHeight = 13
+  inherited pnlMainAncestor: TPanel
+    Width = 884
+    Height = 355
+    StyleElements = [seFont, seClient, seBorder]
+    ExplicitWidth = 884
+    ExplicitHeight = 355
+    inherited pnlGrid: TPanel
+      Width = 800
+      Height = 349
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitWidth = 800
+      ExplicitHeight = 349
+      inherited lstCaptionList: TCaptionListView
+        Width = 790
+        Height = 253
+        Columns = <
+          item
+            Caption = 'Results'
+          end
+          item
+            AutoSize = True
+            Caption = 'Selected Exams'
+            Tag = 1
+          end>
+        Caption = 'Exams'
+        Pieces = '1,2'
+        ExplicitWidth = 790
+        ExplicitHeight = 253
+      end
+      inherited pnlComments: TPanel
+        Top = 302
+        Width = 796
+        TabOrder = 2
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitTop = 302
+        ExplicitWidth = 796
+        inherited lblComment: TLabel
+          Width = 790
+          StyleElements = [seFont, seClient, seBorder]
         end
-        item
-          Caption = 'Selected Exams'
-          Tag = 1
-          Width = 300
-        end>
-      Caption = 'Exams'
-      Pieces = '1,2'
-      ExplicitWidth = 433
+        inherited edtComment: TCaptionEdit
+          Width = 790
+          StyleElements = [seFont, seClient, seBorder]
+          ExplicitWidth = 790
+        end
+      end
+      object gridMagUCUMData: TGridPanel
+        Left = 0
+        Top = 259
+        Width = 796
+        Height = 43
+        Align = alBottom
+        BevelOuter = bvNone
+        ColumnCollection = <
+          item
+            Value = 20.000000000000000000
+          end
+          item
+            Value = 12.000000000000000000
+          end
+          item
+            Value = 68.000000000000000000
+          end>
+        ControlCollection = <
+          item
+            Column = 0
+            Control = pnlResult
+            Row = 0
+          end
+          item
+            Column = 2
+            Control = pnlUCUM
+            Row = 0
+          end
+          item
+            Column = 1
+            Control = pnlMagnitude
+            Row = 0
+          end>
+        ParentBackground = False
+        RowCollection = <
+          item
+            Value = 100.000000000000000000
+          end>
+        TabOrder = 1
+        StyleElements = [seFont, seBorder]
+        object pnlResult: TPanel
+          Left = 0
+          Top = 0
+          Width = 159
+          Height = 43
+          Align = alClient
+          AutoSize = True
+          BevelOuter = bvNone
+          TabOrder = 0
+          object lblExamResults: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 153
+            Height = 13
+            Align = alTop
+            Caption = 'Results'
+            ExplicitWidth = 35
+          end
+          object cboExamResults: TORComboBox
+            Tag = 60
+            AlignWithMargins = True
+            Left = 3
+            Top = 19
+            Width = 153
+            Height = 21
+            Margins.Top = 0
+            Style = orcsDropDown
+            Align = alTop
+            AutoSelect = True
+            Caption = 'Results'
+            Color = clWindow
+            DropDownCount = 8
+            Enabled = False
+            ItemHeight = 13
+            ItemTipColor = clWindow
+            ItemTipEnable = True
+            ListItemsOnly = False
+            LongList = False
+            LookupPiece = 0
+            MaxLength = 0
+            Pieces = '2'
+            Sorted = False
+            SynonymChars = '<>'
+            TabOrder = 0
+            Text = ''
+            FlatCheckBoxes = False
+            OnChange = cboExamResultsChange
+            CharsNeedMatch = 1
+          end
+        end
+        object pnlUCUM: TPanel
+          Left = 255
+          Top = 0
+          Width = 541
+          Height = 43
+          Align = alClient
+          AutoSize = True
+          BevelOuter = bvNone
+          TabOrder = 2
+          object lblUCUM: TLabel
+            AlignWithMargins = True
+            Left = 0
+            Top = 3
+            Width = 538
+            Height = 13
+            Margins.Left = 0
+            Align = alTop
+            Caption = 'Unified Code for Units of Measure  (UCUM)'
+            Visible = False
+            ExplicitWidth = 203
+          end
+          object lblUCUM2: TLabel
+            AlignWithMargins = True
+            Left = 0
+            Top = 22
+            Width = 538
+            Height = 13
+            Margins.Left = 0
+            Align = alTop
+            Caption = 'lblUCUM2'
+            Layout = tlCenter
+            Visible = False
+            ExplicitWidth = 48
+          end
+        end
+        object pnlMagnitude: TPanel
+          Left = 159
+          Top = 0
+          Width = 96
+          Height = 43
+          Align = alClient
+          AutoSize = True
+          BevelOuter = bvNone
+          TabOrder = 1
+          object lblMag: TLabel
+            AlignWithMargins = True
+            Left = 3
+            Top = 3
+            Width = 90
+            Height = 13
+            Align = alTop
+            Caption = 'Magnitude:'
+            Visible = False
+            ExplicitWidth = 53
+          end
+          object edtMag: TCaptionEdit
+            AlignWithMargins = True
+            Left = 3
+            Top = 19
+            Width = 90
+            Height = 21
+            Margins.Top = 0
+            Align = alTop
+            ParentShowHint = False
+            ShowHint = True
+            TabOrder = 0
+            Visible = False
+            OnChange = edtMagChange
+            OnExit = edtMagExit
+            OnKeyPress = edtMagKeyPress
+            Caption = '0'
+          end
+        end
+      end
+    end
+    inherited pnlGridRight: TPanel
+      Left = 806
+      Height = 355
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitLeft = 806
+      ExplicitHeight = 355
+      inherited btnSelectAll: TButton
+        TabStop = True
+      end
     end
   end
-  inherited edtComment: TCaptionEdit
-    Left = 8
-    Top = 391
-    TabOrder = 4
-    ExplicitLeft = 8
-    ExplicitTop = 391
-  end
-  object cboExamResults: TORComboBox [12]
-    Tag = 60
-    Left = 8
-    Top = 349
-    Width = 121
-    Height = 24
-    Style = orcsDropDown
-    AutoSelect = True
-    Caption = 'Results'
-    Color = clWindow
-    DropDownCount = 8
-    Enabled = False
-    ItemHeight = 16
-    ItemTipColor = clWindow
-    ItemTipEnable = True
-    ListItemsOnly = False
-    LongList = False
-    LookupPiece = 0
-    MaxLength = 0
-    Pieces = '2'
-    Sorted = False
-    SynonymChars = '<>'
-    TabOrder = 3
-    Text = ''
-    OnChange = cboExamResultsChange
-    CharsNeedMatch = 1
-  end
-  inherited btnRemove: TButton
-    Left = 541
-    Top = 393
-    TabOrder = 6
-    ExplicitLeft = 541
-    ExplicitTop = 393
-  end
-  inherited btnSelectAll: TButton
-    Left = 541
-    Top = 331
-    TabOrder = 2
-    TabStop = True
-    ExplicitLeft = 541
-    ExplicitTop = 331
+  inherited pnlBottomAncestor: TPanel
+    Top = 559
+    Width = 884
+    Constraints.MinHeight = 25
+    StyleElements = [seFont, seClient, seBorder]
+    ExplicitTop = 559
+    ExplicitWidth = 884
+    inherited btnOK: TBitBtn
+      Left = 725
+      ExplicitLeft = 725
+    end
+    inherited btnCancel: TBitBtn
+      Left = 806
+      ExplicitLeft = 806
+    end
   end
   inherited pnlMain: TPanel
-    TabOrder = 0
-    inherited lbxSection: TORListBox
-      Tag = 80
-    end
-    inherited pnlLeft: TPanel
-      inherited lbSection: TORListBox
-        TabOrder = 0
+    Width = 884
+    StyleElements = [seFont, seClient, seBorder]
+    ExplicitWidth = 884
+    inherited grdMain: TGridPanel
+      Width = 884
+      StyleElements = [seFont, seClient, seBorder]
+      ExplicitWidth = 884
+      inherited lblSection: TLabel
+        Width = 439
         Caption = 'Exam Section'
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitWidth = 65
+      end
+      inherited lblList: TLabel
+        Left = 445
+        Width = 436
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitLeft = 445
+      end
+      inherited lbSection: TORListBox
+        Width = 436
+        StyleElements = [seFont, seClient, seBorder]
+        Caption = 'Exam Section'
+        ExplicitWidth = 436
+      end
+      inherited lbxSection: TORListBox
+        Left = 445
+        Width = 436
+        StyleElements = [seFont, seClient, seBorder]
+        ExplicitLeft = 445
+        ExplicitWidth = 436
       end
       inherited btnOther: TButton
         Tag = 24
+        Width = 436
         Caption = 'Other Exam...'
-        TabOrder = 1
+        ExplicitWidth = 436
       end
     end
   end
-  object edtMag: TCaptionEdit [16]
-    Left = 157
-    Top = 349
-    Width = 80
-    Height = 24
-    Anchors = [akRight, akBottom]
-    ParentShowHint = False
-    ShowHint = True
-    TabOrder = 5
-    Visible = False
-    OnChange = edtMagChange
-    OnExit = edtMagExit
-    OnKeyPress = edtMagKeyPress
-    Caption = '0'
-  end
   inherited amgrMain: TVA508AccessibilityManager
     Data = (
-      (
-        'Component = cboExamResults'
-        'Label = lblExamResults'
-        'Status = stsOK')
       (
         'Component = edtComment'
         'Label = lblComment'
@@ -188,9 +308,6 @@ inherited frmExams: TfrmExams
         'Label = lblList'
         'Status = stsOK')
       (
-        'Component = pnlLeft'
-        'Status = stsDefault')
-      (
         'Component = lbSection'
         'Label = lblSection'
         'Status = stsOK')
@@ -208,6 +325,36 @@ inherited frmExams: TfrmExams
         'Status = stsDefault')
       (
         'Component = frmExams'
+        'Status = stsDefault')
+      (
+        'Component = pnlMainAncestor'
+        'Status = stsDefault')
+      (
+        'Component = lstCaptionList'
+        'Status = stsDefault')
+      (
+        'Component = pnlComments'
+        'Status = stsDefault')
+      (
+        'Component = pnlGridRight'
+        'Status = stsDefault')
+      (
+        'Component = pnlBottomAncestor'
+        'Status = stsDefault')
+      (
+        'Component = gridMagUCUMData'
+        'Status = stsDefault')
+      (
+        'Component = pnlResult'
+        'Status = stsDefault')
+      (
+        'Component = pnlUCUM'
+        'Status = stsDefault')
+      (
+        'Component = cboExamResults'
+        'Status = stsDefault')
+      (
+        'Component = pnlMagnitude'
         'Status = stsDefault')
       (
         'Component = edtMag'

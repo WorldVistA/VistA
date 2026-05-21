@@ -5,10 +5,16 @@
   Developers: Danila Manapsal, Don Craven, Joel Ivey, Herlan Westra
   Description: Contains TRPCBroker and related components.
   Unit: Loginfrm code supporting Login form.
-  Current Release: Version 1.1 Patch 72
+  Current Release: Version 1.1 Patch 74
   *************************************************************** }
 
 { **************************************************
+  Changes in XWB*1.1*74 (CLG 05/30/2024) XWB*1.1*74
+  1. Updated RPC Version to version 74.
+
+  Changes in XWB*1.1*73 (RGG 07/19/2021) XWB*1.1*73
+  1. Updated RPC Version to version 73.
+
   Changes in XWB*1.1*72 (RGG 07/30/2020) XWB*1.1*72
   1. Updated RPC Version to version 72.
 
@@ -387,8 +393,8 @@ begin
   // make form stay on top of others so it can be found
   { adjust appearance per user's preferences }
   SignonConfiguration := TSignonConfiguration.Create;
+  DefaultSignonConfiguration := TSignonValues.Create;
   try
-    DefaultSignonConfiguration := TSignonValues.Create;
     DefaultSignonConfiguration.BackColor := introText.Color;
     DefaultSignonConfiguration.Height := Height;
     DefaultSignonConfiguration.Width := Width;
@@ -435,8 +441,10 @@ begin
     introText.Font := InitialValues.Font;
   finally
     //p73 change from FreeAndNil to CleanupInstance
-    SignonConfiguration.CleanupInstance;        //p73
-    DefaultSignonConfiguration.CleanupInstance; //p73
+    FreeAndNil(SignonConfiguration);
+    FreeAndNil(DefaultSignonConfiguration);
+    //SignonConfiguration.CleanupInstance;        //p73
+    //DefaultSignonConfiguration.CleanupInstance; //p73
   end;
   FChngVerify := False;
 end;
@@ -496,6 +504,8 @@ begin
     WriteRegData(HKCU, REG_SIGNON, 'SignonPos', strPosition);
   end;
   Application.HelpFile := OrigHelp; // Restore helpfile.
+  if Assigned(DefaultSignonConfiguration) then
+    FreeAndNil(DefaultSignonConfiguration);
 end;
 
 { --------------------- TfrmSignon.introTextURLClick --------------

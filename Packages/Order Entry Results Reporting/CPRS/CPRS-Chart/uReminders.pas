@@ -375,9 +375,12 @@ type
 
   TTreeChangeNotifyEvent = procedure(Proc: TNotifyEvent) of object;
 
-  TRemForm = record
+  TRemForm = class
+  private
+    FPCEObj: TPCEData;
+    procedure SetPCEObj(aPCEObj: TPCEData);
+  public
     Form: TForm;
-    PCEObj: TPCEData;
     RightPanel: TPanel;
     CanFinishProc: TRemCanFinishProc;
     DisplayPCEProc: TRemDisplayPCEProc;
@@ -386,6 +389,9 @@ type
     DrawerRemoveReminderTreeChange: TTreeChangeNotifyEvent;
     NewNoteRE: ORExtensions.TRichEdit;
     NoteList: TORListBox;
+    constructor Create;
+    destructor Destroy; override;
+    property PCEObj: TPCEData read FPCEObj write SetPCEObj;
   end;
 
   TResyncObj = class
@@ -395,7 +401,7 @@ type
   end;
 
 var
-  RemForm: TRemForm;
+  RemForm: TRemForm = nil;
   NotPurposeValue: string;
   WHRemPrint: string;
   InitialRemindersLoaded: boolean = FALSE;
@@ -528,7 +534,8 @@ uses
   fMHTest, rPCE, rTemplates, dShared, uTemplateFields, fIconLegend,
   fReminderTree, uInit, VAUtils, VA508AccessibilityRouter,
   VA508AccessibilityManager, uDlgComponents, fBase508Form,
-  System.Types, System.UITypes, uMisc, fPDMPMgr, fFrame, uPDMP, uResponsiveGUI;
+  System.Types, System.UITypes, uMisc, fPDMPMgr, fFrame, uPDMP, uResponsiveGUI,
+  VAShared.UTStringsHelper, VAPieceHelper;
 
 type
   TRemFolder = (rfUnknown, rfDue, rfApplicable, rfNotApplicable,
@@ -571,6 +578,16 @@ type
     property Edit: TEdit read FEdit write FEdit;
     property OnDestroy: TNotifyEvent read FOnDestroy write FOnDestroy;
     property PrintVis: String read FPrintVis write FPrintVis;
+  end;
+
+  TReminderDict = class(TDictionary<string, TORTreeNode>)
+  private
+    function GetNode(aID: string): TORTreeNode;
+    procedure SetNode(aID: string; const Value: TORTreeNode);
+    function GetExist(aID: string): Boolean;
+  public
+    property Exist[aID: string]: Boolean read GetExist;
+    property Node[aID: string]: TORTreeNode read GetNode write SetNode; default;
   end;
 
 var
@@ -2002,223 +2019,276 @@ end;
   DUE      0=Applicable, 1=Due, 2=Not Applicable
   DIALOG   1=Active Dialog Exists
 }
+
 procedure BuildReminderTree(Tree: TORTreeView);
+
+  function AddNodeToTree(aData: String; aParentNode: TORTreeNode = nil): TORTreeNode;
+  begin
+    If assigned(aParentNode) then
+      Result := TORTreeNode(Tree.Items.AddChild(aParentNode, ''))
+    else
+      Result := TORTreeNode(Tree.Items.Add(nil, ''));
+    Result.StringData := aData;
+  end;
+
+  procedure SetExpandedIDStr(const aValue: string; aRemDict: TReminderDict);
+  var
+    i: integer;
+    Node: TORTreeNode;
+    NList: string;
+    Srch: string;
+  begin
+    NList := aValue;
+    repeat
+      i := pos(Tree.NodeDelim, NList);
+      if (i = 0) then i := length(NList) + 1;
+      Srch := copy(NList, 1, i - 1);
+      node := aRemDict[Srch];
+      if (assigned(Node)) then
+        Node.Expand(FALSE);
+      Nlist := copy(NList, i + 1, MaxInt);
+    until (NList = '');
+  end;
+
 var
   ExpandedStr: string;
   TopID1, TopID2: string;
   SelID1, SelID2: string;
   i, j: integer;
-  NeedLost: boolean;
-  tmp, Data, LostCat, Code: string;
+  tmp, LostCat, nodeID, catID: string;
   Node: TORTreeNode;
   M: TMethod;
   Rem: TReminder;
   OpenDue, Found: boolean;
-
-  function Add2Tree(Folder: TRemFolder; CatID: string; Node: TORTreeNode = nil)
-    : TORTreeNode;
-  begin
-    if (Folder = rfUnknown) or (Folder in GetRemFolders) then
-    begin
-      if (CatID = LostCatID) then
-      begin
-        if (NeedLost) then
-        begin
-          (Tree.Items.AddFirst(nil, '') as TORTreeNode).StringData :=
-            LostCatString;
-          NeedLost := FALSE;
-        end;
-      end;
-
-      if (not Assigned(Node)) then
-        Node := Tree.FindPieceNode(CatID, 1);
-      if (Assigned(Node)) then
-      begin
-        Result := (Tree.Items.AddChild(Node, '') as TORTreeNode);
-        Result.StringData := Data;
-      end
-      else
-        Result := nil;
-    end
-    else
-      Result := nil;
-  end;
-
+  saveExpanding: TTVExpandingEvent;
+  saveExpanded: TTVExpandedEvent;
+  sortedOther: TStringList;
+  s, Data, tmpPStr: TPiece;
+  RemDict: TReminderDict;
 begin
   if (not Assigned(Tree)) then
     exit;
-  Tree.Items.BeginUpdate;
+  RemDict := TReminderDict.Create(101);
   try
-    Tree.NodeDelim := U;
-    Tree.NodePiece := 2;
-    M.Code := @GetImageIndex;
-    M.Data := nil;
-    Tree.OnGetImageIndex := TTVExpandedEvent(M);
-    Tree.OnGetSelectedIndex := TTVExpandedEvent(M);
-    M.Code := @RemContextPopup;
-    Tree.OnContextPopup := TContextPopupEvent(M);
+    Tree.Items.BeginUpdate;
+    try
+      saveExpanding := Tree.OnExpanding;
+      saveExpanded := Tree.OnExpanded;
+      try
+        Tree.OnExpanding := nil;
+        Tree.OnExpanded := nil;
+        Tree.NodeDelim := U;
+        Tree.NodePiece := 2;
+        M.Code := @GetImageIndex;
+        M.Data := nil;
+        Tree.OnGetImageIndex := TTVExpandedEvent(M);
+        Tree.OnGetSelectedIndex := TTVExpandedEvent(M);
+        M.Code := @RemContextPopup;
+        Tree.OnContextPopup := TContextPopupEvent(M);
 
-    if (Assigned(Tree.TopItem)) then
-    begin
-      TopID1 := Tree.GetNodeID(TORTreeNode(Tree.TopItem), 1, IncludeParentID);
-      TopID2 := Tree.GetNodeID(TORTreeNode(Tree.TopItem), 1);
-    end
-    else
-      TopID1 := U;
-
-    if (Assigned(Tree.Selected)) then
-    begin
-      SelID1 := Tree.GetNodeID(TORTreeNode(Tree.Selected), 1, IncludeParentID);
-      SelID2 := Tree.GetNodeID(TORTreeNode(Tree.Selected), 1);
-    end
-    else
-      SelID1 := U;
-
-    ExpandedStr := Tree.GetExpandedIDStr(1, IncludeParentID);
-    OpenDue := (ExpandedStr = '');
-
-    Tree.Items.Clear;
-    NeedLost := TRUE;
-
-    if (rfDue in GetRemFolders) then
-      (Tree.Items.Add(nil, '') as TORTreeNode).StringData := DueCatString;
-    if (rfApplicable in GetRemFolders) then
-      (Tree.Items.Add(nil, '') as TORTreeNode).StringData := ApplCatString;
-    if (rfNotApplicable in GetRemFolders) then
-      (Tree.Items.Add(nil, '') as TORTreeNode).StringData := NotApplCatString;
-    if (rfEvaluated in GetRemFolders) then
-      (Tree.Items.Add(nil, '') as TORTreeNode).StringData := EvaluatedCatString;
-    if (rfOther in GetRemFolders) then
-      (Tree.Items.Add(nil, '') as TORTreeNode).StringData := OtherCatString;
-
-    for i := 0 to EvaluatedReminders.Count - 1 do
-    begin
-      Data := RemCode + EvaluatedReminders[i];
-      tmp := Piece(Data, U, 6);
-      // if(Tmp = '1') then Add2Tree(rfDue, DueCatID)
-      if (tmp = '1') or (tmp = '3') or (tmp = '4') then
-        Add2Tree(rfDue, DueCatID) // AGP Error code change 26.8
-      else if (tmp = '0') then
-        Add2Tree(rfApplicable, ApplCatID)
-      else
-        Add2Tree(rfNotApplicable, NotApplCatID);
-      Add2Tree(rfEvaluated, EvaluatedCatID);
-    end;
-
-    if (rfOther in GetRemFolders) and (OtherReminders.Count > 0) then
-    begin
-      for i := 0 to OtherReminders.Count - 1 do
-      begin
-        tmp := OtherReminders[i];
-        if (Piece(tmp, U, 2) = CatCode) then
-          Data := CatCode + Piece(tmp, U, 1)
-        else
+        if (Assigned(Tree.TopItem)) then
         begin
-          Code := Piece(tmp, U, 5);
-          Data := RemCode + Code;
-          Node := Tree.FindPieceNode(Data, 1);
-          if (Assigned(Node)) then
-            Data := Node.StringData
-          else
+          TopID1 := Tree.GetNodeID(TORTreeNode(Tree.TopItem), 1, IncludeParentID);
+          TopID2 := Tree.GetNodeID(TORTreeNode(Tree.TopItem), 1);
+        end
+        else
+          TopID1 := U;
+
+        if (Assigned(Tree.Selected)) then
+        begin
+          SelID1 := Tree.GetNodeID(TORTreeNode(Tree.Selected), 1, IncludeParentID);
+          SelID2 := Tree.GetNodeID(TORTreeNode(Tree.Selected), 1);
+        end
+        else
+          SelID1 := U;
+
+        ExpandedStr := Tree.GetExpandedIDStr(1);
+        OpenDue := (ExpandedStr = '');
+
+        Tree.Items.Clear;
+
+        // Standard catergories
+        if (rfDue in GetRemFolders) then
+          RemDict[DueCatID] := AddNodeToTree(DueCatString);
+        if (rfApplicable in GetRemFolders) then
+           RemDict[ApplCatID] := AddNodeToTree(ApplCatString);
+        if (rfNotApplicable in GetRemFolders) then
+           RemDict[NotApplCatID] := AddNodeToTree(NotApplCatString);
+        if (rfEvaluated in GetRemFolders) then
+           RemDict[EvaluatedCatID] := AddNodeToTree(EvaluatedCatString);
+        if (rfOther in GetRemFolders) then
+           RemDict[OtherCatID] := AddNodeToTree(OtherCatString);
+
+        // Evaluated reminders
+        for s in EvaluatedReminders do
+        begin
+          Data := RemCode + s;
+          tmp := s.Piece(6);
+          if (rfDue in GetRemFolders) and ((tmp = '1') or (tmp = '3') or (tmp = '4')) then
           begin
-            j := EvaluatedReminders.IndexOfPiece(Code);
-            if (j >= 0) then
-              SetPiece(Data, U, 6, Piece(EvaluatedReminders[j], U, 6));
+            Node := AddNodeToTree(Data, RemDict[DueCatID]);
+            RemDict[DueCatID + s.Piece(1)] := Node;
+          end else if (rfApplicable in GetRemFolders) and (tmp = '0') then
+          begin
+            Node :=  AddNodeToTree(Data, RemDict[ApplCatID]);
+            RemDict[ApplCatID + s.Piece(1)] := Node
+          end else if (rfNotApplicable in GetRemFolders) then
+          begin
+            Node := AddNodeToTree(Data, RemDict[NotApplCatID]);
+            RemDict[NotApplCatID + s.Piece(1)] := Node;
+          end;
+          if (rfEvaluated in GetRemFolders) then
+          begin
+            Node := AddNodeToTree(Data, RemDict[EvaluatedCatID]);
+            RemDict[EvaluatedCatID + s.Piece(1)] := Node;
           end;
         end;
-        SetPiece(Data, U, 2, Piece(tmp, U, 3));
-        SetPiece(Data, U, 7, Piece(tmp, U, 6));
-        tmp := CatCode + Piece(tmp, U, 4);
-        Add2Tree(rfOther, OtherCatID, Tree.FindPieceNode(tmp, 1));
-      end;
-    end;
 
-    { The Lost category is for reminders being processed that are no longer in the
-      reminder tree view.  This can happen with reminders that were Due or Applicable,
-      but due to user action are no longer applicable, or due to location changes.
-      The Lost category will not be used if a lost reminder is in the other list. }
+        // Other reminders
+        if (rfOther in GetRemFolders) and (OtherReminders.Count > 0) then
+        begin
+          sortedOther := TStringList.Create;
+          try
+            sortedOther.Assign(OtherReminders);
 
-    if (RemindersInProcess.Count > 0) then
-    begin
-      for i := 0 to RemindersInProcess.Count - 1 do
-      begin
-        Rem := TReminder(RemindersInProcess.Objects[i]);
-        tmp := RemCode + Rem.IEN;
-        Found := FALSE;
-        Node := nil;
-        repeat
-          Node := Tree.FindPieceNode(tmp, 1, #0, Node);
-          // look in the tree first
-          if ((not Found) and (not Assigned(Node))) then
+            //Sort by category, index
+            sortedOther.SortByDelimiters([2,1], [tkString, tkInteger]);
+
+            for s in sortedOther do
+            begin
+              // grab catergory ID
+              catID := CatCode + s.Piece(4);
+
+              if s.Piece(2) = CatCode then
+              begin
+                // "C"Index C1, C2, c4, etc..
+                nodeID := CatCode + s.Piece(1);
+                Data := nodeID;
+              end else begin
+                // "R"Index;CategoryIndex;IEN - R6;4;50098, R90;2;13345, etc..
+                nodeID := RemCode + s.Piece(1) + ';' + s.Piece(4) + ';' + s.Piece(5);
+                Data := RemCode + s.Piece(5);
+
+                // check evaluated
+                j := EvaluatedReminders.IndexOfPiece(s.Piece(5));
+                if (j >= 0) then
+                begin
+                  tmpPStr := EvaluatedReminders[j];
+                  Data := Data.Update([6], [tmpPStr.Piece(6)], U, True) ;
+                end;
+              end;
+              Data := Data.Update([2,7], [s.Piece(3), s.Piece(6)], U, True);
+              node := RemDict[catID];
+              if not assigned(node) then
+                node := RemDict[OtherCatID];
+              RemDict[nodeID] := AddNodeToTree(Data, node);
+            end;
+          finally
+            FreeAndNil(sortedOther);
+          end;
+        end;
+
+        { The Lost category is for reminders being processed that are no longer in the
+          reminder tree view.  This can happen with reminders that were Due or Applicable,
+          but due to user action are no longer applicable, or due to location changes.
+          The Lost category will not be used if a lost reminder is in the other list. }
+
+        if (RemindersInProcess.Count > 0) then
+        begin
+          for i := 0 to RemindersInProcess.Count - 1 do
           begin
-            Data := tmp + U + Rem.PrintName + U + Rem.DueDateStr + U +
-              Rem.LastDateStr + U + IntToStr(Rem.Priority) + U + Rem.Status;
-            if (Rem.Status = '1') then
-              LostCat := DueCatID
-            else if (Rem.Status = '0') then
-              LostCat := ApplCatID
+            Rem := TReminder(RemindersInProcess.Objects[i]);
+            tmp := RemCode + Rem.IEN;
+            Found := FALSE;
+            Node := nil;
+            repeat
+              Node := Tree.FindPieceNode(tmp, 1, #0, Node);
+              // look in the tree first
+              if ((not Found) and (not Assigned(Node))) then
+              begin
+                Data := tmp + U + Rem.PrintName + U + Rem.DueDateStr + U +
+                  Rem.LastDateStr + U + IntToStr(Rem.Priority) + U + Rem.Status;
+                if (Rem.Status = '1') then
+                  LostCat := DueCatID
+                else if (Rem.Status = '0') then
+                  LostCat := ApplCatID
+                else begin
+                  if not RemDict.Exist[LostCatID] then
+                    RemDict[LostCatID] := AddNodeToTree(LostCatString);
+                  LostCat := LostCatID;
+                end;
+                RemDict[tmp] := AddNodeToTree(Data, RemDict[LostCat]);
+              end;
+              if (Assigned(Node)) then
+              begin
+                Node.Bold := Rem.Processing;
+                Found := TRUE;
+              end;
+            until (Found and (not Assigned(Node)));
+          end;
+        end;
+
+        for i := 0 to Tree.Items.Count - 1 do
+        begin
+          Node := TORTreeNode(Tree.Items[i]);
+          for j := 3 to 4 do
+          begin
+            tmp := Piece(Node.StringData, U, j);
+            if (tmp = '') then
+              Data := ''
             else
-              LostCat := LostCatID;
-            Node := Add2Tree(rfUnknown, LostCat);
+              Data := FormatFMDateTimeStr(ReminderDateFormat, tmp);
+            Node.SetPiece(j + (RemTreeDateIdx - 3), Data);
           end;
-          if (Assigned(Node)) then
-          begin
-            Node.Bold := Rem.Processing;
-            Found := TRUE;
-          end;
-        until (Found and (not Assigned(Node)));
-      end;
-    end;
+          Node.SetPiece(RemTreeDateIdx + 2, IntToStr(Node.AbsoluteIndex));
+          tmp := Piece(Node.StringData, U, 5);
+          if (tmp <> '1') and (tmp <> '3') then
+            Node.SetPiece(5, '2');
+        end;
 
-    for i := 0 to Tree.Items.Count - 1 do
-    begin
-      Node := TORTreeNode(Tree.Items[i]);
-      for j := 3 to 4 do
-      begin
-        tmp := Piece(Node.StringData, U, j);
-        if (tmp = '') then
-          Data := ''
+        if (SelID1 = U) then
+          Node := nil
         else
-          Data := FormatFMDateTimeStr(ReminderDateFormat, tmp);
-        Node.SetPiece(j + (RemTreeDateIdx - 3), Data);
+        begin
+          Node := Tree.FindPieceNode(SelID1, 1, IncludeParentID);
+          if (not Assigned(Node)) then
+            Node := Tree.FindPieceNode(SelID2, 1);
+          if (Assigned(Node)) then
+            Node.EnsureVisible;
+        end;
+        Tree.Selected := Node;
+
+        SetExpandedIDStr(ExpandedStr, RemDict);
+
+        if (OpenDue) then
+        begin
+          Node := RemDict[DueCatID];
+          if (Assigned(Node)) then
+            Node.Expand(FALSE);
+        end;
+
+        if (TopID1 = U) then
+          Tree.TopItem := Tree.Items.GetFirstNode
+        else
+        begin
+          Node := Tree.FindPieceNode(TopID1, 1, IncludeParentID);
+          if (not Assigned(Node)) then
+            Node := Tree.FindPieceNode(TopID2, 1);
+          if Assigned(Node) then
+            Tree.TopItem := Node;
+        end;
+
+      finally
+        Tree.OnExpanding := saveExpanding;
+        Tree.OnExpanded := saveExpanded;
       end;
-      Node.SetPiece(RemTreeDateIdx + 2, IntToStr(Node.AbsoluteIndex));
-      tmp := Piece(Node.StringData, U, 5);
-      if (tmp <> '1') and (tmp <> '3') then
-        Node.SetPiece(5, '2');
+
+    finally
+      Tree.Items.EndUpdate;
     end;
 
   finally
-    Tree.Items.EndUpdate;
-  end;
-
-  if (SelID1 = U) then
-    Node := nil
-  else
-  begin
-    Node := Tree.FindPieceNode(SelID1, 1, IncludeParentID);
-    if (not Assigned(Node)) then
-      Node := Tree.FindPieceNode(SelID2, 1);
-    if (Assigned(Node)) then
-      Node.EnsureVisible;
-  end;
-  Tree.Selected := Node;
-
-  Tree.SetExpandedIDStr(1, IncludeParentID, ExpandedStr);
-  if (OpenDue) then
-  begin
-    Node := Tree.FindPieceNode(DueCatID, 1);
-    if (Assigned(Node)) then
-      Node.Expand(FALSE);
-  end;
-
-  if (TopID1 = U) then
-    Tree.TopItem := Tree.Items.GetFirstNode
-  else
-  begin
-    Tree.TopItem := Tree.FindPieceNode(TopID1, 1, IncludeParentID);
-    if (not Assigned(Tree.TopItem)) then
-      Tree.TopItem := Tree.FindPieceNode(TopID2, 1);
+    FreeAndNil(RemDict);
   end;
 end;
 
@@ -2261,7 +2331,6 @@ begin
     OtherReminders.Clear;
     EvaluatedReminders.Clear;
     ReminderCallList.Clear;
-    RemindersInProcess.KillObjects;
     RemindersInProcess.Clear;
     LastProcessingList := '';
     InitialRemindersLoaded := FALSE;
@@ -2291,10 +2360,10 @@ procedure InitReminderObjects;
 var
   M: TMethod;
 
-  procedure InitReminderList(var List: TORStringList);
+  procedure InitReminderList(var List: TORStringList; AOwnsObjects: Boolean = False);
   begin
     if (not Assigned(List)) then
-      List := TORStringList.Create;
+      List := TORStringList.Create(AOwnsObjects);
   end;
 
 begin
@@ -2302,7 +2371,7 @@ begin
   InitReminderList(OtherReminders);
   InitReminderList(EvaluatedReminders);
   InitReminderList(ReminderCallList);
-  InitReminderList(RemindersInProcess);
+  InitReminderList(RemindersInProcess, True);
   InitReminderList(ProcessedReminders);
 
   M.Code := @RemindersInProcessChanged;
@@ -2311,26 +2380,30 @@ begin
 
   AddToNotifyWhenCreated(LocationChanged, TEncounter);
 
+  if not Assigned(RemForm) then
+    RemForm := TRemForm.Create;
   RemForm.Form := nil;
 end;
 
 procedure FreeReminderObjects;
 begin
-  KillObj(@ActiveReminders);
-  KillObj(@OtherReminders);
-  KillObj(@EvaluatedReminders);
-  KillObj(@ReminderTreeMenuDlg);
-  KillObj(@ReminderTreeMenu);
-  KillObj(@ReminderCatMenu);
-  KillObj(@EducationTopics);
-  KillObj(@WebPages);
-  KillObj(@ReminderCallList);
-  KillObj(@TmpActive);
-  KillObj(@TmpOther);
-  KillObj(@RemindersInProcess, TRUE);
-  KillObj(@ReminderDialogInfo, TRUE);
+  FreeAndNil(ActiveReminders);
+  FreeAndNil(OtherReminders);
+  FreeAndNil(EvaluatedReminders);
+  FreeAndNil(ReminderTreeMenuDlg);
+  FreeAndNil(ReminderTreeMenu);
+  FreeAndNil(ReminderCatMenu);
+  FreeAndNil(EducationTopics);
+  FreeAndNil(WebPages);
+  FreeAndNil(ReminderCallList);
+  FreeAndNil(TmpActive);
+  FreeAndNil(TmpOther);
+  FreeAndNil(RemindersInProcess);
+  FreeAndNil(ReminderDialogInfo);
   KillObj(@PCERootList, TRUE);
-  KillObj(@ProcessedReminders);
+  FreeAndNil(ProcessedReminders);
+  if assigned(RemForm) then
+    FreeAndNil(RemForm);
   if assigned(RemDlgResyncElements) then
     FreeAndNil(RemDlgResyncElements);
 end;
@@ -2873,7 +2946,7 @@ begin
   aList := TStringList.Create;
   try
     if (not Assigned(ReminderDialogInfo)) then
-      ReminderDialogInfo := TStringList.Create;
+      ReminderDialogInfo := TStringList.Create(True);
     GetIdx(GetIEN);
     if (idx < 0) then
       idx := ReminderDialogInfo.AddObject(GetIEN, TORStringList.Create);
@@ -9738,6 +9811,39 @@ begin
     FreeAndNil(Control);
   end;
   inherited;
+end;
+
+constructor TRemForm.Create;
+begin
+  FPCEObj := TPCEData.Create;
+end;
+
+destructor TRemForm.Destroy;
+begin
+  FreeAndNil(FPCEObj);
+  inherited;
+end;
+
+procedure TRemForm.SetPCEObj(aPCEObj: TPCEData);
+begin
+  aPCEObj.CopyPCEData(FPCEObj);
+end;
+
+{ TReminderDict }
+
+function TReminderDict.GetExist(aID: string): Boolean;
+begin
+  Result := Self.ContainsKey(aID);
+end;
+
+function TReminderDict.GetNode(aID: string): TORTreeNode;
+begin
+  Self.TryGetValue(aID, Result);
+end;
+
+procedure TReminderDict.SetNode(aID: string; const Value: TORTreeNode);
+begin
+  Self.AddOrSetValue(aID, Value)
 end;
 
 initialization

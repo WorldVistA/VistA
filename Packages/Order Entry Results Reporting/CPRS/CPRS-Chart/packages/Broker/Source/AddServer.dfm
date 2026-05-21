@@ -11,8 +11,6 @@ object frmAddServer: TfrmAddServer
   Font.Height = -7
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = False
-  PixelsPerInch = 96
   TextHeight = 13
   object lblAddress: TLabel
     Left = 7
