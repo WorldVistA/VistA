@@ -349,6 +349,7 @@ class PackageInfoSectionParser (AbstractSectionParser):
     def __init__(self):
         AbstractSectionParser.__init__(self, IXindexLogFileParser.PACKAGE_COMPONENT_SECTION)
         self._curPackage = None
+        self._localHandler = None
 
     def __isSectionHeader__(self, curLine):
         for (regex, section) in iteritems(SECTION_HEADER_REGEX):
@@ -386,9 +387,14 @@ class PackageInfoSectionParser (AbstractSectionParser):
       if sectionHeader:
         self._localSection = sectionHeader
         self._localHandler = sectHandleDict.get(sectionHeader)
-      else:
-        self._localHandler._addVarToRoutine = None
-        self._localHandler._postParsingRoutine = None
+      # NOTE: Do NOT null out self._localHandler._addVarToRoutine /
+      # _postParsingRoutine here. The handlers in sectHandleDict are shared
+      # singletons also used to parse ordinary routines; mutating them
+      # permanently disabled variable capture (External References, Local/
+      # Global Variables, Label References) for every routine parsed after any
+      # package-component section. The callbacks are read defensively below via
+      # getattr so a handler that lacks them does not crash (the original reason
+      # this branch was added).
       if self.__ignoreLine__(line):
           return
       result = self.__isNameValuePairLine__(line, pkgInfo=True)
@@ -419,10 +425,12 @@ class PackageInfoSectionParser (AbstractSectionParser):
               self._curRoutine = self._curGetFunction(self._curKey, optionNumber)
               if  self.componentTypeStr:
                 self._curRoutine.componentType =  self.componentTypeStr
-              if self._localHandler._addVarToRoutine:
-                  self._localHandler._addVarToRoutine(self._curRoutine, CrossReference)
-              if self._localHandler._postParsingRoutine:
-                  self._localHandler._postParsingRoutine(self._curRoutine, CrossReference)
+              addVar = getattr(self._localHandler, "_addVarToRoutine", None)
+              if addVar:
+                  addVar(self._curRoutine, CrossReference)
+              postParse = getattr(self._localHandler, "_postParsingRoutine", None)
+              if postParse:
+                  postParse(self._curRoutine, CrossReference)
           return
       result = self.__isValueOnlyLine__(line)
       if result:
@@ -445,10 +453,12 @@ class PackageInfoSectionParser (AbstractSectionParser):
                   self._curRoutine = self._curGetFunction(self._curKey, optionNumber)
                   checkCSVDeps(self, CrossReference, optionText, self._curKey)
                 self._curRoutine = self._curGetFunction(self._curKey, optionNumber)
-                if self._localHandler._addVarToRoutine:
-                    self._localHandler._addVarToRoutine(self._curRoutine, CrossReference)
-                if self._localHandler._postParsingRoutine:
-                    self._localHandler._postParsingRoutine(self._curRoutine, CrossReference)
+                addVar = getattr(self._localHandler, "_addVarToRoutine", None)
+                if addVar:
+                    addVar(self._curRoutine, CrossReference)
+                postParse = getattr(self._localHandler, "_postParsingRoutine", None)
+                if postParse:
+                    postParse(self._curRoutine, CrossReference)
             return
           else:
             self._localHandler._varName = line[DEFAULT_NAME_FIELD_START_INDEX:self._valueStartIdx].strip()
@@ -468,10 +478,12 @@ class PackageInfoSectionParser (AbstractSectionParser):
             self._varPrefix = line[0:DEFAULT_NAME_FIELD_START_INDEX]
             self._varValue = match.groups()[1]
             self._varName = match.groups()[0].strip()
-            if self._localHandler._addVarToRoutine:
-                self._localHandler._addVarToRoutine(self._curRoutine, CrossReference)
-            if self._localHandler._postParsingRoutine:
-                self._localHandler._postParsingRoutine(self._curRoutine, CrossReference)
+            addVar = getattr(self._localHandler, "_addVarToRoutine", None)
+            if addVar:
+                addVar(self._curRoutine, CrossReference)
+            postParse = getattr(self._localHandler, "_postParsingRoutine", None)
+            if postParse:
+                postParse(self._curRoutine, CrossReference)
             return
           if self._suspiousLine:
               self.__handleSuspiousCases__(Routine, CrossReference)
