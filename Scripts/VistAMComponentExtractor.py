@@ -58,7 +58,7 @@ class VistADataExtractor(object):
   def __init__(self, vistARepoDir, outputResultDir,
                outputLogDir, routineOutDir=None,
                gitBranch=None, generateReadMe=False,
-               serialExport=False):
+               serialExport=False, splitJobs=None):
     assert os.path.exists(vistARepoDir)
     assert os.path.exists(outputResultDir)
     assert os.path.exists(outputLogDir)
@@ -80,6 +80,7 @@ class VistADataExtractor(object):
     self._generateReadMe = generateReadMe
     self._gitBranch = gitBranch
     self._serialExport = serialExport
+    self._splitJobs = splitJobs
   def extractData(self, vistATestClient):
     self.__setupLogging__(vistATestClient)
     self.__switchBranch__()
@@ -181,12 +182,13 @@ class VistADataExtractor(object):
       shutil.copy2(zwrFile, self._packagesDir)
 
   def __splitGlobalFiles__(self):
-    from SplitZWR import splitZWR
-    zwrFiles = glob.glob(os.path.join(self._packagesDir, "*.zwr"))
+    from SplitZWR import splitZWRFiles
     maxSize = 64 << 20
-    for f in zwrFiles:
-      if os.stat(f).st_size > maxSize:
-        splitZWR(f, maxSize)
+    # NOTE: split() is called directly (not via SplitZWR.main()), so DD.zwr is
+    # intentionally NOT skipped here -- it is split like any oversized global.
+    zwrFiles = [f for f in glob.glob(os.path.join(self._packagesDir, "*.zwr"))
+                if os.stat(f).st_size > maxSize]
+    splitZWRFiles(zwrFiles, maxSize, jobs=self._splitJobs)
 
   def __populatePackageFiles__(self):
     from PopulatePackages import populate
@@ -241,6 +243,9 @@ def main():
                 help='path to the directory where GT. M stores routines')
   parser.add_argument('-sx', '--serialize', default=False, action="store_true",
                       help = 'export the globals serially (Needed on on single-user Cache instace)')
+  parser.add_argument('-sj', '--splitJobs', default=None, type=int,
+                      help = 'number of parallel workers for splitting oversized '
+                             'globals (default: all CPUs; 1 = serial)')
   result = parser.parse_args();
   print (result)
   outputDir = result.outputDir
@@ -254,7 +259,8 @@ def main():
                                             outputDir,
                                             result.logDir,
                                             result.routineOutDir,
-                                            serialExport = result.serialize)
+                                            serialExport = result.serialize,
+                                            splitJobs = result.splitJobs)
     vistADataExtractor.extractData(testClient)
 
 def test1():

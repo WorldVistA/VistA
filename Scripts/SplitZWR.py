@@ -71,6 +71,43 @@ def splitZWR(f, maxSize):
     SplitZWR(f, maxSize).run()
     os.remove(f)
 
+def _splitOne(args):
+    # module-level worker so multiprocessing can pickle it
+    f, maxSize = args
+    splitZWR(f, maxSize)
+
+def splitZWRFiles(files, maxSize, jobs=None):
+    """Split each file in `files` (already size-filtered) into <=maxSize pieces.
+
+    Output is identical regardless of `jobs`: every input file is independent
+    (its output names/bytes depend only on that file), so worker count and
+    scheduling order cannot affect the produced files -- only the interleaving
+    of the progress lines on stdout.
+    """
+    if not files:
+        return
+    if jobs is None:
+        jobs = os.cpu_count() or 1
+    jobs = max(1, min(jobs, len(files)))
+    if jobs == 1:
+        for f in files:
+            splitZWR(f, maxSize)
+        return
+    # biggest first so long-running files don't tail the run; safe to reorder
+    files = sorted(files, key=lambda f: os.stat(f).st_size, reverse=True)
+    from multiprocessing import Pool
+    pool = Pool(processes=jobs)
+    try:
+        # consume the iterator so any worker exception propagates and aborts,
+        # matching the fail-fast behavior of the serial loop
+        for _ in pool.imap_unordered(_splitOne,
+                                     [(f, maxSize) for f in files],
+                                     chunksize=1):
+            pass
+    finally:
+        pool.close()
+        pool.join()
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--size', dest='size', action='store',
@@ -81,6 +118,9 @@ def main():
                         help='read files to split from standard input lines')
     parser.add_argument('files', action='append', nargs='*', metavar='<files>',
                         help='files to split')
+    parser.add_argument('--jobs', dest='jobs', action='store', type=int,
+                        default=1, metavar='<N>',
+                        help='number of parallel workers (default 1)')
     config = parser.parse_args()
 
     maxSize = int(config.size) << 20
@@ -88,6 +128,7 @@ def main():
     if config.stdin:
         files.extend([a.rstrip() for a in sys.stdin])
 
+    toSplit = []
     for f in files:
         if "DD.zwr" in f:
             continue
@@ -95,7 +136,8 @@ def main():
             sys.stderr.write('Skipping non-.zwr file: %s\n' % f)
             continue
         if os.stat(f).st_size > maxSize:
-            splitZWR(f, maxSize)
+            toSplit.append(f)
+    splitZWRFiles(toSplit, maxSize, jobs=config.jobs)
 
 if __name__ == '__main__':
     main()
