@@ -491,7 +491,7 @@ begin
       sURL := DstParameters.FTestUrl + DstParameters.FUiPath +
         '?dstID=' + dstID;
 {$IFDEF DEBUG}
-    sURL := 'https://dst-demo.domain/ctb/emulator/';
+    sURL := 'https://aaaa.domain.ext/ctb/emulator/';
 {$ENDIF}
     Result := dstReviewResult(sURL, DSTMode);
   finally

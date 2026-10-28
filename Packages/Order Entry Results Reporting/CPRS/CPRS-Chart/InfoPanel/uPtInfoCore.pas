@@ -2343,13 +2343,13 @@ end;
 
 type
   TJsonListConverterPtInfoReturnData = class
-    (TJsonTypedListConverter<TPtInfoReturnData>);
+    (TJsonListConverter<TPtInfoReturnData>);
   TJsonListConverterPtInfoRequiredData = class
-    (TJsonTypedListConverter<TPtInfoRequiredData>);
+    (TJsonListConverter<TPtInfoRequiredData>);
   TJsonListConverterPtInfoPresentation = class
-    (TJsonTypedListConverter<TPtInfoPresentation>);
+    (TJsonListConverter<TPtInfoPresentation>);
   TJsonListConverterPtInfoSection = class
-    (TJsonTypedListConverter<TPtInfoSection>);
+    (TJsonListConverter<TPtInfoSection>);
 
   TPtInfoDataJSONSerializer = class(TJsonSerializer)
   public

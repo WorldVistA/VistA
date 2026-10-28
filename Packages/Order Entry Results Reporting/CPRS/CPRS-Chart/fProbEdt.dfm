@@ -13,12 +13,12 @@ inherited frmdlgProb: TfrmdlgProb
   OldCreateOrder = True
   ExplicitWidth = 834
   ExplicitHeight = 536
-  TextHeight = 13
+  TextHeight = 15
   object edResDate: TCaptionEdit [0]
     Left = 189
     Top = 8
     Width = 117
-    Height = 21
+    Height = 23
     TabStop = False
     Color = clInactiveCaptionText
     Enabled = False
@@ -32,7 +32,7 @@ inherited frmdlgProb: TfrmdlgProb
     Left = 189
     Top = 8
     Width = 117
-    Height = 21
+    Height = 23
     TabStop = False
     Color = clInactiveCaptionText
     Enabled = False
@@ -73,9 +73,9 @@ inherited frmdlgProb: TfrmdlgProb
     ControlCollection = <
       item
         Column = 0
-        ColumnSpan = 5
+        ColumnSpan = 3
         Control = lblAct
-        Row = 0
+        Row = 5
       end
       item
         Column = 0
@@ -112,9 +112,9 @@ inherited frmdlgProb: TfrmdlgProb
       end
       item
         Column = 0
-        ColumnSpan = 3
+        ColumnSpan = 5
         Control = ckVerify
-        Row = 5
+        Row = 0
       end
       item
         Column = 3
@@ -132,6 +132,8 @@ inherited frmdlgProb: TfrmdlgProb
         Control = bvlTop
         Row = 2
       end>
+    ParentBackground = False
+    ParentColor = True
     RowCollection = <
       item
         SizeStyle = ssAbsolute
@@ -143,11 +145,11 @@ inherited frmdlgProb: TfrmdlgProb
       end
       item
         SizeStyle = ssAbsolute
-        Value = 30.000000000000000000
+        Value = 3.000000000000000000
       end
       item
         SizeStyle = ssAbsolute
-        Value = 200.000000000000000000
+        Value = 300.000000000000000000
       end
       item
         Value = 100.000000000000000000
@@ -161,22 +163,19 @@ inherited frmdlgProb: TfrmdlgProb
     object lblAct: TLabel
       AlignWithMargins = True
       Left = 8
-      Top = 3
-      Width = 823
+      Top = 509
+      Width = 583
       Height = 24
       Margins.Left = 8
       Align = alClient
       Caption = 'Activity'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -15
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
-      ParentFont = False
+      Color = clActiveCaption
+      ParentColor = False
       Layout = tlCenter
       Visible = False
-      ExplicitWidth = 42
-      ExplicitHeight = 16
+      StyleElements = [seFont, seBorder]
+      ExplicitWidth = 40
+      ExplicitHeight = 15
     end
     object edProb: TCaptionEdit
       AlignWithMargins = True
@@ -193,7 +192,7 @@ inherited frmdlgProb: TfrmdlgProb
       Text = 'Problem Title'
       OnChange = ControlChange
       Caption = ''
-      ExplicitHeight = 21
+      ExplicitHeight = 23
     end
     object bbChangeProb: TBitBtn
       AlignWithMargins = True
@@ -212,11 +211,11 @@ inherited frmdlgProb: TfrmdlgProb
     object rgStatus: TKeyClickRadioGroup
       AlignWithMargins = True
       Left = 8
-      Top = 93
+      Top = 66
       Width = 89
-      Height = 194
+      Height = 68
       Margins.Left = 8
-      Align = alClient
+      Align = alTop
       Caption = 'Status'
       ItemIndex = 0
       Items.Strings = (
@@ -230,10 +229,10 @@ inherited frmdlgProb: TfrmdlgProb
     object rgStage: TKeyClickRadioGroup
       AlignWithMargins = True
       Left = 103
-      Top = 93
+      Top = 66
       Width = 94
-      Height = 194
-      Align = alClient
+      Height = 108
+      Align = alTop
       Caption = 'Immediacy'
       Ctl3D = True
       ItemIndex = 2
@@ -249,9 +248,9 @@ inherited frmdlgProb: TfrmdlgProb
     object pnlTop: TPanel
       AlignWithMargins = True
       Left = 203
-      Top = 93
+      Top = 66
       Width = 623
-      Height = 194
+      Height = 294
       Margins.Right = 8
       Align = alClient
       BevelOuter = bvNone
@@ -260,54 +259,54 @@ inherited frmdlgProb: TfrmdlgProb
         Left = 0
         Top = 0
         Width = 421
-        Height = 194
+        Height = 294
         Align = alClient
         BevelOuter = bvNone
         TabOrder = 0
         object lblRespProv: TLabel
           AlignWithMargins = True
           Left = 3
-          Top = 49
+          Top = 53
           Width = 415
-          Height = 13
+          Height = 15
           Align = alTop
           Caption = 'Resp Provider:'
-          ExplicitWidth = 70
+          ExplicitWidth = 75
         end
         object lblOnsetDate: TLabel
           AlignWithMargins = True
           Left = 3
           Top = 3
           Width = 415
-          Height = 13
+          Height = 15
           Align = alTop
           Caption = 'Date of Onset:'
-          ExplicitWidth = 69
+          ExplicitWidth = 75
         end
         object lblLoc: TLabel
           AlignWithMargins = True
           Left = 3
-          Top = 114
+          Top = 128
           Width = 415
-          Height = 13
+          Height = 15
           Align = alTop
           Caption = 'Clinic:'
-          ExplicitTop = 118
-          ExplicitWidth = 28
+          ExplicitTop = 124
+          ExplicitWidth = 33
         end
         object cbLoc: TORComboBox
           AlignWithMargins = True
           Left = 3
-          Top = 160
+          Top = 178
           Width = 415
-          Height = 21
+          Height = 23
           Style = orcsDropDown
           Align = alTop
           AutoSelect = True
           Caption = ''
           Color = clWindow
           DropDownCount = 8
-          ItemHeight = 13
+          ItemHeight = 15
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = True
@@ -325,20 +324,21 @@ inherited frmdlgProb: TfrmdlgProb
           OnKeyPress = cbLocKeyPress
           OnNeedData = cbLocNeedData
           CharsNeedMatch = 1
+          ExplicitTop = 174
         end
         object cbServ: TORComboBox
           AlignWithMargins = True
           Left = 3
-          Top = 133
+          Top = 149
           Width = 415
-          Height = 21
+          Height = 23
           Style = orcsDropDown
           Align = alTop
           AutoSelect = True
           Caption = 'Service:'
           Color = clWindow
           DropDownCount = 8
-          ItemHeight = 13
+          ItemHeight = 15
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = True
@@ -355,14 +355,15 @@ inherited frmdlgProb: TfrmdlgProb
           OnChange = ControlChange
           OnNeedData = cbServNeedData
           CharsNeedMatch = 1
+          ExplicitTop = 145
         end
         object edOnsetdate: TCaptionEdit
           Tag = 3
           AlignWithMargins = True
           Left = 3
-          Top = 22
+          Top = 24
           Width = 415
-          Height = 21
+          Height = 23
           Align = alTop
           TabOrder = 0
           Text = 'Today'
@@ -372,16 +373,16 @@ inherited frmdlgProb: TfrmdlgProb
         object cbProv: TORCheckComboBox
           AlignWithMargins = True
           Left = 3
-          Top = 68
+          Top = 74
           Width = 415
-          Height = 40
+          Height = 48
           Style = orcsDropDown
           Align = alTop
           AutoSelect = True
           Caption = 'Resp Provider'
           Color = clWindow
           DropDownCount = 8
-          ItemHeight = 13
+          ItemHeight = 15
           ItemTipColor = clWindow
           ItemTipEnable = True
           ListItemsOnly = True
@@ -410,21 +411,19 @@ inherited frmdlgProb: TfrmdlgProb
         Left = 421
         Top = 0
         Width = 202
-        Height = 194
+        Height = 294
         Align = alRight
         TabOrder = 1
         ExplicitLeft = 421
         ExplicitWidth = 202
-        ExplicitHeight = 194
+        ExplicitHeight = 294
         inherited sbMain: TScrollBox
           Width = 202
-          Height = 194
+          Height = 294
           BevelKind = bkFlat
           BorderStyle = bsSingle
-          ExplicitLeft = 3
-          ExplicitTop = 2
           ExplicitWidth = 202
-          ExplicitHeight = 194
+          ExplicitHeight = 294
           inherited pnlMain: TPanel
             Width = 194
             StyleElements = [seFont, seClient, seBorder]
@@ -433,10 +432,12 @@ inherited frmdlgProb: TfrmdlgProb
               Width = 188
               Caption = 'Treatment Factors'
               ExplicitWidth = 188
+              inherited lblNoSAAvailable: TStaticText
+                Width = 184
+                ExplicitWidth = 184
+              end
               inherited gpMain: TGridPanel
-                Top = 15
                 Width = 178
-                Height = 75
                 ControlCollection = <
                   item
                     Column = 0
@@ -449,25 +450,12 @@ inherited frmdlgProb: TfrmdlgProb
                     Row = 0
                   end>
                 StyleElements = [seFont, seClient, seBorder]
-                ExplicitTop = 15
                 ExplicitWidth = 178
-                ExplicitHeight = 75
                 inherited lblYes: TLabel
-                  Top = 2
-                  Height = 13
                   StyleElements = [seFont, seClient, seBorder]
-                  ExplicitTop = 2
-                  ExplicitWidth = 18
-                  ExplicitHeight = 13
                 end
                 inherited lblNo: TLabel
-                  Top = 2
-                  Width = 155
-                  Height = 13
                   StyleElements = [seFont, seClient, seBorder]
-                  ExplicitTop = 2
-                  ExplicitWidth = 14
-                  ExplicitHeight = 13
                 end
               end
             end
@@ -478,23 +466,29 @@ inherited frmdlgProb: TfrmdlgProb
     object pnlComments: TPanel
       AlignWithMargins = True
       Left = 8
-      Top = 293
+      Top = 366
       Width = 818
-      Height = 210
+      Height = 137
       Margins.Left = 8
       Margins.Right = 8
       Align = alClient
       Anchors = []
       BevelOuter = bvNone
       BorderStyle = bsSingle
+      Ctl3D = False
+      ParentColor = True
+      ParentCtl3D = False
       TabOrder = 6
       object lstComments: TCaptionListView
         AlignWithMargins = True
         Left = 3
         Top = 33
-        Width = 808
-        Height = 170
+        Width = 810
+        Height = 99
         Align = alClient
+        BevelInner = bvNone
+        BevelOuter = bvNone
+        BorderStyle = bsNone
         Columns = <
           item
             Caption = 'Comment Date'
@@ -513,28 +507,27 @@ inherited frmdlgProb: TfrmdlgProb
         ParentShowHint = False
         ShowWorkAreas = True
         ShowHint = True
-        TabOrder = 0
+        TabOrder = 1
         ViewStyle = vsReport
         OnChange = lstCommentsChange
         AutoSize = False
         Caption = 'Comments'
         Pieces = '1,2'
-        ExplicitTop = 35
-        ExplicitHeight = 168
       end
       object pnlButtons: TPanel
         Left = 0
         Top = 0
-        Width = 814
+        Width = 816
         Height = 30
         Align = alTop
         BevelOuter = bvNone
         Caption = 'pnlButtons'
+        ParentColor = True
         ShowCaption = False
-        TabOrder = 1
+        TabOrder = 0
         object bbAdd: TBitBtn
           AlignWithMargins = True
-          Left = 442
+          Left = 444
           Top = 3
           Width = 114
           Height = 24
@@ -546,13 +539,12 @@ inherited frmdlgProb: TfrmdlgProb
           NumGlyphs = 2
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 0
+          TabOrder = 1
           OnClick = bbAddComClick
-          ExplicitHeight = 26
         end
         object bbRemove: TBitBtn
           AlignWithMargins = True
-          Left = 692
+          Left = 694
           Top = 3
           Width = 114
           Height = 24
@@ -565,13 +557,12 @@ inherited frmdlgProb: TfrmdlgProb
           NumGlyphs = 2
           ParentShowHint = False
           ShowHint = True
-          TabOrder = 1
+          TabOrder = 3
           OnClick = bbRemoveClick
-          ExplicitHeight = 26
         end
         object bbEdit: TBitBtn
           AlignWithMargins = True
-          Left = 567
+          Left = 569
           Top = 3
           Width = 114
           Height = 24
@@ -586,15 +577,33 @@ inherited frmdlgProb: TfrmdlgProb
           ShowHint = True
           TabOrder = 2
           OnClick = bbEditClick
-          ExplicitHeight = 26
+        end
+        object cbHeader: TCheckBox
+          AlignWithMargins = True
+          Left = 3
+          Top = 3
+          Width = 435
+          Height = 24
+          Hint = 'Uncheck to hide comments list header'
+          Align = alClient
+          Caption = 'Show Header'
+          Checked = True
+          ParentShowHint = False
+          ShowHint = True
+          State = cbChecked
+          TabOrder = 0
+          OnClick = cbHeaderClick
+          ExplicitLeft = -9
+          ExplicitTop = -13
+          ExplicitWidth = 97
         end
       end
     end
     object ckVerify: TCheckBox
       AlignWithMargins = True
       Left = 8
-      Top = 509
-      Width = 583
+      Top = 3
+      Width = 823
       Height = 24
       Margins.Left = 8
       TabStop = False
@@ -642,9 +651,10 @@ inherited frmdlgProb: TfrmdlgProb
       Left = 0
       Top = 60
       Width = 834
-      Height = 30
+      Height = 3
       Align = alClient
       Shape = bsBottomLine
+      Visible = False
       ExplicitLeft = 352
       ExplicitTop = 72
       ExplicitWidth = 50
@@ -655,7 +665,7 @@ inherited frmdlgProb: TfrmdlgProb
     Left = 189
     Top = 8
     Width = 117
-    Height = 21
+    Height = 23
     TabStop = False
     Color = clInactiveCaptionText
     Enabled = False
@@ -666,8 +676,8 @@ inherited frmdlgProb: TfrmdlgProb
     Caption = ''
   end
   inherited amgrMain: TVA508AccessibilityManager
-    Left = 624
-    Top = 400
+    Left = 448
+    Top = 432
     Data = (
       (
         'Component = pnlComments'
@@ -745,6 +755,9 @@ inherited frmdlgProb: TfrmdlgProb
         'Status = stsDefault')
       (
         'Component = pnlButtons'
+        'Status = stsDefault')
+      (
+        'Component = cbHeader'
         'Status = stsDefault'))
   end
 end

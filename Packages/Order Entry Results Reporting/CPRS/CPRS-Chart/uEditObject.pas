@@ -1090,7 +1090,8 @@ begin
   lbl := (editComponent as TVA508StaticText);
   value := value.Replace(DLim, CRLF);
   lbl.Caption := value;
-  intVal := lbl.Caption;
+  if editIntVal <> '' then intVal := editIntVal
+  else intVal := lbl.Caption;
   extVal := lbl.Caption;
 end;
 

@@ -1445,6 +1445,37 @@ begin
   Result := Broker.Socket;
 end; // function ExistingSocket
 
+{ ------------------------ IAMServerConfigured ---------------------
+  OSEHRA/SMH - PIV/SSOi login only works on VA workstations, which have
+  the IAM STS server set in the registry (REG_IAM or REG_IAM_AD). The
+  compiled-in IAM_Server_URL in the FOIA source is a scrubbed placeholder
+  that can never work, so it is ignored here. Outside of the VA, return
+  False so that we go straight to the Access/Verify sign-on screen
+  instead of showing the 2FA/PIV certificate prompts.
+  ------------------------------------------------------------------ }
+function IAMServerConfigured: Boolean;
+
+  function HasNonEmptyValue(const Key: string): Boolean;
+  var
+    RegValues: TStringList;
+    I: integer;
+  begin
+    Result := False;
+    RegValues := TStringList.Create;
+    try
+      ReadRegValues(HKEY_LOCAL_MACHINE, Key, RegValues);
+      for I := 0 to RegValues.Count - 1 do
+        if RegValues.ValueFromIndex[I] <> '' then
+          Exit(True);
+    finally
+      RegValues.Free;
+    end;
+  end;
+
+begin
+  Result := HasNonEmptyValue(REG_IAM) or HasNonEmptyValue(REG_IAM_AD);
+end; // function IAMServerConfigured
+
 { ------------------------ AuthenticateUser ------------------------
   ------------------------------------------------------------------ }
 procedure AuthenticateUser(ConnectingBroker: TRPCBroker);
@@ -1527,8 +1558,10 @@ begin
     // p71 the code above was preventing BSE connections from working properly, users were being
     // promoted for their credentials on the remote VistA connection, adding another check to the code
     // allows the BSE login to work properly,  Added and (ConnectingBroker.SecurityPhrase = '')
+    // OSEHRA/SMH - added IAMServerConfigured so non-VA users skip the PIV prompts.
+    // SSOiRetry is only set in here, so this also skips the p74 2nd attempt below.
     if (not blnSignedOn) and (ConnectingBroker.KernelLogIn = True) and
-      (ConnectingBroker.SecurityPhrase = '') then
+      (ConnectingBroker.SecurityPhrase = '') and IAMServerConfigured then
     // p71 added and (ConnectingBroker.SecurityPhrase = '') in line above
     begin
       // Set SSOi token values (get token from IAM).

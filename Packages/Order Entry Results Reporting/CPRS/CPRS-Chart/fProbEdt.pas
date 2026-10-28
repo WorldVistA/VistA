@@ -50,6 +50,7 @@ type
     gpMain: TGridPanel;
     bvlTop: TBevel;
     pnlButtons: TPanel;
+    cbHeader: TCheckBox;
     procedure bbQuitClick(Sender: TObject);
     procedure bbAddComClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -79,6 +80,7 @@ type
     procedure lstCommentsChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
     procedure cbProvMainCheckboxClick(Sender: TObject);
+    procedure cbHeaderClick(Sender: TObject);
   private
     FEditing: Boolean;
     FInitialShow: Boolean;
@@ -96,6 +98,10 @@ type
     FSearchString: String;
     VA508Captions: Array of tVA508Captions;
     FReason: TProblemActionReason;
+
+    fDlgStatus: String;
+    procedure setDlgStatus(aValue: String);
+
     procedure UMTakeFocus(var Message: TMessage); message UM_TAKEFOCUS;
     procedure ShowComments;
     procedure GetEditedComments;
@@ -130,6 +136,7 @@ type
     procedure ResetSizes;
     property CanQuit: boolean read FCanQuit write FCanQuit;
     property Reason: TProblemActionReason read FReason write FReason;
+    property DlgStatus: string read fDlgStatus write setDlgStatus;
   end ;
 
 implementation
@@ -159,6 +166,7 @@ begin
     begin
       frmProblems.lblProbList.caption := frmProblems.pnlRight.Caption ;
       frmProblems.wgProbData.TabStop := True; //CQ #15531 part (c) [CPRS v28.1] {TC}.
+      frmProblems.HeaderControl.Visible := True;
       //correct JAWS from reading the 'Edit Problem' caption of the wgProbData captionlistbx.
       if AnsiCompareText(frmProblems.wgProbData.Caption, 'Edit Problem')=0 then
          frmProblems.wgProbData.Caption := frmProblems.lblProbList.caption;
@@ -176,6 +184,7 @@ begin
         begin
           frmProblems.lblProbList.caption := frmProblems.pnlRight.Caption ;
           frmProblems.wgProbData.TabStop := True; //CQ #15531 part (c) [CPRS v28.1] {TC}.
+          frmProblems.HeaderControl.Visible := True;
           //correct JAWS from reading the 'Edit Problem' caption of the wgProbData captionlistbx.
           if AnsiCompareText(frmProblems.wgProbData.Caption, 'Edit Problem')=0 then
              frmProblems.wgProbData.Caption := frmProblems.lblProbList.caption;
@@ -223,13 +232,15 @@ begin
   AList := TStringList.Create;
   try
     if Reason = parEdit then
-      lblact.caption := 'Editing:'
+      DlgStatus := 'Editing Problem Record'
     else if Reason = parAdd then
-      lblact.caption := 'Adding'
+      DlgStatus := 'Adding New Problem'
     else {display, comment edit or remove problem}
       begin
-        case reason of parComment: lblact.caption := 'Comment Edit';
-                       parRemove: lblact.caption := 'Remove Problem:';
+//        case reason of parComment: lblact.caption := 'Comment Edit';
+//                       parRemove: lblact.caption := 'Remove Problem:';
+        case reason of parComment: DlgStatus := 'Editing Comment';
+                       parRemove: DlgStatus := 'Removing Problem';
         end; {case}
         {ckVerify.Enabled:=false;}
         cbProv.Enabled       := false;
@@ -242,7 +253,7 @@ begin
         edOnsetDate.enabled  := false;
         if Reason = parRemove then bbFile.caption := 'Remove';
       end;
-    edProb.Caption := lblact.Caption;
+    edProb.Caption := DlgStatus; //lblact.Caption;
     edProb.Text := Piece(subjProb, u, 2);
 
     if Piece(subjProb, '|', 2) <> '' then
@@ -472,6 +483,7 @@ begin
   else
     DateOfInterest := Encounter.DateTime;
   frmProblems.wgProbData.TabStop := True;  //CQ #15531 part (c) [CPRS v28.1] {TC}.
+  frmProblems.HeaderControl.Visible := True;
 
   if not CheckForSimilarName(cbProv, aErrMsg, sPr) then
   begin
@@ -701,6 +713,12 @@ end;
 procedure TfrmdlgProb.cbProvClick(Sender: TObject);
 begin
   SendMessage(cbProv.Handle, CB_SHOWDROPDOWN, 0, 0); {Closes list}
+end;
+
+procedure TfrmdlgProb.cbHeaderClick(Sender: TObject);
+begin
+  inherited;
+  lstComments.ShowColumnHeaders := cbHeader.Checked;
 end;
 
 procedure TfrmdlgProb.cbLocClick(Sender: TObject);
@@ -967,18 +985,29 @@ procedure TfrmdlgProb.ResetSizes;
 
   procedure UpdateRowHeights;
   const
-    SimpleRows: TArray<Integer> = [0,1,2,5];
+    SimpleRows: TArray<Integer> = [{0,}1,{2,}5];
     ComplexRow = 3;
   var
     i, H, Min, Temp: Integer;
   begin
-    H := MainFontTextHeight + 19;
-    for i := 0 to Length(SimpleRows) - 1 do  
-      gpMain.RowCollection[SimpleRows[i]].Value := H;
+    H := MainFontTextHeight + 10; //19;
+
+    rgStage.Height := (rgStage.Items.Count + 1) * H;
+    rgStatus.Height := rgStage.Height;
+
+//    for i := 0 to Length(SimpleRows) - 1 do
+//      gpMain.RowCollection[SimpleRows[i]].Value := H;
+    for i in SimpleRows do
+      gpMain.RowCollection[i].Value := H;
+    gpMain.RowCollection[0].Value := 0;
+    gpMain.RowCollection[2].Value := 2;
+
     pnlButtons.Height := H;
-    Min := fraSpecialAuthorities.gbVisitRelatedTo.Height +
-      fraSpecialAuthorities.gbVisitRelatedTo.Margins.Top +
-      fraSpecialAuthorities.gbVisitRelatedTo.Margins.Bottom;
+    Min := rgStage.Height;
+    if fraSpecialAuthorities.Visible then
+      Min := fraSpecialAuthorities.gbVisitRelatedTo.Height +
+        fraSpecialAuthorities.gbVisitRelatedTo.Margins.Top +
+        fraSpecialAuthorities.gbVisitRelatedTo.Margins.Bottom;
     for i := 0 to pnlDetails.ControlCount - 1 do
       if pnlDetails.Controls[i].Visible then
       begin
@@ -1020,9 +1049,12 @@ procedure TfrmdlgProb.ResetSizes;
           end;
           if ColumnMin < Min then
             ColumnMin := Min;
-        end;    
+        end;
       for i := 0 to Columns.Count - 1 do
-        gpMain.ColumnCollection[Columns[i]].Value := ColumnMin;        
+        gpMain.ColumnCollection[Columns[i]].Value := ColumnMin;
+
+      gpMain.ColumnCollection[Columns[0]].Value := ColumnMin - 12;
+
     finally
       FreeAndNil(Columns);
     end;
@@ -1286,6 +1318,13 @@ begin
 
   end;
  end;
+end;
+
+procedure TfrmdlgProb.setDlgStatus(aValue: String);
+begin
+  fDlgStatus := aValue;
+  lblAct.Caption := fDlgStatus;
+  frmProblems.lblProbList.Caption := fDlgStatus;
 end;
 
 initialization

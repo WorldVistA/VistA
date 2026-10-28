@@ -296,9 +296,9 @@ end;
 
 type
   TJsonListConverterValueChangeActionEx = class
-    (TJsonTypedListConverter<TValueChangeActionEx>);
+    (TJsonListConverter<TValueChangeActionEx>);
   TJsonListConverterSpecialAuthorityTypeEx = class
-    (TJsonTypedListConverter<TSpecialAuthorityTypeEx>);
+    (TJsonListConverter<TSpecialAuthorityTypeEx>);
 
   TSpecialAuthorityTypesExJSONSerializer = class(TJsonSerializer)
   public

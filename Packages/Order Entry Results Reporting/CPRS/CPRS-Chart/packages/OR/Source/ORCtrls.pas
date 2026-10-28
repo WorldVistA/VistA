@@ -342,14 +342,21 @@ type
 
   TORComboEdit = class(TEdit)
   private
+    FOnBeforeTextChange: TNotifyEvent;
+    FOnAfterTextChange: TNotifyEvent;
     procedure WMSetFocus(var Message: TWMSetFocus); message WM_SETFOCUS;
     procedure WMKillFocus(var Message: TWMKillFocus); message WM_KILLFOCUS;
+    procedure CMTextChanged(var Message: TMessage); message CM_TEXTCHANGED;
   protected
     procedure CreateParams(var Params: TCreateParams); override;
   public
     procedure SuspendRedraw; deprecated 'Use LockDrawing';
     procedure ResumeRedraw; deprecated 'Use UnlockDrawing';
+    property OnBeforeTextChange: TNotifyEvent read FOnBeforeTextChange write FOnBeforeTextChange;
+    property OnAfterTextChange: TNotifyEvent read FOnAfterTextChange write FOnAfterTextChange;
   end;
+
+  TChangeType = (ctNone, ctPureDeletion, ctPureInsertion, ctReplacement);
 
   TORComboBox = class(TWinControl, IVADynamicProperty, IORBlackColorModeCompatible)
   private
@@ -365,9 +372,11 @@ type
     FDropDownCount: Integer; // number of items to display when list appears
     FFromSelf: Boolean; // prevents recursive calls to change event
     FFromDropBtn: Boolean; // determines when to capture mouse on drop
+    FConsumeBackspace: Boolean; // true when VK_BACK was handled in KeyDown and must be swallowed in KeyPress
     FKeyTimerActive: Boolean; // true when timer running for OnKeyPause
     FKeyIsDown: Boolean; // true between KeyDown & KeyUp events
-    FPrevEditBoxText: string; // Contents of FEditBox.Text when FKeyIsDown
+    FEditBoxTextBefore: string; // Contents of FEditBox.Text when FKeyIsDown
+    FTypedPrefix: string; // Last user-entered prefix; excludes autocomplete-only fill text
     FChangePending: Boolean;
     FListItemsOnly: Boolean;
     FLastFound: string;
@@ -388,6 +397,7 @@ type
     FTemplateField: boolean;
     FCharsNeedMatch: integer; // how many text need to be matched for auto selection
     FUniqueAutoComplete: Boolean; // If true only perform autocomplete for unique list items.
+    FDirectMatchWhenUnique: Boolean; // If true, direct (exact) item matches are resolved even when UniqueAutoComplete is on.
     FBlackColorMode: boolean;
     FDropDownStatusChangedCount: integer; // prevents multiple calls to disabling hint window
     fRpcCall: String;
@@ -399,6 +409,7 @@ type
 
     procedure setOnDrawItem(aValue: TDrawItemEvent);
     procedure EditOnExit(Sender: TObject);
+    function FindEditTextMatchIndex(const AText: string): Integer;
     procedure DropDownStatusChanged(opened: boolean);
     procedure ClearDropDownStatus;
     procedure DropButtonDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState;
@@ -651,6 +662,10 @@ type
  7278 - PTM 36 Meds: Select 40000 UNT/2ML and backspace to 4000 the dose selected remains 40000
  7284 - Inconsistencies of pulling in a dose from the Possible Dose File }
     property UniqueAutoComplete: Boolean read FUniqueAutoComplete write SetUniqueAutoComplete default False;
+    { When True, an exact match in the list is selected immediately even if UniqueAutoComplete
+      is enabled. Default False preserves original behavior: UniqueAutoComplete suppresses
+      direct-match selection so the user can continue narrowing the input. }
+    property DirectMatchWhenUnique: Boolean read FDirectMatchWhenUnique write FDirectMatchWhenUnique default False;
     property OnDrawItem: TDrawItemEvent read fOnDrawItem write setOnDrawItem;
     // set SetItemIndexOnChange to False to stop OnChange events when changing ItemIndex.
     property SetItemIndexOnChange: boolean read FSetItemIndexOnChange write FSetItemIndexOnChange default True;
@@ -1350,6 +1365,51 @@ var
   uNewStyle: Boolean; // True if using Windows 95 interface
   HintArray: array of THintRecords;
 { General functions and procedures --------------------------------------------------------- }
+
+function DetectChangeType(const ACurrentText, APreviousText: string): TChangeType;
+// Compares current text against previous text and returns how they differ:
+// ctNone, ctPureDeletion, ctPureInsertion, or ctReplacement.
+// Comparison is case-insensitive so that autocomplete casing does not affect detection.
+var
+  iStart, iEndOld, iEndNew: Integer;
+  CurrentUC, PreviousUC: string;
+begin
+  CurrentUC  := AnsiUpperCase(ACurrentText);
+  PreviousUC := AnsiUpperCase(APreviousText);
+
+  // 1. Find first difference
+  iStart := 1;
+  while (iStart <= Length(PreviousUC)) and
+        (iStart <= Length(CurrentUC)) and
+        (PreviousUC[iStart] = CurrentUC[iStart]) do
+    Inc(iStart);
+
+  // If no difference at all
+  if (iStart > Length(PreviousUC)) and (iStart > Length(CurrentUC)) then
+    Exit(ctNone);
+
+  // 2. Find last difference from the end
+  iEndOld := Length(PreviousUC);
+  iEndNew := Length(CurrentUC);
+  while (iEndOld >= iStart) and (iEndNew >= iStart) and
+        (PreviousUC[iEndOld] = CurrentUC[iEndNew]) do
+  begin
+    Dec(iEndOld);
+    Dec(iEndNew);
+  end;
+
+  // Extract removed and inserted segments
+  var Removed := Copy(PreviousUC, iStart, iEndOld - iStart + 1);
+  var Inserted := Copy(CurrentUC,  iStart, iEndNew - iStart + 1);
+
+  // 3. Classify
+  if (Removed <> '') and (Inserted = '') then
+    Result := ctPureDeletion
+  else if (Removed = '') and (Inserted <> '') then
+    Result := ctPureInsertion
+  else
+    Result := ctReplacement;  // BOTH removed & inserted
+end;
 
 function ClientWidthOfList(AListBox: TORListBox): Integer;
 begin
@@ -2213,16 +2273,45 @@ procedure TORListBox.LBAddString(var Message: TMessage);
 var
   ItemRec: PItemRec;
   ItemPos: Integer;
+  InsertIndex: Integer;
+  NewText: string;
+  I: Integer;
+  UseDefaultLongListAdd: Boolean;
 begin
   if not FFromSelf then
   begin
+    UseDefaultLongListAdd := False;
     if FLongList then // -- special long list processing - begin
     begin
       if FFromNeedData then FDataAdded := True else with Message do
         begin
-          WParam := FWaterMark;
-          Result := Perform(LB_INSERTSTRING, WParam, LParam); // always insert into short list
-          Exit;
+          if Sorted and (FParentCombo = nil) then
+          begin
+            // In simple style there is no drop panel split, so native sorted add is safe.
+            UseDefaultLongListAdd := True;
+          end
+          else
+          begin
+            if Sorted then
+            begin
+              // In dropdown long-list mode, keep inserts within the short-list region.
+              NewText := PChar(LParam);
+              InsertIndex := FWaterMark;
+              for I := 0 to FWaterMark - 1 do
+              begin
+                if CompareText(TListBox(Self).Items[I], NewText) > 0 then
+                begin
+                  InsertIndex := I;
+                  Break;
+                end;
+              end;
+              WParam := InsertIndex;
+            end
+            else
+              WParam := FWaterMark;
+            Result := Perform(LB_INSERTSTRING, WParam, LParam); // always insert into short list
+            Exit;
+          end;
         end;
     end; // -- special long list processing - end
     New(ItemRec);
@@ -2238,6 +2327,12 @@ begin
     FCreatingItem := TRUE;
     inherited;
     FCreatingItem := FALSE;
+    if FLongList and (not FFromNeedData) and UseDefaultLongListAdd and (Message.Result <> LB_ERR) then
+    begin
+       // Native sorted add can insert before/at watermark; keep short-list boundary in sync.
+      if Integer(Message.Result) <= FWaterMark then
+        Inc(FWaterMark);
+    end;
     // insert into list AFTER calling inherited in case the listbox is sorted
     DoChange;
     with Message do if Result <> LB_ERR then
@@ -4235,19 +4330,33 @@ function TORListBox.GetStringIndex(const AString: string): Integer;
 {returns the index of the first string that partially matches AString}
 var
   i: Integer;
+
+  function IsMatch(const ItemText, SearchText: string): Boolean;
+  begin
+    if FUseExactSearch then
+      Result := CompareText(ItemText, SearchText) = 0
+    else
+      Result := CompareText(SearchText, Copy(ItemText, 1, Length(SearchText))) = 0;
+  end;
+
 begin
   Result := -1;
   if Length(AString) > 0 then {*KCM*}
   begin
     if not FLongList then // Normal List
     begin
-      Result := SendMessage(Handle, SearchMsg, -1, Longint(PChar(AString)));
-      if Result = LB_ERR then Result := -1;
+      // Match against display text so Piece-based combos search what users actually type.
+      for i := 0 to Items.Count - 1 do
+        if IsMatch(DisplayText[i], AString) then
+        begin
+          Result := i;
+          Break;
+        end;
     end else // Long List
     begin
       if FScrollBar.Position = 0 then for i := 0 to FWatermark - 1 do
         begin
-          if CompareText(AString, Copy(DisplayText[i], 1, Length(AString))) = 0 then
+          if IsMatch(DisplayText[i], AString) then
           begin
             Result := i;
             break;
@@ -4268,21 +4377,35 @@ var
   x: string;
   i: Integer;
   index: integer;
+
+  function IsMatch(const ItemText, SearchText: string): Boolean;
+  begin
+    if FUseExactSearch then
+      Result := CompareText(ItemText, SearchText) = 0
+    else
+      Result := CompareText(SearchText, Copy(ItemText, 1, Length(SearchText))) = 0;
+  end;
+
 begin
   Result := -1;
   if Length(AString) > 0 then {*KCM*}
   begin
     if not FLongList then // Normal List
     begin
-      Result := SendMessage(Handle, SearchMsg, -1, Longint(PChar(AString)));
-      if Result = LB_ERR then Result := -1;
+      // Match against display text so non-LongList behavior is consistent with LongList.
+      for i := 0 to Items.Count - 1 do
+        if IsMatch(DisplayText[i], AString) then
+        begin
+          Result := i;
+          Break;
+        end;
       // use FFocusIndex instead of FocusIndex to reduce flashing
       FFocusIndex := Result;
     end else // Long List
     begin
       if FScrollBar.Position = 0 then for i := 0 to FWatermark - 1 do
         begin
-          if CompareText(AString, Copy(DisplayText[i], 1, Length(AString))) = 0 then
+          if IsMatch(DisplayText[i], AString) then
           begin
             Result := i;
             break;
@@ -4651,6 +4774,15 @@ const
   ComboBoxImages: array[boolean] of string = ('BMP_CBODOWN_DISABLED', 'BMP_CBODOWN');
   BlackComboBoxImages: array[boolean] of string = ('BLACK_BMP_CBODOWN_DISABLED', 'BLACK_BMP_CBODOWN');
 
+procedure TORComboEdit.CMTextChanged(var Message: TMessage);
+begin
+  if Assigned(FOnBeforeTextChange) then
+    FOnBeforeTextChange(self);
+  inherited;
+  if Assigned(FOnAfterTextChange) then
+    FOnAfterTextChange(self);
+end;
+
 procedure TORComboEdit.CreateParams(var Params: TCreateParams);
 { sets a one line edit box to multiline style so the editing rectangle can be changed }
 begin
@@ -4739,6 +4871,8 @@ begin
   TimerInterval := KEY_TIMER_DELAY;
   FOwnsData := True;
   FSetItemIndexOnChange := True;
+  FConsumeBackspace := False;
+  FTypedPrefix := '';
 end;
 
 procedure TORComboBox.WMDestroy(var Message: TWMDestroy);
@@ -4931,91 +5065,111 @@ end;
 
 procedure TORComboBox.FwdChange(Sender: TObject);
 { allow timer to call FwdChangeDelayed if long list, otherwise call directly }
-var
-  IsChangeDeleteOnly: Boolean;
 begin
-  if FFromSelf then Exit;
-  IsChangeDeleteOnly := Copy(FPrevEditBoxText, 1, Length(FEditBox.Text)) = FEditBox.Text;
-  FPrevEditBoxText := FEditBox.Text;
-  if not IsChangeDeleteOnly then FListBox.SelectedDataString := '';
-  if (not IsChangeDeleteOnly) or ListItemsOnly then FChangePending := True;
-  if FListBox.LongList and FKeyIsDown then Exit;
-  if (not IsChangeDeleteOnly) or ListItemsOnly then FwdChangeDelayed;
+  if FFromSelf then Exit;  // ignore programmatic text changes to avoid re-entrant loops
+  FListBox.SelectedDataString := '';
+  FChangePending := True;
+  if FListBox.LongList and FKeyIsDown then Exit;  // key still held; timer will call FwdChangeDelayed after release
+  FwdChangeDelayed;
 end;
 
 procedure TORComboBox.FwdChangeDelayed;
 { when user types in the editbox, find a partial match in the listbox & set into editbox }
 var
-  aSelectIndex, ASelStart: integer;
-  X: string;
-
-  procedure NoCheckBoxesSelection(aLen: Integer);
-  begin
-    if (not FListBox.FCheckBoxes) then
-      SendMessage(FEditBox.Handle, EM_SETSEL, Length(FEditBox.Text), aLen);
-  end;
-
+  SelectIndex, ASelStart, DirectMatchIndex: Integer;
+  CurrentTypedPrefix: string;
+  WasTextDeleted, CanFireChange: Boolean;
+  HadPrefixMatch: Boolean; // True when typed prefix matches at least one list item
 begin
   FChangePending := False;
+  if (not FListItemsOnly) and (Length(FEditBox.Text) > 0) and
+     (FEditBox.SelStart = 0) then
+    Exit;
 
-  if FListItemsOnly or (FEditBox.Text = '') or (FEditBox.SelStart <> 0) then
+  FListBox.ItemIndex := -1;
+  DirectMatchIndex := -1;
+
+  CurrentTypedPrefix := Copy(FEditBox.Text, 1, SelStart);
+
+  // Skip autocomplete when the user just deleted text; still match in list-only mode.
+  WasTextDeleted := DetectChangeType(CurrentTypedPrefix, FTypedPrefix) in [ctNone, ctPureDeletion];
+  FTypedPrefix := CurrentTypedPrefix;
+  // Only attempt a direct (exact) item match when UniqueAutoComplete is off,
+  // or when DirectMatchWhenUnique explicitly enables it alongside UniqueAutoComplete.
+  if (not UniqueAutoComplete) or FDirectMatchWhenUnique then
+    DirectMatchIndex := FListBox.Items.IndexOf(FEditBox.Text);
+
+  if DirectMatchIndex > -1 then
+  begin
+    FFromSelf := True;
+    try
+      FListBox.ItemIndex := DirectMatchIndex;
+      FEditBox.Text := GetEditBoxText(DirectMatchIndex);
+      FLastFound := FTypedPrefix;
+      SelStart := Length(FEditBox.Text);
+    finally
+      FFromSelf := False;
+    end;
+  end else if FListItemsOnly or (not WasTextDeleted) then
   begin
     if SelLength > 0 then
-    begin
-      X := Copy(FEditBox.Text, 1, SelStart);
-      ASelStart := -1;
-    end
+      ASelStart := -1
     else
-    begin
-      X := FEditBox.Text;
       ASelStart := SelStart;
-    end;
+    SelectIndex := -1;
 
-    aSelectIndex := -1;
-    if (Length(X) >= CharsNeedMatch) or
-      ((Length(X) < CharsNeedMatch) and (FListBox.ItemIndex > -1)) then
-      aSelectIndex := FListBox.SelectString(X);
+    if Length(FTypedPrefix) >= CharsNeedMatch then
+      SelectIndex := FListBox.SelectString(FTypedPrefix);
+    if (Length(FTypedPrefix) < CharsNeedMatch) and (FListBox.ItemIndex > -1) then
+      SelectIndex := FListBox.SelectString(FTypedPrefix);
+
+    HadPrefixMatch := SelectIndex > -1;
+
     if UniqueAutoComplete then
-      aSelectIndex := FListBox.VerifyUnique(aSelectIndex, X);
-
-    if FListItemsOnly and (aSelectIndex < 0) and (X <> '') then
+      SelectIndex := FListBox.VerifyUnique(SelectIndex, FTypedPrefix);
+    // In list-only mode, revert only when there is truly no matching prefix.
+    // With UniqueAutoComplete enabled, ambiguous prefixes are allowed while typing.
+    if FListItemsOnly and (SelectIndex < 0) and (FTypedPrefix <> '') and
+       (not (UniqueAutoComplete and HadPrefixMatch)) then
     begin
-      FFromSelf := TRUE;
-//       x := FLastFound;                    // VISTAOR-41035 ------------ begin
-      X := Copy(FEditBox.Text, 1, SelStart); // SelStart has changed after click
-      aSelectIndex := FListBox.SelectString(X);
-
-      if aSelectIndex < 0 then               //
-        FEditBox.Text := X                   //
-      else                                   // VISTAOR-41035 -------------- end
-        FEditBox.Text := GetEditBoxText(aSelectIndex);
-
-      NoCheckBoxesSelection(Length(X));
+      FFromSelf := True;
+      SelectIndex := FListBox.SelectString(FLastFound);
+      FEditBox.Text := GetEditBoxText(SelectIndex);
+      if (not FListBox.FCheckBoxes) then
+        SendMessage(FEditBox.Handle, EM_SETSEL, Length(FEditBox.Text), Length(FLastFound));
       FFromSelf := False;
-    end
-    else
+      Exit; // OnChange not called in this case
+    end;
+    FFromSelf := True;
+    if SelectIndex > -1 then
     begin
-      FFromSelf := TRUE;
-      if aSelectIndex > -1 then
+      FEditBox.Text := GetEditBoxText(SelectIndex);
+      FLastFound := FTypedPrefix;
+      if (not FListBox.FCheckBoxes) then
+        SendMessage(FEditBox.Handle, EM_SETSEL, Length(FEditBox.Text), Length(FTypedPrefix));
+    end else
+    begin
+      if (FListBox.CheckBoxes) then
+        FEditBox.Text := GetEditBoxText(SelectIndex)
+      else
+        FEditBox.Text := FTypedPrefix; // no match, so don't set FLastFound
+      if ASelStart < 0 then
       begin
-        FEditBox.Text := GetEditBoxText(aSelectIndex);
-        FLastFound := X;
-        NoCheckBoxesSelection(Length(X));
+        FEditBox.SelStart := Length(FTypedPrefix);
       end
       else
       begin
-        if (FListBox.CheckBoxes) then
-          FEditBox.Text := GetEditBoxText(aSelectIndex)
-        else
-          FEditBox.Text := X; // no match, so don't set FLastFound
-
-        FEditBox.SelStart := IfThen(ASelStart < 0, Length(X), ASelStart);
+        FEditBox.SelStart := ASelStart;
       end;
-      FFromSelf := False;
-      if (not FListBox.FCheckBoxes) and assigned(FOnChange) then
-          FOnChange(Self);
     end;
+    FFromSelf := False;
   end;
+
+  // In list-only mode fire OnChange only when the visible text actually changed,
+  // avoiding a spurious event when the selection is merely confirmed unchanged.
+  CanFireChange := (not FListItemsOnly) or (FEditBoxTextBefore <> FEditBox.Text);
+  if (not FListBox.FCheckBoxes) and CanFireChange then
+    if Assigned(FOnChange) then FOnChange(Self);
 end;
 
 procedure TORComboBox.FwdClick(Sender: TObject);
@@ -5038,6 +5192,8 @@ begin
   if Assigned(FOnClick) then FOnClick(Self);
   if (not FListBox.FCheckBoxes) then
     if Assigned(FOnChange) then FOnChange(Self); // click causes both click & change events
+  FTypedPrefix := FEditBox.Text;
+  FEditBoxTextBefore := FEditBox.Text;
 end;
 
 procedure TORComboBox.FwdDblClick(Sender: TObject);
@@ -5053,6 +5209,8 @@ var
   x, AString: string;
 begin
   try
+    FConsumeBackspace := False;
+    FEditBoxTextBefore := FEditBox.Text;  // snapshot before any key processing
     // special case: when default action taken (RETURN) make sure FwdChangeDelayed is called first
     if (Key = VK_RETURN) and FListBox.LongList and FChangePending then
       FwdChangeDelayed;
@@ -5095,17 +5253,48 @@ begin
     if Key in [VK_RETURN, VK_ESCAPE, VK_TAB] then SendMessage(Parent.Handle, CN_KEYDOWN, Key, 0);
     if Key = VK_BACK then // backspace
     begin
-      FFromSelf := True;
-      x := FEditBox.Text;
-      i := FEditBox.SelStart;
-      Delete(x, i + 1, Length(x));
-      if (FListBox.FCheckBoxes) then
-        FEditBox.Text := GetEditBoxText(ItemIndex)
-      else
-        FEditBox.Text := x;
-      FLastFound := x;
-      FEditBox.SelStart := i;
-      FFromSelf := False;
+      // For autocomplete tail-highlight, remove only highlighted text and keep caret at typed end.
+      // With no selection, let the edit control perform normal backspace behavior.
+      if FEditBox.SelLength > 0 then
+      begin
+        FFromSelf := True;
+        try
+          x := FEditBox.Text;
+          i := FEditBox.SelStart;
+          Delete(x, i + 1, FEditBox.SelLength);  // Remove highlighted text
+
+          // If ListItemsOnly, also remove the last typed character and re-search
+          if FListItemsOnly and (i > 0) then
+          begin
+            Delete(x, i, 1);  // Remove the character before the selection
+            i := i - 1;
+          end;
+
+          if (FListBox.FCheckBoxes) then
+            FEditBox.Text := GetEditBoxText(ItemIndex)
+          else
+            FEditBox.Text := x;
+          FLastFound := x;
+          FEditBox.SelStart := i;
+        finally
+          FFromSelf := False;
+        end;
+
+        // If ListItemsOnly, re-run autocomplete search to populate new suggestion
+        if FListItemsOnly then
+        begin
+          FChangePending := True;
+          FwdChangeDelayed;
+        end
+        else
+        begin
+          // For non-ListItemsOnly, still attempt rematch after removing highlighted text
+          FwdChangeDelayed;
+        end;
+
+        FConsumeBackspace := True;
+        Key := 0; // consume key so default edit backspace does not run a second delete
+      end;
     end;
     if (FStyle = orcsDropDown) and (Key = VK_F4) then DroppedDown := not DroppedDown; // drop
 
@@ -5119,7 +5308,6 @@ begin
     end;
   finally
     FKeyIsDown := True;
-    FPrevEditBoxText := FEditBox.Text;
   end;
 end;
 
@@ -5136,8 +5324,16 @@ begin
   end
   else
   begin
+    if (KeyCode = VK_BACK) and FConsumeBackspace then
+    begin
+      Key := #0;
+      FConsumeBackspace := False;
+      Exit;
+    end;
+
     // may want to make the tab beep if tab key (#9) - can't tab until list raised
-    if (KeyCode = VK_RETURN) or (KeyCode = VK_TAB) or (FListBox.FCheckBoxes and (KeyCode = VK_SPACE)) then
+    if (KeyCode = VK_RETURN) or (KeyCode = VK_TAB) or
+       (FListBox.FCheckBoxes and (KeyCode = VK_SPACE)) then
     begin
       Key := #0;
       Exit;
@@ -5150,8 +5346,6 @@ procedure TORComboBox.FwdKeyUp(Sender: TObject; var Key: Word; Shift: TShiftStat
 { surfaces the key up event from the editbox so it is available as a combobox property }
 begin
   FKeyIsDown := False;
-  FPrevEditBoxText := '';
-
   // tell parent about RETURN, ESCAPE so that the default action is taken
   if Key in [VK_RETURN, VK_ESCAPE, VK_TAB] then SendMessage(Parent.Handle, CN_KEYUP, Key, 0);
   if Assigned(FOnKeyUp) then FOnKeyUp(Self, Key, Shift);
@@ -5230,7 +5424,8 @@ begin
   begin
     if Assigned(FOnDropDownClose) then FOnDropDownClose(Self);
     FListBox.MouseCapture := False;
-    uItemTip.Hide;
+    if assigned(uItemTip) then
+      uItemTip.Hide;
     FDropPanel.Hide;
     DropDownStatusChanged(FALSE);
     if (FListBox.FCheckBoxes) and (assigned(FOnChange)) and
@@ -5278,6 +5473,7 @@ begin
   FFromSelf := True;
   FEditBox.Text := Value;
   FLastFound := FEditBox.Text;
+  FTypedPrefix := Value;
   FFromSelf := False;
   PostMessage(FEditBox.Handle, EM_SETSEL, 0, Length(FEditBox.Text));
 end;
@@ -5690,7 +5886,10 @@ end;
 
 function TORComboBox.GetText: string;
 begin
-  Result := FEditBox.Text;
+  // In list-only + unique-autocomplete mode, suppress the result unless the user
+  // has actually confirmed a selection; otherwise return whatever is in the edit box.
+  if (not ListItemsOnly) or (not UniqueAutoComplete) or (ItemIndex > -1) then
+    Result := FEditBox.Text;
 end;
 
 procedure TORComboBox.SelectAll;
@@ -5776,8 +5975,85 @@ begin
 end;
 
 procedure TORComboBox.SetSorted(Value: Boolean);
+var
+  PlainItems: TStrings;
+  OldMItems: TStringList;
+  OldPlainItems: TStringList;
+  NewMItems: TStringList;
+  UsedOldIndexes: array of Boolean;
+  i, j, MatchedIndex: Integer;
+  AllItemsMatched: Boolean;
+  SortedPlainText: string;
 begin
-  FListBox.Sorted := Value;
+  if FListBox.Sorted = Value then
+    Exit;
+
+  // Apply visual sort state even when M-item synchronization is unavailable.
+  if not (FMItems is TORStrings) then
+  begin
+    FListBox.Sorted := Value;
+    Exit;
+  end;
+
+  PlainItems := TListBox(FListBox).Items;
+  OldMItems := TORStrings(FMItems).MList;
+
+  if (OldMItems.Count <= 1) or (PlainItems.Count <> OldMItems.Count) then
+  begin
+    FListBox.Sorted := Value;
+    Exit;
+  end;
+
+  OldPlainItems := TStringList.Create;
+  NewMItems := TStringList.Create;
+  try
+    // Snapshot plain-text order before sorting so we can remap full M-items by index.
+    OldPlainItems.Assign(PlainItems);
+    FListBox.Sorted := Value;
+
+    NewMItems.Capacity := OldMItems.Count;
+    SetLength(UsedOldIndexes, OldMItems.Count);
+    AllItemsMatched := True;
+
+    for i := 0 to PlainItems.Count - 1 do
+    begin
+      SortedPlainText := PlainItems[i];
+      MatchedIndex := -1;
+
+      for j := 0 to OldPlainItems.Count - 1 do
+      begin
+        if UsedOldIndexes[j] then
+          Continue;
+
+        // Allow duplicate display text by consuming the first unused pre-sort match.
+        if CompareText(OldPlainItems[j], SortedPlainText) = 0 then
+        begin
+          MatchedIndex := j;
+          Break;
+        end;
+      end;
+
+      if MatchedIndex > -1 then
+      begin
+        UsedOldIndexes[MatchedIndex] := True;
+        // Rebuild full M-string order to match the newly sorted visible list order.
+        NewMItems.Add(OldMItems[MatchedIndex]);
+      end
+      else
+      begin
+        // Leave prior M-item order untouched if we cannot produce a complete mapping.
+        AllItemsMatched := False;
+        Break;
+      end;
+    end;
+
+    // Only replace if every visible row mapped cleanly to its original full item.
+    if AllItemsMatched and (NewMItems.Count = OldMItems.Count) then
+      OldMItems.Assign(NewMItems);
+  finally
+    NewMItems.Free;
+    OldPlainItems.Free;
+  end;
 end;
 
 procedure TORComboBox.SetTabPositions(const Value: string);
@@ -6080,8 +6356,88 @@ begin
   FListBox.OnDrawItem := aValue;
 end;
 
-procedure TORComboBox.EditOnExit(Sender: TObject);
+function TORComboBox.FindEditTextMatchIndex(const AText: string): Integer;
+var
+  i: Integer;
 begin
+  Result := -1;
+  if AText = '' then
+    Exit;
+
+  for i := 0 to FListBox.Items.Count - 1 do
+  begin
+    if AnsiCompareText(GetEditBoxText(i), AText) = 0 then
+    begin
+      Result := i;
+      Exit;
+    end;
+  end;
+end;
+
+procedure TORComboBox.EditOnExit(Sender: TObject);
+var
+  MatchIndex, OldItemIndex: Integer;
+  OldText, OldSelectedDataString: string;
+  DidSelectOnExit, ValueChanged: Boolean;
+begin
+  OldItemIndex := FListBox.ItemIndex;
+  OldText := FEditBox.Text;
+  OldSelectedDataString := FListBox.SelectedDataString;
+  DidSelectOnExit := False;
+
+  // Skip exit-time validation for LongList combos: FListBox.Items only holds the
+  // on-demand short-list window, not the full item set, so a legitimately selected
+  // value (e.g. a programmatically loaded quick-order Imaging Procedure) would not be
+  // found and would be wrongly cleared on focus loss.
+  if FListItemsOnly and (not FListBox.CheckBoxes) and (not FListBox.LongList) then
+  begin
+    MatchIndex := FindEditTextMatchIndex(FEditBox.Text);
+    if MatchIndex > -1 then
+    begin
+      FFromSelf := True;
+      try
+        FListBox.ItemIndex := MatchIndex;
+        FListBox.FFocusIndex := MatchIndex;
+        FEditBox.Text := GetEditBoxText(MatchIndex);
+        FLastFound := FEditBox.Text;
+        FTypedPrefix := FEditBox.Text;
+        FEditBoxTextBefore := FEditBox.Text;
+      finally
+        FFromSelf := False;
+      end;
+      DidSelectOnExit := True;
+    end
+    else
+    begin
+      FFromSelf := True;
+      try
+        FListBox.ItemIndex := -1;
+        FListBox.FFocusIndex := -1;
+        FListBox.SelectedDataString := '';
+        FEditBox.Text := '';
+        FLastFound := '';
+        FTypedPrefix := '';
+        FEditBoxTextBefore := '';
+      finally
+        FFromSelf := False;
+      end;
+    end;
+  end;
+
+  ValueChanged := (OldItemIndex <> FListBox.ItemIndex) or
+    (OldText <> FEditBox.Text) or
+    (OldSelectedDataString <> FListBox.SelectedDataString);
+
+  // Only notify when the value actually changed on exit. Merely confirming an
+  // already-selected item (DidSelectOnExit with no net change) must NOT fire
+  // OnChange/OnClick, otherwise downstream handlers treat a plain focus-loss as a
+  // user edit - e.g. tabbing out of the fODRad Imaging Type combo would fire its
+  // OnChange, flag an image-type change, and rebuild/clear the Imaging Procedure.
+  if DidSelectOnExit and ValueChanged and Assigned(FOnClick) then
+    FOnClick(Self);
+  if ValueChanged and Assigned(FOnChange) then
+    FOnChange(Self);
+
   FListBox.Invalidate;
 end;
 
@@ -8396,11 +8752,15 @@ var
   counter: integer;
 begin
   Result := SelectIndex;
+  if SelectIndex < 0 then
+    Exit;
+
   if LongList then
   begin
-      //Implemented for CQ: 10092, PSI-04-057
-      //asume long lists are alphabetically ordered...
-    if CompareText(iText, Copy(DisplayText[SelectIndex + 1], 1, Length(iText))) = 0 then
+    // Implemented for CQ: 10092, PSI-04-057.
+    // Assume long lists are ordered; only next item is needed to detect ambiguity.
+    if (SelectIndex + 1 < Items.Count) and
+      (CompareText(iText, Copy(DisplayText[SelectIndex + 1], 1, Length(iText))) = 0) then
       Result := -1;
   end
   else //Not a LongList
@@ -8908,3 +9268,4 @@ finalization
 {$WARN UNSAFE_CAST ON}
 {$WARN UNSAFE_CODE ON}
 end.
+

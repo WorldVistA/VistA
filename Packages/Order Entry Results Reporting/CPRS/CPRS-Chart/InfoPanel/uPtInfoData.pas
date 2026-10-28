@@ -15,10 +15,10 @@ type
   TPresentation = class;
   TSection = class;
 
-  TJsonListConverterTReturnData = class(TJsonTypedListConverter<TReturnData>);
-  TJsonListConverterTRequiredData = class(TJsonTypedListConverter<TRequiredData>);
-  TJsonListConverterTPresentation = class(TJsonTypedListConverter<TPresentation>);
-  TJsonListConverterTSection = class(TJsonTypedListConverter<TSection>);
+  TJsonListConverterTReturnData = class(TJsonListConverter<TReturnData>);
+  TJsonListConverterTRequiredData = class(TJsonListConverter<TRequiredData>);
+  TJsonListConverterTPresentation = class(TJsonListConverter<TPresentation>);
+  TJsonListConverterTSection = class(TJsonListConverter<TSection>);
 
   [JsonSerialize(TJsonMemberSerialization.Public)]
   TReturnData = class(TPersistent)

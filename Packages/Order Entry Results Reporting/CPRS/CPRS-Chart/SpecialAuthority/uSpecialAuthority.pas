@@ -12,7 +12,7 @@ uses
 type
   TSpecialAuthority = class;
 
-  TJsonListConverterTSpecialAuthority = class(TJsonTypedListConverter<TSpecialAuthority>);
+  TJsonListConverterTSpecialAuthority = class(TJsonListConverter<TSpecialAuthority>);
 
   [JsonSerialize(TJsonMemberSerialization.Public)]
   TSpecialAuthority = class(TPersistent)

@@ -848,7 +848,7 @@ end;
 
 type
   TJsonListConverterSpecialAuthorityEx = class
-    (TJsonTypedListConverter<TSpecialAuthorityEx>);
+    (TJsonListConverter<TSpecialAuthorityEx>);
 
   TSpecialAuthoritiesExJSONSerializer = class(TJsonSerializer)
   public

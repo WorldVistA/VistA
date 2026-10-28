@@ -1406,6 +1406,7 @@ begin
       dlgProbs.Align := alClient ;
       dlgProbs.Reason:= parAdd;
       dlgProbs.SubjProb:=newprob;
+      HeaderControl.Visible := False;
       dlgProbs.show;
       PostMessage(dlgProbs.Handle, UM_TAKEFOCUS, 0, 0);
       wgProbData.TabStop := False; //fixes part (c) of CQ #15531: 508 Problems tab [CPRS v28.1] {TC}.
@@ -1452,6 +1453,7 @@ begin
       dlgProbs.Show;
       PostMessage(dlgProbs.Handle, UM_TAKEFOCUS, 0, 0);
       wgProbData.TabStop := False;  //fixes part (c) of CQ #15531: 508 Problems tab [CPRS v28.1] {TC}.
+      HeaderControl.Visible := False;
       //prevents the selected problem or last entered problem from the PL captionlistbox
       //underneath pnlProbDlg to be focused & read by Jaws
     end
@@ -1859,7 +1861,9 @@ begin
   try
     {These labels are hidden in an ORAutoPanel, so have to be sized manually}
     lblProbCats.Height := ResizeHeight( Font, MainFont, lblProbCats.Height);
-    lblProblems.Height := ResizeHeight( Font, MainFont, lblProblems.Height);
+//    lblProblems.Height := ResizeHeight( Font, MainFont, lblProblems.Height)*2;
+    lblProblems.Height := lblProbCats.Height;
+
     inherited SetFontSize( NewFontSize);
   finally
     if Assigned(dlgProbs) then

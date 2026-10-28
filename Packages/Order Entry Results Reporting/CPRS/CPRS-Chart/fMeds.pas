@@ -196,6 +196,17 @@ type
     FSortView: Integer;
     FOrderTitlecaption: string;
     FRenewing: boolean;
+    FIsInitialized: Boolean;
+    // User-preferred heights for the two fixed panels
+    // (updated after splitter drags).
+    FPreferredOut: Integer;
+    FPreferredIn:  Integer;
+    // Minimum heights (fixed rows + child MinHeight + border overhead).
+    FMinOut: Integer;
+    FMinNon: Integer;
+    FMinIn:  Integer;
+    function ComputePanelMinHeight(APanel: TGridPanel): Integer;
+    procedure WMSize(var AMessage: TWMSize); message WM_SIZE;
     function ListSelected(const ErrMsg: string): TListBox;
     procedure ValidateSelected(AListBox: TListBox;
       const AnAction, WarningMsg, WarningTitle: string);
@@ -279,7 +290,8 @@ uses uCore, rCore, fFrame, fRptBox, uOrders, fODBase, fOrdersDC, fOrdersHold,
   fOrdersRenew, fOMNavA, fOrdersRefill, fMedCopy, fOrders, fODChild, rODBase,
   StrUtils, fActivateDeactivate, VA2006Utils, VA508AccessibilityRouter,
   VAUtils, System.UITypes, System.Types, uPaPI, fOrdersPark, fOrdersUnPark,
-  rODMeds, rMisc, uWriteAccess;  //rMisc added for Patch Check of OR*3.0*498 // PaPI
+  rODMeds, rMisc, uWriteAccess,
+  System.Math;  // rMisc added for Patch Check of OR*3.0*498 // PaPI
 
 {$R *.DFM}
 
@@ -341,13 +353,104 @@ begin
 
 end;
 
+function TfrmMeds.ComputePanelMinHeight(APanel: TGridPanel): Integer;
+var
+  I: Integer;
+  AControl: TControl;
+  AFixedRowSum: Integer;
+  AMinFlexH: Integer;
+begin
+  AFixedRowSum := 0;
+  for I := 0 to APanel.RowCollection.Count - 1 do
+    if APanel.RowCollection[I].SizeStyle = ssAbsolute then
+      AFixedRowSum := AFixedRowSum + Round(APanel.RowCollection[I].Value);
+
+  AMinFlexH := 0;
+  for I := 0 to APanel.ControlCount - 1 do
+  begin
+    AControl := APanel.Controls[I];
+    if (AControl.Align = alClient) and
+       (AControl.Constraints.MinHeight > AMinFlexH) then
+      AMinFlexH := AControl.Constraints.MinHeight;
+  end;
+
+  // 2 px for bsSingle window border +
+  // 2*BorderWidth for Delphi panel padding.
+  Result := AFixedRowSum + AMinFlexH + 2 + APanel.BorderWidth * 2;
+end;
+
 procedure TfrmMeds.DisplayPage;
 const
   RATIO_SMALL = 0.13; // 0.1866;
 
+  procedure AdjustSplitterPositions(ATopPanel, ABottomPanel: TControl);
+  // Ensure splitters don't overlap with adjacent panels by nudging
+  // panels as needed based on splitter positioning.
+  begin
+    if splitTop.Top < ATopPanel.Top then
+      ATopPanel.Top := splitTop.Top - 1;
+    if splitBottom.Top > ABottomPanel.Top then
+      ABottomPanel.Top := splitBottom.Top + 1;
+  end;
+
+  procedure SetupPanelLayout;
+  // Arrange the five stacked controls (three panels + two splitters) in the
+  // correct order based on patient status. DisableAlign/EnableAlign batching
+  // prevents flicker and ensures splitter positions are correct.
+  var
+    ALayoutParent: TWinControl;
+  begin
+    ALayoutParent := gdpIn.Parent;
+    if not Assigned(ALayoutParent) then
+      Exit;
+
+    ALayoutParent.DisableAlign;
+    try
+      // Clear all alignments
+      gdpIn.Align := alNone;
+      splitTop.Align := alNone;
+      gdpNon.Align := alNone;
+      splitBottom.Align := alNone;
+      gdpOut.Align := alNone;
+
+      // Set new alignment order based on patient status
+      if Patient.Inpatient then
+      begin
+        // Inpatient: In (top), splitTop, Non (client), splitBottom, Out (bottom)
+        gdpIn.Align := alTop;
+        splitTop.Align := alTop;
+        gdpOut.Align := alBottom;
+        splitBottom.Align := alBottom;
+      end
+      else
+      begin
+        // Outpatient: Out (top), splitTop, Non (client), splitBottom, In (bottom)
+        gdpOut.Align := alTop;
+        splitTop.Align := alTop;
+        gdpIn.Align := alBottom;
+        splitBottom.Align := alBottom;
+      end;
+
+      gdpNon.Align := alClient;
+      splitTop.Height := 5;
+      splitBottom.Height := 5;
+    finally
+      ALayoutParent.EnableAlign;
+      ALayoutParent.Realign;
+      ALayoutParent.Invalidate;
+
+      // Force splitters to correct position after align operations
+      if Patient.Inpatient then
+        AdjustSplitterPositions(gdpIn, gdpOut)
+      else
+        AdjustSplitterPositions(gdpOut, gdpIn);
+    end;
+  end;
+
 begin
   inherited DisplayPage;
   frmFrame.ShowHideChartTabMenus(mnuViewChart);
+
   if InitPage then
   begin
     mnuActOneStep.Enabled := User.EnableActOneStep;
@@ -361,101 +464,39 @@ begin
     popMedDC.Enabled := False;
     popMedRenew.Enabled := False;
     popMedNew.Enabled := False;
-
   end;
 
-  // Swap Inpatient/Outpatient list display positions depending in inpatient/outpatient status
+  // Swap Inpatient/Outpatient list display positions depending on inpatient/outpatient status
   if InitPage and User.DisableHold then
   begin
     mnuActHold.Visible := False;
     mnuActUnhold.Visible := False;
   end;
 
-  if Patient.Inpatient then
+  // Rearrange panels if patient status changed or form is initializing
+  if (Patient.Inpatient <> FPrevInPatient) or InitPage then
+    SetupPanelLayout;
+
+  // Configure row heights based on font size
+  if txtDateRangeOp.Font.Size > 12 then
   begin
-    if (not FPrevInPatient) or InitPage then
-    begin
-      gdpIn.Align := alNone;
-      splitBottom.Align := alNone;
-      gdpNon.Align := alNone;
-      splitTop.Align := alNone;
-      gdpOut.Align := alNone;
-
-      gdpIn.Align := alTop;
-      splitTop.Align := alTop;
-      gdpNon.Align := alClient;
-
-      gdpOut.Align := alBottom;
-      splitBottom.Align := alBottom;
-
-      gdpIn.Repaint;
-      splitTop.Repaint;
-      gdpNon.Repaint;
-      splitBottom.Repaint;
-      gdpOut.Repaint;
-    end;
-
-    if txtDateRangeOp.Font.Size > 12 then
-    begin
-      gdpOut.RowCollection[0].Value := (txtDateRangeOp.Height + 3);
-      gdpOut.RowCollection[1].Value := (hdrMedsOut.Height + 3);
-      gdpIn.RowCollection[0].Value := (txtDateRangeIp.Height + 3);
-      gdpIn.RowCollection[1].Value := (hdrMedsIn.Height + 3);
-      gdpNon.RowCollection[0].Value := (txtDateRangeNon.Height + 3);
-      gdpNon.RowCollection[1].Value := (hdrMedsNonVA.Height + 3);
-    end
-    else
-    begin
-      gdpOut.RowCollection[0].Value := (txtDateRangeOp.Height + 1);
-      gdpOut.RowCollection[1].Value := (hdrMedsOut.Height + 1);
-      gdpIn.RowCollection[0].Value := (txtDateRangeIp.Height + 1);
-      gdpIn.RowCollection[1].Value := (hdrMedsIn.Height + 1);
-      gdpNon.RowCollection[0].Value := (txtDateRangeNon.Height + 1);
-      gdpNon.RowCollection[1].Value := (hdrMedsNonVA.Height + 1);
-    end;
+    gdpOut.RowCollection[0].Value := (txtDateRangeOp.Height + 3);
+    gdpOut.RowCollection[1].Value := (hdrMedsOut.Height + 3);
+    gdpIn.RowCollection[0].Value := (txtDateRangeIp.Height + 3);
+    gdpIn.RowCollection[1].Value := (hdrMedsIn.Height + 3);
+    gdpNon.RowCollection[0].Value := (txtDateRangeNon.Height + 3);
+    gdpNon.RowCollection[1].Value := (hdrMedsNonVA.Height + 3);
   end
-  else // Outpatient
+  else
   begin
-    if FPrevInPatient then
-    begin
-      gdpOut.Align := alNone;
-      splitBottom.Align := alNone;
-      gdpNon.Align := alNone;
-      splitTop.Align := alNone;
-      gdpIn.Align := alNone;
-
-      gdpOut.Align := alTop;
-      gdpOut.Repaint;
-      splitTop.Align := alTop;
-      splitTop.Repaint;
-      gdpNon.Align := alClient;
-      gdpNon.Repaint;
-
-      gdpIn.Align := alBottom;
-      gdpIn.Repaint;
-      splitBottom.Align := alBottom;
-      splitBottom.Repaint;
-    end;
-
-    if txtDateRangeOp.Font.Size > 12 then
-    begin
-      gdpOut.RowCollection[0].Value := (txtDateRangeOp.Height + 3);
-      gdpOut.RowCollection[1].Value := (hdrMedsOut.Height + 3);
-      gdpIn.RowCollection[0].Value := (txtDateRangeIp.Height + 3);
-      gdpIn.RowCollection[1].Value := (hdrMedsIn.Height + 3);
-      gdpNon.RowCollection[0].Value := (txtDateRangeNon.Height + 3);
-      gdpNon.RowCollection[1].Value := (hdrMedsNonVA.Height + 3);
-    end
-    else
-    begin
-      gdpOut.RowCollection[0].Value := (txtDateRangeOp.Height + 1);
-      gdpOut.RowCollection[1].Value := (hdrMedsOut.Height + 1);
-      gdpIn.RowCollection[0].Value := (txtDateRangeIp.Height + 1);
-      gdpIn.RowCollection[1].Value := (hdrMedsIn.Height + 1);
-      gdpNon.RowCollection[0].Value := (txtDateRangeNon.Height + 1);
-      gdpNon.RowCollection[1].Value := (hdrMedsNonVA.Height + 1);
-    end;
+    gdpOut.RowCollection[0].Value := (txtDateRangeOp.Height + 1);
+    gdpOut.RowCollection[1].Value := (hdrMedsOut.Height + 1);
+    gdpIn.RowCollection[0].Value := (txtDateRangeIp.Height + 1);
+    gdpIn.RowCollection[1].Value := (hdrMedsIn.Height + 1);
+    gdpNon.RowCollection[0].Value := (txtDateRangeNon.Height + 1);
+    gdpNon.RowCollection[1].Value := (hdrMedsNonVA.Height + 1);
   end;
+
   RefreshMedLists;
   FPrevInPatient := Patient.Inpatient;
 end;
@@ -810,6 +851,29 @@ begin
     DocumentNonVAMeds1.Enabled := canWriteOrder(NonVADisp);
     DocumentNonVAMeds2.Enabled := DocumentNonVAMeds1.Enabled;
   end;
+
+  // Snapshot the DFM heights as initial preferred sizes.
+  FPreferredOut := gdpOut.Height;
+  FPreferredIn  := gdpIn.Height;
+
+  // Compute per-panel minimums.
+  FMinOut := ComputePanelMinHeight(gdpOut);
+  FMinNon := ComputePanelMinHeight(gdpNon);
+  FMinIn  := ComputePanelMinHeight(gdpIn);
+
+  // Alignments are LEFT AS-IS (alTop / alClient / alBottom) so that
+  // splitters keep working. WMSize intercepts each resize, adjusts
+  // gdpOut.Height and gdpIn.Height, then lets VCL's AlignControls give
+  // the remainder to gdpNon.
+
+  // Prevent the form from being resized smaller than all panels at their
+  // floors. Height - ClientHeight captures the title bar +
+  // window-border overhead.
+  Constraints.MinHeight := gdpSort.Height + splitTop.Height + splitBottom.Height
+                           + FMinOut + FMinNon + FMinIn
+                           + (Height - ClientHeight);
+
+  FIsInitialized := True;
 end;
 
 procedure TfrmMeds.FormDestroy(Sender: TObject);
@@ -2443,28 +2507,8 @@ begin
 end;
 
 procedure TfrmMeds.FormResize(Sender: TObject);
-var
-  maxPanelHeight: Integer;
-
 begin
   inherited;
-  if Assigned(frmMeds) then
-  begin
-    // CQ9522 v26.51 Make sure all three panels are visible regardless of font size
-    if Assigned(self.Parent) then
-    begin
-      if self.Height > Parent.ClientHeight then
-        self.Height := Parent.ClientHeight;
-      maxPanelHeight := round((Parent.ClientHeight - 20) / 3);
-      if gdpOut.Height + gdpIn.Height + gdpNon.Height > Parent.ClientHeight then
-      begin
-        // gdpIn.Height := maxPanelHeight*2;
-        gdpIn.Height := maxPanelHeight;
-        gdpNon.Height := maxPanelHeight;
-        gdpOut.Height := maxPanelHeight;
-      end;
-    end; // assigned(self.parent)
-  end;
   if Visible then
     mnuOptimizeFieldsClick(Sender);
 end;
@@ -2844,6 +2888,115 @@ procedure TfrmMeds.ViewInfo(Sender: TObject);
 begin
   inherited;
   frmFrame.ViewInfo(Sender);
+end;
+
+// Keep top/bottom panel heights stable during form resize while allowing the
+// middle client panel to absorb growth and shrink first. Splitter drags do
+// not trigger WM_SIZE, so user-driven panel resizing remains intact.
+procedure TfrmMeds.WMSize(var AMessage: TWMSize);
+var
+  ANewClientHeight: Integer;
+  AAvailableHeight: Integer;
+  AAvailableOutInHeight: Integer;
+  ASplitterHeight: Integer;
+  AOutHeight: Integer;
+  AInHeight: Integer;
+  ADeficit: Integer;
+  AOutSlack: Integer;
+  AInSlack: Integer;
+  AEqualSlack: Integer;
+  ATakeOut: Integer;
+  ATakeIn: Integer;
+  ARemaining: Integer;
+begin
+  if FIsInitialized then
+  begin
+    ANewClientHeight := AMessage.Height;
+    ASplitterHeight := splitTop.Height + splitBottom.Height;
+
+    // If gdpNon currently has more than its minimum, the panels are at
+    // their user-preferred sizes (set at creation or by a splitter drag).
+    // Record those sizes so we always squeeze from the right baseline.
+    if ClientHeight - gdpSort.Height - ASplitterHeight - gdpOut.Height - gdpIn.Height >=
+       FMinNon then
+    begin
+      FPreferredOut := gdpOut.Height;
+      FPreferredIn  := gdpIn.Height;
+    end;
+
+    AAvailableHeight := ANewClientHeight - gdpSort.Height - ASplitterHeight;
+    AAvailableOutInHeight := AAvailableHeight - FMinNon;
+
+    if AAvailableOutInHeight >= FPreferredOut + FPreferredIn then
+    begin
+      // Phase 1: room to spare.
+      // Out and In stay at their preferred heights; Non absorbs all change.
+      AOutHeight := FPreferredOut;
+      AInHeight  := FPreferredIn;
+    end
+    else
+    begin
+      // Phase 2: Non is at its minimum.
+      // Squeeze Out and In evenly, respecting their individual floors.
+      AOutHeight := FPreferredOut;
+      AInHeight  := FPreferredIn;
+      ADeficit := (FPreferredOut + FPreferredIn) - AAvailableOutInHeight;
+
+      if ADeficit > 0 then
+      begin
+        AOutSlack := FPreferredOut - FMinOut;
+        AInSlack  := FPreferredIn  - FMinIn;
+
+        if ADeficit <= AOutSlack + AInSlack then
+        begin
+          AEqualSlack := Min(AOutSlack, AInSlack);
+
+          if ADeficit <= 2 * AEqualSlack then
+          begin
+            // For odd deficits, the extra pixel is applied to the out panel.
+            ATakeOut := (ADeficit + 1) div 2;
+            ATakeIn  :=  ADeficit      div 2;
+          end
+          else
+          begin
+            // One panel will reach its floor first; give it its full slack,
+            // then take the rest from the panel that still has headroom.
+            ATakeOut := AEqualSlack;
+            ATakeIn := AEqualSlack;
+            ARemaining := ADeficit - 2 * AEqualSlack;
+            if AOutSlack > AInSlack then
+              Inc(ATakeOut, ARemaining)
+            else
+              Inc(ATakeIn, ARemaining);
+          end;
+
+          AOutHeight := FPreferredOut - ATakeOut;
+          AInHeight  := FPreferredIn  - ATakeIn;
+        end
+        else
+        begin
+          // Deficit exceeds combined slack; both panels go to their
+          // floors.
+          AOutHeight := FMinOut;
+          AInHeight  := FMinIn;
+        end;
+      end;
+    end;
+
+    // Safety floor (guards against rounding edge-cases).
+    if AOutHeight < FMinOut then
+      AOutHeight := FMinOut;
+    if AInHeight < FMinIn then
+      AInHeight := FMinIn;
+
+    // Apply heights now, before inherited triggers AlignControls.
+    // AlignControls will honour these heights and give the remainder
+    // to gdpNon.
+    gdpOut.Height := AOutHeight;
+    gdpIn.Height  := AInHeight;
+  end;
+
+  inherited;
 end;
 
 procedure TfrmMeds.mnuViewInformationClick(Sender: TObject);

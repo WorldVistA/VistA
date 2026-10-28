@@ -1,4 +1,4 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{F8E15202-4A9E-4237-8BB3-000B788BB4ED}</ProjectGuid>
     </PropertyGroup>
@@ -16,6 +16,9 @@
             <Dependencies/>
         </Projects>
         <Projects Include="..\..\IDEUtils\Packages\12\IDEUtils_D12.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\..\IDEUtils\Source\IDEUtils.dproj">
             <Dependencies/>
         </Projects>
         <Projects Include="..\..\Broker\Packages\12\XWB_D12.dproj">
@@ -91,6 +94,15 @@
     </Target>
     <Target Name="IDEUtils_D12:Make">
         <MSBuild Projects="..\..\IDEUtils\Packages\12\IDEUtils_D12.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="IDEUtils">
+        <MSBuild Projects="..\..\IDEUtils\Source\IDEUtils.dproj"/>
+    </Target>
+    <Target Name="IDEUtils:Clean">
+        <MSBuild Projects="..\..\IDEUtils\Source\IDEUtils.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="IDEUtils:Make">
+        <MSBuild Projects="..\..\IDEUtils\Source\IDEUtils.dproj" Targets="Make"/>
     </Target>
     <Target Name="XWB_D12">
         <MSBuild Projects="..\..\Broker\Packages\12\XWB_D12.dproj"/>

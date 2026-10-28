@@ -14,10 +14,10 @@ type
   TValueChangeAction = class;
   TSpecialAuthorityType = class;
 
-  TJsonListConverterstring = class(TJsonTypedListConverter<string>);
-  TJsonListConverterTPackage = class(TJsonTypedListConverter<TPackage>);
-  TJsonListConverterTValueChangeAction = class(TJsonTypedListConverter<TValueChangeAction>);
-  TJsonListConverterTSpecialAuthorityType = class(TJsonTypedListConverter<TSpecialAuthorityType>);
+  TJsonListConverterstring = class(TJsonListConverter<string>);
+  TJsonListConverterTPackage = class(TJsonListConverter<TPackage>);
+  TJsonListConverterTValueChangeAction = class(TJsonListConverter<TValueChangeAction>);
+  TJsonListConverterTSpecialAuthorityType = class(TJsonListConverter<TSpecialAuthorityType>);
 
   [JsonSerialize(TJsonMemberSerialization.Public)]
   TPackage = class(TPersistent)
