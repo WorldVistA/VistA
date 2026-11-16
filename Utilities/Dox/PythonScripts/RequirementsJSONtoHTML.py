@@ -3,7 +3,6 @@ from builtins import object
 import json
 import argparse
 import os.path
-import cgi
 import sys
 
 from LogManager import logger

@@ -19,7 +19,6 @@ import sys
 import re
 from datetime import datetime
 import glob
-import cgi
 import re
 import json
 import argparse
